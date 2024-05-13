@@ -120,6 +120,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art."version" art_version, 
             art.model art_model, 
             art.proto art_proto, 
+            art."type" art_type, 
             art.cat art_cat, 
             art.phase art_phase, 
             art.uom art_uom, 
@@ -234,6 +235,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art."version" art_version, 
             art.model art_model, 
             art.proto art_proto, 
+            art."type" art_type, 
             art.cat art_cat, 
             art.phase art_phase, 
             art.uom art_uom, 
@@ -263,7 +265,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        ${c.sqlCondition}
+        ${c.andSqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -357,7 +359,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 <include refid="filtconds" />
             </if>
         </where>
-    <include refid="co.countOpts" />
+        <include refid="co.countOpts" />
     </select>
 
 </mapper>

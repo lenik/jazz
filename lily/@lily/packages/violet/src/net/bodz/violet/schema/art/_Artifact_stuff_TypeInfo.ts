@@ -7,6 +7,7 @@ import { Uom_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomTypeInfo"
 import { ArtifactCategory_TYPE } from "./ArtifactCategoryTypeInfo";
 import { ArtifactPhase_TYPE } from "./ArtifactPhaseTypeInfo";
 import { Artifact_TYPE } from "./ArtifactTypeInfo";
+import { ArtifactType_TYPE } from "./ArtifactTypeTypeInfo";
 import _Artifact_stuff_Validators from "./_Artifact_stuff_Validators";
 
 export class _Artifact_stuff_TypeInfo extends CoImagedTypeInfo {
@@ -19,6 +20,7 @@ export class _Artifact_stuff_TypeInfo extends CoImagedTypeInfo {
     static readonly FIELD_RFID_CODE = "rfid";
     static readonly FIELD_MODEL_NAME = "model";
     static readonly FIELD_PROTO_ID = "proto";
+    static readonly FIELD_TYPE_ID = "type";
     static readonly FIELD_CATEGORY_ID = "cat";
     static readonly FIELD_PHASE_ID = "phase";
     static readonly FIELD_UOM_ID = "uom";
@@ -30,6 +32,7 @@ export class _Artifact_stuff_TypeInfo extends CoImagedTypeInfo {
     static readonly N_RFID_CODE = 30;
     static readonly N_MODEL_NAME = 80;
     static readonly N_PROTO_ID = 10;
+    static readonly N_TYPE_ID = 10;
     static readonly N_CATEGORY_ID = 10;
     static readonly N_PHASE_ID = 10;
     static readonly N_UOM_ID = 10;
@@ -54,6 +57,9 @@ export class _Artifact_stuff_TypeInfo extends CoImagedTypeInfo {
             modelName: property({ type: STRING, precision: 80, validator: this.validators.validateModelName }),
             finish: property({ type: SHORT, nullable: false, precision: 5, validator: this.validators.validateFinish }),
             price: property({ type: BIG_DECIMAL, precision: 12, scale: 2, validator: this.validators.validatePrice }),
+
+            type: property({ type: ArtifactType_TYPE, validator: this.validators.validateType }),
+            typeId: property({ type: INT, precision: 10 }),
 
             proto: property({ type: this, validator: this.validators.validateProto }),
             protoId: property({ type: INT, precision: 10 }),

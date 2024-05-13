@@ -17,10 +17,13 @@ export interface Props {
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
+import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 import CoImagedFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoImagedFieldGroup.vue";
 import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
 import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
+import OrganizationChooseDialog from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationChooseDialog.vue";
+import PersonChooseDialog from "@lily/basic/src/net/bodz/lily/schema/contact/PersonChooseDialog.vue";
 
 defineOptions({
     inheritAttrs: false
@@ -43,6 +46,8 @@ const fieldRowProps = getDefaultFieldRowProps({ labelWidth: '7rem' });
 provide(FIELD_ROW_PROPS, fieldRowProps);
 
 const rootElement = ref<HTMLElement>();
+const organizationChooseDialog = ref<InstanceType<typeof OrganizationChooseDialog>>();
+const personChooseDialog = ref<InstanceType<typeof PersonChooseDialog>>();
 const valids = ref<any>({});
 
 // methods
@@ -74,8 +79,16 @@ onMounted(() => {
             <FieldRow :property="meta.hydm" v-model="model.hydm">
                 <input type="number" v-model="model.hydm" />
             </FieldRow>
+            <FieldRow :property="meta.supplierOrg" v-model="model.supplierOrg">
+                <RefEditor :dialog="organizationChooseDialog" v-model="model.supplierOrg" v-model:id="model.supplierOrgId" />
+            </FieldRow>
+            <FieldRow :property="meta.supplier" v-model="model.supplier">
+                <RefEditor :dialog="personChooseDialog" v-model="model.supplier" v-model:id="model.supplierId" />
+            </FieldRow>
         </FieldGroup>
     </div>
+    <OrganizationChooseDialog ref="organizationChooseDialog" />
+    <PersonChooseDialog ref="personChooseDialog" />
 </template>
 
 <style scoped lang="scss">

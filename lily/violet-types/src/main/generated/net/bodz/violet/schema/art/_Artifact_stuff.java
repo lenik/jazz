@@ -28,6 +28,7 @@ public abstract class _Artifact_stuff
     public static final String FIELD_RFID_CODE = "rfid";
     public static final String FIELD_MODEL_NAME = "model";
     public static final String FIELD_PROTO_ID = "proto";
+    public static final String FIELD_TYPE_ID = "type";
     public static final String FIELD_CATEGORY_ID = "cat";
     public static final String FIELD_PHASE_ID = "phase";
     public static final String FIELD_UOM_ID = "uom";
@@ -39,6 +40,7 @@ public abstract class _Artifact_stuff
     public static final int N_RFID_CODE = 30;
     public static final int N_MODEL_NAME = 80;
     public static final int N_PROTO_ID = 10;
+    public static final int N_TYPE_ID = 10;
     public static final int N_CATEGORY_ID = 10;
     public static final int N_PHASE_ID = 10;
     public static final int N_UOM_ID = 10;
@@ -50,7 +52,8 @@ public abstract class _Artifact_stuff
     private static final int _ord_RFID_CODE = _ord_BAR_CODE + 1;
     private static final int _ord_MODEL_NAME = 18;
     private static final int _ord_PROTO_ID = _ord_MODEL_NAME + 1;
-    private static final int _ord_CATEGORY_ID = _ord_PROTO_ID + 1;
+    private static final int _ord_TYPE_ID = _ord_PROTO_ID + 1;
+    private static final int _ord_CATEGORY_ID = _ord_TYPE_ID + 1;
     private static final int _ord_PHASE_ID = _ord_CATEGORY_ID + 1;
     private static final int _ord_UOM_ID = _ord_PHASE_ID + 1;
     private static final int _ord_FINISH = _ord_UOM_ID + 2;
@@ -68,6 +71,11 @@ public abstract class _Artifact_stuff
     short finish;
 
     BigDecimal price;
+
+    /**  */
+    ArtifactType type;
+
+    Integer typeId;
 
     /**  */
     Artifact proto;
@@ -157,6 +165,36 @@ public abstract class _Artifact_stuff
 
     public void setPrice(BigDecimal value) {
         this.price = value;
+    }
+
+    /**
+     *
+     * @constraint foreign key (type) references violet.arttype (id)
+     */
+    @JoinColumn(name = "type")
+    @ManyToOne
+    public ArtifactType getType() {
+        return type;
+    }
+
+    /**
+     */
+    public void setType(ArtifactType value) {
+        this.type = value;
+    }
+
+    @Ordinal(_ord_TYPE_ID)
+    @Precision(value = N_TYPE_ID)
+    @Column(name = "type", precision = 10)
+    public synchronized Integer getTypeId() {
+        if (type != null) {
+            return type.getId();
+        }
+        return typeId;
+    }
+
+    public synchronized void setTypeId(Integer value) {
+        this.typeId = value;
     }
 
     /**

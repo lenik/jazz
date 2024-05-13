@@ -27,6 +27,7 @@ import UomChooseDialog from "@lily/basic/src/net/bodz/lily/schema/util/UomChoose
 import ArtifactCategoryChooseDialog from "./ArtifactCategoryChooseDialog.vue";
 import ArtifactChooseDialog from "./ArtifactChooseDialog.vue";
 import ArtifactPhaseChooseDialog from "./ArtifactPhaseChooseDialog.vue";
+import ArtifactTypeChooseDialog from "./ArtifactTypeChooseDialog.vue";
 
 defineOptions({
     inheritAttrs: false
@@ -50,6 +51,7 @@ provide(FIELD_ROW_PROPS, fieldRowProps);
 
 const rootElement = ref<HTMLElement>();
 const artifactChooseDialog = ref<InstanceType<typeof ArtifactChooseDialog>>();
+const artifactTypeChooseDialog = ref<InstanceType<typeof ArtifactTypeChooseDialog>>();
 const artifactCategoryChooseDialog = ref<InstanceType<typeof ArtifactCategoryChooseDialog>>();
 const artifactPhaseChooseDialog = ref<InstanceType<typeof ArtifactPhaseChooseDialog>>();
 const uomChooseDialog = ref<InstanceType<typeof UomChooseDialog>>();
@@ -99,6 +101,9 @@ onMounted(() => {
             <FieldRow :property="meta.proto" v-model="model.proto">
                 <RefEditor :dialog="artifactChooseDialog" v-model="model.proto" v-model:id="model.protoId" />
             </FieldRow>
+            <FieldRow :property="meta.type" v-model="model.type">
+                <RefEditor :dialog="artifactTypeChooseDialog" v-model="model.type" v-model:id="model.typeId" />
+            </FieldRow>
             <FieldRow :property="meta.category" v-model="model.category">
                 <RefEditor :dialog="artifactCategoryChooseDialog" v-model="model.category" v-model:id="model.categoryId" />
             </FieldRow>
@@ -111,6 +116,7 @@ onMounted(() => {
         </FieldGroup>
     </div>
     <ArtifactChooseDialog ref="artifactChooseDialog" />
+    <ArtifactTypeChooseDialog ref="artifactTypeChooseDialog" />
     <ArtifactCategoryChooseDialog ref="artifactCategoryChooseDialog" />
     <ArtifactPhaseChooseDialog ref="artifactPhaseChooseDialog" />
     <UomChooseDialog ref="uomChooseDialog" />

@@ -52,7 +52,7 @@ net.bodz.lily.schema.pub.PostTalkVoteSamples
 net.bodz.lily.schema.pub.PostVoteSamples
 net.bodz.lily.schema.reward.BadgeSamples
 net.bodz.lily.schema.reward.UserBadgeSamples
-net.bodz.lily.schema.util.UomSamples
+net.bodz.lily.schema.util.UomRowSamples
 net.bodz.lily.schema.vapp.ApiTypeSamples
 net.bodz.lily.schema.vapp.VApiCreditSamples
 net.bodz.lily.schema.vapp.VApiLogSamples

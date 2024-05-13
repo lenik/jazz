@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.art.dao.ArtifactTypeParamMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.art.ArtifactTypeParam">
+        <id property="id" column="id" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModified" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="ival" column="ival" />
+        <result property="fval" column="fval" />
+        <result property="sval" column="sval" />
+        <result property="arttypeId" column="arttype" />
+        <result property="parameterId" column="parm" />
+        <association property="arttype" columnPrefix="arttype_" notNullColumn="id" 
+            javaType="net.bodz.violet.schema.art.ArtifactType" 
+            resultMap="net.bodz.violet.schema.art.dao.ArtifactTypeMapper.objlist_map" />
+        <association property="parameter" columnPrefix="parm_" notNullColumn="id" 
+            javaType="net.bodz.violet.schema.art.StdParameter" 
+            resultMap="net.bodz.violet.schema.art.dao.StdParameterMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.arttype, 
+            a.parm, 
+            a.ival, 
+            a.fval, 
+            a.sval, 
+            arttype.id arttype_id, 
+            arttype.uid arttype_uid, 
+            arttype.gid arttype_gid, 
+            arttype.mode arttype_mode, 
+            arttype.acl arttype_acl, 
+            arttype.label arttype_label, 
+            arttype.description arttype_description, 
+            arttype.icon arttype_icon, 
+            arttype.priority arttype_priority, 
+            arttype.flags arttype_flags, 
+            arttype."state" arttype_state, 
+            arttype.creation arttype_creation, 
+            arttype.lastmod arttype_lastmod, 
+            arttype."version" arttype_version, 
+            arttype.cat arttype_cat, 
+            arttype.parent arttype_parent, 
+            arttype.uom arttype_uom, 
+            parm.id parm_id, 
+            parm.uid parm_uid, 
+            parm.gid parm_gid, 
+            parm.mode parm_mode, 
+            parm.acl parm_acl, 
+            parm."name" parm_name, 
+            parm.label parm_label, 
+            parm.description parm_description, 
+            parm.icon parm_icon, 
+            parm.priority parm_priority, 
+            parm.flags parm_flags, 
+            parm."state" parm_state, 
+            parm.creation parm_creation, 
+            parm.lastmod parm_lastmod, 
+            parm."version" parm_version, 
+            parm."type" parm_type, 
+            parm.optional parm_optional, 
+            parm.uom parm_uom, 
+            parm."values" parm_values
+        from arttype_parm a
+            left join arttype arttype on a.arttype = arttype.id
+            left join artparm parm on a.parm = parm.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.arttype, 
+            a.parm, 
+            a.ival, 
+            a.fval, 
+            a.sval, 
+            arttype.id arttype_id, 
+            arttype.uid arttype_uid, 
+            arttype.gid arttype_gid, 
+            arttype.mode arttype_mode, 
+            arttype.acl arttype_acl, 
+            arttype.label arttype_label, 
+            arttype.description arttype_description, 
+            arttype.icon arttype_icon, 
+            arttype.priority arttype_priority, 
+            arttype.flags arttype_flags, 
+            arttype."state" arttype_state, 
+            arttype.creation arttype_creation, 
+            arttype.lastmod arttype_lastmod, 
+            arttype."version" arttype_version, 
+            arttype.cat arttype_cat, 
+            arttype.parent arttype_parent, 
+            arttype.uom arttype_uom, 
+            parm.id parm_id, 
+            parm.uid parm_uid, 
+            parm.gid parm_gid, 
+            parm.mode parm_mode, 
+            parm.acl parm_acl, 
+            parm."name" parm_name, 
+            parm.label parm_label, 
+            parm.description parm_description, 
+            parm.icon parm_icon, 
+            parm.priority parm_priority, 
+            parm.flags parm_flags, 
+            parm."state" parm_state, 
+            parm.creation parm_creation, 
+            parm.lastmod parm_lastmod, 
+            parm."version" parm_version, 
+            parm."type" parm_type, 
+            parm.optional parm_optional, 
+            parm.uom parm_uom, 
+            parm."values" parm_values
+        from arttype_parm a
+            left join arttype arttype on a.arttype = arttype.id
+            left join artparm parm on a.parm = parm.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.andSqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id"><![CDATA[
+        insert into arttype_parm(
+            creation,
+            lastmod,
+            "version",
+            arttype,
+            parm,
+            ival,
+            fval,
+            sval
+        ) values(
+            #{creationDate},
+            #{lastModified},
+            #{version},
+            #{arttypeId},
+            #{parameterId},
+            #{ival},
+            #{fval},
+            #{sval}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update arttype_parm
+        <set>
+            creation = #{creationDate},
+            lastmod = #{lastModified},
+            "version" = #{version},
+            arttype = #{arttypeId},
+            parm = #{parameterId},
+            ival = #{ival},
+            fval = #{fval},
+            sval = #{sval},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from arttype_parm
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from arttype_parm a
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+        <include refid="co.countOpts" />
+    </select>
+
+</mapper>

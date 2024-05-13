@@ -19,6 +19,7 @@ import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
+import CoParameterFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoParameterFieldGroup.vue";
 import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
 
 defineOptions({
@@ -65,12 +66,10 @@ onMounted(() => {
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
+        <CoParameterFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="_IssueParameter_stuff_TYPE">
             <FieldRow :property="meta.name" v-model="model.name">
                 <input type="text" v-model="model.name" />
-            </FieldRow>
-            <FieldRow :property="meta.dummy" v-model="model.dummy">
-                <input type="number" v-model="model.dummy" />
             </FieldRow>
         </FieldGroup>
     </div>

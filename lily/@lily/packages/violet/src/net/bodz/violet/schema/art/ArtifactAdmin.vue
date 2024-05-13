@@ -13,6 +13,7 @@ import Artifact from "./Artifact";
 import { ArtifactCategory_TYPE } from "./ArtifactCategoryTypeInfo";
 import { ArtifactPhase_TYPE } from "./ArtifactPhaseTypeInfo";
 import { Artifact_TYPE } from "./ArtifactTypeInfo";
+import { ArtifactType_TYPE } from "./ArtifactTypeTypeInfo";
 
 export const title = "Admin view of: Artifact";
 export interface Props {
@@ -40,6 +41,7 @@ const typeMap = {
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "Artifact": Artifact_TYPE,
+    "ArtifactType": ArtifactType_TYPE,
     "ArtifactCategory": ArtifactCategory_TYPE,
     "ArtifactPhase": ArtifactPhase_TYPE,
     "Uom": Uom_TYPE,
@@ -76,6 +78,7 @@ onMounted(() => {
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="STRING" data-field="modelName">Model Name</th>
             <th data-type="Artifact" data-format="label" data-field="proto">Proto</th>
+            <th data-type="ArtifactType" data-format="label" data-field="type">Type</th>
             <th data-type="ArtifactCategory" data-format="label" data-field="category">Category</th>
             <th data-type="ArtifactPhase" data-format="label" data-field="phase">Phase</th>
             <th data-type="Uom" data-format="label" data-field="uom">Uom</th>

@@ -13,10 +13,12 @@ import net.bodz.lily.util.IRandomPicker;
 import net.bodz.violet.schema.art.dao.ArtifactCategoryMapper;
 import net.bodz.violet.schema.art.dao.ArtifactMapper;
 import net.bodz.violet.schema.art.dao.ArtifactPhaseMapper;
+import net.bodz.violet.schema.art.dao.ArtifactTypeMapper;
 
 public class ArtifactSamples
         extends TestSampleBuilder {
 
+    public ArtifactType type;
     public Group ownerGroup;
     public Artifact proto;
     public ArtifactPhase phase;
@@ -28,6 +30,7 @@ public class ArtifactSamples
     public Artifact build()
             throws Exception {
         Artifact a = new Artifact();
+        a.setType(type);
         a.setOwnerGroup(ownerGroup);
         a.setProto(proto);
         a.setPhase(phase);
@@ -45,6 +48,7 @@ public class ArtifactSamples
 
     @Override
     public ArtifactSamples wireAny(IRandomPicker picker) {
+        this.type = picker.pickAny(ArtifactTypeMapper.class, "arttype");
         this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
         this.proto = picker.pickAny(ArtifactMapper.class, "art");
         this.phase = picker.pickAny(ArtifactPhaseMapper.class, "artphase");

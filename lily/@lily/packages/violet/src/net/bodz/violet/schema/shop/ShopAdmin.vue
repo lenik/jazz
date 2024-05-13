@@ -7,6 +7,8 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
 import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
 import Shop from "./Shop";
 
@@ -36,6 +38,8 @@ const typeMap = {
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
+    "Organization": Organization_TYPE,
+    "Person": Person_TYPE,
 };
 
 onMounted(() => {
@@ -63,6 +67,8 @@ onMounted(() => {
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="STRING" data-field="code">Code</th>
             <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th data-type="Organization" data-format="label" data-field="supplierOrg">Supplier Org</th>
+            <th data-type="Person" data-format="label" data-field="supplier">Supplier</th>
             <th data-type="INT" data-field="hydm">Hydm</th>
         </template>
         <template #preview>

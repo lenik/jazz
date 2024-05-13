@@ -1,4 +1,3 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 import CoParameterValidators from "@lily/basic/src/net/bodz/lily/concrete/CoParameterValidators";
 
@@ -15,9 +14,6 @@ export class _IssueParameter_stuff_Validators extends CoParameterValidators {
     }
 
     validateName(val: string) {
-    }
-
-    validateDummy(val: int) {
     }
 
 }

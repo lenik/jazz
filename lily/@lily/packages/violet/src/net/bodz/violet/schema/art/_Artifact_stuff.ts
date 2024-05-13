@@ -5,6 +5,7 @@ import type Uom from "@lily/basic/src/net/bodz/lily/schema/util/Uom";
 import type Artifact from "./Artifact";
 import type ArtifactCategory from "./ArtifactCategory";
 import type ArtifactPhase from "./ArtifactPhase";
+import type ArtifactType from "./ArtifactType";
 import _Artifact_stuff_TypeInfo from "./_Artifact_stuff_TypeInfo";
 
 export class _Artifact_stuff extends CoImaged<int> {
@@ -22,6 +23,9 @@ export class _Artifact_stuff extends CoImaged<int> {
     modelName?: string;
     finish: short;
     price?: BigDecimal;
+
+    type?: ArtifactType;
+    typeId?: int;
 
     proto?: Artifact;
     protoId?: int;

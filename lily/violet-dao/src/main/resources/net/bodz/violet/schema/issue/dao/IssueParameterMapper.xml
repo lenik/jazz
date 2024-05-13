@@ -18,9 +18,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="creationDate" column="creation" />
         <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
-        <result property="dummy" column="dummy" />
+        <result property="type" column="type" />
+        <result property="optional" column="optional" />
+        <result property="values" column="values" />
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
+        <result property="uomId" column="uom" />
+        <association property="uom" columnPrefix="uom_" notNullColumn="id" 
+            javaType="net.bodz.lily.schema.util.Uom" 
+            resultMap="net.bodz.lily.schema.util.dao.UomMapper.objlist_map" />
         <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
@@ -46,7 +52,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.creation, 
             a.lastmod, 
             a."version", 
-            a.dummy, 
+            a."type", 
+            a.optional, 
+            a.uom, 
+            a."values", 
+            uom.id uom_id, 
+            uom.code uom_code, 
+            uom.label uom_label, 
+            uom.description uom_description, 
+            uom.icon uom_icon, 
+            uom.props uom_props, 
+            uom.prop uom_prop, 
+            uom.std uom_std, 
+            uom."scale" uom_scale, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
             ownerUser."name" ownerUser_name, 
@@ -78,6 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.props ownerGroup_props, 
             ownerGroup.parent ownerGroup_parent
         from issueparm a
+            left join lily.uom uom on a.uom = uom.id
             left join lily."user" ownerUser on a.uid = ownerUser.id
             left join lily."group" ownerGroup on a.gid = ownerGroup.id
         ]]>
@@ -100,7 +119,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.creation, 
             a.lastmod, 
             a."version", 
-            a.dummy, 
+            a."type", 
+            a.optional, 
+            a.uom, 
+            a."values", 
+            uom.id uom_id, 
+            uom.code uom_code, 
+            uom.label uom_label, 
+            uom.description uom_description, 
+            uom.icon uom_icon, 
+            uom.props uom_props, 
+            uom.prop uom_prop, 
+            uom.std uom_std, 
+            uom."scale" uom_scale, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
             ownerUser."name" ownerUser_name, 
@@ -132,13 +163,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.props ownerGroup_props, 
             ownerGroup.parent ownerGroup_parent
         from issueparm a
+            left join lily.uom uom on a.uom = uom.id
             left join lily."user" ownerUser on a.uid = ownerUser.id
             left join lily."group" ownerGroup on a.gid = ownerGroup.id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        ${c.sqlCondition}
+        ${c.andSqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -177,7 +209,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             creation,
             lastmod,
             "version",
-            dummy
+            "type",
+            optional,
+            uom,
+            "values"
         ) values(
             #{ownerUserId},
             #{ownerGroupId},
@@ -193,7 +228,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{creationDate},
             #{lastModified},
             #{version},
-            #{dummy}
+            #{type},
+            #{optional},
+            #{uomId},
+            #{values}
         );
     ]]></insert>
 
@@ -214,7 +252,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             creation = #{creationDate},
             lastmod = #{lastModified},
             "version" = #{version},
-            dummy = #{dummy},
+            "type" = #{type},
+            optional = #{optional},
+            uom = #{uomId},
+            "values" = #{values},
         </set>
         <where>
             id = #{id}
@@ -235,7 +276,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 <include refid="filtconds" />
             </if>
         </where>
-    <include refid="co.countOpts" />
+        <include refid="co.countOpts" />
     </select>
 
 </mapper>

@@ -53,6 +53,7 @@ net.bodz.lily.schema.pub.ws.PostVoteIndex
 net.bodz.lily.schema.reward.ws.BadgeIndex
 net.bodz.lily.schema.reward.ws.UserBadgeIndex
 net.bodz.lily.schema.util.ws.UomIndex
+net.bodz.lily.schema.util.ws.UomRowIndex
 net.bodz.lily.schema.vapp.ws.ApiTypeIndex
 net.bodz.lily.schema.vapp.ws.VApiCreditIndex
 net.bodz.lily.schema.vapp.ws.VApiIndex

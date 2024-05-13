@@ -6,6 +6,7 @@ import type Uom from "@lily/basic/src/net/bodz/lily/schema/util/Uom";
 import type Artifact from "./Artifact";
 import type ArtifactCategory from "./ArtifactCategory";
 import type ArtifactPhase from "./ArtifactPhase";
+import type ArtifactType from "./ArtifactType";
 import type _Artifact_stuff_TypeInfo from "./_Artifact_stuff_TypeInfo";
 
 export class _Artifact_stuff_Validators extends CoImagedValidators {
@@ -34,6 +35,9 @@ export class _Artifact_stuff_Validators extends CoImagedValidators {
     }
 
     validatePrice(val: BigDecimal) {
+    }
+
+    validateType(val: ArtifactType) {
     }
 
     validateProto(val: Artifact) {

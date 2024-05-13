@@ -3,6 +3,9 @@ net.bodz.lily.schema.account.Group
 net.bodz.lily.schema.account.GroupType
 net.bodz.lily.schema.account.Policy
 net.bodz.lily.schema.account.User
+net.bodz.lily.schema.account.UserOtherId
+net.bodz.lily.schema.account.UserOtherIdType
+net.bodz.lily.schema.account.UserType
 net.bodz.lily.schema.contact.OrgUnit
 net.bodz.lily.schema.contact.Organization
 net.bodz.lily.schema.contact.PartyCategory
@@ -31,7 +34,7 @@ net.bodz.lily.schema.pub.PostParameterType
 net.bodz.lily.schema.pub.PostTagType
 net.bodz.lily.schema.pub.PostTalk
 net.bodz.lily.schema.reward.Badge
-net.bodz.lily.schema.util.Uom
+net.bodz.lily.schema.util.UomRow
 net.bodz.lily.schema.vapp.ApiType
 net.bodz.lily.schema.vapp.VAppCategory
 net.bodz.lily.schema.vapp.VAppRequest

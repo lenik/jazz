@@ -27,9 +27,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
         <result property="protoId" column="proto" />
+        <result property="typeId" column="type" />
         <result property="categoryId" column="cat" />
         <result property="phaseId" column="phase" />
         <result property="uomId" column="uom" />
+        <association property="type" columnPrefix="type_" notNullColumn="id" 
+            javaType="net.bodz.violet.schema.art.ArtifactType" 
+            resultMap="net.bodz.violet.schema.art.dao.ArtifactTypeMapper.objlist_map" />
         <association property="ownerGroup" columnPrefix="ownerGroup_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
@@ -71,12 +75,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a."version", 
             a.model, 
             a.proto, 
+            a."type", 
             a.cat, 
             a.phase, 
             a.uom, 
             a.props, 
             a.finish, 
             a.price, 
+            "type".id type_id, 
+            "type".uid type_uid, 
+            "type".gid type_gid, 
+            "type".mode type_mode, 
+            "type".acl type_acl, 
+            "type".label type_label, 
+            "type".description type_description, 
+            "type".icon type_icon, 
+            "type".priority type_priority, 
+            "type".flags type_flags, 
+            "type"."state" type_state, 
+            "type".creation type_creation, 
+            "type".lastmod type_lastmod, 
+            "type"."version" type_version, 
+            "type".cat type_cat, 
+            "type".parent type_parent, 
+            "type".uom type_uom, 
             ownerGroup.id ownerGroup_id, 
             ownerGroup."name" ownerGroup_name, 
             ownerGroup."type" ownerGroup_type, 
@@ -110,6 +132,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             proto."version" proto_version, 
             proto.model proto_model, 
             proto.proto proto_proto, 
+            proto."type" proto_type, 
             proto.cat proto_cat, 
             proto.phase proto_phase, 
             proto.uom proto_uom, 
@@ -183,6 +206,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.serialfmt category_serialfmt, 
             category."count" category_count
         from art a
+            left join arttype "type" on a."type" = "type".id
             left join lily."group" ownerGroup on a.gid = ownerGroup.id
             left join art proto on a.proto = proto.id
             left join artphase phase on a.phase = phase.id
@@ -213,12 +237,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a."version", 
             a.model, 
             a.proto, 
+            a."type", 
             a.cat, 
             a.phase, 
             a.uom, 
             a.props, 
             a.finish, 
             a.price, 
+            "type".id type_id, 
+            "type".uid type_uid, 
+            "type".gid type_gid, 
+            "type".mode type_mode, 
+            "type".acl type_acl, 
+            "type".label type_label, 
+            "type".description type_description, 
+            "type".icon type_icon, 
+            "type".priority type_priority, 
+            "type".flags type_flags, 
+            "type"."state" type_state, 
+            "type".creation type_creation, 
+            "type".lastmod type_lastmod, 
+            "type"."version" type_version, 
+            "type".cat type_cat, 
+            "type".parent type_parent, 
+            "type".uom type_uom, 
             ownerGroup.id ownerGroup_id, 
             ownerGroup."name" ownerGroup_name, 
             ownerGroup."type" ownerGroup_type, 
@@ -252,6 +294,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             proto."version" proto_version, 
             proto.model proto_model, 
             proto.proto proto_proto, 
+            proto."type" proto_type, 
             proto.cat proto_cat, 
             proto.phase proto_phase, 
             proto.uom proto_uom, 
@@ -325,6 +368,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.serialfmt category_serialfmt, 
             category."count" category_count
         from art a
+            left join arttype "type" on a."type" = "type".id
             left join lily."group" ownerGroup on a.gid = ownerGroup.id
             left join art proto on a.proto = proto.id
             left join artphase phase on a.phase = phase.id
@@ -335,7 +379,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        ${c.sqlCondition}
+        ${c.andSqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -378,6 +422,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "version",
             model,
             proto,
+            "type",
             cat,
             phase,
             uom,
@@ -403,6 +448,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{version},
             #{modelName},
             #{protoId},
+            #{typeId},
             #{categoryId},
             #{phaseId},
             #{uomId},
@@ -433,6 +479,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "version" = #{version},
             model = #{modelName},
             proto = #{protoId},
+            "type" = #{typeId},
             cat = #{categoryId},
             phase = #{phaseId},
             uom = #{uomId},
@@ -459,7 +506,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 <include refid="filtconds" />
             </if>
         </where>
-    <include refid="co.countOpts" />
+        <include refid="co.countOpts" />
     </select>
 
 </mapper>

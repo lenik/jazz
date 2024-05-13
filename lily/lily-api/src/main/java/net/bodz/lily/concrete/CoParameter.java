@@ -15,12 +15,49 @@ public abstract class CoParameter<self_t extends CoParameter<self_t>>
 
     private static final long serialVersionUID = 1L;
 
+    String type;
+    boolean optional;
+    String uom;
+    String values;
+
     public CoParameter() {
         super();
     }
 
     public CoParameter(self_t parent) {
         super(parent);
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isOptional() {
+        return optional;
+    }
+
+    public void setOptional(boolean optional) {
+        this.optional = optional;
+    }
+
+    public String getUom() {
+        return uom;
+    }
+
+    public void setUom(String uom) {
+        this.uom = uom;
+    }
+
+    public String getValues() {
+        return values;
+    }
+
+    public void setValues(String values) {
+        this.values = values;
     }
 
 }

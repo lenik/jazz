@@ -22,9 +22,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="hydm" column="hydm" />
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
+        <result property="supplierOrgId" column="supplierorg" />
+        <result property="supplierId" column="supplier" />
         <association property="ownerGroup" columnPrefix="ownerGroup_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
+        <association property="supplier" columnPrefix="supplier_" notNullColumn="id" 
+            javaType="net.bodz.lily.schema.contact.Person" 
+            resultMap="net.bodz.lily.schema.contact.dao.PersonMapper.objlist_map" />
+        <association property="supplierOrg" columnPrefix="supplierorg_" notNullColumn="id" 
+            javaType="net.bodz.lily.schema.contact.Organization" 
+            resultMap="net.bodz.lily.schema.contact.dao.OrganizationMapper.objlist_map" />
         <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
@@ -48,6 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a."version", 
             a.code, 
             a.props, 
+            a.supplierorg, 
+            a.supplier, 
             a.hydm, 
             ownerGroup.id ownerGroup_id, 
             ownerGroup."name" ownerGroup_name, 
@@ -63,6 +73,84 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
             ownerGroup.parent ownerGroup_parent, 
+            supplier.id supplier_id, 
+            supplier.uid supplier_uid, 
+            supplier.gid supplier_gid, 
+            supplier.mode supplier_mode, 
+            supplier.acl supplier_acl, 
+            supplier.label supplier_label, 
+            supplier.description supplier_description, 
+            supplier.icon supplier_icon, 
+            supplier.priority supplier_priority, 
+            supplier.flags supplier_flags, 
+            supplier."state" supplier_state, 
+            supplier.creation supplier_creation, 
+            supplier.lastmod supplier_lastmod, 
+            supplier."version" supplier_version, 
+            supplier.alias supplier_alias, 
+            supplier.ctprops supplier_ctprops, 
+            supplier.address1 supplier_address1, 
+            supplier.address2 supplier_address2, 
+            supplier."zone" supplier_zone, 
+            supplier.tel supplier_tel, 
+            supplier.telok supplier_telok, 
+            supplier.email supplier_email, 
+            supplier.emailok supplier_emailok, 
+            supplier.props supplier_props, 
+            supplier.cat supplier_cat, 
+            supplier.birthday supplier_birthday, 
+            supplier.father supplier_father, 
+            supplier.mother supplier_mother, 
+            supplier.locale supplier_locale, 
+            supplier.timezone supplier_timezone, 
+            supplier.nrole supplier_nrole, 
+            supplier.customer supplier_customer, 
+            supplier.supplier supplier_supplier, 
+            supplier.employee supplier_employee, 
+            supplier.subject supplier_subject, 
+            supplier.nbank supplier_nbank, 
+            supplier.gender supplier_gender, 
+            supplier.pronoun supplier_pronoun, 
+            supplier.sexual_orient supplier_sexual_orient, 
+            supplier.homeland supplier_homeland, 
+            supplier.passport supplier_passport, 
+            supplier.ssn supplier_ssn, 
+            supplier.dln supplier_dln, 
+            supplierorg.id supplierorg_id, 
+            supplierorg.uid supplierorg_uid, 
+            supplierorg.gid supplierorg_gid, 
+            supplierorg.mode supplierorg_mode, 
+            supplierorg.acl supplierorg_acl, 
+            supplierorg.label supplierorg_label, 
+            supplierorg.description supplierorg_description, 
+            supplierorg.icon supplierorg_icon, 
+            supplierorg.priority supplierorg_priority, 
+            supplierorg.flags supplierorg_flags, 
+            supplierorg."state" supplierorg_state, 
+            supplierorg.creation supplierorg_creation, 
+            supplierorg.lastmod supplierorg_lastmod, 
+            supplierorg."version" supplierorg_version, 
+            supplierorg.alias supplierorg_alias, 
+            supplierorg.ctprops supplierorg_ctprops, 
+            supplierorg.address1 supplierorg_address1, 
+            supplierorg.address2 supplierorg_address2, 
+            supplierorg."zone" supplierorg_zone, 
+            supplierorg.tel supplierorg_tel, 
+            supplierorg.telok supplierorg_telok, 
+            supplierorg.email supplierorg_email, 
+            supplierorg.emailok supplierorg_emailok, 
+            supplierorg.props supplierorg_props, 
+            supplierorg.cat supplierorg_cat, 
+            supplierorg.birthday supplierorg_birthday, 
+            supplierorg.locale supplierorg_locale, 
+            supplierorg.timezone supplierorg_timezone, 
+            supplierorg.nrole supplierorg_nrole, 
+            supplierorg.supplier supplierorg_supplier, 
+            supplierorg.customer supplierorg_customer, 
+            supplierorg.subject supplierorg_subject, 
+            supplierorg.nbank supplierorg_nbank, 
+            supplierorg."size" supplierorg_size, 
+            supplierorg.taxid supplierorg_taxid, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
             ownerUser."name" ownerUser_name, 
@@ -81,6 +169,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.person ownerUser_person
         from shop a
             left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join lily.person supplier on a.supplier = supplier.id
+            left join lily.org supplierorg on a.supplierorg = supplierorg.id
             left join lily."user" ownerUser on a.uid = ownerUser.id
         ]]>
     </sql>
@@ -103,6 +193,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a."version", 
             a.code, 
             a.props, 
+            a.supplierorg, 
+            a.supplier, 
             a.hydm, 
             ownerGroup.id ownerGroup_id, 
             ownerGroup."name" ownerGroup_name, 
@@ -118,6 +210,84 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
             ownerGroup.parent ownerGroup_parent, 
+            supplier.id supplier_id, 
+            supplier.uid supplier_uid, 
+            supplier.gid supplier_gid, 
+            supplier.mode supplier_mode, 
+            supplier.acl supplier_acl, 
+            supplier.label supplier_label, 
+            supplier.description supplier_description, 
+            supplier.icon supplier_icon, 
+            supplier.priority supplier_priority, 
+            supplier.flags supplier_flags, 
+            supplier."state" supplier_state, 
+            supplier.creation supplier_creation, 
+            supplier.lastmod supplier_lastmod, 
+            supplier."version" supplier_version, 
+            supplier.alias supplier_alias, 
+            supplier.ctprops supplier_ctprops, 
+            supplier.address1 supplier_address1, 
+            supplier.address2 supplier_address2, 
+            supplier."zone" supplier_zone, 
+            supplier.tel supplier_tel, 
+            supplier.telok supplier_telok, 
+            supplier.email supplier_email, 
+            supplier.emailok supplier_emailok, 
+            supplier.props supplier_props, 
+            supplier.cat supplier_cat, 
+            supplier.birthday supplier_birthday, 
+            supplier.father supplier_father, 
+            supplier.mother supplier_mother, 
+            supplier.locale supplier_locale, 
+            supplier.timezone supplier_timezone, 
+            supplier.nrole supplier_nrole, 
+            supplier.customer supplier_customer, 
+            supplier.supplier supplier_supplier, 
+            supplier.employee supplier_employee, 
+            supplier.subject supplier_subject, 
+            supplier.nbank supplier_nbank, 
+            supplier.gender supplier_gender, 
+            supplier.pronoun supplier_pronoun, 
+            supplier.sexual_orient supplier_sexual_orient, 
+            supplier.homeland supplier_homeland, 
+            supplier.passport supplier_passport, 
+            supplier.ssn supplier_ssn, 
+            supplier.dln supplier_dln, 
+            supplierorg.id supplierorg_id, 
+            supplierorg.uid supplierorg_uid, 
+            supplierorg.gid supplierorg_gid, 
+            supplierorg.mode supplierorg_mode, 
+            supplierorg.acl supplierorg_acl, 
+            supplierorg.label supplierorg_label, 
+            supplierorg.description supplierorg_description, 
+            supplierorg.icon supplierorg_icon, 
+            supplierorg.priority supplierorg_priority, 
+            supplierorg.flags supplierorg_flags, 
+            supplierorg."state" supplierorg_state, 
+            supplierorg.creation supplierorg_creation, 
+            supplierorg.lastmod supplierorg_lastmod, 
+            supplierorg."version" supplierorg_version, 
+            supplierorg.alias supplierorg_alias, 
+            supplierorg.ctprops supplierorg_ctprops, 
+            supplierorg.address1 supplierorg_address1, 
+            supplierorg.address2 supplierorg_address2, 
+            supplierorg."zone" supplierorg_zone, 
+            supplierorg.tel supplierorg_tel, 
+            supplierorg.telok supplierorg_telok, 
+            supplierorg.email supplierorg_email, 
+            supplierorg.emailok supplierorg_emailok, 
+            supplierorg.props supplierorg_props, 
+            supplierorg.cat supplierorg_cat, 
+            supplierorg.birthday supplierorg_birthday, 
+            supplierorg.locale supplierorg_locale, 
+            supplierorg.timezone supplierorg_timezone, 
+            supplierorg.nrole supplierorg_nrole, 
+            supplierorg.supplier supplierorg_supplier, 
+            supplierorg.customer supplierorg_customer, 
+            supplierorg.subject supplierorg_subject, 
+            supplierorg.nbank supplierorg_nbank, 
+            supplierorg."size" supplierorg_size, 
+            supplierorg.taxid supplierorg_taxid, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
             ownerUser."name" ownerUser_name, 
@@ -136,12 +306,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.person ownerUser_person
         from shop a
             left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join lily.person supplier on a.supplier = supplier.id
+            left join lily.org supplierorg on a.supplierorg = supplierorg.id
             left join lily."user" ownerUser on a.uid = ownerUser.id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        ${c.sqlCondition}
+        ${c.andSqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -181,6 +353,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "version",
             code,
             props,
+            supplierorg,
+            supplier,
             hydm
         ) values(
             #{ownerUserId},
@@ -198,6 +372,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{version},
             #{code},
             #{properties},
+            #{supplierOrgId},
+            #{supplierId},
             #{hydm}
         );
     ]]></insert>
@@ -220,6 +396,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "version" = #{version},
             code = #{code},
             props = #{properties},
+            supplierorg = #{supplierOrgId},
+            supplier = #{supplierId},
             hydm = #{hydm},
         </set>
         <where>
@@ -241,7 +419,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 <include refid="filtconds" />
             </if>
         </where>
-    <include refid="co.countOpts" />
+        <include refid="co.countOpts" />
     </select>
 
 </mapper>

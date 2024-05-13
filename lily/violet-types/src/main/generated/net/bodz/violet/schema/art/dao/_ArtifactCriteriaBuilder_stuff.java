@@ -24,6 +24,8 @@ public class _ArtifactCriteriaBuilder_stuff<self_t extends _ArtifactCriteriaBuil
 
     public final IntegerField protoId = integer("proto");
 
+    public final IntegerField typeId = integer("\"type\"");
+
     public final IntegerField categoryId = integer("cat");
 
     public final IntegerField phaseId = integer("phase");

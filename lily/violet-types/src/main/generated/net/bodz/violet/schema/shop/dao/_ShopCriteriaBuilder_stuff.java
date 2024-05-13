@@ -16,6 +16,10 @@ public class _ShopCriteriaBuilder_stuff<self_t extends _ShopCriteriaBuilder_stuf
 
     public final StringField code = string("code");
 
+    public final IntegerField supplierOrgId = integer("supplierorg");
+
+    public final IntegerField supplierId = integer("supplier");
+
     public final IntegerField hydm = integer("hydm");
 
 }

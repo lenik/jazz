@@ -52,7 +52,7 @@ net.bodz.lily.schema.pub.dao.PostTalkVoteMapper
 net.bodz.lily.schema.pub.dao.PostVoteMapper
 net.bodz.lily.schema.reward.dao.BadgeMapper
 net.bodz.lily.schema.reward.dao.UserBadgeMapper
-net.bodz.lily.schema.util.dao.UomMapper
+net.bodz.lily.schema.util.dao.UomRowMapper
 net.bodz.lily.schema.vapp.dao.ApiTypeMapper
 net.bodz.lily.schema.vapp.dao.VApiCreditMapper
 net.bodz.lily.schema.vapp.dao.VApiLogMapper

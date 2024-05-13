@@ -1,4 +1,4 @@
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoParameterTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoParameterTypeInfo";
 
@@ -10,10 +10,8 @@ export class _IssueParameter_stuff_TypeInfo extends CoParameterTypeInfo {
     static TABLE_NAME = "issueparm";
 
     static readonly FIELD_NAME = "name";
-    static readonly FIELD_DUMMY = "dummy";
 
     static readonly N_NAME = 30;
-    static readonly N_DUMMY = 10;
 
     readonly validators = new _IssueParameter_stuff_Validators(this);
 
@@ -28,7 +26,6 @@ export class _IssueParameter_stuff_TypeInfo extends CoParameterTypeInfo {
         super.preamble();
         this.declare({
             name: property({ type: STRING, precision: 30, validator: this.validators.validateName }),
-            dummy: property({ type: INT, precision: 10, validator: this.validators.validateDummy }),
         });
     }
 

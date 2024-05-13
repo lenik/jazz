@@ -1,11 +1,12 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
 import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Uom_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomTypeInfo";
 
 import IssueParameter from "./IssueParameter";
 
@@ -34,6 +35,8 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
+    "BOOLEAN": BOOLEAN,
+    "Uom": Uom_TYPE,
 };
 
 onMounted(() => {
@@ -60,7 +63,10 @@ onMounted(() => {
             <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
             <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
-            <th data-type="INT" data-field="dummy">Dummy</th>
+            <th data-type="STRING" data-field="type">Type</th>
+            <th data-type="BOOLEAN" data-field="optional">Optional</th>
+            <th data-type="Uom" data-format="label" data-field="uom">Uom</th>
+            <th data-type="STRING" data-field="values">Values</th>
         </template>
         <template #preview>
             <IssueParameterEditor class="editor" v-model="selection" />
