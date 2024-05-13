@@ -20,6 +20,7 @@ import net.bodz.bas.fmt.json.ReflectOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.bean.Internal;
+import net.bodz.bas.meta.bean.JsonRedundant;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.decl.Stop;
 
@@ -130,6 +131,9 @@ public class BeanJsonDumper
                 continue;
 
             if (getter.isAnnotationPresent(Internal.class))
+                continue;
+
+            if (getter.isAnnotationPresent(JsonRedundant.class))
                 continue;
 
             Class<?> declaringClass = getter.getDeclaringClass();
