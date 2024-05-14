@@ -5,7 +5,7 @@ import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public class SelectOptions
-        extends SelectionRange
+        extends AbstractSelectionRange<SelectOptions>
         implements
             IVarMapForm {
 
