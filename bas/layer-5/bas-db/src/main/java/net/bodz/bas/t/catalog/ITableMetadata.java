@@ -14,6 +14,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public interface ITableMetadata
         extends
@@ -60,6 +61,14 @@ public interface ITableMetadata
 
     default String getBaseTypeName() {
         return null;
+    }
+
+    default String getJavaTypeName() {
+        QualifiedName javaType = getJavaType();
+        if (javaType == null)
+            return null;
+        else
+            return javaType.getFullName();
     }
 
     TableKey getPrimaryKey();
