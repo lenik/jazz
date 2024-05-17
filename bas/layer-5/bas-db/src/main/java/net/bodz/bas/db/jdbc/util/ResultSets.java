@@ -25,7 +25,7 @@ public class ResultSets {
             if (indexKeys)
                 map.put(i, cell);
             if (nameKeys)
-                map.put(metaData.getCatalogName(i), cell);
+                map.put(metaData.getColumnName(i), cell);
         }
         return map;
     }
