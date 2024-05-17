@@ -83,7 +83,7 @@ public class DefaultTableMetadata
     }
 
     @Override
-    public String getJavaPackage() {
+    public String getJavaPackageName() {
         if (javaType != null)
             return javaType.packageName;
         if (parent != null)

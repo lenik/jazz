@@ -89,7 +89,7 @@ public class Item2Attachment
 
     public void processTable(ITableMetadata table)
             throws IOException, SQLException, ParseException, FormatException {
-        IVolume volume = anyGroup.getVolume(table.getJavaType().getFullName());
+        IVolume volume = anyGroup.getEntityVolume(table.getJavaTypeName());
 
         Statement st = connection.createStatement(//
                 ResultSet.TYPE_FORWARD_ONLY, //

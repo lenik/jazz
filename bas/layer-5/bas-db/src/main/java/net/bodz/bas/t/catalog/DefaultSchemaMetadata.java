@@ -88,7 +88,7 @@ public class DefaultSchemaMetadata
         if (qName != null)
             return qName.packageName;
         if (parent != null)
-            return parent.getJavaPackage();
+            return parent.getJavaPackageName();
         return null;
     }
 

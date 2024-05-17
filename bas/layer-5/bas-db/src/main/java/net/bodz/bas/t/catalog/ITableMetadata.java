@@ -98,7 +98,7 @@ public interface ITableMetadata
 
         out.entry(K_TABLE_TYPE, getTableType());
 
-        out.entryNotNull(K_JAVA_TYPE, getJavaType().getFullName());
+        out.entryNotNull(K_JAVA_TYPE, getJavaTypeName());
         out.entryNotNull(K_BASE_TYPE, getBaseTypeName());
         out.entryTrue(K_EXCLUDED, isExcluded());
 
@@ -129,8 +129,7 @@ public interface ITableMetadata
         getId().writeObject(out);
 
         out.attribute(K_TABLE_TYPE, getTableType());
-
-        out.attributeNotNull(K_JAVA_TYPE, getJavaType().getFullName());
+        out.attributeNotNull(K_JAVA_TYPE, getJavaTypeName());
         out.attributeNotNull(K_BASE_TYPE, getBaseTypeName());
         out.attributeTrue(K_EXCLUDED, isExcluded());
 
