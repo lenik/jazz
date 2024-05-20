@@ -10,8 +10,9 @@ public abstract class AbstractCoNodeCache<node_t extends CoNode<node_t, K>, K>
 
     Map<K, node_t> rootMap;
 
-    public AbstractCoNodeCache(DataContext dataContext, Class<node_t> entityClass) {
-        super(dataContext, entityClass);
+    public AbstractCoNodeCache(DataContext dataContext, Class<node_t> entityClass, boolean indexUniqName,
+            boolean indexLabel) {
+        super(dataContext, entityClass, indexUniqName, indexLabel);
     }
 
     public Map<K, node_t> getOrLoadRootMap() {

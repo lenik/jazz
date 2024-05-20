@@ -35,12 +35,15 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
     private Map<String, T> uniqNameMap;
     private Map<String, Set<T>> labelMap;
 
-    public AbstractCoEntityCache(DataContext dataContext, Class<T> entityClass) {
+    public AbstractCoEntityCache(DataContext dataContext, Class<T> entityClass, boolean indexUniqName,
+            boolean indexLabel) {
         super(entityClass);
         if (dataContext == null)
             throw new NullPointerException("dataContext");
         this.dataContext = dataContext;
         this.idType = IdFn._getIdType(entityClass);
+        this.indexUniqName = indexUniqName;
+        this.indexLabel = indexLabel;
     }
 
     protected IEntityMapper<T> getMapper() {
