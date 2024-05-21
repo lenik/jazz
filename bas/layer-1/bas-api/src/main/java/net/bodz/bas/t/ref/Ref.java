@@ -2,11 +2,6 @@ package net.bodz.bas.t.ref;
 
 public interface Ref<T> {
 
-    /**
-     * Get the declared class of target value.
-     */
-    Class<? extends T> getValueType();
-
     default boolean isReadOnly() {
         return false;
     }

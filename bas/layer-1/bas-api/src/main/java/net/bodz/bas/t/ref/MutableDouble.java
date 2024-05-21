@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class MutableDouble
         implements
-            Ref<Double> {
+            TypedRef<Double> {
 
     public double value;
 

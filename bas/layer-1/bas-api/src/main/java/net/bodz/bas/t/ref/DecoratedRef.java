@@ -13,11 +13,6 @@ public class DecoratedRef<T>
     }
 
     @Override
-    public Class<? extends T> getValueType() {
-        return getWrapped().getValueType();
-    }
-
-    @Override
     public T get() {
         return getWrapped().get();
     }

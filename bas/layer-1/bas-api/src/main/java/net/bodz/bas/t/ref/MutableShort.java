@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class MutableShort
         implements
-            Ref<Short> {
+            TypedRef<Short> {
 
     public short value;
 

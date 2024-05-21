@@ -1,10 +1,11 @@
 package net.bodz.bas.ctx.sys;
 
 import net.bodz.bas.err.ReadOnlyException;
-import net.bodz.bas.t.ref.Ref;
+import net.bodz.bas.t.ref.TypedRef;
 
 public abstract class SystemConstantRef<T>
-        implements Ref<T> {
+        implements
+            TypedRef<T> {
 
     @Override
     public void set(T value) {

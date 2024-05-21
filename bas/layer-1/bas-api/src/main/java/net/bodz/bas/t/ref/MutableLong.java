@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class MutableLong
         implements
-            Ref<Long> {
+            TypedRef<Long> {
 
     public long value;
 

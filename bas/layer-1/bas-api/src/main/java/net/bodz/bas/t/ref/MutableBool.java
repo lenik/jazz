@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class MutableBool
         implements
-            Ref<Boolean> {
+            TypedRef<Boolean> {
 
     public boolean value;
 

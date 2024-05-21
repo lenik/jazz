@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class MutableInt
         implements
-            Ref<Integer> {
+            TypedRef<Integer> {
 
     public int value;
 

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class MutableChar
         implements
-            Ref<Character> {
+            TypedRef<Character> {
 
     public char value;
 

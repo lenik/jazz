@@ -1,10 +1,12 @@
 package net.bodz.bas.fn;
 
 import net.bodz.bas.err.ReadOnlyException;
-import net.bodz.bas.t.ref.Ref;
+import net.bodz.bas.t.ref.TypedRef;
 
 public class Constant<T>
-        implements IEvaluable<T>, Ref<T> {
+        implements
+            IEvaluable<T>,
+            TypedRef<T> {
 
     private final Class<? extends T> valueType;
     private final T value;

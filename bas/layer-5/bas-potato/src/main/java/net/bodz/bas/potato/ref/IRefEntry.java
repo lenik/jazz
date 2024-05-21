@@ -5,14 +5,19 @@ import java.lang.reflect.AnnotatedElement;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.rtx.IQueryable;
-import net.bodz.bas.t.ref.Ref;
+import net.bodz.bas.t.ref.TypedRef;
 import net.bodz.bas.t.tree.IPathInfo;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.typer.std.IValidator;
 import net.bodz.bas.typer.std.ValidationException;
 
 public interface IRefEntry<T>
-        extends Ref<T>, IElement, IPathInfo, IQueryable, AnnotatedElement {
+        extends
+            TypedRef<T>,
+            IElement,
+            IPathInfo,
+            IQueryable,
+            AnnotatedElement {
 
     class fn {
 

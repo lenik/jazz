@@ -3,7 +3,8 @@ package net.bodz.bas.t.ref;
 import net.bodz.bas.err.ReadOnlyException;
 
 public abstract class ReadOnlyRef<T>
-        implements Ref<T> {
+        implements
+            Ref<T> {
 
     @Override
     public void set(T value) {

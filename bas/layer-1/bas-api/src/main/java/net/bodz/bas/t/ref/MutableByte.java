@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class MutableByte
         implements
-            Ref<Byte> {
+            TypedRef<Byte> {
 
     public byte value;
 

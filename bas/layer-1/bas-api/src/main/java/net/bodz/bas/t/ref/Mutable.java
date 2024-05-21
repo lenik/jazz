@@ -7,15 +7,6 @@ public class Mutable<T>
     public T value;
 
     @Override
-    public Class<? extends T> getValueType() {
-        if (value == null)
-            return null;
-        @SuppressWarnings("unchecked")
-        Class<? extends T> type = (Class<? extends T>) value.getClass();
-        return type;
-    }
-
-    @Override
     public T get() {
         return value;
     }

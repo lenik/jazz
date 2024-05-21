@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class MutableFloat
         implements
-            Ref<Float> {
+            TypedRef<Float> {
 
     public float value;
 

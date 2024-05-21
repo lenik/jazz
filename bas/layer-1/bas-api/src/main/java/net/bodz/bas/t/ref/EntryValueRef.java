@@ -3,7 +3,9 @@ package net.bodz.bas.t.ref;
 import java.util.Map.Entry;
 
 public class EntryValueRef<V>
-        extends ReadOnlyRef<V> {
+        extends ReadOnlyRef<V>
+        implements
+            TypedRef<V> {
 
     private final Entry<?, V> entry;
     private final Class<? extends V> valueType;

@@ -1,13 +1,13 @@
 package net.bodz.bas.ctx.scope;
 
 import net.bodz.bas.err.LoadException;
-import net.bodz.bas.t.ref.Ref;
+import net.bodz.bas.t.ref.TypedRef;
 
 /**
  * Focused on scope-cluster.
  */
 public class ScopedAutoloadRef<T>
-        implements Ref<T> {
+        implements TypedRef<T> {
 
     private final Class<T> objectType;
     private ScopedTypeInfo<T> info;
