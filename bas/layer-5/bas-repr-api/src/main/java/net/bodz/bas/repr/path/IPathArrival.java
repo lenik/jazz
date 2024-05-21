@@ -49,6 +49,12 @@ public interface IPathArrival {
      */
     Object getTarget();
 
+    default IPathArrival target(Object newTarget) {
+        return target(getResolver(), newTarget);
+    }
+
+    IPathArrival target(Object newResolver, Object newTarget);
+
     // TODO target annotations
 
     boolean isMultiple();

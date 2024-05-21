@@ -10,7 +10,8 @@ import net.bodz.bas.c.object.TreeDumps;
 import net.bodz.bas.c.string.StringArray;
 
 public class PathArrival
-        implements IPathArrival {
+        implements
+            IPathArrival {
 
     private IPathArrival parent;
     private String[] consumedTokens = new String[0];
@@ -36,7 +37,8 @@ public class PathArrival
         this.remainingPath = remainingPath;
     }
 
-    public PathArrival(IPathArrival parent, Object resolver, Object target, String consumedToken, String remainingPath) {
+    public PathArrival(IPathArrival parent, Object resolver, Object target, String consumedToken,
+            String remainingPath) {
         this(parent, resolver, target, new String[] { consumedToken }, remainingPath);
     }
 
@@ -123,6 +125,7 @@ public class PathArrival
         return remainingPath;
     }
 
+    @Override
     public Object getResolver() {
         return resolver;
     }
@@ -138,6 +141,12 @@ public class PathArrival
 
     public void setTarget(Object target) {
         this.target = target;
+    }
+
+    @Override
+    public IPathArrival target(Object newResolver, Object newTarget) {
+        return new PathArrival(parent, newResolver, newTarget, //
+                consumedTokens, remainingPath);
     }
 
     @Override
@@ -212,10 +221,10 @@ public class PathArrival
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!(obj instanceof PathArrival))
+        if (! (obj instanceof PathArrival))
             return false;
         PathArrival other = (PathArrival) obj;
-        if (!Arrays.equals(consumedTokens, other.consumedTokens))
+        if (! Arrays.equals(consumedTokens, other.consumedTokens))
             return false;
         if (parent != other.parent)
             return false;
