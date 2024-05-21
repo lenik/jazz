@@ -52,11 +52,15 @@ public abstract class AbstractCriteriaBuilder<This>
         typeInfo = EntityTypes.getTypeInfo(entityType);
         typeInferrer = new ColumnAndThenProps(typeInfo);
 
-        create();
+        clear();
     }
 
-    protected void create() {
-        stack.push(new Junction());
+    protected void clear() {
+        stack.clear();
+        stack.push(defaultCombine());
+    }
+
+    protected void addDefaults() {
     }
 
     @SuppressWarnings("unchecked")
@@ -178,8 +182,8 @@ public abstract class AbstractCriteriaBuilder<This>
             throws ParseException {
         Function<String, String> qualifier = (String name) -> qualify(name);
 
-        if (stack.isEmpty())
-            stack.push(defaultCombine());
+        clear();
+        addDefaults();
 
         Composite composite = stack.top().composite;
         composite.readObject(map, qualifier, typeInferrer);
