@@ -39,7 +39,7 @@ public abstract class AbstractCriteriaBuilder<This>
     @Deprecated
     final IType cbType = PotatoTypes.getInstance().getType(getClass());
 
-    public AbstractCriteriaBuilder() {
+    protected AbstractCriteriaBuilder() {
         ForEntityType aForEntityType = getClass().getAnnotation(ForEntityType.class);
         if (aForEntityType == null)
             throw new IllegalUsageException("ForEntityType isn't present: " + getClass());
@@ -52,6 +52,10 @@ public abstract class AbstractCriteriaBuilder<This>
         typeInfo = EntityTypes.getTypeInfo(entityType);
         typeInferrer = new ColumnAndThenProps(typeInfo);
 
+        create();
+    }
+
+    protected void create() {
         stack.push(new Junction());
     }
 
