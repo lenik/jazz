@@ -174,11 +174,11 @@ public abstract class AbstractCriteriaBuilder<This>
             throws ParseException {
         Function<String, String> qualifier = (String name) -> qualify(name);
 
-        stack.clear();
+        if (stack.isEmpty())
+            stack.push(defaultCombine());
 
-        Composite composite = defaultCombine();
+        Composite composite = stack.top().composite;
         composite.readObject(map, qualifier, typeInferrer);
-        stack.push(composite);
 
         for (String key : map.keySet()) {
             FieldCriterionBuilder<?, ?, Object> field = getField(key);
