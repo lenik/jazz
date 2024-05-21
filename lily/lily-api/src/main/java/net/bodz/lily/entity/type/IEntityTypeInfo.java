@@ -5,6 +5,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.form.IFormDecl;
+import net.bodz.bas.t.pojo.Pair;
 import net.bodz.lily.criteria.ICriteriaBuilder;
 
 public interface IEntityTypeInfo {
@@ -74,9 +75,15 @@ public interface IEntityTypeInfo {
 
     default Object parseId(String[] columns)
             throws ParseException {
+        return parseId2(columns).first;
+    }
+
+    default Pair<Object, Object[]> parseId2(String[] columns)
+            throws ParseException {
         Object[] fields = parseIdColumns(columns);
         try {
-            return newId(fields);
+            Object id = newId(fields);
+            return Pair.of(id, fields);
         } catch (ReflectiveOperationException e) {
             throw new ParseException("error create id: " + e.getMessage(), e);
         }

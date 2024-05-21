@@ -324,6 +324,9 @@ public abstract class AbstractEntityController<T>
     @Override
     public IPathArrival dispatchToEntity(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
+        if (tokens.available() == 0)
+            return null;
+
         ResolveMethods<T> methods = new ResolveMethods<T>(typeInfo, getMapper());
 
         IPathArrival arrival = methods.byIdPath(previous, tokens, q);
@@ -334,15 +337,16 @@ public abstract class AbstractEntityController<T>
         if (arrival != null)
             return arrival;
 
-        if (arrival == null) {
-            // obj = outOfTruth(idVec);
-            // if (obj == null)
-            // return null;
+        OutOfTruthEntity o = outOfTruth(tokens, q);
+        if (o != null) {
+            return PathArrival.shift(o.consumedTokens.length, //
+                    previous, this, o.toResolved(), tokens);
         }
+
         return null;
     }
 
-    protected T outOfTruth(Object id) {
+    protected OutOfTruthEntity outOfTruth(ITokenQueue tokens, IVariantMap<String> q) {
         return null;
     }
 
