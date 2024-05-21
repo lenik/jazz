@@ -108,11 +108,15 @@ public abstract class SimpleDialog
         dialogs = new SwtUserDialogs(parent, SWT.APPLICATION_MODAL);
     }
 
-    public abstract Object open()
-            throws Exception;
+    /**
+     * @throws CancelException
+     */
+    public abstract Object open();
 
-    protected synchronized Object open(boolean cancelException)
-            throws CancelException {
+    /**
+     * @throws CancelException
+     */
+    protected synchronized Object open(boolean cancelException) {
         if (shell == null) {
             createContents();
             addEffects();
@@ -126,8 +130,8 @@ public abstract class SimpleDialog
         Display display = Display.getCurrent(); // (parent != null ? parent :
         // shell).getDisplay();
         canceled = true;
-        while (!shell.isDisposed()) {
-            if (!display.readAndDispatch())
+        while (! shell.isDisposed()) {
+            if (! display.readAndDispatch())
                 display.sleep();
         }
         if (canceled)
