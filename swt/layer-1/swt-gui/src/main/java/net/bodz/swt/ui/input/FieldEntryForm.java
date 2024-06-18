@@ -32,8 +32,8 @@ public class FieldEntryForm {
         return new ButtonEntryBuilder(this);
     }
 
-    public ButtonEntryBuilder checkbox() {
-        return new ButtonEntryBuilder(this).checkbox();
+    public CheckboxEntryBuilder checkbox() {
+        return new CheckboxEntryBuilder(this);
     }
 
     public ButtonEntryBuilder radio() {
