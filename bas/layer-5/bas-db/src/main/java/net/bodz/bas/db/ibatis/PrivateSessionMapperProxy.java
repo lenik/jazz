@@ -21,11 +21,13 @@ public class PrivateSessionMapperProxy
         this.sqlSessionFactory = sqlSessionFactory;
     }
 
+    public static boolean __autoCommit = false;
+
     @Override
     protected Object invokeMapperMethod(Object obj, Method method, Object[] args)
             throws Throwable {
         Object result;
-        SqlSession session = sqlSessionFactory.openSession();
+        SqlSession session = sqlSessionFactory.openSession(__autoCommit);
         long begin = -1;
         try {
             Object proxy = session.getMapper(mapperClass);
