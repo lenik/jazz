@@ -3,7 +3,8 @@ package net.bodz.bas.servlet.config;
 import net.bodz.bas.c.object.IdentityHashSet;
 
 public abstract class AbstractPluginDescriptor
-        implements IPluginDescriptor {
+        implements
+            IPluginDescriptor {
 
     String id;
     int index;

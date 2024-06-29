@@ -6,7 +6,8 @@ import java.io.Serializable;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class ContentRange
-        implements Serializable {
+        implements
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 

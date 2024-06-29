@@ -4,7 +4,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandler.Context;
 
-import net.bodz.bas.c.javax.servlet.DecoratedServletContext;
+import net.bodz.bas.c.jakarta.servlet.DecoratedServletContext;
 import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.ParseException;

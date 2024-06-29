@@ -2,18 +2,18 @@ package net.bodz.bas.servlet;
 
 import java.io.IOException;
 
-import net.bodz.bas.c.javax.servlet.http.IHttpFilter;
-import net.bodz.bas.c.javax.servlet.http.MutableHttpServletRequest;
-import net.bodz.bas.c.javax.servlet.http.MutableHttpSession;
-import net.bodz.bas.log.Logger;
-import net.bodz.bas.log.LoggerFactory;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import net.bodz.bas.c.jakarta.servlet.http.IHttpFilter;
+import net.bodz.bas.c.jakarta.servlet.http.MutableHttpServletRequest;
+import net.bodz.bas.c.jakarta.servlet.http.MutableHttpSession;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
 /**
  * Add session support for requests originated from local files.

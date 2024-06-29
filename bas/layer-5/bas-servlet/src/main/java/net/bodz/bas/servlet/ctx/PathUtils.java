@@ -5,7 +5,7 @@ public class PathUtils {
     public static String hrefFrom(String fromPath, String destPath) {
         if (fromPath == null)
             throw new NullPointerException("otherPath");
-        if (!fromPath.startsWith("/"))
+        if (! fromPath.startsWith("/"))
             throw new IllegalArgumentException("Not absolute: " + fromPath);
 
         // Remove the "basename" at first.

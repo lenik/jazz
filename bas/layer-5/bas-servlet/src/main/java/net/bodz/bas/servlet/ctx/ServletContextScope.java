@@ -6,11 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
 
+import jakarta.servlet.ServletContext;
+
 import net.bodz.bas.ctx.ScopeType;
 import net.bodz.bas.ctx.scope.ScopeIdClass;
 import net.bodz.bas.ctx.scope.ScopeTeller;
-
-import jakarta.servlet.ServletContext;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

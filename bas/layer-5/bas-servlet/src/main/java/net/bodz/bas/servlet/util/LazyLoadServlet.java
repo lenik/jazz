@@ -1,0 +1,62 @@
+package net.bodz.bas.servlet.util;
+
+import java.io.IOException;
+
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.servlet.HttpServlet;
+
+public class LazyLoadServlet
+        extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
+
+    private String className;
+
+    transient HttpServlet servlet;
+
+    @Override
+    public void init(ServletConfig config)
+            throws ServletException {
+        className = config.getInitParameter("servlet-class");
+
+        if (className == null)
+            throw new ServletException("Servlet class name isn't specified. (init-param: servlet-class)");
+
+        super.init(config);
+    }
+
+    @Override
+    public void service(ServletRequest req, ServletResponse res)
+            throws ServletException, IOException {
+        if (servlet == null) {
+            synchronized (this) {
+                if (servlet == null)
+                    try {
+                        servlet = loadServlet();
+                    } catch (ReflectiveOperationException e) {
+                        throw new ServletException(e.getMessage(), e);
+                    }
+            }
+        }
+        servlet.service(req, res);
+    }
+
+    protected HttpServlet loadServlet()
+            throws ReflectiveOperationException, ServletException {
+        Class<?> servletClass = Class.forName(className);
+
+        if (HttpServlet.class.isAssignableFrom(servletClass))
+            throw new IllegalUsageException("Not an http-servlet class: " + servletClass);
+
+        servlet = (HttpServlet) servletClass.getConstructor().newInstance();
+
+        servlet.init(getServletConfig());
+        return servlet;
+    }
+
+}

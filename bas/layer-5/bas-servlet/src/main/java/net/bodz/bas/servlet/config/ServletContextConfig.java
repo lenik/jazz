@@ -11,14 +11,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import net.bodz.bas.c.javax.servlet.http.IHttpSessionActivationListener;
-import net.bodz.bas.c.javax.servlet.http.IHttpSessionAttributeListener;
-import net.bodz.bas.c.javax.servlet.http.IHttpSessionBindingListener;
-import net.bodz.bas.c.javax.servlet.http.IHttpSessionListener;
-import net.bodz.bas.c.javax.servlet.http.IServletContextAttributeListener;
-import net.bodz.bas.c.javax.servlet.http.IServletContextListener;
-import net.bodz.bas.c.javax.servlet.http.IServletRequestAttributeListener;
-import net.bodz.bas.c.javax.servlet.http.IServletRequestListener;
+import jakarta.servlet.Filter;
+import jakarta.servlet.Servlet;
+
+import net.bodz.bas.c.jakarta.servlet.http.IHttpSessionActivationListener;
+import net.bodz.bas.c.jakarta.servlet.http.IHttpSessionAttributeListener;
+import net.bodz.bas.c.jakarta.servlet.http.IHttpSessionBindingListener;
+import net.bodz.bas.c.jakarta.servlet.http.IHttpSessionListener;
+import net.bodz.bas.c.jakarta.servlet.http.IServletContextAttributeListener;
+import net.bodz.bas.c.jakarta.servlet.http.IServletContextListener;
+import net.bodz.bas.c.jakarta.servlet.http.IServletRequestAttributeListener;
+import net.bodz.bas.c.jakarta.servlet.http.IServletRequestListener;
 import net.bodz.bas.c.object.UseNet;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.io.BTreeOut;
@@ -29,9 +32,6 @@ import net.bodz.bas.io.xml.XmlDoc;
 import net.bodz.bas.io.xml.XmlOutputFormat;
 import net.bodz.bas.t.order.PrioritySortedLists;
 import net.bodz.uni.echo.resource.IResourceProvider;
-
-import jakarta.servlet.Filter;
-import jakarta.servlet.Servlet;
 
 public class ServletContextConfig {
 
@@ -126,8 +126,8 @@ public class ServletContextConfig {
     public void setContextPath(String contextPath) {
         if (contextPath == null)
             throw new NullPointerException("contextPath");
-        if (!contextPath.isEmpty())
-            if (!contextPath.startsWith("/"))
+        if (! contextPath.isEmpty())
+            if (! contextPath.startsWith("/"))
                 throw new IllegalArgumentException("Context path must be empty or start with slash.");
         this.contextPath = contextPath;
     }
@@ -143,7 +143,7 @@ public class ServletContextConfig {
         else {
             String contextPath = getContextPath();
             int portNumber = 80;
-            if (!portNumbers.isEmpty())
+            if (! portNumbers.isEmpty())
                 portNumber = portNumbers.get(0);
             String prefix = "http://" + getHostName("localhost") + ":" + portNumber + contextPath;
             urlString = prefix + "/" + href;
@@ -160,7 +160,7 @@ public class ServletContextConfig {
     public void addWelcomeFile(String welcomeFile) {
         if (welcomeFile == null)
             throw new NullPointerException("welcomeFile");
-        if (!welcomeFiles.contains(welcomeFile))
+        if (! welcomeFiles.contains(welcomeFile))
             welcomeFiles.add(welcomeFile);
     }
 

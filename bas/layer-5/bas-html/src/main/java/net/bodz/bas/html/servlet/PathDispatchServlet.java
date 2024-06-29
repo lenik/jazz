@@ -2,7 +2,7 @@ package net.bodz.bas.html.servlet;
 
 import java.io.IOException;
 
-import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
+import net.bodz.bas.c.jakarta.servlet.http.HttpServletReqEx;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.html.artifact.IArtifactManager;

@@ -5,9 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.bodz.bas.c.javax.servlet.DecoratedServletContext;
-import net.bodz.bas.c.javax.servlet.IAttributes;
-import net.bodz.bas.c.javax.servlet.http.DecoratedHttpSession;
+import net.bodz.bas.c.jakarta.servlet.DecoratedServletContext;
+import net.bodz.bas.c.jakarta.servlet.http.DecoratedHttpSession;
+import net.bodz.bas.c.util.IAttributes;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.res.ResFn;

@@ -1,9 +1,9 @@
 package net.bodz.bas.servlet.ctx;
 
+import jakarta.servlet.http.HttpSession;
+
 import net.bodz.bas.ctx.scope.AbstractScopeTeller;
 import net.bodz.bas.ctx.scope.IScopeInstance;
-
-import jakarta.servlet.http.HttpSession;
 
 public class SessionScopeTeller
         extends AbstractScopeTeller {

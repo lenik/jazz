@@ -7,7 +7,8 @@ import java.util.List;
 import net.bodz.bas.t.order.IPriority;
 
 public interface IResourceProvider
-        extends IPriority {
+        extends
+            IPriority {
 
     /**
      * Get a system-wide accessible resource.

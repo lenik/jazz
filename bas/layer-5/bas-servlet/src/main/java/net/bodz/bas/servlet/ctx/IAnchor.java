@@ -26,7 +26,7 @@ public interface IAnchor {
     }
 
     /**
-
+    
      */
     default String toWebPath() {
         ServletContext servletContext = CurrentHttpService.getServletContext();

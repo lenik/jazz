@@ -2,7 +2,7 @@ package net.bodz.bas.html.viz.util;
 
 import java.io.IOException;
 
-import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
+import net.bodz.bas.c.jakarta.servlet.http.HttpServletReqEx;
 import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.io.tag.HtmlPre;

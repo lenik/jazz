@@ -2,20 +2,42 @@ package net.bodz.bas.servlet.config;
 
 import java.util.List;
 
-import net.bodz.bas.c.javax.servlet.http.*;
+import jakarta.servlet.ServletContextAttributeEvent;
+import jakarta.servlet.ServletContextAttributeListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.ServletRequestAttributeEvent;
+import jakarta.servlet.ServletRequestAttributeListener;
+import jakarta.servlet.ServletRequestEvent;
+import jakarta.servlet.ServletRequestListener;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSessionActivationListener;
+import jakarta.servlet.http.HttpSessionAttributeListener;
+import jakarta.servlet.http.HttpSessionBindingEvent;
+import jakarta.servlet.http.HttpSessionBindingListener;
+import jakarta.servlet.http.HttpSessionEvent;
+import jakarta.servlet.http.HttpSessionListener;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
+import net.bodz.bas.c.jakarta.servlet.http.IHttpSessionActivationListener;
+import net.bodz.bas.c.jakarta.servlet.http.IHttpSessionAttributeListener;
+import net.bodz.bas.c.jakarta.servlet.http.IHttpSessionBindingListener;
+import net.bodz.bas.c.jakarta.servlet.http.IHttpSessionListener;
+import net.bodz.bas.c.jakarta.servlet.http.IServletContextAttributeListener;
+import net.bodz.bas.c.jakarta.servlet.http.IServletContextListener;
+import net.bodz.bas.c.jakarta.servlet.http.IServletRequestAttributeListener;
+import net.bodz.bas.c.jakarta.servlet.http.IServletRequestListener;
 
 public class ServletContextConfigAdapter
-        implements ServletContextListener, //
-        ServletContextAttributeListener, //
-        ServletRequestListener, //
-        ServletRequestAttributeListener, //
-        HttpSessionListener, //
-        HttpSessionAttributeListener, //
-        HttpSessionActivationListener, //
-        HttpSessionBindingListener {
+        implements
+            ServletContextListener, //
+            ServletContextAttributeListener, //
+            ServletRequestListener, //
+            ServletRequestAttributeListener, //
+            HttpSessionListener, //
+            HttpSessionAttributeListener, //
+            HttpSessionActivationListener, //
+            HttpSessionBindingListener {
 
     private final ServletContextConfig config;
 

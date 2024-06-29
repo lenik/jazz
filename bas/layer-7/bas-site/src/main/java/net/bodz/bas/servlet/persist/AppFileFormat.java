@@ -8,9 +8,9 @@ import java.time.Instant;
 import java.util.Map;
 
 import net.bodz.bas.c.java.time.DateTimes;
-import net.bodz.bas.c.javax.servlet.AttributesIterable;
-import net.bodz.bas.c.javax.servlet.IAttributes;
 import net.bodz.bas.c.org.json.JsonWriter;
+import net.bodz.bas.c.util.AttributesIterable;
+import net.bodz.bas.c.util.IAttributes;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonPersistor;

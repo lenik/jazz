@@ -2,12 +2,12 @@ package net.bodz.lily.security.login;
 
 import java.io.IOException;
 
-import net.bodz.bas.c.javax.servlet.http.IHttpFilter;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import net.bodz.bas.c.jakarta.servlet.http.IHttpFilter;
 
 /**
  * Redirect to login page for access controled pages.

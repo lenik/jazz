@@ -1,7 +1,8 @@
 package net.bodz.bas.servlet.config;
 
 public abstract class AbstractServletContextConfigurer
-        implements IServletContextConfigurer {
+        implements
+            IServletContextConfigurer {
 
     @Override
     public int getPriority() {

@@ -5,7 +5,8 @@ import net.bodz.bas.t.order.IPriority;
 
 @IndexedType
 public interface IServletContextConfigurer
-        extends IPriority {
+        extends
+            IPriority {
 
     void filters(ServletContextConfig config);
 

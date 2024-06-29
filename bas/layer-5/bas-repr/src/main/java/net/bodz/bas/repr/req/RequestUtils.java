@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.req;
 
-import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
+import net.bodz.bas.c.jakarta.servlet.http.HttpServletReqEx;
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;

@@ -2,15 +2,16 @@ package net.bodz.bas.servlet;
 
 import java.util.Map;
 
-import net.bodz.bas.ctx.util.IFramedMap;
-import net.bodz.bas.rtx.IQueryable;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import net.bodz.bas.ctx.util.IFramedMap;
+import net.bodz.bas.rtx.IQueryable;
+
 public interface IHttpViewContext
-        extends IQueryable {
+        extends
+            IQueryable {
 
     HttpServletRequest getRequest();
 
