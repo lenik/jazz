@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
+import java.util.function.Predicate;
 
 import net.bodz.bas.c.java.time.DateTimes;
-import net.bodz.bas.fn.legacy.Pred1;
 
 /**
  * A simple framework for printing change lists produced by <code>Diff</code>.
@@ -43,7 +43,7 @@ public class DiffPrint {
          * Set to ignore certain kinds of lines when printing an edit script. For example, ignoring blank lines or
          * comments.
          */
-        protected Pred1<Object> ignore = null;
+        protected Predicate<Object> ignore = null;
 
         /**
          * Set to the lines of the files being compared.
@@ -107,10 +107,10 @@ public class DiffPrint {
                 show_from += next.deleted;
                 show_to += next.inserted;
                 for (i = next.index0; i <= l0 && ! nontrivial; i++)
-                    if (! ignore.eval(file0.get(i)))
+                    if (! ignore.test(file0.get(i)))
                         nontrivial = true;
                 for (i = next.index1; i <= l1 && ! nontrivial; i++)
-                    if (! ignore.eval(file1.get(i)))
+                    if (! ignore.test(file1.get(i)))
                         nontrivial = true;
                 start++;
             }

@@ -1,19 +1,27 @@
 package net.bodz.swt.c.control;
 
+import java.util.function.Predicate;
+
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.*;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.bodz.bas.fn.legacy.Pred1;
 import net.bodz.swt.c.canvas.ViewportCanvas;
 
 public class ControlAdapters {
 
     /**
      * Auto re-grab the focus when the focus is lost.
-     * 
+     *
      * @param loseFocusListener
      *            Observer when it is try to lose focus.
      */
@@ -22,30 +30,17 @@ public class ControlAdapters {
             @Override
             public void focusLost(FocusEvent e) {
                 boolean doit = loseFocusListener.loseFocus(e);
-                if (!doit) {
+                if (! doit) {
                     control.setFocus();
                 }
             }
         });
     }
 
-    static final Pred1<MouseEvent> pass;
-    static {
-        pass = new Pred1<MouseEvent>() {
-            @Override
-            public boolean test(MouseEvent a) {
-                return true;
-            }
-        };
-    }
+    static final Predicate<MouseEvent> pass = (e) -> true;
 
-    public static Pred1<MouseEvent> getMaskEnabler(final int mask) {
-        return new Pred1<MouseEvent>() {
-            @Override
-            public boolean test(MouseEvent e) {
-                return mask == (e.stateMask & mask);
-            }
-        };
+    public static Predicate<MouseEvent> getMaskEnabler(final int mask) {
+        return (e) -> mask == (e.stateMask & mask);
     }
 
     private static void fixMouseDownStateMask(MouseEvent e) {
@@ -76,10 +71,11 @@ public class ControlAdapters {
         makeMoveable(control, getMaskEnabler(mask));
     }
 
-    public static void makeMoveable(final Control control, final Pred1<MouseEvent> enabler) {
+    public static void makeMoveable(final Control control, final Predicate<MouseEvent> enabler) {
         class Moving
                 extends MouseAdapter
-                implements MouseMoveListener {
+                implements
+                    MouseMoveListener {
             int x0;
             int y0;
             boolean moving;
@@ -122,10 +118,11 @@ public class ControlAdapters {
         makePannable(view, getMaskEnabler(mask));
     }
 
-    public static void makePannable(final ViewportCanvas view, final Pred1<MouseEvent> enabler) {
+    public static void makePannable(final ViewportCanvas view, final Predicate<MouseEvent> enabler) {
         class Panning
                 extends MouseAdapter
-                implements MouseMoveListener {
+                implements
+                    MouseMoveListener {
             int x0;
             int y0;
             boolean panning;
@@ -160,10 +157,11 @@ public class ControlAdapters {
         makeWheelPannable(view, getMaskEnabler(hMask), getMaskEnabler(vMask));
     }
 
-    public static void makeWheelPannable(final ViewportCanvas view, final Pred1<MouseEvent> hEnabler,
-            final Pred1<MouseEvent> vEnabler) {
+    public static void makeWheelPannable(final ViewportCanvas view, final Predicate<MouseEvent> hEnabler,
+            final Predicate<MouseEvent> vEnabler) {
         class Panning
-                implements MouseWheelListener {
+                implements
+                    MouseWheelListener {
             @Override
             public void mouseScrolled(MouseEvent e) {
                 if (hEnabler.test(e)) {
@@ -180,12 +178,13 @@ public class ControlAdapters {
 
     public static void cascadeDispose(final Composite composite) {
         class CascadeDispose
-                implements DisposeListener {
+                implements
+                    DisposeListener {
             @Override
             public void widgetDisposed(DisposeEvent e) {
                 Control[] children = composite.getChildren();
                 for (Control c : children)
-                    if (!c.isDisposed())
+                    if (! c.isDisposed())
                         c.dispose();
             }
         }

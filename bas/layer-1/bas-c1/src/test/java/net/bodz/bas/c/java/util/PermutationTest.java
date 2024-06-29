@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.primitive.IntMath;
 import net.bodz.bas.c.primitive.IntegerCollection;
-import net.bodz.bas.fn.legacy.Proc1;
 
 public class PermutationTest
         extends Assert {
@@ -28,9 +28,9 @@ public class PermutationTest
         final char[] array = orig.toCharArray();
         final Set<String> instances = new HashSet<String>();
 
-        Permutation.iterate(Arrays.wrap(array), new Proc1<char[]>() {
+        Permutation.iterate(Arrays.wrap(array), new Consumer<char[]>() {
             @Override
-            public void exec(char[] inst) {
+            public void accept(char[] inst) {
                 count++;
                 // System.out.println(cc);
                 String s = new String(inst);
@@ -221,9 +221,9 @@ public class PermutationTest
     public void testIterOrd() {
         final char[] src = "1234".toCharArray();
         final List<Integer> ords = new ArrayList<Integer>();
-        Permutation.iterate(Arrays.wrap(src), new Proc1<char[]>() {
+        Permutation.iterate(Arrays.wrap(src), new Consumer<char[]>() {
             @Override
-            public void exec(char[] inst) {
+            public void accept(char[] inst) {
                 int ord = Permutation.ord(Arrays.wrap(src), Arrays.wrap(inst));
                 ords.add(ord);
             }

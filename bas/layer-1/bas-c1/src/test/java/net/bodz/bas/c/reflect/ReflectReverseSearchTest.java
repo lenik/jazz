@@ -4,11 +4,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import net.bodz.bas.fn.legacy.Pred1;
 
 public class ReflectReverseSearchTest
         extends Assert {
@@ -23,7 +22,8 @@ public class ReflectReverseSearchTest
     public static int FIVE = 5;
 
     static class CatNames
-            extends Pred1<Field> {
+            implements
+                Predicate<Field> {
         List<String> list = new ArrayList<String>();
 
         @Override

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -15,7 +16,13 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.ListBox;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringSearch;
@@ -23,7 +30,6 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.CancelException;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fn.legacy.Func0;
 import net.bodz.bas.repr.viz.IViewBuilderFactory;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
@@ -563,7 +569,7 @@ public class SwtUserDialogs
 
         class ChoicesDialog
                 extends _Dialog {
-            Func0<Set<K>> selection;
+            Supplier<Set<K>> selection;
 
             public ChoicesDialog(Shell parent, int style, String title) {
                 super(parent, style, title);
@@ -578,7 +584,7 @@ public class SwtUserDialogs
             @Override
             protected Set<K> evaluate()
                     throws Exception {
-                return selection.eval();
+                return selection.get();
             }
 
             @Override
@@ -600,7 +606,7 @@ public class SwtUserDialogs
                     selection = createList(parent, candidates, initials);
             }
 
-            Func0<Set<K>> createChecks(Composite parent, Map<K, ?> candidates, Set<K> initial)
+            Supplier<Set<K>> createChecks(Composite parent, Map<K, ?> candidates, Set<K> initial)
                     throws CreateException {
                 parent.setLayout(new GridLayout(2, false));
 
@@ -629,9 +635,9 @@ public class SwtUserDialogs
                         throw new CreateException(e);
                     }
                 }
-                return new Func0<Set<K>>() {
+                return new Supplier<Set<K>>() {
                     @Override
-                    public Set<K> eval() {
+                    public Set<K> get() {
                         Set<K> set = new HashSet<K>(size);
                         for (KeyButton kb : keyButtons)
                             if (kb.button.getSelection())
@@ -641,7 +647,7 @@ public class SwtUserDialogs
                 };
             }
 
-            Func0<Set<K>> createList(Composite parent, Map<K, ?> candidates, Set<K> initial)
+            Supplier<Set<K>> createList(Composite parent, Map<K, ?> candidates, Set<K> initial)
                     throws CreateException {
                 FillLayout fillLayout = new FillLayout();
                 fillLayout.type = SWT.VERTICAL;
@@ -704,9 +710,9 @@ public class SwtUserDialogs
                     if (selected)
                         listBox.select(insertIndex);
                 }
-                return new Func0<Set<K>>() {
+                return new Supplier<Set<K>>() {
                     @Override
-                    public Set<K> eval() {
+                    public Set<K> get() {
                         Set<K> set = new HashSet<K>(size);
                         for (int i = 0; i < keys.length; i++)
                             if (listBox.isSelected(i))

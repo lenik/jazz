@@ -1,22 +1,23 @@
 package net.bodz.bas.c.java.util;
 
+import java.util.function.Consumer;
+
 import net.bodz.bas.c.java.util.array.ArrayWrapper;
 import net.bodz.bas.c.java.util.array.IArrayWrapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.fn.legacy.Proc1;
 import net.bodz.bas.t._int.IntSList;
 
 public class Permutation {
 
     /**
      * In-place iterate core implementation.
-     * 
+     *
      * The array after full-iterated will be reversed.
      */
-    private static <A, E> void _iterate(IArrayWrapper<A, E> array, int off, int len, Proc1<A> visitor) {
+    private static <A, E> void _iterate(IArrayWrapper<A, E> array, int off, int len, Consumer<A> visitor) {
         if (len == 1) {
-            visitor.exec(array.getArray());
+            visitor.accept(array.getArray());
             return;
         }
         int count = len;
@@ -27,21 +28,21 @@ public class Permutation {
         }
     }
 
-    public static <T> void iterate(T[] array, Proc1<T[]> closure) {
+    public static <T> void iterate(T[] array, Consumer<T[]> closure) {
         ArrayWrapper<T> _array = ArrayWrapper.wrap(array);
         iterate(_array, closure);
     }
 
-    public static <A, E> void iterate(IArrayWrapper<A, E> array, Proc1<A> closure) {
+    public static <A, E> void iterate(IArrayWrapper<A, E> array, Consumer<A> closure) {
         _iterate(array.copy(), 0, array.length(), closure);
     }
 
-    public static <T> void iterateInPlace(T[] array, Proc1<T[]> closure) {
+    public static <T> void iterateInPlace(T[] array, Consumer<T[]> closure) {
         ArrayWrapper<T> _array = ArrayWrapper.wrap(array);
         iterateInPlace(_array, closure);
     }
 
-    public static <A, E> void iterateInPlace(IArrayWrapper<A, E> array, Proc1<A> closure) {
+    public static <A, E> void iterateInPlace(IArrayWrapper<A, E> array, Consumer<A> closure) {
         _iterate(array, 0, array.length(), closure);
         array.reverse();
     }

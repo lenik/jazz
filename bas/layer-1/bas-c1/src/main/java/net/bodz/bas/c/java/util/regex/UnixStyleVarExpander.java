@@ -5,8 +5,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.c.java.util.MapGetTransformer;
-
 public class UnixStyleVarExpander
         extends TextPreps.Matches {
 
@@ -30,7 +28,7 @@ public class UnixStyleVarExpander
 
     public UnixStyleVarExpander(Map<?, ?> map) {
         super(variableRefPattern);
-        this.fn = new MapGetTransformer<String, Object>(map);
+        this.fn = map::get;
     }
 
     protected String unescapeBracedName(String name) {

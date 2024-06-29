@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
 import net.bodz.bas.c.java.util.array.ArrayWrapper;
 import net.bodz.bas.c.java.util.array.BooleanArrayWrapper;
@@ -15,7 +16,6 @@ import net.bodz.bas.c.java.util.array.DoubleArrayWrapper;
 import net.bodz.bas.c.java.util.array.FloatArrayWrapper;
 import net.bodz.bas.c.java.util.array.IntArrayWrapper;
 import net.bodz.bas.c.java.util.array.LongArrayWrapper;
-import net.bodz.bas.fn.legacy.Func1;
 import net.bodz.bas.t._int.IntIterable;
 import net.bodz.bas.t._int.IntIterator;
 
@@ -262,13 +262,13 @@ public class Arrays
         return ArrayAndScalar.of(remaining, array[array.length - 1]);
     }
 
-    public static <T> T[] map(T[] array, Func1<T, T> fn) {
+    public static <T> T[] map(T[] array, Function<T, T> fn) {
         Class<?> valType = array.getClass().getComponentType();
         @SuppressWarnings("unchecked")
         T[] result = (T[]) Array.newInstance(valType, array.length);
         for (int i = 0; i < array.length; i++) {
             T val = array[i];
-            val = fn.eval(val);
+            val = fn.apply(val);
             result[i] = val;
         }
         return result;

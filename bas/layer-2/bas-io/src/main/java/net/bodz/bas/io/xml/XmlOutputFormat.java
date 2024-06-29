@@ -1,6 +1,6 @@
 package net.bodz.bas.io.xml;
 
-import net.bodz.bas.fn.legacy.Pred1;
+import java.util.function.Predicate;
 
 public class XmlOutputFormat {
 
@@ -38,7 +38,7 @@ public class XmlOutputFormat {
     XmlStringEncoder attribEncoder = XmlStringEncoder.forAttribute();
     XmlStringEncoder textEncoder = XmlStringEncoder.forText();
 
-    Pred1<IXmlOut> shouldBreakLine;
+    Predicate<IXmlOut> shouldBreakLine;
 
     public String encodeAttr(String str) {
         return attribEncoder.encode(str);

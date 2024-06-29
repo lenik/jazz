@@ -1,12 +1,12 @@
 package net.bodz.bas.c.type;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.java.util.Permutation;
-import net.bodz.bas.fn.legacy.Proc1;
 
 public class ClassComparatorTest
         extends Assert {
@@ -34,19 +34,23 @@ public class ClassComparatorTest
     }
 
     static interface IF_P
-            extends IF {
+            extends
+                IF {
     }
 
     static interface IF_P_Q
-            extends IF_P {
+            extends
+                IF_P {
     }
 
     static interface IF_U
-            extends IF {
+            extends
+                IF {
     };
 
     static interface IF_U_V
-            extends IF_U {
+            extends
+                IF_U {
     }
 
     static String joinSimpleNames(Class<?>[] typeArray) {
@@ -75,9 +79,9 @@ public class ClassComparatorTest
     public void testSortClassTypes() {
         final Class<?>[] expectedClassOrder = { C.class, C_A.class, C_A_B.class, C_X.class, C_X_Y.class };
 
-        Permutation.iterate(expectedClassOrder, new Proc1<Class<?>[]>() {
+        Permutation.iterate(expectedClassOrder, new Consumer<Class<?>[]>() {
             @Override
-            public void exec(Class<?>[] eachOrder) {
+            public void accept(Class<?>[] eachOrder) {
                 sortTypes(eachOrder, expectedClassOrder);
             }
         });
@@ -87,9 +91,9 @@ public class ClassComparatorTest
     public void testSortInterfaceTypes() {
         final Class<?>[] expectedInterfaceOrder = { IF.class, IF_P.class, IF_P_Q.class, IF_U.class, IF_U_V.class };
 
-        Permutation.iterate(expectedInterfaceOrder, new Proc1<Class<?>[]>() {
+        Permutation.iterate(expectedInterfaceOrder, new Consumer<Class<?>[]>() {
             @Override
-            public void exec(Class<?>[] eachOrder) {
+            public void accept(Class<?>[] eachOrder) {
                 sortTypes(eachOrder, expectedInterfaceOrder);
             }
         });

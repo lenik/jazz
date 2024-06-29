@@ -9,20 +9,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.TreeMap;
+import java.util.function.Function;
 
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.fn.legacy.Filt1;
 
 /**
  * <pre>
- * CURL: 
+ * CURL:
  *   [TYPE://] {ALPHA,'#'} ['?' {PARAM,'&amp;'}]
- * 
- * ALPHA: 
+ *
+ * ALPHA:
  *   [{INIT-PARAM,':'} '@'] {BETA,'/'}
- * 
+ *
  * PARAM:
  *   NAME '=' VALUE
  * </pre>
@@ -216,14 +216,14 @@ public class CURL {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof CURL))
+        if (! (obj instanceof CURL))
             return false;
         CURL c = (CURL) obj;
-        if (!Objects.equals(type, c.type))
+        if (! Objects.equals(type, c.type))
             return false;
-        if (!Arrays.equals(alphas, c.alphas))
+        if (! Arrays.equals(alphas, c.alphas))
             return false;
-        if (!Objects.equals(parameters, c.parameters))
+        if (! Objects.equals(parameters, c.parameters))
             return false;
         return true;
     }
@@ -339,12 +339,12 @@ public class CURL {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof Alpha))
+            if (! (obj instanceof Alpha))
                 return false;
             Alpha a = (Alpha) obj;
-            if (!Arrays.equals(initParameters, a.initParameters))
+            if (! Arrays.equals(initParameters, a.initParameters))
                 return false;
-            if (!Arrays.equals(betas, a.betas))
+            if (! Arrays.equals(betas, a.betas))
                 return false;
             return true;
         }
@@ -386,21 +386,7 @@ public class CURL {
         return s;
     }
 
-    static final Filt1<String, String> ENCODER;
-    static final Filt1<String, String> DECODER;
-    static {
-        ENCODER = new Filt1<String, String>() {
-            @Override
-            public String filter(String s) {
-                return encode(s);
-            }
-        };
-        DECODER = new Filt1<String, String>() {
-            @Override
-            public String filter(String s) {
-                return decode(s);
-            }
-        };
-    }
+    static final Function<String, String> ENCODER = (s) -> encode(s);
+    static final Function<String, String> DECODER = (s) -> decode(s);
 
 }

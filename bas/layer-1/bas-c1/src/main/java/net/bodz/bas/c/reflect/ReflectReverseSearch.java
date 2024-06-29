@@ -1,20 +1,19 @@
 package net.bodz.bas.c.reflect;
 
 import java.lang.reflect.Field;
-
-import net.bodz.bas.fn.legacy.Pred1;
+import java.util.function.Predicate;
 
 public class ReflectReverseSearch {
 
-    public static void findField(Class<?> clazz, Object object, Object fieldValue, Pred1<Field> pred) {
+    public static void findField(Class<?> clazz, Object object, Object fieldValue, Predicate<Field> pred) {
         for (Field field : clazz.getFields()) {
             try {
                 Object value = field.get(object);
                 if (value != fieldValue) {
-                    if (fieldValue == null || !fieldValue.equals(value))
+                    if (fieldValue == null || ! fieldValue.equals(value))
                         continue;
                 }
-                if (!pred.test(field))
+                if (! pred.test(field))
                     break;
             } catch (IllegalAccessException e) {
                 // continue find?
@@ -23,13 +22,13 @@ public class ReflectReverseSearch {
         }
     }
 
-    public static void findField(Object object, Object fieldValue, Pred1<Field> pred) {
+    public static void findField(Object object, Object fieldValue, Predicate<Field> pred) {
         findField(object.getClass(), object, fieldValue, pred);
     }
 
     public static Field getFirstField(Class<?> clazz, Object object, Object fieldValue) {
         final Field[] first = new Field[1];
-        findField(clazz, object, fieldValue, new Pred1<Field>() {
+        findField(clazz, object, fieldValue, new Predicate<Field>() {
             @Override
             public boolean test(Field field) {
                 first[0] = field;
