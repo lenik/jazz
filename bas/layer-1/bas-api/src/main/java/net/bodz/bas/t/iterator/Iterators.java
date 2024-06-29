@@ -1,9 +1,18 @@
 package net.bodz.bas.t.iterator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.function.Function;
 
 import net.bodz.bas.fn.IFilter;
+import net.bodz.bas.t.coll.TransformedIterator;
 
 public class Iterators {
 
@@ -137,7 +146,7 @@ public class Iterators {
         return new FilteredIterator<T>(iterator, filter);
     }
 
-    public static <S, T> Iterator<T> transform(Iterator<S> iterable, Function<S, T> transformer) {
+    public static <S, T> Iterator<T> transform(Iterator<? extends S> iterable, Function<S, T> transformer) {
         return new TransformedIterator<S, T>(iterable, transformer);
     }
 
@@ -297,37 +306,6 @@ class FilteredIterator<T>
                 return obj;
         }
         return end();
-    }
-
-}
-
-class TransformedIterator<S, T>
-        implements
-            Iterator<T> {
-
-    final Iterator<? extends S> orig;
-    final Function<S, T> transformer;
-
-    public TransformedIterator(Iterator<? extends S> orig, Function<S, T> transformer) {
-        this.orig = orig;
-        this.transformer = transformer;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return orig.hasNext();
-    }
-
-    @Override
-    public T next() {
-        S src = orig.next();
-        T dst = transformer.apply(src);
-        return dst;
-    }
-
-    @Override
-    public void remove() {
-        orig.remove();
     }
 
 }

@@ -1,10 +1,17 @@
 package net.bodz.bas.t.iterator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.fn.IFilter;
+import net.bodz.bas.t.coll.TransformedIterable;
 import net.bodz.bas.t.factory.IFactory;
 import net.bodz.bas.t.factory.Instantiator;
 
@@ -188,26 +195,6 @@ class FilteredIterable<T>
     public Iterator<T> iterator() {
         Iterator<? extends T> iterator = orig.iterator();
         return new FilteredIterator<T>(iterator, filter);
-    }
-
-}
-
-class TransformedIterable<S, T>
-        implements
-            Iterable<T> {
-
-    final Iterable<? extends S> orig;
-    final Function<S, T> transformer;
-
-    public TransformedIterable(Iterable<? extends S> orig, Function<S, T> transformer) {
-        this.orig = orig;
-        this.transformer = transformer;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        Iterator<? extends S> iterator = orig.iterator();
-        return new TransformedIterator<S, T>(iterator, transformer);
     }
 
 }
