@@ -59,6 +59,11 @@ public class SaveProcess
     }
 
     @Override
+    public ResolvedEntity getResolvedEntity() {
+        return resolvedEntity;
+    }
+
+    @Override
     public Object execute()
             throws Exception {
         // 1. Prepare the object to be saved

@@ -3,6 +3,9 @@ package net.bodz.lily.entity.manager.cmd;
 import java.io.File;
 import java.net.URL;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -24,9 +27,6 @@ import net.bodz.lily.entity.manager.IEntityCommandContext;
 import net.bodz.lily.entity.manager.ResolvedEntity;
 import net.bodz.lily.storage.IVolume;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 public class AttachmentResolveProcess
         extends AbstractEntityCommandProcess {
 
@@ -39,6 +39,11 @@ public class AttachmentResolveProcess
             ResolvedEntity resolvedEntity) {
         super(type, context);
         this.resolvedEntity = resolvedEntity;
+    }
+
+    @Override
+    public ResolvedEntity getResolvedEntity() {
+        return resolvedEntity;
     }
 
     @Override

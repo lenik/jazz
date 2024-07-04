@@ -29,6 +29,11 @@ public class DeleteProcess
     }
 
     @Override
+    public ResolvedEntity getResolvedEntity() {
+        return resolvedEntity;
+    }
+
+    @Override
     public Object execute()
             throws Exception {
         int nUpdates = 0;

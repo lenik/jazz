@@ -11,6 +11,8 @@ public interface IEntityCommandProcess
             IPathDispatchable,
             IVarMapForm {
 
+    IEntityCommandType getCommandType();
+
     default void setQueryContext(IQueryable context) {
     }
 

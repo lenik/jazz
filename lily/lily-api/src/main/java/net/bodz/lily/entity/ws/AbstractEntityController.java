@@ -13,6 +13,8 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.apache.poi.ss.usermodel.Workbook;
 
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
@@ -71,8 +73,6 @@ import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.format.excel.DefaultListingExcel;
 import net.bodz.lily.meta.DefaultLimit;
 import net.bodz.lily.security.AccessControl;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @AccessControl
 @VirtualHostScope
@@ -180,13 +180,13 @@ public abstract class AbstractEntityController<T>
         return process;
     }
 
-    IPathArrival processDispatch(IEntityCommandType type, ResolvedEntity resolvedEntity, //
+    IPathArrival dispatchToCommand(IEntityCommandType type, ResolvedEntity resolvedEntity, //
             IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        return processDispatch(type, resolvedEntity, previous, tokens, q, 1);
+        return dispatchToCommand(type, resolvedEntity, previous, tokens, q, 1);
     }
 
-    IPathArrival processDispatch(IEntityCommandType type, ResolvedEntity resolvedEntity, //
+    protected IPathArrival dispatchToCommand(IEntityCommandType type, ResolvedEntity resolvedEntity, //
             IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q, int consumedTokenCount)
             throws PathDispatchException {
         IEntityCommandProcess process = createProcess(type, resolvedEntity);
@@ -202,7 +202,7 @@ public abstract class AbstractEntityController<T>
 
         previous = PathArrival.shift(consumedTokenCount, previous, this, process, tokens);
         try {
-            return process.dispatch(previous, tokens, q);
+            return dispatchToProcess(process, previous, tokens, q);
         } catch (PathDispatchException e) {
             String commandTypeStr = "command";
             if (type.isContentCommand())
@@ -219,6 +219,22 @@ public abstract class AbstractEntityController<T>
                     e.getMessage());
             throw new PathDispatchException(message, e);
         }
+    }
+
+    protected IPathArrival dispatchToProcess(IEntityCommandProcess process, //
+            IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+            throws PathDispatchException {
+        IEntityCommandType type = process.getCommandType();
+        ResolvedEntity re = process.getResolvedEntity();
+//        System.err.printfln(//
+        logger.infof(//
+                "%s:%s<%s%s> q=%s", //
+                type.getUniqueId(), //
+                process.getClass().getSimpleName(), //
+                getEntityType().getSimpleName(), //
+                re == null ? "" : ("@" + re.id), //
+                q);
+        return process.dispatch(previous, tokens, q);
     }
 
     protected IEntityCommandContext newCommandContext() {
@@ -264,7 +280,7 @@ public abstract class AbstractEntityController<T>
         if (commands != null)
             for (IEntityCommandType command : commands)
                 if (command.isAcceptedMethod(method)) {
-                    arrival = processDispatch(command, null, previous, tokens, q);
+                    arrival = dispatchToCommand(command, null, previous, tokens, q);
                     if (arrival != null)
                         return arrival;
                 }
@@ -300,7 +316,7 @@ public abstract class AbstractEntityController<T>
             if (commands != null)
                 for (IEntityCommandType command : commands)
                     if (command.isAcceptedMethod(method)) {
-                        arrival = processDispatch(command, resolvedEntity, previous, tokens, q, //
+                        arrival = dispatchToCommand(command, resolvedEntity, previous, tokens, q, //
                                 token == null ? 0 : 1);
                         if (arrival != null)
                             return arrival;
@@ -309,7 +325,7 @@ public abstract class AbstractEntityController<T>
             for (IEntityCommandType other : locator.getOthers())
                 if (other.isAcceptedMethod(method))
                     if (other.checkPathValid(previous, tokens, q))
-                        arrival = processDispatch(other, resolvedEntity, previous, tokens, q, 0);
+                        arrival = dispatchToCommand(other, resolvedEntity, previous, tokens, q, 0);
 
             if (token != null)
                 return arrival;

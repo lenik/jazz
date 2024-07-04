@@ -124,6 +124,11 @@ class ResolveProcess
     }
 
     @Override
+    public ResolvedEntity getResolvedEntity() {
+        return resolvedEntity;
+    }
+
+    @Override
     protected Boolean isReturningJsonResult() {
         return false;
     }
