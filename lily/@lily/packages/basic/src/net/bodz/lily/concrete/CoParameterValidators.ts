@@ -1,7 +1,6 @@
-
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
 import CoCodeValidators from './CoCodeValidators';
 import CoParameterTypeInfo from './CoParameterTypeInfo';
+import UomRow from '../schema/util/UomRow';
 
 export class CoParameterValidators extends CoCodeValidators {
 
@@ -12,6 +11,12 @@ export class CoParameterValidators extends CoCodeValidators {
     get type(): CoParameterTypeInfo {
         return this._type as CoParameterTypeInfo;
     }
+
+    validateType(val: string) { }
+
+    validateUom(val: UomRow) { }
+
+    validateValues(val: string) { }
 
 }
 

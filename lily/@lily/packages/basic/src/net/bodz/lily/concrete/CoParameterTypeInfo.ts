@@ -2,6 +2,8 @@ import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/Entit
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 import CoParameterValidators from './CoParameterValidators';
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
+import { BOOLEAN, INT, STRING } from '@skeljs/core/src/lang/baseinfo';
+import UomRow from '../schema/util/UomRow';
 
 export class CoParameterTypeInfo extends CoCodeTypeInfo {
 
@@ -19,12 +21,26 @@ export class CoParameterTypeInfo extends CoCodeTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            // id: primaryKey({ type: 'number', precision: 20, })
+            type: property({
+                type: STRING, nullable: false, precision: 19, icon: "far-cube",
+                validator: this.validators.validateType
+            }),
+            optional: property({
+                type: BOOLEAN, nullable: false, icon: "far-key",
+            }),
+            uom: property({
+                type: UomRow.TYPE, icon: "far-bag",
+                validator: this.validators.validateUom
+            }),
+            values: property({
+                type: STRING, nullable: true, icon: "far-bars",
+                validator: this.validators.validateValues
+            }),
         });
     }
 
     static readonly INSTANCE = new CoParameterTypeInfo();
-    
+
 }
 
 export default CoParameterTypeInfo;

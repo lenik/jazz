@@ -15,7 +15,7 @@ import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 import UserChooseDialog from "../schema/account/UserChooseDialog.vue";
 
-const model = defineModel<FavRecord<any>>({ required: true });
+const model = defineModel<FavRecord>({ required: true });
 
 const props = withDefaults(defineProps<Props>(), {
 });

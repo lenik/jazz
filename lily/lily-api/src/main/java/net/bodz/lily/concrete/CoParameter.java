@@ -1,5 +1,7 @@
 package net.bodz.lily.concrete;
 
+import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.cache.Derived;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.meta.FieldGroupVue;
 import net.bodz.lily.meta.TsTyped;
@@ -16,9 +18,11 @@ public abstract class CoParameter<self_t extends CoParameter<self_t>>
 
     private static final long serialVersionUID = 1L;
 
+    String name;
     String type;
     boolean optional;
     Uom uom;
+    Integer uomId;
     String values;
 
     public CoParameter() {
@@ -27,6 +31,24 @@ public abstract class CoParameter<self_t extends CoParameter<self_t>>
 
     public CoParameter(self_t parent) {
         super(parent);
+    }
+
+    @Override
+    public String getUniqueName() {
+        return getName();
+    }
+
+    @Override
+    public void setUniqueName(String name) {
+        setName(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
@@ -51,6 +73,17 @@ public abstract class CoParameter<self_t extends CoParameter<self_t>>
 
     public void setUom(Uom uom) {
         this.uom = uom;
+    }
+
+    @Derived
+    @DetailLevel(DetailLevel.HIDDEN)
+    public synchronized Integer getUomId() {
+        return uom != null ? uom.id() : uomId;
+    }
+
+    public synchronized void setUomId(Integer id) {
+        uom = null;
+        uomId = id;
     }
 
     public String getValues() {
