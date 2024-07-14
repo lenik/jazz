@@ -4,7 +4,16 @@
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.UniqName
 --\mixin lily.mixin.LabelExVer
-        dummy       int
+
+        type        varchar(30) not null default 'int',
+        
+        optional    boolean not null default false,
+        
+        -- default UOM
+        uom         int
+            references uom on update cascade,
+            
+        values      varchar(300)
     );
 
     create index $1parm_label       on $1parm(label);

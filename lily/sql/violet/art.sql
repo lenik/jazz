@@ -1,5 +1,7 @@
 --\import violet.art.art
 --\import violet.art.artcat
+--\import violet.art.arttype
+--\import violet.art.arttypeparm
 --\import violet.art.art_backref
 --\import violet.art.art_doc
 --\import violet.art.art_fav

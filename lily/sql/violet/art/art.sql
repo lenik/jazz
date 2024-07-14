@@ -2,6 +2,7 @@
 --\import lily.util.uom
 --\import violet.art.artcat
 --\import violet.art.artphase
+--\import violet.art.arttype
 
     create sequence art_seq start with 1000;
     create table art(
@@ -21,6 +22,9 @@
         proto       int
             references art(id) on update cascade,
 
+        type        int
+            references arttype(id) on update cascade,
+            
         cat         int
             references artcat(id) on update cascade,
 

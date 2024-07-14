@@ -9,6 +9,11 @@
 --\mixin lily.mixin.Code
 --\mixin lily.mixin.Props
 
+        supplierorg int
+            references org on update cascade,
+        supplier    int
+            references person on update cascade,
+
         hydm    int
     );
 
