@@ -10,7 +10,7 @@
             references "$1" on update cascade on delete cascade,
 
         parm        int not null
-            references $1parm on update cascade,
+            references ${4=$1parm} on update cascade,
 
         ival        int,
         fval        double precision,
@@ -27,6 +27,6 @@
             parm.label parm_label
         from $1_parm a
             left join "$1" o on a."$1" = o.id
-            left join $1parm parm on a.parm = parm.id
+            left join ${4=$1parm} parm on a.parm = parm.id
             ;
 

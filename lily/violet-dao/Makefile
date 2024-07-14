@@ -7,7 +7,7 @@ daorst = violet.rst
 
 dao-art: predao
 	$(DAOGEN) \
-            art artcat artparm artphase arttag \
+            art arttype arttype_parm artcat artparm art_parm artphase arttag \
             art_backref art_doc art_fav art_vote artpack
 
 dao-asset: predao
@@ -57,7 +57,8 @@ dao-glob: predao
 
 dao: predao
 	$(DAOGEN) \
-            art artcat artparm artphase arttag art_backref art_doc art_vote artpack \
+            art arttype arttype_parm artcat artparm art_parm artphase arttag \
+            art_backref art_doc art_vote artpack \
             asset asset_group asset_org asset_ou asset_person asset_user \
             course coursecat coursetag course_fav coursekit coursekitcat coursekittag coursekit_fav \
             testq testans testqtag testq_fav testq_vote testq_msg testq_msg_vote \

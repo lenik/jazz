@@ -20,6 +20,9 @@ class-map {
         artparm
     net.bodz.lily.concrete.CoPhase: \
         artphase
+    net.bodz.lily.concrete.CoRelation: \
+        art_parm \
+        arttype_parm
     net.bodz.lily.concrete.CoTag: \
         arttag
     net.bodz.lily.concrete.BackrefRecord: \
@@ -34,9 +37,12 @@ table-name {
     art:                net.bodz.violet.schema.art.Artifact
     artcat:             net.bodz.violet.schema.art.ArtifactCategory
     artmodel:           net.bodz.violet.schema.art.ArtifactModel
-    artparm:            net.bodz.violet.schema.art.ArtifactParameter
+    artparm:            net.bodz.violet.schema.art.StdParameter
+    art_parm:           net.bodz.violet.schema.art.ArtifactParam
     artphase:           net.bodz.violet.schema.art.ArtifactPhase
     arttag:             net.bodz.violet.schema.art.ArtifactTag
+    arttype:            net.bodz.violet.schema.art.ArtifactType
+    arttype_parm:       net.bodz.violet.schema.art.ArtifactTypeParam
     art_backref:        net.bodz.violet.schema.art.ArtifactBackref
     art_doc:            net.bodz.violet.schema.art.ArtifactDoc
     art_vote:           net.bodz.violet.schema.art.ArtifactVote
@@ -63,4 +69,3 @@ table artmodel {
         javaName: modelName
     }
 }
-

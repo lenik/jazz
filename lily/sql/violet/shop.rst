@@ -57,6 +57,9 @@ table-name {
 }
 
 table shop {
+    column supplierorg {
+        javaName: supplierOrg
+    }
 }
 
 table saleodr {
