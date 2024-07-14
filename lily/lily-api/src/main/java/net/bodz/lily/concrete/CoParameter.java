@@ -5,6 +5,7 @@ import net.bodz.lily.meta.FieldGroupVue;
 import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
+import net.bodz.lily.schema.util.Uom;
 
 @FieldGroupVue
 @IdType(Integer.class)
@@ -17,7 +18,7 @@ public abstract class CoParameter<self_t extends CoParameter<self_t>>
 
     String type;
     boolean optional;
-    String uom;
+    Uom uom;
     String values;
 
     public CoParameter() {
@@ -44,11 +45,11 @@ public abstract class CoParameter<self_t extends CoParameter<self_t>>
         this.optional = optional;
     }
 
-    public String getUom() {
+    public Uom getUom() {
         return uom;
     }
 
-    public void setUom(String uom) {
+    public void setUom(Uom uom) {
         this.uom = uom;
     }
 
