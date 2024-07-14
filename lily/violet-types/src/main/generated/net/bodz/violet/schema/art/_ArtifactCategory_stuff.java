@@ -2,14 +2,14 @@ package net.bodz.violet.schema.art;
 
 import javax.persistence.Column;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.Ordinal;
-import net.bodz.bas.repr.form.meta.NotNull;
+import net.bodz.bas.meta.decl.TypeParamType;
+import net.bodz.bas.meta.decl.TypeParameters;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.concrete.CoCategory;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.meta.TypeParamType;
-import net.bodz.lily.meta.TypeParameters;
 
 @TypeParameters({ TypeParamType.THIS_TYPE })
 @IdType(Integer.class)

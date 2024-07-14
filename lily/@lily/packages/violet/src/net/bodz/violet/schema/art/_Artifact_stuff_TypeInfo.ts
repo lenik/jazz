@@ -2,7 +2,7 @@ import { BIG_DECIMAL, INT, SHORT, STRING } from "@skeljs/core/src/lang/baseinfo"
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
-import { Uom_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomTypeInfo";
+import { UomRow_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomRowTypeInfo";
 
 import { ArtifactCategory_TYPE } from "./ArtifactCategoryTypeInfo";
 import { ArtifactPhase_TYPE } from "./ArtifactPhaseTypeInfo";
@@ -67,7 +67,7 @@ export class _Artifact_stuff_TypeInfo extends CoImagedTypeInfo {
             phase: property({ type: ArtifactPhase_TYPE, validator: this.validators.validatePhase }),
             phaseId: property({ type: INT, precision: 10 }),
 
-            uom: property({ type: Uom_TYPE, validator: this.validators.validateUom }),
+            uom: property({ type: UomRow_TYPE, validator: this.validators.validateUom }),
             uomId: property({ type: INT, precision: 10 }),
 
             category: property({ type: ArtifactCategory_TYPE, validator: this.validators.validateCategory }),

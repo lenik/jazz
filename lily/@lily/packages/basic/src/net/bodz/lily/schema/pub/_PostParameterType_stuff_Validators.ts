@@ -1,4 +1,3 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoParameterValidators from "../../concrete/CoParameterValidators";
@@ -12,12 +11,6 @@ export class _PostParameterType_stuff_Validators extends CoParameterValidators {
 
     get type() {
         return this._type as _PostParameterType_stuff_TypeInfo;
-    }
-
-    validateName(val: string) {
-    }
-
-    validateDummy(val: int) {
     }
 
 }

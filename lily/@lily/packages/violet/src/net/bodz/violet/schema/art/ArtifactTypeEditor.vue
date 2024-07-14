@@ -21,7 +21,7 @@ import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
 import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
-import UomChooseDialog from "@lily/basic/src/net/bodz/lily/schema/util/UomChooseDialog.vue";
+import UomRowChooseDialog from "@lily/basic/src/net/bodz/lily/schema/util/UomRowChooseDialog.vue";
 
 import ArtifactCategoryChooseDialog from "./ArtifactCategoryChooseDialog.vue";
 import ArtifactTypeChooseDialog from "./ArtifactTypeChooseDialog.vue";
@@ -49,7 +49,7 @@ provide(FIELD_ROW_PROPS, fieldRowProps);
 const rootElement = ref<HTMLElement>();
 const artifactCategoryChooseDialog = ref<InstanceType<typeof ArtifactCategoryChooseDialog>>();
 const artifactTypeChooseDialog = ref<InstanceType<typeof ArtifactTypeChooseDialog>>();
-const uomChooseDialog = ref<InstanceType<typeof UomChooseDialog>>();
+const uomRowChooseDialog = ref<InstanceType<typeof UomRowChooseDialog>>();
 const valids = ref<any>({});
 
 // methods
@@ -81,13 +81,13 @@ onMounted(() => {
                 <RefEditor :dialog="artifactTypeChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>
             <FieldRow :property="meta.uom" v-model="model.uom">
-                <RefEditor :dialog="uomChooseDialog" v-model="model.uom" v-model:id="model.uomId" />
+                <RefEditor :dialog="uomRowChooseDialog" v-model="model.uom" v-model:id="model.uomId" />
             </FieldRow>
         </FieldGroup>
     </div>
     <ArtifactCategoryChooseDialog ref="artifactCategoryChooseDialog" />
     <ArtifactTypeChooseDialog ref="artifactTypeChooseDialog" />
-    <UomChooseDialog ref="uomChooseDialog" />
+    <UomRowChooseDialog ref="uomRowChooseDialog" />
 </template>
 
 <style scoped lang="scss">

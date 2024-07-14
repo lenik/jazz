@@ -74,7 +74,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parm.creation parm_creation, 
             parm.lastmod parm_lastmod, 
             parm."version" parm_version, 
-            parm.dummy parm_dummy
+            parm."type" parm_type, 
+            parm.optional parm_optional, 
+            parm.uom parm_uom, 
+            parm."values" parm_values
         from post_parm a
             left join post post on a.post = post.id
             left join postparm parm on a.parm = parm.id
@@ -133,7 +136,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parm.creation parm_creation, 
             parm.lastmod parm_lastmod, 
             parm."version" parm_version, 
-            parm.dummy parm_dummy
+            parm."type" parm_type, 
+            parm.optional parm_optional, 
+            parm.uom parm_uom, 
+            parm."values" parm_values
         from post_parm a
             left join post post on a.post = post.id
             left join postparm parm on a.parm = parm.id

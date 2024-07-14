@@ -5,7 +5,6 @@ import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import { Object_TYPE } from "../../../../../java/lang/ObjectTypeInfo";
 import { ArtifactTypeParam } from "./ArtifactTypeParam";
 import { ArtifactType_TYPE } from "./ArtifactTypeTypeInfo";
 import { StdParameter_TYPE } from "./StdParameterTypeInfo";
@@ -33,9 +32,8 @@ const emit = defineEmits<{
 // property shortcuts
 
 const typeMap = {
-    "Object": Object_TYPE,
-    "OffsetDateTime": OffsetDateTime.TYPE,
     "INT": INT,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "ArtifactType": ArtifactType_TYPE,
     "StdParameter": StdParameter_TYPE,
     "DOUBLE": DOUBLE,
@@ -56,7 +54,7 @@ onMounted(() => {
 
 <template>
     <EntityChooseDialog ref="entityChooseDialog" :type="ArtifactTypeParam.TYPE" :typeMap="typeMap" :modal="modal">
-        <th data-type="Object" data-field="id">Id</th>
+        <th data-type="INT" data-field="id">Id</th>
         <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
         <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>

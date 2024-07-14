@@ -4,15 +4,15 @@ import net.bodz.lily.schema.account.Group;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.account.dao.GroupMapper;
 import net.bodz.lily.schema.account.dao.UserMapper;
-import net.bodz.lily.schema.util.Uom;
-import net.bodz.lily.schema.util.dao.UomMapper;
+import net.bodz.lily.schema.util.UomRow;
+import net.bodz.lily.schema.util.dao.UomRowMapper;
 import net.bodz.lily.test.TestSampleBuilder;
 import net.bodz.lily.util.IRandomPicker;
 
 public class IssueParameterSamples
         extends TestSampleBuilder {
 
-    public Uom uom;
+    public UomRow uom;
     public User ownerUser;
     public Group ownerGroup;
 
@@ -29,7 +29,7 @@ public class IssueParameterSamples
 
     @Override
     public IssueParameterSamples wireAny(IRandomPicker picker) {
-        this.uom = picker.pickAny(UomMapper.class, "uom");
+        this.uom = picker.pickAny(UomRowMapper.class, "uom");
         this.ownerUser = picker.pickAny(UserMapper.class, "user");
         this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
         return this;

@@ -8,7 +8,7 @@ import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState"
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
 import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
-import { Uom_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomTypeInfo";
+import { UomRow_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomRowTypeInfo";
 
 import { Artifact } from "./Artifact";
 import { ArtifactCategory_TYPE } from "./ArtifactCategoryTypeInfo";
@@ -49,7 +49,7 @@ const typeMap = {
     "ArtifactType": ArtifactType_TYPE,
     "ArtifactCategory": ArtifactCategory_TYPE,
     "ArtifactPhase": ArtifactPhase_TYPE,
-    "Uom": Uom_TYPE,
+    "UomRow": UomRow_TYPE,
     "JSON_VARIANT": JSON_VARIANT,
     "SHORT": SHORT,
     "BIG_DECIMAL": BIG_DECIMAL,
@@ -91,7 +91,7 @@ onMounted(() => {
         <th data-type="ArtifactType" data-format="label" data-field="type">Type</th>
         <th data-type="ArtifactCategory" data-format="label" data-field="category">Category</th>
         <th data-type="ArtifactPhase" data-format="label" data-field="phase">Phase</th>
-        <th data-type="Uom" data-format="label" data-field="uom">Uom</th>
+        <th data-type="UomRow" data-format="label" data-field="uom">Uom</th>
         <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
         <th data-type="SHORT" data-field="finish">Finish</th>
         <th data-type="BIG_DECIMAL" data-field="price">Price</th>

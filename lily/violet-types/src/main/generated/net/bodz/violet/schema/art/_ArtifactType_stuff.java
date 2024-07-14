@@ -8,7 +8,7 @@ import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.schema.util.Uom;
+import net.bodz.lily.schema.util.UomRow;
 
 @IdType(Integer.class)
 public abstract class _ArtifactType_stuff
@@ -32,7 +32,7 @@ public abstract class _ArtifactType_stuff
     private static final int _ord_UOM_ID = _ord_PARENT_ID + 1;
 
     /**  */
-    Uom uom;
+    UomRow uom;
 
     Integer uomId;
 
@@ -52,13 +52,13 @@ public abstract class _ArtifactType_stuff
      */
     @JoinColumn(name = "uom")
     @ManyToOne
-    public Uom getUom() {
+    public UomRow getUom() {
         return uom;
     }
 
     /**
      */
-    public void setUom(Uom value) {
+    public void setUom(UomRow value) {
         this.uom = value;
     }
 

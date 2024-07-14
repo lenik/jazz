@@ -6,13 +6,13 @@ import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.Ordinal;
-import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.concrete.CoImaged;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.schema.util.Uom;
+import net.bodz.lily.schema.util.UomRow;
 
 @IdType(Integer.class)
 public abstract class _Artifact_stuff
@@ -88,7 +88,7 @@ public abstract class _Artifact_stuff
     Integer phaseId;
 
     /**  */
-    Uom uom;
+    UomRow uom;
 
     Integer uomId;
 
@@ -263,13 +263,13 @@ public abstract class _Artifact_stuff
      */
     @JoinColumn(name = "uom")
     @ManyToOne
-    public Uom getUom() {
+    public UomRow getUom() {
         return uom;
     }
 
     /**
      */
-    public void setUom(Uom value) {
+    public void setUom(UomRow value) {
         this.uom = value;
     }
 

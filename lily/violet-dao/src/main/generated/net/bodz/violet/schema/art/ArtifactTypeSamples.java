@@ -4,8 +4,8 @@ import net.bodz.lily.schema.account.Group;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.account.dao.GroupMapper;
 import net.bodz.lily.schema.account.dao.UserMapper;
-import net.bodz.lily.schema.util.Uom;
-import net.bodz.lily.schema.util.dao.UomMapper;
+import net.bodz.lily.schema.util.UomRow;
+import net.bodz.lily.schema.util.dao.UomRowMapper;
 import net.bodz.lily.test.TestSampleBuilder;
 import net.bodz.lily.util.IRandomPicker;
 import net.bodz.violet.schema.art.dao.ArtifactCategoryMapper;
@@ -14,7 +14,7 @@ import net.bodz.violet.schema.art.dao.ArtifactTypeMapper;
 public class ArtifactTypeSamples
         extends TestSampleBuilder {
 
-    public Uom uom;
+    public UomRow uom;
     public ArtifactType parent;
     public Group ownerGroup;
     public User ownerUser;
@@ -34,7 +34,7 @@ public class ArtifactTypeSamples
 
     @Override
     public ArtifactTypeSamples wireAny(IRandomPicker picker) {
-        this.uom = picker.pickAny(UomMapper.class, "uom");
+        this.uom = picker.pickAny(UomRowMapper.class, "uom");
         this.parent = picker.pickAny(ArtifactTypeMapper.class, "arttype");
         this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
         this.ownerUser = picker.pickAny(UserMapper.class, "user");

@@ -2,7 +2,7 @@ import { INT } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
-import { Uom_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomTypeInfo";
+import { UomRow_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomRowTypeInfo";
 
 import { ArtifactCategory_TYPE } from "./ArtifactCategoryTypeInfo";
 import { ArtifactType_TYPE } from "./ArtifactTypeTypeInfo";
@@ -34,7 +34,7 @@ export class _ArtifactType_stuff_TypeInfo extends IdEntityTypeInfo {
         super.preamble();
         this.declare({
 
-            uom: property({ type: Uom_TYPE, validator: this.validators.validateUom }),
+            uom: property({ type: UomRow_TYPE, validator: this.validators.validateUom }),
             uomId: property({ type: INT, precision: 10 }),
 
             parent: property({ type: this, validator: this.validators.validateParent }),

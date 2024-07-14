@@ -31,8 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
         <association property="uom" columnPrefix="uom_" notNullColumn="id" 
-            javaType="net.bodz.lily.schema.util.Uom" 
-            resultMap="net.bodz.lily.schema.util.dao.UomMapper.objlist_map" />
+            javaType="net.bodz.lily.schema.util.UomRow" 
+            resultMap="net.bodz.lily.schema.util.dao.UomRowMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[

@@ -1,14 +1,12 @@
 package net.bodz.violet.schema.plan.dao;
 
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.concrete.CoCodeCriteriaBuilder;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.violet.schema.plan.DiaryParameterType;
 
 @ForEntityType(DiaryParameterType.class)
 public class _DiaryParameterTypeCriteriaBuilder_stuff<self_t extends _DiaryParameterTypeCriteriaBuilder_stuff<self_t>>
-        extends CoObjectCriteriaBuilder<self_t> {
-
-    public final IntegerField id = integer("id");
+        extends CoCodeCriteriaBuilder<self_t> {
 
     public final IntegerField ownerUserId = integer("uid");
 

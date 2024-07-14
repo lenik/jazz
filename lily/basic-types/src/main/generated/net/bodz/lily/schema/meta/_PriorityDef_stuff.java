@@ -1,8 +1,8 @@
 package net.bodz.lily.schema.meta;
 
+import net.bodz.bas.meta.decl.TypeParamType;
+import net.bodz.bas.meta.decl.TypeParameters;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.meta.TypeParamType;
-import net.bodz.lily.meta.TypeParameters;
 
 @TypeParameters({ TypeParamType.THIS_TYPE })
 @IdType(Integer.class)

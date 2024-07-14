@@ -1,14 +1,12 @@
 package net.bodz.violet.schema.plan.dao;
 
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.concrete.CoCodeCriteriaBuilder;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.violet.schema.plan.PlanParameterType;
 
 @ForEntityType(PlanParameterType.class)
 public class _PlanParameterTypeCriteriaBuilder_stuff<self_t extends _PlanParameterTypeCriteriaBuilder_stuff<self_t>>
-        extends CoObjectCriteriaBuilder<self_t> {
-
-    public final IntegerField id = integer("id");
+        extends CoCodeCriteriaBuilder<self_t> {
 
     public final IntegerField ownerUserId = integer("uid");
 

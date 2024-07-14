@@ -5,7 +5,7 @@ import type ArtifactType from "./ArtifactType";
 import type StdParameter from "./StdParameter";
 import _ArtifactTypeParam_stuff_TypeInfo from "./_ArtifactTypeParam_stuff_TypeInfo";
 
-export class _ArtifactTypeParam_stuff extends CoRelation {
+export class _ArtifactTypeParam_stuff extends CoRelation<int> {
 
     static _typeInfo: _ArtifactTypeParam_stuff_TypeInfo;
     static get TYPE() {

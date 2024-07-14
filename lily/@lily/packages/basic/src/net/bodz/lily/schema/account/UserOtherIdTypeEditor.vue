@@ -19,6 +19,7 @@ import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
+import CoImagedFieldGroup from "../../concrete/CoImagedFieldGroup.vue";
 import CoObjectFieldGroup from "../../concrete/CoObjectFieldGroup.vue";
 import StructRowFieldGroup from "../../concrete/StructRowFieldGroup.vue";
 
@@ -66,6 +67,7 @@ onMounted(() => {
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
+        <CoImagedFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="_UserOtherIdType_stuff_TYPE">
             <FieldRow :property="meta.dummy" v-model="model.dummy">
                 <input type="number" v-model="model.dummy" />

@@ -1,7 +1,7 @@
 import type { BigDecimal, int, short } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 import CoImagedValidators from "@lily/basic/src/net/bodz/lily/concrete/CoImagedValidators";
-import type Uom from "@lily/basic/src/net/bodz/lily/schema/util/Uom";
+import type UomRow from "@lily/basic/src/net/bodz/lily/schema/util/UomRow";
 
 import type Artifact from "./Artifact";
 import type ArtifactCategory from "./ArtifactCategory";
@@ -46,7 +46,7 @@ export class _Artifact_stuff_Validators extends CoImagedValidators {
     validatePhase(val: ArtifactPhase) {
     }
 
-    validateUom(val: Uom) {
+    validateUom(val: UomRow) {
     }
 
     validateCategory(val: ArtifactCategory) {

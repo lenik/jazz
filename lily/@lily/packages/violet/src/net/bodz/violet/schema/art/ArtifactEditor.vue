@@ -22,7 +22,7 @@ import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 import CoImagedFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoImagedFieldGroup.vue";
 import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
 import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
-import UomChooseDialog from "@lily/basic/src/net/bodz/lily/schema/util/UomChooseDialog.vue";
+import UomRowChooseDialog from "@lily/basic/src/net/bodz/lily/schema/util/UomRowChooseDialog.vue";
 
 import ArtifactCategoryChooseDialog from "./ArtifactCategoryChooseDialog.vue";
 import ArtifactChooseDialog from "./ArtifactChooseDialog.vue";
@@ -54,7 +54,7 @@ const artifactChooseDialog = ref<InstanceType<typeof ArtifactChooseDialog>>();
 const artifactTypeChooseDialog = ref<InstanceType<typeof ArtifactTypeChooseDialog>>();
 const artifactCategoryChooseDialog = ref<InstanceType<typeof ArtifactCategoryChooseDialog>>();
 const artifactPhaseChooseDialog = ref<InstanceType<typeof ArtifactPhaseChooseDialog>>();
-const uomChooseDialog = ref<InstanceType<typeof UomChooseDialog>>();
+const uomRowChooseDialog = ref<InstanceType<typeof UomRowChooseDialog>>();
 const valids = ref<any>({});
 
 // methods
@@ -111,7 +111,7 @@ onMounted(() => {
                 <RefEditor :dialog="artifactPhaseChooseDialog" v-model="model.phase" v-model:id="model.phaseId" />
             </FieldRow>
             <FieldRow :property="meta.uom" v-model="model.uom">
-                <RefEditor :dialog="uomChooseDialog" v-model="model.uom" v-model:id="model.uomId" />
+                <RefEditor :dialog="uomRowChooseDialog" v-model="model.uom" v-model:id="model.uomId" />
             </FieldRow>
         </FieldGroup>
     </div>
@@ -119,7 +119,7 @@ onMounted(() => {
     <ArtifactTypeChooseDialog ref="artifactTypeChooseDialog" />
     <ArtifactCategoryChooseDialog ref="artifactCategoryChooseDialog" />
     <ArtifactPhaseChooseDialog ref="artifactPhaseChooseDialog" />
-    <UomChooseDialog ref="uomChooseDialog" />
+    <UomRowChooseDialog ref="uomRowChooseDialog" />
 </template>
 
 <style scoped lang="scss">

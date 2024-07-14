@@ -6,8 +6,8 @@ import net.bodz.lily.schema.account.Group;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.account.dao.GroupMapper;
 import net.bodz.lily.schema.account.dao.UserMapper;
-import net.bodz.lily.schema.util.Uom;
-import net.bodz.lily.schema.util.dao.UomMapper;
+import net.bodz.lily.schema.util.UomRow;
+import net.bodz.lily.schema.util.dao.UomRowMapper;
 import net.bodz.lily.test.TestSampleBuilder;
 import net.bodz.lily.util.IRandomPicker;
 import net.bodz.violet.schema.art.dao.ArtifactCategoryMapper;
@@ -22,7 +22,7 @@ public class ArtifactSamples
     public Group ownerGroup;
     public Artifact proto;
     public ArtifactPhase phase;
-    public Uom uom;
+    public UomRow uom;
     public User ownerUser;
     public ArtifactCategory category;
 
@@ -52,7 +52,7 @@ public class ArtifactSamples
         this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
         this.proto = picker.pickAny(ArtifactMapper.class, "art");
         this.phase = picker.pickAny(ArtifactPhaseMapper.class, "artphase");
-        this.uom = picker.pickAny(UomMapper.class, "uom");
+        this.uom = picker.pickAny(UomRowMapper.class, "uom");
         this.ownerUser = picker.pickAny(UserMapper.class, "user");
         this.category = picker.pickAny(ArtifactCategoryMapper.class, "artcat");
         return this;

@@ -1,6 +1,6 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
-import type Uom from "@lily/basic/src/net/bodz/lily/schema/util/Uom";
+import type UomRow from "@lily/basic/src/net/bodz/lily/schema/util/UomRow";
 
 import type ArtifactCategory from "./ArtifactCategory";
 import type ArtifactType from "./ArtifactType";
@@ -15,7 +15,7 @@ export class _ArtifactType_stuff extends IdEntity<int> {
         return this._typeInfo;
     }
 
-    uom?: Uom;
+    uom?: UomRow;
     uomId?: int;
 
     parent?: ArtifactType;

@@ -1,4 +1,5 @@
 import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoRelationTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoRelationTypeInfo";
 
@@ -26,7 +27,7 @@ export class _ArtifactTypeParam_stuff_TypeInfo extends CoRelationTypeInfo {
     readonly validators = new _ArtifactTypeParam_stuff_Validators(this);
 
     constructor() {
-        super();
+        super(INT);
     }
 
     get name() { return "net.bodz.violet.schema.art.ArtifactTypeParam"; }

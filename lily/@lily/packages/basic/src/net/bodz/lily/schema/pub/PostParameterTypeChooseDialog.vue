@@ -1,13 +1,14 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
 import { Group_TYPE } from "../account/GroupTypeInfo";
 import { User_TYPE } from "../account/UserTypeInfo";
+import { UomRow_TYPE } from "../util/UomRowTypeInfo";
 import { PostParameterType } from "./PostParameterType";
 
 export const title = "Choose dialog for: Post parameter type";
@@ -39,6 +40,8 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
+    "BOOLEAN": BOOLEAN,
+    "UomRow": UomRow_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();
@@ -70,7 +73,10 @@ onMounted(() => {
         <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
         <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
-        <th data-type="INT" data-field="dummy">Dummy</th>
+        <th data-type="STRING" data-field="type">Type</th>
+        <th data-type="BOOLEAN" data-field="optional">Optional</th>
+        <th data-type="UomRow" data-format="label" data-field="uom">Uom</th>
+        <th data-type="STRING" data-field="values">Values</th>
     </EntityChooseDialog>
 </template>
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
@@ -30,6 +31,7 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
+    "JSON_VARIANT": JSON_VARIANT,
 };
 
 onMounted(() => {
@@ -51,6 +53,7 @@ onMounted(() => {
             <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
             <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
             <th data-type="INT" data-field="dummy">Dummy</th>
         </template>
         <template #preview>

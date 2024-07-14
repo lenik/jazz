@@ -1,7 +1,7 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 import IdEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/IdEntityValidators";
-import type Uom from "@lily/basic/src/net/bodz/lily/schema/util/Uom";
+import type UomRow from "@lily/basic/src/net/bodz/lily/schema/util/UomRow";
 
 import type ArtifactCategory from "./ArtifactCategory";
 import type ArtifactType from "./ArtifactType";
@@ -17,7 +17,7 @@ export class _ArtifactType_stuff_Validators extends IdEntityValidators {
         return this._type as _ArtifactType_stuff_TypeInfo;
     }
 
-    validateUom(val: Uom) {
+    validateUom(val: UomRow) {
     }
 
     validateParent(val: ArtifactType) {

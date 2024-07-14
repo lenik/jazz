@@ -7,7 +7,7 @@ import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState"
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
 import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
-import { Uom_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomTypeInfo";
+import { UomRow_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomRowTypeInfo";
 
 import { ArtifactCategory_TYPE } from "./ArtifactCategoryTypeInfo";
 import { ArtifactType } from "./ArtifactType";
@@ -44,7 +44,7 @@ const typeMap = {
     "OffsetDateTime": OffsetDateTime.TYPE,
     "ArtifactCategory": ArtifactCategory_TYPE,
     "ArtifactType": ArtifactType_TYPE,
-    "Uom": Uom_TYPE,
+    "UomRow": UomRow_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();
@@ -77,7 +77,7 @@ onMounted(() => {
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="ArtifactCategory" data-format="label" data-field="category">Category</th>
         <th data-type="ArtifactType" data-format="label" data-field="parent">Parent</th>
-        <th data-type="Uom" data-format="label" data-field="uom">Uom</th>
+        <th data-type="UomRow" data-format="label" data-field="uom">Uom</th>
     </EntityChooseDialog>
 </template>
 

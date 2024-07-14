@@ -18,6 +18,7 @@ import net.bodz.lily.entity.attachment.util.IDocInProps;
 import net.bodz.lily.entity.attachment.util.IVideosInProps;
 import net.bodz.lily.repr.EntGroup;
 import net.bodz.lily.schema.util.Uom;
+import net.bodz.lily.schema.util.UomRow;
 
 /**
  * 物品
@@ -38,7 +39,7 @@ public class Artifact
     private int decimalDigits = 2;
 
     {
-        uom = new Uom(Uoms.PIECE);
+        uom = new UomRow(Uoms.PIECE);
     }
 
     /**

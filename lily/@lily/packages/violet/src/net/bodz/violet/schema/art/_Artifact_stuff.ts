@@ -1,6 +1,6 @@
 import type { BigDecimal, int, short } from "@skeljs/core/src/lang/basetype";
 import CoImaged from "@lily/basic/src/net/bodz/lily/concrete/CoImaged";
-import type Uom from "@lily/basic/src/net/bodz/lily/schema/util/Uom";
+import type UomRow from "@lily/basic/src/net/bodz/lily/schema/util/UomRow";
 
 import type Artifact from "./Artifact";
 import type ArtifactCategory from "./ArtifactCategory";
@@ -33,7 +33,7 @@ export class _Artifact_stuff extends CoImaged<int> {
     phase?: ArtifactPhase;
     phaseId?: int;
 
-    uom?: Uom;
+    uom?: UomRow;
     uomId?: int;
 
     category?: ArtifactCategory;

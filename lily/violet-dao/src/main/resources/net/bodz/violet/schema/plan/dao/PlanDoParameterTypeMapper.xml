@@ -25,8 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="ownerGroupId" column="gid" />
         <result property="uomId" column="uom" />
         <association property="uom" columnPrefix="uom_" notNullColumn="id" 
-            javaType="net.bodz.lily.schema.util.Uom" 
-            resultMap="net.bodz.lily.schema.util.dao.UomMapper.objlist_map" />
+            javaType="net.bodz.lily.schema.util.UomRow" 
+            resultMap="net.bodz.lily.schema.util.dao.UomRowMapper.objlist_map" />
         <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />

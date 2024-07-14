@@ -14,6 +14,12 @@ public class _PostParameterTypeCriteriaBuilder_stuff<self_t extends _PostParamet
 
     public final StringField name = string("\"name\"");
 
-    public final IntegerField dummy = integer("dummy");
+    public final StringField type = string("\"type\"");
+
+    public final BooleanField optional = bool("optional");
+
+    public final IntegerField uomId = integer("uom");
+
+    public final StringField values = string("\"values\"");
 
 }

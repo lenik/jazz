@@ -44,8 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             javaType="net.bodz.violet.schema.art.ArtifactPhase" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactPhaseMapper.objlist_map" />
         <association property="uom" columnPrefix="uom_" notNullColumn="id" 
-            javaType="net.bodz.lily.schema.util.Uom" 
-            resultMap="net.bodz.lily.schema.util.dao.UomMapper.objlist_map" />
+            javaType="net.bodz.lily.schema.util.UomRow" 
+            resultMap="net.bodz.lily.schema.util.dao.UomRowMapper.objlist_map" />
         <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
