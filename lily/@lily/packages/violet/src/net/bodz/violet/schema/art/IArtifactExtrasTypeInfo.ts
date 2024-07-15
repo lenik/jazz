@@ -2,6 +2,7 @@ import { INT, STRING } from '@skeljs/core/src/lang/baseinfo';
 import EntityType from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import IArtifactExtrasValidators from './IArtifactExtrasValidators';
+import IArtifactExtras from './IArtifactExtras';
 
 export class IArtifactExtrasTypeInfo extends EntityType {
 
@@ -11,6 +12,10 @@ export class IArtifactExtrasTypeInfo extends EntityType {
     get icon() { return "fa-image"; }
     get label() { return "Artifact Extras"; }
     get description() { return "color/caution/etc."; }
+
+    override create() {
+        return new IArtifactExtras();
+    }
 
     override preamble() {
         this.declare({
@@ -25,3 +30,5 @@ export class IArtifactExtrasTypeInfo extends EntityType {
 }
 
 export default IArtifactExtrasTypeInfo;
+
+export const IArtifactExtras_TYPE = IArtifactExtrasTypeInfo.INSTANCE;

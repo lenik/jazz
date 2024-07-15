@@ -25,3 +25,4 @@ export class Dim3dTypeInfo extends StructRowTypeInfo {
 }
 
 export default Dim3dTypeInfo;
+export const Dim3d_TYPE = Dim3dTypeInfo.INSTANCE;

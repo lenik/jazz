@@ -3,7 +3,12 @@ import IArtifactExtrasTypeInfo from "./IArtifactExtrasTypeInfo";
 
 export class IArtifactExtras {
 
-    static readonly TYPE = IArtifactExtrasTypeInfo.INSTANCE;
+    static _typeInfo: IArtifactExtrasTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = IArtifactExtrasTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     caution?: string
     color?: string
