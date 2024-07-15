@@ -1,7 +1,7 @@
 import ArtifactPhaseTypeInfo from "./ArtifactPhaseTypeInfo";
 import _ArtifactPhase_stuff from "./_ArtifactPhase_stuff";
 
-export class ArtifactPhase extends _ArtifactPhase_stuff {
+export class ArtifactPhase extends _ArtifactPhase_stuff<ArtifactPhase> {
 
     static _typeInfo: ArtifactPhaseTypeInfo;
     static get TYPE() {
