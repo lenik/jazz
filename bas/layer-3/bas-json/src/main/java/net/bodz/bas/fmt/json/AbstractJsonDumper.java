@@ -135,11 +135,26 @@ public abstract class AbstractJsonDumper<self_t>
         dumpVariant(obj, 0);
     }
 
+    static Set<Object> ignoreVals = new HashSet<>();
+    static {
+        ignoreVals.add(Double.NaN);
+        ignoreVals.add(Float.NaN);
+    }
+
+    boolean shouldIgnore(Object val) {
+        return ignoreVals.contains(val);
+    }
+
     protected boolean dumpVariant(@NotNull Object obj, int depth)
             throws IOException, FormatException {
         if (obj == null) {
             out.value(null);
             return true;
+        }
+
+        if (shouldIgnore(obj)) {
+            out.value(null);
+            return false;
         }
 
         Class<?> type = obj.getClass();
@@ -294,9 +309,13 @@ public abstract class AbstractJsonDumper<self_t>
             if (key == null) // null-key isn't supported in json.
                 continue;
 
-            if (value == null)
+            if (value == null) {
                 if (! includeNull)
                     continue;
+            } else {
+                if (shouldIgnore(value))
+                    continue;
+            }
 
             if (beginChild(key.toString()))
                 try {
