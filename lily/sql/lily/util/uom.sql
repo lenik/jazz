@@ -1,5 +1,5 @@
 
-    create sequence uom_seq start with 1000;
+    create sequence uom_seq start with 10000;
     create table uom(
         id          int primary key default nextval('uom_seq'),
 --\mixin lily.mixin.Code
@@ -52,6 +52,13 @@
     insert into uom(id, code, label, prop, std, scale) values(430, 'ct',     '克拉',   '质量', 400, 0.2);
     insert into uom(id, code, label, prop) values(480, 'N', '牛顿', '力');
     insert into uom(id, code, label, prop, std, scale) values(481, 'kN',     '千牛顿',  '力', 480, 1);
+    insert into uom(id, code, label, prop) values(490, 'Pa', '帕', '压强');
+
+    insert into uom(id, code, label, prop) values(500, 'V', '伏特', '电压');
+    insert into uom(id, code, label, prop) values(510, 'A', '安培', '电流');
+    insert into uom(id, code, label, prop) values(520, 'W', '瓦特', '功率');
+    insert into uom(id, code, label, prop, std, scale) values(521, 'kW',     '千瓦',   '功率', 520, 1000);
+    insert into uom(id, code, label, prop) values(530, 'Ohm', '欧姆', '电阻');
 
     /*
     insert into uom(id, code, label, prop, std, scale) values(901, '个', '个', '数量', 1, 1);
