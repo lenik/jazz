@@ -18,10 +18,10 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
-import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
+import net.bodz.lily.meta.ReadOnly;
 import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
@@ -58,7 +58,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
      *
      * @label.zh 引用统计
      */
-    @Internal
+    @ReadOnly
     @OfGroup(StdGroup.Statistics.class)
     public int getRefCount() {
         return refCount;
