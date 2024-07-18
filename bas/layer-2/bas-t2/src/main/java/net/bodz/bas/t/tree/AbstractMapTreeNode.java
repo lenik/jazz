@@ -1,10 +1,17 @@
 package net.bodz.bas.t.tree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
 
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.object.ObjectInfo;
+import net.bodz.bas.repr.form.SortOrder;
 
 public abstract class AbstractMapTreeNode<node_t extends IMutableTreeNode<node_t>>
         extends AbstractMutableTreeNode<node_t> {
@@ -27,6 +34,16 @@ public abstract class AbstractMapTreeNode<node_t extends IMutableTreeNode<node_t
         if (map == null)
             throw new NullPointerException("map");
         this.childMap = map;
+    }
+
+    public AbstractMapTreeNode(SortOrder order) {
+        super();
+        this.childMap = order.newMap();
+    }
+
+    public AbstractMapTreeNode(node_t parent, SortOrder order) {
+        super(parent);
+        this.childMap = order.newMap();
     }
 
     protected Map<String, node_t> createMap() {
@@ -89,7 +106,7 @@ public abstract class AbstractMapTreeNode<node_t extends IMutableTreeNode<node_t
 
     @Override
     public void putChild(String key, node_t child) {
-        childMap.put(key, (node_t) child);
+        childMap.put(key, child);
     }
 
     @Override

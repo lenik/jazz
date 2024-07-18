@@ -9,7 +9,9 @@ import net.bodz.bas.meta.bean.Transient;
 
 public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<node_t>>
         extends AbstractTreeNode<node_t>
-        implements IMutableTreeNode<node_t>, Serializable {
+        implements
+            IMutableTreeNode<node_t>,
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -85,17 +87,13 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
             throws CreateException;
 
     @Override
-    protected final node_t _resolveChild(String childKey, String remainingPath) {
+    protected final node_t _resolveChild(String childKey) {
         node_t child = getChild(childKey);
         if (child == null) {
             child = newChild();
             putChild(childKey, child);
         }
-
-        if (remainingPath == null)
-            return child;
-        else
-            return child.resolve(remainingPath);
+        return child;
     }
 
     @Override

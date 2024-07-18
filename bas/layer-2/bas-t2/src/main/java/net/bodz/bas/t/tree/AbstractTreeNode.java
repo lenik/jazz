@@ -9,7 +9,8 @@ import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.t.iterator.RecIterator;
 
 public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
-        implements ITreeNode<node_t> {
+        implements
+            ITreeNode<node_t> {
 
     @Transient
     @Override
@@ -114,15 +115,50 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
             return next.resolve(path);
         }
 
-        return _resolveChild(key, path);
-    }
-
-    protected node_t _resolveChild(String childKey, String remainingPath) {
-        node_t child = getChild(childKey);
+        node_t child = _resolveChild(key);
         if (child == null)
             return null;
+
+        if (path == null)
+            return child;
         else
-            return child.resolve(remainingPath);
+            return child.resolve(path);
+    }
+
+    @Override
+    public node_t resolve(String[] path) {
+        if (path == null)
+            throw new NullPointerException("path");
+
+        @SuppressWarnings("unchecked")
+        node_t _this = (node_t) this;
+
+        if (path.length == 0)
+            return _this;
+
+        node_t ptr = _this;
+        for (String key : path) {
+            if (".".equals(key))
+                continue;
+
+            if ("..".equals(key)) {
+                node_t parent = getParent();
+                if (parent == null)
+                    ; // return null;
+                ptr = parent;
+                continue;
+            }
+
+            node_t child = _resolveChild(key);
+            if (child == null)
+                return null;
+            ptr = child;
+        }
+        return ptr;
+    }
+
+    protected node_t _resolveChild(String childKey) {
+        return getChild(childKey);
     }
 
     @Override

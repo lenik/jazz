@@ -3,6 +3,7 @@ package net.bodz.bas.t.tree;
 import java.util.Map;
 
 import net.bodz.bas.err.CreateException;
+import net.bodz.bas.repr.form.SortOrder;
 
 public class MapTreeNode<node_t extends IMutableTreeNode<node_t>>
         extends AbstractMapTreeNode<node_t> {
@@ -19,6 +20,14 @@ public class MapTreeNode<node_t extends IMutableTreeNode<node_t>>
 
     public MapTreeNode(node_t parent, Map<String, node_t> map) {
         super(parent, map);
+    }
+
+    public MapTreeNode(SortOrder order) {
+        super(order);
+    }
+
+    public MapTreeNode(node_t parent, SortOrder order) {
+        super(parent, order);
     }
 
     @SuppressWarnings("unchecked")

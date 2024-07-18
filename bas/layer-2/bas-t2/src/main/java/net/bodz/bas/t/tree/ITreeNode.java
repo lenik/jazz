@@ -10,7 +10,7 @@ public interface ITreeNode<node_t extends ITreeNode<?>> {
 
     /**
      * Get the parent node.
-     * 
+     *
      * @return <code>null</code> if this node doesn't have a parent.
      */
     node_t getParent();
@@ -29,15 +29,27 @@ public interface ITreeNode<node_t extends ITreeNode<?>> {
 
     /**
      * Get or create the node by path.
-     * 
+     *
      * @param path
      *            Path of the node to be resolved. Can't be <code>null</code>.
      * @return The resolved node. If the <code>path</code> is empty, returns this node. All missing
      *         nodes along the path should be created implicitly. If it's failed to create any
      *         missing node, <code>null</code> is returned.
-     * 
+     *
      */
     node_t resolve(String path);
+
+    /**
+     * Get or create the node by path.
+     *
+     * @param path
+     *            Path of the node to be resolved. Can't be <code>null</code>.
+     * @return The resolved node. If the <code>path</code> is empty, returns this node. All missing
+     *         nodes along the path should be created implicitly. If it's failed to create any
+     *         missing node, <code>null</code> is returned.
+     *
+     */
+    node_t resolve(String[] path);
 
     Set<String> childKeySet();
 
