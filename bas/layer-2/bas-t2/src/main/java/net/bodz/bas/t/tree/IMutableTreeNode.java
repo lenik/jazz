@@ -1,7 +1,8 @@
 package net.bodz.bas.t.tree;
 
-public interface IMutableTreeNode<node_t extends IMutableTreeNode<?>>
-        extends ITreeNode<node_t> {
+public interface IMutableTreeNode<node_t extends IMutableTreeNode<node_t>>
+        extends
+            ITreeNode<node_t> {
 
     @Override
     node_t getParent();

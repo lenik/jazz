@@ -6,6 +6,7 @@ import java.util.Set;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.meta.bean.Transient;
+import net.bodz.bas.repr.form.SortOrder;
 
 public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<node_t>>
         extends AbstractTreeNode<node_t>
@@ -101,6 +102,21 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
         Set<String> keySet = new HashSet<String>(childKeySet());
         for (String key : keySet)
             removeChild(key);
+    }
+
+    static class _Builder<node_t extends IMutableTreeNode<node_t>> {
+
+        SortOrder order = SortOrder.NONE;
+        node_t parent;
+
+        public void order(SortOrder order) {
+            this.order = order;
+        }
+
+        public void parent(node_t parent) {
+            this.parent = parent;
+        }
+
     }
 
 }

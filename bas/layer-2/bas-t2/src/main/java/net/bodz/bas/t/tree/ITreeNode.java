@@ -3,8 +3,9 @@ package net.bodz.bas.t.tree;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
-public interface ITreeNode<node_t extends ITreeNode<?>> {
+public interface ITreeNode<node_t extends ITreeNode<node_t>> {
 
     boolean isMutable();
 
@@ -60,5 +61,16 @@ public interface ITreeNode<node_t extends ITreeNode<?>> {
     String keyOf(ITreeNode<?> child);
 
     List<String> keysOf(ITreeNode<?> child);
+
+    void accept(ITreeNodeVisitor<? super node_t> visitor);
+
+    default void topDown(BiConsumer<List<String>, node_t> fn) {
+        accept(new PathNodeVisitor<node_t>() {
+            @Override
+            public void topDown(List<String> path, node_t node) {
+                fn.accept(path, node);
+            }
+        });
+    }
 
 }

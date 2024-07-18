@@ -37,4 +37,16 @@ public class MapTreeNode<node_t extends IMutableTreeNode<node_t>>
         return (node_t) new MapTreeNode<node_t>((node_t) this);
     }
 
+    public static <node_t extends MapTreeNode<node_t>> //
+    Builder<node_t> builder() {
+        return new Builder<>();
+    }
+
+    static class Builder<node_t extends MapTreeNode<node_t>>
+            extends _Builder<node_t> {
+        public MapTreeNode<node_t> build() {
+            return new MapTreeNode<node_t>(parent, order.newMap());
+        }
+    }
+
 }

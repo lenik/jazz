@@ -185,6 +185,13 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
             return keys.get(0);
     }
 
+    @Override
+    public void accept(ITreeNodeVisitor<? super node_t> visitor) {
+        @SuppressWarnings("unchecked")
+        node_t _this = (node_t) this;
+        visitor.node(_this);
+    }
+
 }
 
 class ChildRecIterator<node_t extends ITreeNode<node_t>>
