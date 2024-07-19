@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.err.CreateException;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.repr.form.SortOrder;
 
@@ -19,10 +18,6 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
     private node_t parent;
 
     public AbstractMutableTreeNode() {
-    }
-
-    public AbstractMutableTreeNode(node_t parent) {
-        attach(parent);
     }
 
     @Transient
@@ -54,22 +49,6 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
     }
 
     @Override
-    public <self_t extends node_t> self_t attach(node_t parent) {
-        @SuppressWarnings("unchecked")
-        self_t _this = (self_t) this;
-
-        if (this.parent != parent) {
-            detach();
-
-            this.parent = parent;
-            if (parent != null && parent.isMutable())
-                parent.addChild(_this);
-        }
-
-        return _this;
-    }
-
-    @Override
     public <self_t extends node_t> self_t attach(node_t parent, String key) {
         @SuppressWarnings("unchecked")
         self_t _this = (self_t) this;
@@ -84,16 +63,11 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
         return _this;
     }
 
-    protected abstract node_t newChild()
-            throws CreateException;
-
     @Override
     protected final node_t _resolveChild(String childKey) {
         node_t child = getChild(childKey);
-        if (child == null) {
-            child = newChild();
-            putChild(childKey, child);
-        }
+        if (child == null)
+            child = addNewChild(childKey);
         return child;
     }
 
@@ -108,13 +82,15 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
 
         SortOrder order = SortOrder.NONE;
         node_t parent;
+        String key;
 
         public void order(SortOrder order) {
             this.order = order;
         }
 
-        public void parent(node_t parent) {
+        public void parent(node_t parent, String key) {
             this.parent = parent;
+            this.key = key;
         }
 
     }

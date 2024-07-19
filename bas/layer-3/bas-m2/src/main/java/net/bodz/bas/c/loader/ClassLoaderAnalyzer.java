@@ -30,7 +30,8 @@ public class ClassLoaderAnalyzer {
             for (ClassLoader _loader : vector) {
                 ClassLoaderNode _node = loaderNodeMap.get(_loader);
                 if (_node == null) {
-                    _node = new ClassLoaderNode(_lastNode, _loader);
+                    String key = _loader.toString();
+                    _node = new ClassLoaderNode(_loader).attach(_lastNode, key);
                     loaderNodeMap.put(_loader, _node);
                 }
                 _lastNode = _node;

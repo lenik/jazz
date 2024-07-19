@@ -15,14 +15,11 @@ public interface IMutableTreeNode<node_t extends IMutableTreeNode<node_t>>
     /**
      * @return this.
      */
-    <self_t extends node_t> self_t attach(node_t parent);
-
-    /**
-     * @return this.
-     */
     <self_t extends node_t> self_t attach(node_t parent, String key);
 
-    void addChild(node_t child);
+    node_t addNewChild(String key);
+
+//    void addChild(node_t child);
 
     /**
      * If the specific child is duplicated in the children set, any number of them can be removed.

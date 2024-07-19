@@ -2,8 +2,6 @@ package net.bodz.bas.t.tree;
 
 import java.util.List;
 
-import net.bodz.bas.err.CreateException;
-
 public class ListTreeNode<node_t extends IMutableTreeNode<node_t>>
         extends AbstractListTreeNode<node_t> {
 
@@ -13,19 +11,27 @@ public class ListTreeNode<node_t extends IMutableTreeNode<node_t>>
         super();
     }
 
-    public ListTreeNode(node_t parent) {
-        super(parent);
-    }
-
-    public ListTreeNode(node_t parent, List<node_t> list) {
-        super(parent, list);
+    public ListTreeNode(List<node_t> list) {
+        super(list);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    protected node_t newChild()
-            throws CreateException {
-        return (node_t) new ListTreeNode<node_t>((node_t) this);
+    public node_t addNewChild(String key) {
+        int id;
+        try {
+            id = Integer.parseInt(key);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(e);
+        }
+
+        if (id != size())
+            throw new IllegalArgumentException("bad key (index): " + key);
+
+        node_t _this = (node_t) this;
+        node_t child = new ListTreeNode<node_t>().attach(_this, key);
+        list.add(child);
+        return child;
     }
 
 }

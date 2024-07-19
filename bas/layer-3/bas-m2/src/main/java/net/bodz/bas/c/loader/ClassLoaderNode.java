@@ -3,7 +3,6 @@ package net.bodz.bas.c.loader;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import net.bodz.bas.err.CreateException;
 import net.bodz.bas.t.tree.AbstractListTreeNode;
 
 public class ClassLoaderNode
@@ -14,15 +13,13 @@ public class ClassLoaderNode
     ClassLoader loader;
     Set<String> tags = new LinkedHashSet<String>();
 
-    public ClassLoaderNode(ClassLoaderNode parent, ClassLoader loader) {
-        super(parent);
+    public ClassLoaderNode(ClassLoader loader) {
         this.loader = loader;
     }
 
     @Override
-    protected ClassLoaderNode newChild()
-            throws CreateException {
-        return new ClassLoaderNode(this, null);
+    public ClassLoaderNode addNewChild(String key) {
+        return new ClassLoaderNode(null).attach(this, key);
     }
 
     public ClassLoader getClassLoader() {

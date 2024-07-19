@@ -1,5 +1,6 @@
 package net.bodz.bas.t.tree;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -26,7 +27,13 @@ public interface ITreeNode<node_t extends ITreeNode<node_t>> {
 
     node_t getChild(String key);
 
-    node_t getDescendant(String path);
+    node_t findPath(String path);
+
+    node_t find(Iterable<String> path);
+
+    default node_t find(String... path) {
+        return find(Arrays.asList(path));
+    }
 
     /**
      * Get or create the node by path.
@@ -38,7 +45,7 @@ public interface ITreeNode<node_t extends ITreeNode<node_t>> {
      *         missing node, <code>null</code> is returned.
      *
      */
-    node_t resolve(String path);
+    node_t findOrCreatePath(String path);
 
     /**
      * Get or create the node by path.
@@ -50,7 +57,11 @@ public interface ITreeNode<node_t extends ITreeNode<node_t>> {
      *         missing node, <code>null</code> is returned.
      *
      */
-    node_t resolve(String[] path);
+    node_t findOrCreate(Iterable<String> path);
+
+    default node_t findOrCreate(String... path) {
+        return findOrCreate(Arrays.asList(path));
+    }
 
     Set<String> childKeySet();
 

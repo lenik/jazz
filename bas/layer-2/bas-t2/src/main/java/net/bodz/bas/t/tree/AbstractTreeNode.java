@@ -56,7 +56,7 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
     public abstract node_t getChild(String key);
 
     @Override
-    public node_t getDescendant(String path) {
+    public node_t findPath(String path) {
         int slash = path.indexOf('/');
         if (slash == -1)
             return getChild(path);
@@ -69,7 +69,7 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
         node_t next;
 
         if (".".equals(key))
-            return getDescendant(path);
+            return findPath(path);
 
         if ("..".equals(key)) {
             next = getParent();
@@ -81,11 +81,35 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
                 return null;
         }
 
-        return next.getDescendant(path);
+        return next.findPath(path);
     }
 
     @Override
-    public node_t resolve(String path) {
+    public node_t find(Iterable<String> path) {
+        @SuppressWarnings("unchecked")
+        node_t node = (node_t) this;
+
+        for (String key : path) {
+            if (".".equals(key))
+                continue;
+
+            if ("..".equals(key)) {
+                node_t next = getParent();
+                if (next == null)
+                    continue; // return null;
+                node = next;
+                continue;
+            }
+
+            node_t next = getChild(key);
+            if (next == null)
+                return null;
+        }
+        return node;
+    }
+
+    @Override
+    public node_t findOrCreatePath(String path) {
         if (path == null)
             throw new NullPointerException("path");
 
@@ -106,13 +130,13 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
         }
 
         if (".".equals(key))
-            return resolve(path);
+            return findOrCreatePath(path);
 
         if ("..".equals(key)) {
             node_t next = getParent();
             if (next == null)
                 next = _this;
-            return next.resolve(path);
+            return next.findOrCreatePath(path);
         }
 
         node_t child = _resolveChild(key);
@@ -122,19 +146,16 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
         if (path == null)
             return child;
         else
-            return child.resolve(path);
+            return child.findOrCreatePath(path);
     }
 
     @Override
-    public node_t resolve(String[] path) {
+    public node_t findOrCreate(Iterable<String> path) {
         if (path == null)
             throw new NullPointerException("path");
 
         @SuppressWarnings("unchecked")
         node_t _this = (node_t) this;
-
-        if (path.length == 0)
-            return _this;
 
         node_t ptr = _this;
         for (String key : path) {

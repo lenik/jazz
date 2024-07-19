@@ -140,8 +140,8 @@ public class ProjectInfoMojo
             /**
              * The dependency artifacts is only resolved since the compile phase.
              *
-             * That is, "@phase" must be compile or above, or the
-             * "@requiresDependencyResolution test" must be set.
+             * That is, "@phase" must be compile or above, or the "@requiresDependencyResolution
+             * test" must be set.
              *
              * Otherwise, the dpendency artifacts is null.
              */
@@ -166,7 +166,7 @@ public class ProjectInfoMojo
                 if (classRealm == null)
                     out.println("project.classRealm: null");
                 else {
-                    ClassLoaderNode realmNode = new ClassLoaderNode(null, classRealm);
+                    ClassLoaderNode realmNode = new ClassLoaderNode(classRealm);
                     realmNode.addTag("project.classRealm");
                     out.println("project.classRealm: ");
                     formatter.format(out, realmNode);

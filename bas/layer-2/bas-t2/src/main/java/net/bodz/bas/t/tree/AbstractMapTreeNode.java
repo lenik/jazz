@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
 
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.object.ObjectInfo;
@@ -18,36 +17,29 @@ public abstract class AbstractMapTreeNode<node_t extends IMutableTreeNode<node_t
 
     private static final long serialVersionUID = 1L;
 
+    private final SortOrder order;
     private Map<String, node_t> childMap;
 
     public AbstractMapTreeNode() {
-        this.childMap = createMap();
+        this(SortOrder.NONE);
     }
 
-    public AbstractMapTreeNode(node_t parent) {
-        super(parent);
-        this.childMap = createMap();
+    public AbstractMapTreeNode(SortOrder order) {
+        if (order == null)
+            throw new NullPointerException("order");
+        this.order = order;
+        this.childMap = order.newMap();
     }
 
-    public AbstractMapTreeNode(node_t parent, Map<String, node_t> map) {
-        super(parent);
+    protected AbstractMapTreeNode(SortOrder order, Map<String, node_t> map) {
+        this(order);
         if (map == null)
             throw new NullPointerException("map");
         this.childMap = map;
     }
 
-    public AbstractMapTreeNode(SortOrder order) {
-        super();
-        this.childMap = order.newMap();
-    }
-
-    public AbstractMapTreeNode(node_t parent, SortOrder order) {
-        super(parent);
-        this.childMap = order.newMap();
-    }
-
     protected Map<String, node_t> createMap() {
-        return new TreeMap<String, node_t>();
+        return order.newMap();
     }
 
     @Override
@@ -87,8 +79,7 @@ public abstract class AbstractMapTreeNode<node_t extends IMutableTreeNode<node_t
         return keys;
     }
 
-    @Override
-    public void addChild(node_t child) {
+    void _addChild(node_t child) {
         String prefix = ObjectInfo.getSimpleId(child);
         String key = TextMap.fn.searchUnusedKey(childMap.keySet(), prefix);
         putChild(key, child);

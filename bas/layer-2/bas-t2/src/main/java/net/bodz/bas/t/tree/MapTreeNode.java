@@ -2,7 +2,6 @@ package net.bodz.bas.t.tree;
 
 import java.util.Map;
 
-import net.bodz.bas.err.CreateException;
 import net.bodz.bas.repr.form.SortOrder;
 
 public class MapTreeNode<node_t extends IMutableTreeNode<node_t>>
@@ -14,27 +13,22 @@ public class MapTreeNode<node_t extends IMutableTreeNode<node_t>>
         super();
     }
 
-    public MapTreeNode(node_t parent) {
-        super(parent);
-    }
-
-    public MapTreeNode(node_t parent, Map<String, node_t> map) {
-        super(parent, map);
-    }
-
     public MapTreeNode(SortOrder order) {
         super(order);
     }
 
-    public MapTreeNode(node_t parent, SortOrder order) {
-        super(parent, order);
+    protected MapTreeNode(SortOrder order, Map<String, node_t> map) {
+        super(order, map);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    protected node_t newChild()
-            throws CreateException {
-        return (node_t) new MapTreeNode<node_t>((node_t) this);
+    public node_t addNewChild(String key) {
+        node_t _this = (node_t) this;
+        node_t child = new MapTreeNode<node_t>().attach(_this, key);
+        putChild(key, child);
+        return child;
+
     }
 
     public static <node_t extends MapTreeNode<node_t>> //
@@ -45,7 +39,7 @@ public class MapTreeNode<node_t extends IMutableTreeNode<node_t>>
     static class Builder<node_t extends MapTreeNode<node_t>>
             extends _Builder<node_t> {
         public MapTreeNode<node_t> build() {
-            return new MapTreeNode<node_t>(parent, order.newMap());
+            return new MapTreeNode<node_t>(order).attach(parent, key);
         }
     }
 

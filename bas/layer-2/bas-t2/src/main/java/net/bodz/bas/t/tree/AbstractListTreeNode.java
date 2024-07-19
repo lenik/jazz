@@ -13,19 +13,13 @@ public abstract class AbstractListTreeNode<node_t extends IMutableTreeNode<node_
 
     private static final long serialVersionUID = 1L;
 
-    private List<node_t> list;
+    List<node_t> list;
 
     public AbstractListTreeNode() {
         this.list = createList();
     }
 
-    public AbstractListTreeNode(node_t parent) {
-        super(parent);
-        this.list = createList();
-    }
-
-    public AbstractListTreeNode(node_t parent, List<node_t> list) {
-        super(parent);
+    public AbstractListTreeNode(List<node_t> list) {
         if (list == null)
             throw new NullPointerException("list");
         this.list = list;
@@ -83,11 +77,11 @@ public abstract class AbstractListTreeNode<node_t extends IMutableTreeNode<node_
         return keys;
     }
 
-    @Override
-    public synchronized void addChild(node_t child) {
+    public void addChild(node_t child) {
         list.add(child);
     }
 
+    @Override
     public void removeChild(node_t child) {
         list.remove(child);
     }
@@ -98,7 +92,7 @@ public abstract class AbstractListTreeNode<node_t extends IMutableTreeNode<node_
         if (childParent != null)
             throw new IllegalStateException("Child node is already attached: " + child);
 
-        if (!StringPred.isDecimal(key))
+        if (! StringPred.isDecimal(key))
             throw new IllegalArgumentException("key isn't integer: " + key);
 
         int index = Integer.parseInt(key);
@@ -118,7 +112,7 @@ public abstract class AbstractListTreeNode<node_t extends IMutableTreeNode<node_
             if (index >= 0 && index < list.size()) {
                 node_t child = list.remove(index);
                 if (child.isMutable()) {
-                    IMutableTreeNode<?> _child = (IMutableTreeNode<?>) child;
+                    IMutableTreeNode<?> _child = child;
                     _child.detach();
                 }
                 return child;
