@@ -1,6 +1,17 @@
 package net.bodz.bas.repr.form;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 public enum SortOrder {
 
@@ -20,6 +31,16 @@ public enum SortOrder {
 
     public static SortOrder valueOf(int ordinal) {
         return values[ordinal];
+    }
+
+    public static SortOrder ofMap(Map<?, ?> map) {
+        if (map == null)
+            return NONE;
+        if (map instanceof SortedMap<?, ?>)
+            return SORTED;
+        if (map instanceof LinkedHashMap<?, ?>)
+            return KEEP;
+        return NONE;
     }
 
     public <K, V> Map<K, V> newMap() {
