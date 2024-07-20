@@ -1,13 +1,15 @@
 package net.bodz.bas.t.tree;
 
 import java.util.List;
-import java.util.Stack;
+
+import net.bodz.bas.t.list.ArrayStack;
+import net.bodz.bas.t.list.IStack;
 
 public abstract class PathNodeVisitor<node_t extends ITreeNode<node_t>>
         implements
             ITreeNodeVisitor<node_t> {
 
-    Stack<String> path;
+    IStack<String> path = new ArrayStack<>();
 
     @Override
     public final void node(node_t node) {

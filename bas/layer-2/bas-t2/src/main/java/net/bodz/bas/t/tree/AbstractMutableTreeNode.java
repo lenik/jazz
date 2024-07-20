@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.meta.bean.Transient;
-import net.bodz.bas.repr.form.SortOrder;
 
 public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<node_t>>
         extends AbstractTreeNode<node_t>
@@ -64,35 +63,88 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
     }
 
     @Override
-    protected final node_t _resolveChild(String childKey) {
-        node_t child = getChild(childKey);
-        if (child == null)
-            child = addNewChild(childKey);
-        return child;
-    }
-
-    @Override
     public void clear() {
         Set<String> keySet = new HashSet<String>(childKeySet());
         for (String key : keySet)
             removeChild(key);
     }
 
-    static class _Builder<node_t extends IMutableTreeNode<node_t>> {
+    @Override
+    public node_t getOrCreateChild(String key) {
+        node_t child = getChild(key);
+        if (child == null)
+            child = addNewChild(key);
+        return child;
+    }
 
-        SortOrder order = SortOrder.NONE;
-        node_t parent;
+    @Override
+    public node_t findOrCreatePath(String path) {
+        if (path == null)
+            throw new NullPointerException("path");
+
+        @SuppressWarnings("unchecked")
+        node_t _this = (node_t) this;
+
+        if (path.isEmpty())
+            return _this;
+
+        int slash = path.indexOf('/');
         String key;
-
-        public void order(SortOrder order) {
-            this.order = order;
+        if (slash == -1) {
+            key = path;
+            path = null;
+        } else {
+            key = path.substring(0, slash);
+            path = path.substring(slash + 1);
         }
 
-        public void parent(node_t parent, String key) {
-            this.parent = parent;
-            this.key = key;
+        if (".".equals(key))
+            return findOrCreatePath(path);
+
+        if ("..".equals(key)) {
+            node_t next = getParent();
+            if (next == null)
+                next = _this;
+            return next.findOrCreatePath(path);
         }
 
+        node_t child = getOrCreateChild(key);
+        if (child == null)
+            return null;
+
+        if (path == null)
+            return child;
+        else
+            return child.findOrCreatePath(path);
+    }
+
+    @Override
+    public node_t findOrCreate(Iterable<String> path) {
+        if (path == null)
+            throw new NullPointerException("path");
+
+        @SuppressWarnings("unchecked")
+        node_t _this = (node_t) this;
+
+        node_t ptr = _this;
+        for (String key : path) {
+            if (".".equals(key))
+                continue;
+
+            if ("..".equals(key)) {
+                node_t parent = getParent();
+                if (parent == null)
+                    ; // return null;
+                ptr = parent;
+                continue;
+            }
+
+            node_t child = ptr.getOrCreateChild(key);
+            if (child == null)
+                return null;
+            ptr = child;
+        }
+        return ptr;
     }
 
 }

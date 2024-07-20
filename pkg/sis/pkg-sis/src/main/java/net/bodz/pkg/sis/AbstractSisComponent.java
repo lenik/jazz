@@ -81,7 +81,7 @@ public abstract class AbstractSisComponent
             else
                 id = parentId + '.' + name;
 
-            attach(parent);
+            attach(parent, name);
         }
     }
 

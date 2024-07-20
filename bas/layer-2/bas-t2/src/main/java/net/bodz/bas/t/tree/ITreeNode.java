@@ -35,34 +35,6 @@ public interface ITreeNode<node_t extends ITreeNode<node_t>> {
         return find(Arrays.asList(path));
     }
 
-    /**
-     * Get or create the node by path.
-     *
-     * @param path
-     *            Path of the node to be resolved. Can't be <code>null</code>.
-     * @return The resolved node. If the <code>path</code> is empty, returns this node. All missing
-     *         nodes along the path should be created implicitly. If it's failed to create any
-     *         missing node, <code>null</code> is returned.
-     *
-     */
-    node_t findOrCreatePath(String path);
-
-    /**
-     * Get or create the node by path.
-     *
-     * @param path
-     *            Path of the node to be resolved. Can't be <code>null</code>.
-     * @return The resolved node. If the <code>path</code> is empty, returns this node. All missing
-     *         nodes along the path should be created implicitly. If it's failed to create any
-     *         missing node, <code>null</code> is returned.
-     *
-     */
-    node_t findOrCreate(Iterable<String> path);
-
-    default node_t findOrCreate(String... path) {
-        return findOrCreate(Arrays.asList(path));
-    }
-
     Set<String> childKeySet();
 
     Collection<? extends node_t> getChildren();
@@ -79,6 +51,15 @@ public interface ITreeNode<node_t extends ITreeNode<node_t>> {
         accept(new PathNodeVisitor<node_t>() {
             @Override
             public void topDown(List<String> path, node_t node) {
+                fn.accept(path, node);
+            }
+        });
+    }
+
+    default void bottomUp(BiConsumer<List<String>, node_t> fn) {
+        accept(new PathNodeVisitor<node_t>() {
+            @Override
+            public void bottomUp(List<String> path, node_t node) {
                 fn.accept(path, node);
             }
         });
