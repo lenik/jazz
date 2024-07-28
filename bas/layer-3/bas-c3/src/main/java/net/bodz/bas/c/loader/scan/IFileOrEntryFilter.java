@@ -5,11 +5,12 @@ import java.io.FileFilter;
 import java.util.zip.ZipEntry;
 
 public interface IFileOrEntryFilter
-        extends FileFilter {
+        extends
+            FileFilter {
 
     boolean accept(ZipEntry entry);
 
-    IFileOrEntryFilter TRUE = new IFileOrEntryFilter() {
+    IFileOrEntryFilter ALL = new IFileOrEntryFilter() {
 
         @Override
         public boolean accept(File pathname) {
@@ -19,19 +20,6 @@ public interface IFileOrEntryFilter
         @Override
         public boolean accept(ZipEntry entry) {
             return true;
-        }
-    };
-
-    IFileOrEntryFilter FALSE = new IFileOrEntryFilter() {
-
-        @Override
-        public boolean accept(File pathname) {
-            return false;
-        }
-
-        @Override
-        public boolean accept(ZipEntry entry) {
-            return false;
         }
     };
 

@@ -1,5 +1,6 @@
 package net.bodz.bas.c.loader.scan;
 
+@FunctionalInterface
 public interface ITypeNameCallback {
 
     /**

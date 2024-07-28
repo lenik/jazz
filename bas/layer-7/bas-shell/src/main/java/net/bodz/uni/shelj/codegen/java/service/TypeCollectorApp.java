@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.loader.ClassLoaders;
-import net.bodz.bas.c.loader.scan.TypeCollector;
+import net.bodz.bas.c.loader.scan.ClassCollector1;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.c.type.TypeIndex;
@@ -76,11 +76,16 @@ public class TypeCollectorApp
      */
     List<File> scanDirs = new ArrayList<>();
 
-    ClassLoader classLoader = ClassLoaders.getRuntimeClassLoader();
+    ClassLoader classLoader;
     TypeIndex typeIndex;
 
     public TypeCollectorApp() {
+        classLoader = getDefaultClassLoader();
         typeIndex = TypeIndex.getInstance(classLoader);
+    }
+
+    protected ClassLoader getDefaultClassLoader() {
+        return ClassLoaders.getRuntimeClassLoader();
     }
 
     @Override
@@ -113,7 +118,15 @@ public class TypeCollectorApp
             for (Class<?> type : typeIndex.listAnnodated(IndexedType.class))
                 indexedTypes.add(type);
 
-        TypeCollector collector = new TypeCollector(classLoader);
+        ClassCollector1 collector = new ClassCollector1();
+
+        for (String pkg : scanPackages)
+            collector.includePackageToScan(pkg);
+
+        for (File dir : scanDirs) {
+            dir = dir.getCanonicalFile();
+            collector.includeDirToScan(dir);
+        }
 
         for (Class<?> indexedType : indexedTypes) {
 
@@ -125,18 +138,9 @@ public class TypeCollectorApp
                     String graph = i++ == n - 1 ? "    `- " : "    |- ";
                     System.out.println(graph + extension);
                 }
-                continue;
+            } else {
+                collector.collect(classLoader, indexedType);
             }
-
-            for (String pkg : scanPackages)
-                collector.includePackageToScan(pkg);
-
-            for (File dir : scanDirs) {
-                dir = dir.getCanonicalFile();
-                collector.includeDirToScan(dir);
-            }
-
-            collector.collect(indexedType);
         }
     }
 
