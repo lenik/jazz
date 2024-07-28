@@ -1,2 +1,0 @@
-main cfgconv = net.bodz.lily.tool.javagen.config.ConfigFormatConv
-main item2att = net.bodz.lily.tool.sql.Item2Attachment
