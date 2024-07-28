@@ -1,13 +1,24 @@
 package net.bodz.bas.t.iterator;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.Function;
 
 import net.bodz.bas.t.coll.TransformedEnumeration;
 
 public class Enumerations {
+
+    public static <E> List<E> copy(Enumeration<E> enm) {
+        List<E> list = new ArrayList<>();
+        while (enm.hasMoreElements()) {
+            E el = enm.nextElement();
+            list.add(el);
+        }
+        return list;
+    }
 
     public static <E> Enumeration<E> otp(Iterator<E> iter) {
         return new IteratorEnum<E>(iter);
