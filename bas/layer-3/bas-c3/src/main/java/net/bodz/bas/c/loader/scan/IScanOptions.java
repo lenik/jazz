@@ -14,12 +14,12 @@ public interface IScanOptions {
                 if (pathname.isDirectory()) {
                     if (! acceptDirEntry(pathname))
                         return false;
-                    if (! acceptDirEntry(pathname.getName()))
+                    if (! acceptDirName(pathname.getName()))
                         return false;
                 } else {
                     if (! acceptFileEntry(pathname))
                         return false;
-                    if (! acceptFileEntry(pathname.getName()))
+                    if (! acceptFileName(pathname.getName()))
                         return false;
                 }
                 return true;
@@ -31,12 +31,12 @@ public interface IScanOptions {
         if (entry.isDirectory()) {
             if (! acceptDirEntry(entry))
                 return false;
-            if (! acceptDirEntry(entry.getName()))
+            if (! acceptDirName(entry.getName()))
                 return false;
         } else {
             if (! acceptFileEntry(entry))
                 return false;
-            if (! acceptFileEntry(entry.getName()))
+            if (! acceptFileName(entry.getName()))
                 return false;
         }
         return true;
@@ -46,13 +46,13 @@ public interface IScanOptions {
 
     boolean acceptDirEntry(ZipEntry entry);
 
-    boolean acceptDirEntry(String name);
+    boolean acceptDirName(String name);
 
     boolean acceptFileEntry(File file);
 
     boolean acceptFileEntry(ZipEntry entry);
 
-    boolean acceptFileEntry(String name);
+    boolean acceptFileName(String name);
 
     boolean acceptJarPath(JarFile jarFile);
 
@@ -73,7 +73,7 @@ public interface IScanOptions {
         }
 
         @Override
-        public boolean acceptDirEntry(String name) {
+        public boolean acceptDirName(String name) {
             return true;
         }
 
@@ -88,7 +88,7 @@ public interface IScanOptions {
         }
 
         @Override
-        public boolean acceptFileEntry(String name) {
+        public boolean acceptFileName(String name) {
             return true;
         }
 

@@ -28,8 +28,8 @@ public class DecoratedScanOptions
     }
 
     @Override
-    public boolean acceptDirEntry(String name) {
-        return getWrapped().acceptDirEntry(name);
+    public boolean acceptDirName(String name) {
+        return getWrapped().acceptDirName(name);
     }
 
     @Override
@@ -43,8 +43,8 @@ public class DecoratedScanOptions
     }
 
     @Override
-    public boolean acceptFileEntry(String name) {
-        return getWrapped().acceptFileEntry(name);
+    public boolean acceptFileName(String name) {
+        return getWrapped().acceptFileName(name);
     }
 
     @Override

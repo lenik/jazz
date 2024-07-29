@@ -30,12 +30,9 @@ public class ResourceScanner {
         Enumeration<URL> urls = classLoader.getResources(resourceName);
         while (urls.hasMoreElements()) {
             URL url = urls.nextElement();
-            // System.out.println(url);
-            if ("jar".equals(url.getProtocol())) {
-                String path = url.getPath(); // "file:....!/..."
-                int exclm = path.lastIndexOf('!');
-                String jarPath = path.substring(5, exclm); // remove "file:"
-                JarFile jarFile = new JarFile(jarPath);
+
+            JarFile jarFile = JarFiles.fromJarURL(url);
+            if (jarFile != null) {
                 if (! options.acceptJarPath(jarFile))
                     continue;
 
@@ -48,7 +45,9 @@ public class ResourceScanner {
                         list.addItem(new JarItem(jarFile, entry));
                     }
                 }
-            } else if ("file".equals(url.getProtocol())) {
+            }
+
+            else if ("file".equals(url.getProtocol())) {
                 URI uri;
                 try {
                     uri = url.toURI();

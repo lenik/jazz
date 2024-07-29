@@ -7,7 +7,8 @@ import java.util.List;
 
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.loader.ClassLoaders;
-import net.bodz.bas.c.loader.scan.ClassCollector1;
+import net.bodz.bas.c.loader.scan.ClassCollector;
+import net.bodz.bas.c.loader.scan.ClassForrest;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.c.type.TypeIndex;
@@ -118,7 +119,7 @@ public class TypeCollectorApp
             for (Class<?> type : typeIndex.listAnnodated(IndexedType.class))
                 indexedTypes.add(type);
 
-        ClassCollector1 collector = new ClassCollector1();
+        ClassCollector collector = new ClassCollector();
 
         for (String pkg : scanPackages)
             collector.includePackageToScan(pkg);
@@ -128,8 +129,9 @@ public class TypeCollectorApp
             collector.includeDirToScan(dir);
         }
 
-        for (Class<?> indexedType : indexedTypes) {
+        ClassForrest forrest = collector.scan(classLoader);
 
+        for (Class<?> indexedType : indexedTypes) {
             if (listOnly) {
                 System.out.println("SPI: " + indexedType);
                 Collection<?> list = typeIndex.listIndexed(indexedType);
@@ -139,7 +141,7 @@ public class TypeCollectorApp
                     System.out.println(graph + extension);
                 }
             } else {
-                collector.collect(classLoader, indexedType);
+                collector.collect(forrest, indexedType);
             }
         }
     }

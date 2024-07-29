@@ -21,11 +21,10 @@ import net.bodz.bas.meta.codegen.IEtcFilesEditor;
 import net.bodz.bas.meta.codegen.IEtcFilesInstaller;
 import net.bodz.bas.meta.codegen.IndexedType;
 
-public class ClassCollector1 {
+public class ClassCollector {
 
-    static Logger logger = LoggerFactory.getLogger(ClassCollector1.class);
+    static Logger logger = LoggerFactory.getLogger(ClassCollector.class);
 
-//    ClassScanner scanner;
     DefaultScanOptions scanOptions;
 
     List<String> includeFqcnPrefixes = new ArrayList<String>();
@@ -36,12 +35,8 @@ public class ClassCollector1 {
     boolean showPaths;
     boolean deleteEmptyFiles = true;
 
-    public ClassCollector1() {
+    public ClassCollector() {
         scanOptions = new DefaultScanOptions();
-    }
-
-    protected ClassScanner createClassScanner() {
-        return new ClassScanner(scanOptions);
     }
 
     public boolean isShowPaths() {
@@ -236,23 +231,22 @@ public class ClassCollector1 {
         return classLoader;
     }
 
-    synchronized ClassForrest scan(ClassLoader classLoader)
+    public ClassForrest scan(ClassLoader classLoader)
             throws IOException {
-        ClassScanner scanner = createClassScanner();
+        ClassFinder scanner = new ClassFinder(scanOptions);
 
         if (includeFqcnPrefixes.isEmpty()) {
-            scanner.scanPackage(classLoader, "");
+            scanner.addAllClasses(classLoader);
         } else {
             for (String packageName : includeFqcnPrefixes)
-                scanner.scanPackage(classLoader, packageName);
+                scanner.addPackage(classLoader, packageName);
         }
 
-        return scanner.forrest;
+        return scanner;
     }
 
-    public List<Class<?>> collect(ClassLoader classLoader, Class<?> baseClass)
+    public List<Class<?>> collect(ClassForrest forrest, Class<?> baseClass)
             throws IOException {
-        ClassForrest forrest = scan(classLoader);
 
         FileContentMap contents = publishEtcFiles(forrest, baseClass);
         int size = contents.size();

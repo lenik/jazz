@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,9 @@ import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 import net.bodz.bas.meta.meta.Implicit;
 
-public class ClassForrest {
+public class ClassForrest
+        implements
+            Iterable<Class<?>> {
 
     Set<Class<?>> parseList = new LinkedHashSet<>();
     Set<Class<?>> closure = new HashSet<>();
@@ -35,6 +38,15 @@ public class ClassForrest {
 
     public Set<Class<?>> getRoots() {
         return roots;
+    }
+
+    public Set<Class<?>> getClasses() {
+        return extensions.keySet();
+    }
+
+    @Override
+    public Iterator<Class<?>> iterator() {
+        return extensions.keySet().iterator();
     }
 
     public void clear() {
@@ -189,7 +201,7 @@ public class ClassForrest {
                 implementing = false;
             }
 
-            boolean implicitInherited = ! base.isAnnotationPresent(Implicit.class);
+            boolean implicitInherited = base.isAnnotationPresent(Implicit.class);
             if (! implicitInherited)
                 annotating = false;
 

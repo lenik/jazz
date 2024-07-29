@@ -11,7 +11,7 @@ public class AbstractScanOptions
     @Override
     public boolean acceptDirEntry(File dir) {
         String name = dir.getName();
-        if (! acceptDirEntry(name))
+        if (! acceptDirName(name))
             return false;
         return true;
     }
@@ -19,13 +19,13 @@ public class AbstractScanOptions
     @Override
     public boolean acceptDirEntry(ZipEntry entry) {
         String name = entry.getName();
-        if (! acceptDirEntry(name))
+        if (! acceptDirName(name))
             return false;
         return true;
     }
 
     @Override
-    public boolean acceptDirEntry(String name) {
+    public boolean acceptDirName(String name) {
         return true;
     }
 
@@ -33,7 +33,7 @@ public class AbstractScanOptions
     public boolean acceptFileEntry(File file) {
         if (file.isFile()) {
             String name = file.getName();
-            if (! acceptFileEntry(name))
+            if (! acceptFileName(name))
                 return false;
         }
         return true;
@@ -43,14 +43,14 @@ public class AbstractScanOptions
     public boolean acceptFileEntry(ZipEntry entry) {
         if (! entry.isDirectory()) {
             String name = entry.getName();
-            if (! acceptFileEntry(name))
+            if (! acceptFileName(name))
                 return false;
         }
         return true;
     }
 
     @Override
-    public boolean acceptFileEntry(String name) {
+    public boolean acceptFileName(String name) {
         return true;
     }
 
