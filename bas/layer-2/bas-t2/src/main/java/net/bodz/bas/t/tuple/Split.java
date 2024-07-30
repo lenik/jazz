@@ -11,19 +11,35 @@ public class Split
 
     public String a;
     public String b;
+    public String sep;
 
-    public Split(String a, String b) {
+    public Split(String a, String b, char sep) {
         this.a = a;
         this.b = b;
+        this.sep = String.valueOf(sep);
+    }
+
+    public Split(String a, String b, String sep) {
+        this.a = a;
+        this.b = b;
+        this.sep = sep;
     }
 
     static Split nul() {
-        return new Split(null, null);
+        return new Split(null, null, null);
     }
 
     @Override
     public Split clone() {
-        return new Split(a, b);
+        return new Split(a, b, sep);
+    }
+
+    public String join() {
+        if (a == null)
+            return b;
+        if (b == null)
+            return a;
+        return a + sep + b;
     }
 
     @Override
@@ -39,7 +55,7 @@ public class Split
     }
 
     public Split toSwapped() {
-        return new Split(b, a);
+        return new Split(b, a, sep);
     }
 
     @Override
@@ -226,9 +242,9 @@ public class Split
             return nul();
         int pos = s.indexOf(sep);
         if (pos == -1)
-            return new Split(s, null);
+            return new Split(s, null, sep);
         else
-            return new Split(s.substring(0, pos), s.substring(pos + 1));
+            return new Split(s.substring(0, pos), s.substring(pos + 1), sep);
     }
 
     public static Split shiftFirst(String s, String sep) {
@@ -240,9 +256,9 @@ public class Split
             throw new IllegalArgumentException("empty sep");
         int pos = s.indexOf(sep);
         if (pos == -1)
-            return new Split(s, null);
+            return new Split(s, null, sep);
         else
-            return new Split(s.substring(0, pos), s.substring(pos + sep.length()));
+            return new Split(s.substring(0, pos), s.substring(pos + sep.length()), sep);
     }
 
     public static Split skip(String s, char sep) {
@@ -250,9 +266,9 @@ public class Split
             return nul();
         int pos = s.indexOf(sep);
         if (pos == -1)
-            return new Split(null, s);
+            return new Split(null, s, sep);
         else
-            return new Split(s.substring(0, pos), s.substring(pos + 1));
+            return new Split(s.substring(0, pos), s.substring(pos + 1), sep);
     }
 
     public static Split skipFirst(String s, String sep) {
@@ -264,9 +280,9 @@ public class Split
             throw new IllegalArgumentException("empty sep");
         int pos = s.indexOf(sep);
         if (pos == -1)
-            return new Split(null, s);
+            return new Split(null, s, sep);
         else
-            return new Split(s.substring(0, pos), s.substring(pos + sep.length()));
+            return new Split(s.substring(0, pos), s.substring(pos + sep.length()), sep);
     }
 
     public static Split pop(String s, char sep) {
@@ -274,9 +290,9 @@ public class Split
             return nul();
         int pos = s.lastIndexOf(sep);
         if (pos == -1)
-            return new Split(null, s);
+            return new Split(null, s, sep);
         else
-            return new Split(s.substring(0, pos), s.substring(pos + 1));
+            return new Split(s.substring(0, pos), s.substring(pos + 1), sep);
     }
 
     public static Split popLast(String s, String sep) {
@@ -288,9 +304,9 @@ public class Split
             throw new IllegalArgumentException("empty sep");
         int pos = s.lastIndexOf(sep);
         if (pos == -1)
-            return new Split(null, s);
+            return new Split(null, s, sep);
         else
-            return new Split(s.substring(0, pos), s.substring(pos + sep.length()));
+            return new Split(s.substring(0, pos), s.substring(pos + sep.length()), sep);
     }
 
     /**
@@ -301,9 +317,9 @@ public class Split
             return nul();
         int pos = s.lastIndexOf(sep);
         if (pos == -1)
-            return new Split(s, null);
+            return new Split(s, null, sep);
         else
-            return new Split(s.substring(0, pos), s.substring(pos + 1));
+            return new Split(s.substring(0, pos), s.substring(pos + 1), sep);
     }
 
     public static Split chopLast(String s, String sep) {
@@ -315,9 +331,9 @@ public class Split
             throw new IllegalArgumentException("empty sep");
         int pos = s.lastIndexOf(sep);
         if (pos == -1)
-            return new Split(s, null);
+            return new Split(s, null, sep);
         else
-            return new Split(s.substring(0, pos), s.substring(pos + sep.length()));
+            return new Split(s.substring(0, pos), s.substring(pos + sep.length()), sep);
     }
 
     public static Split keyValue(String s) {
