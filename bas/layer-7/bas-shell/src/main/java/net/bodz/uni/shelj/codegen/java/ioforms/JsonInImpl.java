@@ -27,7 +27,7 @@ public class JsonInImpl
 
             Class<?> type = member.getType();
             String getType = Primitives.unbox(type).getSimpleName();
-            boolean nullable = !type.isPrimitive();
+            boolean nullable = ! type.isPrimitive();
 
             int modifiers = member.getModifiers();
             boolean isFinal = Modifier.isFinal(modifiers);
@@ -40,9 +40,16 @@ public class JsonInImpl
             // case TypeId.STRING:
             // }
 
-            boolean alloc = !isFinal;
+            boolean alloc = ! isFinal;
 
             if (IJsonForm.class.isAssignableFrom(type)) {
+                JsonFormTypeInfo info = JsonFormTypeInfo.ofClass(type);
+                if (info.hasFrom_JoKey) {
+                    out.printLineForJavaSet(member, //
+                            "%s.from(o, %s)", type.getSimpleName(), keyName);
+                    continue;
+                }
+
                 out.printf("if (o.containsKey(%s))", keyName);
                 if (alloc) {
                     out.print(" {");
