@@ -40,6 +40,13 @@ public class IOFormsGenerator
     List<Class<?>> inputClasses = new ArrayList<>();
 
     /**
+     * Just members. Don't declare class.
+     *
+     * @option -n
+     */
+    boolean noSkel;
+
+    /**
      * Select members declared on the class and specified depth number of superclasses.
      *
      * (default public members)
@@ -148,11 +155,18 @@ public class IOFormsGenerator
             BCharOut buf = new BCharOut();
             ITreeOut out = buf.indented();
 
-            out.enterln("class " + inputClass.getSimpleName() + "Fields " + "{");
+            boolean classDecl = ! noSkel;
+            if (classDecl) {
+                out.enterln("class " + inputClass.getSimpleName() + "Fields " + "{");
+            }
+
             JavaCodeWriter javaWriter = new JavaCodeWriter(packageName, out);
             generateJavaSource(javaWriter, members);
-            out.println();
-            out.leaveln("}");
+
+            if (classDecl) {
+                out.println();
+                out.leaveln("}");
+            }
 
             ITreeOut cout = Stdio.out.indented();
             javaWriter.im.dump(cout);
