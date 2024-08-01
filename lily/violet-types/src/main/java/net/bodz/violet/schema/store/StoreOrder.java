@@ -9,9 +9,9 @@ import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.StdGroup.Statistics;
+import net.bodz.bas.t.list.SizedList;
 import net.bodz.lily.meta.DefaultAccessMode;
 import net.bodz.lily.security.IAccessMode;
-import net.bodz.lily.util.SizedList;
 
 
 /**

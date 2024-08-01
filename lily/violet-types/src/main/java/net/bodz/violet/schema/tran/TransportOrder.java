@@ -10,10 +10,10 @@ import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.bas.repr.form.meta.OfGroup;
+import net.bodz.bas.t.list.SizedList;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.meta.LilyGroups;
-import net.bodz.lily.util.SizedList;
 import net.bodz.violet.schema.shop.SalesOrderItem;
 
 /**
