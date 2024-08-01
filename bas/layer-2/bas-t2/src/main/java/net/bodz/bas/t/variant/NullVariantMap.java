@@ -11,6 +11,7 @@ import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 import net.bodz.bas.t.tuple.QualifiedName;
 
@@ -376,6 +377,26 @@ public class NullVariantMap<K>
 
     @Override
     public <T extends Enum<T>> T getEnum(Class<T> type, K key, T defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public <T extends Enum<T>> T[] getEnumArray(Class<T> type, K key) {
+        return null;
+    }
+
+    @Override
+    public <T extends Enum<T>> T[] getEnumArray(Class<T> type, K key, T[] defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public <T extends Enum<T>> List<T> getEnumList(Class<T> type, K key) {
+        return null;
+    }
+
+    @Override
+    public <T extends Enum<T>> List<T> getEnumList(Class<T> type, K key, List<T> defaultValue) {
         return defaultValue;
     }
 

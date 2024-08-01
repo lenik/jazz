@@ -11,6 +11,7 @@ import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.t.model.AbstractDecorator;
@@ -412,6 +413,26 @@ public class DecoratedVariantMap<K>
     @Override
     public <T extends Enum<T>> T getEnum(Class<T> type, K key, T defaultValue) {
         return getWrapped().getEnum(type, key, defaultValue);
+    }
+
+    @Override
+    public <T extends Enum<T>> T[] getEnumArray(Class<T> type, K key) {
+        return getWrapped().getEnumArray(type, key);
+    }
+
+    @Override
+    public <T extends Enum<T>> T[] getEnumArray(Class<T> type, K key, T[] defaultValue) {
+        return getWrapped().getEnumArray(type, key, defaultValue);
+    }
+
+    @Override
+    public <T extends Enum<T>> List<T> getEnumList(Class<T> type, K key) {
+        return getWrapped().getEnumList(type, key);
+    }
+
+    @Override
+    public <T extends Enum<T>> List<T> getEnumList(Class<T> type, K key, List<T> defaultValue) {
+        return getWrapped().getEnumList(type, key, defaultValue);
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 import net.bodz.bas.c.object.Enums;
 import net.bodz.bas.err.TypeConvertException;
@@ -626,6 +627,16 @@ public abstract class AutoConvVariantMap<K>
 
         T enumVal = Enums.valueOf(type, enumKey, defaultValue);
         return enumVal;
+    }
+
+    @Override
+    public <T extends Enum<T>> T[] getEnumArray(Class<T> type, K key) {
+        return getEnumArray(type, key, null);
+    }
+
+    @Override
+    public <T extends Enum<T>> List<T> getEnumList(Class<T> type, K key) {
+        return getEnumList(type, key, null);
     }
 
     @Override

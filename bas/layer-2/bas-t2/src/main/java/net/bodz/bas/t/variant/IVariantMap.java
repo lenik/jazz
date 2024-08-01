@@ -11,6 +11,7 @@ import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 import net.bodz.bas.t.tuple.QualifiedName;
 
@@ -194,6 +195,14 @@ public interface IVariantMap<K>
     <T extends Enum<T>> T getEnum(Class<T> type, K key);
 
     <T extends Enum<T>> T getEnum(Class<T> type, K key, T defaultValue);
+
+    <T extends Enum<T>> T[] getEnumArray(Class<T> type, K key);
+
+    <T extends Enum<T>> T[] getEnumArray(Class<T> type, K key, T[] defaultValue);
+
+    <T extends Enum<T>> List<T> getEnumList(Class<T> type, K key);
+
+    <T extends Enum<T>> List<T> getEnumList(Class<T> type, K key, List<T> defaultValue);
 
     <T> T getAny(Class<T> type, K key);
 

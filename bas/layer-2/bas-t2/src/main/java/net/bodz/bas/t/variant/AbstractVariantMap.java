@@ -1,6 +1,8 @@
 package net.bodz.bas.t.variant;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.bodz.bas.c.object.Enums;
 import net.bodz.bas.c.string.StringPred;
@@ -86,10 +88,8 @@ public abstract class AbstractVariantMap<K>
         return QualifiedName.parse(value);
     }
 
-    @Override
-    public <T extends Enum<T>> T getEnum(Class<T> enumType, K key, T defaultValue) {
-        String s = getString(key);
-        if (s == null || s.isEmpty())
+    static <T extends Enum<T>> T toEnum(Class<T> enumType, String s, T defaultValue) {
+        if (s == null)
             return defaultValue;
         if (StringPred.isDecimal(s)) {
             int ordinal = Integer.parseInt(s);
@@ -98,6 +98,53 @@ public abstract class AbstractVariantMap<K>
             T value = Enum.valueOf(enumType, s);
             return value;
         }
+    }
+
+    static <T extends Enum<T>> T toEnum(Class<T> enumType, Object o, T defaultValue) {
+        if (o == null)
+            return defaultValue;
+        if (o instanceof String)
+            return toEnum(enumType, (String) o, defaultValue);
+        if (o instanceof Enum<?>) {
+            @SuppressWarnings("unchecked")
+            T e = (T) o;
+            return e;
+        }
+        return Enums.valueOf(enumType, o, defaultValue);
+    }
+
+    @Override
+    public <T extends Enum<T>> T getEnum(Class<T> enumType, K key, T defaultValue) {
+        String s = getString(key);
+        if (s == null || s.isEmpty())
+            return defaultValue;
+        return toEnum(enumType, s, defaultValue);
+    }
+
+    @Override
+    public <T extends Enum<T>> T[] getEnumArray(Class<T> enumType, K key, T[] defaultValue) {
+        Object[] any = getArray(key);
+        int n = any.length;
+
+        @SuppressWarnings("unchecked")
+        T[] array = (T[]) Array.newInstance(enumType, n);
+
+        for (int i = 0; i < n; i++) {
+            array[i] = toEnum(enumType, any[i], null);
+        }
+        return array;
+    }
+
+    @Override
+    public <T extends Enum<T>> List<T> getEnumList(Class<T> enumType, K key, List<T> defaultValue) {
+        Object[] any = getArray(key);
+        int n = any.length;
+        List<T> list = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) {
+            T e = toEnum(enumType, any[i], null);
+            list.add(e);
+        }
+        return list;
     }
 
     @Override
