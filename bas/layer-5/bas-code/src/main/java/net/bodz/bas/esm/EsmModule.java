@@ -124,6 +124,10 @@ public class EsmModule
 
     }
 
+    public String[] getExclusivePackageNames() {
+        return new String[0];
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(name, baseDir);
