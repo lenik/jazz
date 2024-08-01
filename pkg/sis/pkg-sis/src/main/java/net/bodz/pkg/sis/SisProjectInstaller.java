@@ -10,6 +10,7 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
+import net.bodz.bas.program.model.IAppLifecycleListener;
 import net.bodz.bas.ui.err.UiException;
 import net.bodz.pkg.sisi.page.SisiNavigator;
 import net.bodz.swt.c.pageflow.BadPathEvent;
@@ -26,7 +27,9 @@ import net.bodz.swt.program.BasicGUI;
 @MainVersion({ 1, 0 })
 @RcsKeywords(id = "$Id$")
 public class SisProjectInstaller
-        extends BasicGUI {
+        extends BasicGUI
+        implements
+            IAppLifecycleListener<SisProjectInstaller> {
 
     static final Logger logger = LoggerFactory.getLogger(SisProjectInstaller.class);
 
@@ -46,8 +49,7 @@ public class SisProjectInstaller
     }
 
     @Override
-    protected void reconfigure()
-            throws Exception {
+    public void initDefaults(SisProjectInstaller app) {
         if (majorClass != null) {
             if (project == null) {
                 AbstractSisProject projByClass = new AbstractSisProject(majorClass);

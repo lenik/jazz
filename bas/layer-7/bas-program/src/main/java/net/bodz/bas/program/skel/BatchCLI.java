@@ -18,6 +18,7 @@ import net.bodz.bas.io.res.builtin.OutputStreamTarget;
 import net.bodz.bas.log.LogRecord;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.program.model.IAppLifecycleListener;
 import net.bodz.bas.util.stat.StatNode;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
@@ -149,19 +150,19 @@ public abstract class BatchCLI
         @Override
         public boolean accept(IFile file) {
             if (includeMask != null)
-                if (!includeMask.test(file))
+                if (! includeMask.test(file))
                     return false;
             if (excludeMask != null)
                 if (excludeMask.test(file))
                     return false;
             if (includeName != null)
-                if (!includeName.matcher(file.getName()).matches())
+                if (! includeName.matcher(file.getName()).matches())
                     return false;
             if (excludeName != null)
                 if (excludeName.matcher(file.getName()).matches())
                     return false;
             if (includePath != null)
-                if (!includePath.matcher(file.getPath().toString()).find())
+                if (! includePath.matcher(file.getPath().toString()).find())
                     return false;
             if (excludePath != null)
                 if (excludePath.matcher(file.getPath().toString()).find())
@@ -171,12 +172,24 @@ public abstract class BatchCLI
 
     }
 
-    @Override
-    protected void _reconfigure()
-            throws Exception {
-        super._reconfigure();
-        if (fileFilter == null)
-            fileFilter = new DefaultFileFilter();
+    class SysLifecycle
+            implements
+                IAppLifecycleListener<BatchCLI> {
+
+        @Override
+        public int getPriority() {
+            return -100;
+        }
+
+        @Override
+        public void initDefaults(BatchCLI app) {
+            if (fileFilter == null)
+                fileFilter = new DefaultFileFilter();
+        }
+    }
+
+    public BatchCLI() {
+        addLifecycleListener(new SysLifecycle());
     }
 
     @Override
@@ -200,7 +213,7 @@ public abstract class BatchCLI
                     ExceptionLog log = handler.getExceptionLog();
                     for (LogRecord entry : log)
                         logger.getLogSink().log(entry);
-                    if (!errorContinue)
+                    if (! errorContinue)
                         break;
                 }
             }
@@ -263,7 +276,7 @@ public abstract class BatchCLI
 
     protected synchronized void endFile(FileHandler handler) {
         _statRoot.resolveCounter("...");
-        if (handler.isErrored() && !errorContinue) {
+        if (handler.isErrored() && ! errorContinue) {
         }
     }
 

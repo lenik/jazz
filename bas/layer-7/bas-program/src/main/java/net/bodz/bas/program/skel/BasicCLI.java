@@ -19,6 +19,7 @@ import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.program.IPerformanceAware;
 import net.bodz.bas.program.model.AbstractProgram;
+import net.bodz.bas.program.model.IAppLifecycleListener;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.ParserUtil;
@@ -78,6 +79,10 @@ public abstract class BasicCLI
      * @option hidden
      */
     boolean _logWithDate = false;
+
+    public BasicCLI() {
+        addLifecycleListener(new SysLifecycle());
+    }
 
     protected static String getPackageHeads(String fqcn, int depth) {
         String[] domains = fqcn.split("\\.");
@@ -164,38 +169,6 @@ public abstract class BasicCLI
         return Typers.getTyper(getClass(), IType.class);
     }
 
-    @Override
-    protected void _reconfigure()
-            throws Exception {
-        super._reconfigure();
-
-        if (verboseLevel != 0) {
-            Logger logger = getConfigLogger();
-            if (logger != null) {
-                LogLevel level = logger.getLevel();
-                if (level == null) {
-                    logger.error("null logger.level. have you checked conflicts log4j.properties files?");
-                } else {
-                    while (verboseLevel < 0) {
-                        LogLevel quiet = level.getQuiet();
-                        if (quiet == null)
-                            break;
-                        level = quiet;
-                        verboseLevel++;
-                    }
-                    while (verboseLevel > 0) {
-                        LogLevel verbose = level.getVerbose();
-                        if (verbose == null)
-                            break;
-                        level = verbose;
-                        verboseLevel--;
-                    }
-                    logger.setLevel(level);
-                }
-            }
-        }
-    }
-
     public void runExtra(String cmdline)
             throws Throwable {
         String[] args = {};
@@ -240,6 +213,49 @@ public abstract class BasicCLI
         WildcardsExpander expander = new WildcardsExpander(pathname);
         expander.logger = logger; // Utilize the verbose option.
         return expander;
+    }
+
+    class SysLifecycle
+            implements
+                IAppLifecycleListener<BasicCLI> {
+
+        @Override
+        public int getPriority() {
+            return -100;
+        }
+
+        @Override
+        public void initDefaults(BasicCLI app) {
+            if (verboseLevel != 0)
+                setupLogLevel(verboseLevel);
+        }
+
+        void setupLogLevel(int verboseLevel) {
+            Logger logger = getConfigLogger();
+            if (logger != null) {
+                LogLevel level = logger.getLevel();
+                if (level == null) {
+                    logger.error("null logger.level. have you checked conflicts log4j.properties files?");
+                } else {
+                    while (verboseLevel < 0) {
+                        LogLevel quiet = level.getQuiet();
+                        if (quiet == null)
+                            break;
+                        level = quiet;
+                        verboseLevel++;
+                    }
+                    while (verboseLevel > 0) {
+                        LogLevel verbose = level.getVerbose();
+                        if (verbose == null)
+                            break;
+                        level = verbose;
+                        verboseLevel--;
+                    }
+                    logger.setLevel(level);
+                }
+            }
+        }
+
     }
 
 }

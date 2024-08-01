@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.bodz.bas.c.object.SimpleObjectFormatter;
 import net.bodz.bas.c.system.System2;
@@ -20,6 +22,7 @@ import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.potato.invoke.Invocation;
 import net.bodz.bas.program.IProgram;
 import net.bodz.bas.program.skel.CLISyntaxException;
+import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactObject;
 
@@ -41,6 +44,22 @@ public abstract class AbstractProgram
     protected Map<String, Object> variableMap = new LinkedHashMap<String, Object>();
 
     private transient IOptionGroup optionGroup;
+
+    Set<IAppLifecycleListener<IProgram>> lifecycleListeners = new TreeSet<>(PriorityComparator.INSTANCE);
+
+    public AbstractProgram() {
+        if (this instanceof IAppLifecycleListener<?>)
+            addLifecycleListener((IAppLifecycleListener<?>) this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void addLifecycleListener(IAppLifecycleListener<?> listener) {
+        lifecycleListeners.add((IAppLifecycleListener<IProgram>) listener);
+    }
+
+    public void removeLifecycleListener(IAppLifecycleListener<?> listener) {
+        lifecycleListeners.remove(listener);
+    }
 
     @Override
     public synchronized IOptionGroup getOptionModel() {
@@ -129,26 +148,19 @@ public abstract class AbstractProgram
             return;
         }
 
-        _reconfigure();
-        reconfigure();
+        logger.debug("init defaults");
+        for (IAppLifecycleListener<IProgram> l : lifecycleListeners) {
+            logger.trace("    - ", l.getClass().getName());
+            l.initDefaults(this);
+        }
 
-        IOptionGroup options = getOptionModel();
-        if (logger.isDebugEnabled()) {
-            for (Entry<String, IOption> entry : options.getLocalOptionMap().entrySet()) {
-                IOption option = entry.getValue();
-                String optionName = option.getName();
-                if (!optionName.equals(entry.getKey()))
-                    continue;
-                Object optionValue = option.property().getValue(this);
-                if (optionValue instanceof Invocation)
-                    continue;
-                logger.debug(optionName, " = ", SimpleObjectFormatter.dispval(optionValue));
-            }
-            for (Entry<String, Object> entry : variableMap.entrySet()) {
-                String name = entry.getKey();
-                Object value = entry.getValue();
-                logger.debug("var ", name, " = ", value);
-            }
+        if (logger.isDebugEnabled())
+            dumpOptions();
+
+        logger.debug("setup");
+        for (IAppLifecycleListener<IProgram> l : lifecycleListeners) {
+            logger.trace("    - ", l.getClass().getName());
+            l.setup(this);
         }
 
         try {
@@ -165,23 +177,15 @@ public abstract class AbstractProgram
                     continue;
                 }
         } finally {
-            shutDown();
+            logger.debug("shutdown");
+            for (IAppLifecycleListener<IProgram> l : lifecycleListeners) {
+                logger.trace("    - ", l.getClass().getName());
+                l.shutdown(this);
+            }
         }
 
         System2.setExitStatus(0);
         return;
-    }
-
-    protected void _reconfigure()
-            throws Exception {
-    }
-
-    protected void reconfigure()
-            throws Exception {
-    }
-
-    protected void shutDown()
-            throws Exception {
     }
 
     /**
@@ -190,6 +194,36 @@ public abstract class AbstractProgram
     protected void _exit(int status)
             throws Exception {
         throw new ControlExit(status);
+    }
+
+    void dumpOptions()
+            throws ReflectiveOperationException {
+        IOptionGroup options = getOptionModel();
+        logger.debug("Dump of options:");
+
+        Map<String, IOption> localMap = options.getLocalOptionMap();
+        if (! localMap.isEmpty()) {
+            logger.debug("    Local options: ");
+            for (Entry<String, IOption> entry : localMap.entrySet()) {
+                IOption option = entry.getValue();
+                String optionName = option.getName();
+                if (! optionName.equals(entry.getKey()))
+                    continue;
+                Object optionValue = option.property().getValue(this);
+                if (optionValue instanceof Invocation)
+                    continue;
+                logger.debug("        ", optionName, " = ", SimpleObjectFormatter.dispval(optionValue));
+            }
+        }
+
+        if (! variableMap.isEmpty()) {
+            logger.debug("    Variables: ");
+            for (Entry<String, Object> entry : variableMap.entrySet()) {
+                String name = entry.getKey();
+                Object value = entry.getValue();
+                logger.debug("        ", name, " = ", value);
+            }
+        }
     }
 
     /**
