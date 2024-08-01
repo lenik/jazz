@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -449,6 +450,18 @@ public class JsonObject
         }
 
         return collection;
+    }
+
+    public Map<String, String> //
+            getMap(String key, SortOrder order)
+                    throws ParseException {
+        return readIntoMap(key, null, (Object o) -> Nullables.toString(o), () -> order.newMap());
+    }
+
+    public Map<String, String> //
+            getMap(String key, Map<String, String> map, SortOrder order)
+                    throws ParseException {
+        return readIntoMap(key, map, (Object o) -> Nullables.toString(o), () -> order.newMap());
     }
 
     public <T> Map<String, T> //
