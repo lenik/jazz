@@ -17,12 +17,23 @@ public class QualifiedName {
     static final String FS = SysProps.fileSep;
 
     public QualifiedName(String packageName, String name) {
+        if (name == null)
+            throw new NullPointerException("name");
         this.packageName = packageName;
         this.name = name;
     }
 
+    public QualifiedName(Package _package, String name) {
+        if (name == null)
+            throw new NullPointerException("name");
+        this.packageName = _package == null ? null : _package.getName();
+        this.name = name;
+    }
+
     public static QualifiedName of(Class<?> clazz) {
-        return new QualifiedName(clazz.getPackage().getName(), clazz.getSimpleName());
+        if (clazz == null)
+            throw new NullPointerException("clazz");
+        return new QualifiedName(clazz.getPackage(), clazz.getSimpleName());
     }
 
     public static QualifiedName parse(String fullName) {
