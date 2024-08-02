@@ -5,12 +5,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.bodz.bas.repr.path.builtin.ClassResourcePathDispatcher;
-
 /**
  * TODO
  *
- * @see ClassResourcePathDispatcher
+ * @see net.bodz.bas.repr.path.builtin.ClassResourcePathDispatcher
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
