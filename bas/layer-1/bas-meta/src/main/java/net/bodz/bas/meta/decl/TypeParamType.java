@@ -1,4 +1,4 @@
-package net.bodz.lily.meta;
+package net.bodz.bas.meta.decl;
 
 public enum TypeParamType {
 

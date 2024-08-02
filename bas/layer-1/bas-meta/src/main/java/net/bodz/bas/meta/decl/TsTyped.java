@@ -1,4 +1,4 @@
-package net.bodz.lily.meta;
+package net.bodz.bas.meta.decl;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

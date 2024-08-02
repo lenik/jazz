@@ -1,4 +1,4 @@
-package net.bodz.lily.meta;
+package net.bodz.bas.meta.decl;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
