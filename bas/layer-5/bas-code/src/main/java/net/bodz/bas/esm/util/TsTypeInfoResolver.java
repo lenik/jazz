@@ -101,6 +101,9 @@ public class TsTypeInfoResolver
             return imports.importDefault(qName) + ".TYPE";
 
         EsmSource source = imports.findSource(typeInfoName);
+        if (source == null)
+            throw new NullPointerException("source for " + typeInfoName);
+
         EsmName Foo_TYPE = source.name(qName.name + "_TYPE");
         return imports.importName(Foo_TYPE);
     }
