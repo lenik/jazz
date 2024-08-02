@@ -1,10 +1,8 @@
 package net.bodz.bas.esm;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
 
@@ -14,7 +12,7 @@ public class EsmModules {
 
     public static List<IEsmModuleProvider> providers = new ArrayList<>();
     public static Set<EsmModule> modules = new HashSet<>();
-    public static Map<String, EsmModule> packageMap = new HashMap<>();
+    public static DomainMap<EsmModule> domainMap = new DomainMap<>();
 
     static {
         for (IEsmModuleProvider provider : ServiceLoader.load(IEsmModuleProvider.class)) {
@@ -23,11 +21,11 @@ public class EsmModules {
             for (EsmModule module : provider.getModules()) {
                 modules.add(module);
 
-                for (String packageName : module.getExclusivePackageNames()) {
-                    EsmModule prev = packageMap.get(packageName);
+                for (String pattern : module.getExclusiveDomains()) {
+                    EsmModule prev = domainMap.patternGet(pattern);
                     if (prev != null)
-                        throw new DuplicatedKeyException(packageName, prev);
-                    packageMap.put(packageName, module);
+                        throw new DuplicatedKeyException(pattern, prev);
+                    domainMap.patternPut(pattern, module);
                 }
             }
         }

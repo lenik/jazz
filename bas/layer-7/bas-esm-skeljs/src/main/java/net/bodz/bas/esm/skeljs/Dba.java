@@ -63,12 +63,12 @@ public class Dba
     public final EsmName FieldGroup = vue("ui/lily/FieldGroup.vue");
     public final EsmName RefEditor = vue("ui/input/RefEditor.vue");
 
-    static final String[] packageNames = { //
+    static final String[] domainPatterns = { //
             "net.bodz.bas.db" };
 
     @Override
-    public String[] getExclusivePackageNames() {
-        return packageNames;
+    public String[] getExclusiveDomains() {
+        return domainPatterns;
     }
 
 }

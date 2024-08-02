@@ -196,12 +196,16 @@ public class Core
     public final FieldRow FieldRow = add(new FieldRow());
     public final EsmName JsonEditor = vue("ui/input/JsonEditor.vue");
 
-    static final String[] packageNames = { //
-            "java.time", "net.bodz.bas.i18n", "net.bodz.bas.repr" };
+    static final String[] domainPatterns = { //
+            "lang", //
+            // "java.time", // lang.time
+            "net.bodz.bas.i18n", //
+            "net.bodz.bas.repr", //
+    };
 
     @Override
-    public String[] getExclusivePackageNames() {
-        return packageNames;
+    public String[] getExclusiveDomains() {
+        return domainPatterns;
     }
 
 }

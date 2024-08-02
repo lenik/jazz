@@ -124,7 +124,7 @@ public class EsmModule
 
     }
 
-    public String[] getExclusivePackageNames() {
+    public String[] getExclusiveDomains() {
         return new String[0];
     }
 

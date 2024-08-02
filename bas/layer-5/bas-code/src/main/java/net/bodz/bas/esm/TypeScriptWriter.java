@@ -14,25 +14,25 @@ public class TypeScriptWriter
     private static final long serialVersionUID = 1L;
 
     public final EsmImports im;
-    public final EsmPackageMap packageMap;
+    public final EsmDomainMap domainMap;
     final QualifiedName contextQName;
 
     public TypeScriptWriter(QualifiedName qName, ITreeOut _orig) {
-        this(qName, _orig, EsmImports.forLocal(qName), new EsmPackageMap());
+        this(qName, _orig, EsmImports.forLocal(qName), new EsmDomainMap());
     }
 
-    public TypeScriptWriter(QualifiedName qName, ITreeOut _orig, EsmImports imports, EsmPackageMap packageMap) {
+    public TypeScriptWriter(QualifiedName qName, ITreeOut _orig, EsmImports imports, EsmDomainMap domainMap) {
         super(_orig);
 
         if (qName == null)
             throw new NullPointerException("qName");
         if (imports == null)
             throw new NullPointerException("imports");
-        if (packageMap == null)
-            throw new NullPointerException("packageMap");
+        if (domainMap == null)
+            throw new NullPointerException("domainMap");
 
         this.im = imports;
-        this.packageMap = packageMap;
+        this.domainMap = domainMap;
 
         this.contextQName = qName;
     }
@@ -48,7 +48,7 @@ public class TypeScriptWriter
 
     @Override
     public EsmSource findSource(QualifiedName qName, String extension) {
-        return packageMap.findSource(qName, extension, contextQName);
+        return domainMap.findSource(qName, extension, contextQName);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class TypeScriptWriter
 
     public TypeScriptWriter buffer() {
         BCharOut buf = new BCharOut();
-        TypeScriptWriter bufOut = new TypeScriptWriter(contextQName, buf.indented(), im, packageMap);
+        TypeScriptWriter bufOut = new TypeScriptWriter(contextQName, buf.indented(), im, domainMap);
         return bufOut;
     }
 

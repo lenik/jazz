@@ -3,18 +3,15 @@ package net.bodz.bas.esm;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.t.preorder.PackageMap;
 import net.bodz.bas.t.tuple.QualifiedName;
 
-public class EsmPackageMap
-        extends PackageMap<EsmModule> {
-
-    private static final long serialVersionUID = 1L;
+public class EsmDomainMap
+        extends DomainMap<EsmModule> {
 
     EsmModule contextModule;
     int localPriority;
 
-    EsmPackageMap() {
+    EsmDomainMap() {
     }
 
     public static class Builder {
@@ -32,8 +29,8 @@ public class EsmPackageMap
             return this;
         }
 
-        public EsmPackageMap build() {
-            EsmPackageMap o = new EsmPackageMap();
+        public EsmDomainMap build() {
+            EsmDomainMap o = new EsmDomainMap();
             if (this.contextModule != null)
                 o.contextModule = this.contextModule;
             if (this.localPriority != null)
@@ -41,20 +38,6 @@ public class EsmPackageMap
             return o;
         }
 
-    }
-
-    public void addModule(String packageName, EsmModule module) {
-        if (packageName == null)
-            throw new NullPointerException("packageName");
-        if (module == null)
-            throw new NullPointerException("module");
-        put(packageName, module);
-    }
-
-    public EsmModule findModule(QualifiedName qName) {
-        String fullName = qName.getFullName();
-        EsmModule module = meet(fullName);
-        return module;
     }
 
     public EsmSource findSource(QualifiedName qName, String extension, QualifiedName context) {
@@ -66,7 +49,7 @@ public class EsmPackageMap
         if (path == null)
             throw new IllegalUsageException("null path of qName");
 
-        EsmModule module = findModule(qName);
+        EsmModule module = find(qName);
         if (module != null && ! Nullables.equals(contextModule, module)) {
             return module.source(path);
         }

@@ -9,9 +9,9 @@ import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.esm.BuiltinModules;
+import net.bodz.bas.esm.EsmDomainMap;
 import net.bodz.bas.esm.EsmModule;
 import net.bodz.bas.esm.EsmModules;
-import net.bodz.bas.esm.EsmPackageMap;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.site.json.JsonMap;
@@ -19,7 +19,10 @@ import net.bodz.bas.t.list.SizedList;
 
 public class TsConfig {
 
-    public static EsmPackageMap getPackageMap(File webDir) {
+    /**
+     * Find out the context module by looking into package.json.
+     */
+    public static EsmDomainMap buildDomainMap(File webDir) {
         NpmDir npmDir = NpmDir.closest(webDir);
         EsmModule contextModule = null;
 
@@ -34,18 +37,18 @@ public class TsConfig {
             contextModule = new EsmModule(pacakgeName, "src");
         }
 
-        return getPackageMap(contextModule);
+        return buildDomainMap(contextModule);
     }
 
-    public static EsmPackageMap getPackageMap(EsmModule contextModule) {
-        EsmPackageMap packageMap = new EsmPackageMap.Builder()//
+    public static EsmDomainMap buildDomainMap(EsmModule contextModule) {
+        EsmDomainMap domainMap = new EsmDomainMap.Builder()//
                 .contextModule(contextModule) //
                 .localPriority(BuiltinModules.PRIORITY_LOCAL)//
                 .build();
 
-        packageMap.putAll(EsmModules.packageMap);
+        domainMap.addAll(EsmModules.domainMap);
 
-        return packageMap;
+        return domainMap;
     }
 
     static TypePoMap<Class<?>> equivTypeMap = new TypePoMap<>();
