@@ -19,6 +19,7 @@ public class JsonInImpl
         out.println("@Override");
         out.println("public void jsonIn(JsonObject o, JsonFormOptions opts)");
         out.enterln("        throws ParseException {");
+        out.println("super.jsonIn(o, opts);");
 
         for (IMember member : members) {
 

@@ -15,6 +15,7 @@ public class JsonOutImpl
         out.println("@Override");
         out.println("public void jsonOut(IJsonOut out, JsonFormOptions opts)");
         out.enterln("        throws IOException, FormatException {");
+        out.println("super.jsonOut(out, opts);");
 
         for (IMember member : members) {
             Phrase nam = Phrase.fooBar(member.getName());
