@@ -17,6 +17,7 @@ import net.bodz.bas.esm.skeljs.Core.BasInfo;
 import net.bodz.bas.esm.skeljs.Core.BaseInfo;
 import net.bodz.bas.esm.skeljs.Core.LangTime;
 import net.bodz.bas.fmt.json.JsonVariant;
+import net.bodz.bas.t.variant.MutableVariant;
 
 public class TsTypeInfos
         extends TsTypeMap
@@ -60,12 +61,9 @@ public class TsTypeInfos
         addAbstractType(Map.class, baseInfo.MAP);
 
         addType(JsonVariant.class, basInfo.JSON_VARIANT);
-        addAbstractType(InetAddress.class, SkeljsModules.core.baseInfo.INET_ADDRESS);
-    }
+        addType(MutableVariant.class, basInfo.JSON_VARIANT);
 
-    @Override
-    public EsmName forClassName(String className) {
-        return map.get(className);
+        addAbstractType(InetAddress.class, SkeljsModules.core.baseInfo.INET_ADDRESS);
     }
 
     @Override

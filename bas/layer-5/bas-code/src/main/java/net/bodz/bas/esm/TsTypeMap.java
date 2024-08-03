@@ -18,6 +18,10 @@ public class TsTypeMap {
         abstractMap.put(clazz, esmName);
     }
 
+    public final EsmName forClassName(String className) {
+        return map.get(className);
+    }
+
     public EsmName forClass(Class<?> clazz) {
         EsmName esmName = map.get(clazz.getName());
         if (esmName != null)

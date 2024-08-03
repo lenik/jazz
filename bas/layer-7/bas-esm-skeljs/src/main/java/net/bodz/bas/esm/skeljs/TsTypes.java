@@ -25,6 +25,8 @@ import net.bodz.bas.esm.skeljs.Core.LangTime;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.site.json.JsonMap;
+import net.bodz.bas.t.variant.IVariant;
+import net.bodz.bas.t.variant.MutableVariant;
 
 public class TsTypes
         extends TsTypeMap
@@ -67,6 +69,10 @@ public class TsTypes
         addType(JsonVariant.class, basType.JsonVariant);
         addType(JsonMap.class, basType.JsonVariant);
 
+        addAbstractType(IVariant.class, basType.JsonVariant);
+        addType(MutableVariant.class, basType.JsonVariant);
+//        addType(MutableVariant.class, baseType.any);
+
         addType(Date.class, time.JavaDate);
         addType(java.sql.Date.class, time.SQLDate);
         addType(Time.class, time.SQLTime);
@@ -83,11 +89,6 @@ public class TsTypes
         addType(ZoneId.class, baseType._string);
 
         addType(State.class, SkeljsModules.core.state.DefaultState);
-    }
-
-    @Override
-    public EsmName forClassName(String className) {
-        return map.get(className);
     }
 
     @Override
