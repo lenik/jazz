@@ -15,14 +15,14 @@ public class EsmImports {
     Set<EsmModule> excludeModules = new HashSet<>();
     Set<EsmSource> excludeSources = new HashSet<>();
 
-    public EsmImports(EsmSource source) {
-        this(source, EsmNameComparator.INSTANCE);
+    public EsmImports(EsmSource contextSource) {
+        this(contextSource, EsmNameComparator.INSTANCE);
     }
 
-    public EsmImports(EsmSource source, Comparator<EsmName> order) {
+    public EsmImports(EsmSource contextSource, Comparator<EsmName> order) {
         names = new TreeSet<>(order);
-        if (source != null)
-            excludeSources.add(source);
+        if (contextSource != null)
+            exclude(contextSource);
     }
 
     public void exclude(EsmModule module) {
@@ -37,14 +37,14 @@ public class EsmImports {
         excludeSources.add(source);
     }
 
-    public static EsmImports forLocal(QualifiedName qName) {
-        return forLocal(qName, null);
+    public static EsmImports forLocal(QualifiedName contextName) {
+        return forLocal(contextName, null);
     }
 
-    public static EsmImports forLocal(QualifiedName qName, String extension) {
-        String localPath = qName.getLocalPath(extension);
-        EsmSource source = EsmModule.local(0).source(localPath);
-        return new EsmImports(source);
+    public static EsmImports forLocal(QualifiedName contextName, String extension) {
+        String contextRelativePath = contextName.getLocalPath(extension);
+        EsmSource contextSource = EsmModule.local(0).source(contextRelativePath);
+        return new EsmImports(contextSource);
     }
 
     public void excludeModule(EsmModule module) {
