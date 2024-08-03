@@ -36,6 +36,12 @@
             <groupId>com.vladsch.flexmark</groupId>
             <artifactId>flexmark</artifactId>
             <version>${flexmark.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jetbrains</groupId>
+                    <artifactId>annotations</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.vladsch.flexmark</groupId>
@@ -45,6 +51,10 @@
                 <exclusion>
                     <groupId>log4j</groupId>
                     <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jetbrains</groupId>
+                    <artifactId>annotations</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
