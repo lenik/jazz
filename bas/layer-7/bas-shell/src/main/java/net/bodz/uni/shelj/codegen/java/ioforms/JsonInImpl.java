@@ -73,6 +73,16 @@ public class JsonInImpl
                 continue;
             }
 
+            if (type.isEnum()) {
+                if (nullable)
+                    out.printLineForJavaSet(member, "o.getEnum(%s.class, %s)", //
+                            out.importName(type), keyName);
+                else
+                    out.printLineForJavaSet(member, "o.getEnum(%s.class, %s, %s)", //
+                            out.importName(type), keyName, member.javaGet());
+                continue;
+            }
+
             String getFn = "get" + Strings.ucfirst(getType);
             if (nullable)
                 out.printLineForJavaSet(member, "o.%s(%s)", getFn, keyName);
