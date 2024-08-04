@@ -161,6 +161,20 @@ public interface IJsonOut
         return this;
     }
 
+    default IJsonOut entryNot0(String key, float value)
+            throws JSONException {
+        if (value != 0.0f)
+            entry(key, value);
+        return this;
+    }
+
+    default IJsonOut entryNot0(String key, double value)
+            throws JSONException {
+        if (value != 0.0)
+            entry(key, value);
+        return this;
+    }
+
     default IJsonOut object(Object object)
             throws JSONException {
         try {
