@@ -27,6 +27,7 @@ import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
 import net.bodz.bas.repr.form.FormDeclBuilder;
 import net.bodz.bas.repr.form.IFormDecl;
+import net.bodz.lily.concrete.CoObject;
 import net.bodz.lily.concrete.StructRowCriteriaBuilder;
 import net.bodz.lily.criteria.ICriteriaBuilder;
 import net.bodz.lily.entity.IIdentity;
@@ -135,6 +136,17 @@ public class DefaultEntityTypeInfo
         order = ColumnPropertyOrder.INSTANCE;
         Arrays.sort(idProperties, order);
         return idProperties;
+    }
+
+    @Override
+    public Object newInstance() {
+        CoObject instance;
+        try {
+            instance = (CoObject) entityClass.getConstructor().newInstance();
+        } catch (Exception e) {
+            throw new IllegalUsageException("Error calling default constructor: " + e.getMessage(), e);
+        }
+        return instance;
     }
 
     @Override

@@ -43,7 +43,6 @@ import net.bodz.lily.security.IAccessMode;
 import net.bodz.lily.security.IGroup;
 import net.bodz.lily.security.IUser;
 import net.bodz.lily.security.Users;
-import net.bodz.lily.security.login.ILoginListener;
 
 /**
  * Co/Con: Concrete, also Content, Controlled
@@ -54,7 +53,6 @@ public abstract class CoObject
         extends StructRow
         implements
             IReset,
-            ILoginListener,
             IAccessControlled,
             IStated {
 
@@ -97,12 +95,6 @@ public abstract class CoObject
 
     public CoObject() {
         // Opt to reinit()?
-    }
-
-    @Override
-    public void onLoggedIn(IUser user) {
-        setOwnerUser(user);
-        setOwnerGroup(user == null ? null : user.getPrimaryGroup());
     }
 
     @DetailLevel(DetailLevel.HIDDEN)

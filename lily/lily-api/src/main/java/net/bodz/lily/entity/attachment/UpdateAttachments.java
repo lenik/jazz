@@ -14,15 +14,15 @@ import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.manager.IJdbcRowOpListener;
 import net.bodz.lily.entity.manager.JdbcRowOpEvent;
 import net.bodz.lily.entity.manager.JdbcRowOpType;
-import net.bodz.lily.entity.manager.RowOpListeners;
+import net.bodz.lily.entity.manager.RowOpAware;
 import net.bodz.lily.storage.IVolume;
 import net.bodz.lily.storage.IVolumeItem;
 
 /**
- * See {@link RowOpListeners} which is indexed and annotated class like {@link IHaveAttachments}
+ * See {@link RowOpAware} which is indexed and annotated class like {@link IHaveAttachments}
  * lists this class as the row-op listener.
  *
- * @see RowOpListeners
+ * @see RowOpAware
  */
 public class UpdateAttachments
         implements

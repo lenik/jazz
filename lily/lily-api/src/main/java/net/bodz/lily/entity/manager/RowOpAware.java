@@ -8,15 +8,11 @@ import java.lang.annotation.Target;
 
 import javax.persistence.Inheritance;
 
-import net.bodz.bas.meta.codegen.IndexedType;
-import net.bodz.bas.meta.codegen.PublishDir;
-
 @Documented
 @Inheritance
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@IndexedType(publishDir = PublishDir.features, includeAbstract = true)
-public @interface RowOpListeners {
+public @interface RowOpAware {
 
     Class<? extends IJdbcRowOpListener>[] value();
 

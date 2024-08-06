@@ -8,10 +8,9 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.t.object.ICloneable;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
 import net.bodz.lily.entity.manager.IEntityCommandContext;
-import net.bodz.lily.entity.ws.RequestHandlerException;
+import net.bodz.lily.entity.type.EntityOpListeners;
 
 public class CreateProcess
         extends AbstractEntityCommandProcess {
@@ -72,22 +71,15 @@ public class CreateProcess
         }
 
         if (obj == null)
-            try {
-                obj = create();
-            } catch (ReflectiveOperationException e) {
-                throw new RequestHandlerException("failed to create: " + e.getMessage(), e);
-            }
+            obj = typeInfo.newInstance();
+
+        Class<?> type = typeInfo.getEntityClass();
+        EntityOpListeners.onCreate(type, obj);
+        EntityOpListeners.onLoad(type, obj);
 
         JsonWrapper wrapper = JsonWrapper.wrap(obj, "data");
         wrapper.setOptions(jsonFormOptions);
         return wrapper;
-    }
-
-    protected Object create()
-            throws ReflectiveOperationException {
-        Class<?> clazz = typeInfo.getEntityClass();
-        IId<?> instance = (IId<?>) clazz.getConstructor().newInstance();
-        return instance;
     }
 
     @Override

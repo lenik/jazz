@@ -1,6 +1,6 @@
 net.bodz.lily.concrete.CoObjectIndex
 net.bodz.lily.entity.manager.IEntityCommandProvider
-net.bodz.lily.entity.manager.RowOpListeners
+net.bodz.lily.entity.type.IEntityOpListener
 net.bodz.lily.entity.ws.IEntityController
 net.bodz.lily.security.IUserFactory
 net.bodz.lily.security.login.ILoginManagerProvider

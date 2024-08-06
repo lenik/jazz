@@ -1,10 +1,7 @@
 package net.bodz.lily.entity.manager.cmd;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.NoSuchKeyException;
@@ -21,9 +18,11 @@ import net.bodz.lily.entity.manager.IEntityCommandContext;
 import net.bodz.lily.entity.manager.IEntityCommandType;
 import net.bodz.lily.entity.manager.IJdbcRowOpListener;
 import net.bodz.lily.entity.manager.JdbcRowOpEvent;
+import net.bodz.lily.entity.manager.JdbcRowOpListeners;
 import net.bodz.lily.entity.manager.JdbcRowOpType;
 import net.bodz.lily.entity.manager.ResolvedEntity;
-import net.bodz.lily.entity.manager.RowOpListeners;
+import net.bodz.lily.entity.manager.RowOpAwares;
+import net.bodz.lily.entity.type.EntityOpListeners;
 
 public class SaveProcess
         extends AbstractEntityCommandProcess
@@ -72,7 +71,7 @@ public class SaveProcess
             obj = resolvedEntity.entity;
         } else {
             if (createNew) {
-                obj = (StructRow) typeInfo.getEntityClass().getConstructor().newInstance();
+                obj = (StructRow) typeInfo.newInstance();
             } else {
                 obj = (StructRow) getEntityMapper().select(id);
                 if (obj == null)
@@ -94,15 +93,8 @@ public class SaveProcess
         JdbcRowOpEvent event = new JdbcRowOpEvent(this, //
                 createNew ? JdbcRowOpType.CREATE : JdbcRowOpType.UPDATE);
 
-        RowOpListeners aRowOps = obj.getClass().getAnnotation(RowOpListeners.class);
-        if (aRowOps != null) {
-            for (Class<? extends IJdbcRowOpListener> handlerClass : aRowOps.value()) {
-                IJdbcRowOpListener handler = handlerClass.getConstructor(IId.class).newInstance(obj);
-                if (! handler.beforeRowOperation(event))
-                    return false;
-            }
-        }
         beforeRowOp(event, obj);
+        EntityOpListeners.beforeUpdate(getClass(), jsonForm, createNew);
 
         IEntityMapper<Object> mapper = getEntityMapper();
         if (createNew) {
@@ -128,43 +120,39 @@ public class SaveProcess
         return result.succeed();
     }
 
-    static List<Class<? extends IJdbcRowOpListener>> globalHandlerClasses;
-    static boolean enableRowOps = true;
-    static {
-        globalHandlerClasses = new ArrayList<>();
-        if (enableRowOps)
-            for (Class<? extends RowOpListeners> c : IndexedTypes.list(RowOpListeners.class, true)) {
-                RowOpListeners aRowOps = c.getAnnotation(RowOpListeners.class);
-                for (Class<? extends IJdbcRowOpListener> handlerClass : aRowOps.value())
-                    globalHandlerClasses.add(handlerClass);
-            }
-    }
-
     boolean beforeRowOp(JdbcRowOpEvent event, Object obj)
             throws Exception {
+
         if (obj instanceof IJdbcRowOpListener) {
             IJdbcRowOpListener l = (IJdbcRowOpListener) obj;
             if (! l.beforeRowOperation(event))
                 return false;
         }
-        for (Class<? extends IJdbcRowOpListener> c : globalHandlerClasses) {
-            IJdbcRowOpListener handler = c.getConstructor(IId.class).newInstance(obj);
-            if (! handler.beforeRowOperation(event))
-                return false;
-        }
+
+        if (! RowOpAwares.beforeRowOperation(obj, event))
+            return false;
+
+        EntityOpListeners.beforeUpdate(obj, ! createNew);
+
+        JdbcRowOpListeners.beforeRowOperation(event);
+
         return true;
     }
 
     void afterRowOp(JdbcRowOpEvent event, Object obj)
             throws Exception {
+
         if (obj instanceof IJdbcRowOpListener) {
             IJdbcRowOpListener l = (IJdbcRowOpListener) obj;
             l.afterRowOperation(event);
         }
-        for (Class<? extends IJdbcRowOpListener> c : globalHandlerClasses) {
-            IJdbcRowOpListener handler = c.getConstructor(IId.class).newInstance(obj);
-            handler.afterRowOperation(event);
-        }
+
+        RowOpAwares.afterRowOperation(obj, event);
+
+        EntityOpListeners.afterUpdate(obj, ! createNew);
+
+        JdbcRowOpListeners.afterRowOperation(event);
+
     }
 
     @Override

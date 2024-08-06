@@ -1,8 +1,8 @@
 package net.bodz.lily.entity.attachment;
 
-import net.bodz.lily.entity.manager.RowOpListeners;
+import net.bodz.lily.entity.manager.RowOpAware;
 
-@RowOpListeners(UpdateAttachments.class)
+@RowOpAware(UpdateAttachments.class)
 public interface IHaveAttachments {
 
     IAttachmentListing listAttachments();
