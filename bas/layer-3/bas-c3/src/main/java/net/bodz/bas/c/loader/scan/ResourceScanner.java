@@ -10,6 +10,10 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.io.res.ContainerItemList;
+import net.bodz.bas.io.res.DirSubpathItem;
+import net.bodz.bas.io.res.JarEntryItem;
+import net.bodz.bas.io.res.JarFiles;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -24,25 +28,26 @@ public class ResourceScanner {
         this.options = options;
     }
 
-    public ResList scanResources(ClassLoader classLoader, String resourceName)
+    public ContainerItemList scanResources(ClassLoader classLoader, String resourceName)
             throws IOException {
-        ResList list = new ResList();
+        ContainerItemList list = new ContainerItemList();
         Enumeration<URL> urls = classLoader.getResources(resourceName);
         while (urls.hasMoreElements()) {
             URL url = urls.nextElement();
 
-            JarFile jarFile = JarFiles.fromJarURL(url);
-            if (jarFile != null) {
-                if (! options.acceptJarPath(jarFile))
+            File file = JarFiles._fromJarURL(url);
+            if (file != null) {
+                if (! options.acceptJarPath(file))
                     continue;
 
+                JarFile jarFile = new JarFile(file);
                 Enumeration<JarEntry> entries = jarFile.entries();
                 while (entries.hasMoreElements()) {
                     JarEntry entry = entries.nextElement();
                     if (! entry.getName().startsWith(resourceName))
                         continue;
                     if (options.acceptZipEntry(entry)) {
-                        list.addItem(new JarItem(jarFile, entry));
+                        list.addItem(new JarEntryItem(jarFile, entry));
                     }
                 }
             }
@@ -54,9 +59,10 @@ public class ResourceScanner {
                 } catch (URISyntaxException e) {
                     throw new UnexpectedException(e.getMessage(), e);
                 }
-                File file = new File(uri);
-                if (options.acceptPath(file))
-                    scanLocalDir(list, file, resourceName);
+                File localDir = new File(uri);
+                assert localDir.isDirectory();
+                if (options.acceptDirPath(localDir))
+                    scanLocalDir(list, localDir, resourceName);
                 else
                     logger.debug("excluded: " + url);
             }
@@ -64,26 +70,24 @@ public class ResourceScanner {
         return list;
     }
 
-    void scanLocalDir(ResList list, File dir, String resourcePath) {
+    void scanLocalDir(ContainerItemList list, File dir, String resourcePath) {
 //        logger.info("Scan-LocalDir: ", dir);
-        scanLocalTree(list, dir, resourcePath);
+        scanLocalTree(dir, list, dir, resourcePath);
     }
 
-    void scanLocalTree(ResList list, File dir, String resourcePath) {
+    void scanLocalTree(File startDir, ContainerItemList list, File dir, String resourcePath) {
         String resourcePath_ = resourcePath;
         if (! resourcePath_.isEmpty())
             resourcePath_ += "/";
 
-        for (File child : dir.listFiles(options.getFileFilter())) {
+        File[] children = dir.listFiles(options.getFileFilter(startDir));
+        for (File child : children) {
             String name = child.getName();
             String childPath = resourcePath_ + name;
-            if (child.isDirectory()) {
-                if (options.acceptDirEntry(child))
-                    scanLocalTree(list, child, childPath);
-            } else {
-                if (options.acceptFileEntry(child))
-                    list.addItem(new FileItem(child, childPath));
-            }
+            if (child.isDirectory())
+                scanLocalTree(startDir, list, child, childPath);
+            else
+                list.addItem(new DirSubpathItem(child, childPath));
         }
     }
 

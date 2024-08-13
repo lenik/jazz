@@ -131,17 +131,22 @@ public class TypeCollectorApp
 
         ClassForrest forrest = collector.scan(classLoader);
 
-        for (Class<?> indexedType : indexedTypes) {
+        for (Class<?> baseClass : indexedTypes) {
+            if (! baseClass.isAnnotationPresent(IndexedType.class)) {
+                logger.error("@IndexedType not present on " + baseClass);
+                continue;
+            }
+
             if (listOnly) {
-                System.out.println("SPI: " + indexedType);
-                Collection<?> list = typeIndex.listIndexed(indexedType);
+                System.out.println("SPI: " + baseClass);
+                Collection<?> list = typeIndex.listIndexed(baseClass);
                 int i = 0, n = list.size();
-                for (Class<?> extension : typeIndex.listIndexed(indexedType)) {
+                for (Class<?> extension : typeIndex.listIndexed(baseClass)) {
                     String graph = i++ == n - 1 ? "    `- " : "    |- ";
                     System.out.println(graph + extension);
                 }
             } else {
-                collector.collect(forrest, indexedType);
+                collector.collect(forrest, baseClass);
             }
         }
     }

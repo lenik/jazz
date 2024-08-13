@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import net.bodz.bas.c.string.StringPred;
+import net.bodz.bas.io.res.ContainerItemList;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -46,7 +47,7 @@ public class ClassFinder
         String packageDir = packageName == null ? "" : packageName.replace('.', '/');
 
         ResourceScanner scanner = new ResourceScanner(options);
-        ResList resources = scanner.scanResources(classLoader, packageDir);
+        ContainerItemList resources = scanner.scanResources(classLoader, packageDir);
         for (String relativePath : resources.paths()) {
             if (! relativePath.endsWith(".class"))
                 continue;

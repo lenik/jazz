@@ -1,7 +1,6 @@
 package net.bodz.bas.c.loader.scan;
 
 import java.io.File;
-import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
 import net.bodz.bas.t.model.AbstractDecorator;
@@ -18,48 +17,23 @@ public class DecoratedScanOptions
     }
 
     @Override
-    public boolean acceptDirEntry(File dir) {
-        return getWrapped().acceptDirEntry(dir);
+    public boolean acceptDirPath(File dir) {
+        return getWrapped().acceptDirPath(dir);
     }
 
     @Override
-    public boolean acceptDirEntry(ZipEntry entry) {
-        return getWrapped().acceptDirEntry(entry);
+    public boolean acceptJarPath(File jar) {
+        return getWrapped().acceptJarPath(jar);
     }
 
     @Override
-    public boolean acceptDirName(String name) {
-        return getWrapped().acceptDirName(name);
+    public boolean acceptLocalEntry(File startDir, File file) {
+        return getWrapped().acceptLocalEntry(startDir, file);
     }
 
     @Override
-    public boolean acceptFileEntry(File file) {
-        return getWrapped().acceptFileEntry(file);
-    }
-
-    @Override
-    public boolean acceptFileEntry(ZipEntry entry) {
-        return getWrapped().acceptFileEntry(entry);
-    }
-
-    @Override
-    public boolean acceptFileName(String name) {
-        return getWrapped().acceptFileName(name);
-    }
-
-    @Override
-    public boolean acceptJarPath(JarFile jarFile) {
-        return getWrapped().acceptJarPath(jarFile);
-    }
-
-    @Override
-    public boolean acceptPath(File dir) {
-        return getWrapped().acceptPath(dir);
-    }
-
-    @Override
-    public boolean acceptPath(String dirName) {
-        return getWrapped().acceptPath(dirName);
+    public boolean acceptZipEntry(ZipEntry entry) {
+        return getWrapped().acceptZipEntry(entry);
     }
 
 }

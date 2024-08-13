@@ -3,10 +3,10 @@ package net.bodz.bas.c.loader.scan;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
-import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,11 +15,14 @@ import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.m2.MavenTestClassLoader;
 import net.bodz.bas.c.type.CachedInstantiator;
+import net.bodz.bas.io.res.FileCacheMap;
+import net.bodz.bas.io.res.SaveOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IEtcFilesEditor;
 import net.bodz.bas.meta.codegen.IEtcFilesInstaller;
 import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.t.pojo.Pair;
 
 public class ClassCollector {
 
@@ -47,16 +50,12 @@ public class ClassCollector {
         this.showPaths = showPaths;
     }
 
-//    public ClassScanner getScanner() {
-//        return scanner;
-//    }
-
     public void includeDirToScan(File dir) {
-        scanOptions.addDirToInclude(dir.getAbsolutePath());
+        scanOptions.includePath(dir.getAbsolutePath());
     }
 
     public void excludeDirToScan(File dir) {
-        scanOptions.addDirToExclude(dir.getAbsolutePath());
+        scanOptions.excludePath(dir.getAbsolutePath());
     }
 
     public void includePackageToScan(String packageName) {
@@ -67,89 +66,59 @@ public class ClassCollector {
         excludeFqcnPrefixes.remove(packageName);
     }
 
-    protected FileContentMap publishEtcFiles(ClassForrest forrest, Class<?> baseClass) {
-        FileContentMap fileContentMap = new FileContentMap();
+    protected ClassFileMap filter(Collection<Class<?>> classes, Class<?> baseClass) {
+        ClassFileMap selection = new ClassFileMap();
+        for (Class<?> clazz : classes) {
+            ExcludeReason reason;
+            do {
+                reason = IndexedTypeUtil.check(clazz, baseClass);
+                if (reason.isExcluded())
+                    break;
 
+                Pair<ExcludeReason, File> reasonAndFile;
+                reason = (reasonAndFile = IndexedTypeUtil.checkDir(clazz)).first;
+                if (reason.isExcluded())
+                    break;
+
+                try {
+                    reason = IndexedTypeUtil.checkScan(clazz, scanOptions);
+                } catch (IOException e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+                if (reason.isExcluded())
+                    break;
+
+                selection.put(clazz, reasonAndFile.second);
+            } while (false);
+
+            if (reason.isExcluded()) {
+                String type = baseClass.isAnnotation() ? "annotated" : "derived";
+                logger.infof("    Excluded %s %s: %s", type, clazz, reason);
+            }
+        }
+        return selection;
+
+    }
+
+    protected FileCacheMap publishEtcFiles(ClassFileMap filterMap, Class<?> baseClass) {
         IndexedType aIndexedType = baseClass.getAnnotation(IndexedType.class);
+        if (aIndexedType == null)
+            throw new NullPointerException("aIndexedType");
 
-        logger.info("For " + baseClass.getCanonicalName());
+        String publishDir = aIndexedType.publishDir();
+        if (publishDir.isEmpty())
+            publishDir = null;
+        else if (! publishDir.endsWith("/"))
+            publishDir += "/";
 
-        String info = null;
-        Collection<Class<?>> derivedClasses = forrest.listFilteredDerivations(baseClass);
-        for (Class<?> derivedClass : derivedClasses) {
-            if (info != null)
-                logger.info(info);
+        FileCacheMap fileContentMap = new FileCacheMap();
+        for (Class<?> derivedClass : filterMap.keySet()) {
+            File resDir = filterMap.get(derivedClass);
 
-            String derivedClassName = derivedClass.getCanonicalName();
-            int modifier = derivedClass.getModifiers();
-
-            info = "    Subclass: " + (baseClass.isAnnotation() ? "@" : "") + derivedClassName;
-            if (aIndexedType == null) { // Not indexed-type, skipped
-                info += " -noindex";
-                continue;
-            }
-
-            if (! Modifier.isPublic(modifier))
-                if (! aIndexedType.includeNonPublic()) {
-                    info += " -nonpub";
-                    continue;
-                }
-
-            if (derivedClass.isAnnotation()) {
-                if (! aIndexedType.includeAnnotation()) {
-                    info += " -ann";
-                    continue;
-                }
-            } else {
-                // Non-annotation.
-                if (! aIndexedType.includeClass()) {
-                    info += " -class";
-                    continue;
-                }
-                if (Modifier.isAbstract(modifier))
-                    if (! aIndexedType.includeAbstract()) {
-                        info += " -abstract";
-                        continue;
-                    }
-            }
-
-            URL url = derivedClass.getResource(derivedClass.getSimpleName() + ".class");
-            if ("file".equals(url.getProtocol())) {
-                String path = url.getPath();
-                File file = new File(path);
-                if (! scanOptions.acceptPath(file)) {
-                    info += " -dir";
-                    continue;
-                }
-            }
-
-            fileContentMap.extensions.add(derivedClass);
-
-            MavenPomDir pomDir = MavenPomDir.fromClass(derivedClass);
-            if (pomDir == null) {
-                logger.debug("Not belongs to maven project. Maybe in the jar: " + derivedClass);
-                info += " jar";
-                continue;
-            }
-
-            final File resDir = pomDir.getResourceDir(derivedClass);
-            if (resDir == null) {
-                logger.debug("No resource dir: " + derivedClassName);
-                info += " nrd";
-                continue;
-            }
-
-            logger.info(info);
-            info = null;
-
-            String publishDir = aIndexedType.publishDir();
-            if (! publishDir.isEmpty()) {
-                if (! publishDir.endsWith("/"))
-                    publishDir += "/";
-
+            if (publishDir != null) {
                 File listFile = new File(resDir, publishDir + baseClass.getName());
-                boolean init = ! fileContentMap.containsKey(listFile);
-                List<String> lines = fileContentMap.loadFile(listFile);
+                boolean init = ! fileContentMap.containsFile(listFile);
+                List<String> lines = fileContentMap.loadCache(listFile);
 
                 if (init) // Refresh: remove included packages before re-add.
                     beforeRefresh(lines);
@@ -159,7 +128,7 @@ public class ClassCollector {
                 } else {
                     lines.add(derivedClass.getName());
                 }
-            } // publishDir
+            }
 
             Class<? extends IEtcFilesInstaller> etcFilesClass = aIndexedType.etcFiles();
             if (etcFilesClass != null && ! Modifier.isAbstract(etcFilesClass.getModifiers())) {
@@ -169,14 +138,14 @@ public class ClassCollector {
                     @Override
                     public void clear(String path) {
                         File file = FilePath.joinHref(resDir, path);
-                        List<String> lines = fileContentMap.loadFile(file);
+                        List<String> lines = fileContentMap.loadCache(file);
                         lines.clear();
                     }
 
                     @Override
                     public void addLine(String path, String s) {
                         File file = FilePath.joinHref(resDir, path);
-                        List<String> lines = fileContentMap.loadFile(file);
+                        List<String> lines = fileContentMap.loadCache(file);
                         lines.add(s);
                     }
                 };
@@ -184,9 +153,6 @@ public class ClassCollector {
                 etcFiles.install(derivedClass, editor);
             } // etc-files
         } // for derivations
-
-        if (info != null)
-            logger.info(info);
 
         return fileContentMap;
     }
@@ -245,20 +211,36 @@ public class ClassCollector {
         return scanner;
     }
 
-    public List<Class<?>> collect(ClassForrest forrest, Class<?> baseClass)
-            throws IOException {
+    SaveOptions saveOptions = new SaveOptions();
+    {
+        saveOptions.setPurgeEmpty(deleteEmptyFiles);
+        saveOptions.setCompare(true);
+        saveOptions.setMkdirs(true);
+        saveOptions.setEncoding("utf-8");
+    }
 
-        FileContentMap contents = publishEtcFiles(forrest, baseClass);
-        int size = contents.size();
-        contents.saveFiles(deleteEmptyFiles);
+    public Collection<Class<?>> collect(ClassForrest forrest, Class<?> baseClass)
+            throws IOException {
+        logger.info("For " + baseClass.getCanonicalName());
+
+        Collection<Class<?>> classes = forrest.listFilteredDerivations(baseClass);
+
+        ClassFileMap filterMap = filter(classes, baseClass);
+        // filterMap.subMap(baseDir);
+
+        FileCacheMap contents = publishEtcFiles(filterMap, baseClass);
+        if (contents.isEmpty())
+            return Collections.emptyList();
+
+        contents.save(saveOptions);
 
         if (showPaths)
-            for (Class<?> extension : contents.extensions) {
+            for (Class<?> extension : filterMap.keySet()) {
                 MavenPomDir pomDir = MavenPomDir.fromClass(extension);
                 File sourceFile = pomDir.getSourceFile(extension);
                 System.out.println(sourceFile);
             }
-        return contents.extensions;
+        return filterMap.keySet();
     }
 
 }
