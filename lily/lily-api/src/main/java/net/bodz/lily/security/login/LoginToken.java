@@ -3,6 +3,9 @@ package net.bodz.lily.security.login;
 import java.io.IOException;
 import java.util.Random;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 import net.bodz.bas.c.string.StringPred;
@@ -19,9 +22,6 @@ import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.lily.security.IUser;
 import net.bodz.lily.security.IUserSecret;
 import net.bodz.lily.security.Users;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 public class LoginToken
         extends MutableAttributes

@@ -1,29 +1,30 @@
-package net.bodz.lily.entity;
+package net.bodz.bas.t.variant;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.t.variant.conv.IVarConverter;
+import net.bodz.bas.t.variant.conv.StringVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 
-public class StrVar {
+public class VarConv {
 
-    static IVarConverter<String> strConv = VarConverters.getConverter(String.class);
+    static final IVarConverter<String> STRING = StringVarConverter.INSTANCE;
 
-    public static <K> K parse(Class<K> type, String s)
+    public static <T> T fromString(Class<T> type, String str)
             throws ParseException {
         try {
-            return strConv.to(s, type);
+            return STRING.to(str, type);
         } catch (TypeConvertException e) {
             throw new ParseException("failed to parse: " + e.getMessage(), e);
         }
     }
 
-    public static <K> K parseAny(Class<K> type, Object anyVal)
+    public static <T> T toAny(Object source, Class<T> type)
             throws ParseException {
-        IVarConverter<K> converter = VarConverters.getConverter(type);
+        IVarConverter<T> converter = VarConverters.getConverter(type);
         try {
-            K id = converter.from(anyVal);
-            return id;
+            T val = converter.from(source);
+            return val;
         } catch (TypeConvertException e) {
             throw new ParseException("failed to convert: " + e.getMessage(), e);
         }

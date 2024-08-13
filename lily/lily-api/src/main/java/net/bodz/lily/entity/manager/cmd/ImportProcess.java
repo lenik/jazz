@@ -27,15 +27,24 @@ import net.bodz.bas.site.file.UploadHandler;
 import net.bodz.bas.site.file.UploadResult;
 import net.bodz.bas.site.file.UploadedFileInfo;
 import net.bodz.bas.site.json.JsonResult;
-import net.bodz.bas.t.catalog.*;
+import net.bodz.bas.t.catalog.CsvTable;
+import net.bodz.bas.t.catalog.DefaultColumnMetadata;
+import net.bodz.bas.t.catalog.DefaultTableMetadata;
+import net.bodz.bas.t.catalog.ICell;
+import net.bodz.bas.t.catalog.IColumnMetadata;
+import net.bodz.bas.t.catalog.IMutableCell;
+import net.bodz.bas.t.catalog.IRow;
+import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.MutableRow;
+import net.bodz.bas.t.catalog.MutableTable;
 import net.bodz.bas.t.catalog.poi.SheetBook;
 import net.bodz.bas.t.catalog.poi.SheetTable;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.t.variant.VarConv;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 import net.bodz.lily.concrete.CoObject;
 import net.bodz.lily.concrete.StructRow;
-import net.bodz.lily.entity.StrVar;
 import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
 import net.bodz.lily.entity.manager.IEntityCommandContext;
 import net.bodz.lily.storage.IVolume;
@@ -199,7 +208,7 @@ public class ImportProcess
                         cellVal = converter.to(src, cellType);
                     } else {
                         String srcText = src == null ? null : src.toString();
-                        cellVal = StrVar.parse(cellType, srcText);
+                        cellVal = VarConv.fromString(cellType, srcText);
                     }
                 } catch (ParseException e) {
                     throw new ParseException(String.format(//

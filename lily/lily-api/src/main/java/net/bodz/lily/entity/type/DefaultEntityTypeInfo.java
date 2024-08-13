@@ -27,6 +27,7 @@ import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
 import net.bodz.bas.repr.form.FormDeclBuilder;
 import net.bodz.bas.repr.form.IFormDecl;
+import net.bodz.bas.t.variant.VarConv;
 import net.bodz.lily.concrete.CoObject;
 import net.bodz.lily.concrete.StructRowCriteriaBuilder;
 import net.bodz.lily.criteria.ICriteriaBuilder;
@@ -34,7 +35,6 @@ import net.bodz.lily.entity.IIdentity;
 import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.PrimaryKeyColumns;
 import net.bodz.lily.entity.PrimaryKeyProperties;
-import net.bodz.lily.entity.StrVar;
 
 public class DefaultEntityTypeInfo
         implements
@@ -230,7 +230,7 @@ public class DefaultEntityTypeInfo
         if (primaryKeyPropertyNames == null) {
             values = new Object[1];
             try {
-                Object val = StrVar.parse(idClass, columns[0]);
+                Object val = VarConv.fromString(idClass, columns[0]);
                 values[0] = val;
             } catch (ParseException e) {
                 String err = String.format("error parse id property[%d]: %s %s: value `%s`, in entity type %s", //
@@ -247,7 +247,7 @@ public class DefaultEntityTypeInfo
                 String column = columns[i];
                 if (column != null)
                     try {
-                        Object val = StrVar.parse(propertyType, columns[i]);
+                        Object val = VarConv.fromString(propertyType, columns[i]);
                         values[i] = val;
                     } catch (Exception e) {
                         String err = String.format("error parse id property[%d]: %s %s: value `%s`, in entity type %s", //
@@ -267,7 +267,7 @@ public class DefaultEntityTypeInfo
 
         Object value;
         try {
-            value = StrVar.parse(idClass, str);
+            value = VarConv.fromString(idClass, str);
         } catch (ParseException e) {
             String err = String.format("error parse id: %s from `%s`, in entity type %s", //
                     idClass.getName(), str, entityClass.getName());
