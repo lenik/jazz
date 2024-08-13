@@ -7,12 +7,13 @@ import java.util.ServiceLoader;
 import java.util.Set;
 
 import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.io.Stdio;
 
 public class EsmModules {
 
     public static List<IEsmModuleProvider> providers = new ArrayList<>();
     public static Set<EsmModule> modules = new HashSet<>();
-    public static DomainMap<EsmModule> domainMap = new DomainMap<>();
+    public static DomainMap<EsmModule> registry = new DomainMap<>();
 
     static {
         for (IEsmModuleProvider provider : ServiceLoader.load(IEsmModuleProvider.class)) {
@@ -22,13 +23,15 @@ public class EsmModules {
                 modules.add(module);
 
                 for (String pattern : module.getExclusiveDomains()) {
-                    EsmModule prev = domainMap.patternGet(pattern);
+                    EsmModule prev = registry.patternGet(pattern);
                     if (prev != null)
                         throw new DuplicatedKeyException(pattern, prev);
-                    domainMap.patternPut(pattern, module);
+                    registry.patternPut(pattern, module);
                 }
             }
         }
+
+        registry.dump(Stdio.out.indented());
     }
 
 }

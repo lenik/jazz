@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.NotImplementedException;
 
+import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.t.preorder.PackageMap;
 import net.bodz.bas.t.preorder.PrefixMap;
 import net.bodz.bas.t.tuple.QualifiedName;
@@ -97,6 +98,36 @@ public class DomainMap<E> {
 
         module = prefixMap.meet(fullName);
         return module;
+    }
+
+    public void dump(ITreeOut out) {
+        out.enterln("Dump of DomainMap:");
+
+        if (defaultValue != null)
+            out.println("default :" + defaultValue);
+
+        out.enterln("packageMap:");
+        dump(out, packageMap, null);
+
+        out.enterln("prefixMap:");
+        dump(out, prefixMap, "%");
+
+        out.enterln("qNameMap:");
+        dump(out, map, null);
+
+        out.leaveln();
+    }
+
+    void dump(ITreeOut out, Map<String, E> map, String keySuffix) {
+        out.enter();
+        for (String key : map.keySet()) {
+            E val = map.get(key);
+            String keyDisp = key;
+            if (keySuffix != null)
+                keyDisp += keySuffix;
+            out.println(keyDisp + " = " + val);
+        }
+        out.leave();
     }
 
 }

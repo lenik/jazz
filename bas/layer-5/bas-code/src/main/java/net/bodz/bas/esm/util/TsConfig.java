@@ -41,14 +41,14 @@ public class TsConfig {
     }
 
     public static EsmDomainMap buildDomainMap(EsmModule contextModule) {
-        EsmDomainMap domainMap = new EsmDomainMap.Builder()//
+        EsmDomainMap registryWithContext = new EsmDomainMap.Builder()//
                 .contextModule(contextModule) //
                 .localPriority(BuiltinModules.PRIORITY_LOCAL)//
                 .build();
 
-        domainMap.addAll(EsmModules.domainMap);
+        registryWithContext.addAll(EsmModules.registry);
 
-        return domainMap;
+        return registryWithContext;
     }
 
     static TypePoMap<Class<?>> equivTypeMap = new TypePoMap<>();
