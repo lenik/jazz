@@ -10,6 +10,7 @@ import org.apache.logging.log4j.spi.StandardLevel;
 
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.log.LogUtils;
 import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.impl.Log4jLogSink.DebugSink;
 import net.bodz.bas.log.impl.Log4jLogSink.ErrorSink;
@@ -141,7 +142,7 @@ public class Log4jLogger
         for (int i = 1; i < stackTrace.length; i++) {
             StackTraceElement element = stackTrace[i];
             String className = element.getClassName();
-            if (!className.startsWith("net.bodz.bas.log."))
+            if (! className.startsWith("net.bodz.bas.log."))
                 break;
             lastLogClass = className;
         }
@@ -181,7 +182,7 @@ public class Log4jLogger
     }
 
     public static Log4jLogger getInstance(Class<?> clazz) {
-        String name = nameOf(clazz);
+        String name = LogUtils.nameOf(clazz);
         return getInstance(name);
     }
 

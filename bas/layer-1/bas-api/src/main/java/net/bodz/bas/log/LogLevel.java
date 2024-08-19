@@ -103,7 +103,7 @@ public class LogLevel
         if (intern == null) {
             if (other.intern != null)
                 return false;
-        } else if (!intern.equals(other.intern))
+        } else if (! intern.equals(other.intern))
             return false;
         if (group != other.group)
             return false;
@@ -140,6 +140,45 @@ public class LogLevel
             return cmp;
 
         return -1;
+    }
+
+    public static LogLevel parse(String name) {
+        if (name == null)
+            return null;
+        switch (name.toUpperCase()) {
+        case "STDERR":
+            return STDERR;
+        case "STDOUT":
+            return STDOUT;
+        case "OFF":
+            return OFF;
+        case "FATAL":
+            return FATAL;
+        case "ERROR":
+            return ERROR;
+        case "WARN":
+            return WARN;
+        case "MESG":
+        case "MESSAGE":
+            return MESG;
+        case "INFO":
+            return INFO;
+        case "LOG":
+            return LOG;
+        case "DEBUG":
+            return DEBUG;
+        case "TRACE":
+            return TRACE;
+        case "ALL":
+            return ALL;
+        case "ST":
+        case "STATUS":
+            return STATUS;
+        case "PROG":
+        case "PROGRESS":
+            return PROGRESS;
+        }
+        throw new IllegalArgumentException("invalid name: " + name);
     }
 
 }

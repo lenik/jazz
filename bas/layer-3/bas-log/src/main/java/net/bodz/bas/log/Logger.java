@@ -7,13 +7,41 @@ import javax.annotation.Generated;
  */
 @Generated("By LoggerCG")
 public interface Logger
-        extends ILogComposite, ILogger, ILog4jCompat {
+        extends
+            ILogComposite,
+            ILogger,
+            ILog4jCompat {
+
+    @Override
+    default boolean fatal(Object message) {
+        return _fatal(0, null, message);
+    }
+
+    @Override
+    default boolean error(Object message) {
+        return _error(0, null, message);
+    }
+
+    @Override
+    default void warn(Object message) {
+        _warn(0, null, message);
+    }
+
+    @Override
+    default void info(Object message) {
+        _info(0, null, message);
+    }
+
+    @Override
+    default void debug(Object message) {
+        _debug(0, null, message);
+    }
 
     /**
      * Get the stderr logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getStderrSink();
@@ -22,7 +50,7 @@ public interface Logger
      * Get the stderr logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
@@ -33,7 +61,7 @@ public interface Logger
      * Get the stdout logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getStdoutSink();
@@ -42,7 +70,7 @@ public interface Logger
      * Get the stdout logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
@@ -53,7 +81,7 @@ public interface Logger
      * Get the fatal logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getFatalSink();
@@ -62,7 +90,7 @@ public interface Logger
      * Get the fatal logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
@@ -73,7 +101,7 @@ public interface Logger
      * Get the error logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getErrorSink();
@@ -82,7 +110,7 @@ public interface Logger
      * Get the error logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
@@ -93,7 +121,7 @@ public interface Logger
      * Get the warn logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getWarnSink();
@@ -102,7 +130,7 @@ public interface Logger
      * Get the warn logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
@@ -113,7 +141,7 @@ public interface Logger
      * Get the mesg logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getMesgSink();
@@ -122,7 +150,7 @@ public interface Logger
      * Get the mesg logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
@@ -133,7 +161,7 @@ public interface Logger
      * Get the info logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getInfoSink();
@@ -142,7 +170,7 @@ public interface Logger
      * Get the info logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
@@ -153,7 +181,7 @@ public interface Logger
      * Get the log logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getLogSink();
@@ -162,7 +190,7 @@ public interface Logger
      * Get the log logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
@@ -173,7 +201,7 @@ public interface Logger
      * Get the debug logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getDebugSink();
@@ -182,7 +210,7 @@ public interface Logger
      * Get the debug logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
@@ -193,7 +221,7 @@ public interface Logger
      * Get the trace logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getTraceSink();
@@ -202,7 +230,7 @@ public interface Logger
      * Get the trace logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
@@ -213,7 +241,7 @@ public interface Logger
      * Get the status logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getStatusSink();
@@ -222,7 +250,7 @@ public interface Logger
      * Get the status logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.
@@ -233,7 +261,7 @@ public interface Logger
      * Get the progress logging output sink.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @return Non-<code>null</code> sink object.
      */
     ILogSink getProgressSink();
@@ -242,7 +270,7 @@ public interface Logger
      * Get the progress logging output sink with a delta verbose.
      * <p>
      * If the specific logging is disabled, a NullLogSink will be returned.
-     * 
+     *
      * @param delta
      *            The verbose level delta.
      * @return Non-<code>null</code> sink object.

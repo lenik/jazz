@@ -2,8 +2,6 @@ package net.bodz.bas.log;
 
 import net.bodz.bas.log.impl.NullLogSink;
 import net.bodz.bas.log.impl.PrintStreamLogSink;
-import net.bodz.bas.log.message.ArrayJoinMessage;
-import net.bodz.bas.log.message.StringFormatMessage;
 import net.bodz.bas.meta.source.ChainOrder;
 import net.bodz.bas.meta.source.ChainUsage;
 import net.bodz.bas.meta.source.OverrideOption;
@@ -80,17 +78,5 @@ public abstract class AbstractLogComposite
     }
 
     // utils
-
-    protected static String nameOf(Class<?> clazz) {
-        return clazz.getName();
-    }
-
-    protected static Object concat(Object... array) {
-        return new ArrayJoinMessage(array);
-    }
-
-    protected static Object format(String fmt, Object... args) {
-        return new StringFormatMessage(fmt, args);
-    }
 
 }

@@ -16,13 +16,13 @@ public class BufferedLogger
 
     static final int defaultMaxRecordCount = 10000;
 
-    String prefix;
+    final String prefix;
 
-    int maxRecordCount;
+    final int maxRecordCount;
 
     // BlockingQueue<E>
     // ConcurrentLinkedQueue<E>
-    LinkedList<LogRecord> records;
+    protected final LinkedList<LogRecord> records;
     List<IListChangeListener> listChangeListeners;
 
     public BufferedLogger() {
@@ -56,11 +56,11 @@ public class BufferedLogger
         return prefix;
     }
 
-    public void setPrefix(String prefix) {
-        if (prefix == null)
-            throw new NullPointerException("prefix");
-        this.prefix = prefix;
-    }
+//    public void setPrefix(String prefix) {
+//        if (prefix == null)
+//            throw new NullPointerException("prefix");
+//        this.prefix = prefix;
+//    }
 
     public List<LogRecord> getRecords() {
         return records;
@@ -98,12 +98,14 @@ public class BufferedLogger
         return buf.toString();
     }
 
-    public void dump() {
+    public void dump(boolean clear) {
         dump(System.out, System.err);
-        records.clear();
-        if (listChangeListeners != null)
-            for (IListChangeListener listener : listChangeListeners)
-                listener.onCleared();
+        if (clear) {
+            records.clear();
+            if (listChangeListeners != null)
+                for (IListChangeListener listener : listChangeListeners)
+                    listener.onCleared();
+        }
     }
 
     public void dump(PrintStream info, PrintStream err) {
