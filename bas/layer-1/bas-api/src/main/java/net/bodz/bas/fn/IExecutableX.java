@@ -1,6 +1,7 @@
 package net.bodz.bas.fn;
 
-public interface IExecutableX<X extends Exception> {
+@FunctionalInterface
+public interface IExecutableX<X extends Throwable> {
 
     void execute()
             throws X;

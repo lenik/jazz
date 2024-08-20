@@ -19,20 +19,36 @@ public interface IFlyingTransient {
 
     ICodeBin getCode(long index);
 
-    FlyingIndex lastIndexOf(ICodeBin code, int distance, int allowAhead);
+    default FlyingIndex lastIndexOf(ICodeBin code, int distance, int allowAhead) {
+        long window = getWindow();
+        long fromIndex = System.currentTimeMillis() / window;
+        return lastIndexOf(fromIndex, code, distance, allowAhead);
+    }
 
     FlyingIndex lastIndexOf(long fromIndex, ICodeBin code, int distance, int allowAhead);
 
-    FlyingIndex lastIndexOf(String codeStr, int distance, int allowAhead);
+    default FlyingIndex lastIndexOf(String codeStr, int distance, int allowAhead) {
+        long window = getWindow();
+        long fromIndex = System.currentTimeMillis() / window;
+        return lastIndexOf(fromIndex, codeStr, distance, allowAhead);
+    }
 
     FlyingIndex lastIndexOf(long fromIndex, String codeStr, int distance, int allowAhead);
 
-    IFlyingTransient getCore();
+//    IFlyingTransient getCore();
 
-    IFlyingTransient transform(Function<? extends ICodeBin, ? extends ICodeBin> transformer);
+    default <T extends ICodeBin> IFlyingTransient transform(Function<ICodeBin, T> transformer) {
+        return new TransformedFlyingTransient<ICodeBin, T>(this, transformer);
+    }
 
     @SuppressWarnings("unchecked")
-    IFlyingTransient transform(Function<? extends ICodeBin, ? extends ICodeBin>... transformers);
+    default IFlyingTransient transform(Function<ICodeBin, ? extends ICodeBin>... transformers) {
+        IFlyingTransient node = this;
+        for (Function<ICodeBin, ? extends ICodeBin> fn : transformers) {
+            node = node.transform(fn);
+        }
+        return node;
+    }
 
     void diag(String search, int distance, int allowAhead);
 

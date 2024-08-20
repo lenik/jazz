@@ -2,14 +2,10 @@ package net.bodz.bas.crypto.trans;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
 
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.crypto.trans.fn.ICodeBin;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fn.TransformerArray;
 
 public abstract class AbstractFlyingTransient
         implements
@@ -39,15 +35,6 @@ public abstract class AbstractFlyingTransient
     }
 
     @Override
-    public abstract ICodeBin getCode(long index);
-
-    @Override
-    public FlyingIndex lastIndexOf(ICodeBin code, int distance, int allowAhead) {
-        long fromIndex = System.currentTimeMillis() / window;
-        return lastIndexOf(fromIndex, code, distance, allowAhead);
-    }
-
-    @Override
     public FlyingIndex lastIndexOf(long fromIndex, ICodeBin code, int distance, int allowAhead) {
         long pos = fromIndex + allowAhead;
         distance += allowAhead;
@@ -61,12 +48,6 @@ public abstract class AbstractFlyingTransient
     }
 
     @Override
-    public FlyingIndex lastIndexOf(String codeStr, int distance, int allowAhead) {
-        long fromIndex = System.currentTimeMillis() / window;
-        return lastIndexOf(fromIndex, codeStr, distance, allowAhead);
-    }
-
-    @Override
     public FlyingIndex lastIndexOf(long fromIndex, String codeStr, int distance, int allowAhead) {
         long pos = fromIndex + allowAhead;
         distance += allowAhead;
@@ -77,29 +58,6 @@ public abstract class AbstractFlyingTransient
             pos--;
         }
         return FlyingIndex.NULL;
-    }
-
-    @Override
-    public IFlyingTransient getCore() {
-        return null;
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Override
-    public IFlyingTransient transform(Function<? extends ICodeBin, ? extends ICodeBin> transformer) {
-        return new TransformedFlyingTransient(this, transformer);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public IFlyingTransient transform(Function<? extends ICodeBin, ? extends ICodeBin>... transformers) {
-        List<Function<ICodeBin, ICodeBin>> list = new ArrayList<Function<ICodeBin, ICodeBin>>();
-        for (Function<? extends ICodeBin, ? extends ICodeBin> item : transformers) {
-            Function<ICodeBin, ICodeBin> cast = (Function<ICodeBin, ICodeBin>) item;
-            list.add(cast);
-        }
-        TransformerArray<ICodeBin> array = new TransformerArray<ICodeBin>(list);
-        return transform(array);
     }
 
     @Override

@@ -16,7 +16,6 @@ public class TransformedFlyingTransient<S extends ICodeBin, T extends ICodeBin>
         this.transformer = transformer;
     }
 
-    @Override
     public IFlyingTransient getCore() {
         return core;
     }

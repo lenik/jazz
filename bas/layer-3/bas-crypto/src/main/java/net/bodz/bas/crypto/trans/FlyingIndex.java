@@ -11,11 +11,17 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.site.json.AbstractJsonResponse;
 
 public class FlyingIndex
-        implements IFlyingIndex, IJsonForm {
+        implements
+            IFlyingIndex,
+            IJsonForm {
 
-    public static final long INDEX_NA = 0L;
+    /**
+     * Because index can be positive or negative. So use 0L here instead of -1.
+     */
+    private static final long INDEX_NA = 0L;
 
     long window;
     long time;
@@ -119,6 +125,13 @@ public class FlyingIndex
         long relativeTime = getRelativeTime();
         out.entry("relativeIndex", relativeIndex);
         out.entry("relativeTime", relativeTime);
+    }
+
+    public FlyingIndex applyOn(AbstractJsonResponse<?> resp) {
+        if (resp != null)
+            if (exists())
+                resp.setHeader("fi", this);
+        return this;
     }
 
 }
