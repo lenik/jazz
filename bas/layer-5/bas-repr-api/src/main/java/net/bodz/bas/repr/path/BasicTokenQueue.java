@@ -5,18 +5,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
 
 @ThreadUnsafe
 public class BasicTokenQueue
         implements
-            IBasicTokenQueue,
+            IStaticTokenArray,
+            IForwardOnlyTokenQueue,
             Serializable,
             Cloneable {
 
     private static final long serialVersionUID = 1L;
 
     final String[] tokens;
+    final int begin;
+    final int end;
     final boolean entered;
     int index;
     boolean stopped;
@@ -25,6 +29,8 @@ public class BasicTokenQueue
         if (tokens == null)
             throw new NullPointerException("tokens");
         this.tokens = tokens;
+        this.begin = 0;
+        this.end = tokens.length;
         this.entered = entered;
     }
 
@@ -33,6 +39,8 @@ public class BasicTokenQueue
         if (tokens == null)
             throw new NullPointerException("tokens");
         this.tokens = tokens;
+        this.begin = 0;
+        this.end = tokens.length;
         this.entered = entered;
     }
 
@@ -54,18 +62,92 @@ public class BasicTokenQueue
     }
 
     @Override
+    public int size() {
+        return end - begin;
+    }
+
+    @Override
+    public String get(int index) {
+        if (index < 0 || index >= end - begin)
+            throw new IndexOutOfBoundsException("" + index);
+        return tokens[begin + index];
+    }
+
+    @Override
+    public int getInt(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseInt(token);
+    }
+
+    @Override
+    public int getInt(int index, int fallback) {
+        String token = get(index);
+        if (! isNumber(token))
+            return fallback;
+        try {
+            return Integer.parseInt(token);
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public long getLong(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseLong(token);
+    }
+
+    @Override
+    public long getLong(int index, long fallback) {
+        String token = get(index);
+        if (! isNumber(token))
+            return fallback;
+        try {
+            return Long.parseLong(token);
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public <E extends Enum<E>> E get(Class<E> enumType, int index)
+            throws ParseException {
+        E val = get(enumType, index, null);
+        if (val == null) {
+            String token = tokens[begin + index];
+            throw new ParseException(String.format(//
+                    "invalid enum name %s, in type %s", token, enumType.getName()));
+        }
+        return val;
+    }
+
+    @Override
+    public <E extends Enum<E>> E get(Class<E> enumType, int index, E fallback) {
+        if (index < 0 || index >= end - begin)
+            return fallback;
+        String token = tokens[begin + index];
+        try {
+            return Enum.valueOf(enumType, token);
+        } catch (IllegalArgumentException e) {
+            return fallback;
+        }
+    }
+
+    @Override
     public int available() {
-        return tokens.length - index;
+        return end - index;
     }
 
     @Override
     public String getRemainingPath() {
-        int remaining = tokens.length - index;
+        int remaining = end - index;
         if (remaining == 0)
             return null;
 
         StringBuilder buf = new StringBuilder(remaining * 20);
-        for (int i = index; i < tokens.length; i++) {
+        for (int i = index; i < end; i++) {
             if (i != index)
                 buf.append('/');
             buf.append(tokens[i]);
@@ -79,14 +161,14 @@ public class BasicTokenQueue
     }
 
     @Override
-    public boolean isEmpty() {
-        return index >= tokens.length;
+    public boolean isDone() {
+        return index >= end;
     }
 
     @Override
     public void skip(int n) {
         int index = this.index + n;
-        if (index > tokens.length)
+        if (index > end)
             throw new IllegalArgumentException("Skip to underflow: " + n);
         this.index = index;
     }
@@ -94,7 +176,7 @@ public class BasicTokenQueue
     @Override
     public String[] shift(int n) {
         if (index + n > tokens.length)
-            return null;
+            throw new TokenUnderflowException();
         String[] copy = Arrays.copyOfRange(tokens, index, index + n);
         index += n;
         return copy;
@@ -113,7 +195,8 @@ public class BasicTokenQueue
     }
 
     @Override
-    public Integer shiftInt() {
+    public Integer shiftInt()
+            throws ParseException {
         Integer n = peekInt();
         if (n != null)
             index++;
@@ -121,7 +204,17 @@ public class BasicTokenQueue
     }
 
     @Override
-    public Long shiftLong() {
+    public int shiftInt(int fallback) {
+        if (index >= end)
+            return fallback;
+        int n = peekInt(fallback);
+        index++;
+        return n;
+    }
+
+    @Override
+    public Long shiftLong()
+            throws ParseException {
         Long n = peekLong();
         if (n != null)
             index++;
@@ -129,47 +222,122 @@ public class BasicTokenQueue
     }
 
     @Override
-    public final String peek() {
-        return peekAt(0);
+    public long shiftLong(int fallback) {
+        if (index >= end)
+            return fallback;
+        long n = peekLong(fallback);
+        index++;
+        return n;
     }
 
     @Override
-    public String peekAt(int offset) {
+    public final String peek() {
+        return peekAhead(0);
+    }
+
+    @Override
+    public String peekAhead(int offset) {
         int index = this.index + offset;
-        if (index >= tokens.length)
+        if (index < 0 || index >= tokens.length)
             return null;
         return tokens[index];
     }
 
     @Override
-    public final Integer peekInt() {
-        return peekIntAt(0);
+    public final Integer peekInt()
+            throws ParseException {
+        return peekIntAhead(0);
     }
 
     @Override
-    public Integer peekIntAt(int offset) {
+    public Integer peekIntAhead(int offset)
+            throws ParseException {
         int index = this.index + offset;
-        if (index >= tokens.length)
+        if (index < 0 || index >= tokens.length)
             return null;
-        if (! isNumber(tokens[index]))
-            return null;
-        return Integer.valueOf(tokens[index]);
+        String token = tokens[index];
+        return parseInt(token);
     }
 
     @Override
-    public final Long peekLong() {
-        return peekLongAt(0);
+    public int peekInt(int fallback) {
+        return peekIntAhead(0, fallback);
     }
 
     @Override
-    public Long peekLongAt(int offset) {
+    public int peekIntAhead(int offset, int fallback) {
         int index = this.index + offset;
-        if (index >= tokens.length)
-            return null;
+        if (index < 0 || index >= tokens.length)
+            return fallback;
         if (! isNumber(tokens[index]))
+            return fallback;
+        try {
+            return Integer.valueOf(tokens[index]);
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public final Long peekLong()
+            throws ParseException {
+        return peekLongAhead(0);
+    }
+
+    @Override
+    public Long peekLongAhead(int offset)
+            throws ParseException {
+        int index = this.index + offset;
+        if (index < 0 || index >= tokens.length)
             return null;
-        long n = Long.parseLong(tokens[index]);
-        return n;
+        String token = tokens[index];
+        return parseLong(token);
+    }
+
+    @Override
+    public long peekLong(long fallback) {
+        return peekLongAhead(0, fallback);
+    }
+
+    @Override
+    public long peekLongAhead(int offset, long fallback) {
+        int index = this.index + offset;
+        if (index < 0 || index >= tokens.length)
+            return fallback;
+        String token = tokens[index];
+        if (! isNumber(token))
+            return fallback;
+        try {
+            return Long.valueOf(token);
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public <E extends Enum<E>> E peekAhead(Class<E> enumType, int offset)
+            throws ParseException {
+        E val = peekAhead(enumType, offset, null);
+        if (val == null) {
+            int index = this.index + offset;
+            String token = tokens[index];
+            throw new ParseException(String.format(//
+                    "invalid enum name %s, in type %s", token, enumType.getName()));
+        }
+        return val;
+    }
+
+    @Override
+    public <E extends Enum<E>> E peekAhead(Class<E> enumType, int offset, E fallback) {
+        int index = this.index + offset;
+        if (index < 0 || index >= tokens.length)
+            return null;
+        String token = tokens[index];
+        try {
+            return Enum.valueOf(enumType, token);
+        } catch (IllegalArgumentException e) {
+            return fallback;
+        }
     }
 
     @Override
@@ -209,6 +377,32 @@ public class BasicTokenQueue
                 return false;
         }
         return true;
+    }
+
+    static void ensureNumber(String str)
+            throws ParseException {
+        if (! isNumber(str))
+            throw new ParseException("Not a number: " + str);
+    }
+
+    static int parseInt(String str)
+            throws ParseException {
+        ensureNumber(str);
+        try {
+            return Integer.valueOf(str);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Not a number: " + str, e);
+        }
+    }
+
+    static long parseLong(String str)
+            throws ParseException {
+        ensureNumber(str);
+        try {
+            return Long.valueOf(str);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Not a number: " + str, e);
+        }
     }
 
     public static class Builder {

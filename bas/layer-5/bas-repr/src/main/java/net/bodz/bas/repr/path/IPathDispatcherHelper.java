@@ -9,7 +9,7 @@ public interface IPathDispatcherHelper {
         TokenQueue tokens = TokenQueue.ofPath(path);
         IPathArrival start = new PathArrival(startObject, tokens.getRemainingPath());
         IPathArrival result = pd.dispatch(start, startObject, tokens, q);
-        if (result == null || ! tokens.isEmpty())
+        if (result == null || ! tokens.isDone())
             throw new IncompleteDispatchException(tokens.toString());
         return result.getTarget();
     }
@@ -18,7 +18,7 @@ public interface IPathDispatcherHelper {
             throws PathDispatchException {
         IPathArrival start = new PathArrival(startObject, tokens.getRemainingPath());
         IPathArrival result = pd.dispatch(start, startObject, tokens, q);
-        if (result == null || ! tokens.isEmpty())
+        if (result == null || ! tokens.isDone())
             throw new IncompleteDispatchException(tokens.toString());
         return result.getTarget();
     }

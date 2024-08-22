@@ -23,7 +23,7 @@ public class BasicTokenQueueTest
         queue.shift();
         assertNull(queue.getRemainingPath());
 
-        assertTrue(queue.isEmpty());
+        assertTrue(queue.isDone());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class BasicTokenQueueTest
         assertEquals("a", queue.shift());
         assertEquals("b", queue.shift());
         assertEquals("c", queue.shift());
-        assertTrue(queue.isEmpty());
+        assertTrue(queue.isDone());
         assertNull(queue.shift());
     }
 
@@ -65,7 +65,7 @@ public class BasicTokenQueueTest
 
         queue = BasicTokenQueue.ofPath("////");
         assertTrue(queue.isEntered());
-        assertTrue(queue.isEmpty());
+        assertTrue(queue.isDone());
     }
 
 }

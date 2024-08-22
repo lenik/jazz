@@ -2,6 +2,11 @@ package net.bodz.bas.html.servlet;
 
 import java.io.IOException;
 
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import net.bodz.bas.c.jakarta.servlet.http.HttpServletReqEx;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.err.IllegalUsageError;
@@ -40,11 +45,6 @@ import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VariantMaps;
 import net.bodz.bas.ui.dom1.UiVar;
-
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 public class PathDispatchServlet
         extends DumpServlet {
@@ -137,7 +137,7 @@ public class PathDispatchServlet
         if (target == NoRender.INSTANCE)
             return;
 
-        if (! tokenQueue.isEmpty() && ! tokenQueue.isStopped()) {
+        if (! tokenQueue.isDone() && ! tokenQueue.isStopped()) {
             logger.error("Incomplete-Dispatch: " + tokenQueue);
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, //
                     "Path-Remaining: " + tokenQueue.getRemainingPath());

@@ -39,7 +39,7 @@ public interface IPathDispatcher
         TokenQueue tokens = TokenQueue.ofPath(path);
         PathArrival start = new PathArrival(startObject, tokens.getRemainingPath());
         IPathArrival result = dispatch(start, startObject, tokens, q);
-        if (! tokens.isEmpty())
+        if (! tokens.isDone())
             throw new IncompleteDispatchException(tokens.toString());
         return result;
     }

@@ -1,5 +1,6 @@
 package net.bodz.bas.repr.path;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedTokenQueue
@@ -54,6 +55,54 @@ public abstract class DecoratedTokenQueue
     }
 
     @Override
+    public int size() {
+        return getWrapped().size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return getWrapped().isEmpty();
+    }
+
+    @Override
+    public String get(int index) {
+        return getWrapped().get(index);
+    }
+
+    @Override
+    public int getInt(int index)
+            throws ParseException {
+        return getWrapped().getInt(index);
+    }
+
+    @Override
+    public int getInt(int index, int fallback) {
+        return getWrapped().getInt(index, fallback);
+    }
+
+    @Override
+    public long getLong(int index)
+            throws ParseException {
+        return getWrapped().getLong(index);
+    }
+
+    @Override
+    public long getLong(int index, long fallback) {
+        return getWrapped().getLong(index, fallback);
+    }
+
+    @Override
+    public <E extends Enum<E>> E get(Class<E> enumType, int index)
+            throws ParseException {
+        return getWrapped().get(enumType, index);
+    }
+
+    @Override
+    public <E extends Enum<E>> E get(Class<E> enumType, int index, E fallback) {
+        return getWrapped().get(enumType, index, fallback);
+    }
+
+    @Override
     public int available() {
         return getWrapped().available();
     }
@@ -69,8 +118,8 @@ public abstract class DecoratedTokenQueue
     }
 
     @Override
-    public boolean isEmpty() {
-        return getWrapped().isEmpty();
+    public boolean isDone() {
+        return getWrapped().isDone();
     }
 
     @Override
@@ -94,13 +143,25 @@ public abstract class DecoratedTokenQueue
     }
 
     @Override
-    public Integer shiftInt() {
+    public Integer shiftInt()
+            throws ParseException {
         return getWrapped().shiftInt();
     }
 
     @Override
-    public Long shiftLong() {
+    public int shiftInt(int fallback) {
+        return getWrapped().shiftInt(fallback);
+    }
+
+    @Override
+    public Long shiftLong()
+            throws ParseException {
         return getWrapped().shiftLong();
+    }
+
+    @Override
+    public long shiftLong(int fallback) {
+        return getWrapped().shiftLong(fallback);
     }
 
     @Override
@@ -109,28 +170,108 @@ public abstract class DecoratedTokenQueue
     }
 
     @Override
-    public String peekAt(int offset) {
-        return getWrapped().peekAt(offset);
+    public String peekAhead(int offset) {
+        return getWrapped().peekAhead(offset);
     }
 
     @Override
-    public Integer peekInt() {
+    public Integer peekInt()
+            throws ParseException {
         return getWrapped().peekInt();
     }
 
     @Override
-    public Integer peekIntAt(int offset) {
-        return getWrapped().peekIntAt(offset);
+    public int peekInt(int fallback) {
+        return getWrapped().peekInt(fallback);
     }
 
     @Override
-    public Long peekLong() {
+    public Integer peekIntAhead(int offset)
+            throws ParseException {
+        return getWrapped().peekIntAhead(offset);
+    }
+
+    @Override
+    public int peekIntAhead(int offset, int fallback) {
+        return getWrapped().peekIntAhead(offset, fallback);
+    }
+
+    @Override
+    public Long peekLong()
+            throws ParseException {
         return getWrapped().peekLong();
     }
 
     @Override
-    public Long peekLongAt(int offset) {
-        return getWrapped().peekLongAt(offset);
+    public long peekLong(long fallback) {
+        return getWrapped().peekLong(fallback);
+    }
+
+    @Override
+    public Long peekLongAhead(int offset)
+            throws ParseException {
+        return getWrapped().peekLongAhead(offset);
+    }
+
+    @Override
+    public long peekLongAhead(int offset, long fallback) {
+        return getWrapped().peekLongAhead(offset, fallback);
+    }
+
+    @Override
+    public int[] peekInts(int n)
+            throws ParseException {
+        return getWrapped().peekInts(n);
+    }
+
+    @Override
+    public int[] peekInts(int n, int fallback) {
+        return getWrapped().peekInts(n, fallback);
+    }
+
+    @Override
+    public long[] peekLongs(int n)
+            throws ParseException {
+        return getWrapped().peekLongs(n);
+    }
+
+    @Override
+    public long[] peekLongs(int n, long fallback)
+            throws ParseException {
+        return getWrapped().peekLongs(n, fallback);
+    }
+
+    @Override
+    public <E extends Enum<E>> E peek(Class<E> enumType)
+            throws ParseException {
+        return getWrapped().peek(enumType);
+    }
+
+    @Override
+    public <E extends Enum<E>> E peekAhead(Class<E> enumType, int offset)
+            throws ParseException {
+        return getWrapped().peekAhead(enumType, offset);
+    }
+
+    @Override
+    public <E extends Enum<E>> E[] peek(Class<E> enumType, int n)
+            throws ParseException {
+        return getWrapped().peek(enumType, n);
+    }
+
+    @Override
+    public <E extends Enum<E>> E peek(Class<E> enumType, E fallback) {
+        return getWrapped().peek(enumType, fallback);
+    }
+
+    @Override
+    public <E extends Enum<E>> E peekAhead(Class<E> enumType, int offset, E fallback) {
+        return getWrapped().peekAhead(enumType, offset, fallback);
+    }
+
+    @Override
+    public <E extends Enum<E>> E[] peek(Class<E> enumType, int n, E fallback) {
+        return getWrapped().peek(enumType, n, fallback);
     }
 
     @Override

@@ -1,20 +1,21 @@
 package net.bodz.bas.repr.path;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedBasicTokenQueue
-        extends AbstractDecorator<IBasicTokenQueue>
+        extends AbstractDecorator<IForwardOnlyTokenQueue>
         implements
-            IBasicTokenQueue {
+            IForwardOnlyTokenQueue {
 
     private static final long serialVersionUID = 1L;
 
-    public DecoratedBasicTokenQueue(IBasicTokenQueue _orig) {
+    public DecoratedBasicTokenQueue(IForwardOnlyTokenQueue _orig) {
         super(_orig);
     }
 
     @Override
-    public IBasicTokenQueue clone() {
+    public IForwardOnlyTokenQueue clone() {
         return getWrapped().clone();
     }
 
@@ -34,8 +35,8 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public boolean isEmpty() {
-        return getWrapped().isEmpty();
+    public boolean isDone() {
+        return getWrapped().isDone();
     }
 
     @Override
@@ -59,12 +60,14 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public Integer shiftInt() {
+    public Integer shiftInt()
+            throws ParseException {
         return getWrapped().shiftInt();
     }
 
     @Override
-    public Long shiftLong() {
+    public Long shiftLong()
+            throws ParseException {
         return getWrapped().shiftLong();
     }
 
@@ -74,28 +77,32 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public String peekAt(int offset) {
-        return getWrapped().peekAt(offset);
+    public String peekAhead(int offset) {
+        return getWrapped().peekAhead(offset);
     }
 
     @Override
-    public Integer peekInt() {
+    public Integer peekInt()
+            throws ParseException {
         return getWrapped().peekInt();
     }
 
     @Override
-    public Integer peekIntAt(int offset) {
-        return getWrapped().peekIntAt(offset);
+    public Integer peekIntAhead(int offset)
+            throws ParseException {
+        return getWrapped().peekIntAhead(offset);
     }
 
     @Override
-    public Long peekLong() {
+    public Long peekLong()
+            throws ParseException {
         return getWrapped().peekLong();
     }
 
     @Override
-    public Long peekLongAt(int offset) {
-        return getWrapped().peekLongAt(offset);
+    public Long peekLongAhead(int offset)
+            throws ParseException {
+        return getWrapped().peekLongAhead(offset);
     }
 
     @Override

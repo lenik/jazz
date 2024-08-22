@@ -72,7 +72,7 @@ public class MethodPathDispatcher
 
         for (int i = 0; i < wantPV.length; i++) {
             char decor = decoration.charAt(i);
-            String token = tokens.peekAt(i + 1);
+            String token = tokens.peekAhead(i + 1);
 
             Class<?> decorType;
             Object parameter;

@@ -6,9 +6,10 @@ package net.bodz.bas.repr.path;
  * When the dispatch started, the token queue contains tokens to be dispatched, and after dispatch
  * is completed, all processed tokens are consumed, rest only the unprocessed tokens.
  */
-public interface ITokenQueue
+public interface ITokenQueue // URI-TokenQueue
         extends
-            IBasicTokenQueue {
+            IStaticTokenArray,
+            IForwardOnlyTokenQueue {
 
     String ATTRIBUTE_KEY = ITokenQueue.class.getName();
 

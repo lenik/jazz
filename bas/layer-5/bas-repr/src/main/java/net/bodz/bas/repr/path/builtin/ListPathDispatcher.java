@@ -39,8 +39,8 @@ public class ListPathDispatcher
         if (head == null)
             return null;
 
-        Integer index = tokens.shiftInt();
-        if (index == null)
+        int index = tokens.shiftInt(-1); // -1 if parse error
+        if (index < 0)
             return null;
 
         List<?> list = (List<?>) source;

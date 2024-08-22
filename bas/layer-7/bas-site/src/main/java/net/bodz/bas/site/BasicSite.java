@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import net.bodz.bas.JazzBasProject;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.i18n.LocaleVars;
@@ -32,8 +34,6 @@ import net.bodz.bas.t.project.IJazzProject;
 import net.bodz.bas.t.project.JazzProjects;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.typer.std.MutableTypedAttributes;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 public abstract class BasicSite
         extends AbstractXjdocContent
@@ -213,7 +213,7 @@ public abstract class BasicSite
             break;
 
         case K_SET_LOCALE:
-            String lang = tokens.peekAt(1);
+            String lang = tokens.peekAhead(1);
             if (lang != null) {
                 Locale locale = Locale.forLanguageTag(lang); // non-null.
                 request.setAttribute(LocaleVars.LOCALE.getName(), locale);
