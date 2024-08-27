@@ -1,13 +1,13 @@
-package net.bodz.bas.repr.req;
+package net.bodz.bas.c.jakarta.servlet.http;
 
 import java.util.ServiceLoader;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @IndexedType
 public interface IHttpRequestProcessor {
@@ -27,7 +27,7 @@ public interface IHttpRequestProcessor {
         public static boolean applyAll(HttpServletRequest req, HttpServletResponse resp) {
             for (IHttpRequestProcessor proc : ServiceLoader.load(IHttpRequestProcessor.class))
                 try {
-                    if (!proc.apply(req, resp)) {
+                    if (! proc.apply(req, resp)) {
                         // invalid request.
                         return false;
                     }

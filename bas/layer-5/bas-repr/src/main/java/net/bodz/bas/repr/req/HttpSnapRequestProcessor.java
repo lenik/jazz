@@ -1,5 +1,6 @@
 package net.bodz.bas.repr.req;
 
+import net.bodz.bas.c.jakarta.servlet.http.IHttpRequestProcessor;
 import net.bodz.bas.err.ParseException;
 
 import jakarta.servlet.http.HttpServletRequest;

@@ -3,6 +3,7 @@ package net.bodz.bas.repr.req;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import net.bodz.bas.c.jakarta.servlet.http.IHttpRequestProcessor;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;

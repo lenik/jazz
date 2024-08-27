@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.jakarta.servlet.http.HttpServletReqEx;
+import net.bodz.bas.c.jakarta.servlet.http.IHttpRequestProcessor;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.html.artifact.IArtifactManager;
@@ -31,7 +32,6 @@ import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.PathDispatchIndex;
 import net.bodz.bas.repr.path.TokenQueue;
 import net.bodz.bas.repr.req.HttpSnapManager;
-import net.bodz.bas.repr.req.IHttpRequestProcessor;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.repr.viz.ViewBuilderSet;
 import net.bodz.bas.repr.viz.web.IHttpViewBuilder;
