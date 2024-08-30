@@ -2,22 +2,20 @@ package net.bodz.mda.xjdoc.taglib;
 
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.rtx.Injector;
 import net.bodz.bas.t.preorder.PackageMap;
-import net.bodz.mda.xjdoc.tagtype.ITagType;
-import net.bodz.mda.xjdoc.tagtype.RepeatForListTagType;
-import net.bodz.mda.xjdoc.tagtype.StringTagType;
+import net.bodz.mda.xjdoc.model.IDocTag;
 
 public abstract class AbstractTagLibrary
         implements
             ITagLibrary {
 
-    private PackageMap<ITagType> tagMap = new PackageMap<ITagType>();
-
-    // private ITagType defaultTagType = StringTagType.getInstance();
-    private ITagType defaultTagType = new RepeatForListTagType(StringTagType.getInstance());
+    private PackageMap<Class<? extends IDocTag<?>>> map = new PackageMap<>();
+    private IDocTagFactory defaultTagType;
 
     @Override
     public String getName() {
@@ -29,30 +27,45 @@ public abstract class AbstractTagLibrary
 
     @Override
     public String getRootTagName(String tagName) {
-        String rootTagName = tagMap.meetKey(tagName);
+        String rootTagName = map.meetKey(tagName);
         return rootTagName;
     }
 
-    @Override
-    public ITagType getTagType(String rootTagName) {
-        ITagType tagType = tagMap.get(rootTagName);
-        return tagType;
+    public IDocTagFactory getDefaultTagType() {
+        return defaultTagType;
     }
 
-    public void addTagType(String rootTagName, ITagType tagType) {
+    public void setDefaultTagType(IDocTagFactory defaultTagType) {
+        this.defaultTagType = defaultTagType;
+    }
+
+    public void addTagType(String rootTagName, Class<? extends IDocTag<?>> type) {
         if (rootTagName == null)
             throw new NullPointerException("rootTagName");
 
-        ITagType existing = tagMap.get(rootTagName);
+        Class<? extends IDocTag<?>> existing = map.get(rootTagName);
         if (existing != null)
             throw new DuplicatedKeyException(rootTagName, existing);
 
-        tagMap.put(rootTagName, tagType);
+        map.put(rootTagName, type);
     }
 
     @Override
-    public ITagType getDefaultTagType() {
-        return defaultTagType;
+    public IDocTag<?> createTag(String rootTagName) {
+        Class<? extends IDocTag<?>> type = map.get(rootTagName);
+        if (type != null) {
+            Injector injector = new Injector();
+            injector.setExplicitConstructor(true); // require single constructor
+            injector.setRequireAll(true); // require all parameters specified
+            try {
+                return injector.instantiate(type);
+            } catch (ReflectiveOperationException e) {
+                throw new CreateException(e.getMessage(), e);
+            }
+        }
+        if (defaultTagType != null)
+            return defaultTagType.get();
+        return null;
     }
 
     public static ITagLibrary fromOptions(IOptions options) {

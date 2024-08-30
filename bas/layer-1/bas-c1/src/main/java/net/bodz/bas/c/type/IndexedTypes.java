@@ -120,7 +120,7 @@ public class IndexedTypes {
             if (currentReader == null) {
                 while (resources.hasMoreElements()) {
                     URL resource = resources.nextElement();
-                    // System.err.println("resource " + resource);
+//                    System.err.println("resource " + resource);
 
                     InputStream in;
                     try {
@@ -147,7 +147,7 @@ public class IndexedTypes {
             while (true) {
                 try {
                     line = currentReader.readLine();
-                    // System.err.println("ReadLine ----- " + line);
+//                    System.err.println("ReadLine ----- " + line);
                 } catch (IOException e) { // SecurityException: digest error
                     logger.log(Level.SEVERE, "Can't read from " + currentResource + ": " + e.getMessage(), e);
                     close();

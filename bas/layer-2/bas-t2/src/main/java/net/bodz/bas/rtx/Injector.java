@@ -1,13 +1,13 @@
 package net.bodz.bas.rtx;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.LoadException;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class Injector {
@@ -85,7 +85,8 @@ public class Injector {
         return false;
     }
 
-    public <T> T instantiate(Class<T> type) {
+    public <T> T instantiate(Class<T> type)
+            throws InstantiationException, IllegalAccessException, InvocationTargetException {
         Constructor<?>[] ctors = type.getDeclaredConstructors();
 
         if (explicitConstructor) {
@@ -106,47 +107,43 @@ public class Injector {
         }
 
         C: for (Constructor<?> ctor : ctors) {
-            try {
-                int n = ctor.getParameterCount();
-                Parameter[] parameters = ctor.getParameters();
-                Object[] paramValues = new Object[n];
+            int n = ctor.getParameterCount();
+            Parameter[] parameters = ctor.getParameters();
+            Object[] paramValues = new Object[n];
 
-                for (int i = 0; i < n; i++) {
-                    Parameter p = parameters[i];
-                    Class<?> paramType = p.getType();
-                    String paramName = p.getName();
+            for (int i = 0; i < n; i++) {
+                Parameter p = parameters[i];
+                Class<?> paramType = p.getType();
+                String paramName = p.getName();
 
-                    Object provided = null;
-                    do {
-                        if (p.isNamePresent()) {
-                            provided = namedProvides.get(paramName);
-                            if (provided != null || namedProvides.containsKey(paramName))
-                                break;
-                        }
-
-                        provided = typedProvides.meet(paramType);
-                        if (provided != null || typedProvides.containsKey(paramType))
+                Object provided = null;
+                do {
+                    if (p.isNamePresent()) {
+                        provided = namedProvides.get(paramName);
+                        if (provided != null || namedProvides.containsKey(paramName))
                             break;
+                    }
 
-                        provided = _typeDefaults.get(paramType);
-                        if (provided != null || _typeDefaults.containsKey(paramType))
-                            break;
+                    provided = typedProvides.meet(paramType);
+                    if (provided != null || typedProvides.containsKey(paramType))
+                        break;
 
-                        if (! isRequired(p))
-                            break;
+                    provided = _typeDefaults.get(paramType);
+                    if (provided != null || _typeDefaults.containsKey(paramType))
+                        break;
 
-                        continue C;
-                    } while (false);
+                    if (! isRequired(p))
+                        break;
 
-                    paramValues[i] = provided;
-                }
+                    continue C;
+                } while (false);
 
-                @SuppressWarnings("unchecked")
-                T instance = (T) ctor.newInstance(paramValues);
-                return instance;
-            } catch (ReflectiveOperationException e) {
-                throw new LoadException(e.getMessage(), e);
+                paramValues[i] = provided;
             }
+
+            @SuppressWarnings("unchecked")
+            T instance = (T) ctor.newInstance(paramValues);
+            return instance;
         }
 
         throw new IllegalUsageException("No suitable constructor found.");

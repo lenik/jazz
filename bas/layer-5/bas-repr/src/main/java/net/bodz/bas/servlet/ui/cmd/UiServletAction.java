@@ -15,7 +15,8 @@ import net.bodz.bas.ui.model.action.RollbackException;
 
 public abstract class UiServletAction
         extends UiObject
-        implements IServletAction {
+        implements
+            IServletAction {
 
     private List<Class<?>> locations;
     private Map<String, String> scripts;
@@ -83,7 +84,7 @@ public abstract class UiServletAction
     @Override
     public boolean isAsync() {
         // getClass().isAnnotationPresent(Async)
-        return getXjdoc().getTag("cmd.async") != null;
+        return getXjdoc().isTagPresent("cmd.async");
     }
 
     @Override

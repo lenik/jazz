@@ -8,12 +8,13 @@ import net.bodz.mda.xjdoc.model.javadoc.XjdocObject;
 
 public class UiObject
         extends XjdocObject
-        implements IUiElement {
+        implements
+            IUiElement {
 
     @Override
     public IUiElementStyleDeclaration getStyle() {
         IElementDoc xjdoc = getXjdoc();
-        String styleCss = (String) xjdoc.getTag("style");
+        String styleCss = xjdoc.getString("style");
 
         MutableUiStyleDeclaration decl = new MutableUiStyleDeclaration();
         try {

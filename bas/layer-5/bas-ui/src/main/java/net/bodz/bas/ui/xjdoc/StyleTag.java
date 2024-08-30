@@ -3,15 +3,10 @@ package net.bodz.bas.ui.xjdoc;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.mda.xjdoc.tagtype.AbstractScalarTagType;
+import net.bodz.mda.xjdoc.tagtype.SimpleDocTag;
 
-public class StyleTagType
-        extends AbstractScalarTagType<TextMap<String>> {
-
-    @Override
-    public Class<?> getValueType() {
-        return TextMap.class;
-    }
+public class StyleTag
+        extends SimpleDocTag<TextMap<String>> {
 
     @Override
     protected TextMap<String> parse(String s)

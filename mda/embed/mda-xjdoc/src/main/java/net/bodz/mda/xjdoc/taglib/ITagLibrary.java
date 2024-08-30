@@ -1,7 +1,7 @@
 package net.bodz.mda.xjdoc.taglib;
 
 import net.bodz.bas.meta.codegen.IndexedType;
-import net.bodz.mda.xjdoc.tagtype.ITagType;
+import net.bodz.mda.xjdoc.model.IDocTag;
 
 @IndexedType
 public interface ITagLibrary {
@@ -13,8 +13,8 @@ public interface ITagLibrary {
     /**
      * @return <code>null</code> if the tag name isn't defined.
      */
-    ITagType getTagType(String rootTagName);
+    IDocTag<?> createTag(String rootTagName);
 
-    ITagType getDefaultTagType();
+    ITagLibrary NULL = NullTagLibrary.INSTANCE;
 
 }

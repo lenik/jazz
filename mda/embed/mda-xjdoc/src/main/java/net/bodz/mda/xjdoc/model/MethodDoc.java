@@ -2,12 +2,14 @@ package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom.StrFn;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
+import net.bodz.bas.t.coll.IContainer;
+import net.bodz.mda.xjdoc.tagtype.HeadedTextTag;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
@@ -45,7 +47,7 @@ public class MethodDoc
      * @return <code>null</code> if return doc isn't existed.
      */
     public iString getReturnDoc() {
-        return getTag("return", iString.class);
+        return getTag("return").getText();
     }
 
     /**
@@ -62,19 +64,16 @@ public class MethodDoc
      *
      *         The map is order-preserved, so that the first parameter is in the first iteration.
      */
-    public Map<String, iString> getParamDocs() {
-        Map<String, iString> map = getTag("param", Map.class);
-        if (map == null) {
-            map = new LinkedHashMap<String, iString>();
-            setTag("param", map);
-        }
-        return map;
+    public IContainer<iString> getParamDocs() {
+        HeadedTextTag paramTag = makeTag("param");
+        return paramTag.getContainer();
     }
 
-    public void setParamDocs(Map<String, iString> paramDocs) {
+    public void setParamDocs(IContainer<iString> paramDocs) {
         if (paramDocs == null)
             throw new NullPointerException("paramDocs");
-        setTag("param", paramDocs);
+        HeadedTextTag tag = makeTag("param");
+        tag.setData(paramDocs);
     }
 
     public iString getParamDoc(String paramName) {
@@ -86,26 +85,23 @@ public class MethodDoc
             throw new NullPointerException("paramName");
         if (paramDoc == null)
             throw new NullPointerException("paramDoc");
-        getParamDocs().put(paramName, paramDoc);
+        getParamDocs().set(paramName, paramDoc);
     }
 
     public final void addParamDoc(String paramName, iString paramDoc) {
         setParamDoc(paramName, paramDoc);
     }
 
-    public Map<String, iString> getExceptionDocs() {
-        Map<String, iString> map = getTag("exception", Map.class);
-        if (map == null) {
-            map = new LinkedHashMap<String, iString>();
-            setTag("exception", map);
-        }
-        return map;
+    public IContainer<iString> getExceptionDocs() {
+        HeadedTextTag exceptionTag = makeTag("exception");
+        return exceptionTag.getContainer();
     }
 
-    public void setExceptionDocs(Map<String, iString> exceptionDocs) {
+    public void setExceptionDocs(IContainer<iString> exceptionDocs) {
         if (exceptionDocs == null)
             throw new NullPointerException("exceptionDocs");
-        setTag("exception", Map.class);
+        HeadedTextTag tag = makeTag("exception");
+        tag.setData(exceptionDocs);
     }
 
     public iString getExceptionDoc(String exceptionType) {
@@ -117,12 +113,12 @@ public class MethodDoc
             throw new NullPointerException("exceptionType");
         if (exceptionDoc == null)
             throw new NullPointerException("exceptionDoc");
-        getExceptionDocs().put(exceptionType, exceptionDoc);
+        getExceptionDocs().addNamed(exceptionDoc, exceptionType);
     }
 
     @Override
     public void writeObject(IFlatfOutput out, IOptions options)
-            throws IOException {
+            throws IOException, FormatException {
         ImportMap imports = getClassDoc().getOrCreateImports();
         String importedForm = methodId.getImportedForm(imports);
         out.beginSection("method:" + importedForm);

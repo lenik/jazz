@@ -13,25 +13,26 @@ import net.bodz.bas.c.java.time.DateTimes;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.ReleaseDescription;
-import net.bodz.mda.xjdoc.model.DecoratedJavaElementDoc;
-import net.bodz.mda.xjdoc.model.IElementDoc;
+import net.bodz.bas.t.coll.IContainer;
+import net.bodz.mda.xjdoc.model.DecoratedMutableElementDoc;
+import net.bodz.mda.xjdoc.model.IMutableElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.Author;
 
 public class ArtifactDoc
-        extends DecoratedJavaElementDoc {
+        extends DecoratedMutableElementDoc {
 
     private static final long serialVersionUID = 1L;
 
-    public ArtifactDoc(IElementDoc _orig) {
+    public ArtifactDoc(IMutableElementDoc _orig) {
         super(_orig);
     }
 
     public iString getLabel() {
-        return super.getTextTag(LABEL);
+        return super.getText(LABEL);
     }
 
     public iString getDescription() {
-        return super.getTextTag(DESCRIPTION);
+        return super.getText(DESCRIPTION);
     }
 
     public Set<String> getUsedLangs() {
@@ -41,7 +42,7 @@ public class ArtifactDoc
             if (domain != null)
                 langs.add(domain);
 
-        String[] langTags = getTag("lang");
+        String[] langTags = getTag("lang").getStringArray();
         if (langTags != null)
             for (String langTag : langTags)
                 langs.add(langTag);
@@ -50,12 +51,12 @@ public class ArtifactDoc
     }
 
     public List<Author> getAuthors() {
-        List<Author> authors = getTag("author");
+        @SuppressWarnings("unchecked")
+        IContainer<Author> authors = (IContainer<Author>) getTag("author").getContainer();
         if (authors == null)
-            authors = Collections.emptyList();
+            return Collections.emptyList();
         else
-            authors = Collections.unmodifiableList(authors);
-        return authors;
+            return authors.toList();
     }
 
     public Author getAuthor() {
@@ -67,7 +68,7 @@ public class ArtifactDoc
     }
 
     public IVersion getVersion() {
-        IVersion version = getTag("version");
+        IVersion version = (IVersion) getTag("version").getData();
         return version;
     }
 

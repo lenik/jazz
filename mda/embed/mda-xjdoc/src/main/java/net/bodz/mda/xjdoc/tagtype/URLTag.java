@@ -5,13 +5,8 @@ import java.net.URL;
 
 import net.bodz.bas.err.ParseException;
 
-public class URLTagType
-        extends AbstractScalarTagType<URL> {
-
-    @Override
-    public Class<?> getValueType() {
-        return URL.class;
-    }
+public class URLTag
+        extends SimpleDocTag<URL> {
 
     @Override
     protected URL parse(String s)
@@ -28,9 +23,9 @@ public class URLTagType
         return value.toString();
     }
 
-    static final URLTagType instance = new URLTagType();
+    static final URLTag instance = new URLTag();
 
-    public static URLTagType getInstance() {
+    public static URLTag getInstance() {
         return instance;
     }
 

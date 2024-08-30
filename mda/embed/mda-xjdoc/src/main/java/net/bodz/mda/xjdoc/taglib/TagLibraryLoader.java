@@ -3,31 +3,48 @@ package net.bodz.mda.xjdoc.taglib;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.ServiceLoader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.bodz.bas.c.object.ObjectInfo;
+import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.rtx.Injector;
 
 public class TagLibraryLoader {
 
     static final Logger logger = LoggerFactory.getLogger(TagLibraryLoader.class);
 
-    private Map<String, ITagLibrary> taglibMap;
+    Map<Class<?>, Object> caches = new HashMap<>();
+    Map<String, ITagLibrary> nameMap = new HashMap<String, ITagLibrary>();
+
+    Injector injector = new Injector();
 
     public TagLibraryLoader(ClassLoader loader) {
-        taglibMap = new HashMap<String, ITagLibrary>();
-
         logger.trace("Search taglibs in class loader:");
         try {
-            for (ITagLibrary taglib : ServiceLoader.load(ITagLibrary.class, loader)) {
-                String name = taglib.getName();
-                logger.trace("    Found taglib " + name + " = " + ObjectInfo.getSimpleId(taglib));
-                register(name, taglib);
+            // for (ITagLibrary taglib : ServiceLoader.load(ITagLibrary.class, loader)) {
+            Iterator<Class<? extends ITagLibrary>> libClasses = IndexedTypes.list(ITagLibrary.class, false).iterator();
+            while (libClasses.hasNext()) {
+                Class<? extends ITagLibrary> libClass = libClasses.next();
+                // System.err.println("LibClass ----- " + libClass);
+                ITagLibrary instance = (ITagLibrary) caches.get(libClass);
+                if (instance == null) {
+                    try {
+                        instance = injector.instantiate(libClass);
+                    } catch (ReflectiveOperationException e) {
+                        logger.error("Error instantiate " + libClass);
+                        continue;
+                    }
+                    caches.put(libClass, instance);
+                }
+
+                String name = instance.getName();
+                register(name, instance);
             }
         } catch (Error e) {
             logger.error("Service configuration error", e);
@@ -35,29 +52,34 @@ public class TagLibraryLoader {
     }
 
     public Map<String, ITagLibrary> getTaglibMap() {
-        return Collections.unmodifiableMap(taglibMap);
+        return Collections.unmodifiableMap(nameMap);
     }
 
-    public void register(String name, ITagLibrary taglib) {
+    public void register(String name, ITagLibrary instance) {
         if (name == null)
             throw new NullPointerException("name");
-        if (taglib == null)
-            throw new NullPointerException("taglib");
+        if (instance == null)
+            throw new NullPointerException("instance");
 
-        ITagLibrary existing = taglibMap.get(name);
-        if (existing != null)
+        ITagLibrary existing = nameMap.get(name);
+        if (existing != null) {
+            if (existing == instance)
+                return;
             throw new DuplicatedKeyException(name, existing);
+        }
 
-        taglibMap.put(name, taglib);
+        logger.trace("    Register taglib " + name + " = " + ObjectInfo.getSimpleId(instance));
+        nameMap.put(name, instance);
     }
 
     public ITagLibrary resolve(String name) {
-        ITagLibrary taglib = taglibMap.get(name);
-        if (taglib == null) {
+        ITagLibrary taglib = nameMap.get(name);
+        if (taglib == null && name.contains(".")) {
+            String qName = name;
             try {
                 @SuppressWarnings("unchecked")
-                Class<? extends ITagLibrary> taglibClass = (Class<? extends ITagLibrary>) Class.forName(name);
-                taglib = taglibClass.getConstructor().newInstance();
+                Class<? extends ITagLibrary> taglibClass = (Class<? extends ITagLibrary>) Class.forName(qName);
+                taglib = injector.instantiate(taglibClass);
             } catch (ClassNotFoundException e) {
                 return null;
             } catch (ReflectiveOperationException e) {
@@ -70,7 +92,7 @@ public class TagLibraryLoader {
     public String nameOf(ITagLibrary taglib) {
         if (taglib == null)
             throw new NullPointerException("taglib");
-        for (Entry<String, ITagLibrary> entry : taglibMap.entrySet()) {
+        for (Entry<String, ITagLibrary> entry : nameMap.entrySet()) {
             if (entry.getValue() == taglib)
                 return entry.getKey();
         }
@@ -88,7 +110,7 @@ public class TagLibraryLoader {
             throw new NullPointerException("taglibNames");
 
         if ("*".equals(taglibNames)) {
-            Collection<ITagLibrary> taglibs = taglibMap.values();
+            Collection<ITagLibrary> taglibs = nameMap.values();
             return new TagLibrarySet(taglibs);
         }
 

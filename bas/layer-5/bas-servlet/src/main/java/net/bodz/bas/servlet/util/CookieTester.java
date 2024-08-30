@@ -28,6 +28,7 @@ public class CookieTester
             for (String ns : NS_OPS) {
                 int nsLen = ns.length();
                 if (param.startsWith(ns)) {
+                    // name:domain:path=...
                     String name = param.substring(nsLen);
                     String domain = null;
                     String path = "/";

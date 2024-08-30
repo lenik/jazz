@@ -2,6 +2,7 @@ package net.bodz.bas.fmt.flatf;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.meta.source.SerializableForm;
 import net.bodz.bas.rtx.IOptions;
 
@@ -9,7 +10,7 @@ import net.bodz.bas.rtx.IOptions;
 public interface IFlatfForm {
 
     void writeObject(IFlatfOutput out, IOptions options)
-            throws IOException;
+            throws IOException, FormatException;
 
     // void readObject(IFlatfInput in, INegotiation options)
     // throws IOException, ParseException;

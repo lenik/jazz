@@ -3,12 +3,10 @@ package net.bodz.mda.xjdoc.tagtype;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.build.IVersion;
 
-public class VersionTagType
-        extends AbstractScalarTagType<IVersion> {
+public class VersionTag
+        extends SimpleDocTag<IVersion> {
 
-    @Override
-    public Class<?> getValueType() {
-        return IVersion.class;
+    public VersionTag() {
     }
 
     @Override
@@ -24,7 +22,5 @@ public class VersionTagType
         else
             return value.toString();
     }
-
-    public static final VersionTagType INSTANCE = new VersionTagType();
 
 }

@@ -1,6 +1,6 @@
 package net.bodz.mda.xjdoc.model.artifact;
 
-import net.bodz.mda.xjdoc.model.IElementDoc;
+import net.bodz.mda.xjdoc.model.IMutableElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.SemiMutableXjdocElement;
 
 public class SemiMutableArtifactElement
@@ -10,7 +10,7 @@ public class SemiMutableArtifactElement
 
     @Override
     public ArtifactDoc getXjdoc() {
-        IElementDoc xjdoc = super.getXjdoc();
+        IMutableElementDoc xjdoc = (IMutableElementDoc) super.getXjdoc();
         ArtifactDoc artifactDoc = new ArtifactDoc(xjdoc);
         return artifactDoc;
     }

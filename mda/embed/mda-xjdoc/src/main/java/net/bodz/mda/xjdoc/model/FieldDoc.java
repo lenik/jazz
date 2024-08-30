@@ -2,6 +2,7 @@ package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
@@ -9,7 +10,8 @@ import net.bodz.bas.rtx.IOptions;
 
 public class FieldDoc
         extends MutableElementDoc
-        implements IFieldDoc {
+        implements
+            IFieldDoc {
 
     private String name;
     private final IClassDoc classDoc;
@@ -39,7 +41,7 @@ public class FieldDoc
 
     @Override
     public void writeObject(IFlatfOutput out, IOptions options)
-            throws IOException {
+            throws IOException, FormatException {
         out.beginSection("field:" + name);
         super.writeObject(out, options);
         out.endSection();

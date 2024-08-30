@@ -7,7 +7,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.mda.xjdoc.XjdocLoaderException;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.IElementDoc;
+import net.bodz.mda.xjdoc.model.IMutableElementDoc;
 
 public class XjdocObject
         extends AbstractXjdocElement {
@@ -16,7 +16,7 @@ public class XjdocObject
     private static final Logger _logger = Logger.getLogger(XjdocObject.class.getName());
 
     @Override
-    protected IElementDoc loadXjdoc()
+    protected IMutableElementDoc loadXjdoc()
             throws XjdocLoaderException, ParseException, IOException {
         Class<?> clazz = getClass();
         ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(clazz);

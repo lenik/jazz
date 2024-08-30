@@ -1,7 +1,6 @@
 package net.bodz.mda.xjdoc.conv;
 
 import java.util.List;
-import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.ParaLangStrings;
@@ -10,14 +9,20 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
+import net.bodz.mda.xjdoc.model.IDocTag;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.model.MutableElementDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
-import net.bodz.mda.xjdoc.tagtype.ITagType;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
-import com.thoughtworks.qdox.model.*;
+import com.thoughtworks.qdox.model.DocletTag;
+import com.thoughtworks.qdox.model.JavaAnnotatedElement;
+import com.thoughtworks.qdox.model.JavaClass;
+import com.thoughtworks.qdox.model.JavaField;
+import com.thoughtworks.qdox.model.JavaMethod;
+import com.thoughtworks.qdox.model.JavaParameter;
+import com.thoughtworks.qdox.model.JavaType;
 
 /**
  * Build class documents from the qdox parsed java sources.
@@ -44,7 +49,8 @@ public class ClassDocBuilder {
         this.missingDoc = missingDoc;
     }
 
-    public ClassDoc buildClass(JavaClass javaClass) {
+    public ClassDoc buildClass(JavaClass javaClass)
+            throws ParseException {
         String fqcn = javaClass.getFullyQualifiedName();
         ClassDoc classDoc = new ClassDoc(tagLibrary, fqcn);
 
@@ -119,21 +125,20 @@ public class ClassDocBuilder {
 
     <J extends JavaAnnotatedElement> //
     void populate(MutableElementDoc elementDoc, //
-            J javaEntity, String name, IOptions options) {
+            J javaEntity, String name, IOptions options)
+            throws ParseException {
         String comment = javaEntity.getComment(); // maybe null if no javadoc.
         if (comment != null) {
             iString text = ParaLangStrings.parse(comment);
             elementDoc.setText(text);
         }
 
-        Map<String, Object> rootTagContMap = elementDoc.getTagMap();
-
         for (DocletTag docletTag : javaEntity.getTags()) {
             String tagName = docletTag.getName();
             String tagValueString = docletTag.getValue();
 
             String rootTagName = tagLibrary.getRootTagName(tagName);
-            String tagNameSpec = null;
+            String extension = null;
 
             if (rootTagName == null) {
                 // TODO logging...
@@ -143,27 +148,16 @@ public class ClassDocBuilder {
             }
 
             else if (tagName.startsWith(rootTagName)) {
-                tagNameSpec = tagName.substring(rootTagName.length());
-                if (tagNameSpec.startsWith("."))
-                    tagNameSpec = tagNameSpec.substring(1);
+                extension = tagName.substring(rootTagName.length());
+                if (extension.startsWith("."))
+                    extension = extension.substring(1);
                 else
-                    tagNameSpec = null;
+                    extension = null;
             }
 
             // DomainString value = DomainString.parseParaLang(tagValueString);
-            ITagType tagType = tagLibrary.getTagType(rootTagName);
-            if (tagType == null) // fallback to string.
-                tagType = tagLibrary.getDefaultTagType();
-
-            Object cont = rootTagContMap.get(rootTagName);
-            Object tagValue;
-            try {
-                tagValue = tagType.parseJavadoc(tagNameSpec, cont, tagValueString, options);
-            } catch (ParseException e) {
-                throw new RuntimeException(e.getMessage(), e);
-            }
-            if (cont == null)
-                rootTagContMap.put(rootTagName, tagValue);
+            IDocTag<?> tag = elementDoc.makeTag(rootTagName);
+            tag.parseJavadoc(rootTagName, extension, tagValueString, options);
         }
     }
 

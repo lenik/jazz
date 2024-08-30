@@ -3,12 +3,14 @@ package net.bodz.bas.program.skel;
 import java.io.IOException;
 import java.util.Map.Entry;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.flatf.FlatfOutput;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.model.IOption;
 import net.bodz.bas.program.model.IOptionGroup;
+import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.mda.xjdoc.IXjdocProvider;
@@ -38,12 +40,13 @@ public class BatchCLITest
     }
 
     static void printBaseDoc()
-            throws IOException {
-        ClassDoc doc = xjdocs.getClassDoc(BatchCLI.class);
+            throws IOException, FormatException {
+        ClassDoc classDoc = xjdocs.getClassDoc(BatchCLI.class);
         BCharOut buf = new BCharOut();
         FlatfOutput out = new FlatfOutput(buf);
-        doc.writeObject(out, new Options() //
-                .addOption(ITagLibrary.class, new ArtifactTagLibrary()));
+        IOptions options = new Options() //
+                .addOption(ITagLibrary.class, new ArtifactTagLibrary());
+        classDoc.writeObject(out, options);
         System.out.println(buf);
     }
 
@@ -51,7 +54,7 @@ public class BatchCLITest
             throws Exception {
         new BatchCLITest().execute(//
                 "-h" //
-                );
+        );
     }
 
     static void dumpOptions(IOptionGroup group) {

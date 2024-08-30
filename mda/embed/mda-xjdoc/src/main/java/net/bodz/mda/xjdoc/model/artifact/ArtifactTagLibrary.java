@@ -1,28 +1,26 @@
 package net.bodz.mda.xjdoc.model.artifact;
 
 import net.bodz.mda.xjdoc.taglib.AbstractTagLibrary;
-import net.bodz.mda.xjdoc.tagtype.TagSpecKeyTagType;
-import net.bodz.mda.xjdoc.tagtype.TokensTagType;
-import net.bodz.mda.xjdoc.tagtype.URLTagType;
-import net.bodz.mda.xjdoc.tagtype.VersionTagType;
+import net.bodz.mda.xjdoc.tagtype.TokensTag;
+import net.bodz.mda.xjdoc.tagtype.URLMapTag;
+import net.bodz.mda.xjdoc.tagtype.VersionTag;
 
 /**
  * This tag library defines tags commonly used by the facade of applications.
- * 
+ *
  * @tags tags, predefined, meta-model
  */
 public class ArtifactTagLibrary
         extends AbstractTagLibrary {
 
     public ArtifactTagLibrary() {
-        addTagType("lang", TokensTagType.COMMA_SEPARATED);
+        addTagType("lang", TokensTag.Comma.class);
 
-        addTagType("site", new TagSpecKeyTagType(//
-                URLTagType.getInstance()));
+        addTagType("site", URLMapTag.class);
 
-        addTagType("tags", TokensTagType.COMMA_SEPARATED);
+        addTagType("tags", TokensTag.Comma.class);
 
-        addTagType("version", VersionTagType.INSTANCE);
+        addTagType("version", VersionTag.class);
     }
 
 }

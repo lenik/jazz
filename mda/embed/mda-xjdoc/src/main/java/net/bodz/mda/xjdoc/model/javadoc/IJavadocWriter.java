@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.tagtype;
+package net.bodz.mda.xjdoc.model.javadoc;
 
 import java.io.IOException;
 

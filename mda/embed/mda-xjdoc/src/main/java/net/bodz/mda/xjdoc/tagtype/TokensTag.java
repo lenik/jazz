@@ -5,25 +5,20 @@ import java.util.List;
 
 import net.bodz.bas.err.ParseException;
 
-public class TokensTagType
-        extends AbstractScalarTagType<String[]> {
+public class TokensTag
+        extends SimpleDocTag<String[]> {
 
     private String separator;
     private boolean normalizeSpace;
     private boolean removeEmptyToken;
 
-    public TokensTagType(String separator, boolean normalizeSpace) {
+    public TokensTag(String separator, boolean normalizeSpace) {
         if (separator == null)
             throw new NullPointerException("separator");
         this.separator = separator;
         this.normalizeSpace = normalizeSpace;
         if (separator.equals(" "))
             removeEmptyToken = true;
-    }
-
-    @Override
-    public Class<?> getValueType() {
-        return String[].class;
     }
 
     @Override
@@ -72,7 +67,18 @@ public class TokensTagType
         return sb.toString();
     }
 
-    public static final TokensTagType SPACE_SEPARATED = new TokensTagType(" ", true);
-    public static final TokensTagType COMMA_SEPARATED = new TokensTagType(",", true);
+    public static class Comma
+            extends TokensTag {
+        public Comma() {
+            super(",", true);
+        }
+    }
+
+    public static class Space
+            extends TokensTag {
+        public Space() {
+            super(" ", true);
+        }
+    }
 
 }

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.string.StringPart;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.fmt.flatf.ISectionHandler;
@@ -159,7 +160,7 @@ public class ClassDoc
      */
     @Override
     public void writeObject(IFlatfOutput out, IOptions options)
-            throws IOException {
+            throws IOException, FormatException {
         ITagLibrary taglib = options.get(ITagLibrary.class);
         out.comment("taglibs: " + taglib.getName());
 

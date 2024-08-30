@@ -34,7 +34,7 @@ public class ArtifactTagLibraryTest
 
     @Test
     public void testGetLangs() {
-        String[] langs = (String[]) doc.getTag("lang");
+        String[] langs = doc.getTag("lang").getStringArray();
         Set<String> set = new TreeSet<String>(Arrays.asList(langs));
         assertEquals(2, set.size());
         assertTrue(set.contains("zh"));

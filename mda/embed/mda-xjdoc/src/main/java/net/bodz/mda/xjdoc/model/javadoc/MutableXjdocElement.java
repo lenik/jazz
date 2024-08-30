@@ -32,8 +32,8 @@ public class MutableXjdocElement
         if (applyToElementProperties) {
             if (xjdoc == null)
                 throw new NullPointerException("xjdoc");
-            setLabel(xjdoc.getTextTag(IElementDoc.LABEL));
-            setDescription(xjdoc.getTextTag(IElementDoc.DESCRIPTION));
+            setLabel(xjdoc.getText(IElementDoc.LABEL));
+            setDescription(xjdoc.getText(IElementDoc.DESCRIPTION));
             setHelpDoc(xjdoc.getText());
         }
     }

@@ -7,8 +7,6 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import net.bodz.bas.bean.api.IBeanInfo;
@@ -35,12 +33,14 @@ import net.bodz.bas.program.model.MethodOption;
 import net.bodz.bas.program.model.MutableOptionGroup;
 import net.bodz.bas.program.model.PropertyOption;
 import net.bodz.bas.program.model.SyntaxUsage;
+import net.bodz.bas.t.coll.IContainer;
 import net.bodz.mda.xjdoc.XjdocLoaderException;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
+import net.bodz.mda.xjdoc.tagtype.StringMapTag;
 import net.bodz.mda.xjdoc.util.MethodId;
 
 public class ClassDocToOptionsConverter
@@ -257,12 +257,11 @@ public class ClassDocToOptionsConverter
         group.setHelpDoc(text.tailPar());
 
         // Import syntax usages into group.
-        @SuppressWarnings("unchecked")
-        Map<String, String> usageMap = (Map<String, String>) classDoc.getTag("usage");
-        if (usageMap != null)
-            for (Entry<String, String> entry : usageMap.entrySet()) {
-                String id = entry.getKey();
-                String script = entry.getValue();
+        StringMapTag usageTag = classDoc.getTag("usage");
+        if (usageTag != null) {
+            IContainer<String> usageMap = usageTag.getContainer();
+            for (String id : usageMap.names()) {
+                String script = usageMap.get(id);
                 if (script == null) {
                     logger.warn("null script for usage entry of key " + id);
                     continue;
@@ -270,6 +269,7 @@ public class ClassDocToOptionsConverter
                 SyntaxUsage usage = new SyntaxUsage(id, script);
                 group.addUsage(usage);
             }
+        }
 
         Set<Method> usedMethods = new HashSet<>();
 
@@ -391,7 +391,7 @@ public class ClassDocToOptionsConverter
         if (doc == null)
             return xjdocRequired ? null : "";
 
-        String descriptor = (String) doc.getTag("option");
+        String descriptor = doc.getString("option");
         if (descriptor == null)
             if (! xjdocRequired)
                 return "";

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.mda.xjdoc.model.IElementDoc;
+import net.bodz.mda.xjdoc.model.IMutableElementDoc;
 
 public class ExternXjdocElement
         extends AbstractXjdocElement {
@@ -20,7 +21,7 @@ public class ExternXjdocElement
     }
 
     @Override
-    protected IElementDoc loadXjdoc()
+    protected IMutableElementDoc loadXjdoc()
             throws ParseException, IOException {
         return null;
     }

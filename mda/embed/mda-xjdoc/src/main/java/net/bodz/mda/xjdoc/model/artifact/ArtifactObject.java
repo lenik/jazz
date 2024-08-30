@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.mda.xjdoc.XjdocLoaderException;
-import net.bodz.mda.xjdoc.model.IElementDoc;
+import net.bodz.mda.xjdoc.model.IMutableElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.XjdocObject;
 
 public abstract class ArtifactObject
@@ -21,7 +21,7 @@ public abstract class ArtifactObject
     @Override
     protected ArtifactDoc loadXjdoc()
             throws XjdocLoaderException, ParseException, IOException {
-        IElementDoc xjdoc = super.loadXjdoc();
+        IMutableElementDoc xjdoc = super.loadXjdoc();
         // xjdoc.as(ArtifactDoc.class);
         ArtifactDoc artifactDoc = new ArtifactDoc(xjdoc);
         return artifactDoc;

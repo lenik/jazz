@@ -9,30 +9,31 @@ import net.bodz.bas.c.string.BrokenCharsTokenizer;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.mda.xjdoc.model.IElementDoc;
+import net.bodz.mda.xjdoc.model.IMutableElementDoc;
+import net.bodz.mda.xjdoc.tagtype.TextTag;
 
 public class XjdocModifier {
 
-    static String _DOCPAR = ".docpar";
-
-    public static void process(IElementDoc doc) {
-        String docpar = IElementDoc.DESCRIPTION;
-        Object _docpar = doc.getFirstTag(_DOCPAR);
-        if (_docpar != null) {
-            docpar = _docpar.toString().trim();
-            if (docpar.isEmpty())
+    public static void process(IMutableElementDoc doc) {
+        String docparTagName = IElementDoc.DESCRIPTION;
+        String docparTagNameOverride = doc.getString(".docpar");
+        if (docparTagNameOverride != null) {
+            if (docparTagNameOverride.isEmpty())
                 return;
+            docparTagName = docparTagNameOverride;
         }
 
-        if (!docpar.contains(" ")) {
-            doc.setTag(docpar, doc.getText());
+        if (! docparTagName.contains(" ")) {
+            TextTag docparTag = doc.makeTag(docparTagName);
+            docparTag.setData(doc.getText());
             return;
         }
 
         List<String> tags = new ArrayList<String>();
-        StringTokenizer tokens = new StringTokenizer(docpar, " ");
+        StringTokenizer tokens = new StringTokenizer(docparTagName, " ");
         while (tokens.hasMoreTokens()) {
             String token = tokens.nextToken().trim();
-            if (!token.isEmpty())
+            if (! token.isEmpty())
                 tags.add(token);
         }
         int ntag = tags.size();

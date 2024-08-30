@@ -1,6 +1,5 @@
 package net.bodz.mda.xjdoc.model;
 
-import java.util.Collection;
 import java.util.Map;
 
 import net.bodz.bas.i18n.dom.iString;
@@ -14,9 +13,6 @@ public interface IElementDoc
     String LABEL = "label";
     String DESCRIPTION = "description";
 
-    /**
-     * @return <code>null</code> if not applicable.
-     */
     ITagLibrary getTagLibrary();
 
     /**
@@ -39,63 +35,15 @@ public interface IElementDoc
     void setText(iString text);
 
     /**
-     * Get the value of a named tag.
-     *
-     * The tag value type may be scalar, collection, map, or other user type.
-     *
-     * @return <code>null</code> if the tag isn't defined.
-     */
-    <T> T getTag(String tagName);
-
-    /**
-     * Get the value of a named tag, with value type checked.
-     *
-     * The tag value type may be scalar, collection, map, or other user type.
-     *
-     * @param tagValueType
-     *            The value type.
-     * @return <code>null</code> if the tag isn't defined.
-     * @throws ClassCastException
-     *             If the value is not instance of the specified <code>tagValueType</code>.
-     */
-    <T> T getTag(String tagName, Class<T> tagValueType);
-
-    /**
-     * Set the tag value.
-     *
-     * @param tagName
-     *            Non-<code>null</code> tag name.
-     * @param tagValue
-     *            Tag value, maybe <code>null</code>.
-     * @throws IllegalArgumentException
-     *             If the type of the value is invalid.
-     */
-    void setTag(String tagName, Object tagValue);
-
-    /**
-     * Remove the named tag.
-     *
-     * @return Value of the removed tag. <code>null</code> if the tag was not existed, or its value
-     *         is <code>null</code>.
-     */
-    Object removeTag(String tagName);
-
-    /**
      * Get the named tag map.
      *
      * @return non-<code>null</code> {@link Map} contains all the tags.
      */
-    Map<String, Object> getTagMap();
+    Map<String, IDocTag<?>> getTagMap();
 
-    /**
-     * @return <code>null</code> if the tag isn't used.
-     */
-    Object getFirstTag(String tagName);
+    boolean isTagPresent(String tagName);
 
-    /**
-     * @return Non-<code>null</code> collection.
-     */
-    Collection<?> getAllTag(String tagName);
+    <T extends IDocTag<?>> T getTag(String tagName);
 
     /**
      * Get the value of a named tag.
@@ -104,9 +52,24 @@ public interface IElementDoc
      *
      * @return {@link iString#NULL} if the tag isn't used.
      */
-    iString getTextTag(String tagName);
+    default String getString(String tagName) {
+        return getString(tagName, null);
+    }
 
-    String getString(String tagName);
+    String getString(String tagName, String defaultValue);
+
+    /**
+     * Get the value of a named tag.
+     *
+     * The tag value type may be scalar, collection, map, or other user type.
+     *
+     * @return {@link iString#NULL} if the tag isn't used.
+     */
+    default iString getText(String tagName) {
+        return getText(tagName, iString.NULL);
+    }
+
+    iString getText(String tagName, iString defaultValue);
 
     NullElementDoc NULL = new NullElementDoc();
 

@@ -1,16 +1,11 @@
 package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfForm;
@@ -23,16 +18,15 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.mda.xjdoc.taglib.AbstractTagLibrary;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
-import net.bodz.mda.xjdoc.tagtype.ITagType;
 
 public class MutableElementDoc
         implements
-            IElementDoc,
+            IMutableElementDoc,
             IFlatfForm {
 
     ITagLibrary tagLibrary;
     iString text = iString.NULL;
-    Map<String, Object> tagMap = new LinkedHashMap<String, Object>();
+    Map<String, IDocTag<?>> tagMap = new LinkedHashMap<>();
 
     public MutableElementDoc(ITagLibrary tagLibrary) {
         this.tagLibrary = tagLibrary;
@@ -59,127 +53,68 @@ public class MutableElementDoc
         this.text = text;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <T> T getTag(String tagName) {
-        return (T) tagMap.get(tagName);
-    }
-
-    @Override
-    public <T> T getTag(String tagName, Class<T> tagValueType) {
-        Object _value = tagMap.get(tagName);
-        if (_value == null)
-            if (tagValueType == iString.class)
-                return tagValueType.cast(iString.NULL);
-            else
-                return null;
-        T value = tagValueType.cast(_value);
-        return value;
-    }
-
-    @Override
-    public void setTag(String tagName, Object tagValue) {
-        tagMap.put(tagName, tagValue);
-    }
-
-    @Override
-    public Object removeTag(String tagName) {
-        return tagMap.remove(tagName);
-    }
-
-    @Override
-    public Map<String, Object> getTagMap() {
+    public Map<String, IDocTag<?>> getTagMap() {
         return tagMap;
     }
 
     @Override
-    public Object getFirstTag(String tagName) {
-        Object value = getTag(tagName);
-        if (value == null)
-            return null;
+    public boolean isTagPresent(String name) {
+        Object value = tagMap.get(name);
+        return value != null;
+    }
 
-        ITagType tagType = tagLibrary.getTagType(tagName);
-        if (tagType == null)
-            tagType = tagLibrary.getDefaultTagType();
-
-        switch (tagType.getAggregationEnum()) {
-        case ARRAY:
-            int length = Array.getLength(value);
-            if (length == 0)
-                return null;
-            else
-                return Array.get(value, 0);
-
-        case LIST:
-            List<?> list = (List<?>) value;
-            if (list.isEmpty())
-                return null;
-            else
-                return list.get(0);
-
-        case COLLECTION:
-        case SET:
-            Collection<?> collection = (Collection<?>) value;
-            Iterator<?> iterator = collection.iterator();
-            return iterator.hasNext() ? iterator.next() : null;
-
-        case MAP:
-        case SCALAR:
-        default:
-            return value;
-        }
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends IDocTag<?>> T getTag(String tagName) {
+        return (T) tagMap.get(tagName);
     }
 
     @Override
-    public Collection<?> getAllTag(String tagName) {
-        Object value = getTag(tagName);
-        if (value == null)
-            return Collections.emptyList();
+    public void setTag(String tagName, IDocTag<?> value) {
+        tagMap.put(tagName, value);
+    }
 
-        ITagType tagType = tagLibrary.getTagType(tagName);
-        if (tagType == null)
-            tagType = tagLibrary.getDefaultTagType();
-
-        switch (tagType.getAggregationEnum()) {
-        case ARRAY:
-            Object[] array = (Object[]) value;
-            List<?> list = Arrays.asList(array);
-            return list;
-
-        case COLLECTION:
-        case LIST:
-            return (Collection<?>) value;
-
-        case MAP:
-        case SCALAR:
-        default:
-            return Arrays.asList(value);
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends IDocTag<?>> T makeTag(String tagName) {
+        T tag = (T) tagMap.get(tagName);
+        if (tag == null) {
+            tag = (T) tagLibrary.createTag(tagName);
+            if (tag == null)
+                throw new IllegalUsageException("tag isn't defined: " + tagName);
+            tagMap.put(tagName, tag);
         }
+        return tag;
     }
 
     @Override
-    public iString getTextTag(String tagName) {
-        iString tag = getTag(tagName, iString.class);
+    public IDocTag<?> removeTag(String tagName) {
+        return tagMap.remove(tagName);
+    }
+
+    @Override
+    public String getString(String tagName, String defaultValue) {
+        IDocTag<?> tag = getTag(tagName);
         if (tag == null)
-            return iString.NULL;
-        else
-            return tag;
+            return defaultValue;
+        String s = tag.getString();
+        if (s == null)
+            return defaultValue;
+        return s;
     }
 
     @Override
-    public String getString(String tagName) {
-        Object tag = getTag(tagName);
+    public iString getText(String tagName, iString defaultValue) {
+        IDocTag<?> tag = getTag(tagName);
         if (tag == null)
-            return null;
-        if (tag.getClass().isArray()) {
-            if (Array.getLength(tag) == 0)
-                return null;
-            Object head = Array.get(tag, 0);
-            if (head == null)
-                return null;
-            tag = head;
-        }
-        return tag.toString();
+            return defaultValue;
+
+        iString str = tag.getText();
+        if (str == null)
+            return defaultValue;
+
+        return str;
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfForm}. */
@@ -187,7 +122,7 @@ public class MutableElementDoc
 
     @Override
     public void writeObject(IFlatfOutput out, IOptions options)
-            throws IOException {
+            throws IOException, FormatException {
         ITagLibrary taglib = null;
         if (options != null)
             taglib = options.get(ITagLibrary.class);
@@ -196,20 +131,20 @@ public class MutableElementDoc
 
         if (text != null && text != iString.NULL)
             out.attribute(".", text);
-        for (Entry<String, Object> entry : tagMap.entrySet()) {
+        for (Entry<String, IDocTag<?>> entry : tagMap.entrySet()) {
             String tagName = entry.getKey();
-            Object tagValue = entry.getValue();
+            IDocTag<?> tag = entry.getValue();
 
-            ITagType tagType = taglib.getTagType(tagName);
-            if (tagType == null) {
-                // throw new IllegalUsageException("Undefined tag: " + tagName);
-                tagType = taglib.getDefaultTagType();
+            if (tag == null) {
+                tag = taglib.createTag(tagName);
+                if (tag == null)
+                    continue; // not supported
             }
 
             try {
-                tagType.writeEntries(out, tagName, tagValue, options);
-            } catch (RuntimeException e) {
-                throw new RuntimeException("Failed to write ff-entry for tag " + tagName + " := " + tagValue, e);
+                tag.writeObject(out, tagName, options);
+            } catch (FormatException e) {
+                throw new FormatException("Failed to write ff-entry for tag " + tagName + " := " + tag, e);
             }
         }
     }
@@ -267,21 +202,22 @@ public class MutableElementDoc
                 suffix = name.substring(dot + 1);
             }
 
-            ITagType tagType = taglib.getTagType(tagName);
-            if (tagType == null)
-                tagType = taglib.getDefaultTagType();
-
-            Object cont = getTag(tagName);
-            Object tagValue;
-
-            try {
-                tagValue = tagType.parseEntry(cont, suffix, string, options);
-            } catch (RuntimeException e) {
-                throw new RuntimeException(String.format(//
-                        "Failed to parse ff-entry: %s (tt=%s)", string, tagType));
+            IDocTag<?> docTag = getTag(tagName);
+            if (docTag == null) {
+                docTag = taglib.createTag(tagName);
+                if (docTag == null) {
+                    return; // skip if not supported
+                }
+                tagMap.put(tagName, docTag);
             }
 
-            setTag(tagName, tagValue);
+            try {
+                docTag.parseAttribute(tagName, suffix, string, options);
+            } catch (ParseException e) {
+                throw new RuntimeException(String.format(//
+                        "Failed to parse ff-entry: %s (tt=%s), error %s", //
+                        string, docTag.getClass().getSimpleName(), e.getMessage()), e);
+            }
         }
 
     }
@@ -300,13 +236,13 @@ public class MutableElementDoc
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        iString label = getTextTag(LABEL);
+        iString label = getText(LABEL);
         if (! StrFn.isEmpty(label)) {
             sb.append(label);
             sb.append(": ");
         }
 
-        iString description = getTextTag(DESCRIPTION);
+        iString description = getText(DESCRIPTION);
         if (! StrFn.isEmpty(description))
             sb.append(description);
 

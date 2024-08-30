@@ -23,7 +23,8 @@ import net.bodz.mda.xjdoc.model.javadoc.IXjdocAware;
 
 public class UiActionNode_htm
         extends AbstractHtmlViewBuilder<UiActionNode>
-        implements IBasicSiteAnchors {
+        implements
+            IBasicSiteAnchors {
 
     static final Logger logger = LoggerFactory.getLogger(UiActionNode_htm.class);
 
@@ -67,7 +68,7 @@ public class UiActionNode_htm
         }
 
         boolean pseudo = node.isRoot() || mergeToParent;
-        if (!pseudo) {
+        if (! pseudo) {
             // root node doesn't have label, image, at all.
             out = out.li();
 
@@ -85,13 +86,13 @@ public class UiActionNode_htm
                     out.attr(scriptId, script);
             }
             Map<String, String> attributeMap = action.getAttributeMap();
-            if (attributeMap != null && !attributeMap.isEmpty())
+            if (attributeMap != null && ! attributeMap.isEmpty())
                 out.attrs(attributeMap);
         }
 
-        if (!pseudo) {
+        if (! pseudo) {
             // IImageData image = element.getStyle().getImage(ImageUsage.NORMAL);
-            String icon = xjdoc == null ? null : (String) xjdoc.getFirstTag("icon");
+            String icon = xjdoc == null ? null : (String) xjdoc.getString("icon");
             if (icon != null) {
                 if (icon.startsWith("\"")) {
                     String iconChar = icon.substring(1, icon.length() - 1);
@@ -103,7 +104,7 @@ public class UiActionNode_htm
             out.text(element.getLabel());
         }
 
-        if (!node.isEmpty()) {
+        if (! node.isEmpty()) {
             IHtmlOut sub = out;
             if (mergeToParent) {
             } else {
@@ -116,7 +117,7 @@ public class UiActionNode_htm
             }
 
             for (UiActionNode child : node.getChildren()) {
-                if (!isIncluded(child))
+                if (! isIncluded(child))
                     continue;
                 if (mergeChildren) {
                     List<UiActionNode> selection = new ArrayList<UiActionNode>();
@@ -124,7 +125,7 @@ public class UiActionNode_htm
                         if (isIncluded(childChild))
                             selection.add(childChild);
 
-                    if (!selection.isEmpty()) {
+                    if (! selection.isEmpty()) {
                         for (UiActionNode childChild : selection)
                             buildHtmlView(ctx, sub, UiVar.wrap(childChild));
                         out.hr();

@@ -1,6 +1,5 @@
 package net.bodz.mda.xjdoc.model;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ public class NullElementDoc
 
     @Override
     public ITagLibrary getTagLibrary() {
-        return null;
+        return ITagLibrary.NULL;
     }
 
     @Override
@@ -32,47 +31,38 @@ public class NullElementDoc
     }
 
     @Override
-    public <T> T getTag(String tagName) {
-        return null;
-    }
-
-    @Override
-    public <T> T getTag(String tagName, Class<T> tagValueType) {
-        return null;
-    }
-
-    @Override
-    public void setTag(String tagName, Object tagValue) {
-    }
-
-    @Override
-    public Object removeTag(String tagName) {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> getTagMap() {
+    public Map<String, IDocTag<?>> getTagMap() {
         return Collections.emptyMap();
     }
 
     @Override
-    public Object getFirstTag(String tagName) {
+    public boolean isTagPresent(String tagName) {
+        return false;
+    }
+
+    @Override
+    public <T extends IDocTag<?>> T getTag(String tagName) {
         return null;
-    }
-
-    @Override
-    public Collection<?> getAllTag(String tagName) {
-        return Collections.emptySet();
-    }
-
-    @Override
-    public iString getTextTag(String tagName) {
-        return iString.NULL;
     }
 
     @Override
     public String getString(String tagName) {
         return null;
+    }
+
+    @Override
+    public String getString(String tagName, String defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public iString getText(String tagName) {
+        return iString.NULL;
+    }
+
+    @Override
+    public iString getText(String tagName, iString defaultValue) {
+        return defaultValue;
     }
 
 }

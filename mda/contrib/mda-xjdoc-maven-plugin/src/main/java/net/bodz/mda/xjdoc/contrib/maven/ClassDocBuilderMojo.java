@@ -52,7 +52,7 @@ public class ClassDocBuilderMojo
     /**
      * Include test classes.
      *
-     * @parameter expression="${classdoc.tests}"
+     * @parameter property="${classdoc.tests}"
      */
     boolean testClasses;
 
@@ -164,7 +164,12 @@ public class ClassDocBuilderMojo
             for (JavaClass jclass : QdoxUtils.getAllNestedClasses(jsource)) {
                 ClassDocBuilder builder = new ClassDocBuilder(taglibs);
                 // builder.setCreateClassImports(true);
-                ClassDoc classDoc = builder.buildClass(jclass);
+                ClassDoc classDoc;
+                try {
+                    classDoc = builder.buildClass(jclass);
+                } catch (ParseException e) {
+                    throw new MojoFailureException(e.getMessage(), e);
+                }
                 // builder.setMissingDoc(missingDoc);
 
                 String fqcn = jclass.getFullyQualifiedName();

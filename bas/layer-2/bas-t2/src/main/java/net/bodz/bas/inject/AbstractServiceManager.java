@@ -50,17 +50,14 @@ public abstract class AbstractServiceManager<T> {
     protected void load()
             throws LoadException {
         for (Class<? extends T> type : IndexedTypes.list(serviceClass, false)) {
-            T provider = injector.instantiate(type);
-
-            String name = getName(provider);
-            if (name != null) {
-                T prev = nameMap.get(name);
-                if (prev != null)
-                    throw new DuplicatedKeyException(name, prev);
-                nameMap.put(name, provider);
+            T provider;
+            try {
+                provider = injector.instantiate(type);
+            } catch (ReflectiveOperationException e) {
+                throw new LoadException(e.getMessage(), e);
             }
 
-            providers.add(provider);
+            addProvider(provider);
         }
     }
 
@@ -80,6 +77,17 @@ public abstract class AbstractServiceManager<T> {
                     return provider;
             }
         return null;
+    }
+
+    public void addProvider(T provider) {
+        String name = getName(provider);
+        if (name != null) {
+            T prev = nameMap.get(name);
+            if (prev != null)
+                throw new DuplicatedKeyException(name, prev);
+            nameMap.put(name, provider);
+        }
+        providers.add(provider);
     }
 
 }

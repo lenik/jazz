@@ -25,7 +25,7 @@ public class MutableUiElement
 
     public void populate(IElementDoc doc)
             throws ParseException {
-        String css = (String) doc.getTag("style");
+        String css = doc.getString("style");
         if (css != null) {
             UiElementStyleDeclaration styleDecl = new UiElementStyleDeclaration(null);
             styleDecl.parseCss(css);

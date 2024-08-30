@@ -12,11 +12,11 @@ public interface IXjdocElement
             extends IElement.fn {
 
         public static final void initPropsFromXjdoc(IMutableElement element, IElementDoc doc) {
-            iString label = doc.getTextTag(IElementDoc.LABEL);
+            iString label = doc.getText(IElementDoc.LABEL);
             if (label != null)
                 element.setLabel(label);
 
-            iString description = doc.getTextTag(IElementDoc.DESCRIPTION);
+            iString description = doc.getText(IElementDoc.DESCRIPTION);
             if (description != null)
                 element.setDescription(description);
 

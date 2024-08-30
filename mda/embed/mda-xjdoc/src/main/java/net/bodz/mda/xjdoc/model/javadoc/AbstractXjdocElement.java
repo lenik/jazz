@@ -11,6 +11,7 @@ import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.mda.xjdoc.model.IElementDoc;
+import net.bodz.mda.xjdoc.model.IMutableElementDoc;
 
 public abstract class AbstractXjdocElement
         // extends AbstractElement
@@ -36,24 +37,26 @@ public abstract class AbstractXjdocElement
     void _load(XjdocCache cache) {
         IElementDoc xjdoc = cache.xjdoc;
         if (xjdoc == null) {
+            IMutableElementDoc mutable;
             try {
-                xjdoc = loadXjdoc();
+                mutable = loadXjdoc();
             } catch (Exception e) {
                 throw new LazyLoadException(e.getMessage(), e);
             }
-            if (xjdoc == null)
+            if (mutable == null)
                 // xjdoc = IElementDoc.NULL;
                 throw new IllegalUsageException("xjdoc isn't available.");
 
-            _cache.xjdoc = xjdoc;
-            XjdocModifier.process(xjdoc);
+            _cache.xjdoc = mutable;
+            XjdocModifier.process(mutable);
+            xjdoc = mutable;
         }
 
         // New version: Use @label only.
-        iString label = xjdoc.getTextTag(IElementDoc.LABEL);
+        iString label = xjdoc.getText(IElementDoc.LABEL);
         // if (label == null) label = xjdoc.getText().headPar();
 
-        iString description = xjdoc.getTextTag(IElementDoc.DESCRIPTION);
+        iString description = xjdoc.getText(IElementDoc.DESCRIPTION);
         if (description == null)
             description = getXjdoc().getText().headPar();
 
@@ -88,7 +91,7 @@ public abstract class AbstractXjdocElement
         _load(_cache);
     }
 
-    protected abstract IElementDoc loadXjdoc()
+    protected abstract IMutableElementDoc loadXjdoc()
             throws ParseException, IOException;
 
     @Override

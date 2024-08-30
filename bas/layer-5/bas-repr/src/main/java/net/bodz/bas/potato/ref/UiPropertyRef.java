@@ -31,7 +31,7 @@ public class UiPropertyRef<T>
     @Override
     public IUiElementStyleDeclaration getStyle() {
         IElementDoc xjdoc = getProperty().getXjdoc();
-        xjdoc.getTag("style");
+        xjdoc.getString("style");
         // TODO
         throw new NotImplementedException();
     }

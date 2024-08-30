@@ -12,6 +12,7 @@ import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BatchEditCLI;
 import net.bodz.bas.program.skel.FileHandler;
 import net.bodz.mda.xjdoc.FlatfDocLoader;
+import net.bodz.mda.xjdoc.model.IDocTag;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
 @ProgramName("ff2tm")
@@ -33,10 +34,11 @@ public class Xjdoc2TextMap
         Map<String, iString> map = new LinkedHashMap<String, iString>();
 
         IElementDoc doc = flatfDocLoader.load(handler.getInputSource());
-        for (Entry<String, Object> entry : doc.getTagMap().entrySet()) {
+        for (Entry<String, IDocTag<?>> entry : doc.getTagMap().entrySet()) {
             String key = entry.getKey();
-            Object value = entry.getValue();
-            map.put(key, StrFn.conv(value));
+            IDocTag<?> tag = entry.getValue();
+            Object data = tag.getData();
+            map.put(key, StrFn.conv(data));
         }
 
         iString text = doc.getText();

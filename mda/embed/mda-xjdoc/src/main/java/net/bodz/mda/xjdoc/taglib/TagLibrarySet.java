@@ -5,17 +5,18 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
-import net.bodz.mda.xjdoc.tagtype.ITagType;
-import net.bodz.mda.xjdoc.tagtype.StringTagType;
+import net.bodz.mda.xjdoc.model.IDocTag;
+import net.bodz.mda.xjdoc.tagtype.StringTag;
 
 @ExcludedFromIndex
 public class TagLibrarySet
         extends LinkedHashSet<ITagLibrary>
-        implements ITagLibrary {
+        implements
+            ITagLibrary {
 
     private static final long serialVersionUID = 1L;
 
-    private ITagType defaultTagType = StringTagType.getInstance();
+    IDocTagFactory defaultTagType = () -> new StringTag();
 
     public TagLibrarySet(ITagLibrary... taglibs) {
         this(Arrays.asList(taglibs));
@@ -46,21 +47,24 @@ public class TagLibrarySet
         return null;
     }
 
-    @Override
-    public ITagType getTagType(String rootTagName) {
-        for (ITagLibrary taglib : this) {
-            ITagType tagType = taglib.getTagType(rootTagName);
-            if (tagType != null)
-                return tagType;
-        }
-        return null;
+    public IDocTagFactory getDefaultTagType() {
+        return defaultTagType;
+    }
+
+    public void setDefaultTagType(IDocTagFactory defaultTagType) {
+        this.defaultTagType = defaultTagType;
     }
 
     @Override
-    public ITagType getDefaultTagType() {
-        for (ITagLibrary taglib : this)
-            return taglib.getDefaultTagType();
-        return defaultTagType;
+    public IDocTag<?> createTag(String rootTagName) {
+        for (ITagLibrary taglib : this) {
+            IDocTag<?> tag = taglib.createTag(rootTagName);
+            if (tag != null)
+                return tag;
+        }
+        if (defaultTagType != null)
+            return defaultTagType.get();
+        return null;
     }
 
 }

@@ -349,7 +349,7 @@ public class MutableFormProperty
     public void populate(IElementDoc doc)
             throws ParseException {
         super.populate(doc);
-        this.placeholder = (iString) doc.getTag("placeholder");
+        this.placeholder = doc.getText("placeholder");
     }
 
     public void populate(IAnnotated annotations) {

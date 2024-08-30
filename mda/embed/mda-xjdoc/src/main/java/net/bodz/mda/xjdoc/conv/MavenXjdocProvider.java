@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import net.bodz.bas.c.m2.MavenPomDir;
+import net.bodz.bas.err.ParseException;
 import net.bodz.mda.xjdoc.AbstractXjdocProvider;
 import net.bodz.mda.xjdoc.XjdocLoaderException;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -24,7 +25,7 @@ public class MavenXjdocProvider
         File sourceFile = pomDir.getSourceFile(clazz);
         if (sourceFile == null) // Not belong to the maven project.
             return null;
-        if (!sourceFile.exists())
+        if (! sourceFile.exists())
             return null;
 
         ClassLoader classLoader = clazz.getClassLoader();
@@ -43,7 +44,12 @@ public class MavenXjdocProvider
         if (javaClass == null)
             throw new XjdocLoaderException("No class source in file: " + sourceFile);
 
-        ClassDoc classDoc = classDocBuilder.buildClass(javaClass);
+        ClassDoc classDoc;
+        try {
+            classDoc = classDocBuilder.buildClass(javaClass);
+        } catch (ParseException e) {
+            throw new XjdocLoaderException("Parse error: " + e.getMessage(), e);
+        }
         return classDoc;
     }
 

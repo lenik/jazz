@@ -3,6 +3,7 @@ package net.bodz.mda.xjdoc.model;
 import java.io.IOException;
 
 import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
@@ -41,7 +42,7 @@ public class PropertyDoc
 
     @Override
     public void writeObject(IFlatfOutput out, IOptions options)
-            throws IOException {
+            throws IOException, FormatException {
         // ImportMap imports = getClassDoc().getOrCreateImports();
         // Method getter = propertyDescriptor.getReadMethod();
         // Method setter = propertyDescriptor.getWriteMethod();

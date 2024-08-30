@@ -7,10 +7,11 @@ import org.junit.Test;
 
 import net.bodz.bas.err.ParseException;
 
-public class TokensTagTypeTest_SpaceSeparated
-        extends Assert {
+public class TokensTagTest_SpaceSeparated
+        extends
+        Assert {
 
-    TokensTagType tagType = TokensTagType.SPACE_SEPARATED;
+    TokensTag tagType = new TokensTag(" ", true);
 
     @Test
     public void testEmpty()
