@@ -1,6 +1,15 @@
 package net.bodz.bas.log;
 
-public interface IBaseLogger {
+import net.bodz.bas.t.order.IPriority;
+
+public interface IBaseLogger
+        extends
+            IPriority {
+
+    @Override
+    default int getPriority() {
+        return 0;
+    }
 
     /**
      * Check if stderr logging is enabled.

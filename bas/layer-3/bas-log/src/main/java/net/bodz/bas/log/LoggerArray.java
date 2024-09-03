@@ -6,13 +6,25 @@ import java.util.List;
 public class LoggerArray
         extends AbstractLogger {
 
+    final String name;
     List<ILogger> loggers = new ArrayList<>();
 
-    public LoggerArray() {
+    public LoggerArray(String name) {
+        this.name = name;
     }
 
-    public LoggerArray(ILogger sysLogger) {
-        addLogger(sysLogger);
+    public LoggerArray(List<ILogger> loggers, String name) {
+        this(name);
+        if (loggers == null)
+            throw new NullPointerException("loggers");
+        this.loggers = loggers;
+    }
+
+    public static LoggerArray of(String name, ILogger... loggers) {
+        LoggerArray array = new LoggerArray(name);
+        for (ILogger l : loggers)
+            array.addLogger(l);
+        return array;
     }
 
     public void addLogger(ILogger logger) {
@@ -97,6 +109,11 @@ public class LoggerArray
     public void _progress(int delta, Throwable e, Object message) {
         for (ILogger l : loggers)
             l._progress(delta, e, message);
+    }
+
+    @Override
+    public String toString() {
+        return name + " [" + loggers.size() + "]";
     }
 
 }
