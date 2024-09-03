@@ -89,8 +89,18 @@ public class Injector {
         Constructor<?>[] ctors = type.getDeclaredConstructors();
 
         if (explicitConstructor) {
-            if (ctors.length > 1)
-                throw new IllegalUsageException("type " + type + " has more than one constructor.");
+            if (ctors.length > 1) {
+                Constructor<?> defaultCtor = null;
+                for (Constructor<?> ctor : ctors)
+                    if (ctor.getParameterCount() == 0) {
+                        defaultCtor = ctor;
+                        break;
+                    }
+                if (defaultCtor == null)
+                    throw new IllegalUsageException("type " + type + " has more than one constructor.");
+                else
+                    ctors = new Constructor<?>[] { defaultCtor };
+            }
             if (ctors.length == 0)
                 throw new IllegalUsageException("type " + type + " has no constructor.");
         }
