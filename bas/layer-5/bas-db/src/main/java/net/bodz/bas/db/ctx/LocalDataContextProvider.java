@@ -12,7 +12,7 @@ import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.fs.IFilesForm;
+import net.bodz.bas.fmt.fs.IDirForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.XmlFn;
@@ -23,7 +23,7 @@ import net.bodz.bas.t.tuple.Split;
 public class LocalDataContextProvider
         implements
             IDataContextProvider,
-            IFilesForm {
+            IDirForm {
 
     File folder;
 

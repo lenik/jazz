@@ -6,7 +6,7 @@ import java.io.IOException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 
-public interface IFilesForm {
+public interface IDirForm {
 
     void readObject(File folder)
             throws IOException, ParseException;
