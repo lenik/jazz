@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import net.bodz.bas.c.jakarta.servlet.http.IHttpRequestProcessor;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.MutableVariantMap;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Find method name in the dispatch path, translate into request attributes and remove them from
@@ -72,7 +72,7 @@ public class DefaultMethodOfRequest
     static boolean paramMethod = true;
 
     @Override
-    public boolean apply(HttpServletRequest request, HttpServletResponse response) {
+    public void apply(HttpServletRequest request, HttpServletResponse response) {
         String methodName = null;
 
         if (methodName == null && paramMethodLong)
@@ -97,7 +97,7 @@ public class DefaultMethodOfRequest
         this.parameters.setWrapped(params);
 
         request.setAttribute(IMethodOfRequest.ATTRIBUTE_KEY, this);
-        return true;
+        return;
     }
 
     @Override

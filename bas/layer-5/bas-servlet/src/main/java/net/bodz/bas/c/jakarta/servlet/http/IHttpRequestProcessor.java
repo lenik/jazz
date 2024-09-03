@@ -15,7 +15,7 @@ public interface IHttpRequestProcessor {
     /**
      * @return <code>false</code> if the request is invalid and the process should be canceled.
      */
-    boolean apply(HttpServletRequest request, HttpServletResponse response)
+    void apply(HttpServletRequest request, HttpServletResponse response)
             throws ParseException;
 
     @IndexedTypeLoader(IHttpRequestProcessor.class)
@@ -27,12 +27,11 @@ public interface IHttpRequestProcessor {
         public static boolean applyAll(HttpServletRequest req, HttpServletResponse resp) {
             for (IHttpRequestProcessor proc : ServiceLoader.load(IHttpRequestProcessor.class))
                 try {
-                    if (! proc.apply(req, resp)) {
-                        // invalid request.
-                        return false;
-                    }
+                    proc.apply(req, resp);
                 } catch (ParseException e) {
                     throw new RuntimeException(e.getMessage(), e);
+//                } catch (RuntimeException e) {
+//                    throw new RuntimeException(e.getMessage(), e);
                 }
             return true;
         }

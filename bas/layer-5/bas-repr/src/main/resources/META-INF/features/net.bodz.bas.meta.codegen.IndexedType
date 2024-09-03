@@ -1,3 +1,2 @@
-net.bodz.bas.repr.req.IHttpRequestProcessor
 net.bodz.bas.repr.viz.IViewBuilderFactory
 net.bodz.bas.repr.viz.web.IHttpViewBuilder

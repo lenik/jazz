@@ -3,15 +3,15 @@ package net.bodz.bas.repr.req;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import net.bodz.bas.c.jakarta.servlet.http.IHttpRequestProcessor;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.MutableVariantMap;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 public class DefaultViewOfRequest
         implements
@@ -64,7 +64,7 @@ public class DefaultViewOfRequest
     // static boolean contentTypeAuto = true;
 
     @Override
-    public boolean apply(HttpServletRequest request, HttpServletResponse response) {
+    public void apply(HttpServletRequest request, HttpServletResponse response) {
         String viewName = null;
         if (viewName == null && paramViewLong)
             viewName = request.getParameter("view:");
@@ -94,7 +94,6 @@ public class DefaultViewOfRequest
             setContentType(contentType);
 
         request.setAttribute(IViewOfRequest.ATTRIBUTE_KEY, this);
-        return true;
     }
 
     @Override

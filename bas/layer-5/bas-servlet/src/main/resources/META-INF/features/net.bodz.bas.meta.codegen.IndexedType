@@ -1,4 +1,5 @@
 net.bodz.bas.c.jakarta.servlet.http.IHttpFilter
+net.bodz.bas.c.jakarta.servlet.http.IHttpRequestProcessor
 net.bodz.bas.c.jakarta.servlet.http.IServletContextListener
 net.bodz.bas.c.jakarta.servlet.http.IServletRequestListener
 net.bodz.bas.servlet.config.IServletContextConfigurer
