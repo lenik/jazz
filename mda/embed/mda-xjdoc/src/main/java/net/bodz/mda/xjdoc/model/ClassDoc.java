@@ -18,7 +18,8 @@ import net.bodz.mda.xjdoc.util.MethodId;
 
 public class ClassDoc
         extends MutableElementDoc
-        implements IClassDoc {
+        implements
+            IClassDoc {
 
     private String fqcn;
     private ImportMap imports;
@@ -198,7 +199,7 @@ public class ClassDoc
             String types = StringPart.beforeLast(StringPart.after(_id, "("), ")");
 
             String typev[] = {};
-            if (!types.isEmpty())
+            if (! types.isEmpty())
                 typev = types.split(",");
 
             MethodId methodId = new MethodId(methodName, typev.length);

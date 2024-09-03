@@ -9,7 +9,8 @@ import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 public abstract class DecoratedJavaElementDoc
         extends AbstractDecorator<IElementDoc>
-        implements IElementDoc {
+        implements
+            IElementDoc {
 
     private static final long serialVersionUID = 1L;
 
@@ -70,6 +71,11 @@ public abstract class DecoratedJavaElementDoc
     @Override
     public iString getTextTag(String tagName) {
         return getWrapped().getTextTag(tagName);
+    }
+
+    @Override
+    public String getString(String tagName) {
+        return getWrapped().getString(tagName);
     }
 
     @Override

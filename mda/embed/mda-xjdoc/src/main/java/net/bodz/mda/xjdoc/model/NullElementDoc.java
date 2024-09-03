@@ -70,4 +70,9 @@ public class NullElementDoc
         return iString.NULL;
     }
 
+    @Override
+    public String getString(String tagName) {
+        return null;
+    }
+
 }

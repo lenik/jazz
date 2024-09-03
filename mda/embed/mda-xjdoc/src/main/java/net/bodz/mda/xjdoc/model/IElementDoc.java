@@ -75,8 +75,8 @@ public interface IElementDoc
     /**
      * Remove the named tag.
      *
-     * @return Value of the removed tag. <code>null</code> if the tag was not existed, or its value is
-     *         <code>null</code>.
+     * @return Value of the removed tag. <code>null</code> if the tag was not existed, or its value
+     *         is <code>null</code>.
      */
     Object removeTag(String tagName);
 
@@ -105,6 +105,8 @@ public interface IElementDoc
      * @return {@link iString#NULL} if the tag isn't used.
      */
     iString getTextTag(String tagName);
+
+    String getString(String tagName);
 
     NullElementDoc NULL = new NullElementDoc();
 

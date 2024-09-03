@@ -166,6 +166,22 @@ public class MutableElementDoc
             return tag;
     }
 
+    @Override
+    public String getString(String tagName) {
+        Object tag = getTag(tagName);
+        if (tag == null)
+            return null;
+        if (tag.getClass().isArray()) {
+            if (Array.getLength(tag) == 0)
+                return null;
+            Object head = Array.get(tag, 0);
+            if (head == null)
+                return null;
+            tag = head;
+        }
+        return tag.toString();
+    }
+
     /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfForm}. */
     /* _____________________________ */static section.iface __FLATF__;
 
