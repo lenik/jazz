@@ -1,7 +1,10 @@
 package net.bodz.bas.rtx;
 
+import java.util.NoSuchElementException;
+
 public interface IOptions
-        extends Iterable<IOption> {
+        extends
+            Iterable<IOption> {
 
     int size();
 
@@ -42,6 +45,16 @@ public interface IOptions
      * @return <code>defaultValue</code> if the parameter is undefined.
      */
     <T> T get(Class<T> clazz, T defaultValue);
+
+    /**
+     * @throws NoSuchElementException
+     */
+    <T> T require(String id);
+
+    /**
+     * @throws NoSuchElementException
+     */
+    <T> T require(Class<T> clazz);
 
     /**
      * @return Integer value. If the value is string, it will be parsed. Returns <code>0</code> if

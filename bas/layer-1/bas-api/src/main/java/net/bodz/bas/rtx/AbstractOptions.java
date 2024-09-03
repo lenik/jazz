@@ -1,9 +1,12 @@
 package net.bodz.bas.rtx;
 
+import java.util.NoSuchElementException;
+
 import net.bodz.bas.err.IllegalUsageException;
 
 public abstract class AbstractOptions
-        implements IOptions {
+        implements
+            IOptions {
 
     @Override
     public IOption getOption(Class<?> clazz) {
@@ -35,6 +38,22 @@ public abstract class AbstractOptions
             return defaultValue;
         else
             return parameter.getValue();
+    }
+
+    @Override
+    public <T> T require(String id) {
+        T o = get(id);
+        if (o == null)
+            throw new NoSuchElementException(id);
+        return o;
+    }
+
+    @Override
+    public <T> T require(Class<T> clazz) {
+        T o = get(clazz);
+        if (o == null)
+            throw new NoSuchElementException(clazz.toString());
+        return o;
     }
 
     @Override
