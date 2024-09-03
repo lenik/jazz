@@ -1,12 +1,13 @@
 package net.bodz.lily.security.login;
 
-import net.bodz.lily.security.IUser;
+import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.meta.codegen.PublishDir;
 
+@IndexedType(publishDir = PublishDir.features)
 public interface ILoginListener {
 
-    void onLoggedIn(IUser user);
+    void onLoggedIn(LoginToken token);
 
-    default void onLoggedOut(IUser user) {
-    }
+    void onLoggedOut(LoginToken token);
 
 }

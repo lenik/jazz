@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.persistence.Table;
 
 import net.bodz.bas.db.ibatis.IResultSetForm;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.meta.bean.JsonRedundant;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
@@ -18,7 +19,8 @@ import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.lily.concrete.util.ExtraAttributes;
 import net.bodz.lily.entity.type.EntityTypes;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
-import net.bodz.lily.security.IUser;
+import net.bodz.lily.security.IGroup;
+import net.bodz.lily.security.IMutableUser;
 
 /**
  * <p lang="zh-cn">
@@ -40,7 +42,7 @@ import net.bodz.lily.security.IUser;
 public class User
         extends _User_stuff
         implements
-            IUser,
+            IMutableUser,
             IResultSetForm {
 
     private static final long serialVersionUID = 1L;
@@ -96,6 +98,11 @@ public class User
         return attributes.getAttribute(name, defaultValue);
     }
 
+    @Override
+    public void setAttribute(String name, Object value) {
+        attributes.setAttribute(name, value);
+    }
+
     public List<Group> getGroups() {
         return groups;
     }
@@ -116,6 +123,11 @@ public class User
             for (Group g : groups)
                 gids.add(g.id());
         return gids;
+    }
+
+    @Override
+    public void setPrimaryGroup(IGroup primaryGroup) {
+        super.setPrimaryGroup((Group) primaryGroup);
     }
 
     public UserSecret makeSecret() {
@@ -186,6 +198,11 @@ public class User
                     return true;
 
         return false;
+    }
+
+    @Override
+    public void setSuperUser(boolean superUser) {
+        throw new NotImplementedException();
     }
 
     /**

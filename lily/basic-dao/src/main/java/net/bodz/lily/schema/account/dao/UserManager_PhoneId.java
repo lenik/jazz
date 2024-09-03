@@ -1,7 +1,8 @@
-package net.bodz.lily.security.ops;
+package net.bodz.lily.schema.account.dao;
 
 import java.util.List;
 
+import net.bodz.bas.db.ctx.AbstractDataService;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
@@ -12,16 +13,11 @@ import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.account.UserOtherId;
 import net.bodz.lily.schema.account.UserOtherIdTypes;
 import net.bodz.lily.schema.account.UserSecret;
-import net.bodz.lily.schema.account.dao.UserCriteriaBuilder;
-import net.bodz.lily.schema.account.dao.UserMapper;
-import net.bodz.lily.schema.account.dao.UserOtherIdCriteriaBuilder;
-import net.bodz.lily.schema.account.dao.UserOtherIdMapper;
-import net.bodz.lily.schema.account.dao.UserSecretMapper;
-import net.bodz.lily.security.login.LoginManager;
+import net.bodz.lily.security.auth.AuthData;
 import net.bodz.lily.security.login.LoginResult;
 
-public class UserOps_PhoneId
-        extends AbstractOps
+class UserManager_PhoneId
+        extends AbstractDataService
         implements
             IDataContextAware {
 
@@ -29,20 +25,20 @@ public class UserOps_PhoneId
     UserSecretMapper secretMapper;
     UserOtherIdMapper oidMapper;
 
-    public UserOps_PhoneId(DataContext dataContext) {
+    public UserManager_PhoneId(DataContext dataContext) {
         super(dataContext);
         userMapper = dataContext.getMapper(UserMapper.class);
         secretMapper = dataContext.getMapper(UserSecretMapper.class);
         oidMapper = dataContext.getMapper(UserOtherIdMapper.class);
     }
 
-    public LoginResult register(LoginManager loginManager, String phone, String password) {
+    public AuthData register(String phone, String password) {
         LoginResult resp = new LoginResult();
         // 1. check if phone is in use
         List<UserOtherId> oids = oidMapper.filter(new UserOtherIdCriteriaBuilder()//
                 .otherId.eq(phone).get());
         if (! oids.isEmpty())
-            return resp.fail("Phone is already used.");
+            throw new IllegalArgumentException("Phone is already used.");
 
         // 2. auto create a user (random name)
         User user = new User();
@@ -73,21 +69,19 @@ public class UserOps_PhoneId
         oid.setOtherId(phone);
         oidMapper.insert(oid);
 
-        // 4. auto login
-        resp.token = loginManager.allocateToken(user);
-        return resp.succeed();
+        return AuthData.complete(this, user);
     }
 
-    public LoginResult resetPassword(LoginManager loginManager, String phone, String password) {
+    public AuthData resetPassword(String phone, String password) {
         LoginResult resp = new LoginResult();
         // 1. find the corresponding user
         List<UserOtherId> oids = oidMapper.filter(//
                 new UserOtherIdCriteriaBuilder().otherId.eq(phone).get(), //
                 SelectOptions.TOP10);
         if (oids.isEmpty())
-            return resp.fail("Phone number isn't used by any user.");
+            throw new IllegalArgumentException("Phone number isn't used by any user.");
         if (oids.size() > 1)
-            return resp.fail("Phone number is used by multiple users.");
+            throw new IllegalArgumentException("Phone number is used by multiple users.");
         UserOtherId oid = oids.get(0);
 
         int userId = oid.getUser().id();
@@ -98,9 +92,7 @@ public class UserOps_PhoneId
         secret.setPassword(password);
         secretMapper.update(secret);
 
-        // 3. auto login
-        resp.token = loginManager.allocateToken(user);
-        return resp.succeed();
+        return AuthData.complete(this, user);
     }
 
     public IJsonResponse bind(int uid, String phone) {

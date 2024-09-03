@@ -1,19 +1,23 @@
-package net.bodz.lily.security.login;
+package net.bodz.lily.security.auth.pam;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.schema.account.dao.UserMapper;
 
-public abstract class DataBackedLoginResolver
-        extends AbstractLoginResolver {
+public abstract class DatabasedPam
+        extends AbstractPam {
 
     protected final DataContext dataContext;
     protected UserMapper userMapper;
 
-    public DataBackedLoginResolver(DataContext dataContext) {
+    public DatabasedPam(DataContext dataContext) {
         if (dataContext == null)
             throw new NullPointerException("dataContext");
         this.dataContext = dataContext;
         this.userMapper = dataContext.getMapper(UserMapper.class);
+    }
+
+    protected DataContext getDataContext() {
+        return dataContext;
     }
 
 }

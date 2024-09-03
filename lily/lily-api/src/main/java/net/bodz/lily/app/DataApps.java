@@ -3,10 +3,13 @@ package net.bodz.lily.app;
 import java.io.File;
 import java.util.Collection;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.db.ctx.UnionDefaultContextIdsResolver;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.lily.entity.attachment.AttachmentGroup;
 import net.bodz.lily.site.DataAppHosts;
 import net.bodz.lily.site.IDataAppHost;
@@ -39,7 +42,12 @@ public class DataApps {
     }
 
     public static IDataApplication fromRequest() {
-        IDataAppHost host = DataAppHosts.fromRequest();
+        HttpServletRequest request = CurrentHttpService.getRequest();
+        return fromRequest(request);
+    }
+
+    public static IDataApplication fromRequest(HttpServletRequest request) {
+        IDataAppHost host = DataAppHosts.fromRequest(request);
         return host.getDataApp();
     }
 

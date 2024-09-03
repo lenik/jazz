@@ -141,7 +141,7 @@ public class EventLog
             map = new JsonVarMap($user);
             IMutableUser user = Users.newUser();
             user.id(map.getInt("id"));
-            user.setUniqName(map.getString("name"));
+            user.setName(map.getString("name"));
             user.setFullName(map.getString("fullName"));
             this.user = user;
         }

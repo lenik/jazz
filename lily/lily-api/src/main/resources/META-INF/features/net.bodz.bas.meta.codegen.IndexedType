@@ -3,7 +3,7 @@ net.bodz.lily.entity.manager.IEntityCommandProvider
 net.bodz.lily.entity.type.IEntityOpListener
 net.bodz.lily.entity.ws.IEntityController
 net.bodz.lily.security.IUserFactory
-net.bodz.lily.security.login.ILoginManagerProvider
-net.bodz.lily.security.login.ILoginResolver
-net.bodz.lily.security.login.ILoginResolverProvider
+net.bodz.lily.security.auth.IAuthModule
+net.bodz.lily.security.auth.ILoginManagerProvider
+net.bodz.lily.security.login.ILoginListener
 net.bodz.lily.test.TestSampleBuilder

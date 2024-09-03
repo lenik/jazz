@@ -5,6 +5,7 @@ import net.bodz.bas.site.vhost.CurrentVirtualHost;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.lily.app.DataApps;
 import net.bodz.lily.app.IDataApplication;
+import net.bodz.lily.security.auth.ILoginManagerProvider;
 
 public class VhostLoginManagerProvider
         implements

@@ -22,6 +22,8 @@ import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.lily.security.IUser;
 import net.bodz.lily.security.IUserSecret;
 import net.bodz.lily.security.Users;
+import net.bodz.lily.security.auth.AuthData;
+import net.bodz.lily.security.auth.ILoginTokenManager;
 
 public class LoginToken
         extends MutableAttributes
@@ -40,16 +42,15 @@ public class LoginToken
     long id;
     long expireDate;
 
-    IUser user;
-    IUserSecret secret;
+    AuthData authData;
+//    IUserSecret secret;
 
     private long transaction;
 
-    LoginToken(IUser user) {
-        if (user == null)
-            throw new NullPointerException("user");
-        this.user = user;
-        this.secret = user.getSecret();
+    LoginToken(AuthData authData) {
+        if (authData == null)
+            throw new NullPointerException("authUser");
+        this.authData = authData;
         this.transaction = next();
     }
 
@@ -72,7 +73,7 @@ public class LoginToken
     }
 
     public IUser getUser() {
-        return user;
+        return authData.getUser();
     }
 
     public long getTransaction() {
@@ -90,9 +91,17 @@ public class LoginToken
         return transaction;
     }
 
+    IUserSecret getSecret() {
+        IUserSecret secret = authData.getUser().getSecret();
+        return secret;
+    }
+
     public String getExpectedClientResponse() {
         String salt = String.valueOf(transaction);
+
+        IUserSecret secret = getSecret();
         String text = salt + secret + salt;
+
         String hex = DigestUtils.sha1Hex(text);
         return hex;
     }
@@ -106,6 +115,7 @@ public class LoginToken
     }
 
     public boolean isIgnoreAcl() {
+        IUser user = authData.getUser();
         if (user == null)
             return true;
         if (user.isSuperUser())
@@ -203,7 +213,7 @@ public class LoginToken
         return (LoginToken) session.getAttribute(LoginToken.ATTRIBUTE_NAME);
     }
 
-    void saveInSession() {
+    public void saveInSession() {
         HttpSession session = CurrentHttpService.getSessionOpt();
         if (session == null)
             throw new IllegalStateException("No session");
@@ -211,7 +221,7 @@ public class LoginToken
             saveInSession(session);
     }
 
-    void saveInSession(HttpSession session) {
+    public void saveInSession(HttpSession session) {
         synchronized (session) {
             LoginToken existing = (LoginToken) session.getAttribute(LoginToken.ATTRIBUTE_NAME);
             if (existing != null)
@@ -263,7 +273,7 @@ public class LoginToken
         if (_user != null) {
             IUser user = Users.newUser();
             user.jsonIn(o, opts);
-            this.user = user;
+            authData = AuthData.complete(this, user);
         }
     }
 
@@ -274,6 +284,7 @@ public class LoginToken
         out.entry("txn", transaction);
         out.entry("timeout", Long.MAX_VALUE);
 
+        IUser user = authData.getUser();
         out.key("user");
         out.object();
         {
@@ -290,6 +301,7 @@ public class LoginToken
 
     @Override
     public String toString() {
+        IUser user = authData.getUser();
         String s = String.format("token_%d<user(%d: %s), txn %d>", //
                 id, user.id(), user.getName(), transaction);
         return s;

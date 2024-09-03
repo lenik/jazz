@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 import net.bodz.bas.t.order.PriorityComparator;
+import net.bodz.lily.security.auth.ILoginManagerProvider;
 
 public class LoginManagers {
 

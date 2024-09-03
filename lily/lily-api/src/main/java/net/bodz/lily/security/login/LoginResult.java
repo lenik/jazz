@@ -16,7 +16,7 @@ public class LoginResult
             IJsonForm {
 
     String serverChallenge;
-    public LoginToken token;
+    private LoginToken token;
 
     public LoginResult() {
     }
@@ -35,6 +35,10 @@ public class LoginResult
 
     public void setServerChallenge(String serverChallenge) {
         this.serverChallenge = serverChallenge;
+    }
+
+    public boolean hasToken() {
+        return token != null;
     }
 
     public LoginToken getToken() {
@@ -62,13 +66,15 @@ public class LoginResult
         return super.readRootEntry(o, key, opts);
     }
 
+    static final String K_SERVER_CHALLENGE = "sc";
+    static final String K_TOKEN = "token";
+
     @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         super.jsonOut(out, opts);
-        out.entry("sc", serverChallenge);
-        if (token != null)
-            out.entry("token", token);
+        out.entryNotNull(K_SERVER_CHALLENGE, serverChallenge);
+        out.entryNotNull(K_TOKEN, token);
     }
 
 }

@@ -6,12 +6,14 @@ public interface IMutableUser
 
     void id(Integer newId);
 
-    void setUniqName(String uniqName);
+    void setName(String uniqName);
 
     void setFullName(String fullName);
 
     void setSuperUser(boolean superUser);
 
     void setPrimaryGroup(IGroup primaryGroup);
+
+    void setAttribute(String name, Object value);
 
 }

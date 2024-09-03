@@ -1,5 +1,7 @@
 package net.bodz.lily.site;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -18,8 +20,6 @@ import net.bodz.lily.site.module.MapperService;
 import net.bodz.lily.storage.IVolume;
 import net.bodz.lily.tool.log.EventLogger;
 import net.bodz.lily.tool.wsdoc.WsDocSite;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 public abstract class LilyStartSite
         extends DataAppSite {
@@ -95,8 +95,12 @@ public abstract class LilyStartSite
     void setupServices() {
         serviceMap.install("mapper", new MapperService(dataContext));
         serviceMap.install("service-map", serviceMap);
-        serviceMap.install("session", new LoginManagerWs());
         serviceMap.install("ws-doc", new WsDocSite());
+
+        LoginManagerWs man = new LoginManagerWs();
+        serviceMap.install("session", man);
+        serviceMap.install("pam", man);
+
         setupDataIndex();
     }
 
