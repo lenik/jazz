@@ -1,5 +1,8 @@
 package net.bodz.bas.site.json;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fn.IExecutableX;
 
@@ -32,6 +35,24 @@ public class JsonResult
             result.fail(e, e.getMessage());
         }
         return result;
+    }
+
+    private static ThreadLocal<List<JsonLogger>> _tls = new ThreadLocal<>();
+
+    static synchronized List<JsonLogger> getThreadLocalList() {
+        List<JsonLogger> list = _tls.get();
+        if (list == null)
+            _tls.set(list = new ArrayList<>());
+        return list;
+    }
+
+    public static void addThreadJsonLogger(JsonLogger logger) {
+        getThreadLocalList().add(logger);
+    }
+
+    public static void removeThreadJsonLogger(JsonLogger logger) {
+        if (logger != null)
+            getThreadLocalList().remove(logger);
     }
 
 }
