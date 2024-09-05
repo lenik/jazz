@@ -69,7 +69,7 @@ class UserManager_PhoneId
         oid.setOtherId(phone);
         oidMapper.insert(oid);
 
-        return AuthData.complete(this, user);
+        return AuthData.complete(this, password, user);
     }
 
     public AuthData resetPassword(String phone, String password) {
@@ -92,7 +92,7 @@ class UserManager_PhoneId
         secret.setPassword(password);
         secretMapper.update(secret);
 
-        return AuthData.complete(this, user);
+        return AuthData.complete(this, password, user);
     }
 
     public IJsonResponse bind(int uid, String phone) {

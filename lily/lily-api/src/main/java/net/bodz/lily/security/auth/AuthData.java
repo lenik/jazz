@@ -24,6 +24,7 @@ public class AuthData
 
     Object authority;
     String method;
+    Object authId;
 
     IUser user;
     final Map<Class<?>, Object> items = new LinkedHashMap<>();
@@ -34,20 +35,21 @@ public class AuthData
     // String stateName;
 //    JsonResult result = new JsonResult();
 
-    public AuthData(Object authority, boolean completed) {
+    public AuthData(Object authority, Object id, boolean completed) {
         this.authority = authority;
+        this.authId = id;
         this.completed = completed;
     }
 
 //    public static AuthData auth(Object authority, IUser user) {
 //        return new AuthData(authority).user(user);
 //    }
-    public static AuthData complete(Object authority, IUser user) {
-        return new AuthData(authority, true).user(user);
+    public static AuthData complete(Object authority, Object id, IUser user) {
+        return new AuthData(authority, id, true).user(user);
     }
 
     public static AuthData pending(Object authority) {
-        return new AuthData(authority, false);
+        return new AuthData(authority, null, false);
     }
 
     public ZonedDateTime getAuthTime() {
@@ -80,6 +82,14 @@ public class AuthData
 
     public void setMethod(String method) {
         this.method = method;
+    }
+
+    public Object getAuthId() {
+        return authId;
+    }
+
+    public void setAuthId(Object authId) {
+        this.authId = authId;
     }
 
     public IUser getUser() {
@@ -147,7 +157,6 @@ public class AuthData
     @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-
     }
 
     @Override

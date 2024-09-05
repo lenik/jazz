@@ -85,9 +85,7 @@ public class LoginToken
     }
 
     public long next() {
-        transaction = RANDOM.nextLong() % MAX_TXN_NO;
-        // keep positive.
-        transaction = (transaction + MAX_TXN_NO) % MAX_TXN_NO;
+        transaction = RANDOM.nextLong(MAX_TXN_NO);
         return transaction;
     }
 
@@ -273,16 +271,20 @@ public class LoginToken
         if (_user != null) {
             IUser user = Users.newUser();
             user.jsonIn(o, opts);
-            authData = AuthData.complete(this, user);
+            Object authId = user.getName();
+            authData = AuthData.complete(this, authId, user);
         }
     }
 
     @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
+        out.entry("type", LoginToken.class.getSimpleName());
         out.entry("id", id);
         out.entry("txn", transaction);
         out.entry("timeout", Long.MAX_VALUE);
+
+        out.entryNotNull("authId", authData.getAuthId());
 
         IUser user = authData.getUser();
         out.key("user");

@@ -17,13 +17,13 @@ public interface IAuthModule
         return 0;
     }
 
+    boolean isAuto();
+
     String getName();
 
-    default boolean isEnabled(AuthContext context) {
-        return true;
-    }
+    IAuthModuleState getState(AuthContext authContext);
 
-    AuthData authenticate(AuthContext context)
+    AuthData authenticate(AuthContext authContext)
             throws AuthException;
 
 }

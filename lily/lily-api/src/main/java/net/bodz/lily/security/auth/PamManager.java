@@ -1,13 +1,17 @@
 package net.bodz.lily.security.auth;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.inject.AbstractServiceManager;
-import net.bodz.bas.inject.Injector;
+import net.bodz.bas.rtx.Injector;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
+import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.lily.app.DataApps;
 import net.bodz.lily.app.IDataApplication;
 
@@ -17,6 +21,8 @@ public class PamManager
     public static final String ATTRIBUTE_KEY = PamManager.class.getName();
 
     DataContext dataContext;
+
+    Set<IAuthModule> autos;
 
     PamManager(DataContext dataContext) {
         super(IAuthModule.class, createInjector(dataContext));
@@ -38,6 +44,20 @@ public class PamManager
     @Override
     public String getName(IAuthModule provider) {
         return provider.getName();
+    }
+
+    @Override
+    public void addProvider(IAuthModule provider) {
+        super.addProvider(provider);
+        if (provider.isAuto()) {
+            getAutos().add(provider);
+        }
+    }
+
+    public synchronized Set<IAuthModule> getAutos() {
+        if (autos == null)
+            autos = new TreeSet<>(PriorityComparator.INSTANCE);
+        return autos;
     }
 
     /**

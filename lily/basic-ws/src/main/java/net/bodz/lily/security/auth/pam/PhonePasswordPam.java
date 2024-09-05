@@ -15,7 +15,9 @@ import net.bodz.lily.schema.account.dao.UserSecretMapper;
 import net.bodz.lily.security.auth.AuthContext;
 import net.bodz.lily.security.auth.AuthData;
 import net.bodz.lily.security.auth.AuthException;
+import net.bodz.lily.security.auth.AuthModuleState;
 import net.bodz.lily.security.auth.FlyingCodes;
+import net.bodz.lily.security.auth.IAuthModuleState;
 import net.bodz.lily.security.login.LoginResult;
 
 public class PhonePasswordPam
@@ -37,6 +39,17 @@ public class PhonePasswordPam
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public IAuthModuleState getState(AuthContext authContext) {
+        IVariantMap<String> q = authContext.getParameters();
+
+        String sign = q.getString(K_ENC_PASSWD);
+        if (sign == null)
+            return AuthModuleState.disabled();
+
+        return AuthModuleState.enabled(sign);
     }
 
     @Override
@@ -80,7 +93,7 @@ public class PhonePasswordPam
             String passwd = userSecret.getPassword();
             FlyingIndex fi = checker.checkSignature(passwd, sign);
             if (fi.exists()) {
-                return AuthData.complete(this, matchedUser).flyingIndex(fi);
+                return AuthData.complete(this, sign, matchedUser).flyingIndex(fi);
             }
         }
 

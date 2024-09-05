@@ -14,6 +14,7 @@ import net.bodz.lily.security.auth.AuthContext;
 import net.bodz.lily.security.auth.AuthData;
 import net.bodz.lily.security.auth.AuthException;
 import net.bodz.lily.security.auth.IAuthModule;
+import net.bodz.lily.security.auth.IAuthModuleState;
 import net.bodz.lily.security.auth.PamManager;
 import net.bodz.lily.security.auth.pam.AuthAction;
 
@@ -27,11 +28,14 @@ public class LoginManagerWs
         pamAliasMap.put("login", "passwd");
         pamAliasMap.put("phone", "phone");
         pamAliasMap.put("email", "email");
+        // pamAliasMap.put("status", "cookie");
     }
 
     ILoginManager getLoginManager() {
         return LoginManagers.requireLoginManager();
     }
+
+    int statusCount = 0;
 
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
@@ -43,16 +47,16 @@ public class LoginManagerWs
         Object target = null;
 
         PamManager pamManager = PamManager.fromRequest();
+
+        AuthContext authContext = new AuthContext();
+        authContext.setPathInfo(token);
+        authContext.setParameters(q);
+        authContext.setAutoCreateUser(token.contains("register"));
+        if (token.contains("verify"))
+            authContext.setAction(AuthAction.VERIFY);
+
         IAuthModule module = pamManager.getFirstProvider(token, pamAliasMap.get(token));
         if (module != null) {
-            AuthContext authContext = new AuthContext();
-            authContext.setPathInfo(token);
-            authContext.setParameters(q);
-
-            authContext.setAutoCreateUser(token.contains("register"));
-            if (token.contains("verify"))
-                authContext.setAction(AuthAction.VERIFY);
-
             LoginResult result = loginModule(module, authContext);
             if (result != null)
                 return PathArrival.shift(previous, this, result, tokens);
@@ -60,9 +64,39 @@ public class LoginManagerWs
 
         switch (token) {
         case "status":
-            target = LoginToken.fromRequest();
+            int countAdd = q.getInt("count", 1);
+            statusCount += countAdd;
+
+            LoginToken currentToken = LoginToken.fromRequest();
+            Object currentAuthId = null;
+            if (currentToken != null) {
+                target = currentToken;
+                currentAuthId = currentToken.authData.getAuthId();
+            }
+
+            AuthContext autoAuthContext = new AuthContext();
+            autoAuthContext.setPathInfo(token);
+            autoAuthContext.setParameters(q);
+            autoAuthContext.setAutoCreateUser(true);
+
+            for (IAuthModule pam : pamManager.getAutos()) {
+                IAuthModuleState state = pam.getState(autoAuthContext);
+                if (state.isDisabled())
+                    continue;
+                Object authId = state.getAuthId();
+                if (currentAuthId != null && currentAuthId.equals(authId))
+                    continue;
+
+                LoginResult loginResult = loginModule(pam, autoAuthContext);
+                if (loginResult != null) {
+                    target = loginResult.getToken();
+                    break;
+                }
+            }
+
             if (target == null) {
                 JsonResult notLogin = new JsonResult();
+                notLogin.setHeader("statusCallCounter", statusCount);
                 notLogin.fail("Not logged in.");
                 target = notLogin;
             }

@@ -3,9 +3,9 @@ package net.bodz.lily.security.login;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.inject.AbstractServiceManager;
-import net.bodz.bas.inject.Injector;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.rtx.Injector;
 import net.bodz.lily.security.IUser;
 
 public class LoginListenerManager

@@ -9,7 +9,7 @@ public class DocUtil {
 
         if (doc == null)
             return null;
-        iString label = (iString) doc.getTag("label");
+        iString label = doc.getText("label");
         if (label != null)
             return label.toString();
 

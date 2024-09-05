@@ -10,8 +10,10 @@ import net.bodz.lily.schema.account.dao.UserSecretMapper;
 import net.bodz.lily.security.auth.AuthContext;
 import net.bodz.lily.security.auth.AuthData;
 import net.bodz.lily.security.auth.AuthException;
+import net.bodz.lily.security.auth.AuthModuleState;
 import net.bodz.lily.security.auth.FlyingCodes;
 import net.bodz.lily.security.auth.IAuthModule;
+import net.bodz.lily.security.auth.IAuthModuleState;
 
 public class AuthInitiator
         extends DatabasedPam {
@@ -28,6 +30,11 @@ public class AuthInitiator
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public IAuthModuleState getState(AuthContext context) {
+        return AuthModuleState.PENDING;
     }
 
     @Override

@@ -12,7 +12,9 @@ import net.bodz.lily.schema.account.dao.UserOtherIdMapper;
 import net.bodz.lily.schema.account.dao.UserSecretMapper;
 import net.bodz.lily.security.auth.AuthContext;
 import net.bodz.lily.security.auth.AuthData;
+import net.bodz.lily.security.auth.AuthModuleState;
 import net.bodz.lily.security.auth.FlyingCodes;
+import net.bodz.lily.security.auth.IAuthModuleState;
 
 public class PhoneCheckPam
         extends DatabasedPam {
@@ -33,6 +35,17 @@ public class PhoneCheckPam
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public IAuthModuleState getState(AuthContext authContext) {
+        IVariantMap<String> q = authContext.getParameters();
+
+        String sign = q.getString(K_ENC_CLIENT_RESP);
+        if (sign == null)
+            return AuthModuleState.disabled();
+
+        return AuthModuleState.enabled(sign);
     }
 
     @Override
@@ -72,7 +85,7 @@ public class PhoneCheckPam
         User matchedUser = users.get(0);
         FlyingIndex fi = checker.checkSignature(phone, sign);
         if (fi.exists()) {
-            return AuthData.complete(this, matchedUser).flyingIndex(fi);
+            return AuthData.complete(this, sign, matchedUser).flyingIndex(fi);
         }
 
         throw new IllegalArgumentException(String.format(//

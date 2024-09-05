@@ -6,4 +6,9 @@ public abstract class AbstractPam
         implements
             IAuthModule {
 
+    @Override
+    public boolean isAuto() {
+        return false;
+    }
+
 }

@@ -13,7 +13,9 @@ import net.bodz.lily.schema.account.dao.UserSecretCriteriaBuilder;
 import net.bodz.lily.schema.account.dao.UserSecretMapper;
 import net.bodz.lily.security.auth.AuthContext;
 import net.bodz.lily.security.auth.AuthData;
+import net.bodz.lily.security.auth.AuthModuleState;
 import net.bodz.lily.security.auth.FlyingCodes;
+import net.bodz.lily.security.auth.IAuthModuleState;
 
 public class UserPasswordPam
         extends DatabasedPam {
@@ -37,6 +39,17 @@ public class UserPasswordPam
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public IAuthModuleState getState(AuthContext authContext) {
+        IVariantMap<String> q = authContext.getParameters();
+
+        String sign = q.getString(K_ENC_PASSWD);
+        if (sign == null)
+            return AuthModuleState.disabled();
+
+        return AuthModuleState.enabled(sign);
     }
 
     @Override
@@ -75,7 +88,7 @@ public class UserPasswordPam
             String passwd = userSecret.getPassword();
             FlyingIndex fIndex = checker.checkSignature(passwd, sign);
             if (fIndex.exists()) {
-                return AuthData.complete(this, user).flyingIndex(fIndex);
+                return AuthData.complete(this, sign, user).flyingIndex(fIndex);
             }
         }
 
