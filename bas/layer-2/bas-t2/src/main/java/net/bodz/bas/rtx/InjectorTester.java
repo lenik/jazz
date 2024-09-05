@@ -1,4 +1,4 @@
-package net.bodz.bas.inject;
+package net.bodz.bas.rtx;
 
 class Foo {
 

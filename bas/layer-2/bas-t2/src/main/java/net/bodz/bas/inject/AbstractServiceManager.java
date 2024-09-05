@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoadException;
+import net.bodz.bas.rtx.Injector;
 import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.t.order.PriorityComparator;
 
