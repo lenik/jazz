@@ -30,7 +30,7 @@ public class CookieTester
                 if (param.startsWith(ns)) {
                     String name = param.substring(nsLen);
                     String domain = null;
-                    String path = null;
+                    String path = "/";
 
                     int colon = name.indexOf(':');
                     if (colon != -1) {
@@ -53,11 +53,15 @@ public class CookieTester
                     } else {
                         String value = req.getParameter(param);
                         cookie = new Cookie(name, value);
-                        if (domain != null)
-                            cookie.setDomain(domain);
-                        if (path != null)
-                            cookie.setPath(path);
                     }
+
+                    if (domain != null)
+                        cookie.setDomain(domain);
+                    if (path != null)
+                        cookie.setPath(path);
+                    else
+                        cookie.setPath("/");
+
                     resp.addCookie(cookie);
                 }
             }

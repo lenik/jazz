@@ -29,8 +29,9 @@ public class Cookies
 
     public Cookies(Cookie... array) {
         if (array == null)
-            throw new NullPointerException("array");
-        this.list = Arrays.asList(array);
+            this.list = new ArrayList<>();
+        else
+            this.list = Arrays.asList(array);
     }
 
     public Cookies(List<Cookie> list) {
