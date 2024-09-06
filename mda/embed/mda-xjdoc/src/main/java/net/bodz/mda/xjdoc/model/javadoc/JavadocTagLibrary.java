@@ -12,13 +12,18 @@ public class JavadocTagLibrary
         extends AbstractTagLibrary {
 
     public JavadocTagLibrary() {
+        this(0);
+    }
+
+    public JavadocTagLibrary(int priority) {
+        super(priority);
         addTagType("author", AuthorsTag.class);
         addTagType("exception", QNameHeadedTextTag.class);
-        addTagType("label",  LocaleTextTag.class);
-        addTagType("param",  HeadedTextTag.class);
-        addTagType("return",  TextTag.class);
-        addTagType("see",  StringTag.class);
-        addTagType("throws",  QNameHeadedTextTag.class);
+        addTagType("label", LocaleTextTag.class);
+        addTagType("param", HeadedTextTag.class);
+        addTagType("return", TextTag.class);
+        addTagType("see", StringTag.class);
+        addTagType("throws", QNameHeadedTextTag.class);
     }
 
 }

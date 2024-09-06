@@ -2,12 +2,19 @@ package net.bodz.mda.xjdoc.model;
 
 public interface IDocVisitor {
 
-    void visit(MutableElementDoc elementDoc);
+    void packageDoc(JavaPackageDoc packageDoc);
 
-    void visit(ClassDoc classDoc);
+    void classDoc(ClassDoc classDoc);
 
-    void visit(FieldDoc fieldDoc);
+    void fieldDoc(FieldDoc fieldDoc);
 
-    void visit(MethodDoc methodDoc);
+    void methodDoc(MethodDoc methodDoc);
+
+    @Deprecated
+    void propertyDoc(PropertyDoc propertyDoc);
+
+    void mutable(IMutableElementDoc doc);
+
+    void other(IElementDoc doc);
 
 }

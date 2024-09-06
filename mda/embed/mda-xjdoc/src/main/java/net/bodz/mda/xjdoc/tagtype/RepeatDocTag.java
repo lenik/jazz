@@ -46,12 +46,12 @@ public abstract class RepeatDocTag<E>
     }
 
     @Override
-    public void writeObject(IFlatfOutput out, String name, IOptions options)
+    public void writeObject(IFlatfOutput out, String attributeName, IOptions options)
             throws IOException, FormatException {
         int index = 0;
         for (E element : data) {
             String str = format(element);
-            out.attribute(name + "." + index, str);
+            out.attribute(attributeName + "." + index, str);
             index++;
         }
     }

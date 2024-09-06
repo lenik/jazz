@@ -2,28 +2,32 @@ package net.bodz.mda.xjdoc.taglib;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.util.TreeSet;
 
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.mda.xjdoc.model.IDocTag;
-import net.bodz.mda.xjdoc.tagtype.StringTag;
 
 @ExcludedFromIndex
 public class TagLibrarySet
-        extends LinkedHashSet<ITagLibrary>
+        extends TreeSet<ITagLibrary>
         implements
             ITagLibrary {
 
     private static final long serialVersionUID = 1L;
-
-    IDocTagFactory defaultTagType = () -> new StringTag();
 
     public TagLibrarySet(ITagLibrary... taglibs) {
         this(Arrays.asList(taglibs));
     }
 
     public TagLibrarySet(Collection<ITagLibrary> taglibs) {
+        super(PriorityComparator.INSTANCE);
         addAll(taglibs);
+    }
+
+    @Override
+    public int getPriority() {
+        return 0;
     }
 
     @Override
@@ -47,14 +51,6 @@ public class TagLibrarySet
         return null;
     }
 
-    public IDocTagFactory getDefaultTagType() {
-        return defaultTagType;
-    }
-
-    public void setDefaultTagType(IDocTagFactory defaultTagType) {
-        this.defaultTagType = defaultTagType;
-    }
-
     @Override
     public IDocTag<?> createTag(String rootTagName) {
         for (ITagLibrary taglib : this) {
@@ -62,8 +58,6 @@ public class TagLibrarySet
             if (tag != null)
                 return tag;
         }
-        if (defaultTagType != null)
-            return defaultTagType.get();
         return null;
     }
 

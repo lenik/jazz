@@ -7,6 +7,11 @@ public class AnimalTagLibrary
         extends AbstractTagLibrary {
 
     public AnimalTagLibrary() {
+        this(0);
+    }
+
+    public AnimalTagLibrary(int priority) {
+        super(priority);
         addTagType("color", TextTag.class);
     }
 

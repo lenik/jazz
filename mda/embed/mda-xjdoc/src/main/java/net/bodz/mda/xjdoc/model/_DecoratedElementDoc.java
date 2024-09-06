@@ -23,6 +23,11 @@ public abstract class _DecoratedElementDoc<T extends IElementDoc>
     }
 
     @Override
+    public String getName() {
+        return getWrapped().getName();
+    }
+
+    @Override
     public iString getText() {
         return getWrapped().getText();
     }
@@ -65,6 +70,11 @@ public abstract class _DecoratedElementDoc<T extends IElementDoc>
     @Override
     public iString getText(String tagName, iString defaultValue) {
         return getWrapped().getText(tagName, defaultValue);
+    }
+
+    @Override
+    public void accept(IDocVisitor visitor) {
+        getWrapped().accept(visitor);
     }
 
     @Override

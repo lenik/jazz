@@ -45,7 +45,7 @@ public class TextTag
     }
 
     @Override
-    public void writeObject(IFlatfOutput out, String name, IOptions options)
+    public void writeObject(IFlatfOutput out, String attributeName, IOptions options)
             throws IOException, FormatException {
         iString dstr = this.getText();
 
@@ -55,7 +55,7 @@ public class TextTag
         String mlstr = dstr.toMultiLangString(domainSep, lineSep);
 
         // out.attribute(prefix, dstr);
-        out.attribute(name, mlstr);
+        out.attribute(attributeName, mlstr);
     }
 
 }

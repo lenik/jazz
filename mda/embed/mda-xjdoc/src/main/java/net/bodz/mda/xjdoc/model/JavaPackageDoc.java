@@ -8,13 +8,23 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 public class JavaPackageDoc
-        extends MutableElementDoc {
+        extends AbstractElementDoc {
 
-    String fqpn;
+    final String qName;
 
-    public JavaPackageDoc(ITagLibrary tagLibrary, String fqpn) {
+    public JavaPackageDoc(ITagLibrary tagLibrary, String qName) {
         super(tagLibrary);
-        this.fqpn = fqpn;
+        this.qName = qName;
+    }
+
+    @Override
+    public String getName() {
+        return qName;
+    }
+
+    @Override
+    public void accept(IDocVisitor visitor) {
+        visitor.packageDoc(this);
     }
 
     @Override

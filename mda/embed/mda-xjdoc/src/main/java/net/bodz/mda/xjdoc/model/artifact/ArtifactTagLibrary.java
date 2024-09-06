@@ -14,6 +14,11 @@ public class ArtifactTagLibrary
         extends AbstractTagLibrary {
 
     public ArtifactTagLibrary() {
+        this(0);
+    }
+
+    public ArtifactTagLibrary(int priority) {
+        super(priority);
         addTagType("lang", TokensTag.Comma.class);
 
         addTagType("site", URLMapTag.class);

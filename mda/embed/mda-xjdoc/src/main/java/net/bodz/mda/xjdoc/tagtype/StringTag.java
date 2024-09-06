@@ -22,32 +22,6 @@ public class StringTag
     }
 
     @Override
-    public void parseAttribute(String attributeName, String extension, String string, IOptions options)
-            throws ParseException {
-        if (string.startsWith("\"") && string.endsWith("\"")) {
-            String quotedString = string;
-            String unescaped = StringEscape.parseQuotedJavaString(quotedString);
-            string = unescaped;
-        }
-
-    }
-
-    @Override
-    public void writeObject(IFlatfOutput out, String name, IOptions options)
-            throws IOException, FormatException {
-        String tag = getTagName();
-        if (tag == null) {
-            // warning...
-            return;
-        }
-
-        String str = getString();
-        String escaped = StringEscape.escapeJava(str);
-        String quoted = StringQuote.qq(escaped);
-        out.attribute(name, quoted);
-    }
-
-    @Override
     public void parseJavadoc(String tagName, String extension, String javadoc, IOptions options)
             throws ParseException {
         // TODO normalize-space?
@@ -55,11 +29,31 @@ public class StringTag
     }
 
     @Override
-    public void writeJavadoc(String annotation, IJavadocWriter writer, IOptions options)
+    public void writeJavadoc(String tagName, IJavadocWriter writer, IOptions options)
             throws IOException, FormatException {
         String string = getString();
         // TODO Line-wrap...
-        writer.writeTag(annotation, string);
+        writer.writeTag(tagName, string);
+    }
+
+    @Override
+    public void parseAttribute(String attributeName, String extension, String text, IOptions options)
+            throws ParseException {
+        if (! (text.startsWith("\"") && text.endsWith("\"")))
+            throw new ParseException("unquoted: " + text);
+
+        String quotedString = text;
+        String unescaped = StringEscape.parseQuotedJavaString(quotedString);
+        this.data = unescaped;
+    }
+
+    @Override
+    public void writeObject(IFlatfOutput out, String attributeName, IOptions options)
+            throws IOException, FormatException {
+        String str = getString();
+        String escaped = StringEscape.escapeJava(str);
+        String quoted = StringQuote.qq(escaped);
+        out.attribute(attributeName, quoted);
     }
 
 }

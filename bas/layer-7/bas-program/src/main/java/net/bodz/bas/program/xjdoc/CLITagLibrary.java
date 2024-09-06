@@ -8,6 +8,11 @@ public class CLITagLibrary
         extends AbstractTagLibrary {
 
     public CLITagLibrary() {
+        this(0);
+    }
+
+    public CLITagLibrary(int priority) {
+        super(priority);
         // addTagType("option", new OptionTagType());
         addTagType("option", StringTag.class);
         addTagType("usage", StringMapTag.class);

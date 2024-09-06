@@ -7,6 +7,11 @@ public class FormTagLibrary
         extends AbstractTagLibrary {
 
     public FormTagLibrary() {
+        this(0);
+    }
+
+    public FormTagLibrary(int priority) {
+        super(priority);
         addTagType("placeholder", TextTag.class);
     }
 

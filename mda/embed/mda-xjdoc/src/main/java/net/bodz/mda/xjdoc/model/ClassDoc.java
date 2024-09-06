@@ -18,18 +18,18 @@ import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
 public class ClassDoc
-        extends MutableElementDoc
+        extends AbstractElementDoc
         implements
             IClassDoc {
 
-    private String fqcn;
+    private String qName;
     private ImportMap imports;
     private Map<String, FieldDoc> fieldDocs;
     private Map<MethodId, MethodDoc> methodDocs;
 
-    public ClassDoc(ITagLibrary tagLibrary, String fqcn) {
+    public ClassDoc(ITagLibrary tagLibrary, String qName) {
         super(tagLibrary);
-        this.fqcn = fqcn;
+        this.qName = qName;
         fieldDocs = new LinkedHashMap<String, FieldDoc>();
         methodDocs = new LinkedHashMap<MethodId, MethodDoc>();
     }
@@ -44,8 +44,9 @@ public class ClassDoc
         return classDoc;
     }
 
+    @Override
     public String getName() {
-        return fqcn;
+        return qName;
     }
 
     @Override
@@ -57,11 +58,11 @@ public class ClassDoc
     public synchronized ImportMap getOrCreateImports() {
         if (imports == null) {
             String packageName;
-            int lastDot = fqcn.lastIndexOf('.');
+            int lastDot = qName.lastIndexOf('.');
             if (lastDot == -1)
                 packageName = "";
             else
-                packageName = fqcn.substring(0, lastDot);
+                packageName = qName.substring(0, lastDot);
             imports = new ImportMap(packageName);
         }
         return imports;
@@ -118,6 +119,11 @@ public class ClassDoc
     @Override
     public MethodDoc removeMethodDoc(MethodId methodId) {
         return methodDocs.remove(methodId);
+    }
+
+    @Override
+    public void accept(IDocVisitor visitor) {
+        visitor.classDoc(this);
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfForm}. */

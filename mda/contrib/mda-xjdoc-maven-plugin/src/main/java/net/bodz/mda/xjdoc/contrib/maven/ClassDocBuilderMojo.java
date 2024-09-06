@@ -2,6 +2,7 @@ package net.bodz.mda.xjdoc.contrib.maven;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.function.Consumer;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -173,7 +174,7 @@ public class ClassDocBuilderMojo
                 // builder.setMissingDoc(missingDoc);
 
                 String fqcn = jclass.getFullyQualifiedName();
-                if (!fqcn.startsWith(packageName + "."))
+                if (! fqcn.startsWith(packageName + "."))
                     throw new UnexpectedException("Class FQCN doesn't starts with package: " + fqcn);
                 String baseName = fqcn.substring(packageName.length() + 1);
                 baseName = baseName.replace('.', '$') + "." + extension;
@@ -183,7 +184,9 @@ public class ClassDocBuilderMojo
 
                 IOptions options = new Options() //
                         .addOption(ITagLibrary.class, taglibs) //
-                        .addOption(ImportMap.class, classImports);
+                        .addOption(ImportMap.class, classImports) //
+                        .addOption(Log.class, log) //
+                        .addOption("log", (Consumer<String>) a -> log.info("ff: " + a));
 
                 IStreamOutputTarget outTarget;
                 if (classDocFile == null) {

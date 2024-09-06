@@ -14,8 +14,22 @@ public abstract class AbstractTagLibrary
         implements
             ITagLibrary {
 
-    private PackageMap<Class<? extends IDocTag<?>>> map = new PackageMap<>();
-    private IDocTagFactory defaultTagType;
+    final int priority;
+    PackageMap<Class<? extends IDocTag<?>>> map = new PackageMap<>();
+    Class<? extends IDocTag<?>> defaultTagType;
+
+    public AbstractTagLibrary() {
+        this(0);
+    }
+
+    public AbstractTagLibrary(int priority) {
+        this.priority = priority;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
+    }
 
     @Override
     public String getName() {
@@ -28,14 +42,18 @@ public abstract class AbstractTagLibrary
     @Override
     public String getRootTagName(String tagName) {
         String rootTagName = map.meetKey(tagName);
-        return rootTagName;
+        if (rootTagName != null)
+            return rootTagName;
+        if (defaultTagType != null)
+            return tagName;
+        return null;
     }
 
-    public IDocTagFactory getDefaultTagType() {
+    public Class<? extends IDocTag<?>> getDefaultTagType() {
         return defaultTagType;
     }
 
-    public void setDefaultTagType(IDocTagFactory defaultTagType) {
+    public void setDefaultTagType(Class<? extends IDocTag<?>> defaultTagType) {
         this.defaultTagType = defaultTagType;
     }
 
@@ -53,6 +71,8 @@ public abstract class AbstractTagLibrary
     @Override
     public IDocTag<?> createTag(String rootTagName) {
         Class<? extends IDocTag<?>> type = map.get(rootTagName);
+        if (type == null)
+            type = defaultTagType;
         if (type != null) {
             Injector injector = new Injector();
             injector.setExplicitConstructor(true); // require single constructor
@@ -63,8 +83,6 @@ public abstract class AbstractTagLibrary
                 throw new CreateException(e.getMessage(), e);
             }
         }
-        if (defaultTagType != null)
-            return defaultTagType.get();
         return null;
     }
 

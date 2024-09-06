@@ -1,10 +1,13 @@
 package net.bodz.mda.xjdoc.taglib;
 
 import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.t.order.IPriority;
 import net.bodz.mda.xjdoc.model.IDocTag;
 
 @IndexedType
-public interface ITagLibrary {
+public interface ITagLibrary
+        extends
+            IPriority {
 
     String getName();
 

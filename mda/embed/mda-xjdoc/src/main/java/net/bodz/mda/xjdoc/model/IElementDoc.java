@@ -15,6 +15,8 @@ public interface IElementDoc
 
     ITagLibrary getTagLibrary();
 
+    String getName();
+
     /**
      * The main text of the element.
      *
@@ -70,6 +72,8 @@ public interface IElementDoc
     }
 
     iString getText(String tagName, iString defaultValue);
+
+    void accept(IDocVisitor visitor);
 
     NullElementDoc NULL = new NullElementDoc();
 

@@ -55,7 +55,7 @@ public class LocaleTextTag
 
     @CopyAndPaste(TextTag.class)
     @Override
-    public void writeObject(IFlatfOutput out, String name, IOptions options)
+    public void writeObject(IFlatfOutput out, String attributeName, IOptions options)
             throws IOException, FormatException {
         iString dstr = getText();
         if (dstr != null) {
@@ -65,7 +65,7 @@ public class LocaleTextTag
             String mlstr = dstr.toMultiLangString(domainSep, lineSep);
 
             // out.attribute(prefix, dstr);
-            out.attribute(name, mlstr);
+            out.attribute(attributeName, mlstr);
         }
     }
 

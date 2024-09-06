@@ -14,7 +14,7 @@ import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
 public class MethodDoc
-        extends MutableElementDoc {
+        extends AbstractElementDoc {
 
     final IClassDoc classDoc;
     final MethodId methodId;
@@ -39,6 +39,11 @@ public class MethodDoc
 
     public MethodId getMethodId() {
         return methodId;
+    }
+
+    @Override
+    public String getName() {
+        return methodId.toString();
     }
 
     /**
@@ -114,6 +119,11 @@ public class MethodDoc
         if (exceptionDoc == null)
             throw new NullPointerException("exceptionDoc");
         getExceptionDocs().addNamed(exceptionDoc, exceptionType);
+    }
+
+    @Override
+    public void accept(IDocVisitor visitor) {
+        visitor.methodDoc(this);
     }
 
     @Override

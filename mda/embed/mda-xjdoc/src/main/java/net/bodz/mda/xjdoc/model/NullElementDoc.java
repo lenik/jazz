@@ -22,6 +22,11 @@ public class NullElementDoc
     }
 
     @Override
+    public String getName() {
+        return "(no name)";
+    }
+
+    @Override
     public iString getText() {
         return iString.NULL;
     }
@@ -63,6 +68,10 @@ public class NullElementDoc
     @Override
     public iString getText(String tagName, iString defaultValue) {
         return defaultValue;
+    }
+
+    @Override
+    public void accept(IDocVisitor visitor) {
     }
 
 }

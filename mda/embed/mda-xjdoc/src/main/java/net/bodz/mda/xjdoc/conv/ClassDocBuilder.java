@@ -2,6 +2,7 @@ package net.bodz.mda.xjdoc.conv;
 
 import java.util.List;
 
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.ParaLangStrings;
 import net.bodz.bas.i18n.dom.iString;
@@ -11,7 +12,7 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.IDocTag;
 import net.bodz.mda.xjdoc.model.MethodDoc;
-import net.bodz.mda.xjdoc.model.MutableElementDoc;
+import net.bodz.mda.xjdoc.model.AbstractElementDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
@@ -124,7 +125,7 @@ public class ClassDocBuilder {
     }
 
     <J extends JavaAnnotatedElement> //
-    void populate(MutableElementDoc elementDoc, //
+    void populate(AbstractElementDoc elementDoc, //
             J javaEntity, String name, IOptions options)
             throws ParseException {
         String comment = javaEntity.getComment(); // maybe null if no javadoc.
@@ -141,10 +142,9 @@ public class ClassDocBuilder {
             String extension = null;
 
             if (rootTagName == null) {
-                // TODO logging...
-                String mesg = "Undefined tag @" + tagName + " occurred in " + name;
-                // throw new IllegalUsageException(mesg);
-                rootTagName = tagName;
+                throw new IllegalUsageException(String.format(//
+                        "Undefined tag @%s occurred in %s %s, taglib = %s", //
+                        tagName, javaEntity.getClass().getSimpleName(), name, tagLibrary.getName()));
             }
 
             else if (tagName.startsWith(rootTagName)) {
@@ -155,10 +155,18 @@ public class ClassDocBuilder {
                     extension = null;
             }
 
-            // DomainString value = DomainString.parseParaLang(tagValueString);
             IDocTag<?> tag = elementDoc.makeTag(rootTagName);
+//            if (javaEntity instanceof JavaClass) {
+//                System.err.printf("type %s, name %s, tag %s :: %s  ==> %s\n", //
+//                        javaEntity.getClass().getSimpleName(), //
+//                        name, rootTagName, extension, tag.getClass().getSimpleName());
+//            }
+
             tag.parseJavadoc(rootTagName, extension, tagValueString, options);
         }
+
+//        if (javaEntity instanceof JavaClass)
+//            System.err.printf("type %s, tags %s\n", name, elementDoc.getTagMap());
     }
 
 }

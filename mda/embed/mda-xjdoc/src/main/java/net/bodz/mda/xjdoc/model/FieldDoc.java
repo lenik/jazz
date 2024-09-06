@@ -9,11 +9,11 @@ import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 
 public class FieldDoc
-        extends MutableElementDoc
+        extends AbstractElementDoc
         implements
             IFieldDoc {
 
-    private String name;
+    private final String name;
     private final IClassDoc classDoc;
 
     public FieldDoc(IClassDoc classDoc, String name) {
@@ -32,8 +32,18 @@ public class FieldDoc
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public IClassDoc getClassDoc() {
         return classDoc;
+    }
+
+    @Override
+    public void accept(IDocVisitor visitor) {
+        visitor.fieldDoc(this);
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfForm}. */

@@ -34,11 +34,11 @@ public abstract class SimpleDocTag<T>
     }
 
     @Override
-    public void writeObject(IFlatfOutput out, String name, IOptions options)
+    public void writeObject(IFlatfOutput out, String attributeName, IOptions options)
             throws IOException, FormatException {
         if (data != null) {
             String string = format(data);
-            out.attribute(name, string);
+            out.attribute(attributeName, string);
         }
     }
 

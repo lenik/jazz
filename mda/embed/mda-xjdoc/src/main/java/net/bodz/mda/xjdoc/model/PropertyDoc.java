@@ -13,7 +13,7 @@ import net.bodz.bas.rtx.IOptions;
  */
 @Deprecated
 public class PropertyDoc
-        extends MutableElementDoc {
+        extends AbstractElementDoc {
 
     final IClassDoc classDoc;
     final IPropertyDescriptor propertyDescriptor;
@@ -38,6 +38,16 @@ public class PropertyDoc
 
     public IPropertyDescriptor getIPropertyDescriptor() {
         return propertyDescriptor;
+    }
+
+    @Override
+    public String getName() {
+        return propertyDescriptor.getName();
+    }
+
+    @Override
+    public void accept(IDocVisitor visitor) {
+        visitor.propertyDoc(this);
     }
 
     @Override

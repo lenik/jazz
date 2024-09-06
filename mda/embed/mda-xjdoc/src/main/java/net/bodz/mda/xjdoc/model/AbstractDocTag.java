@@ -283,5 +283,12 @@ public abstract class AbstractDocTag<T>
     }
 
     //
+    @Override
+    public String toString() {
+        if (data == null)
+            return "(null)";
+        else
+            return data.toString();
+    }
 
 }
