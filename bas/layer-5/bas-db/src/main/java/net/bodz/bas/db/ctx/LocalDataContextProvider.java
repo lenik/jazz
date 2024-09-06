@@ -12,12 +12,12 @@ import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.fs.IDirForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.XmlFn;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
-import net.bodz.bas.t.tuple.Split;
 
 @ExcludedFromIndex
 public class LocalDataContextProvider
@@ -77,53 +77,67 @@ public class LocalDataContextProvider
     @Override
     public void readObject(File folder)
             throws IOException, ParseException {
-        readObject(folder, "");
+        readObject(folder, null);
         this.folder = folder;
     }
 
-    public void readObject(File folder, String prefix)
+    public void readObject(File folder, String folderPathInfo)
             throws IOException, ParseException {
 
         for (File file : folder.listFiles()) {
-            String fileName = file.getName();
-            if (file.isDirectory()) {
-                readObject(file, prefix + fileName + "/");
-                continue;
+            String name = file.getName();
+            String pathInfo = folderPathInfo;
+            if (pathInfo == null || pathInfo.isEmpty())
+                pathInfo = name;
+            else {
+                pathInfo += "/" + name;
             }
 
-            Split nameExtension = Split.nameExtension(fileName);
-            String name = nameExtension.a;
-            String extension = nameExtension.b;
-            if (extension == null)
-                continue;
-
-            String key = prefix + name;
-            ConnectOptions options = new ConnectOptions();
-
-            switch (nameExtension.b) {
-            case "xml":
-                options.setSourceUri(file.toURI().toString());
-                try {
-                    XmlFn.load(options, file);
-                } catch (Exception e) {
-                    throw new ParseException(e.getMessage(), e);
-                }
-                addConnectOptions(key, options);
-                continue;
-
-            case "json":
-                options.setSourceUri(file.toURI().toString());
-                try {
-                    JsonFn.load(options, file, JsonFormOptions.PRETTY);
-                } catch (Exception e) {
-                    throw new ParseException(e.getMessage(), e);
-                }
-                addConnectOptions(key, options);
-                continue;
+            if (file.isFile()) {
+                addConfigFile(file, pathInfo);
+            } else if (file.isDirectory()) {
+                readObject(file, pathInfo);
+            } else {
+                throw new UnexpectedException("neither file nor folder: " + file);
             }
-
-            // ignore unknown file.
         }
+    }
+
+    boolean addConfigFile(File file, String pathInfo)
+            throws ParseException {
+        int lastDot = pathInfo.lastIndexOf('.');
+
+        String key = pathInfo;
+        String extension = null;
+        if (lastDot != -1) {
+            key = pathInfo.substring(0, lastDot);
+            extension = pathInfo.substring(lastDot + 1);
+        }
+
+        ConnectOptions options = new ConnectOptions();
+
+        switch (extension) {
+        case "xml":
+            options.setSourceUri(file.toURI().toString());
+            try {
+                XmlFn.load(options, file);
+            } catch (Exception e) {
+                throw new ParseException(e.getMessage(), e);
+            }
+            addConnectOptions(key, options);
+            return true;
+
+        case "json":
+            options.setSourceUri(file.toURI().toString());
+            try {
+                JsonFn.load(options, file, JsonFormOptions.PRETTY);
+            } catch (Exception e) {
+                throw new ParseException(e.getMessage(), e);
+            }
+            addConnectOptions(key, options);
+            return true;
+        }
+        return false;
     }
 
     @Override

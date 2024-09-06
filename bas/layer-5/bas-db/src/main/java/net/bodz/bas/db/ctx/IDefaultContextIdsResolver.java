@@ -27,13 +27,13 @@ public interface IDefaultContextIdsResolver
         return 0;
     }
 
+    default Collection<String> resolveContextIds() {
+        return resolveContextIds(0);
+    }
+
     /**
      * @return <code>null</code> if information not available.
      */
     Collection<String> resolveContextIds(int level);
-
-    default Collection<String> resolveContextIds() {
-        return resolveContextIds(0);
-    }
 
 }

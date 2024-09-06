@@ -28,7 +28,6 @@ public class DataHub
     public static final String K_TEMPLATE = "template";
 
     private List<IDataContextProvider> dataContextProviders;
-    UnionDefaultContextIdsResolver defaultContextIdsResolver;
 
     public DataHub() {
         reload();
@@ -39,8 +38,6 @@ public class DataHub
         for (IDataContextProvider provider : ServiceLoader.load(IDataContextProvider.class))
             dataContextProviders.add(provider);
         Collections.sort(dataContextProviders, PriorityComparator.INSTANCE);
-
-        defaultContextIdsResolver = UnionDefaultContextIdsResolver.getInstance();
     }
 
     @Override
@@ -78,7 +75,7 @@ public class DataHub
     }
 
     public DataContext findDataContextForScope(String scope) {
-        Collection<String> contextIds = defaultContextIdsResolver.resolveContextIds(0);
+        Collection<String> contextIds = DefaultContextIds.resolve(0);
         for (String contextId : contextIds) {
             String qName = contextId + "/" + scope;
             DataContext dataContext = getDataContext(qName);
@@ -89,7 +86,7 @@ public class DataHub
     }
 
     public ConnectOptions findConnectOptionsForScope(String scope) {
-        Collection<String> contextIds = defaultContextIdsResolver.resolveContextIds(0);
+        Collection<String> contextIds = DefaultContextIds.resolve(0);
         for (String contextId : contextIds) {
             String qName = contextId + "/" + scope;
             ConnectOptions connectOptions = getConnectOptions(qName);
@@ -136,7 +133,7 @@ public class DataHub
 
         int level = 0;
         out.enterln("Default context ids: ");
-        for (IDefaultContextIdsResolver resolver : defaultContextIdsResolver.getResolvers()) {
+        for (IDefaultContextIdsResolver resolver : DefaultContextIds.getResolvers()) {
             Collection<String> ids = resolver.resolveContextIds(level);
             if (ids != null && ! ids.isEmpty()) {
                 out.printf("%s: %s\n", resolver.getClass().getName(), ids);
