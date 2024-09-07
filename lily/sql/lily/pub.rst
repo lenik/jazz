@@ -1,12 +1,24 @@
 #\import lily.security
 
 class-map {
-    net.bodz.lily.concrete.CoMessage: \
-        article, \
-        post
     net.bodz.lily.concrete.BackrefRecord: \
         article_backref, \
         post_backref
+    net.bodz.lily.concrete.CoCategory: \
+        articlecat, \
+        postcat
+    net.bodz.lily.concrete.CoMessage: \
+        article, \
+        post
+    net.bodz.lily.concrete.CoParameter: \
+        articleparm, \
+        postparm
+    net.bodz.lily.concrete.CoTag: \
+        articletag, \
+        posttag
+    net.bodz.lily.concrete.CoTalk: \
+        article_msg, \
+        post_msg
     net.bodz.lily.concrete.FavRecord: \
         article_fav, \
         post_fav
@@ -15,15 +27,6 @@ class-map {
         post_vote, \
         article_msg_vote, \
         post_msg_vote
-    net.bodz.lily.concrete.CoTalk: \
-        article_msg, \
-        post_msg
-    net.bodz.lily.concrete.CoParameter: \
-        articleparm, \
-        postparm
-    net.bodz.lily.concrete.CoTag: \
-        articletag, \
-        posttag
 }
 
 table-name {
