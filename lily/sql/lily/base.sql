@@ -5,6 +5,7 @@
 --\import lily.base._parm
 --\import lily.base._parmval
 --\import lily.base._phase
+--\import lily.base._priority
 --\import lily.base._tag
 --\import lily.base._tagv
 --\import lily.base._v_form

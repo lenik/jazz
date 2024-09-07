@@ -6,7 +6,7 @@ typesdir = ../basic-types
 daorst = lily.rst
 
 dao-base: predao
-	$(DAOGEN) _schema _cat _form _formparm _parm _parmval _phase _tagv _tag _rlock
+	$(DAOGEN) _schema _cat _form _formparm _parm _parmval _phase _priority _tagv _tag _rlock
 
 dao-account: predao
 	$(DAOGEN) usertype grouptype user usercat useroid useroidtype usersec user_run group policy

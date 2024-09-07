@@ -4,7 +4,10 @@ import javax.persistence.Column;
 
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.concrete.CoCode;
+import net.bodz.lily.meta.TypeParamType;
+import net.bodz.lily.meta.TypeParameters;
 
+@TypeParameters({ TypeParamType.THIS_REC })
 public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_t>>
         extends CoCode<self_t> {
 
@@ -59,16 +62,6 @@ public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_
 
         Integer id = id();
         return id == null ? null : String.valueOf(id);
-    }
-
-    int dummy;
-
-    public int getDummy() {
-        return dummy;
-    }
-
-    public void setDummy(int dummy) {
-        this.dummy = dummy;
     }
 
 }
