@@ -1,6 +1,6 @@
 package net.bodz.bas.doc.io;
 
-import net.bodz.bas.repr.form.meta.NotNull;
+import net.bodz.bas.meta.decl.NotNull;
 
 public interface IAutoFormat {
 

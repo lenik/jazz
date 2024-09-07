@@ -12,7 +12,7 @@ import java.util.Set;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.repr.form.meta.NotNull;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.fork.org.json.JSONException;
 
 @SuppressWarnings("unchecked")

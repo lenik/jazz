@@ -3,7 +3,7 @@ package net.bodz.lily.entity;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.repr.form.meta.Nullable;
+import net.bodz.bas.meta.decl.Nullable;
 
 public class IdFn {
 

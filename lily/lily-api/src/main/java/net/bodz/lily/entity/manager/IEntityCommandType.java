@@ -1,6 +1,6 @@
 package net.bodz.lily.entity.manager;
 
-import net.bodz.bas.repr.form.meta.NotNull;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
