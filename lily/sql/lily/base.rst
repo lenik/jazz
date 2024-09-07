@@ -1,6 +1,6 @@
 column-property {
     creation:           creationDate
-    lastmod:            lastModifiedDate
+    lastmod:            lastModified
     props:              properties
     t0:                 beginTime
     t1:                 endTime
