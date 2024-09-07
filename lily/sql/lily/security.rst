@@ -6,6 +6,11 @@ column-property {
     mode:               accessMode
 }
 
+class-map {
+    net.bodz.lily.concrete.CoImaged: \
+        policy
+}
+
 key-columns {
     format uid {
         pattern: ^uid$

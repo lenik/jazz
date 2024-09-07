@@ -5,6 +5,7 @@
     create table badge(
         id          int primary key default nextval('badge_seq'),
 --\mixin lily.mixin.LabelExVer
+--\mixin lily.mixin.Props
 
         expr        varchar(255),
         val         int not null,
@@ -12,9 +13,7 @@
 
         descend     boolean not null default false,
         transient   boolean not null default false,
-        indexed     boolean not null default false,
-
-        image       varchar(30)
+        indexed     boolean not null default false
     );
 
     create index badge_label          on badge(label);

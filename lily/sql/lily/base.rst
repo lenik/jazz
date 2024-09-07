@@ -25,6 +25,11 @@ column-type {
     props:              net.bodz.bas.fmt.json.JsonVariant
 }
 
+class-map {
+    net.bodz.lily.concrete.CoCategory: \
+        _cat
+}
+
 key-columns {
     format _id {
         pattern: ^(.*)_(id)$
