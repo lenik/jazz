@@ -1,12 +1,12 @@
 #\import lily.security
 
 class-map {
-    net.bodz.lily.concrete.CoCode: \
+    net.bodz.lily.schema.util.Uom: \
         uom
 }
 
 table-name {
-    uom:                net.bodz.lily.schema.util.Uom
+    uom:                net.bodz.lily.schema.util.UomRow
 }
 
 table uom {
