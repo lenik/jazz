@@ -43,7 +43,6 @@ table-name {
     art_doc:            net.bodz.violet.schema.art.ArtifactDoc
     art_vote:           net.bodz.violet.schema.art.ArtifactVote
     artpack:            net.bodz.violet.schema.art.Packaging
-    uom:                net.bodz.violet.schema.art.UOM
 }
 
 table art {
@@ -64,15 +63,6 @@ table art {
 table artmodel {
     column model {
         javaName: modelName
-    }
-}
-
-table uom {
-    column std {
-        javaName: standard
-    }
-    column prop {
-        javaName: property
     }
 }
 
