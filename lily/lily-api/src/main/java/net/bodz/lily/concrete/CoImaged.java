@@ -5,6 +5,7 @@ import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.lily.entity.attachment.AttachmentListingInProps;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.util.IImagesInProps;
+import net.bodz.lily.entity.esm.DTColumn;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
@@ -17,15 +18,16 @@ public class CoImaged<Id>
 
     private static final long serialVersionUID = 1L;
 
-    JsonVariant properties;
+    private JsonVariant properties;
 
+    @DTColumn(hidden = true)
     @Override
-    public final JsonVariant getProperties() {
+    public JsonVariant getProperties() {
         return properties;
     }
 
     @Override
-    public final void setProperties(JsonVariant properties) {
+    public void setProperties(JsonVariant properties) {
         this.properties = properties;
     }
 

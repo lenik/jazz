@@ -3,7 +3,9 @@ package net.bodz.lily.entity.attachment.util;
 import java.util.List;
 
 import net.bodz.lily.concrete.IAttachmentsInProps;
+import net.bodz.lily.entity.attachment.Attachment;
 import net.bodz.lily.entity.attachment.IAttachment;
+import net.bodz.lily.entity.esm.TsType;
 
 public interface IImagesInProps
         extends
@@ -12,6 +14,7 @@ public interface IImagesInProps
 
     String K_IMAGES = "images";
 
+    @TsType(value = List.class, componentType = Attachment.class)
     @Override
     default List<IAttachment> getImages() {
         return getAttachmentGroup(K_IMAGES);
