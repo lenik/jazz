@@ -40,8 +40,8 @@
         shipper     int
             references org(id) on update cascade on delete set null,
 
---\mixin lily.mixin.Contact s_
---\mixin lily.mixin.Contact d_
+--\mixin lily.mixin.Contact src_
+--\mixin lily.mixin.Contact dst_
 
     -- props:
         -- logs: any related info, including grabbed data.
