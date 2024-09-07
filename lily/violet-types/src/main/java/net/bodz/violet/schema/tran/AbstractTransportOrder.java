@@ -1,7 +1,7 @@
 package net.bodz.violet.schema.tran;
 
+import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.lily.concrete.CoMessage;
-import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.schema.contact.Contact;
 
 //@FieldGroupVue

@@ -3,14 +3,14 @@ package net.bodz.lily.concrete;
 import javax.persistence.Column;
 
 import net.bodz.bas.fmt.json.JsonVariant;
+import net.bodz.bas.meta.decl.TsTyped;
+import net.bodz.bas.meta.decl.TypeParamType;
+import net.bodz.bas.meta.decl.TypeParameters;
 import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.lily.entity.attachment.AttachmentListingInProps;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.util.IImagesInProps;
 import net.bodz.lily.meta.FieldGroupVue;
-import net.bodz.lily.meta.TsTyped;
-import net.bodz.lily.meta.TypeParamType;
-import net.bodz.lily.meta.TypeParameters;
 
 @FieldGroupVue
 @HaveAttachments

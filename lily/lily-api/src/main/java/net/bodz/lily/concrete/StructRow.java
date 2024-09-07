@@ -22,6 +22,7 @@ import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.bean.IgnoreChild;
 import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.meta.decl.Priority;
+import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.bas.repr.content.IContent;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
@@ -34,7 +35,6 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.meta.FieldGroupVue;
 import net.bodz.lily.meta.ReadOnly;
-import net.bodz.lily.meta.TsTyped;
 
 @FieldGroupVue
 @TsTyped

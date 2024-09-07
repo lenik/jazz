@@ -12,13 +12,13 @@ import net.bodz.bas.i18n.geo.GeoZone;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.concrete.IHaveProperties;
 import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.meta.FieldGroupVue;
-import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.repr.EntGroup;
 import net.bodz.lily.schema.geo.Zone;
 

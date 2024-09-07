@@ -1,7 +1,7 @@
 package net.bodz.lily.concrete;
 
-import net.bodz.lily.meta.TypeParamType;
-import net.bodz.lily.meta.TypeParameters;
+import net.bodz.bas.meta.decl.TypeParamType;
+import net.bodz.bas.meta.decl.TypeParameters;
 
 //@FieldGroupVue
 //@TsTyped

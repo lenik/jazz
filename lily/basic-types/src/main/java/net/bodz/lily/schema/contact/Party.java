@@ -15,6 +15,7 @@ import javax.persistence.Column;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
+import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -22,7 +23,6 @@ import net.bodz.bas.t.order.PriorityUtils;
 import net.bodz.lily.concrete.CoImaged;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.meta.FieldGroupVue;
-import net.bodz.lily.meta.TsTyped;
 
 /**
  * 参与方

@@ -1,7 +1,7 @@
 package net.bodz.lily.concrete;
 
+import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.lily.meta.FieldGroupVue;
-import net.bodz.lily.meta.TsTyped;
 
 @FieldGroupVue
 @TsTyped

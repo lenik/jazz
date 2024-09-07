@@ -8,12 +8,12 @@ import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.TsTyped;
+import net.bodz.bas.meta.decl.TypeParamType;
+import net.bodz.bas.meta.decl.TypeParameters;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.meta.FieldGroupVue;
-import net.bodz.lily.meta.TsTyped;
-import net.bodz.lily.meta.TypeParamType;
-import net.bodz.lily.meta.TypeParameters;
 
 @FieldGroupVue
 @IncludeMapperXml

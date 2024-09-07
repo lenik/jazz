@@ -3,9 +3,9 @@ package net.bodz.violet.schema.asset;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
+import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.lily.concrete.CoEvent;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.meta.TsTyped;
 import net.bodz.violet.schema.art.Artifact;
 import net.bodz.violet.schema.store.Region;
 

@@ -2,10 +2,10 @@ package net.bodz.lily.schema.meta;
 
 import javax.persistence.Column;
 
+import net.bodz.bas.meta.decl.TypeParamType;
+import net.bodz.bas.meta.decl.TypeParameters;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.concrete.CoCode;
-import net.bodz.lily.meta.TypeParamType;
-import net.bodz.lily.meta.TypeParameters;
 
 @TypeParameters({ TypeParamType.THIS_REC })
 public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_t>>

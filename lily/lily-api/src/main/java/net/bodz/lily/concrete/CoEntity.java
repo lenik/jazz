@@ -5,12 +5,12 @@ import java.io.Serializable;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.meta.FieldGroupVue;
-import net.bodz.lily.meta.TsTyped;
 
 /**
  * aka. Common Entity.

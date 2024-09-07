@@ -1,8 +1,8 @@
 package net.bodz.lily.concrete;
 
-import net.bodz.lily.meta.TsTyped;
-import net.bodz.lily.meta.TypeParamType;
-import net.bodz.lily.meta.TypeParameters;
+import net.bodz.bas.meta.decl.TsTyped;
+import net.bodz.bas.meta.decl.TypeParamType;
+import net.bodz.bas.meta.decl.TypeParameters;
 
 @TsTyped
 @TypeParameters({ TypeParamType.THIS_REC, TypeParamType.ID_TYPE })
