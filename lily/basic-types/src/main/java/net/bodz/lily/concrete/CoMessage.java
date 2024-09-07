@@ -80,16 +80,6 @@ public abstract class CoMessage<Id>
             op = (User) getOwnerUser();
     }
 
-    @Override
-    public Id getId() {
-        return id();
-    }
-
-    @Override
-    public void setId(Id id) {
-        id(id);
-    }
-
     /**
      * @label Original Poster
      * @label.zh 发起人

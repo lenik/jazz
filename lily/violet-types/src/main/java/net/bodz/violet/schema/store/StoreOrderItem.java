@@ -37,9 +37,9 @@ public class StoreOrderItem
     /**
      * 总额
      */
-    @Priority(202)
     @Derived
     @Override
+    @Priority(202)
     public synchronized BigDecimal getAmount() {
         if (amount == null)
             amount = price.multiply(quantity);
