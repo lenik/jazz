@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.bean.Transient;
+import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.lily.concrete.IAttrInProps;
 import net.bodz.lily.entity.attachment.AttachmentListingInProps;
@@ -53,6 +54,7 @@ public class Artifact
         this.convMap = convMap;
     }
 
+    @Derived
     @Transient
     public IArtifactExtras getExtras() {
         return new IArtifactExtrasInProps() {
