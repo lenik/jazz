@@ -3,7 +3,7 @@ package net.bodz.lily.concrete;
 import java.time.ZonedDateTime;
 
 public abstract class CoMessageCriteriaBuilder<self_t extends CoMessageCriteriaBuilder<self_t>>
-        extends CoMomentIntervalCriteriaBuilder<self_t> {
+        extends CoEventCriteriaBuilder<self_t> {
 
     public final IntegerField formId = integer("form");
     public final IntegerField opId = integer("op");

@@ -1,5 +1,5 @@
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import CoMomentIntervalTypeInfo from './CoMomentIntervalTypeInfo';
+import CoEventTypeInfo from './CoEventTypeInfo';
 import CoMessageValidators from './CoMessageValidators';
 import User from '../schema/account/User';
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
@@ -8,7 +8,7 @@ import ZonedDateTime from '@skeljs/core/src/lang/time/ZonedDateTime';
 import FormDef from '../schema/meta/FormDef';
 import ParameterDef from '../schema/meta/ParameterDef';
 
-export class CoMessageTypeInfo extends CoMomentIntervalTypeInfo {
+export class CoMessageTypeInfo extends CoEventTypeInfo {
 
     readonly validators = new CoMessageValidators(this);
 

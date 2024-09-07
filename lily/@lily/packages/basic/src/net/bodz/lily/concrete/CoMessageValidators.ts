@@ -1,11 +1,11 @@
 import { Moment } from "moment-timezone";
 import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
-import CoMomentIntervalValidators from './CoMomentIntervalValidators';
+import CoEventValidators from './CoEventValidators';
 import User from '../schema/account/User';
 import FormDef from '../schema/meta/FormDef';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 
-export class CoMessageValidators extends CoMomentIntervalValidators {
+export class CoMessageValidators extends CoEventValidators {
 
     constructor(type: CoMessageTypeInfo) {
         super(type);

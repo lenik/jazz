@@ -1,10 +1,10 @@
-import CoMomentIntervalValidators from './CoMomentIntervalValidators';
-import CoImagedMomentIntervalTypeInfo from './CoImagedMomentIntervalTypeInfo';
+import CoEventValidators from './CoEventValidators';
+import CoImagedEventTypeInfo from './CoImagedEventTypeInfo';
 import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
 
-export class CoImagedMomentIntervalValidators extends CoMomentIntervalValidators {
+export class CoImagedEventValidators extends CoEventValidators {
 
-    constructor(type: CoImagedMomentIntervalTypeInfo) {
+    constructor(type: CoImagedEventTypeInfo) {
         super(type);
     }
 
@@ -28,4 +28,4 @@ export class CoImagedMomentIntervalValidators extends CoMomentIntervalValidators
 
 }
 
-export default CoImagedMomentIntervalValidators;
+export default CoImagedEventValidators;

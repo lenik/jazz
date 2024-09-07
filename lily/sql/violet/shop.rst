@@ -16,7 +16,7 @@ class-map {
     net.bodz.lily.concrete.CoImaged: \
         shop, \
         coupon
-    net.bodz.lily.concrete.CoImagedMomentInterval: \
+    net.bodz.lily.concrete.CoImagedEvent: \
         shopitem, \
         saleodrl
     net.bodz.lily.concrete.CoPhase: \

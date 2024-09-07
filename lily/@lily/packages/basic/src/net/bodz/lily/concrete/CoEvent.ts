@@ -1,9 +1,9 @@
 import { Moment } from "moment-timezone";
 import { int } from '@skeljs/core/src/lang/basetype';
 import IdEntity from './IdEntity';
-import CoMomentIntervalTypeInfo from './CoMomentIntervalTypeInfo';
+import CoEventTypeInfo from './CoEventTypeInfo';
 
-export abstract class CoMomentInterval<Id> extends IdEntity<Id> {
+export abstract class CoEvent<Id> extends IdEntity<Id> {
     
     beginTime?: Moment
     endTime?: Moment
@@ -14,4 +14,4 @@ export abstract class CoMomentInterval<Id> extends IdEntity<Id> {
     }
 }
 
-export default CoMomentInterval;
+export default CoEvent;

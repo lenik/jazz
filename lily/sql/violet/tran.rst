@@ -13,7 +13,7 @@ class-map {
         tranphase
     net.bodz.lily.concrete.CoMessage: \
         tranodr
-    net.bodz.lily.concrete.CoMomentInterval: \
+    net.bodz.lily.concrete.CoEvent: \
         tranodrl
 }
 

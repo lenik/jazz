@@ -26,7 +26,7 @@ class-map {
         fabstdtest
     net.bodz.lily.concrete.CoMessage: \
         fabodr
-    net.bodz.lily.concrete.CoMomentInterval: \
+    net.bodz.lily.concrete.CoEvent: \
         fabodrl \
         fabproc \
         fabtask \

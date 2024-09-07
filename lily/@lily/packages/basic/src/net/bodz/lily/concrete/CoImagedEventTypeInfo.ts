@@ -2,20 +2,20 @@ import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
 import { INT, LIST } from '@skeljs/core/src/lang/baseinfo';
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
-import CoImagedMomentIntervalValidators from './CoImagedMomentIntervalValidators';
+import CoImagedEventValidators from './CoImagedEventValidators';
 import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
-import CoMomentIntervalTypeInfo from './CoMomentIntervalTypeInfo';
+import CoEventTypeInfo from './CoEventTypeInfo';
 
-export class CoImagedMomentIntervalTypeInfo extends CoMomentIntervalTypeInfo {
+export class CoImagedEventTypeInfo extends CoEventTypeInfo {
 
     readonly idType: TypeInfo<any>;
-    readonly validators = new CoImagedMomentIntervalValidators(this);
+    readonly validators = new CoImagedEventValidators(this);
 
     constructor(idType: TypeInfo<any>) {
         super(idType);
     }
 
-    get name() { return "net.bodz.lily.concrete.CoImagedMomentInterval"; }
+    get name() { return "net.bodz.lily.concrete.CoImagedEvent"; }
     get icon() { return "fa-image"; }
     get label() { return "Concrete Moment-Interval With Image"; }
     get description() { return "A moment-interval entity with optional one or many images."; }
@@ -30,4 +30,4 @@ export class CoImagedMomentIntervalTypeInfo extends CoMomentIntervalTypeInfo {
 
 }
 
-export default CoImagedMomentIntervalTypeInfo;
+export default CoImagedEventTypeInfo;

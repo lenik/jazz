@@ -5,7 +5,7 @@ import java.time.ZonedDateTime;
 import net.bodz.lily.criteria.DateFieldCriterionBuilder;
 import net.bodz.lily.criteria.NumberExprCriteriaBuilder;
 
-public class CoMomentIntervalCriteriaBuilder<self_t extends CoMomentIntervalCriteriaBuilder<self_t>>
+public class CoEventCriteriaBuilder<self_t extends CoEventCriteriaBuilder<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 
     public final DateField<ZonedDateTime> beginTime = date("t0", ZonedDateTime.class);

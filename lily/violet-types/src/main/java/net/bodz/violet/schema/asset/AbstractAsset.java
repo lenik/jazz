@@ -3,7 +3,7 @@ package net.bodz.violet.schema.asset;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
-import net.bodz.lily.concrete.CoMomentInterval;
+import net.bodz.lily.concrete.CoEvent;
 import net.bodz.lily.entity.IdType;
 import net.bodz.violet.schema.art.Artifact;
 import net.bodz.violet.schema.store.Region;
@@ -13,7 +13,7 @@ import net.bodz.violet.schema.store.Region;
  */
 @IdType(Long.class)
 public abstract class AbstractAsset
-        extends CoMomentInterval<Long> {
+        extends CoEvent<Long> {
 
     private static final long serialVersionUID = 1L;
 

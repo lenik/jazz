@@ -1,8 +1,8 @@
 import { int } from '@skeljs/core/src/lang/basetype';
-import CoMomentInterval from './CoMomentInterval';
+import CoEvent from './CoEvent';
 import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
 
-export abstract class CoImagedMomentInterval<Id> extends CoMomentInterval<Id> {
+export abstract class CoImagedEvent<Id> extends CoEvent<Id> {
 
     properties: any
 
@@ -49,4 +49,4 @@ export abstract class CoImagedMomentInterval<Id> extends CoMomentInterval<Id> {
 
 }
 
-export default CoImagedMomentInterval;
+export default CoImagedEvent;

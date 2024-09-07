@@ -14,9 +14,9 @@ import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
 @TypeParameters({ TypeParamType.ID_TYPE })
-@CriteriaClass(CoMomentIntervalCriteriaBuilder.class)
+@CriteriaClass(CoEventCriteriaBuilder.class)
 @IncludeMapperXml
-public abstract class CoMomentInterval<Id>
+public abstract class CoEvent<Id>
         extends IdEntity<Id>
         implements
             IMomentInterval {
@@ -27,7 +27,7 @@ public abstract class CoMomentInterval<Id>
     private ZonedDateTime endTime;
     private int year;
 
-    public CoMomentInterval() {
+    public CoEvent() {
         beginTime = getCreationDate();
     }
 

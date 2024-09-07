@@ -10,8 +10,8 @@ import net.bodz.lily.meta.TypeParameters;
 
 @TypeParameters({ TypeParamType.ID_TYPE })
 @HaveAttachments
-public class CoImagedMomentInterval<Id>
-        extends CoMomentInterval<Id>
+public class CoImagedEvent<Id>
+        extends CoEvent<Id>
         implements
             IImagesInProps {
 

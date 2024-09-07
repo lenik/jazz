@@ -1,12 +1,12 @@
 import { Moment } from "moment-timezone";
 import { int } from '@skeljs/core/src/lang/basetype';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
-import CoMomentInterval from './CoMomentInterval';
+import CoEvent from './CoEvent';
 import User from '../schema/account/User';
 import FormDef from '../schema//meta/FormDef';
 // import UserClickInfo from '../schema/account/UserClickInfo';
 
-export abstract class CoMessage<Id> extends CoMomentInterval<Id> {
+export abstract class CoMessage<Id> extends CoEvent<Id> {
     // static readonly TYPE = new CoMessageTypeInfo();
 
     op: User

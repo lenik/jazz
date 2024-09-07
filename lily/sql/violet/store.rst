@@ -10,7 +10,7 @@ class-map {
         storecat
     net.bodz.lily.concrete.CoCode: \
         regionlevel
-    net.bodz.lily.concrete.CoImagedMomentInterval: \
+    net.bodz.lily.concrete.CoImagedEvent: \
         storeodrl
     net.bodz.lily.concrete.CoNode: \
         region

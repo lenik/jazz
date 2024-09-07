@@ -47,7 +47,7 @@ import net.bodz.lily.security.IUser;
 @TypeParameters({ TypeParamType.ID_TYPE })
 @HaveAttachments
 public abstract class CoMessage<Id>
-        extends CoMomentInterval<Id>
+        extends CoEvent<Id>
         implements
             IPriority,
             IId<Id>,
