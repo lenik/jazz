@@ -33,7 +33,7 @@ export class Contact extends IdEntity<int> {
     qq?: string
     wechat?: string
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
         if (o != null) Object.assign(this, o);
     }

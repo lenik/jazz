@@ -18,7 +18,11 @@ public abstract class AbstractAsset
     private static final long serialVersionUID = 1L;
 
     Artifact artifact;
+    Integer artifactId;
+
     Region region;
+    Integer regionId;
+
     // Batch complex
     BigDecimal quantity = BigDecimal.ZERO;
     Long serial;
@@ -35,12 +39,34 @@ public abstract class AbstractAsset
         this.artifact = artifact;
     }
 
+    public synchronized Integer getArtifactId() {
+        if (artifact != null) {
+            return artifact.getId();
+        }
+        return artifactId;
+    }
+
+    public void setArtifactId(Integer artifactId) {
+        this.artifactId = artifactId;
+    }
+
     public Region getRegion() {
         return region;
     }
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    public synchronized Integer getRegionId() {
+        if (region != null) {
+            return region.getId();
+        }
+        return regionId;
+    }
+
+    public void setRegionId(Integer regionId) {
+        this.regionId = regionId;
     }
 
     public BigDecimal getQuantity() {
