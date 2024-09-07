@@ -16,6 +16,8 @@ class-map {
         artcat
     net.bodz.lily.concrete.CoImaged: \
         art
+    net.bodz.lily.concrete.CoImagedEvent: \
+        artmodel
     net.bodz.lily.concrete.CoParameter: \
         artparm
     net.bodz.lily.concrete.CoPhase: \

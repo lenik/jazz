@@ -6,6 +6,7 @@
         id          bigint primary key default nextval('fabodrl_seq'),
 --\mixin lily.mixin.ExVer
 --\mixin lily.mixin.Mi
+--\mixin lily.mixin.Props
             -- t0: contract date, t1: deadline
 
         odr         bigint not null

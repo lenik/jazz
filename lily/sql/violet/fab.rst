@@ -24,13 +24,14 @@ class-map {
         fabfn, \
         fabstdproc, \
         fabstdtest
+    net.bodz.lily.concrete.CoImagedEvent: \
+        fabodrl
     net.bodz.lily.concrete.CoMessage: \
         fabodr
     net.bodz.lily.concrete.CoEvent: \
-        fabodrl \
-        fabproc \
-        fabtask \
-        fabtaskl \
+        fabproc, \
+        fabtask, \
+        fabtaskl, \
         fabtrack
 }
 
