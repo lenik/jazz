@@ -14,16 +14,26 @@ import net.bodz.bas.t.iterator.PrefetchedIterator;
 public class TypeChain {
 
     public static Class<?>[] supersToRoot(Class<?> clazz) {
+        return supersToRoot(clazz, null);
+    }
+
+    public static Class<?>[] supersToRoot(Class<?> clazz, Class<?> rootClass) {
         List<Class<?>> list = new ArrayList<Class<?>>();
         while (clazz != null) {
             list.add(clazz);
+            if (clazz == rootClass)
+                break;
             clazz = clazz.getSuperclass();
         }
         return list.toArray(new Class<?>[0]);
     }
 
     public static Class<?>[] supersFromRoot(Class<?> clazz) {
-        Class<?>[] list = supersToRoot(clazz);
+        return supersFromRoot(clazz, null);
+    }
+
+    public static Class<?>[] supersFromRoot(Class<?> clazz, Class<?> rootClass) {
+        Class<?>[] list = supersToRoot(clazz, rootClass);
         Arrays.<Class<?>> reverse(list);
         return list;
     }
