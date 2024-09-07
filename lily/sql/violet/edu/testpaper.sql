@@ -9,6 +9,7 @@
         id          int primary key default nextval('testpaper_seq'),
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
+--\mixin lily.mixin.Props
 
         course      int not null
             references course(id) on update cascade,

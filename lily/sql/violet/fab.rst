@@ -20,6 +20,10 @@ column-property {
 class-map {
     net.bodz.lily.concrete.CoCategory: \
         fabstdtestcat
+    net.bodz.lily.concrete.CoImaged: \
+        fabfn, \
+        fabstdproc, \
+        fabstdtest
     net.bodz.lily.concrete.CoMessage: \
         fabodr
     net.bodz.lily.concrete.CoMomentInterval: \

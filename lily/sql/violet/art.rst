@@ -14,6 +14,8 @@ column-type {
 class-map {
     net.bodz.lily.concrete.CoCategory: \
         artcat
+    net.bodz.lily.concrete.CoImaged: \
+        art
     net.bodz.lily.concrete.CoParameter: \
         artparm
     net.bodz.lily.concrete.CoPhase: \

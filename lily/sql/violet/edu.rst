@@ -9,6 +9,15 @@ class-map {
     net.bodz.lily.concrete.CoCategory: \
         coursecat, \
         coursekitcat
+    net.bodz.lily.concrete.CoImaged: \
+        course, \
+        coursekit, \
+        testpaperl
+    net.bodz.lily.concrete.CoMessage: \
+        testq, \
+        testans, \
+        testpaper, \
+        testapply
     net.bodz.lily.concrete.CoTag: \
         coursetag, \
         coursekittag, \
@@ -20,8 +29,6 @@ class-map {
     net.bodz.lily.concrete.VoteRecord: \
         testq_vote, \
         testq_msg_vote
-    net.bodz.lily.concrete.CoMessage: \
-        testq
 }
 
 table-name {

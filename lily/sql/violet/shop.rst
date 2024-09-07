@@ -13,6 +13,12 @@ class-map {
         couponcat, \
         shopmemcat, \
         salecat
+    net.bodz.lily.concrete.CoImaged: \
+        shop, \
+        coupon
+    net.bodz.lily.concrete.CoImagedMomentInterval: \
+        shopitem, \
+        saleodrl
     net.bodz.lily.concrete.CoPhase: \
         salephase
     net.bodz.lily.concrete.CoTag: \
@@ -20,8 +26,6 @@ class-map {
     net.bodz.lily.concrete.FavRecord: \
         shop_fav, \
         shopitem_fav
-    net.bodz.lily.concrete.CoMomentInterval: \
-        shopitem
 }
 
 table-name {

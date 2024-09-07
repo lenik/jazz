@@ -8,16 +8,16 @@ class-map {
     net.bodz.lily.concrete.CoCategory: \
         regioncat, \
         storecat
-    net.bodz.lily.concrete.CoNode: \
-        region
     net.bodz.lily.concrete.CoCode: \
         regionlevel
-    net.bodz.lily.concrete.CoTag: \
-        regiontag
+    net.bodz.lily.concrete.CoImagedMomentInterval: \
+        storeodrl
+    net.bodz.lily.concrete.CoNode: \
+        region
     net.bodz.lily.concrete.CoPhase: \
         storephase
-    net.bodz.lily.concrete.CoMomentInterval: \
-        storeodrl
+    net.bodz.lily.concrete.CoTag: \
+        regiontag
 }
 
 table-name {
