@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -65,6 +66,51 @@ public class JsonObject
         if (any == null)
             return null; // JsonVariant.NULL;
         return JsonVariant.of(any);
+    }
+
+    public <T extends IJsonForm> T getObject(String key, Class<T> clazz)
+            throws ParseException {
+        return getObject(key, () -> {
+            try {
+                return clazz.newInstance();
+            } catch (ReflectiveOperationException e) {
+                throw new CreateException(e.getMessage(), e);
+            }
+        });
+    }
+
+    public <T extends IJsonForm> T getObject(String key, Supplier<T> factory)
+            throws ParseException {
+        JsonVariant jv = getVariant(key);
+        if (jv == null)
+            return null;
+        T instance = factory.get();
+        instance.jsonIn(jv);
+        return instance;
+    }
+
+    public <T extends IJsonForm> T getObject(String key, T defaultValue, Class<T> clazz) {
+        return getObject(key, defaultValue, () -> {
+            try {
+                return clazz.newInstance();
+            } catch (Exception e) {
+                return defaultValue;
+            }
+        });
+    }
+
+    public <T extends IJsonForm> T getObject(String key, T defaultValue, Supplier<T> factory) {
+        JsonVariant jv = getVariant(key);
+        if (jv == null)
+            return defaultValue;
+
+        T instance = factory.get();
+        try {
+            instance.jsonIn(jv);
+        } catch (ParseException e) {
+            return defaultValue;
+        }
+        return instance;
     }
 
     public byte[] getByteArray(String key, byte[] defaultValue) {
@@ -359,32 +405,39 @@ public class JsonObject
         return getVar(LocalTime.class, key, defaultValue);
     }
 
-    public <T extends IJsonForm> T readInto(String key, T obj)
+    public <T extends IJsonForm> T readInto(String key, T context)
             throws ParseException {
-        return readInto(key, obj, null);
+        return readInto(key, context, (Supplier<T>) null);
     }
 
-    public <T extends IJsonForm> T readInto(String key, T obj, T newObj)
+    public <T extends IJsonForm> T readInto(String key, T context, Class<T> factory)
+            throws ParseException {
+        return readInto(key, context, () -> {
+            try {
+                return factory.newInstance();
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
+        });
+    }
+
+    public <T extends IJsonForm> T readInto(String key, T context, Supplier<T> factory)
             throws ParseException {
         if (! has(key)) // nothing to change
-            return obj;
+            return context;
 
-        Object _node = get(key);
-        if (_node == null) // force set to null
+        JsonVariant jv = getVariant(key);
+        if (jv == null || jv.isNull()) // force set to null
             return null;
 
-        JsonVariant node = JsonVariant.of(_node);
-
-        if (node != null) {
-            if (obj == null) {
-                if (newObj == null) // don't auto-create
-                    return null;
-                obj = newObj;
-            }
-            obj.jsonIn(node, JsonFormOptions.XXX);
+        if (context == null) {
+            if (factory == null) // don't auto-create
+                return null;
+            context = factory.get();
         }
+        context.jsonIn(jv, JsonFormOptions.XXX);
 
-        return obj;
+        return context;
     }
 
     public <T> Set<T> //

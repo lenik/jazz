@@ -26,7 +26,9 @@ public interface IJsonForm {
      * (Don't override this method.)
      *
      * @param json
-     *            <code>null</code> for the null object.
+     *            Non-<code>null</code> value.
+     * @throws NullPointerException
+     *             if <code>o</code> is null.
      */
     default void jsonIn(JsonObject o)
             throws ParseException {
@@ -35,7 +37,9 @@ public interface IJsonForm {
 
     /**
      * @param json
-     *            <code>null</code> for the null object.
+     *            Non-<code>null</code> value.
+     * @throws NullPointerException
+     *             if <code>o</code> is null.
      */
     default void jsonIn(JsonVariant in, JsonFormOptions opts)
             throws ParseException {
@@ -44,7 +48,9 @@ public interface IJsonForm {
 
     /**
      * @param json
-     *            <code>null</code> for the null object.
+     *            Non-<code>null</code> value.
+     * @throws NullPointerException
+     *             if <code>o</code> is null.
      */
     void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException;

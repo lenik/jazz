@@ -35,7 +35,7 @@ public class UserFlagRecord
             throws ParseException {
         super.jsonIn(o, opts);
         type = o.getVar(UserFlagType.class, "type");
-        user = o.readInto("user", user, new User());
+        user = o.readInto("user", user, User.class);
     }
 
     @Override

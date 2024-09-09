@@ -150,6 +150,8 @@ public class JsonFn {
     }
 
     public static JsonVariant toJsonVar(IJsonForm obj) {
+        if (obj == null)
+            return null;
         try {
             String json = toJson(obj, JsonFormOptions.DEFAULT);
             return parseAny(json);
@@ -160,6 +162,8 @@ public class JsonFn {
 
     public static JsonObject toJsonObject(IJsonForm obj)
             throws FormatException, ParseException {
+        if (obj == null)
+            return null;
         String json = toJson(obj, JsonFormOptions.DEFAULT);
         JsonObject jo = parseObject(json);
         return jo;
@@ -172,12 +176,36 @@ public class JsonFn {
 
     public static <T extends IJsonForm> T fromJson(T obj, String json, JsonFormOptions opts)
             throws ParseException {
-        if (json == null) // XXX null ?
-            obj.jsonIn((JsonVariant) null, opts);
-        else {
-            JsonVariant j = JsonFn.parseAny(json);
-            obj.jsonIn(j, opts);
-        }
+        if (json == null)
+            return null;
+        JsonVariant j = JsonFn.parseAny(json);
+        obj.jsonIn(j, opts);
+        return obj;
+    }
+
+    public static <T extends IJsonForm> T fromJson(T obj, JsonObject jo)
+            throws ParseException {
+        return fromJson(obj, jo, JsonFormOptions.DEFAULT);
+    }
+
+    public static <T extends IJsonForm> T fromJson(T obj, JsonObject jo, JsonFormOptions opts)
+            throws ParseException {
+        if (jo == null)
+            return null;
+        obj.jsonIn(jo, opts);
+        return obj;
+    }
+
+    public static <T extends IJsonForm> T fromJson(T obj, JsonVariant jv)
+            throws ParseException {
+        return fromJson(obj, jv, JsonFormOptions.DEFAULT);
+    }
+
+    public static <T extends IJsonForm> T fromJson(T obj, JsonVariant jv, JsonFormOptions opts)
+            throws ParseException {
+        if (jv == null)
+            return null;
+        obj.jsonIn(jv, opts);
         return obj;
     }
 

@@ -35,7 +35,7 @@ public class UserVoteRecord
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         super.jsonIn(o, opts);
-        user = o.readInto("user", user, new User());
+        user = o.readInto("user", user, User.class);
         value = o.getInt("value", value);
     }
 

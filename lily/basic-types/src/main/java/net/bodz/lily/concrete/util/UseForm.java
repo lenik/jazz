@@ -66,7 +66,7 @@ public class UseForm
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        def = o.readInto("def", def, new FormDef());
+        def = o.readInto("def", def, () -> new FormDef());
         args = o.getString("args", args);
     }
 

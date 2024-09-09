@@ -268,7 +268,7 @@ public abstract class CoMessage<Id>
             throws ParseException {
         super.jsonIn(o, opts);
 
-        op = o.readInto("op", op, new User());
+        op = o.readInto("op", op, User.class);
         subject = o.getString("subject", subject);
         rawText = o.getString("text", rawText);
 

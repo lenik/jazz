@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
@@ -556,13 +555,8 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
         refCount = o.getInt("refCount", refCount);
 
-        self_t dup;
-        try {
-            dup = (self_t) getClass().getConstructor().newInstance();
-        } catch (ReflectiveOperationException e) {
-            throw new LoadException(e.getMessage(), e);
-        }
-        parent = o.readInto("parent", parent, dup);
+        Class<self_t> selfClass = (Class<self_t>) getClass();
+        parent = o.readInto("parent", parent, selfClass);
         parentId = null;
         // children
     }

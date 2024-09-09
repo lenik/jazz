@@ -467,9 +467,9 @@ public class Contact
             throws ParseException {
         super.jsonIn(o, opts);
 
-        org = o.readInto("org", org, new Organization());
-        orgUnit = o.readInto("orgUnit", orgUnit, new OrgUnit());
-        person = o.readInto("person", person, new Person());
+        org = o.readInto("org", org, Organization.class);
+        orgUnit = o.readInto("orgUnit", orgUnit, OrgUnit.class);
+        person = o.readInto("person", person, Person.class);
 
         rename = o.getString("rename", rename);
         usage = o.getString("usage", usage);

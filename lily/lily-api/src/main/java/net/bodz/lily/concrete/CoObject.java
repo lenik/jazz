@@ -447,8 +447,8 @@ public abstract class CoObject
             priority = o.getInt("priority", priority);
             state = StateJsonFn.getFrom(o, "state", state);
 
-            ownerUser = o.readInto("ownerUser", ownerUser, Users.newUser());
-            ownerGroup = o.readInto("ownerGroup", ownerGroup, Users.newGroup());
+            ownerUser = o.readInto("ownerUser", ownerUser, () -> Users.newUser());
+            ownerGroup = o.readInto("ownerGroup", ownerGroup, () -> Users.newGroup());
             acl = o.getInt("acl", acl);
             accessMode = o.getInt("accessMode", accessMode);
 
