@@ -34,6 +34,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
+import net.bodz.bas.t.tuple.Split;
 
 @ProgramName("lib-updater")
 public class LibUpdater
@@ -166,17 +167,55 @@ public class LibUpdater
      */
     boolean forceMode;
 
+    /**
+     * @option -M --map-dirstruct
+     */
+    boolean mapDirStruct;
+
+    /**
+     * @option -J --include-sources
+     */
+    boolean includeSources;
+
     @Override
     protected void mainImpl(String... args)
             throws Exception {
-        if (!setDefaults())
+        if (! setDefaults())
             _exit(1);
 
         for (File item : URLClassLoaders.getUserClassPath(loader)) {
-            processItem(item);
+            // boolean inM2Repo = item.getPath().contains("m2/repository");
+            boolean isJar = item.getName().endsWith(".jar");
+
+            final File baseDir;
+            final String relativePath;
+            if (isJar) {
+                // group/artifact/ver/artifact-ver.jar
+                File verDir = item.getParentFile();
+                File artifactDir = verDir.getParentFile();
+                File groupDir = artifactDir.getParentFile();
+
+                File repoDir = groupDir.getParentFile();
+                while (repoDir != null && ! repoDir.getName().equals("repository"))
+                    repoDir = repoDir.getParentFile();
+                if (repoDir == null)
+                    throw new IllegalUsageException("not in a repo dir: " + groupDir + ", " + item);
+                baseDir = repoDir;
+
+                String baseDirPath = baseDir.getPath();
+                String itemPath = item.getPath();
+                relativePath = itemPath.substring(baseDirPath.length() + 1);
+            } else {
+                baseDir = item.getParentFile();
+                relativePath = item.getName();
+            }
+
+            processItem(baseDir, relativePath);
         }
 
-        try (PrintStream listOut = new PrintStream(listFilename)) {
+        try (
+
+                PrintStream listOut = new PrintStream(listFilename)) {
             for (String item : classpathList) {
                 listOut.println(item);
 //                System.out.println(item);
@@ -236,7 +275,7 @@ public class LibUpdater
                 }
             } else {
                 logger.debug("create non-existing classdir: " + classDir);
-                if (!classDir.mkdirs()) {
+                if (! classDir.mkdirs()) {
                     logger.error("error mkdir: " + classDir);
                     return false;
                 }
@@ -254,7 +293,7 @@ public class LibUpdater
                             unusedJars.add(item.getName());
             } else {
                 logger.debug("create non-existing jardir: " + jarDir);
-                if (!jarDir.mkdirs()) {
+                if (! jarDir.mkdirs()) {
                     logger.error("error mkdir: " + jarDir);
                     return false;
                 }
@@ -270,8 +309,9 @@ public class LibUpdater
         return true;
     }
 
-    void processItem(File item)
+    void processItem(File baseDir, String relativePath)
             throws IOException, ParseException {
+        File item = new File(baseDir, relativePath);
         boolean resolved = false;
 
         if (item.isFile()) {
@@ -295,8 +335,8 @@ public class LibUpdater
                 }
             }
 
-            if (!resolved) {
-                addFile(item);
+            if (! resolved) {
+                addFile(baseDir, relativePath);
                 resolved = true;
             }
             return;
@@ -322,14 +362,14 @@ public class LibUpdater
             }
 
             if (findJars) {
-                String jarPath = itemId.groupId.replace('.', '/') + "/" + itemId.artifactId + "/" + itemId.version;
+                String groupDir = itemId.groupId.replace('.', '/') + "/" + itemId.artifactId + "/" + itemId.version;
                 String jarName = itemId.artifactId + "-" + itemId.version + ".jar";
-                jarPath += "/" + jarName;
-                jarPath = SysProps.userHome + "/.m2/repository/" + jarPath;
-                File jarFile = new File(jarPath);
+                String jarRelativePath = groupDir + "/" + jarName;
+                File jarBaseDir = new File(SysProps.userHome + "/.m2/repository/");
+                File jarFile = new File(jarBaseDir, jarRelativePath);
                 if (jarFile.isFile()) {
                     logger.debug("dir2jar: " + jarFile);
-                    addFile(jarFile);
+                    addFile(jarBaseDir, jarRelativePath);
                     return;
                 }
             }
@@ -338,46 +378,33 @@ public class LibUpdater
         } // =~ /target/classes$
     }
 
-    void addFile(File src)
+    void addFile(File baseDir, String relativePath)
             throws IOException {
-        src = src.getCanonicalFile();
+        File src = new File(baseDir, relativePath);
+        File srcCanonical = src.getCanonicalFile();
+
         String dstName = src.getName();
         if (jarDir != null) {
-            File dst = new File(jarDir, dstName);
+            File dstFile = createJar(jarDir, dstName, baseDir, relativePath);
+            addClasspath(dstFile);
+            unusedJars.remove(dstFile.getName());
 
-            if (useSymlinkToJars)
-                createSymlink(dst, src);
-
-            else {
-                boolean outdated = true;
-                if (dst.exists()) {
-                    long srcVer = src.lastModified();
-                    long dstVer = dst.lastModified();
-                    if (dstVer >= srcVer)
-                        outdated = false;
-                }
-
-                if (outdated) {
-                    println("copy file: " + src);
-                    Files.copy(src.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                }
+            if (includeSources) {
+                createOthers(jarDir, dstName, baseDir, relativePath, "-sources.jar");
+                createOthers(jarDir, dstName, baseDir, relativePath, "-tests.jar");
+                createOthers(jarDir, dstName, baseDir, relativePath, ".pom");
             }
-
-            addClasspath(dst);
-            unusedJars.remove(dst.getName());
         }
 
         // no --outdir
         else {
-            addClasspath(src);
+            addClasspath(srcCanonical);
         }
     }
 
     void addDir(File src, String dstName)
             throws IOException {
-        File dst = null;
-        if (classDir != null)
-            dst = new File(classDir, dstName);
+        final File dst = classDir == null ? null : new File(classDir, dstName);
 
         if (includeExistedOnly) {
             if (classDir != null && syncModules.contains(dstName)) {
@@ -390,7 +417,7 @@ public class LibUpdater
 
         if (dst != null) {
             if (useSymlinks) {
-                createSymlink(dst, src);
+                createSymlink(classDir, dstName, src.getParentFile(), src.getName());
                 addClasspath(dst);
                 return;
             } else {
@@ -422,8 +449,70 @@ public class LibUpdater
         classpathList.add(path);
     }
 
-    void createSymlink(File linkFile, File targetFile)
+    void createOthers(File dir, String baseName, File srcBaseDir, String srcRelativePath, String suffix)
             throws IOException {
+        Split dirBase = Split.dirBase(srcRelativePath);
+        Split nameExtension = Split.nameExtension(dirBase.b);
+        String otherName = nameExtension.a + suffix;
+
+        File src = new File(srcBaseDir, srcRelativePath);
+        File otherFile = new File(src.getParentFile(), otherName);
+        if (otherFile.exists()) {
+            String otherRelativePath = dirBase.a + "/" + otherName;
+            createJar(jarDir, otherName, srcBaseDir, otherRelativePath);
+        }
+    }
+
+    File createJar(File dir, String baseName, File srcBaseDir, String srcRelativePath)
+            throws IOException {
+        if (useSymlinkToJars) {
+            return createSymlink(jarDir, baseName, srcBaseDir, srcRelativePath);
+        } else {
+            return createCopy(jarDir, baseName, srcBaseDir, srcRelativePath);
+        }
+    }
+
+    File createCopy(File dir, String baseName, File srcBaseDir, String srcRelativePath)
+            throws IOException {
+        File srcFile = new File(srcBaseDir, srcRelativePath);
+
+        File dstFile;
+        if (mapDirStruct) {
+            File dstDir = new File(dir, srcRelativePath).getParentFile();
+            dstDir.mkdirs();
+            dstFile = new File(dstDir, baseName);
+        } else {
+            dstFile = new File(dir, baseName);
+        }
+
+        boolean outdated = true;
+        if (dstFile.exists()) {
+            long srcVer = srcFile.lastModified();
+            long dstVer = dstFile.lastModified();
+            if (dstVer >= srcVer)
+                outdated = false;
+        }
+
+        if (outdated) {
+            println("copy file: " + srcFile);
+            Files.copy(srcFile.toPath(), dstFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+        return dstFile;
+    }
+
+    File createSymlink(File dir, String baseName, File targetBaseDir, String targetRelativePath)
+            throws IOException {
+        File targetFile = new File(targetBaseDir, targetRelativePath);
+
+        File linkFile;
+        if (mapDirStruct) {
+            File linkDir = new File(dir, targetRelativePath).getParentFile();
+            linkDir.mkdirs();
+            linkFile = new File(linkDir, baseName);
+        } else {
+            linkFile = new File(dir, baseName);
+        }
+
         Path link = linkFile.toPath();
         String target;
 
@@ -463,6 +552,8 @@ public class LibUpdater
                 throw e;
             }
         }
+
+        return linkFile;
     }
 
     void syncDirTree(File src, File dst)
