@@ -3,6 +3,7 @@ package net.bodz.mda.xjdoc.model;
 import java.util.Map;
 
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.t.coll.IContainer;
 import net.bodz.bas.t.model.AbstractDecorator;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
@@ -50,6 +51,16 @@ public abstract class _DecoratedElementDoc<T extends IElementDoc>
     @Override
     public <Tag extends IDocTag<?>> Tag getTag(String tagName) {
         return getWrapped().getTag(tagName);
+    }
+
+    @Override
+    public Object getTagData(String tagName, Object defaultValue) {
+        return getWrapped().getTagData(tagName, defaultValue);
+    }
+
+    @Override
+    public IContainer<?> getContainer(String tagName) {
+        return getWrapped().getContainer(tagName);
     }
 
     @Override

@@ -52,7 +52,7 @@ public class ArtifactDoc
 
     public List<Author> getAuthors() {
         @SuppressWarnings("unchecked")
-        IContainer<Author> authors = (IContainer<Author>) getTag("author").getContainer();
+        IContainer<Author> authors = (IContainer<Author>) getContainer("author");
         if (authors == null)
             return Collections.emptyList();
         else
@@ -68,8 +68,7 @@ public class ArtifactDoc
     }
 
     public IVersion getVersion() {
-        IVersion version = (IVersion) getTag("version").getData();
-        return version;
+        return (IVersion) getTagData("version");
     }
 
     public List<URL> getSiteLinks() {

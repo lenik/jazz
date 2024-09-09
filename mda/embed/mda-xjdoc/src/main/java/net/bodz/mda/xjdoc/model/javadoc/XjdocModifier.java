@@ -10,7 +10,7 @@ import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.IMutableElementDoc;
-import net.bodz.mda.xjdoc.tagtype.TextTag;
+import net.bodz.mda.xjdoc.tagtype.StringTag;
 
 public class XjdocModifier {
 
@@ -24,8 +24,9 @@ public class XjdocModifier {
         }
 
         if (! docparTagName.contains(" ")) {
-            TextTag docparTag = doc.makeTag(docparTagName);
-            docparTag.setData(doc.getText());
+            StringTag docparTag = doc.makeTag(docparTagName);
+            // XXX - ???
+            docparTag.setData(doc.getText().toMultiLangString());
             return;
         }
 

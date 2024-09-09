@@ -4,6 +4,7 @@ import java.util.Map;
 
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.sugar.IToChain;
+import net.bodz.bas.t.coll.IContainer;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 public interface IElementDoc
@@ -46,6 +47,14 @@ public interface IElementDoc
     boolean isTagPresent(String tagName);
 
     <T extends IDocTag<?>> T getTag(String tagName);
+
+    default Object getTagData(String tagName) {
+        return getTagData(tagName, null);
+    }
+
+    Object getTagData(String tagName, Object defaultValue);
+
+    IContainer<?> getContainer(String tagName);
 
     /**
      * Get the value of a named tag.

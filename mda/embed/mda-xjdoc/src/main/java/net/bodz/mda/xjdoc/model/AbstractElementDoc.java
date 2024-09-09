@@ -17,6 +17,7 @@ import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.sugar.Tooling;
+import net.bodz.bas.t.coll.IContainer;
 import net.bodz.mda.xjdoc.taglib.AbstractTagLibrary;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
@@ -93,6 +94,24 @@ public abstract class AbstractElementDoc
     @Override
     public IDocTag<?> removeTag(String tagName) {
         return tagMap.remove(tagName);
+    }
+
+    @Override
+    public Object getTagData(String tagName, Object defaultValue) {
+        IDocTag<?> tag = getTag(tagName);
+        if (tag == null)
+            return defaultValue;
+        Object data = tag.getData();
+        return data;
+    }
+
+    @Override
+    public IContainer<?> getContainer(String tagName) {
+        IDocTag<?> tag = getTag(tagName);
+        if (tag == null)
+            return null; // Containers.emptyList();
+        IContainer<?> container = tag.getContainer();
+        return container;
     }
 
     @Override

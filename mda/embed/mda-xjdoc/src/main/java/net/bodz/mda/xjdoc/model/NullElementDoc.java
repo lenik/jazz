@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.sugar.Tooling;
+import net.bodz.bas.t.coll.IContainer;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 public class NullElementDoc
@@ -47,6 +48,16 @@ public class NullElementDoc
 
     @Override
     public <T extends IDocTag<?>> T getTag(String tagName) {
+        return null;
+    }
+
+    @Override
+    public Object getTagData(String tagName, Object defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public IContainer<?> getContainer(String tagName) {
         return null;
     }
 
