@@ -1,11 +1,14 @@
 package net.bodz.bas.c.type;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Modifier;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -15,7 +18,9 @@ import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.java.nio.Charsets;
+import net.bodz.bas.c.java.time.DateTimes;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.meta.codegen.PublishDir;
@@ -149,7 +154,18 @@ public class IndexedTypes {
                     line = currentReader.readLine();
 //                    System.err.println("ReadLine ----- " + line);
                 } catch (IOException e) { // SecurityException: digest error
-                    logger.log(Level.SEVERE, "Can't read from " + currentResource + ": " + e.getMessage(), e);
+                    logger.log(Level.SEVERE,
+                            "Error but ignored: Can't read from " + currentResource + ": " + e.getMessage(), e);
+
+                    File file = FileURL.toNearestFile(currentResource);
+                    if (file != null) {
+                        Instant fileTime = Instant.ofEpochMilli(file.lastModified());
+                        String fileTimeStr = DateTimes.ISO_LOCAL_DATE_TIME.format(LocalDateTime.from(fileTime));
+                        String mesg = String.format("    Zip file: %s, length %d, ", file.getPath(), file.length(),
+                                fileTimeStr);
+                        logger.log(Level.INFO, mesg);
+                    }
+
                     close();
                     return fetch();
                 }
