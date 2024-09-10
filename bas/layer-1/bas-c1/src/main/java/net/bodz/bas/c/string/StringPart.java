@@ -250,14 +250,14 @@ public class StringPart {
     }
 
     public static String getHeadPar(String str) {
-        BrokenCharsTokenizer nl2toks = new BrokenCharsTokenizer(str, '\n', '\n');
+        DelimSeqTokenizer nl2toks = new DelimSeqTokenizer(str, '\n', '\n');
         if (nl2toks.hasNext())
             return nl2toks.next();
         return null;
     }
 
     public static String getTailPar(String str) {
-        BrokenCharsTokenizer nl2toks = new BrokenCharsTokenizer(str, '\n', '\n');
+        DelimSeqTokenizer nl2toks = new DelimSeqTokenizer(str, '\n', '\n');
         if (!nl2toks.hasNext())
             return null;
         nl2toks.next();

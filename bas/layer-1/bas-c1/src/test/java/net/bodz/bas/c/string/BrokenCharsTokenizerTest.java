@@ -11,7 +11,7 @@ public class BrokenCharsTokenizerTest
     @Test
     public void testArrowStrict() {
         String s = "foo->bar";
-        BrokenCharsTokenizer tokens = new BrokenCharsTokenizer(s, ARROW);
+        DelimSeqTokenizer tokens = new DelimSeqTokenizer(s, ARROW);
         String w1 = tokens.next();
         assertEquals("foo", w1);
         assertEquals(3, tokens.getEnd());
@@ -26,7 +26,7 @@ public class BrokenCharsTokenizerTest
     @Test
     public void testArrowLoose0() {
         String s = "foo ->bar";
-        BrokenCharsTokenizer tokens = new BrokenCharsTokenizer(s, ARROW);
+        DelimSeqTokenizer tokens = new DelimSeqTokenizer(s, ARROW);
         String w1 = tokens.next();
         assertEquals("foo ", w1);
         assertEquals(4, tokens.getEnd());
@@ -41,7 +41,7 @@ public class BrokenCharsTokenizerTest
     @Test
     public void testArrowLoose1() {
         String s = "foo- >bar";
-        BrokenCharsTokenizer tokens = new BrokenCharsTokenizer(s, ARROW);
+        DelimSeqTokenizer tokens = new DelimSeqTokenizer(s, ARROW);
         String w1 = tokens.next();
         assertEquals("foo", w1);
         assertEquals(3, tokens.getEnd());
@@ -56,7 +56,7 @@ public class BrokenCharsTokenizerTest
     @Test
     public void testArrowLoose2() {
         String s = "foo-> bar";
-        BrokenCharsTokenizer tokens = new BrokenCharsTokenizer(s, ARROW);
+        DelimSeqTokenizer tokens = new DelimSeqTokenizer(s, ARROW);
         String w1 = tokens.next();
         assertEquals("foo", w1);
         assertEquals(3, tokens.getEnd());

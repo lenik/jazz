@@ -2,7 +2,15 @@ package net.bodz.bas.c.string;
 
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 
-public class BrokenCharsTokenizer
+/**
+ * Split by delim sequence (string), like <code>\n\n</code> , <code>***</code>.
+ *
+ * Allow extra whitespace in the delim sequence, for example, <code>Foo***Bar</code> can be written
+ * as <code>Foo*  \n*\t*Bar</code>.
+ *
+ * However space outside the delim sequence are preserved.
+ */
+public class DelimSeqTokenizer
         extends PrefetchedIterator<String> {
 
     private char[] pattern;
@@ -17,15 +25,13 @@ public class BrokenCharsTokenizer
 
     /**
      * Should be optimized by the caller.
-     * 
-     * @see #BrokenCharsTokenizer(String, char...)
      */
     @Deprecated
-    public BrokenCharsTokenizer(String str, String pattern) {
+    public DelimSeqTokenizer(String str, String pattern) {
         this(str, pattern.toCharArray());
     }
 
-    public BrokenCharsTokenizer(String str, char... pattern) {
+    public DelimSeqTokenizer(String str, char... pattern) {
         this.str = str;
         this.len = str.length();
         this.pattern = pattern;
@@ -59,12 +65,15 @@ public class BrokenCharsTokenizer
                     m = 0;
                     return str.substring(start, end);
                 }
-            } else if (!Character.isWhitespace(ch)) {
+            } else {
+                if (Character.isWhitespace(ch))
+                    // only have effects when inside the delim seq.
+                    continue;
                 m = 0;
             }
         }
 
-        nextStart = end = len;
+        // nextStart = end = len;
         ended = true;
         return str.substring(start);
     }

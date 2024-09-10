@@ -2,7 +2,7 @@ package net.bodz.bas.i18n.dom;
 
 import java.util.Map.Entry;
 
-import net.bodz.bas.c.string.BrokenCharsTokenizer;
+import net.bodz.bas.c.string.DelimSeqTokenizer;
 
 public class DomainStrings {
 
@@ -40,7 +40,7 @@ public class DomainStrings {
             if (str == null)
                 continue;
 
-            BrokenCharsTokenizer pars = new BrokenCharsTokenizer(str, '\n', '\n');
+            DelimSeqTokenizer pars = new DelimSeqTokenizer(str, '\n', '\n');
             String head = pars.next();
 
             par.put(domain, head.trim());
@@ -56,7 +56,7 @@ public class DomainStrings {
             if (str == null)
                 continue;
 
-            BrokenCharsTokenizer pars = new BrokenCharsTokenizer(str, '\n', '\n');
+            DelimSeqTokenizer pars = new DelimSeqTokenizer(str, '\n', '\n');
             pars.next();
             String tail = pars.hasNext() ? pars.next() : "";
 
