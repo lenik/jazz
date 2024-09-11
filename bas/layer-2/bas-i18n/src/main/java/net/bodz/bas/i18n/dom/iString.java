@@ -10,6 +10,10 @@ public interface iString
 
     iString NULL = NulliString.INSTANCE;
 
+    default boolean isNull() {
+        return this == NULL;
+    }
+
     iString clone();
 
     @Override
@@ -35,7 +39,8 @@ public interface iString
     iString concat(iString other);
 
     /**
-     * For domain strings A(default1,en1) and B(default3,et4), the result of join will be C(default13,en13,et14).
+     * For domain strings A(default1,en1) and B(default3,et4), the result of join will be
+     * C(default13,en13,et14).
      */
     iString join(iString other);
 

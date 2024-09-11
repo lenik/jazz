@@ -7,6 +7,7 @@ import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
@@ -54,10 +55,10 @@ public abstract class AbstractXjdocElement
 
         // New version: Use @label only.
         iString label = xjdoc.getText(IElementDoc.LABEL);
-        // if (label == null) label = xjdoc.getText().headPar();
+        // if (StrFn.isNull(label)) label = xjdoc.getText().headPar();
 
         iString description = xjdoc.getText(IElementDoc.DESCRIPTION);
-        if (description == null)
+        if (StrFn.isNull(description))
             description = getXjdoc().getText().headPar();
 
         cache.label = label;
