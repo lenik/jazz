@@ -36,6 +36,12 @@ import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.t.tuple.Split;
 
+/**
+ * Lib updater
+ *
+ * @author Lenik
+ * @version 1.0
+ */
 @ProgramName("lib-updater")
 public class LibUpdater
         extends BasicCLI {
@@ -59,7 +65,8 @@ public class LibUpdater
     /**
      * Override the project-dir mapping file. (default <code>$HOME/.m2/project-dir.map</code>)
      *
-     * The mapping file lists the project id and the workdir each line. (e.g. `groupId:artifactId path`.)
+     * The mapping file lists the project id and the workdir each line. (e.g. `groupId:artifactId
+     * path`.)
      *
      * @option --project-dirs =MAPFILE
      */
@@ -168,14 +175,27 @@ public class LibUpdater
     boolean forceMode;
 
     /**
+     * Preserve maven directory structure in the destination dir.
+     *
      * @option -M --map-dirstruct
      */
     boolean mapDirStruct;
 
     /**
-     * @option -J --include-sources
+     * Include sources, test jars, and the pom.xml.
+     *
+     * @option -J
      */
+    boolean includeOthers;
+
+    /** @option */
     boolean includeSources;
+
+    /** @option */
+    boolean includeTests;
+
+    /** @option */
+    boolean includePoms;
 
     @Override
     protected void mainImpl(String... args)
@@ -184,6 +204,7 @@ public class LibUpdater
             _exit(1);
 
         for (File item : URLClassLoaders.getUserClassPath(loader)) {
+            item = item.getCanonicalFile();
             // boolean inM2Repo = item.getPath().contains("m2/repository");
             boolean isJar = item.getName().endsWith(".jar");
 
@@ -198,8 +219,9 @@ public class LibUpdater
                 File repoDir = groupDir.getParentFile();
                 while (repoDir != null && ! repoDir.getName().equals("repository"))
                     repoDir = repoDir.getParentFile();
-                if (repoDir == null)
+                if (repoDir == null) {
                     throw new IllegalUsageException("not in a repo dir: " + groupDir + ", " + item);
+                }
                 baseDir = repoDir;
 
                 String baseDirPath = baseDir.getPath();
@@ -306,6 +328,11 @@ public class LibUpdater
             else
                 removeUnused = true;
 
+        if (includeOthers) {
+            includeSources = true;
+            includeTests = true;
+            includePoms = true;
+        }
         return true;
     }
 
@@ -389,11 +416,12 @@ public class LibUpdater
             addClasspath(dstFile);
             unusedJars.remove(dstFile.getName());
 
-            if (includeSources) {
+            if (includeSources)
                 createOthers(jarDir, dstName, baseDir, relativePath, "-sources.jar");
+            if (includeTests)
                 createOthers(jarDir, dstName, baseDir, relativePath, "-tests.jar");
+            if (includePoms)
                 createOthers(jarDir, dstName, baseDir, relativePath, ".pom");
-            }
         }
 
         // no --outdir
