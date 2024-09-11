@@ -1,6 +1,7 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.function.Consumer;
 
@@ -8,7 +9,6 @@ import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.project.MavenProject;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
@@ -34,6 +34,10 @@ import net.bodz.mda.xjdoc.util.QdoxUtils;
 import net.bodz.shared.mojo.AbstractResourceGeneratorMojo;
 
 import com.thoughtworks.qdox.JavaProjectBuilder;
+import com.thoughtworks.qdox.directorywalker.DirectoryScanner;
+import com.thoughtworks.qdox.directorywalker.FileVisitor;
+import com.thoughtworks.qdox.directorywalker.Filter;
+import com.thoughtworks.qdox.directorywalker.SuffixFilter;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaSource;
 
@@ -86,6 +90,8 @@ public class ClassDocBuilderMojo
 
     TagLibraryLoader _taglibLoader;
 
+    boolean alwaysMake = false;
+
     public ClassDocBuilderMojo() {
     }
 
@@ -119,96 +125,197 @@ public class ClassDocBuilderMojo
         this.missingDoc = MultiLangStrings.parse(missingDoc);
     }
 
+    ClassLoader classLoader;
+    ITagLibrary tagLibrary;
+
+    synchronized ClassLoader getClassLoader()
+            throws MojoFailureException {
+        if (classLoader == null) {
+            try {
+                classLoader = MavenProjects.createRuntimeClassLoader(getProject());
+            } catch (DependencyResolutionRequiredException e) {
+                throw new MojoFailureException(e.getMessage(), e);
+            }
+        }
+        return classLoader;
+    }
+
+    public ITagLibrary getTagLibrary()
+            throws MojoFailureException {
+        if (tagLibrary == null) {
+            ClassLoader loader = getClassLoader();
+            TagLibrarySet tagLibs = new TagLibraryLoader(loader).parseSet(taglibNames);
+            tagLibrary = tagLibs;
+        }
+        return tagLibrary;
+    }
+
+//    PrintStream dbg;
+
     @Override
     public void execute()
             throws MojoExecutionException, MojoFailureException {
         Log log = getLog();
+        // File diagFile = new File("/xxx/dbg");
+        DurationTimer duration = new DurationTimer().start();
 
-        MavenProject project = getProject();
-
-        ClassLoader runtimeClassLoader;
-        try {
-            runtimeClassLoader = MavenProjects.createRuntimeClassLoader(project);
-        } catch (DependencyResolutionRequiredException e) {
-            throw new MojoFailureException(e.getMessage(), e);
-        }
-
-        TagLibraryLoader taglibLoader = new TagLibraryLoader(runtimeClassLoader);
-        TagLibrarySet taglibs = taglibLoader.parseSet(taglibNames);
-
-        JavaProjectBuilder projectBuilder = new JavaProjectBuilder();
-        projectBuilder.addClassLoader(runtimeClassLoader);
-
+        // try (PrintStream dbg = new PrintStream(new FileOutputStream(diagFile, true))) {
         File srcRoot = getSourceDirectory();
         File outRoot = getOutputDirectory();
+
+        log.debug("make classdoc in:" + srcRoot);
 
         if (srcRoot == null)
             throw new IllegalUsageException("srcRoot");
         if (outRoot == null)
             throw new IllegalUsageException("outRoot");
 
-        log.info("Search javadocs in: " + srcRoot);
-        projectBuilder.addSourceTree(srcRoot);
+        Collection<JavaSource> jsources = findSources(srcRoot, outRoot);
+
+        int nUpdates = make(outRoot, jsources);
+
+        duration.end();
+        log.debug("          duration " + duration.getDurationMicros() + " us, " + nUpdates + " sources");
+//        } catch (IOException e) {
+//            throw new RuntimeException("diag print error: " + e.getMessage(), e);
+//        }
+    }
+
+    Collection<JavaSource> findSources(File srcDir, File dstDir)
+            throws MojoFailureException {
+        Log log = getLog();
+
+        JavaProjectBuilder projectBuilder = new JavaProjectBuilder();
+        projectBuilder.addClassLoader(getClassLoader());
+
+        log.info("Search javadocs to be updated in: " + srcDir);
+        DirectoryScanner scanner = new DirectoryScanner(srcDir);
+        scanner.addFilter(new SuffixFilter(".java"));
+
+        if (! alwaysMake)
+            scanner.addFilter(new IgnoreUpdatedFilter(srcDir, dstDir));
+
+        scanner.scan(new FileVisitor() {
+            @Override
+            public void visitFile(File currentFile) {
+                try {
+                    projectBuilder.addSource(currentFile);
+                } catch (IOException e) {
+                    throw new RuntimeException("Cannot read file : " + currentFile.getName());
+                }
+            }
+        });
 
         Collection<JavaSource> jsources = projectBuilder.getSources();
+        return jsources;
+    }
+
+    class IgnoreUpdatedFilter
+            implements
+                Filter {
+
+        File srcDir;
+        File dstDir;
+        int srcDirLen;
+
+        public IgnoreUpdatedFilter(File srcDir, File dstDir) {
+            this.srcDir = srcDir;
+            this.dstDir = dstDir;
+            srcDirLen = srcDir.getPath().length();
+        }
+
+        @Override
+        public boolean filter(File srcFile) {
+            String srcPath = srcFile.getPath();
+            String srcRelativePath = srcPath.substring(srcDirLen + 1);
+            if (! srcRelativePath.endsWith(".java"))
+                return false;
+            String dstRelativePath = srcRelativePath.substring(0, srcRelativePath.length() - 5) + ".ff";
+            File dstFile = new File(dstDir, dstRelativePath);
+
+            if (dstFile.exists()) {
+                long d = dstFile.lastModified() - srcFile.lastModified();
+                if (d > 0) // unchanged, don't build again.
+                    return false;
+            }
+            return true;
+        }
+
+    }
+
+    int make(File outRoot, Collection<JavaSource> jsources)
+            throws MojoExecutionException, MojoFailureException {
+
+        Log log = getLog();
         log.info("Generating class docs for " + jsources.size() + " source files");
+        int count = 0;
 
         for (JavaSource jsource : jsources) {
             String packageName = jsource.getPackageName();
             File outDir = outRoot == null ? null : new File(outRoot, packageName.replace('.', '/'));
 
-            // Not used: souce imports are resolvable in memeber members.
+            // Not used: souce imports are resolvable in members.
             // ImportMap sourceFileImports = new ImportMap(packageName);
             // for (String importFqcn : jsource.getImports())
             // sourceFileImports.add(importFqcn);
 
             for (JavaClass jclass : QdoxUtils.getAllNestedClasses(jsource)) {
-                ClassDocBuilder builder = new ClassDocBuilder(taglibs);
-                // builder.setCreateClassImports(true);
-                ClassDoc classDoc;
-                try {
-                    classDoc = builder.buildClass(jclass);
-                } catch (ParseException e) {
-                    throw new MojoFailureException(e.getMessage(), e);
-                }
-                // builder.setMissingDoc(missingDoc);
-
-                String fqcn = jclass.getFullyQualifiedName();
-                if (! fqcn.startsWith(packageName + "."))
-                    throw new UnexpectedException("Class FQCN doesn't starts with package: " + fqcn);
-                String baseName = fqcn.substring(packageName.length() + 1);
+                String qName = jclass.getFullyQualifiedName();
+                if (! qName.startsWith(packageName + "."))
+                    throw new UnexpectedException("Class FQCN doesn't starts with package: " + qName);
+                String baseName = qName.substring(packageName.length() + 1);
                 baseName = baseName.replace('.', '$') + "." + extension;
                 File classDocFile = outDir == null ? null : new File(outDir, baseName);
-
-                ImportMap classImports = classDoc.getOrCreateImports();
-
-                IOptions options = new Options() //
-                        .addOption(ITagLibrary.class, taglibs) //
-                        .addOption(ImportMap.class, classImports) //
-                        .addOption(Log.class, log) //
-                        .addOption("log", (Consumer<String>) a -> log.info("ff: " + a));
-
-                IStreamOutputTarget outTarget;
-                if (classDocFile == null) {
-                    outTarget = new OutputStreamTarget(System.out);
-                    System.out.println("FILE: " + baseName);
-                } else {
-                    log.debug("Generate " + classDocFile);
-                    classDocFile.getParentFile().mkdirs();
-                    outTarget = ResFn.file(classDocFile);
-                }
-                // outTarget.setCharset("utf-8");
-                try {
-                    ICharOut charOut = outTarget.newCharOut();
-                    FlatfOutput ffOut = new FlatfOutput(charOut);
-                    ffOut.comment("version: " + version);
-                    classDoc.writeObject(ffOut, options);
-                    charOut.flush();
-                } catch (Exception e) {
-                    throw new MojoExecutionException(e.getMessage(), e);
-                }
+                make(jclass, classDocFile);
             } // for class
+            count++;
         } // for source
+
+        return count;
+    }
+
+    void make(JavaClass jclass, File classDocFile)
+            throws MojoExecutionException, MojoFailureException {
+        Log log = getLog();
+        ITagLibrary tagLibrary = getTagLibrary();
+
+        ClassDocBuilder builder = new ClassDocBuilder(tagLibrary);
+        // builder.setCreateClassImports(true);
+        ClassDoc classDoc;
+        try {
+            classDoc = builder.buildClass(jclass);
+        } catch (ParseException e) {
+            throw new MojoFailureException(e.getMessage(), e);
+        }
+        // builder.setMissingDoc(missingDoc);
+
+        ImportMap classImports = classDoc.getOrCreateImports();
+
+        IOptions options = new Options() //
+                .addOption(ITagLibrary.class, tagLibrary) //
+                .addOption(ImportMap.class, classImports) //
+                .addOption(Log.class, log) //
+                .addOption("log", (Consumer<String>) a -> log.info("ff: " + a));
+
+        IStreamOutputTarget outTarget;
+        if (classDocFile == null) {
+            outTarget = new OutputStreamTarget(System.out);
+            System.out.println("FILE: " + classDocFile.getName());
+        } else {
+            log.debug("Generate " + classDocFile);
+            classDocFile.getParentFile().mkdirs();
+            outTarget = ResFn.file(classDocFile);
+        }
+        // outTarget.setCharset("utf-8");
+        try {
+            ICharOut charOut = outTarget.newCharOut();
+            FlatfOutput ffOut = new FlatfOutput(charOut);
+            ffOut.comment("version: " + version);
+            classDoc.writeObject(ffOut, options);
+            charOut.flush();
+        } catch (Exception e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        }
     }
 
 }
