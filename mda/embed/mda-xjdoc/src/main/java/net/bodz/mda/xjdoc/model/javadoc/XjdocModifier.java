@@ -5,65 +5,64 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
-import net.bodz.bas.c.string.BrokenCharsTokenizer;
+import net.bodz.bas.c.string.DelimSeqTokenizer;
 import net.bodz.bas.i18n.dom.XiString;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.IMutableElementDoc;
-import net.bodz.mda.xjdoc.tagtype.StringTag;
 
 public class XjdocModifier {
 
     public static void process(IMutableElementDoc doc) {
-        String docparTagName = IElementDoc.DESCRIPTION;
-        String docparTagNameOverride = doc.getString(".docpar");
-        if (docparTagNameOverride != null) {
-            if (docparTagNameOverride.isEmpty())
+        String docParams = IElementDoc.DESCRIPTION;
+        String docParamsOverride = doc.getString(".docpar");
+        if (docParamsOverride != null) {
+            if (docParamsOverride.isEmpty())
                 return;
-            docparTagName = docparTagNameOverride;
+            docParams = docParamsOverride;
         }
 
-        if (! docparTagName.contains(" ")) {
-            StringTag docparTag = doc.makeTag(docparTagName);
-            // XXX - ???
-            docparTag.setData(doc.getText().toMultiLangString());
+        if (! docParams.contains(" ")) {
+            doc.setTag(docParams, doc.getText());
             return;
         }
 
-        List<String> tags = new ArrayList<String>();
-        StringTokenizer tokens = new StringTokenizer(docparTagName, " ");
+        List<String> nameVec = new ArrayList<String>();
+        StringTokenizer tokens = new StringTokenizer(docParams, " ");
         while (tokens.hasMoreTokens()) {
             String token = tokens.nextToken().trim();
             if (! token.isEmpty())
-                tags.add(token);
+                nameVec.add(token);
         }
-        int ntag = tags.size();
-        assert ntag > 1;
+        int nameCount = nameVec.size();
+        assert nameCount > 1;
 
         // create tag array (buffer)
-        iString[] vals = new iString[ntag];
-        for (int i = 0; i < ntag; i++)
-            vals[i] = new XiString();
+        iString[] textVec = new iString[nameCount];
+        for (int i = 0; i < nameCount; i++)
+            textVec[i] = new XiString();
 
-        // split text => tags
+        // convert "en Par1 Par2; fr Par1 Par2 Par3; ..."
+        // to text1="en Par1 fr Par1"; text2="en Par2 fr Par2"; ...
         for (Entry<String, String> entry : doc.getText().entrySet()) {
             String lang = entry.getKey();
             String str = entry.getValue();
             if (str == null)
                 continue;
-            BrokenCharsTokenizer pars = new BrokenCharsTokenizer(str, '\n', '\n');
-            for (int i = 0; i < ntag && pars.hasNext(); i++) {
-                String s = i == ntag - 1 ? pars.getRemaining() : pars.next();
-                vals[i].put(lang, s);
+            DelimSeqTokenizer pars = new DelimSeqTokenizer(str, '\n', '\n');
+            for (int i = 0; i < nameCount && pars.hasNext(); i++) {
+                String par = i == nameCount - 1 ? pars.getRemaining() : pars.next();
+                textVec[i].put(lang, par);
             }
         }
 
         // rewrite tags.
-        for (int i = 0; i < ntag; i++) {
-            String tag = tags.get(i);
-            if (tag.equals("-"))
+        for (int i = 0; i < nameCount; i++) {
+            String name = nameVec.get(i);
+            if (name.equals("-"))
                 continue;
-            doc.setTag(tags.get(i), vals[i]);
+            iString text = textVec[i];
+            doc.setTag(name, text);
         }
     }
 
