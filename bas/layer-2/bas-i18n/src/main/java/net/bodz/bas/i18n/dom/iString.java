@@ -11,7 +11,21 @@ public interface iString
     iString NULL = NulliString.INSTANCE;
 
     default boolean isNull() {
-        return this == NULL;
+        if (NULL == this)
+            return true;
+        if (keySet().isEmpty())
+            return true;
+        return false;
+    }
+
+    @Override
+    default boolean isEmpty() {
+        if (keySet().isEmpty())
+            return true;
+        for (String v : values())
+            if (v != null && ! v.isEmpty())
+                return false;
+        return true;
     }
 
     iString clone();

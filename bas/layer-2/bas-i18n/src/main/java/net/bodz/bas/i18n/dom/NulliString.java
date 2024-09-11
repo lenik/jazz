@@ -1,13 +1,25 @@
 package net.bodz.bas.i18n.dom;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map.Entry;
 import java.util.Set;
 
 public class NulliString
-        implements iString {
+        implements
+            iString {
 
     private NulliString() {
+    }
+
+    @Override
+    public boolean isNull() {
+        return true;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return true;
     }
 
     @Override
@@ -53,6 +65,11 @@ public class NulliString
     @Override
     public Set<String> keySet() {
         return Collections.emptySet();
+    }
+
+    @Override
+    public Collection<String> values() {
+        return Collections.emptyList();
     }
 
     @Override

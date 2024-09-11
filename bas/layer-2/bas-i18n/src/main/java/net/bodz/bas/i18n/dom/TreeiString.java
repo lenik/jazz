@@ -10,7 +10,8 @@ import net.bodz.bas.i18n.LocaleVars;
 
 public class TreeiString
         extends TreeMap<String, String>
-        implements iString {
+        implements
+            iString {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,6 +21,13 @@ public class TreeiString
 
     public TreeiString(Map<? extends String, ? extends String> m) {
         super(m);
+    }
+
+    @Override
+    public boolean isNull() {
+        if (keySet().isEmpty())
+            return true;
+        return false;
     }
 
     @Override

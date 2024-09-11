@@ -8,7 +8,9 @@ import net.bodz.bas.i18n.LocaleVars;
 
 public class XiString
         extends XDomainNode<XiString, String>
-        implements iString, Cloneable {
+        implements
+            iString,
+            Cloneable {
 
     public XiString() {
         super(null, null);
@@ -38,6 +40,19 @@ public class XiString
     @Override
     public XiString clone() {
         return new XiString(this);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        if (value != null && ! value.isEmpty())
+            return false;
+        if (follow1 != null)
+            if (! follow1.isEmpty())
+                return false;
+        if (next != null)
+            if (! next.isEmpty())
+                return false;
+        return true;
     }
 
     /**

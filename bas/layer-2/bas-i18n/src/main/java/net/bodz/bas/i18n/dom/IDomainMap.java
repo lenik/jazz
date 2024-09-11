@@ -1,5 +1,6 @@
 package net.bodz.bas.i18n.dom;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ public interface IDomainMap<value_t> {
 
     /**
      * Resolve to the node for specific path.
-     * 
+     *
      * @return The resolved node, <code>null</code> if not existed.
      */
 
@@ -23,7 +24,11 @@ public interface IDomainMap<value_t> {
 
     int size();
 
+    boolean isEmpty();
+
     Set<String> keySet();
+
+    Collection<value_t> values();
 
     Set<Map.Entry<String, value_t>> entrySet();
 

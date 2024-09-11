@@ -1,6 +1,8 @@
 package net.bodz.bas.i18n.dom;
 
+import java.util.AbstractList;
 import java.util.AbstractSet;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -10,7 +12,7 @@ import net.bodz.bas.c.object.Nullables;
 
 /**
  * This is a cross-node design.
- * 
+ *
  * TERM:
  * <ul>
  * <li>Next-List: The list by chaining all <code>next</code> fields.
@@ -18,11 +20,13 @@ import net.bodz.bas.c.object.Nullables;
  * <code>follow1</code>.
  * <li>Path-List: List of nodes render a specific path.
  * </ul>
- * 
+ *
  * Note: This class is not thread safe.
  */
 public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, value_t>
-        implements IDomainNode<node_t, value_t>, Cloneable {
+        implements
+            IDomainNode<node_t, value_t>,
+            Cloneable {
 
     public static final char DOMAIN_SEPARATOR = '-';
 
@@ -141,9 +145,11 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
         return node == null ? null : node.value;
     }
 
+    @Override
     public node_t removeNode(String path) {
         if (path == null || path.isEmpty()) {
-            @SuppressWarnings("unchecked") node_t _this = (node_t) this;
+            @SuppressWarnings("unchecked")
+            node_t _this = (node_t) this;
             this.value = null;
             return _this;
         }
@@ -170,7 +176,8 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
      *            <code>null</code> or empty string means current node.
      */
     protected node_t _resolve(String path, DomainResolveMode mode, value_t initialValue) {
-        @SuppressWarnings("unchecked") node_t _this = (node_t) this;
+        @SuppressWarnings("unchecked")
+        node_t _this = (node_t) this;
 
         if (path == null || path.isEmpty()) {
             if (value != null)
@@ -243,7 +250,7 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
 
     /**
      * Find the token in the follow-list.
-     * 
+     *
      * @param token
      *            non-<code>null</code> token.
      * @return <code>null</code> if the token is not defined.
@@ -322,12 +329,27 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
     }
 
     @Override
+    public boolean isEmpty() {
+        if (value != null)
+            return false;
+        if (follow1 != null)
+            if (! follow1.isEmpty())
+                return false;
+        if (next != null)
+            if (! next.isEmpty())
+                return false;
+        return true;
+    }
+
+    @Override
     public Iterator<Entry<String, node_t>> iterator() {
         return new NodeIterator();
     }
 
     class NodeIterator
-            implements Iterator<Entry<String, node_t>>, Entry<String, node_t> {
+            implements
+                Iterator<Entry<String, node_t>>,
+                Entry<String, node_t> {
 
         StackedNode stack = new StackedNode(null, XDomainNode.this);
         String currentPath;
@@ -407,7 +429,9 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
     }
 
     class EntryIterator
-            implements Iterator<Entry<String, value_t>>, Entry<String, value_t> {
+            implements
+                Iterator<Entry<String, value_t>>,
+                Entry<String, value_t> {
 
         final NodeIterator nodeIterator;
 
@@ -475,7 +499,8 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
     }
 
     class KeyIterator
-            implements Iterator<String> {
+            implements
+                Iterator<String> {
 
         final NodeIterator nodeIterator;
 
@@ -492,6 +517,69 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
         public String next() {
             Entry<String, node_t> entry = nodeIterator.next();
             return entry.getKey();
+        }
+
+        @Override
+        public void remove() {
+            nodeIterator.remove();
+        }
+
+    }
+
+    @Override
+    public Collection<value_t> values() {
+        return new ValueList();
+    }
+
+    class ValueList
+            extends AbstractList<value_t> {
+
+        @Override
+        public Iterator<value_t> iterator() {
+            return new ValueIterator();
+        }
+
+        @Override
+        public value_t get(int index) {
+            if (index < 0)
+                throw new IndexOutOfBoundsException("" + index);
+            int i = 0;
+            for (Entry<String, node_t> entry : XDomainNode.this) {
+                if (i++ == index) {
+                    node_t node = entry.getValue();
+                    return node.getValue();
+                }
+            }
+            throw new IndexOutOfBoundsException("" + index);
+        }
+
+        @Override
+        public int size() {
+            return XDomainNode.this.size();
+        }
+
+    }
+
+    class ValueIterator
+            implements
+                Iterator<value_t> {
+
+        final NodeIterator nodeIterator;
+
+        public ValueIterator() {
+            this.nodeIterator = new NodeIterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nodeIterator.hasNext();
+        }
+
+        @Override
+        public value_t next() {
+            Entry<String, node_t> entry = nodeIterator.next();
+            node_t node = entry.getValue();
+            return (node == null) ? null : node.value;
         }
 
         @Override
@@ -536,11 +624,12 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
         if (obj == null)
             return false;
 
-        @SuppressWarnings("unchecked") node_t o = (node_t) obj;
+        @SuppressWarnings("unchecked")
+        node_t o = (node_t) obj;
 
         // if (!Nullables.equals(domain, o.domain))
         // return false;
-        if (!Nullables.equals(value, o.value))
+        if (! Nullables.equals(value, o.value))
             return false;
 
         if (follow1 != o.follow1) {
@@ -549,7 +638,7 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
             node_t a = follow1, b;
             while (a != null) {
                 b = o.getFollow(a.getDomain(), false);
-                if (b == null || !a.equals(b))
+                if (b == null || ! a.equals(b))
                     return false;
                 a = a.next;
             }
