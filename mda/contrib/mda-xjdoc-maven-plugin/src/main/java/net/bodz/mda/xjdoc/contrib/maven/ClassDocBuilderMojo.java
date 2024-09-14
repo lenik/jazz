@@ -227,7 +227,10 @@ public class ClassDocBuilderMojo
         @Override
         public boolean filter(File srcFile) {
             String srcPath = srcFile.getPath();
-            String srcRelativePath = srcPath.substring(srcDirLen + 1);
+            int srcPrefixLen = srcDirLen + 1;
+            if (srcPath.length() < srcPrefixLen) // dir, not a file.
+                return false;
+            String srcRelativePath = srcPath.substring(srcPrefixLen);
             if (! srcRelativePath.endsWith(".java"))
                 return false;
             String dstRelativePath = srcRelativePath.substring(0, srcRelativePath.length() - 5) + ".ff";
