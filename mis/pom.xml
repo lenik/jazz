@@ -4,6 +4,7 @@
         <groupId>net.bodz.bas</groupId>
         <artifactId>bas-parent</artifactId>
         <version>0.4</version>
+        <relativePath>../bas/bas-parent</relativePath>
     </parent>
     <groupId>net.bodz.mis</groupId>
     <artifactId>mis</artifactId>
@@ -132,10 +133,6 @@
         <module>server</module>
         <module>app</module>
     </modules>
-    <properties>
-        <java.version>1.6</java.version>
-        <java.home>${JAVA_SE_6_HOME}</java.home>
-    </properties>
     <name>MIS Framework</name>
     <url>http://mis.bodz.net/</url>
     <inceptionYear>2008</inceptionYear>

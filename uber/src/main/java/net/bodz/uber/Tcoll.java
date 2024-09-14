@@ -1,12 +1,12 @@
 package net.bodz.uber;
 
-import net.bodz.bas.shell.util.TypeCollectorCLI;
+import net.bodz.uni.shelj.codegen.java.service.TypeCollectorApp;
 
 public class Tcoll {
 
     public static void main(String[] args)
             throws Exception {
-        TypeCollectorCLI.main(args);
+        TypeCollectorApp.main(args);
     }
 
 }

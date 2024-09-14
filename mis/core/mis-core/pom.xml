@@ -6,7 +6,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>mis-core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <dependencies/>
     <name>MIS :: Core :: Core</name>
 </project>
