@@ -1,16 +1,43 @@
 package net.bodz.bas.c.javax.security.auth;
 
 import java.math.BigInteger;
-import java.security.*;
+import java.security.AlgorithmParameters;
+import java.security.GeneralSecurityException;
+import java.security.Key;
+import java.security.KeyStore;
 import java.security.KeyStore.Builder;
 import java.security.KeyStore.CallbackHandlerProtection;
 import java.security.KeyStore.Entry;
 import java.security.KeyStore.PasswordProtection;
 import java.security.KeyStore.ProtectionParameter;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
+import java.security.Provider;
 import java.security.Provider.Service;
-import java.security.cert.*;
+import java.security.ProviderException;
+import java.security.PublicKey;
+import java.security.UnrecoverableEntryException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertStore;
+import java.security.cert.CertStoreException;
+import java.security.cert.CertStoreParameters;
 import java.security.cert.Certificate;
-import java.util.*;
+import java.security.cert.CertificateEncodingException;
+import java.security.cert.CertificateParsingException;
+import java.security.cert.CollectionCertStoreParameters;
+import java.security.cert.LDAPCertStoreParameters;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
 import javax.crypto.Cipher;
 import javax.crypto.ExemptionMechanism;
@@ -526,7 +553,8 @@ public class PKIDumper {
                     else
                         dumpBytes(prefix + "  ", encodedInternal, detail);
                 }
-            } catch (InvalidKeyException e) {
+            // } catch (InvalidKeyException e) {
+            } catch (Exception e) {
                 dumpError(prefix + "  ", e, detail);
             }
         }
