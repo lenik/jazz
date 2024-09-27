@@ -127,12 +127,12 @@ public class NulliString
 
     @Override
     public iString headPar() {
-        return null;
+        return iString.NULL;
     }
 
     @Override
     public iString tailPar() {
-        return null;
+        return iString.NULL;
     }
 
     @Override
