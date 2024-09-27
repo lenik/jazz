@@ -14,6 +14,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.lily.security.IUser;
 import net.bodz.lily.security.IUserSecret;
+import net.bodz.lily.security.MutableUser;
 
 public class AuthData
         implements
@@ -150,16 +151,6 @@ public class AuthData
 //    }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
-            throws ParseException {
-    }
-
-    @Override
-    public void jsonOut(IJsonOut out, JsonFormOptions opts)
-            throws IOException, FormatException {
-    }
-
-    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (user != null) {
@@ -179,6 +170,68 @@ public class AuthData
             }
         }
         return sb.toString();
+    }
+
+    private static final String K_AUTH_TIME = "authTime";
+    private static final String K_EXPIRE_TIME = "expireTime";
+    private static final String K_AUTHORITY_CLASS = "authorityClass";
+    private static final String K_AUTHORITY = "authority";
+    private static final String K_METHOD = "method";
+    private static final String K_AUTH_ID = "authId";
+    private static final String K_USER = "user";
+    private static final String K_ITEMS = "items";
+    private static final String K_FLYING_INDEX = "flyingIndex";
+    private static final String K_COMPLETED = "completed";
+
+    @Override
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
+            throws ParseException {
+        authTime = o.getZonedDateTime(K_AUTH_TIME);
+        expireTime = o.getZonedDateTime(K_EXPIRE_TIME);
+//    authority = o.getObject(K_AUTHORITY);
+        method = o.getString(K_METHOD);
+//    authId = o.getObject(K_AUTH_ID);
+        if (o.containsKey(K_USER)) {
+            user = MutableUser.from(o.getJsonObject(K_USER));
+        }
+        // items = o.getMap(K_ITEMS, SortOrder.KEEP);
+        if (o.containsKey(K_FLYING_INDEX)) {
+            flyingIndex = FlyingIndex.from(o.getJsonObject(K_FLYING_INDEX));
+        }
+        completed = o.getBoolean(K_COMPLETED, completed);
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        out.entryNotNull(K_AUTH_TIME, authTime);
+        out.entryNotNull(K_EXPIRE_TIME, expireTime);
+
+        if (authority != null) {
+            out.entry(K_AUTHORITY_CLASS, authority.getClass().getSimpleName());
+            out.entry(K_AUTHORITY, authority);
+        }
+
+        out.entryNotNull(K_METHOD, method);
+
+        out.entryNotNull(K_AUTH_ID, authId);
+
+        out.key(K_USER);
+        out.object();
+        {
+            out.entry("id", user.id());
+            out.entry("name", user.getName());
+            out.entry("fullName", user.getFullName());
+            for (String attr : user.getAttributeNames()) {
+                Object val = user.getAttribute(attr);
+                out.entry(attr, val);
+            }
+            out.endObject();
+        }
+
+//        out.entryNotNull(K_ITEMS, items);
+//        out.entryNotNull(K_FLYING_INDEX, flyingIndex);
+//        out.entryTrue(K_COMPLETED, completed);
     }
 
 }

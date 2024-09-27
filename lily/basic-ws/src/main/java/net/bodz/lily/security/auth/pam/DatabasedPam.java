@@ -20,4 +20,9 @@ public abstract class DatabasedPam
         return dataContext;
     }
 
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "@" + dataContext.getId();
+    }
+
 }

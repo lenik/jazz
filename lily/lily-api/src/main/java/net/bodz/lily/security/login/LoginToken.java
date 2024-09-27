@@ -10,6 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.content.IReset;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -278,27 +279,14 @@ public class LoginToken
 
     @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
-            throws IOException {
+            throws IOException, FormatException {
         out.entry("type", LoginToken.class.getSimpleName());
+        // out.entry("authority", authData.getAuthority().getClass().getSimpleName());
         out.entry("id", id);
         out.entry("txn", transaction);
         out.entry("timeout", Long.MAX_VALUE);
 
-        out.entryNotNull("authId", authData.getAuthId());
-
-        IUser user = authData.getUser();
-        out.key("user");
-        out.object();
-        {
-            out.entry("id", user.id());
-            out.entry("name", user.getName());
-            out.entry("fullName", user.getFullName());
-            for (String attr : user.getAttributeNames()) {
-                Object val = user.getAttribute(attr);
-                out.entry(attr, val);
-            }
-            out.endObject();
-        }
+        authData.jsonOut(out, opts);
     }
 
     @Override
