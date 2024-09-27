@@ -34,6 +34,8 @@ public class ConnectOptions
 
 //    public static final String ATTRIBUTE_KEY = ConnectOptions.class.getName();
 
+    private String id;
+
     private String sourceUri;
     private long lastModifiedTime;
 
@@ -49,8 +51,17 @@ public class ConnectOptions
 
     private int poolSize = 10;
 
-    public ConnectOptions() {
+    public ConnectOptions(String id) {
+        this.id = id;
         properties = new Properties();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSourceUri() {
@@ -75,7 +86,7 @@ public class ConnectOptions
 
     @Override
     public ConnectOptions clone() {
-        ConnectOptions o = new ConnectOptions();
+        ConnectOptions o = new ConnectOptions(id);
         o.sourceUri = sourceUri;
         o.lastModifiedTime = lastModifiedTime;
         o.type = type;

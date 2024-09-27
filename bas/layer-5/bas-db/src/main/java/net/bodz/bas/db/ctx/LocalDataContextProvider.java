@@ -114,7 +114,7 @@ public class LocalDataContextProvider
             extension = pathInfo.substring(lastDot + 1);
         }
 
-        ConnectOptions options = new ConnectOptions();
+        ConnectOptions options = new ConnectOptions(pathInfo);
 
         switch (extension) {
         case "xml":

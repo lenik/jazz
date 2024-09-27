@@ -46,6 +46,9 @@ public class DataContext
 
 //    public static final String ATTRIBUTE_KEY = DataContext.class.getName();
 
+    static int nextId = 1;
+    int id;
+
     private ConnectOptions options;
     private IDataSourceProvider dataSourceProvider;
     private DataSource dataSource;
@@ -65,6 +68,10 @@ public class DataContext
 
         mapperProvider = new IbatisMapperProvider(dataSource);
         attributes = new MutableAttributes();
+    }
+
+    public String getId() {
+        return id + "@" + options.getId();
     }
 
     @SuppressWarnings("unchecked")
