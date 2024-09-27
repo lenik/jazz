@@ -107,6 +107,13 @@ public class FlyingIndex
         return String.format("index %+d, time %s", relativeIndex, ts);
     }
 
+    public static FlyingIndex from(JsonObject jo)
+            throws ParseException {
+        FlyingIndex a = new FlyingIndex();
+        a.jsonIn(jo);
+        return a;
+    }
+
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
