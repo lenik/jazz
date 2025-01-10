@@ -41,7 +41,8 @@ public class LoginToken
     static final Random RANDOM = new Random();
 
     long id;
-    long expireDate;
+    long expireDate = 0;
+    boolean logging;
 
     AuthData authData;
 //    IUserSecret secret;
@@ -71,6 +72,14 @@ public class LoginToken
 
     public long getExpireDate() {
         return expireDate;
+    }
+
+    public boolean isTransparent() {
+        return ! isLogging();
+    }
+
+    public boolean isLogging() {
+        return logging;
     }
 
     public IUser getUser() {
