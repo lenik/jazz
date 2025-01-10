@@ -11,7 +11,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import ListingAdmin from '@skeljs/dba/src/ui/lily/ListingAdmin.vue';
+import ListingAdmin from 'skel01-dba/src/ui/lily/ListingAdmin.vue';
 
 const props = withDefaults(defineProps<Props>(), {
 });

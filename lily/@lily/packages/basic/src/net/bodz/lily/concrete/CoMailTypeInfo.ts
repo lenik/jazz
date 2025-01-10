@@ -1,7 +1,7 @@
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import CoMailValidators from './CoMailValidators';
-import { ARRAY, BOOLEAN, LONG } from '@skeljs/core/src/lang/baseinfo';
+import { ARRAY, BOOLEAN, LONG } from 'skel01-core/src/lang/baseinfo';
 import User from '../schema/account/User';
 
 export class CoMailTypeInfo extends CoMessageTypeInfo {

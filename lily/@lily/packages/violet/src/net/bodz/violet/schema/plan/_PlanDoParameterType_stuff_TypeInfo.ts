@@ -1,5 +1,5 @@
-import { STRING } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { STRING } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 import CoParameterTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoParameterTypeInfo";
 
 import _PlanDoParameterType_stuff_Validators from "./_PlanDoParameterType_stuff_Validators";

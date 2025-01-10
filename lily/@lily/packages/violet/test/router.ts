@@ -98,7 +98,7 @@ export const links = {
 
 export const routes = [
     { path: '/', component: () => import('./Index.vue') },
-    { path: '/Project', component: () => import('@skeljs/core/src/ui/demo/Project.vue') },
+    { path: '/Project', component: () => import('skel01-core/src/ui/demo/Project.vue') },
     { path: '/ArtifactAdmin', component: () => import('../src/net/bodz/violet/schema/art/ArtifactAdmin.vue') },
     { path: '/ArtifactBackrefAdmin', component: () => import('../src/net/bodz/violet/schema/art/ArtifactBackrefAdmin.vue') },
     { path: '/ArtifactCategoryAdmin', component: () => import('../src/net/bodz/violet/schema/art/ArtifactCategoryAdmin.vue') },

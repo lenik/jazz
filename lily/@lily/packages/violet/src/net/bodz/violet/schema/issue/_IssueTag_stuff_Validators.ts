@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import CoTagValidators from "@lily/basic/src/net/bodz/lily/concrete/CoTagValidators";
 
 import type _IssueTag_stuff_TypeInfo from "./_IssueTag_stuff_TypeInfo";

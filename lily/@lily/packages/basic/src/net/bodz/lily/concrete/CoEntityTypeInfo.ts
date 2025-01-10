@@ -1,8 +1,8 @@
-import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import TypeInfo from 'skel01-core/src/lang/TypeInfo';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoEntityValidators from './CoEntityValidators';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
-import { INT, LONG, UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
+import { INT, LONG, UNDEFINED } from 'skel01-core/src/lang/baseinfo';
 
 export class CoEntityTypeInfo extends CoObjectTypeInfo {
 

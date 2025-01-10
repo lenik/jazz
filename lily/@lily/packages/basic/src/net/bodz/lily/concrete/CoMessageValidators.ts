@@ -1,5 +1,5 @@
 import { Moment } from "moment-timezone";
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
+import { IEntityType } from 'skel01-dba/src/net/bodz/lily/entity/IEntityType';
 import CoEventValidators from './CoEventValidators';
 import User from '../schema/account/User';
 import FormDef from '../schema/meta/FormDef';

@@ -1,7 +1,7 @@
-import { INT, BOOLEAN, STRING, LIST } from '@skeljs/core/src/lang/baseinfo';
-import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
-import LocalDate from '@skeljs/core/src/lang/time/LocalDate';
-import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { INT, BOOLEAN, STRING, LIST } from 'skel01-core/src/lang/baseinfo';
+import { JSON_VARIANT } from 'skel01-core/src/lang/bas-info';
+import LocalDate from 'skel01-core/src/lang/time/LocalDate';
+import { property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoImagedTypeInfo from '../../src/net/bodz/lily/concrete/CoImagedTypeInfo';
 import Contact from './Contact';
 

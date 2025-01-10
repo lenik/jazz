@@ -1,8 +1,8 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import { INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
 import FabTrackParty from "./FabTrackParty";
@@ -15,7 +15,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
 
 import FabTrackPartyEditor from "./FabTrackPartyEditor.vue";
 

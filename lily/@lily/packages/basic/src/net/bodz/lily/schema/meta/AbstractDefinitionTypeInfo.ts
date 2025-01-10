@@ -1,6 +1,6 @@
 import AbstractDefinitionValidators from "./AbstractDefinitionValidators";
 import CoCodeTypeInfo from "../../concrete/CoCodeTypeInfo";
-import TypeInfo from "@skeljs/core/src/lang/TypeInfo";
+import TypeInfo from "skel01-core/src/lang/TypeInfo";
 
 export class AbstractDefinitionTypeInfo extends CoCodeTypeInfo {
 

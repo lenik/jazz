@@ -1,4 +1,4 @@
-import { int } from '@skeljs/core/src/lang/basetype';
+import { int } from 'skel01-core/src/lang/basetype';
 import CoNode from './CoNode';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 

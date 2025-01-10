@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import DocRecordValidators from "@lily/basic/src/net/bodz/lily/concrete/DocRecordValidators";
 
 import type Artifact from "./Artifact";

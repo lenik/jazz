@@ -1,4 +1,4 @@
-import type { long } from "@skeljs/core/src/lang/basetype";
+import type { long } from "skel01-core/src/lang/basetype";
 
 import CoTalk from "../../concrete/CoTalk";
 import type Article from "./Article";

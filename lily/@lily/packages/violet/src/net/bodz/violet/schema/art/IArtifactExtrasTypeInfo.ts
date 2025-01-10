@@ -1,6 +1,6 @@
-import { INT, STRING } from '@skeljs/core/src/lang/baseinfo';
-import EntityType from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { INT, STRING } from 'skel01-core/src/lang/baseinfo';
+import EntityType from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
+import { property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import IArtifactExtrasValidators from './IArtifactExtrasValidators';
 import IArtifactExtras from './IArtifactExtras';
 

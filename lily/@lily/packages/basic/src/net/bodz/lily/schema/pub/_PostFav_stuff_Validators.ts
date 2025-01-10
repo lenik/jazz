@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import FavRecordValidators from "../../concrete/FavRecordValidators";
 import type Post from "./Post";

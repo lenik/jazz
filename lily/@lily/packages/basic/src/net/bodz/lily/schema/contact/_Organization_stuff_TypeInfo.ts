@@ -1,5 +1,5 @@
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { INT, STRING } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import PartyTypeInfo from "./PartyTypeInfo";
 import _Organization_stuff_Validators from "./_Organization_stuff_Validators";

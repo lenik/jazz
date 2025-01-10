@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import AbstractDefinitionValidators from "./AbstractDefinitionValidators";
 import type _PriorityDef_stuff_TypeInfo from "./_PriorityDef_stuff_TypeInfo";

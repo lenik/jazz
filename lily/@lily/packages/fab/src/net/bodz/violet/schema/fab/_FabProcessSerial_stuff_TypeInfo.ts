@@ -1,6 +1,6 @@
-import { LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import type { long } from "@skeljs/core/src/lang/basetype";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { LONG, STRING } from "skel01-core/src/lang/baseinfo";
+import type { long } from "skel01-core/src/lang/basetype";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import { FabProcess_TYPE } from "./FabProcessTypeInfo";

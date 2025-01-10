@@ -1,8 +1,8 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
+import { DOUBLE, INT, STRING } from "skel01-core/src/lang/baseinfo";
 
 import UomRow from "./UomRow";
 import { UomRow_TYPE } from "./UomRowTypeInfo";
@@ -14,7 +14,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
 
 import UomRowEditor from "./UomRowEditor.vue";
 

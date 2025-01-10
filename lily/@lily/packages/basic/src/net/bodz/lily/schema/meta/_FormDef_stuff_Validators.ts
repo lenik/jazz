@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import AbstractDefinitionValidators from "./AbstractDefinitionValidators";
 import type _FormDef_stuff_TypeInfo from "./_FormDef_stuff_TypeInfo";

@@ -1,8 +1,8 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { BIG_DECIMAL, INT, LONG } from "@skeljs/core/src/lang/baseinfo";
-import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
+import { BIG_DECIMAL, INT, LONG } from "skel01-core/src/lang/baseinfo";
+import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
 
 import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
 import TransportOrderItem from "./TransportOrderItem";
@@ -15,7 +15,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
 
 import TransportOrderItemEditor from "./TransportOrderItemEditor.vue";
 

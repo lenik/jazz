@@ -1,6 +1,6 @@
-import { INT } from "@skeljs/core/src/lang/baseinfo";
-import type { int } from "@skeljs/core/src/lang/basetype";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { INT } from "skel01-core/src/lang/baseinfo";
+import type { int } from "skel01-core/src/lang/basetype";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import IdEntityTypeInfo from "../../concrete/IdEntityTypeInfo";
 import { User_TYPE } from "../account/UserTypeInfo";

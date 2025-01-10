@@ -1,5 +1,5 @@
-import type { List, int } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import type { List, int } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 
 import TransportOrderItem from "./TransportOrderItem";
 import TransportOrderTypeInfo from "./TransportOrderTypeInfo";

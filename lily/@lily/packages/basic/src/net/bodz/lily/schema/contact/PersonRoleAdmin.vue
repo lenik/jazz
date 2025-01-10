@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { INT, STRING } from "skel01-core/src/lang/baseinfo";
 
 import { OrgUnit_TYPE } from "./OrgUnitTypeInfo";
 import { Organization_TYPE } from "./OrganizationTypeInfo";
@@ -15,7 +15,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
 
 import PersonRoleEditor from "./PersonRoleEditor.vue";
 

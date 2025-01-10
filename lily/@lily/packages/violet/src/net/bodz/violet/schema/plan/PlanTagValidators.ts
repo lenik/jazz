@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type PlanTagTypeInfo from "./PlanTagTypeInfo";
 import _PlanTag_stuff_Validators from "./_PlanTag_stuff_Validators";

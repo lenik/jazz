@@ -1,9 +1,9 @@
-import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoImagedTypeInfo from '../../concrete/CoImagedTypeInfo';
 import PartyValidators from './PartyValidators';
-import { ARRAY, BOOLEAN, CHAR, INT, STRING } from '@skeljs/core/src/lang/baseinfo';
-import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
-import LocalDate from '@skeljs/core/src/lang/time/LocalDate';
+import { ARRAY, BOOLEAN, CHAR, INT, STRING } from 'skel01-core/src/lang/baseinfo';
+import { JSON_VARIANT } from 'skel01-core/src/lang/bas-info';
+import LocalDate from 'skel01-core/src/lang/time/LocalDate';
 import PartyCategory from './PartyCategory';
 import Person from './Person';
 import Contact from './Contact';

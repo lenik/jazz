@@ -12,7 +12,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-ant</module>
-        <module>bas-esm-skeljs</module>
+        <module>bas-esm-skel01</module>
         <module>bas-httpd</module>
         <module>bas-netserv</module>
         <module>bas-program</module>

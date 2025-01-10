@@ -1,4 +1,4 @@
-package net.bodz.bas.esm.skeljs;
+package net.bodz.bas.esm.skel01;
 
 import net.bodz.bas.esm.EsmModule;
 import net.bodz.bas.esm.EsmName;
@@ -8,7 +8,7 @@ public class Core
         extends EsmModule {
 
     public Core(int priority) {
-        super("@skeljs/core", "src", priority);
+        super("skel01-core", "src", priority);
     }
 
     @SourcePath("lang/basetype")

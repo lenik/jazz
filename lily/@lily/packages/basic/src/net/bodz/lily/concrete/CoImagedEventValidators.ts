@@ -1,6 +1,6 @@
 import CoEventValidators from './CoEventValidators';
 import CoImagedEventTypeInfo from './CoImagedEventTypeInfo';
-import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
+import Attachment from 'skel01-core/src/net/bodz/lily/entity/Attachment';
 
 export class CoImagedEventValidators extends CoEventValidators {
 

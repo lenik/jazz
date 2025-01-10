@@ -1,5 +1,5 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { int } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type PersonRoleTypeInfo from "./PersonRoleTypeInfo";
 import _PersonRole_stuff_Validators from "./_PersonRole_stuff_Validators";

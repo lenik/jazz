@@ -1,7 +1,7 @@
-import { int } from '@skeljs/core/src/lang/basetype';
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
+import { int } from 'skel01-core/src/lang/basetype';
+import { IEntityType } from 'skel01-dba/src/net/bodz/lily/entity/IEntityType';
 import StructRowTypeInfo from './StructRowTypeInfo';
-import { OffsetDateTime } from '@skeljs/core/src/lang/time';
+import { OffsetDateTime } from 'skel01-core/src/lang/time';
 
 export class StructRowValidators {
 

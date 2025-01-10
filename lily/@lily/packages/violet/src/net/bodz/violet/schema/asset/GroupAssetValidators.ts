@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type GroupAssetTypeInfo from "./GroupAssetTypeInfo";
 import _GroupAsset_stuff_Validators from "./_GroupAsset_stuff_Validators";

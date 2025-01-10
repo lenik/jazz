@@ -1,4 +1,4 @@
-package net.bodz.bas.esm.skeljs;
+package net.bodz.bas.esm.skel01;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -13,9 +13,9 @@ import java.util.Set;
 import net.bodz.bas.esm.EsmName;
 import net.bodz.bas.esm.ITsTypeInfoProvider;
 import net.bodz.bas.esm.TsTypeMap;
-import net.bodz.bas.esm.skeljs.Core.BasInfo;
-import net.bodz.bas.esm.skeljs.Core.BaseInfo;
-import net.bodz.bas.esm.skeljs.Core.LangTime;
+import net.bodz.bas.esm.skel01.Core.BasInfo;
+import net.bodz.bas.esm.skel01.Core.BaseInfo;
+import net.bodz.bas.esm.skel01.Core.LangTime;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.t.variant.MutableVariant;
 
@@ -25,9 +25,9 @@ public class TsTypeInfos
             ITsTypeInfoProvider {
 
     {
-        BaseInfo baseInfo = SkeljsModules.core.baseInfo;
-        BasInfo basInfo = SkeljsModules.core.basInfo;
-        LangTime time = SkeljsModules.core.time;
+        BaseInfo baseInfo = Skel01Modules.core.baseInfo;
+        BasInfo basInfo = Skel01Modules.core.basInfo;
+        LangTime time = Skel01Modules.core.time;
 
         addType(byte.class, baseInfo.BYTE);
         addType(short.class, baseInfo.SHORT);
@@ -63,7 +63,7 @@ public class TsTypeInfos
         addType(JsonVariant.class, basInfo.JSON_VARIANT);
         addType(MutableVariant.class, basInfo.JSON_VARIANT);
 
-        addAbstractType(InetAddress.class, SkeljsModules.core.baseInfo.INET_ADDRESS);
+        addAbstractType(InetAddress.class, Skel01Modules.core.baseInfo.INET_ADDRESS);
     }
 
     @Override
@@ -73,9 +73,9 @@ public class TsTypeInfos
             return esmName;
 
         if (clazz.isArray())
-            return SkeljsModules.core.baseInfo.ARRAY;
+            return Skel01Modules.core.baseInfo.ARRAY;
         if (clazz.isEnum())
-            return SkeljsModules.core.baseInfo.ENUM;
+            return Skel01Modules.core.baseInfo.ENUM;
 
         return null;
     }

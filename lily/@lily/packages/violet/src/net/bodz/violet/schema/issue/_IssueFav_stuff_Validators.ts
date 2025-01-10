@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import FavRecordValidators from "@lily/basic/src/net/bodz/lily/concrete/FavRecordValidators";
 
 import type Issue from "./Issue";

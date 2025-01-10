@@ -1,5 +1,5 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { int } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type ArticleTagTypeInfo from "./ArticleTagTypeInfo";
 import _ArticleTag_stuff_Validators from "./_ArticleTag_stuff_Validators";

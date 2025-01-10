@@ -1,6 +1,6 @@
-import type { BigDecimal, long } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { BigDecimal, long } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import CoEventValidators from "@lily/basic/src/net/bodz/lily/concrete/CoEventValidators";
 import type OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
 

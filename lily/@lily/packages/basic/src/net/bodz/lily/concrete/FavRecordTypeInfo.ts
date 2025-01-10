@@ -1,7 +1,7 @@
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import FavRecordValidators from './FavRecordValidators';
-import { INT, LONG } from '@skeljs/core/src/lang/baseinfo';
+import { INT, LONG } from 'skel01-core/src/lang/baseinfo';
 import User from '../schema/account/User';
 
 export class FavRecordTypeInfo extends IdEntityTypeInfo {

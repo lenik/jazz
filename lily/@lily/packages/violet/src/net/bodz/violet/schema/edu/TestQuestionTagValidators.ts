@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type TestQuestionTagTypeInfo from "./TestQuestionTagTypeInfo";
 import _TestQuestionTag_stuff_Validators from "./_TestQuestionTag_stuff_Validators";

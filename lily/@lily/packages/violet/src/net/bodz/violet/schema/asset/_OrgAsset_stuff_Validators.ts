@@ -1,5 +1,5 @@
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
 
 import AbstractAssetValidators from "./AbstractAssetValidators";

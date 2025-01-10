@@ -1,5 +1,5 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { int } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import CoCodeValidators from "@lily/basic/src/net/bodz/lily/concrete/CoCodeValidators";
 
 import type _RegionLevel_stuff_TypeInfo from "./_RegionLevel_stuff_TypeInfo";

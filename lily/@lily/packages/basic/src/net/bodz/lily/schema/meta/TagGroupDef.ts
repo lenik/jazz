@@ -1,4 +1,4 @@
-import type { List } from "@skeljs/core/src/lang/basetype";
+import type { List } from "skel01-core/src/lang/basetype";
 
 import TagDef from "./TagDef";
 import TagGroupDefTypeInfo from "./TagGroupDefTypeInfo";

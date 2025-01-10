@@ -1,4 +1,4 @@
-import type { long } from "@skeljs/core/src/lang/basetype";
+import type { long } from "skel01-core/src/lang/basetype";
 import FavRecord from "@lily/basic/src/net/bodz/lily/concrete/FavRecord";
 
 import type Plan from "./Plan";

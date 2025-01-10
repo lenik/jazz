@@ -1,5 +1,5 @@
-import { BOOLEAN } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { BOOLEAN } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import AbstractDefinitionTypeInfo from "./AbstractDefinitionTypeInfo";
 import _TagGroupDef_stuff_Validators from "./_TagGroupDef_stuff_Validators";

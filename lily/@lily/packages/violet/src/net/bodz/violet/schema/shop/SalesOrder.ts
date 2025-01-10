@@ -1,5 +1,5 @@
-import type { BigDecimal, List, int } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import type { BigDecimal, List, int } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 
 import TransportOrder from "../tran/TransportOrder";
 import SalesOrderItem from "./SalesOrderItem";

@@ -1,4 +1,4 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
+import type { int } from "skel01-core/src/lang/basetype";
 import CoCode from "@lily/basic/src/net/bodz/lily/concrete/CoCode";
 
 export class _RegionLevel_stuff<this_t> extends CoCode<this_t> {

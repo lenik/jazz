@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type SalesPhaseTypeInfo from "./SalesPhaseTypeInfo";
 import _SalesPhase_stuff_Validators from "./_SalesPhase_stuff_Validators";

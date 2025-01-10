@@ -1,9 +1,9 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
+import { INT, STRING } from "skel01-core/src/lang/baseinfo";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
 import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
 import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
@@ -17,7 +17,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
 
 import RegionTagEditor from "./RegionTagEditor.vue";
 

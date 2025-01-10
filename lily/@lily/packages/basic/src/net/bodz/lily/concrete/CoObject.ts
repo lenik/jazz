@@ -1,7 +1,7 @@
 import moment from "moment-timezone";
 import { Moment } from "moment-timezone";
 
-import { int } from '@skeljs/core/src/lang/basetype';
+import { int } from 'skel01-core/src/lang/basetype';
 
 import StructRow from './StructRow';
 import CoObjectTypeInfo from './CoObjectTypeInfo';

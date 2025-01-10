@@ -1,4 +1,4 @@
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
+import { IEntityType } from 'skel01-dba/src/net/bodz/lily/entity/IEntityType';
 import CoMessageValidators from './CoMessageValidators';
 import User from '../schema/account/User';
 import CoMailTypeInfo from './CoMailTypeInfo';

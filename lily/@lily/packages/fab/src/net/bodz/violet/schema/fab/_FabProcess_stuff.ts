@@ -1,6 +1,6 @@
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
-import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
+import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import CoEvent from "@lily/basic/src/net/bodz/lily/concrete/CoEvent";
 
 import type ArtifactModel from "../art/ArtifactModel";

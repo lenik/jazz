@@ -1,8 +1,8 @@
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import BackrefRecordValidators from './BackrefRecordValidators';
 import User from '../schema/account/User';
-import { LONG, STRING } from '@skeljs/core/src/lang/baseinfo';
+import { LONG, STRING } from 'skel01-core/src/lang/baseinfo';
 
 export class BackrefRecordTypeInfo extends IdEntityTypeInfo {
 

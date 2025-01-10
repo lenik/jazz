@@ -1,5 +1,5 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { int } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import CoMessageValidators from "../../concrete/CoMessageValidators";
 import type _VAppRequest_stuff_TypeInfo from "./_VAppRequest_stuff_TypeInfo";

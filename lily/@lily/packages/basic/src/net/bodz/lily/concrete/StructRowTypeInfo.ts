@@ -1,8 +1,8 @@
-import { EntityType, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
+import { EntityType, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
+import EntityPropertyMap from 'skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import StructRowValidators from './StructRowValidators';
-import { INT } from '@skeljs/core/src/lang/baseinfo';
-import OffsetDateTime from '@skeljs/core/src/lang/time/OffsetDateTime';
+import { INT } from 'skel01-core/src/lang/baseinfo';
+import OffsetDateTime from 'skel01-core/src/lang/time/OffsetDateTime';
 import StructRow from './StructRow';
 
 export class StructRowTypeInfo extends EntityType {

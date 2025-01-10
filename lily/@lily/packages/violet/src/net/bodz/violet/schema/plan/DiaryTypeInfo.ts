@@ -1,5 +1,5 @@
-import { LIST } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { LIST } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import Diary from "./Diary";
 import { DiaryParty_TYPE } from "./DiaryPartyTypeInfo";

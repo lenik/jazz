@@ -1,8 +1,8 @@
 --- codegen//tmp/UserValidators17692862795803305840.ts	2024-05-13 11:31:58.355113369 +0800
 +++ user//tmp/UserValidators17692862795803305840.ts	2024-05-13 11:31:58.355113369 +0800
 @@ -1,7 +1,6 @@
- import type { InetAddress, List, int } from "@skeljs/core/src/lang/basetype";
- import { ValidateResult } from "@skeljs/core/src/ui/types";
+ import type { InetAddress, List, int } from "skel01-core/src/lang/basetype";
+ import { ValidateResult } from "skel01-core/src/ui/types";
  
 -import type ExtraAttributes from "../../concrete/util/ExtraAttributes";
  import type Group from "./Group";

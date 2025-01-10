@@ -1,6 +1,6 @@
-import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import { INT } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
+import { INT } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
 import AbstractAssetTypeInfo from "./AbstractAssetTypeInfo";

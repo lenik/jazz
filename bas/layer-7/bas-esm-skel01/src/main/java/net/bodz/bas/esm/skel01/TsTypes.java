@@ -1,4 +1,4 @@
-package net.bodz.bas.esm.skeljs;
+package net.bodz.bas.esm.skel01;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -19,9 +19,9 @@ import java.util.List;
 import net.bodz.bas.esm.EsmName;
 import net.bodz.bas.esm.ITsTypeProvider;
 import net.bodz.bas.esm.TsTypeMap;
-import net.bodz.bas.esm.skeljs.Core.BasType;
-import net.bodz.bas.esm.skeljs.Core.BaseType;
-import net.bodz.bas.esm.skeljs.Core.LangTime;
+import net.bodz.bas.esm.skel01.Core.BasType;
+import net.bodz.bas.esm.skel01.Core.BaseType;
+import net.bodz.bas.esm.skel01.Core.LangTime;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.site.json.JsonMap;
@@ -34,9 +34,9 @@ public class TsTypes
             ITsTypeProvider {
 
     {
-        BaseType baseType = SkeljsModules.core.baseType;
-        BasType basType = SkeljsModules.core.basType;
-        LangTime time = SkeljsModules.core.time;
+        BaseType baseType = Skel01Modules.core.baseType;
+        BasType basType = Skel01Modules.core.basType;
+        LangTime time = Skel01Modules.core.time;
 
         addType(byte.class, baseType._byte);
         addType(short.class, baseType._short);
@@ -88,7 +88,7 @@ public class TsTypes
 
         addType(ZoneId.class, baseType._string);
 
-        addType(State.class, SkeljsModules.core.state.DefaultState);
+        addType(State.class, Skel01Modules.core.state.DefaultState);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class TsTypes
             return esmName;
 
         if (clazz.isEnum())
-            return SkeljsModules.core.baseType.Enum;
+            return Skel01Modules.core.baseType.Enum;
 
         return null;
     }

@@ -1,8 +1,8 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
-import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
+import { INT, LONG } from "skel01-core/src/lang/baseinfo";
+import type { DialogSelectCallback } from "skel01-core/src/ui/types";
 import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
 import { TestQuestionTalk_TYPE } from "./TestQuestionTalkTypeInfo";
@@ -16,7 +16,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
+import EntityChooseDialog from "skel01-dba/src/ui/lily/EntityChooseDialog.vue";
 
 const model = defineModel();
 

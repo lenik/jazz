@@ -1,5 +1,5 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import type { int } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import CoImagedEvent from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEvent";
 import type Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
 import _ArtifactModel_stuff_TypeInfo from "@lily/violet/src/net/bodz/violet/schema/art/_ArtifactModel_stuff_TypeInfo";

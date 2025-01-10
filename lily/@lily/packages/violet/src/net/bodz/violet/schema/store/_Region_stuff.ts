@@ -1,4 +1,4 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
+import type { int } from "skel01-core/src/lang/basetype";
 import CoNode from "@lily/basic/src/net/bodz/lily/concrete/CoNode";
 
 import type Artifact from "../art/Artifact";

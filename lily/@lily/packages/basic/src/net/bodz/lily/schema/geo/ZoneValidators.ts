@@ -1,5 +1,5 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { int } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type GeoLocation from "../../concrete/util/GeoLocation";
 import type ZoneTypeInfo from "./ZoneTypeInfo";

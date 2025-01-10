@@ -1,5 +1,5 @@
-import { BOOLEAN, INET_ADDRESS, INT, LIST, SET, STRING } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { BOOLEAN, INET_ADDRESS, INT, LIST, SET, STRING } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import { Group_TYPE } from "./GroupTypeInfo";
 import User from "./User";

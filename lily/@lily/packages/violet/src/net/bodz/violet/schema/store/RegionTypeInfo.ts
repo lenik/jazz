@@ -1,5 +1,5 @@
-import { STRING } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { STRING } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import { Dim3d_TYPE } from "../art/Dim3dTypeInfo";
 import Region from "./Region";

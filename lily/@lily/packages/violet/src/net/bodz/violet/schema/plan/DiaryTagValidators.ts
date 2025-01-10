@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type DiaryTagTypeInfo from "./DiaryTagTypeInfo";
 import _DiaryTag_stuff_Validators from "./_DiaryTag_stuff_Validators";

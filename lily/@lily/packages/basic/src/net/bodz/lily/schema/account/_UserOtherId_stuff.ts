@@ -1,6 +1,6 @@
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
-import type { int } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
+import type { int } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 
 import CoImaged from "../../concrete/CoImaged";
 import type User from "./User";

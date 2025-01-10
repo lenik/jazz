@@ -1,8 +1,8 @@
 --- codegen//tmp/PersonTypeInfo6241385117835712077.ts	2024-05-13 11:31:57.483077208 +0800
 +++ user//tmp/PersonTypeInfo6241385117835712077.ts	2024-05-13 11:31:57.483077208 +0800
 @@ -1,7 +1,6 @@
- import { LIST, STRING } from "@skeljs/core/src/lang/baseinfo";
- import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+ import { LIST, STRING } from "skel01-core/src/lang/baseinfo";
+ import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
  
 -import { IAttributes_TYPE } from "../../../bas/rtx/IAttributesTypeInfo";
  import Person from "./Person";

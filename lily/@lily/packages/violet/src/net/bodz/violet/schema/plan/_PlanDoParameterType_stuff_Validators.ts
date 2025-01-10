@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import CoParameterValidators from "@lily/basic/src/net/bodz/lily/concrete/CoParameterValidators";
 
 import type _PlanDoParameterType_stuff_TypeInfo from "./_PlanDoParameterType_stuff_TypeInfo";

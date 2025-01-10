@@ -1,5 +1,5 @@
-import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
 import type OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";

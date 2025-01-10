@@ -1,4 +1,4 @@
-import type { double, int } from "@skeljs/core/src/lang/basetype";
+import type { double, int } from "skel01-core/src/lang/basetype";
 import Dim3dTypeInfo from "./Dim3dTypeInfo";
 
 export class Dim3d {

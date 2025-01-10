@@ -1,5 +1,5 @@
-import TypeInfo from "@skeljs/core/src/lang/TypeInfo";
-import { getItemImage } from "@skeljs/core/src/net/bodz/lily/entity/IAttachment";
+import TypeInfo from "skel01-core/src/lang/TypeInfo";
+import { getItemImage } from "skel01-core/src/net/bodz/lily/entity/IAttachment";
 
 class DefaultAttachmentTypeInfo extends TypeInfo<any> {
 

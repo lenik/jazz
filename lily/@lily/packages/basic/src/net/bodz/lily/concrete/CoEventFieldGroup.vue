@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import EntityPropertyMap from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { CoEvent_TYPE } from "./CoEventTypeInfo";
 import CoEvent from "./CoEvent";
 
@@ -10,9 +10,9 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import DateTime from "@skeljs/core/src/ui/input/DateTime.vue";
-import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+import FieldRow from "skel01-core/src/ui/FieldRow.vue";
+import DateTime from "skel01-core/src/ui/input/DateTime.vue";
+import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
 
 const model = defineModel<CoEvent<any>>({ required: true });
 

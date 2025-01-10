@@ -1,4 +1,4 @@
-import type { double, int, long } from "@skeljs/core/src/lang/basetype";
+import type { double, int, long } from "skel01-core/src/lang/basetype";
 
 import IdEntity from "../../concrete/IdEntity";
 import type Article from "./Article";

@@ -1,7 +1,7 @@
-import { BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import type { int } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { BOOLEAN, INT, STRING } from "skel01-core/src/lang/baseinfo";
+import type { int } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
 import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
 import { Artifact_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";

@@ -1,5 +1,5 @@
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
-import type { int, long } from "@skeljs/core/src/lang/basetype";
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
+import type { int, long } from "skel01-core/src/lang/basetype";
 
 import CoMessage from "../../concrete/CoMessage";
 import type ArticleCategory from "./ArticleCategory";

@@ -1,4 +1,4 @@
-import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
+import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
 import CoImaged from "@lily/basic/src/net/bodz/lily/concrete/CoImaged";
 
 import type TestPaper from "./TestPaper";

@@ -25,7 +25,7 @@ export const links = {
 
 export const routes = [
     { path: '/', component: () => import('./Index.vue') },
-    { path: '/Project', component: () => import('@skeljs/core/src/ui/demo/Project.vue') },
+    { path: '/Project', component: () => import('skel01-core/src/ui/demo/Project.vue') },
     { path: '/ArtifactModelAdmin', component: () => import('../src/net/bodz/violet/schema/art/ArtifactModelAdmin.vue') },
     { path: '/FabFnAdmin', component: () => import('../src/net/bodz/violet/schema/fab/FabFnAdmin.vue') },
     { path: '/FabOrderAdmin', component: () => import('../src/net/bodz/violet/schema/fab/FabOrderAdmin.vue') },

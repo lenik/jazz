@@ -1,7 +1,7 @@
-import { double } from '@skeljs/core/src/lang/basetype';
-import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
+import { double } from 'skel01-core/src/lang/basetype';
+import TypeInfo from 'skel01-core/src/lang/TypeInfo';
 import GeoLocation from "./GeoLocation";
-import GeoZone from '@skeljs/core/src/net/bodz/bas/i18n/geo/GeoZone';
+import GeoZone from 'skel01-core/src/net/bodz/bas/i18n/geo/GeoZone';
 
 export class GeoLocationTypeInfo extends TypeInfo<GeoLocation> {
 

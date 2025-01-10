@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import CoTalkValidators from "../../concrete/CoTalkValidators";
 import type Post from "./Post";

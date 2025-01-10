@@ -1,10 +1,10 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
-import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
+import { INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
+import type { DialogSelectCallback } from "skel01-core/src/ui/types";
 import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 import { FormDef_TYPE } from "@lily/basic/src/net/bodz/lily/schema/meta/FormDefTypeInfo";
 
@@ -20,7 +20,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
+import EntityChooseDialog from "skel01-dba/src/ui/lily/EntityChooseDialog.vue";
 
 const model = defineModel();
 

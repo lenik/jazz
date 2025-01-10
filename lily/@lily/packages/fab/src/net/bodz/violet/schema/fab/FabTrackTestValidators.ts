@@ -1,5 +1,5 @@
-import type { long } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { long } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type FabTrackTestTypeInfo from "./FabTrackTestTypeInfo";
 import _FabTrackTest_stuff_Validators from "./_FabTrackTest_stuff_Validators";

@@ -1,8 +1,8 @@
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 import CoParameterValidators from './CoParameterValidators';
-import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { BOOLEAN, INT, STRING } from '@skeljs/core/src/lang/baseinfo';
+import TypeInfo from 'skel01-core/src/lang/TypeInfo';
+import { BOOLEAN, INT, STRING } from 'skel01-core/src/lang/baseinfo';
 import UomRow from '../schema/util/UomRow';
 
 export class CoParameterTypeInfo extends CoCodeTypeInfo {

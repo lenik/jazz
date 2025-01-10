@@ -1,7 +1,7 @@
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import DocRecordValidators from './DocRecordValidators';
-import { BOOLEAN, LONG } from '@skeljs/core/src/lang/baseinfo';
+import { BOOLEAN, LONG } from 'skel01-core/src/lang/baseinfo';
 
 export class DocRecordTypeInfo extends CoMessageTypeInfo {
 

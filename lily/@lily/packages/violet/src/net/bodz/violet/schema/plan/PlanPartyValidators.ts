@@ -1,5 +1,5 @@
-import type { long } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { long } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type PlanPartyTypeInfo from "./PlanPartyTypeInfo";
 import _PlanParty_stuff_Validators from "./_PlanParty_stuff_Validators";

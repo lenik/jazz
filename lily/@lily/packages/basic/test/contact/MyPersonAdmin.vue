@@ -1,9 +1,9 @@
 <script lang="ts">
 import { onMounted, ref } from 'vue';
 
-import LocalDate from '@skeljs/core/src/lang/time/LocalDate';
-import { INT, STRING } from '@skeljs/core/src/lang/baseinfo';
-import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
+import LocalDate from 'skel01-core/src/lang/time/LocalDate';
+import { INT, STRING } from 'skel01-core/src/lang/baseinfo';
+import { JSON_VARIANT } from 'skel01-core/src/lang/bas-info';
 import Person from './Person';
 import { Person_TYPE } from './PersonTypeInfo';
 import { DefaultAttachment_TYPE } from './DefaultAttachmentTypeInfo';
@@ -16,7 +16,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from '@skeljs/dba/src/ui/lily/LilyAdmin.vue';
+import LilyAdmin from 'skel01-dba/src/ui/lily/LilyAdmin.vue';
 import PersonEditor from './PersonEditor.vue';
 import PersonChooseDialog from './PersonChooseDialog.vue';
 

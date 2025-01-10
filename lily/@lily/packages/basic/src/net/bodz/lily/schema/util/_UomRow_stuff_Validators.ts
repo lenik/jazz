@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import UomValidators from "./UomValidators";
 import type _UomRow_stuff_TypeInfo from "./_UomRow_stuff_TypeInfo";

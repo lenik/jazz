@@ -1,4 +1,4 @@
-import type { InetAddress, List, int } from "@skeljs/core/src/lang/basetype";
+import type { InetAddress, List, int } from "skel01-core/src/lang/basetype";
 
 import Group from "./Group";
 import UserOtherId from "./UserOtherId";

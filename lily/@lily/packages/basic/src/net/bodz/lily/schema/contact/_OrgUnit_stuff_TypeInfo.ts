@@ -1,5 +1,5 @@
-import { INT } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { INT } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import { OrgUnit_TYPE } from "./OrgUnitTypeInfo";
 import { Organization_TYPE } from "./OrganizationTypeInfo";

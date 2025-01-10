@@ -1,6 +1,6 @@
-import { INT } from "@skeljs/core/src/lang/baseinfo";
-import type { int } from "@skeljs/core/src/lang/basetype";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { INT } from "skel01-core/src/lang/baseinfo";
+import type { int } from "skel01-core/src/lang/basetype";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import CoImagedTypeInfo from "../../concrete/CoImagedTypeInfo";
 import _UserOtherIdType_stuff_Validators from "./_UserOtherIdType_stuff_Validators";

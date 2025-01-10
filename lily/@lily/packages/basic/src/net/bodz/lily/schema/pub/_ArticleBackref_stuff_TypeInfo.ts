@@ -1,5 +1,5 @@
-import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import BackrefRecordTypeInfo from "../../concrete/BackrefRecordTypeInfo";
 import { ExternalSite_TYPE } from "../inet/ExternalSiteTypeInfo";

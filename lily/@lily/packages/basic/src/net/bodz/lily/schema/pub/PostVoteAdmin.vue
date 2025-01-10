@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
+import { INT, LONG } from "skel01-core/src/lang/baseinfo";
 
 import { User_TYPE } from "../account/UserTypeInfo";
 import { Post_TYPE } from "./PostTypeInfo";
@@ -14,7 +14,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
 
 import PostVoteEditor from "./PostVoteEditor.vue";
 

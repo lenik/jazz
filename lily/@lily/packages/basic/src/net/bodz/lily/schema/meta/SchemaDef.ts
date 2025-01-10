@@ -1,4 +1,4 @@
-import type { List } from "@skeljs/core/src/lang/basetype";
+import type { List } from "skel01-core/src/lang/basetype";
 
 import CategoryDef from "./CategoryDef";
 import ParameterDef from "./ParameterDef";

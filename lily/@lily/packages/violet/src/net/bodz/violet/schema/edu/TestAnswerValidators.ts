@@ -1,5 +1,5 @@
-import type { long } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { long } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type TestAnswerTypeInfo from "./TestAnswerTypeInfo";
 import _TestAnswer_stuff_Validators from "./_TestAnswer_stuff_Validators";

@@ -1,4 +1,4 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
+import type { int } from "skel01-core/src/lang/basetype";
 
 import Party from "./Party";
 import _Organization_stuff_TypeInfo from "./_Organization_stuff_TypeInfo";

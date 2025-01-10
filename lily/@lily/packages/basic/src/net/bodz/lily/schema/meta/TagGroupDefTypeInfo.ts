@@ -1,5 +1,5 @@
-import { BOOLEAN, LIST } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { BOOLEAN, LIST } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import { TagDef_TYPE } from "./TagDefTypeInfo";
 import TagGroupDef from "./TagGroupDef";

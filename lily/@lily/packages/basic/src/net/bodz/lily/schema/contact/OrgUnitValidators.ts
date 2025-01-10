@@ -1,5 +1,5 @@
-import type { List } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { List } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type Contact from "./Contact";
 import type OrgUnitTypeInfo from "./OrgUnitTypeInfo";

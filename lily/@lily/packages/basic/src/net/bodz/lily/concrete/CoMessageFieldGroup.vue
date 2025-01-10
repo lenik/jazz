@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import EntityPropertyMap from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { CoMessage_TYPE } from "./CoMessageTypeInfo";
 import CoMessage from "./CoMessage";
 
@@ -10,9 +10,9 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
-import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+import FieldRow from "skel01-core/src/ui/FieldRow.vue";
+import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
 import UserChooseDialog from "../schema/account/UserChooseDialog.vue";
 import FormDefChooseDialog from "../schema/meta/FormDefChooseDialog.vue";
 

@@ -1,4 +1,4 @@
-import { double } from '@skeljs/core/src/lang/basetype';
+import { double } from 'skel01-core/src/lang/basetype';
 import StructRowValidators from '@lily/basic/src/net/bodz/lily/concrete/StructRowValidators';
 import Dim3dTypeInfo from './Dim3dTypeInfo';
 

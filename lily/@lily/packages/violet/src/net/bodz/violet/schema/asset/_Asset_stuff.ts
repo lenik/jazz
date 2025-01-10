@@ -1,5 +1,5 @@
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
-import type { int } from "@skeljs/core/src/lang/basetype";
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
+import type { int } from "skel01-core/src/lang/basetype";
 import type Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
 import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
 import type OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";

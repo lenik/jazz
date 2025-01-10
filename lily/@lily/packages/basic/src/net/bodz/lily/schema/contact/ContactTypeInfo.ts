@@ -1,13 +1,13 @@
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "../../concrete/IdEntityTypeInfo";
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { INT, STRING } from "skel01-core/src/lang/baseinfo";
 import ContactValidators from "./ContactValidators";
 import Contact from "./Contact";
 import Organization from "./Organization";
 import OrgUnit from "./OrgUnit";
 import Person from "./Person";
 import Zone from "../geo/Zone";
-import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
+import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
 
 export class ContactTypeInfo extends IdEntityTypeInfo {
 

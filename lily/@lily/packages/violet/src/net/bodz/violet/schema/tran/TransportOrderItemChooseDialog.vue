@@ -1,9 +1,9 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { BIG_DECIMAL, INT, LONG } from "@skeljs/core/src/lang/baseinfo";
-import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
-import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
+import { BIG_DECIMAL, INT, LONG } from "skel01-core/src/lang/baseinfo";
+import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
+import type { DialogSelectCallback } from "skel01-core/src/ui/types";
 
 import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
 import { TransportOrderItem } from "./TransportOrderItem";
@@ -17,7 +17,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
+import EntityChooseDialog from "skel01-dba/src/ui/lily/EntityChooseDialog.vue";
 
 const model = defineModel();
 

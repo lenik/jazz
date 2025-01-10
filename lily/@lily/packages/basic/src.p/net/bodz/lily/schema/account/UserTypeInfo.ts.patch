@@ -1,8 +1,8 @@
 --- codegen//tmp/UserTypeInfo7884676764164525655.ts	2024-05-13 11:31:58.343112872 +0800
 +++ user//tmp/UserTypeInfo7884676764164525655.ts	2024-05-13 11:31:58.343112872 +0800
 @@ -1,7 +1,6 @@
- import { BOOLEAN, INET_ADDRESS, INT, LIST, SET, STRING } from "@skeljs/core/src/lang/baseinfo";
- import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+ import { BOOLEAN, INET_ADDRESS, INT, LIST, SET, STRING } from "skel01-core/src/lang/baseinfo";
+ import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
  
 -import { ExtraAttributes_TYPE } from "../../concrete/util/ExtraAttributesTypeInfo";
  import { Group_TYPE } from "./GroupTypeInfo";

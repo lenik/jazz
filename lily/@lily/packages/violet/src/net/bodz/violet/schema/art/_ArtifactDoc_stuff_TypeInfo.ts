@@ -1,5 +1,5 @@
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { INT, STRING } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 import DocRecordTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/DocRecordTypeInfo";
 
 import { Artifact_TYPE } from "./ArtifactTypeInfo";

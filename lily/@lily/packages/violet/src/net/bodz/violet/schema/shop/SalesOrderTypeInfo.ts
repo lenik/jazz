@@ -1,6 +1,6 @@
-import { BIG_DECIMAL, INT, LIST } from "@skeljs/core/src/lang/baseinfo";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { BIG_DECIMAL, INT, LIST } from "skel01-core/src/lang/baseinfo";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import { TransportOrder_TYPE } from "../tran/TransportOrderTypeInfo";
 import SalesOrder from "./SalesOrder";

@@ -1,9 +1,9 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
+import { INT, STRING } from "skel01-core/src/lang/baseinfo";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 
 import UserSecret from "./UserSecret";
 import { User_TYPE } from "./UserTypeInfo";
@@ -15,7 +15,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
 
 import UserSecretEditor from "./UserSecretEditor.vue";
 

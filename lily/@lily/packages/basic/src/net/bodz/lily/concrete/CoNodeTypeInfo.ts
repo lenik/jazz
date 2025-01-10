@@ -1,9 +1,9 @@
-import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoNodeValidators from './CoNodeValidators';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
-import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { INT, UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
-import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
+import TypeInfo from 'skel01-core/src/lang/TypeInfo';
+import { INT, UNDEFINED } from 'skel01-core/src/lang/baseinfo';
+import { JSON_VARIANT } from 'skel01-core/src/lang/bas-info';
 
 export class CoNodeTypeInfo extends IdEntityTypeInfo {
 

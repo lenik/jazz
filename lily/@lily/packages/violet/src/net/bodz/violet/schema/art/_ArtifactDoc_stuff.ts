@@ -1,4 +1,4 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
+import type { int } from "skel01-core/src/lang/basetype";
 import DocRecord from "@lily/basic/src/net/bodz/lily/concrete/DocRecord";
 
 import type Artifact from "./Artifact";

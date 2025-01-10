@@ -1,5 +1,5 @@
-import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import CoEvent from "@lily/basic/src/net/bodz/lily/concrete/CoEvent";
 import type OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
 

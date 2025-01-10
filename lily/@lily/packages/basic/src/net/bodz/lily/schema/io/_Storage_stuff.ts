@@ -1,4 +1,4 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
+import type { int } from "skel01-core/src/lang/basetype";
 
 import CoImaged from "../../concrete/CoImaged";
 import _Storage_stuff_TypeInfo from "./_Storage_stuff_TypeInfo";

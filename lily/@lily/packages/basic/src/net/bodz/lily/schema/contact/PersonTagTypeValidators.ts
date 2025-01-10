@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type PersonTagTypeTypeInfo from "./PersonTagTypeTypeInfo";
 import _PersonTagType_stuff_Validators from "./_PersonTagType_stuff_Validators";

@@ -1,6 +1,6 @@
 import IdEntityValidators from './IdEntityValidators';
 import CoImagedTypeInfo from './CoImagedTypeInfo';
-import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
+import Attachment from 'skel01-core/src/net/bodz/lily/entity/Attachment';
 
 export class CoImagedValidators extends IdEntityValidators {
 

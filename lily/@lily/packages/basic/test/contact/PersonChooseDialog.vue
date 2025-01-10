@@ -1,16 +1,16 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
-import { DialogSelectCallback } from "@skeljs/core/src/ui/types";
+import { DialogSelectCallback } from "skel01-core/src/ui/types";
 
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import LocalDate from "@skeljs/core/src/lang/time/LocalDate";
+import { INT, STRING } from "skel01-core/src/lang/baseinfo";
+import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
+import LocalDate from "skel01-core/src/lang/time/LocalDate";
 
 import { Person_TYPE } from './PersonTypeInfo';
 </script>
 
 <script setup lang="ts">
-import EntityChooseDialog from '@skeljs/dba/src/ui/lily/EntityChooseDialog.vue';
+import EntityChooseDialog from 'skel01-dba/src/ui/lily/EntityChooseDialog.vue';
 
 const model = defineModel();
 

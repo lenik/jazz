@@ -1,5 +1,5 @@
-import { LONG } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { LONG } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import FavRecordTypeInfo from "../../concrete/FavRecordTypeInfo";
 import { Article_TYPE } from "./ArticleTypeInfo";

@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type OrgUnitAssetTypeInfo from "./OrgUnitAssetTypeInfo";
 import _OrgUnitAsset_stuff_Validators from "./_OrgUnitAsset_stuff_Validators";

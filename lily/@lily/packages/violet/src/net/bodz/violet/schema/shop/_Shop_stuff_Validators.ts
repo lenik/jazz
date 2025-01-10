@@ -1,5 +1,5 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { int } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import CoImagedValidators from "@lily/basic/src/net/bodz/lily/concrete/CoImagedValidators";
 import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
 import type Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";

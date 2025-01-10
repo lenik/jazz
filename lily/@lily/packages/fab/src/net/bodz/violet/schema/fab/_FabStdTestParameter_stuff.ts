@@ -1,5 +1,5 @@
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
-import type { int } from "@skeljs/core/src/lang/basetype";
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
+import type { int } from "skel01-core/src/lang/basetype";
 import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import type FabStdTest from "./FabStdTest";

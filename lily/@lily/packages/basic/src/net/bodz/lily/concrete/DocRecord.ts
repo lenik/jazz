@@ -1,5 +1,5 @@
 import { Moment } from "moment-timezone";
-import { int, long } from '@skeljs/core/src/lang/basetype';
+import { int, long } from 'skel01-core/src/lang/basetype';
 import DocRecordTypeInfo from './DocRecordTypeInfo';
 import CoMessage from './CoMessage';
 

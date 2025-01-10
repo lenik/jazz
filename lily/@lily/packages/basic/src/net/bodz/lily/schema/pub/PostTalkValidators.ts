@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type PostTalkTypeInfo from "./PostTalkTypeInfo";
 import _PostTalk_stuff_Validators from "./_PostTalk_stuff_Validators";

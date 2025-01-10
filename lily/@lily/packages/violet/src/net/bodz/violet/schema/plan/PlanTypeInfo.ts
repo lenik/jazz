@@ -1,5 +1,5 @@
-import { SET } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { SET } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import Plan from "./Plan";
 import { PlanTag_TYPE } from "./PlanTagTypeInfo";

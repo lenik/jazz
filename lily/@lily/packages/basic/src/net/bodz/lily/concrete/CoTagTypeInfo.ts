@@ -1,7 +1,7 @@
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 import CoTagValidators from './CoTagValidators';
-import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
+import TypeInfo from 'skel01-core/src/lang/TypeInfo';
 
 export class CoTagTypeInfo extends CoCodeTypeInfo {
 

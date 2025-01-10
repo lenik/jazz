@@ -1,6 +1,6 @@
-import { BIG_DECIMAL, LONG } from "@skeljs/core/src/lang/baseinfo";
-import type { long } from "@skeljs/core/src/lang/basetype";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { BIG_DECIMAL, LONG } from "skel01-core/src/lang/baseinfo";
+import type { long } from "skel01-core/src/lang/basetype";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import { ShopItem_TYPE } from "./ShopItemTypeInfo";

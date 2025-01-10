@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import EntityPropertyMap from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { CoParameter_TYPE } from "./CoParameterTypeInfo";
 import CoParameter from "./CoParameter";
 import UomRowChooseDialog from "../schema/util/UomRowChooseDialog.vue";
@@ -11,9 +11,9 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import FieldRow from "skel01-core/src/ui/FieldRow.vue";
+import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
+import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 
 const model = defineModel<CoParameter<any>>({ required: true });
 

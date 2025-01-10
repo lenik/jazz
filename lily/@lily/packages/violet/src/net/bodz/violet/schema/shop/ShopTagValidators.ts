@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type ShopTagTypeInfo from "./ShopTagTypeInfo";
 import _ShopTag_stuff_Validators from "./_ShopTag_stuff_Validators";

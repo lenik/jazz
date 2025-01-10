@@ -1,4 +1,4 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
+import type { int } from "skel01-core/src/lang/basetype";
 import BackrefRecord from "@lily/basic/src/net/bodz/lily/concrete/BackrefRecord";
 import type ExternalSite from "@lily/basic/src/net/bodz/lily/schema/inet/ExternalSite";
 

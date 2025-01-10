@@ -1,6 +1,6 @@
-import type { BigDecimal, long } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { BigDecimal, long } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type SalesOrderItemTypeInfo from "./SalesOrderItemTypeInfo";
 import _SalesOrderItem_stuff_Validators from "./_SalesOrderItem_stuff_Validators";

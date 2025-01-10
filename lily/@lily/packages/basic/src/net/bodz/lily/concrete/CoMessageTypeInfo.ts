@@ -1,10 +1,10 @@
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoEventTypeInfo from './CoEventTypeInfo';
 import CoMessageValidators from './CoMessageValidators';
 import User from '../schema/account/User';
-import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { MAP, STRING, UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
-import OffsetDateTime from '@skeljs/core/src/lang/time/OffsetDateTime';
+import TypeInfo from 'skel01-core/src/lang/TypeInfo';
+import { MAP, STRING, UNDEFINED } from 'skel01-core/src/lang/baseinfo';
+import OffsetDateTime from 'skel01-core/src/lang/time/OffsetDateTime';
 import FormDef from '../schema/meta/FormDef';
 import ParameterDef from '../schema/meta/ParameterDef';
 

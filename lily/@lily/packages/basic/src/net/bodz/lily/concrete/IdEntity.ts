@@ -1,4 +1,4 @@
-import { int } from '@skeljs/core/src/lang/basetype';
+import { int } from 'skel01-core/src/lang/basetype';
 import CoObject from './CoObject';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 

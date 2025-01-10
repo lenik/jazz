@@ -1,6 +1,6 @@
-import { int } from '@skeljs/core/src/lang/basetype';
+import { int } from 'skel01-core/src/lang/basetype';
 import CoEvent from './CoEvent';
-import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
+import Attachment from 'skel01-core/src/net/bodz/lily/entity/Attachment';
 import CoImagedEventTypeInfo from './CoImagedEventTypeInfo';
 
 export abstract class CoImagedEvent<Id> extends CoEvent<Id> {

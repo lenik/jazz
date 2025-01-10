@@ -1,4 +1,4 @@
-import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
+import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
 import CoEvent from "@lily/basic/src/net/bodz/lily/concrete/CoEvent";
 
 import type Artifact from "../art/Artifact";

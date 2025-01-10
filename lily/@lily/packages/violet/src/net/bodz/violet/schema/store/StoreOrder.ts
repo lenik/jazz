@@ -1,4 +1,4 @@
-import type { BigDecimal, List, int } from "@skeljs/core/src/lang/basetype";
+import type { BigDecimal, List, int } from "skel01-core/src/lang/basetype";
 
 import StoreOrderItem from "./StoreOrderItem";
 import StoreOrderTypeInfo from "./StoreOrderTypeInfo";

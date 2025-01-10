@@ -1,10 +1,10 @@
-import { BIG_DECIMAL, INT, LIST, LONG } from '@skeljs/core/src/lang/baseinfo';
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { BIG_DECIMAL, INT, LIST, LONG } from 'skel01-core/src/lang/baseinfo';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoEventTypeInfo from '@lily/basic/src/net/bodz/lily/concrete/CoEventTypeInfo';
 import AbstractAssetValidators from './AbstractAssetValidators';
 import Artifact from '../art/Artifact';
 import Region from '../store/Region';
-import { ZonedDateTime } from '@skeljs/core/src/lang/time';
+import { ZonedDateTime } from 'skel01-core/src/lang/time';
 
 export class AbstractAssetTypeInfo extends CoEventTypeInfo {
 

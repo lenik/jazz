@@ -1,5 +1,5 @@
-import { STRING } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { STRING } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 import { IValidControl_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/util/IValidControlTypeInfo";
 import ArtifactModelValidators from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelValidators";
 import { FabCost_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/FabCostTypeInfo";

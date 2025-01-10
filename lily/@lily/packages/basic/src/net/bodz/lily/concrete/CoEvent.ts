@@ -1,7 +1,7 @@
-import { int } from '@skeljs/core/src/lang/basetype';
+import { int } from 'skel01-core/src/lang/basetype';
 import IdEntity from './IdEntity';
 import CoEventTypeInfo from './CoEventTypeInfo';
-import { OffsetDateTime } from "@skeljs/core/src/lang/time";
+import { OffsetDateTime } from "skel01-core/src/lang/time";
 
 export abstract class CoEvent<Id> extends IdEntity<Id> {
 

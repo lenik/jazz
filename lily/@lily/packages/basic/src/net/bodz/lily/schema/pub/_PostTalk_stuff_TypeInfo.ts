@@ -1,5 +1,5 @@
-import { LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { LONG, STRING } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import CoTalkTypeInfo from "../../concrete/CoTalkTypeInfo";
 import { Post_TYPE } from "./PostTypeInfo";

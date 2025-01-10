@@ -1,5 +1,5 @@
-import type { double } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { double } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import CoCodeValidators from "../../concrete/CoCodeValidators";
 import type Uom from "./Uom";

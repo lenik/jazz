@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type CourseKitFavTypeInfo from "./CourseKitFavTypeInfo";
 import _CourseKitFav_stuff_Validators from "./_CourseKitFav_stuff_Validators";

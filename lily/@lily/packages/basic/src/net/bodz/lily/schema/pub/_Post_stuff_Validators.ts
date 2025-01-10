@@ -1,6 +1,6 @@
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
-import type { int, long } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
+import type { int, long } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import CoMessageValidators from "../../concrete/CoMessageValidators";
 import type Post from "./Post";

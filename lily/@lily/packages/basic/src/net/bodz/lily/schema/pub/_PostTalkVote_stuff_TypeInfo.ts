@@ -1,5 +1,5 @@
-import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { INT, LONG } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import VoteRecordTypeInfo from "../../concrete/VoteRecordTypeInfo";
 import { PostTalk_TYPE } from "./PostTalkTypeInfo";

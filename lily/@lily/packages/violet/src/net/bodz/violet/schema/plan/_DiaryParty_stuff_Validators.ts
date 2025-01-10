@@ -1,5 +1,5 @@
-import type { int, long } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { int, long } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import IdEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/IdEntityValidators";
 import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
 import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";

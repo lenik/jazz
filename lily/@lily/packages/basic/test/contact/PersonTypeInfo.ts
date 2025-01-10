@@ -1,5 +1,5 @@
-import { BOOLEAN, INT, STRING } from '@skeljs/core/src/lang/baseinfo';
-import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { BOOLEAN, INT, STRING } from 'skel01-core/src/lang/baseinfo';
+import { property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import Gender from '../../src/net/bodz/lily/schema/contact/Gender';
 
 import PartyTypeInfo from './PartyTypeInfo';

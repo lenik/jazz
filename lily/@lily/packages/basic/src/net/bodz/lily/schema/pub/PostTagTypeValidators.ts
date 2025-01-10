@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type PostTagTypeTypeInfo from "./PostTagTypeTypeInfo";
 import _PostTagType_stuff_Validators from "./_PostTagType_stuff_Validators";

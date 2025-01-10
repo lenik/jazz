@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import CoParameterValidators from "../../concrete/CoParameterValidators";
 import type _PostParameterType_stuff_TypeInfo from "./_PostParameterType_stuff_TypeInfo";

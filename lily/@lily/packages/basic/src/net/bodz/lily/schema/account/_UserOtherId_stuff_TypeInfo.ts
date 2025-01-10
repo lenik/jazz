@@ -1,8 +1,8 @@
-import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import type { int } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
+import { INT, STRING } from "skel01-core/src/lang/baseinfo";
+import type { int } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import CoImagedTypeInfo from "../../concrete/CoImagedTypeInfo";
 import { UserOtherIdType_TYPE } from "./UserOtherIdTypeTypeInfo";

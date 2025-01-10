@@ -1,9 +1,9 @@
-import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import CoEventValidators from './CoEventValidators';
-import TypeInfo from "@skeljs/core/src/lang/TypeInfo";
-import { INT, UNDEFINED } from "@skeljs/core/src/lang/baseinfo";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import TypeInfo from "skel01-core/src/lang/TypeInfo";
+import { INT, UNDEFINED } from "skel01-core/src/lang/baseinfo";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 
 export class CoEventTypeInfo extends IdEntityTypeInfo {
 

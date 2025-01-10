@@ -1,4 +1,4 @@
-import { long } from '@skeljs/core/src/lang/basetype';
+import { long } from 'skel01-core/src/lang/basetype';
 import IdEntity from './IdEntity';
 import VoteRecordTypeInfo from './VoteRecordTypeInfo';
 import User from '../schema/account/User';

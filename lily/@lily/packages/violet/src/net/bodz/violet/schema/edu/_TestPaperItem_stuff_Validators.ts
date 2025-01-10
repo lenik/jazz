@@ -1,5 +1,5 @@
-import type { BigDecimal, long } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { BigDecimal, long } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import CoImagedValidators from "@lily/basic/src/net/bodz/lily/concrete/CoImagedValidators";
 
 import type TestPaper from "./TestPaper";

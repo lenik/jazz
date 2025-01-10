@@ -1,8 +1,8 @@
-import { int } from '@skeljs/core/src/lang/basetype';
+import { int } from 'skel01-core/src/lang/basetype';
 import CoImaged from '../../src/net/bodz/lily/concrete/CoImaged';
 import PartyTypeInfo from './PartyTypeInfo'
 import Contact from './Contact';
-import { LocalDate } from '@skeljs/core/src/lang/time';
+import { LocalDate } from 'skel01-core/src/lang/time';
 
 export abstract class Party extends CoImaged<int> {
 

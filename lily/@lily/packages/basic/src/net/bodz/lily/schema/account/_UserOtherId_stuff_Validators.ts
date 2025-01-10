@@ -1,7 +1,7 @@
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
-import type { int } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
+import type { int } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import CoImagedValidators from "../../concrete/CoImagedValidators";
 import type User from "./User";

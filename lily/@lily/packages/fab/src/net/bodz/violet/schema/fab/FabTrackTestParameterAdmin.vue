@@ -1,8 +1,8 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { BOOLEAN, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import { BOOLEAN, INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 
 import { FabStdTestParameter_TYPE } from "./FabStdTestParameterTypeInfo";
 import { FabStdTester_TYPE } from "./FabStdTesterTypeInfo";
@@ -16,7 +16,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
 
 import FabTrackTestParameterEditor from "./FabTrackTestParameterEditor.vue";
 

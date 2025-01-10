@@ -1,4 +1,4 @@
-import type { double, int } from "@skeljs/core/src/lang/basetype";
+import type { double, int } from "skel01-core/src/lang/basetype";
 
 import CoCode from "../../concrete/CoCode";
 import type Uom from "./Uom";

@@ -1,4 +1,4 @@
-import { int } from '@skeljs/core/src/lang/basetype';
+import { int } from 'skel01-core/src/lang/basetype';
 import CoMessage from '@lily/basic/src/net/bodz/lily/concrete/CoMessage';
 import AbstractTransportOrderTypeInfo from './AbstractTransportOrderTypeInfo';
 import Contact from '@lily/basic/src/net/bodz/lily/schema/contact/Contact';

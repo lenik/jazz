@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type ArtifactTagTypeInfo from "./ArtifactTagTypeInfo";
 import _ArtifactTag_stuff_Validators from "./_ArtifactTag_stuff_Validators";

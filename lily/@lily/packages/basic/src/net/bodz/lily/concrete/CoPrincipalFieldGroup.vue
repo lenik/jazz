@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import EntityPropertyMap from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { CoPrincipal_TYPE } from "./CoPrincipalTypeInfo";
 import CoPrincipal from "./CoPrincipal";
 
@@ -10,8 +10,8 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+import FieldRow from "skel01-core/src/ui/FieldRow.vue";
+import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
 
 const model = defineModel<CoPrincipal>({ required: true });
 

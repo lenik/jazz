@@ -1,5 +1,5 @@
-import { double } from '@skeljs/core/src/lang/basetype';
-import GeoZone from '@skeljs/core/src/net/bodz/bas/i18n/geo/GeoZone';
+import { double } from 'skel01-core/src/lang/basetype';
+import GeoZone from 'skel01-core/src/net/bodz/bas/i18n/geo/GeoZone';
 import GeoLocationTypeInfo from './GeoLocationTypeInfo';
 
 export class GeoLocation {

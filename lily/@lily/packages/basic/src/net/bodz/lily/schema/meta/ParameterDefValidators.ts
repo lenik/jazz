@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type ParameterDefTypeInfo from "./ParameterDefTypeInfo";
 import _ParameterDef_stuff_Validators from "./_ParameterDef_stuff_Validators";

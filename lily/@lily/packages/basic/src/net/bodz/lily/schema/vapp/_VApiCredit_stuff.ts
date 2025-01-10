@@ -1,4 +1,4 @@
-import type { BigDecimal, int } from "@skeljs/core/src/lang/basetype";
+import type { BigDecimal, int } from "skel01-core/src/lang/basetype";
 
 import IdEntity from "../../concrete/IdEntity";
 import type ApiType from "./ApiType";

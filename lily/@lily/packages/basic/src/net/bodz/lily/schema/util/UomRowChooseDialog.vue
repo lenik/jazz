@@ -1,9 +1,9 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
+import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
+import { DOUBLE, INT, STRING } from "skel01-core/src/lang/baseinfo";
+import type { DialogSelectCallback } from "skel01-core/src/ui/types";
 
 import { UomRow } from "./UomRow";
 import { UomRow_TYPE } from "./UomRowTypeInfo";
@@ -16,7 +16,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
+import EntityChooseDialog from "skel01-dba/src/ui/lily/EntityChooseDialog.vue";
 
 const model = defineModel();
 

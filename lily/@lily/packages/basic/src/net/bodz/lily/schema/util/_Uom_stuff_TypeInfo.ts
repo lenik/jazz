@@ -1,5 +1,5 @@
-import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { DOUBLE, INT, STRING } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import CoCodeTypeInfo from "../../concrete/CoCodeTypeInfo";
 import { Uom_TYPE } from "./UomTypeInfo";

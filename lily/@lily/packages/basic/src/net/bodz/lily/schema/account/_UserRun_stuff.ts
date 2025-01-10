@@ -1,6 +1,6 @@
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
-import type { InetAddress, int } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
+import type { InetAddress, int } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 
 import CoEntity from "../../concrete/CoEntity";
 import type User from "./User";

@@ -1,6 +1,6 @@
-import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { INT, LONG } from '@skeljs/core/src/lang/baseinfo';
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import TypeInfo from 'skel01-core/src/lang/TypeInfo';
+import { INT, LONG } from 'skel01-core/src/lang/baseinfo';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoMessageTypeInfo from '@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo';
 import AbstractTransportOrderValidators from './AbstractTransportOrderValidators';
 import Contact from '@lily/basic/src/net/bodz/lily/schema/contact/Contact';

@@ -1,10 +1,10 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
+import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
+import { INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import type { DialogSelectCallback } from "skel01-core/src/ui/types";
 
 import { ApiType_TYPE } from "./ApiTypeTypeInfo";
 import { VApi } from "./VApi";
@@ -18,7 +18,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
+import EntityChooseDialog from "skel01-dba/src/ui/lily/EntityChooseDialog.vue";
 
 const model = defineModel();
 

@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type ArticleTalkVoteTypeInfo from "./ArticleTalkVoteTypeInfo";
 import _ArticleTalkVote_stuff_Validators from "./_ArticleTalkVote_stuff_Validators";

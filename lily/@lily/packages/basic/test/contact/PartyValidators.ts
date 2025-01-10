@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types"
+import { ValidateResult } from "skel01-core/src/ui/types"
 import { Moment } from "moment-timezone";
 import IdEntityValidators from "../../src/net/bodz/lily/concrete/IdEntityValidators";
 

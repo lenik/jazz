@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type PlanDoVoteTypeInfo from "./PlanDoVoteTypeInfo";
 import _PlanDoVote_stuff_Validators from "./_PlanDoVote_stuff_Validators";

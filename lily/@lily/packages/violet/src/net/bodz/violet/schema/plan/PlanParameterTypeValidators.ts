@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type PlanParameterTypeTypeInfo from "./PlanParameterTypeTypeInfo";
 import _PlanParameterType_stuff_Validators from "./_PlanParameterType_stuff_Validators";

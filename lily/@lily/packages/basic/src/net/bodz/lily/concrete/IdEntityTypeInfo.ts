@@ -1,6 +1,6 @@
-import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { INT, UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import TypeInfo from 'skel01-core/src/lang/TypeInfo';
+import { INT, UNDEFINED } from 'skel01-core/src/lang/baseinfo';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 import IdEntityValidators from './IdEntityValidators';
 

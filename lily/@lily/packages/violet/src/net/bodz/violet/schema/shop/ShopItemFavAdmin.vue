@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { LONG } from "@skeljs/core/src/lang/baseinfo";
+import { LONG } from "skel01-core/src/lang/baseinfo";
 import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
 import ShopItemFav from "./ShopItemFav";
@@ -14,7 +14,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
 
 import ShopItemFavEditor from "./ShopItemFavEditor.vue";
 

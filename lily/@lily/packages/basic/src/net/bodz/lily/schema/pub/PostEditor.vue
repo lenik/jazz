@@ -1,9 +1,9 @@
 <script lang="ts">
 import { onMounted, provide, ref } from "vue";
 
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
-import type { int, long } from "@skeljs/core/src/lang/basetype";
-import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
+import type { int, long } from "skel01-core/src/lang/basetype";
+import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
 
 import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import Post from "./Post";
@@ -16,11 +16,11 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
-import JsonEditor from "@skeljs/core/src/ui/input/JsonEditor.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
-import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+import FieldRow from "skel01-core/src/ui/FieldRow.vue";
+import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
+import JsonEditor from "skel01-core/src/ui/input/JsonEditor.vue";
+import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
 
 import CoEventFieldGroup from "../../concrete/CoEventFieldGroup.vue";
 import CoMessageFieldGroup from "../../concrete/CoMessageFieldGroup.vue";

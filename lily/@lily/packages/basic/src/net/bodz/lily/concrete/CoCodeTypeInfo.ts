@@ -1,8 +1,8 @@
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import CoNodeTypeInfo from './CoNodeTypeInfo';
 import CoCodeValidators from './CoCodeValidators';
-import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { INT, STRING } from '@skeljs/core/src/lang/baseinfo';
+import TypeInfo from 'skel01-core/src/lang/TypeInfo';
+import { INT, STRING } from 'skel01-core/src/lang/baseinfo';
 
 export class CoCodeTypeInfo extends CoNodeTypeInfo {
 

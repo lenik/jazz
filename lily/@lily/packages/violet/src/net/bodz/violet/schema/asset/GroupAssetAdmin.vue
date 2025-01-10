@@ -1,11 +1,11 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import { BIG_DECIMAL, INT, LONG } from "@skeljs/core/src/lang/baseinfo";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
+import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
+import { BIG_DECIMAL, INT, LONG } from "skel01-core/src/lang/baseinfo";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import ZonedDateTime from "skel01-core/src/lang/time/ZonedDateTime";
+import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
 import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
 import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
@@ -20,7 +20,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
 
 import GroupAssetEditor from "./GroupAssetEditor.vue";
 

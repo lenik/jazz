@@ -1,4 +1,4 @@
-import type { int, long } from "@skeljs/core/src/lang/basetype";
+import type { int, long } from "skel01-core/src/lang/basetype";
 
 import BackrefRecord from "../../concrete/BackrefRecord";
 import type ExternalSite from "../inet/ExternalSite";

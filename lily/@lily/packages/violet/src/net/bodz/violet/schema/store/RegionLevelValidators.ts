@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type RegionLevelTypeInfo from "./RegionLevelTypeInfo";
 import _RegionLevel_stuff_Validators from "./_RegionLevel_stuff_Validators";

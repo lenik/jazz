@@ -1,6 +1,6 @@
-import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import { LONG, STRING } from '@skeljs/core/src/lang/baseinfo';
-import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
+import { property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
+import { LONG, STRING } from 'skel01-core/src/lang/baseinfo';
+import { JSON_VARIANT } from 'skel01-core/src/lang/bas-info';
 import IdEntityTypeInfo from '../../src/net/bodz/lily/concrete/IdEntityTypeInfo';
 
 import _Contact from '../../src/net/bodz/lily/schema/contact/Contact';

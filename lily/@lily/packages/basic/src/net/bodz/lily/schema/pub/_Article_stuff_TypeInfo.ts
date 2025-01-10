@@ -1,7 +1,7 @@
-import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import type { long } from "@skeljs/core/src/lang/basetype";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
+import { INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
+import type { long } from "skel01-core/src/lang/basetype";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import CoMessageTypeInfo from "../../concrete/CoMessageTypeInfo";
 import { ArticleCategory_TYPE } from "./ArticleCategoryTypeInfo";

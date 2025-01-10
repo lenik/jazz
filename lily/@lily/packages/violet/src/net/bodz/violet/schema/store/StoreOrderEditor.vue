@@ -1,9 +1,9 @@
 <script lang="ts">
 import { onMounted, provide, ref } from "vue";
 
-import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
+import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
 import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import StoreOrder from "./StoreOrder";
@@ -17,11 +17,11 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
-import DateTime from "@skeljs/core/src/ui/input/DateTime.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
-import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+import FieldRow from "skel01-core/src/ui/FieldRow.vue";
+import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
+import DateTime from "skel01-core/src/ui/input/DateTime.vue";
+import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
 import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
 import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
 import UserChooseDialog from "@lily/basic/src/net/bodz/lily/schema/account/UserChooseDialog.vue";

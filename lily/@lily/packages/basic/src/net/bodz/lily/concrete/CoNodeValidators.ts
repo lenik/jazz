@@ -1,8 +1,8 @@
-import { int } from '@skeljs/core/src/lang/basetype';
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
+import { int } from 'skel01-core/src/lang/basetype';
+import { IEntityType } from 'skel01-dba/src/net/bodz/lily/entity/IEntityType';
 import IdEntityValidators from './IdEntityValidators';
 import CoNodeTypeInfo from './CoNodeTypeInfo';
-import { JsonVariant } from '@skeljs/core/src/lang/bas-type';
+import { JsonVariant } from 'skel01-core/src/lang/bas-type';
 
 export class CoNodeValidators extends IdEntityValidators {
 

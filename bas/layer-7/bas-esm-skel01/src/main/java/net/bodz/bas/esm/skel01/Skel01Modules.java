@@ -1,9 +1,9 @@
-package net.bodz.bas.esm.skeljs;
+package net.bodz.bas.esm.skel01;
 
 import net.bodz.bas.esm.EsmModule;
 import net.bodz.bas.esm.IEsmModuleProvider;
 
-public class SkeljsModules
+public class Skel01Modules
         implements
             IEsmModuleProvider {
 

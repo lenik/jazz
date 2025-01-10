@@ -1,6 +1,6 @@
-import Predef from "@skeljs/core/src/lang/Predef";
-import PredefType from "@skeljs/core/src/lang/PredefType";
-import type { int } from "@skeljs/core/src/lang/basetype";
+import Predef from "skel01-core/src/lang/Predef";
+import PredefType from "skel01-core/src/lang/PredefType";
+import type { int } from "skel01-core/src/lang/basetype";
 
 export class AccessMode extends Predef<int> {
 

@@ -1,4 +1,4 @@
-import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
+import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
 import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
 
 import type SalesOrder from "../shop/SalesOrder";

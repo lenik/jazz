@@ -1,4 +1,4 @@
-package net.bodz.bas.esm.skeljs;
+package net.bodz.bas.esm.skel01;
 
 import net.bodz.bas.esm.EsmModule;
 import net.bodz.bas.esm.EsmName;
@@ -8,7 +8,7 @@ public class Dba
         extends EsmModule {
 
     public Dba(int priority) {
-        super("@skeljs/dba", "src", priority);
+        super("skel01-dba", "src", priority);
     }
 
     @SourcePath("net/bodz/lily/entity")

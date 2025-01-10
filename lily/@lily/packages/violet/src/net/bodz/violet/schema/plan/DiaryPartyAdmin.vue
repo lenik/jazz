@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
 import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
 import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
@@ -16,7 +16,7 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
 
 import DiaryPartyEditor from "./DiaryPartyEditor.vue";
 

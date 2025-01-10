@@ -6,11 +6,11 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
-import FieldRow from '@skeljs/core/src/ui/FieldRow.vue';
-import JsonEditor from '@skeljs/core/src/ui/input/JsonEditor.vue';
-import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import RefEditor from '@skeljs/dba/src/ui/input/RefEditor.vue';
-import AttachmentsEditor from '@skeljs/dba/src/ui/input/AttachmentsEditor.vue';
+import FieldRow from 'skel01-core/src/ui/FieldRow.vue';
+import JsonEditor from 'skel01-core/src/ui/input/JsonEditor.vue';
+import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
+import RefEditor from 'skel01-dba/src/ui/input/RefEditor.vue';
+import AttachmentsEditor from 'skel01-dba/src/ui/input/AttachmentsEditor.vue';
 import PersonChooseDialog from './PersonChooseDialog.vue';
 
 defineOptions({

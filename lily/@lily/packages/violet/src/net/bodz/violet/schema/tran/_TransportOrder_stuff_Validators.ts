@@ -1,5 +1,5 @@
-import type { BigDecimal, int } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { BigDecimal, int } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
 
 import type SalesOrder from "../shop/SalesOrder";

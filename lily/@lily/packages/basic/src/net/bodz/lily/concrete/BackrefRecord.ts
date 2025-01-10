@@ -1,4 +1,4 @@
-import { long } from '@skeljs/core/src/lang/basetype';
+import { long } from 'skel01-core/src/lang/basetype';
 import IdEntity from './IdEntity';
 import BackrefRecordTypeInfo from './BackrefRecordTypeInfo';
 

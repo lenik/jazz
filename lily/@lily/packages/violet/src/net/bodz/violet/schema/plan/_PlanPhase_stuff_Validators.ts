@@ -1,4 +1,4 @@
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { ValidateResult } from "skel01-core/src/ui/types";
 import CoPhaseValidators from "@lily/basic/src/net/bodz/lily/concrete/CoPhaseValidators";
 
 import type _PlanPhase_stuff_TypeInfo from "./_PlanPhase_stuff_TypeInfo";

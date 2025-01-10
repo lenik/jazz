@@ -1,6 +1,6 @@
-import { STRING } from "@skeljs/core/src/lang/baseinfo";
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { STRING } from "skel01-core/src/lang/baseinfo";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import UserRun from "./UserRun";
 import UserRunValidators from "./UserRunValidators";

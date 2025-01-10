@@ -1,5 +1,5 @@
-import type { List, long } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { List, long } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type DiaryParty from "./DiaryParty";
 import type DiaryTypeInfo from "./DiaryTypeInfo";

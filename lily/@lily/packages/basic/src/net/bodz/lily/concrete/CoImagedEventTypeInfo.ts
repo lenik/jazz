@@ -1,9 +1,9 @@
-import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { INT, LIST, UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import TypeInfo from 'skel01-core/src/lang/TypeInfo';
+import { INT, LIST, UNDEFINED } from 'skel01-core/src/lang/baseinfo';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import CoImagedEventValidators from './CoImagedEventValidators';
-import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
+import Attachment from 'skel01-core/src/net/bodz/lily/entity/Attachment';
 import CoEventTypeInfo from './CoEventTypeInfo';
 
 export class CoImagedEventTypeInfo extends CoEventTypeInfo {

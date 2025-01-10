@@ -1,5 +1,5 @@
-import { BIG_DECIMAL } from "@skeljs/core/src/lang/baseinfo";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { BIG_DECIMAL } from "skel01-core/src/lang/baseinfo";
+import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
 
 import StoreOrderItem from "./StoreOrderItem";
 import StoreOrderItemValidators from "./StoreOrderItemValidators";

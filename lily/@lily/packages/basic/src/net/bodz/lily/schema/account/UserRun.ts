@@ -1,4 +1,4 @@
-import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
+import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 
 import UserRunTypeInfo from "./UserRunTypeInfo";
 import _UserRun_stuff from "./_UserRun_stuff";

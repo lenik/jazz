@@ -1,9 +1,9 @@
-import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import VoteRecordValidators from './VoteRecordValidators';
 import VoteRecord from './VoteRecord';
 import User from '../schema/account/User';
-import { INT, LONG } from '@skeljs/core/src/lang/baseinfo';
+import { INT, LONG } from 'skel01-core/src/lang/baseinfo';
 
 export class VoteRecordTypeInfo extends IdEntityTypeInfo {
 

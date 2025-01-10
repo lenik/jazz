@@ -1,5 +1,5 @@
-import type { InetAddress, List, int } from "@skeljs/core/src/lang/basetype";
-import { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { InetAddress, List, int } from "skel01-core/src/lang/basetype";
+import { ValidateResult } from "skel01-core/src/ui/types";
 
 import type Group from "./Group";
 import type UserOtherId from "./UserOtherId";
