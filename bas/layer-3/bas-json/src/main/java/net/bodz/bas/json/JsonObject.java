@@ -440,24 +440,58 @@ public class JsonObject
         return context;
     }
 
-    public <T> Set<T> //
-            getArraySet(String key, Set<T> set, SortOrder order, FunctionX<Object, T, ParseException> conv)
-                    throws ParseException {
+    public <T> Set<T> getArraySet(String key, Set<T> set, SortOrder order,
+            FunctionX<JsonVariant, T, ParseException> conv)
+            throws ParseException {
         return readArrayInto(key, set, conv, () -> order.newSet());
     }
 
-    public <T> List<T> //
-            getArrayList(String key, List<T> list, FunctionX<Object, T, ParseException> conv)
-                    throws ParseException {
+    public final <T> List<T> getArrayList(String key, FunctionX<JsonVariant, T, ParseException> conv)
+            throws ParseException {
+        return getArrayList(key, null, conv);
+    }
+
+    public final <T> List<T> getArrayList(String key, List<T> list, FunctionX<JsonVariant, T, ParseException> conv)
+            throws ParseException {
         return readArrayInto(key, list, conv, () -> new ArrayList<>());
+    }
+
+    public final <T extends IJsonForm> List<T> getArrayList(String key, Supplier<T> itemFactory)
+            throws ParseException {
+        return getArrayList(key, null, itemFactory);
+    }
+
+    public final <T extends IJsonForm> List<T> getArrayList(String key, List<T> list, Supplier<T> itemFactory)
+            throws ParseException {
+        return readArrayInto(key, list, (JsonVariant _item) -> {
+            T item = itemFactory.get();
+            item.jsonIn(_item);
+            return item;
+        }, () -> new ArrayList<>());
+    }
+
+    public final <T extends IJsonForm> List<T> getArrayList(String key, Class<T> itemType)
+            throws ParseException {
+        return getArrayList(key, null, itemType);
+    }
+
+    public final <T extends IJsonForm> List<T> getArrayList(String key, List<T> list, Class<T> itemType)
+            throws ParseException {
+        return getArrayList(key, list, () -> {
+            try {
+                return itemType.newInstance();
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
+        });
     }
 
     public <T extends IJsonForm> Set<T> //
             readArrayIntoSet(String key, Set<T> set, SortOrder order, Supplier<T> vals)
                     throws ParseException {
-        return readArrayInto(key, set, (Object jsAny) -> {
+        return readArrayInto(key, set, (JsonVariant jv) -> {
             T val = vals.get();
-            val.jsonIn(JsonVariant.of(jsAny), JsonFormOptions.XXX);
+            val.jsonIn(jv, JsonFormOptions.XXX);
             return val;
         }, () -> order.newSet());
     }
@@ -465,15 +499,15 @@ public class JsonObject
     public <T extends IJsonForm> List<T> //
             readArrayIntoList(String key, List<T> list, Supplier<T> vals)
                     throws ParseException {
-        return readArrayInto(key, list, (Object jsAny) -> {
+        return readArrayInto(key, list, (JsonVariant jv) -> {
             T val = vals.get();
-            val.jsonIn(JsonVariant.of(jsAny), JsonFormOptions.XXX);
+            val.jsonIn(jv, JsonFormOptions.XXX);
             return val;
         }, () -> new ArrayList<>());
     }
 
     public <C extends Collection<T>, T> C //
-            readArrayInto(String key, C collection, FunctionX<Object, T, ParseException> conv,
+            readArrayInto(String key, C collection, FunctionX<JsonVariant, T, ParseException> conv,
                     Supplier<C> collectionSupplier)
                     throws ParseException {
         if (! has(key)) // nothing to change
@@ -497,7 +531,8 @@ public class JsonObject
             int n = array.length();
             for (int i = 0; i < n; i++) {
                 Object node = array.get(i);
-                T obj = conv.apply(node);
+                JsonVariant jv = JsonVariant.of(node);
+                T obj = conv.apply(jv);
                 collection.add(obj);
             }
         }
