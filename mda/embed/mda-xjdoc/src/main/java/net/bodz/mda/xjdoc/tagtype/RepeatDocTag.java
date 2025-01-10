@@ -5,8 +5,6 @@ import java.io.IOException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
-import net.bodz.bas.log.Logger;
-import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.t.coll.ListContainer;
 import net.bodz.mda.xjdoc.model.AbstractMultiDocTag;
@@ -15,7 +13,7 @@ import net.bodz.mda.xjdoc.model.javadoc.IJavadocWriter;
 public abstract class RepeatDocTag<E>
         extends AbstractMultiDocTag<E> {
 
-    static final Logger logger = LoggerFactory.getLogger(RepeatDocTag.class);
+//    static final Logger logger = LoggerFactory.getLogger(RepeatDocTag.class);
 
     public RepeatDocTag() {
         super();
