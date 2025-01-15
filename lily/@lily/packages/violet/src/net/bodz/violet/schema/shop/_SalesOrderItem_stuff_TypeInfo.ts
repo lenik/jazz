@@ -2,7 +2,7 @@ import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
 import { BIG_DECIMAL, INT, LONG } from "skel01-core/src/lang/baseinfo";
 import type { long } from "skel01-core/src/lang/basetype";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoImagedEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
+import CoImagedEventTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
 
 import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
 import { SalesOrder_TYPE } from "./SalesOrderTypeInfo";

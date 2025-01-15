@@ -1,7 +1,7 @@
 import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
-import CoEvent from "@lily/basic/src/net/bodz/lily/concrete/CoEvent";
-import type OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
+import CoEvent from "lily-basic/src/net/bodz/lily/concrete/CoEvent";
+import type OrgUnit from "lily-basic/src/net/bodz/lily/schema/contact/OrgUnit";
 
 import type FabProcess from "./FabProcess";
 import _FabTrack_stuff_TypeInfo from "./_FabTrack_stuff_TypeInfo";

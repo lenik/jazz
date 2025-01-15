@@ -1,8 +1,8 @@
 import type { int, long } from "skel01-core/src/lang/basetype";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
-import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import type Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import IdEntity from "lily-basic/src/net/bodz/lily/concrete/IdEntity";
+import type User from "lily-basic/src/net/bodz/lily/schema/account/User";
+import type Organization from "lily-basic/src/net/bodz/lily/schema/contact/Organization";
+import type Person from "lily-basic/src/net/bodz/lily/schema/contact/Person";
 
 import type Diary from "./Diary";
 import _DiaryParty_stuff_TypeInfo from "./_DiaryParty_stuff_TypeInfo";

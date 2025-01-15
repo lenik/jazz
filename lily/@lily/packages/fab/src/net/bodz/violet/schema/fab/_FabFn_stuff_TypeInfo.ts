@@ -1,7 +1,7 @@
 import { INT, STRING } from "skel01-core/src/lang/baseinfo";
 import type { int } from "skel01-core/src/lang/basetype";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
+import CoImagedTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
 
 import { FabFn_TYPE } from "./FabFnTypeInfo";
 import _FabFn_stuff_Validators from "./_FabFn_stuff_Validators";

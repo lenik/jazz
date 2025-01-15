@@ -1,7 +1,7 @@
-import IValidControl from "@lily/basic/src/net/bodz/lily/concrete/util/IValidControl";
-import ArtifactModelTypeInfo from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
-import FabCost from "@lily/violet/src/net/bodz/violet/schema/art/FabCost";
-import _ArtifactModel_stuff from "@lily/violet/src/net/bodz/violet/schema/art/_ArtifactModel_stuff";
+import IValidControl from "lily-basic/src/net/bodz/lily/concrete/util/IValidControl";
+import ArtifactModelTypeInfo from "lily-violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
+import FabCost from "lily-violet/src/net/bodz/violet/schema/art/FabCost";
+import _ArtifactModel_stuff from "lily-violet/src/net/bodz/violet/schema/art/_ArtifactModel_stuff";
 
 export class ArtifactModel extends _ArtifactModel_stuff {
 

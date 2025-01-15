@@ -6,10 +6,10 @@ import { BIG_DECIMAL, INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "skel01-core/src/ui/types";
-import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
-import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
-import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
-import { FormDef_TYPE } from "@lily/basic/src/net/bodz/lily/schema/meta/FormDefTypeInfo";
+import { Group_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Organization_TYPE } from "lily-basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { FormDef_TYPE } from "lily-basic/src/net/bodz/lily/schema/meta/FormDefTypeInfo";
 
 import { SalesOrder_TYPE } from "../shop/SalesOrderTypeInfo";
 import { StoreOrder_TYPE } from "../store/StoreOrderTypeInfo";

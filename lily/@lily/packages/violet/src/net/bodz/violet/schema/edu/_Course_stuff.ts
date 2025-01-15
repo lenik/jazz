@@ -1,6 +1,6 @@
 import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { int } from "skel01-core/src/lang/basetype";
-import CoImaged from "@lily/basic/src/net/bodz/lily/concrete/CoImaged";
+import CoImaged from "lily-basic/src/net/bodz/lily/concrete/CoImaged";
 
 import type CourseCategory from "./CourseCategory";
 import _Course_stuff_TypeInfo from "./_Course_stuff_TypeInfo";

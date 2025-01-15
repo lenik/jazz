@@ -1,4 +1,4 @@
-import CoPhaseTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoPhaseTypeInfo";
+import CoPhaseTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoPhaseTypeInfo";
 
 import _StorePhase_stuff_Validators from "./_StorePhase_stuff_Validators";
 

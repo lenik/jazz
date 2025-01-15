@@ -1,5 +1,5 @@
 import { ValidateResult } from "skel01-core/src/ui/types";
-import FavRecordValidators from "@lily/basic/src/net/bodz/lily/concrete/FavRecordValidators";
+import FavRecordValidators from "lily-basic/src/net/bodz/lily/concrete/FavRecordValidators";
 
 import type Shop from "./Shop";
 import type _ShopFav_stuff_TypeInfo from "./_ShopFav_stuff_TypeInfo";

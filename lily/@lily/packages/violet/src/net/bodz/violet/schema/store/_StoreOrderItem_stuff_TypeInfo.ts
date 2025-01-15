@@ -3,7 +3,7 @@ import { BIG_DECIMAL, INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
 import type { long } from "skel01-core/src/lang/basetype";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoImagedEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
+import CoImagedEventTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
 
 import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
 import { Region_TYPE } from "./RegionTypeInfo";

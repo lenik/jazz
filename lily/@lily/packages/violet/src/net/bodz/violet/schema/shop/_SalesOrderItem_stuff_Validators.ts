@@ -1,7 +1,7 @@
 import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { BigDecimal, long } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoImagedEventValidators from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventValidators";
+import CoImagedEventValidators from "lily-basic/src/net/bodz/lily/concrete/CoImagedEventValidators";
 
 import type Artifact from "../art/Artifact";
 import type SalesOrder from "./SalesOrder";

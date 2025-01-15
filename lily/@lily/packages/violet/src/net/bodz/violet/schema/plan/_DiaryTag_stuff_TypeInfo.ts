@@ -1,4 +1,4 @@
-import CoTagTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoTagTypeInfo";
+import CoTagTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoTagTypeInfo";
 
 import _DiaryTag_stuff_Validators from "./_DiaryTag_stuff_Validators";
 

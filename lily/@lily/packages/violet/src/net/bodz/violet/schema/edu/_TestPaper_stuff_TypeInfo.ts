@@ -1,7 +1,7 @@
 import { INT } from "skel01-core/src/lang/baseinfo";
 import type { int } from "skel01-core/src/lang/basetype";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoMessageTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
+import CoMessageTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
 
 import { Course_TYPE } from "./CourseTypeInfo";
 import _TestPaper_stuff_Validators from "./_TestPaper_stuff_Validators";

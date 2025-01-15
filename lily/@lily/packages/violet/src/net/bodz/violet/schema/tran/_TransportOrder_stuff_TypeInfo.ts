@@ -1,6 +1,6 @@
 import { BIG_DECIMAL, INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Organization_TYPE } from "lily-basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
 
 import { SalesOrder_TYPE } from "../shop/SalesOrderTypeInfo";
 import { StoreOrder_TYPE } from "../store/StoreOrderTypeInfo";

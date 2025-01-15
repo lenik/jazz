@@ -1,5 +1,5 @@
 import type { int, long } from "skel01-core/src/lang/basetype";
-import CoMessage from "@lily/basic/src/net/bodz/lily/concrete/CoMessage";
+import CoMessage from "lily-basic/src/net/bodz/lily/concrete/CoMessage";
 
 import type Plan from "./Plan";
 import type PlanDo from "./PlanDo";

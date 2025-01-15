@@ -5,10 +5,10 @@ import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
 import { INT, STRING } from "skel01-core/src/lang/baseinfo";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
-import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
-import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
-import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
-import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
+import { Group_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Organization_TYPE } from "lily-basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "lily-basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
 import Shop from "./Shop";
 

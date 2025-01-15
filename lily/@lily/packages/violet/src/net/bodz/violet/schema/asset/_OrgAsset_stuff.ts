@@ -1,6 +1,6 @@
 import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { int } from "skel01-core/src/lang/basetype";
-import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
+import type Organization from "lily-basic/src/net/bodz/lily/schema/contact/Organization";
 
 import AbstractAsset from "./AbstractAsset";
 import _OrgAsset_stuff_TypeInfo from "./_OrgAsset_stuff_TypeInfo";

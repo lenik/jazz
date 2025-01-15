@@ -1,6 +1,6 @@
 import type { int } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoCategoryValidators from "@lily/basic/src/net/bodz/lily/concrete/CoCategoryValidators";
+import CoCategoryValidators from "lily-basic/src/net/bodz/lily/concrete/CoCategoryValidators";
 
 import type _RegionCategory_stuff_TypeInfo from "./_RegionCategory_stuff_TypeInfo";
 

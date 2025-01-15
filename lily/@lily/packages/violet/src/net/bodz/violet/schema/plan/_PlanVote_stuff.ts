@@ -1,5 +1,5 @@
 import type { int, long } from "skel01-core/src/lang/basetype";
-import VoteRecord from "@lily/basic/src/net/bodz/lily/concrete/VoteRecord";
+import VoteRecord from "lily-basic/src/net/bodz/lily/concrete/VoteRecord";
 
 import type Plan from "./Plan";
 import _PlanVote_stuff_TypeInfo from "./_PlanVote_stuff_TypeInfo";

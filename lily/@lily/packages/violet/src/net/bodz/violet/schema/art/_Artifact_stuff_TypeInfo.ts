@@ -1,8 +1,8 @@
 import { BIG_DECIMAL, INT, SHORT, STRING } from "skel01-core/src/lang/baseinfo";
 import type { int } from "skel01-core/src/lang/basetype";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
-import { UomRow_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomRowTypeInfo";
+import CoImagedTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
+import { UomRow_TYPE } from "lily-basic/src/net/bodz/lily/schema/util/UomRowTypeInfo";
 
 import { ArtifactCategory_TYPE } from "./ArtifactCategoryTypeInfo";
 import { ArtifactPhase_TYPE } from "./ArtifactPhaseTypeInfo";

@@ -1,6 +1,6 @@
 import type { double, int } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import type Uom from "@lily/basic/src/net/bodz/lily/schema/util/Uom";
+import type Uom from "lily-basic/src/net/bodz/lily/schema/util/Uom";
 
 import type ArtifactTypeInfo from "./ArtifactTypeInfo";
 import type IArtifactExtras from "./IArtifactExtras";

@@ -1,7 +1,7 @@
 import { DOUBLE, INT, STRING } from "skel01-core/src/lang/baseinfo";
 import type { int } from "skel01-core/src/lang/basetype";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoRelationTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoRelationTypeInfo";
+import CoRelationTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoRelationTypeInfo";
 
 import { Artifact_TYPE } from "./ArtifactTypeInfo";
 import { StdParameter_TYPE } from "./StdParameterTypeInfo";

@@ -5,9 +5,9 @@ import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
 import { INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
-import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
-import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
-import { FormDef_TYPE } from "@lily/basic/src/net/bodz/lily/schema/meta/FormDefTypeInfo";
+import { Group_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { FormDef_TYPE } from "lily-basic/src/net/bodz/lily/schema/meta/FormDefTypeInfo";
 
 import Diary from "./Diary";
 import { DiaryCategory_TYPE } from "./DiaryCategoryTypeInfo";

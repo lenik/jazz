@@ -1,9 +1,9 @@
 import { STRING } from "skel01-core/src/lang/baseinfo";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import { IValidControl_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/util/IValidControlTypeInfo";
-import ArtifactModelValidators from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelValidators";
-import { FabCost_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/FabCostTypeInfo";
-import _ArtifactModel_stuff_TypeInfo from "@lily/violet/src/net/bodz/violet/schema/art/_ArtifactModel_stuff_TypeInfo";
+import { IValidControl_TYPE } from "lily-basic/src/net/bodz/lily/concrete/util/IValidControlTypeInfo";
+import ArtifactModelValidators from "lily-violet/src/net/bodz/violet/schema/art/ArtifactModelValidators";
+import { FabCost_TYPE } from "lily-violet/src/net/bodz/violet/schema/art/FabCostTypeInfo";
+import _ArtifactModel_stuff_TypeInfo from "lily-violet/src/net/bodz/violet/schema/art/_ArtifactModel_stuff_TypeInfo";
 
 import ArtifactModel from "./ArtifactModel";
 

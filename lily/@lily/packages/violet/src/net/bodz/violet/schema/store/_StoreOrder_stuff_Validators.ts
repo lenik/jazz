@@ -1,12 +1,12 @@
 import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import IdEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/IdEntityValidators";
-import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import type OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
-import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import type Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
-import type FormDef from "@lily/basic/src/net/bodz/lily/schema/meta/FormDef";
+import IdEntityValidators from "lily-basic/src/net/bodz/lily/concrete/IdEntityValidators";
+import type User from "lily-basic/src/net/bodz/lily/schema/account/User";
+import type OrgUnit from "lily-basic/src/net/bodz/lily/schema/contact/OrgUnit";
+import type Organization from "lily-basic/src/net/bodz/lily/schema/contact/Organization";
+import type Person from "lily-basic/src/net/bodz/lily/schema/contact/Person";
+import type FormDef from "lily-basic/src/net/bodz/lily/schema/meta/FormDef";
 
 import type Plan from "../plan/Plan";
 import type StoreCategory from "./StoreCategory";

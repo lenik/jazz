@@ -1,6 +1,6 @@
 import type { BigDecimal, long } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoEventValidators from "@lily/basic/src/net/bodz/lily/concrete/CoEventValidators";
+import CoEventValidators from "lily-basic/src/net/bodz/lily/concrete/CoEventValidators";
 
 import type Artifact from "../art/Artifact";
 import type TransportOrder from "./TransportOrder";

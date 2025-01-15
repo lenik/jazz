@@ -3,7 +3,7 @@ import { onMounted, provide, ref } from "vue";
 
 import type { long } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
-import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import FabTrackTest from "./FabTrackTest";
 import { _FabTrackTest_stuff_TYPE } from "./_FabTrackTest_stuff_TypeInfo";
@@ -19,7 +19,7 @@ import FieldRow from "skel01-core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
-import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
+import StructRowFieldGroup from "lily-basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
 
 import FabStdTestChooseDialog from "./FabStdTestChooseDialog.vue";
 import FabTrackChooseDialog from "./FabTrackChooseDialog.vue";

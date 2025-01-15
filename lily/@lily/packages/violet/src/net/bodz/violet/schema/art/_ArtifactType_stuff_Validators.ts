@@ -1,7 +1,7 @@
 import type { int } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import IdEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/IdEntityValidators";
-import type UomRow from "@lily/basic/src/net/bodz/lily/schema/util/UomRow";
+import IdEntityValidators from "lily-basic/src/net/bodz/lily/concrete/IdEntityValidators";
+import type UomRow from "lily-basic/src/net/bodz/lily/schema/util/UomRow";
 
 import type ArtifactCategory from "./ArtifactCategory";
 import type ArtifactType from "./ArtifactType";

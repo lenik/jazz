@@ -1,6 +1,6 @@
 import type { double, int } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoRelationValidators from "@lily/basic/src/net/bodz/lily/concrete/CoRelationValidators";
+import CoRelationValidators from "lily-basic/src/net/bodz/lily/concrete/CoRelationValidators";
 
 import type ArtifactType from "./ArtifactType";
 import type StdParameter from "./StdParameter";

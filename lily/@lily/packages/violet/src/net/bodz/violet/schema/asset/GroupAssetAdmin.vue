@@ -6,8 +6,8 @@ import { BIG_DECIMAL, INT, LONG } from "skel01-core/src/lang/baseinfo";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import ZonedDateTime from "skel01-core/src/lang/time/ZonedDateTime";
 import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
-import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
-import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Group_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
 import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
 import { Region_TYPE } from "../store/RegionTypeInfo";

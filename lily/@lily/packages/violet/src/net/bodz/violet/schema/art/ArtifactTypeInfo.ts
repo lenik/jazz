@@ -1,6 +1,6 @@
 import { DOUBLE, MAP } from "skel01-core/src/lang/baseinfo";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import { Uom_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomTypeInfo";
+import { Uom_TYPE } from "lily-basic/src/net/bodz/lily/schema/util/UomTypeInfo";
 
 import Artifact from "./Artifact";
 import ArtifactValidators from "./ArtifactValidators";

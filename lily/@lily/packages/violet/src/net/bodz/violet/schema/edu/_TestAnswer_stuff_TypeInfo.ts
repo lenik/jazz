@@ -1,7 +1,7 @@
 import { BOOLEAN, LONG } from "skel01-core/src/lang/baseinfo";
 import type { long } from "skel01-core/src/lang/basetype";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoMessageTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
+import CoMessageTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
 
 import { TestQuestion_TYPE } from "./TestQuestionTypeInfo";
 import _TestAnswer_stuff_Validators from "./_TestAnswer_stuff_Validators";

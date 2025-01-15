@@ -1,6 +1,6 @@
 import type { long } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoMessageValidators from "@lily/basic/src/net/bodz/lily/concrete/CoMessageValidators";
+import CoMessageValidators from "lily-basic/src/net/bodz/lily/concrete/CoMessageValidators";
 
 import type TestQuestion from "./TestQuestion";
 import type _TestAnswer_stuff_TypeInfo from "./_TestAnswer_stuff_TypeInfo";

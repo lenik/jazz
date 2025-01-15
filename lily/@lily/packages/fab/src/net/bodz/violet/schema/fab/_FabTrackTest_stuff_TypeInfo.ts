@@ -1,7 +1,7 @@
 import { BOOLEAN, INT, LONG } from "skel01-core/src/lang/baseinfo";
 import type { long } from "skel01-core/src/lang/basetype";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import IdEntityTypeInfo from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import { FabStdTest_TYPE } from "./FabStdTestTypeInfo";
 import { FabTrack_TYPE } from "./FabTrackTypeInfo";

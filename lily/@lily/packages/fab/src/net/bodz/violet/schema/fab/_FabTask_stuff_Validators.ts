@@ -1,7 +1,7 @@
 import type { int, long } from "skel01-core/src/lang/basetype";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoEventValidators from "@lily/basic/src/net/bodz/lily/concrete/CoEventValidators";
+import CoEventValidators from "lily-basic/src/net/bodz/lily/concrete/CoEventValidators";
 
 import type FabOrder from "./FabOrder";
 import type _FabTask_stuff_TypeInfo from "./_FabTask_stuff_TypeInfo";

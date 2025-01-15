@@ -4,9 +4,9 @@ import { onMounted, ref } from "vue";
 import { BIG_DECIMAL, INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
-import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
-import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
-import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
+import { Group_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Person_TYPE } from "lily-basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
 import TestApply from "./TestApply";
 import { TestPaper_TYPE } from "./TestPaperTypeInfo";

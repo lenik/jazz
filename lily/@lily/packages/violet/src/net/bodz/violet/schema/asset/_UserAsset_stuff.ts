@@ -1,6 +1,6 @@
 import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { int } from "skel01-core/src/lang/basetype";
-import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import type User from "lily-basic/src/net/bodz/lily/schema/account/User";
 
 import AbstractAsset from "./AbstractAsset";
 import _UserAsset_stuff_TypeInfo from "./_UserAsset_stuff_TypeInfo";

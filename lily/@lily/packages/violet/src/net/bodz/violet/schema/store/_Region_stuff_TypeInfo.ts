@@ -1,7 +1,7 @@
 import { INT, STRING } from "skel01-core/src/lang/baseinfo";
 import type { int } from "skel01-core/src/lang/basetype";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoNodeTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoNodeTypeInfo";
+import CoNodeTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoNodeTypeInfo";
 
 import { ArtifactCategory_TYPE } from "../art/ArtifactCategoryTypeInfo";
 import { Artifact_TYPE } from "../art/ArtifactTypeInfo";

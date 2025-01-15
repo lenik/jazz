@@ -1,6 +1,6 @@
 import type { int, long } from "skel01-core/src/lang/basetype";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
-import CoEvent from "@lily/basic/src/net/bodz/lily/concrete/CoEvent";
+import CoEvent from "lily-basic/src/net/bodz/lily/concrete/CoEvent";
 
 import type FabOrder from "./FabOrder";
 import _FabTask_stuff_TypeInfo from "./_FabTask_stuff_TypeInfo";

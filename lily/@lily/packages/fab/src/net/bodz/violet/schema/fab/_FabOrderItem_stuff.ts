@@ -1,6 +1,6 @@
 import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
-import CoImagedEvent from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEvent";
-import type Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
+import CoImagedEvent from "lily-basic/src/net/bodz/lily/concrete/CoImagedEvent";
+import type Artifact from "lily-violet/src/net/bodz/violet/schema/art/Artifact";
 
 import type FabOrder from "./FabOrder";
 import _FabOrderItem_stuff_TypeInfo from "./_FabOrderItem_stuff_TypeInfo";

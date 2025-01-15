@@ -1,6 +1,6 @@
 import type { BigDecimal, int, short } from "skel01-core/src/lang/basetype";
-import CoImaged from "@lily/basic/src/net/bodz/lily/concrete/CoImaged";
-import type UomRow from "@lily/basic/src/net/bodz/lily/schema/util/UomRow";
+import CoImaged from "lily-basic/src/net/bodz/lily/concrete/CoImaged";
+import type UomRow from "lily-basic/src/net/bodz/lily/schema/util/UomRow";
 
 import type Artifact from "./Artifact";
 import type ArtifactCategory from "./ArtifactCategory";

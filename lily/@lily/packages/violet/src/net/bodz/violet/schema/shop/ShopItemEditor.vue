@@ -4,7 +4,7 @@ import { onMounted, provide, ref } from "vue";
 import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { BigDecimal, long } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
-import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import ShopItem from "./ShopItem";
 import { _ShopItem_stuff_TYPE } from "./_ShopItem_stuff_TypeInfo";
@@ -21,10 +21,10 @@ import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
 import JsonEditor from "skel01-core/src/ui/input/JsonEditor.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
-import CoEventFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoEventFieldGroup.vue";
-import CoImagedEventFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventFieldGroup.vue";
-import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
-import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
+import CoEventFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoEventFieldGroup.vue";
+import CoImagedEventFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoImagedEventFieldGroup.vue";
+import CoObjectFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
+import StructRowFieldGroup from "lily-basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
 
 import ArtifactChooseDialog from "../art/ArtifactChooseDialog.vue";
 import ShopChooseDialog from "./ShopChooseDialog.vue";

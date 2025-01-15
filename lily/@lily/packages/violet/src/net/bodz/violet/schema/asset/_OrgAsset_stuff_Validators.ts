@@ -1,6 +1,6 @@
 import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
+import type Organization from "lily-basic/src/net/bodz/lily/schema/contact/Organization";
 
 import AbstractAssetValidators from "./AbstractAssetValidators";
 import type _OrgAsset_stuff_TypeInfo from "./_OrgAsset_stuff_TypeInfo";

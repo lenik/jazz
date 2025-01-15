@@ -1,7 +1,7 @@
 import type { BigDecimal, long } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoMessageValidators from "@lily/basic/src/net/bodz/lily/concrete/CoMessageValidators";
-import type Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import CoMessageValidators from "lily-basic/src/net/bodz/lily/concrete/CoMessageValidators";
+import type Person from "lily-basic/src/net/bodz/lily/schema/contact/Person";
 
 import type TestPaper from "./TestPaper";
 import type _TestApply_stuff_TypeInfo from "./_TestApply_stuff_TypeInfo";

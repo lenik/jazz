@@ -1,7 +1,7 @@
 import type { BigDecimal, int } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import IdEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/IdEntityValidators";
-import type Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
+import IdEntityValidators from "lily-basic/src/net/bodz/lily/concrete/IdEntityValidators";
+import type Artifact from "lily-violet/src/net/bodz/violet/schema/art/Artifact";
 
 import type ArtifactModel from "../art/ArtifactModel";
 import type FabStdProcess from "./FabStdProcess";

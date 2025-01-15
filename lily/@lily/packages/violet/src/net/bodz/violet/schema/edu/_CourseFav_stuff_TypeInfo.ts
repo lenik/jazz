@@ -1,6 +1,6 @@
 import { INT } from "skel01-core/src/lang/baseinfo";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import FavRecordTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/FavRecordTypeInfo";
+import FavRecordTypeInfo from "lily-basic/src/net/bodz/lily/concrete/FavRecordTypeInfo";
 
 import { Course_TYPE } from "./CourseTypeInfo";
 import _CourseFav_stuff_Validators from "./_CourseFav_stuff_Validators";

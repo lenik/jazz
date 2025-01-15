@@ -1,6 +1,6 @@
 import type { int } from "skel01-core/src/lang/basetype";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
-import type UomRow from "@lily/basic/src/net/bodz/lily/schema/util/UomRow";
+import IdEntity from "lily-basic/src/net/bodz/lily/concrete/IdEntity";
+import type UomRow from "lily-basic/src/net/bodz/lily/schema/util/UomRow";
 
 import type ArtifactCategory from "./ArtifactCategory";
 import type ArtifactType from "./ArtifactType";

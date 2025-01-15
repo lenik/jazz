@@ -6,9 +6,9 @@ import { BIG_DECIMAL, INT, SHORT, STRING } from "skel01-core/src/lang/baseinfo";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "skel01-core/src/ui/types";
-import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
-import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
-import { UomRow_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomRowTypeInfo";
+import { Group_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { UomRow_TYPE } from "lily-basic/src/net/bodz/lily/schema/util/UomRowTypeInfo";
 
 import { Artifact } from "./Artifact";
 import { ArtifactCategory_TYPE } from "./ArtifactCategoryTypeInfo";

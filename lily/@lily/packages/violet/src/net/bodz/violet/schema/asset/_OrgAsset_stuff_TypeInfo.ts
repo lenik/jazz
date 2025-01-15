@@ -1,7 +1,7 @@
 import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
 import { INT } from "skel01-core/src/lang/baseinfo";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Organization_TYPE } from "lily-basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
 
 import AbstractAssetTypeInfo from "./AbstractAssetTypeInfo";
 import _OrgAsset_stuff_Validators from "./_OrgAsset_stuff_Validators";

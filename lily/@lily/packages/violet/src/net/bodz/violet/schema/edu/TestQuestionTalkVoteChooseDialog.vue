@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 
 import { INT, LONG } from "skel01-core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "skel01-core/src/ui/types";
-import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
 import { TestQuestionTalk_TYPE } from "./TestQuestionTalkTypeInfo";
 import { TestQuestionTalkVote } from "./TestQuestionTalkVote";

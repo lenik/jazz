@@ -1,10 +1,10 @@
 import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { int } from "skel01-core/src/lang/basetype";
-import type Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import type OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
-import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import type Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import type Group from "lily-basic/src/net/bodz/lily/schema/account/Group";
+import type User from "lily-basic/src/net/bodz/lily/schema/account/User";
+import type OrgUnit from "lily-basic/src/net/bodz/lily/schema/contact/OrgUnit";
+import type Organization from "lily-basic/src/net/bodz/lily/schema/contact/Organization";
+import type Person from "lily-basic/src/net/bodz/lily/schema/contact/Person";
 
 import AbstractAsset from "./AbstractAsset";
 import _Asset_stuff_TypeInfo from "./_Asset_stuff_TypeInfo";

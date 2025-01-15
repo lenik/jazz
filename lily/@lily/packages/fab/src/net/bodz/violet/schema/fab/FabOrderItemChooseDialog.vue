@@ -6,7 +6,7 @@ import { BIG_DECIMAL, BOOLEAN, INT, LONG, STRING } from "skel01-core/src/lang/ba
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "skel01-core/src/ui/types";
-import { Artifact_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
+import { Artifact_TYPE } from "lily-violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
 
 import { FabOrderItem } from "./FabOrderItem";
 import { FabOrder_TYPE } from "./FabOrderTypeInfo";

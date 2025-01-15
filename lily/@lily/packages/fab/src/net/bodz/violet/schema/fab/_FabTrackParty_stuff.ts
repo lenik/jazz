@@ -1,6 +1,6 @@
 import type { int, long } from "skel01-core/src/lang/basetype";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
-import type Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import IdEntity from "lily-basic/src/net/bodz/lily/concrete/IdEntity";
+import type Person from "lily-basic/src/net/bodz/lily/schema/contact/Person";
 
 import type FabTrack from "./FabTrack";
 import _FabTrackParty_stuff_TypeInfo from "./_FabTrackParty_stuff_TypeInfo";

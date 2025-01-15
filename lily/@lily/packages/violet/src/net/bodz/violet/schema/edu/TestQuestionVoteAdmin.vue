@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { INT, LONG } from "skel01-core/src/lang/baseinfo";
-import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
 import { TestQuestion_TYPE } from "./TestQuestionTypeInfo";
 import TestQuestionVote from "./TestQuestionVote";

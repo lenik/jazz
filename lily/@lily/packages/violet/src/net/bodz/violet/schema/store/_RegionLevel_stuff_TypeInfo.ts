@@ -1,6 +1,6 @@
 import { INT } from "skel01-core/src/lang/baseinfo";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoCodeTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoCodeTypeInfo";
+import CoCodeTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoCodeTypeInfo";
 
 import _RegionLevel_stuff_Validators from "./_RegionLevel_stuff_Validators";
 

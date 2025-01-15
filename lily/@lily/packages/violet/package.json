@@ -1,5 +1,5 @@
 {
-    "name": "@lily/violet",
+    "name": "lily-violet",
     "version": "0.0.1",
     "type": "module",
     "main": "test/index.html",
@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@eirslett/jquery-ui-esm": "1.12.1-alpha",
-        "@lily/basic": "link:../basic",
+        "lily-basic": "link:../basic",
         "skel01-core": "link:../../skel01/packages/core",
         "skel01-dba": "link:../../skel01/packages/dba",
         "bootstrap": "^4.6.2",

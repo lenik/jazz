@@ -1,6 +1,6 @@
 import type { BigDecimal, int } from "skel01-core/src/lang/basetype";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
-import type Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
+import IdEntity from "lily-basic/src/net/bodz/lily/concrete/IdEntity";
+import type Artifact from "lily-violet/src/net/bodz/violet/schema/art/Artifact";
 
 import type ArtifactModel from "../art/ArtifactModel";
 import type FabStdProcess from "./FabStdProcess";

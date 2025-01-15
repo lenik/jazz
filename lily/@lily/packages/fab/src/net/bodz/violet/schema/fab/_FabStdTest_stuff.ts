@@ -1,5 +1,5 @@
 import type { int } from "skel01-core/src/lang/basetype";
-import CoImaged from "@lily/basic/src/net/bodz/lily/concrete/CoImaged";
+import CoImaged from "lily-basic/src/net/bodz/lily/concrete/CoImaged";
 
 import type FabStdTest from "./FabStdTest";
 import type FabStdTestCategory from "./FabStdTestCategory";

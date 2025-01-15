@@ -1,5 +1,5 @@
 import type { int } from "skel01-core/src/lang/basetype";
-import DocRecord from "@lily/basic/src/net/bodz/lily/concrete/DocRecord";
+import DocRecord from "lily-basic/src/net/bodz/lily/concrete/DocRecord";
 
 import type Artifact from "./Artifact";
 import _ArtifactDoc_stuff_TypeInfo from "./_ArtifactDoc_stuff_TypeInfo";

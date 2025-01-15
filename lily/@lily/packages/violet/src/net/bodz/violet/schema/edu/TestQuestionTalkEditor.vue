@@ -4,7 +4,7 @@ import { onMounted, provide, ref } from "vue";
 import type { int, long } from "skel01-core/src/lang/basetype";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
-import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import TestQuestionTalk from "./TestQuestionTalk";
 import { _TestQuestionTalk_stuff_TYPE } from "./_TestQuestionTalk_stuff_TypeInfo";
@@ -21,10 +21,10 @@ import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
 import DateTime from "skel01-core/src/ui/input/DateTime.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
-import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
-import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
-import UserChooseDialog from "@lily/basic/src/net/bodz/lily/schema/account/UserChooseDialog.vue";
-import FormDefChooseDialog from "@lily/basic/src/net/bodz/lily/schema/meta/FormDefChooseDialog.vue";
+import CoObjectFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
+import StructRowFieldGroup from "lily-basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
+import UserChooseDialog from "lily-basic/src/net/bodz/lily/schema/account/UserChooseDialog.vue";
+import FormDefChooseDialog from "lily-basic/src/net/bodz/lily/schema/meta/FormDefChooseDialog.vue";
 
 import TestQuestionChooseDialog from "./TestQuestionChooseDialog.vue";
 import TestQuestionTalkChooseDialog from "./TestQuestionTalkChooseDialog.vue";

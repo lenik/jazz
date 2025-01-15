@@ -3,7 +3,7 @@ import { onMounted, provide, ref } from "vue";
 
 import type { double, int } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
-import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import ArtifactParam from "./ArtifactParam";
 import { _ArtifactParam_stuff_TYPE } from "./_ArtifactParam_stuff_TypeInfo";
@@ -19,7 +19,7 @@ import FieldRow from "skel01-core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
-import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
+import StructRowFieldGroup from "lily-basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
 
 import ArtifactChooseDialog from "./ArtifactChooseDialog.vue";
 import StdParameterChooseDialog from "./StdParameterChooseDialog.vue";

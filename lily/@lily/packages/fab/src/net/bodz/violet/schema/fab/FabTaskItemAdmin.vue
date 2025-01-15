@@ -5,7 +5,7 @@ import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
 import { BIG_DECIMAL, INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
-import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
+import { ArtifactModel_TYPE } from "lily-violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
 
 import FabTaskItem from "./FabTaskItem";
 import { FabTask_TYPE } from "./FabTaskTypeInfo";

@@ -1,5 +1,5 @@
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoPhaseValidators from "@lily/basic/src/net/bodz/lily/concrete/CoPhaseValidators";
+import CoPhaseValidators from "lily-basic/src/net/bodz/lily/concrete/CoPhaseValidators";
 
 import type _IssuePhase_stuff_TypeInfo from "./_IssuePhase_stuff_TypeInfo";
 

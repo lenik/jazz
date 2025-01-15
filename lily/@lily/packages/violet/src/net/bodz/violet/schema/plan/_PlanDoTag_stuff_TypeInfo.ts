@@ -1,4 +1,4 @@
-import CoTagTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoTagTypeInfo";
+import CoTagTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoTagTypeInfo";
 
 import _PlanDoTag_stuff_Validators from "./_PlanDoTag_stuff_Validators";
 

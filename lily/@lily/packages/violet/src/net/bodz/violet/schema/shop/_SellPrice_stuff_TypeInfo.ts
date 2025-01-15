@@ -1,7 +1,7 @@
 import { BIG_DECIMAL, INT, STRING } from "skel01-core/src/lang/baseinfo";
 import type { int } from "skel01-core/src/lang/basetype";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import IdEntityTypeInfo from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
 import _SellPrice_stuff_Validators from "./_SellPrice_stuff_Validators";

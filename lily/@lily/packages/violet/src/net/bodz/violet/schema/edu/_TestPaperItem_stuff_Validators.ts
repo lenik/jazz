@@ -1,6 +1,6 @@
 import type { BigDecimal, long } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoImagedValidators from "@lily/basic/src/net/bodz/lily/concrete/CoImagedValidators";
+import CoImagedValidators from "lily-basic/src/net/bodz/lily/concrete/CoImagedValidators";
 
 import type TestPaper from "./TestPaper";
 import type TestQuestion from "./TestQuestion";

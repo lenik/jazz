@@ -1,5 +1,5 @@
 import type { long } from "skel01-core/src/lang/basetype";
-import FavRecord from "@lily/basic/src/net/bodz/lily/concrete/FavRecord";
+import FavRecord from "lily-basic/src/net/bodz/lily/concrete/FavRecord";
 
 import type ShopItem from "./ShopItem";
 import _ShopItemFav_stuff_TypeInfo from "./_ShopItemFav_stuff_TypeInfo";

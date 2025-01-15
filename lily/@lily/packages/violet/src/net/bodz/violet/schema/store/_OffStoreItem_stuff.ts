@@ -1,6 +1,6 @@
 import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import IdEntity from "lily-basic/src/net/bodz/lily/concrete/IdEntity";
 
 import type Artifact from "../art/Artifact";
 import _OffStoreItem_stuff_TypeInfo from "./_OffStoreItem_stuff_TypeInfo";

@@ -3,7 +3,7 @@ import { onMounted, provide, ref } from "vue";
 
 import type { BigDecimal, long } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
-import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import TestPaperItem from "./TestPaperItem";
 import { _TestPaperItem_stuff_TYPE } from "./_TestPaperItem_stuff_TypeInfo";
@@ -19,9 +19,9 @@ import FieldRow from "skel01-core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
-import CoImagedFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoImagedFieldGroup.vue";
-import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
-import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
+import CoImagedFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoImagedFieldGroup.vue";
+import CoObjectFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
+import StructRowFieldGroup from "lily-basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
 
 import TestPaperChooseDialog from "./TestPaperChooseDialog.vue";
 import TestQuestionChooseDialog from "./TestQuestionChooseDialog.vue";

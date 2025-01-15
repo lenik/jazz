@@ -1,4 +1,4 @@
-import CoParameter from "@lily/basic/src/net/bodz/lily/concrete/CoParameter";
+import CoParameter from "lily-basic/src/net/bodz/lily/concrete/CoParameter";
 
 export class _DiaryParameterType_stuff<this_t> extends CoParameter<this_t> {
 

@@ -3,8 +3,8 @@ import { onMounted, ref } from "vue";
 
 import { LONG, STRING } from "skel01-core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "skel01-core/src/ui/types";
-import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
-import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
+import { Organization_TYPE } from "lily-basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "lily-basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
 import { PlanParty } from "./PlanParty";
 import { Plan_TYPE } from "./PlanTypeInfo";

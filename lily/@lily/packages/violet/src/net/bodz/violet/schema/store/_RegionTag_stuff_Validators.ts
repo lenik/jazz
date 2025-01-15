@@ -1,5 +1,5 @@
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoTagValidators from "@lily/basic/src/net/bodz/lily/concrete/CoTagValidators";
+import CoTagValidators from "lily-basic/src/net/bodz/lily/concrete/CoTagValidators";
 
 import type _RegionTag_stuff_TypeInfo from "./_RegionTag_stuff_TypeInfo";
 

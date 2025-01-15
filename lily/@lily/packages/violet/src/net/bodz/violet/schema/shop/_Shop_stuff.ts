@@ -1,7 +1,7 @@
 import type { int } from "skel01-core/src/lang/basetype";
-import CoImaged from "@lily/basic/src/net/bodz/lily/concrete/CoImaged";
-import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import type Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import CoImaged from "lily-basic/src/net/bodz/lily/concrete/CoImaged";
+import type Organization from "lily-basic/src/net/bodz/lily/schema/contact/Organization";
+import type Person from "lily-basic/src/net/bodz/lily/schema/contact/Person";
 
 import _Shop_stuff_TypeInfo from "./_Shop_stuff_TypeInfo";
 

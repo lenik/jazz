@@ -3,7 +3,7 @@ import { onMounted, provide, ref } from "vue";
 
 import type { int, long } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
-import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import DiaryParty from "./DiaryParty";
 import { _DiaryParty_stuff_TYPE } from "./_DiaryParty_stuff_TypeInfo";
@@ -19,10 +19,10 @@ import FieldRow from "skel01-core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
-import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
-import UserChooseDialog from "@lily/basic/src/net/bodz/lily/schema/account/UserChooseDialog.vue";
-import OrganizationChooseDialog from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationChooseDialog.vue";
-import PersonChooseDialog from "@lily/basic/src/net/bodz/lily/schema/contact/PersonChooseDialog.vue";
+import CoObjectFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
+import UserChooseDialog from "lily-basic/src/net/bodz/lily/schema/account/UserChooseDialog.vue";
+import OrganizationChooseDialog from "lily-basic/src/net/bodz/lily/schema/contact/OrganizationChooseDialog.vue";
+import PersonChooseDialog from "lily-basic/src/net/bodz/lily/schema/contact/PersonChooseDialog.vue";
 
 import DiaryChooseDialog from "./DiaryChooseDialog.vue";
 

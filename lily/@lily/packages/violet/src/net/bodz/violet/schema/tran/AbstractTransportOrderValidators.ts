@@ -1,6 +1,6 @@
-import CoMessageValidators from '@lily/basic/src/net/bodz/lily/concrete/CoMessageValidators';
+import CoMessageValidators from 'lily-basic/src/net/bodz/lily/concrete/CoMessageValidators';
 import AbstractTransportOrderTypeInfo from './AbstractTransportOrderTypeInfo';
-import Contact from '@lily/basic/src/net/bodz/lily/schema/contact/Contact';
+import Contact from 'lily-basic/src/net/bodz/lily/schema/contact/Contact';
 
 export class AbstractTransportOrderValidators extends CoMessageValidators {
 

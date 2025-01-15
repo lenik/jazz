@@ -1,4 +1,4 @@
-import CoPhase from "@lily/basic/src/net/bodz/lily/concrete/CoPhase";
+import CoPhase from "lily-basic/src/net/bodz/lily/concrete/CoPhase";
 
 import _TransportPhase_stuff_TypeInfo from "./_TransportPhase_stuff_TypeInfo";
 

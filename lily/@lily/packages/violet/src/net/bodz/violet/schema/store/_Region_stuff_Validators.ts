@@ -1,6 +1,6 @@
 import type { int } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoNodeValidators from "@lily/basic/src/net/bodz/lily/concrete/CoNodeValidators";
+import CoNodeValidators from "lily-basic/src/net/bodz/lily/concrete/CoNodeValidators";
 
 import type Artifact from "../art/Artifact";
 import type ArtifactCategory from "../art/ArtifactCategory";

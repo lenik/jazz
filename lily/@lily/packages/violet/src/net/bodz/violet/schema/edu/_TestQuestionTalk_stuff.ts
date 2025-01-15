@@ -1,8 +1,8 @@
 import type { int, long } from "skel01-core/src/lang/basetype";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
-import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import type FormDef from "@lily/basic/src/net/bodz/lily/schema/meta/FormDef";
+import IdEntity from "lily-basic/src/net/bodz/lily/concrete/IdEntity";
+import type User from "lily-basic/src/net/bodz/lily/schema/account/User";
+import type FormDef from "lily-basic/src/net/bodz/lily/schema/meta/FormDef";
 
 import type TestQuestion from "./TestQuestion";
 import type TestQuestionTalk from "./TestQuestionTalk";

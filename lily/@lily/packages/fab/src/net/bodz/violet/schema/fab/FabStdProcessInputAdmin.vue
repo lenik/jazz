@@ -3,8 +3,8 @@ import { onMounted, ref } from "vue";
 
 import { BIG_DECIMAL, INT } from "skel01-core/src/lang/baseinfo";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
-import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
-import { Artifact_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
+import { ArtifactModel_TYPE } from "lily-violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
+import { Artifact_TYPE } from "lily-violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
 
 import FabStdProcessInput from "./FabStdProcessInput";
 import { FabStdProcess_TYPE } from "./FabStdProcessTypeInfo";

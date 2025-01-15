@@ -1,7 +1,7 @@
 import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
 import { INT } from "skel01-core/src/lang/baseinfo";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
 import AbstractAssetTypeInfo from "./AbstractAssetTypeInfo";
 import _UserAsset_stuff_Validators from "./_UserAsset_stuff_Validators";

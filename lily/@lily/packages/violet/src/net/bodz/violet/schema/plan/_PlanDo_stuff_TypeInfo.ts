@@ -1,7 +1,7 @@
 import { ARRAY, INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
 import type { long } from "skel01-core/src/lang/basetype";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoMessageTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
+import CoMessageTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
 
 import { PlanDo_TYPE } from "./PlanDoTypeInfo";
 import { Plan_TYPE } from "./PlanTypeInfo";

@@ -1,5 +1,5 @@
 import type { int } from "skel01-core/src/lang/basetype";
-import CoMessage from "@lily/basic/src/net/bodz/lily/concrete/CoMessage";
+import CoMessage from "lily-basic/src/net/bodz/lily/concrete/CoMessage";
 
 import type Course from "./Course";
 import _TestPaper_stuff_TypeInfo from "./_TestPaper_stuff_TypeInfo";

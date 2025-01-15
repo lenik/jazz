@@ -1,5 +1,5 @@
 import type { double, int } from "skel01-core/src/lang/basetype";
-import CoRelation from "@lily/basic/src/net/bodz/lily/concrete/CoRelation";
+import CoRelation from "lily-basic/src/net/bodz/lily/concrete/CoRelation";
 
 import type ArtifactType from "./ArtifactType";
 import type StdParameter from "./StdParameter";

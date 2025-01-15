@@ -1,5 +1,5 @@
 import type { long } from "skel01-core/src/lang/basetype";
-import CoMessage from "@lily/basic/src/net/bodz/lily/concrete/CoMessage";
+import CoMessage from "lily-basic/src/net/bodz/lily/concrete/CoMessage";
 
 import type TestQuestion from "./TestQuestion";
 import _TestAnswer_stuff_TypeInfo from "./_TestAnswer_stuff_TypeInfo";

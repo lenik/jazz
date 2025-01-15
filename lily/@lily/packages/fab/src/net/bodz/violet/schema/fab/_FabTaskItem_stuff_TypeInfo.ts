@@ -3,8 +3,8 @@ import { BIG_DECIMAL, INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
 import type { long } from "skel01-core/src/lang/basetype";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoEventTypeInfo";
-import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
+import CoEventTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoEventTypeInfo";
+import { ArtifactModel_TYPE } from "lily-violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
 
 import { FabTask_TYPE } from "./FabTaskTypeInfo";
 import _FabTaskItem_stuff_Validators from "./_FabTaskItem_stuff_Validators";

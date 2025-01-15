@@ -1,9 +1,9 @@
 import type { int, long } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import IdEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/IdEntityValidators";
-import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import type Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import IdEntityValidators from "lily-basic/src/net/bodz/lily/concrete/IdEntityValidators";
+import type User from "lily-basic/src/net/bodz/lily/schema/account/User";
+import type Organization from "lily-basic/src/net/bodz/lily/schema/contact/Organization";
+import type Person from "lily-basic/src/net/bodz/lily/schema/contact/Person";
 
 import type Diary from "./Diary";
 import type _DiaryParty_stuff_TypeInfo from "./_DiaryParty_stuff_TypeInfo";

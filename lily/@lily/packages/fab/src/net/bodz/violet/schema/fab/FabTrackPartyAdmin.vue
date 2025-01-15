@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 
 import { INT, LONG, STRING } from "skel01-core/src/lang/baseinfo";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
-import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
+import { Person_TYPE } from "lily-basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
 import FabTrackParty from "./FabTrackParty";
 import { FabTrack_TYPE } from "./FabTrackTypeInfo";

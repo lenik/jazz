@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { LONG } from "skel01-core/src/lang/baseinfo";
-import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
 import ShopItemFav from "./ShopItemFav";
 import { ShopItem_TYPE } from "./ShopItemTypeInfo";

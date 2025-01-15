@@ -1,6 +1,6 @@
 import type { int } from "skel01-core/src/lang/basetype";
-import BackrefRecord from "@lily/basic/src/net/bodz/lily/concrete/BackrefRecord";
-import type ExternalSite from "@lily/basic/src/net/bodz/lily/schema/inet/ExternalSite";
+import BackrefRecord from "lily-basic/src/net/bodz/lily/concrete/BackrefRecord";
+import type ExternalSite from "lily-basic/src/net/bodz/lily/schema/inet/ExternalSite";
 
 import type Artifact from "./Artifact";
 import _ArtifactBackref_stuff_TypeInfo from "./_ArtifactBackref_stuff_TypeInfo";

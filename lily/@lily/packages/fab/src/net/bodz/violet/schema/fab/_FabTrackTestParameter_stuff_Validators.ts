@@ -1,6 +1,6 @@
 import type { long } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import IdEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/IdEntityValidators";
+import IdEntityValidators from "lily-basic/src/net/bodz/lily/concrete/IdEntityValidators";
 
 import type FabStdTestParameter from "./FabStdTestParameter";
 import type FabStdTester from "./FabStdTester";

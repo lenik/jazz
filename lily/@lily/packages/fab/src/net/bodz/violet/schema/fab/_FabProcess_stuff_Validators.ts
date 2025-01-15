@@ -2,7 +2,7 @@ import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { BigDecimal, int, long } from "skel01-core/src/lang/basetype";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import CoEventValidators from "@lily/basic/src/net/bodz/lily/concrete/CoEventValidators";
+import CoEventValidators from "lily-basic/src/net/bodz/lily/concrete/CoEventValidators";
 
 import type ArtifactModel from "../art/ArtifactModel";
 import type FabProcess from "./FabProcess";

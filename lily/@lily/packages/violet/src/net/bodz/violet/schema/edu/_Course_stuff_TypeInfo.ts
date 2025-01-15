@@ -2,7 +2,7 @@ import { JSON_VARIANT } from "skel01-core/src/lang/bas-info";
 import { INT } from "skel01-core/src/lang/baseinfo";
 import type { int } from "skel01-core/src/lang/basetype";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
+import CoImagedTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
 
 import { CourseCategory_TYPE } from "./CourseCategoryTypeInfo";
 import _Course_stuff_Validators from "./_Course_stuff_Validators";

@@ -1,6 +1,6 @@
 import type { int } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import VoteRecordValidators from "@lily/basic/src/net/bodz/lily/concrete/VoteRecordValidators";
+import VoteRecordValidators from "lily-basic/src/net/bodz/lily/concrete/VoteRecordValidators";
 
 import type TestQuestion from "./TestQuestion";
 import type _TestQuestionVote_stuff_TypeInfo from "./_TestQuestionVote_stuff_TypeInfo";

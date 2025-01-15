@@ -1,6 +1,6 @@
 import { INT, LONG } from "skel01-core/src/lang/baseinfo";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import VoteRecordTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/VoteRecordTypeInfo";
+import VoteRecordTypeInfo from "lily-basic/src/net/bodz/lily/concrete/VoteRecordTypeInfo";
 
 import { Plan_TYPE } from "./PlanTypeInfo";
 import _PlanVote_stuff_Validators from "./_PlanVote_stuff_Validators";

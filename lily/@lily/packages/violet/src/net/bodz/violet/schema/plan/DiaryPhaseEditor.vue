@@ -3,7 +3,7 @@ import { onMounted, provide, ref } from "vue";
 
 import type { int } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
-import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import DiaryPhase from "./DiaryPhase";
 
@@ -17,9 +17,9 @@ export interface Props {
 import FieldRow from "skel01-core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
-import CoCodeFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoCodeFieldGroup.vue";
-import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
-import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
+import CoCodeFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoCodeFieldGroup.vue";
+import CoObjectFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
+import StructRowFieldGroup from "lily-basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
 
 defineOptions({
     inheritAttrs: false

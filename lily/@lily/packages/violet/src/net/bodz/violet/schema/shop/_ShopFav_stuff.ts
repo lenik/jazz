@@ -1,5 +1,5 @@
 import type { int } from "skel01-core/src/lang/basetype";
-import FavRecord from "@lily/basic/src/net/bodz/lily/concrete/FavRecord";
+import FavRecord from "lily-basic/src/net/bodz/lily/concrete/FavRecord";
 
 import type Shop from "./Shop";
 import _ShopFav_stuff_TypeInfo from "./_ShopFav_stuff_TypeInfo";

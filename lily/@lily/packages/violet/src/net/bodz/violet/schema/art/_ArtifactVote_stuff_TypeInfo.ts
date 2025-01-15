@@ -1,6 +1,6 @@
 import { INT } from "skel01-core/src/lang/baseinfo";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import VoteRecordTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/VoteRecordTypeInfo";
+import VoteRecordTypeInfo from "lily-basic/src/net/bodz/lily/concrete/VoteRecordTypeInfo";
 
 import { Artifact_TYPE } from "./ArtifactTypeInfo";
 import _ArtifactVote_stuff_Validators from "./_ArtifactVote_stuff_Validators";

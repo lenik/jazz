@@ -1,5 +1,5 @@
 import { ValidateResult } from "skel01-core/src/ui/types";
-import DocRecordValidators from "@lily/basic/src/net/bodz/lily/concrete/DocRecordValidators";
+import DocRecordValidators from "lily-basic/src/net/bodz/lily/concrete/DocRecordValidators";
 
 import type Artifact from "./Artifact";
 import type _ArtifactDoc_stuff_TypeInfo from "./_ArtifactDoc_stuff_TypeInfo";

@@ -2,8 +2,8 @@ import { BOOLEAN, INT } from "skel01-core/src/lang/baseinfo";
 import type { int } from "skel01-core/src/lang/basetype";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
-import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
-import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
+import CoImagedTypeInfo from "lily-basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
+import { ArtifactModel_TYPE } from "lily-violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
 
 import { FabFn_TYPE } from "./FabFnTypeInfo";
 import { FabStdTest_TYPE } from "./FabStdTestTypeInfo";

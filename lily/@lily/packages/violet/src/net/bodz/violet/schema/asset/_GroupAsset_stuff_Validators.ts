@@ -1,6 +1,6 @@
 import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import { ValidateResult } from "skel01-core/src/ui/types";
-import type Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
+import type Group from "lily-basic/src/net/bodz/lily/schema/account/Group";
 
 import AbstractAssetValidators from "./AbstractAssetValidators";
 import type _GroupAsset_stuff_TypeInfo from "./_GroupAsset_stuff_TypeInfo";

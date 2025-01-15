@@ -1,5 +1,5 @@
 import type { int, long } from "skel01-core/src/lang/basetype";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import IdEntity from "lily-basic/src/net/bodz/lily/concrete/IdEntity";
 
 import type FabStdTest from "./FabStdTest";
 import type FabTrack from "./FabTrack";

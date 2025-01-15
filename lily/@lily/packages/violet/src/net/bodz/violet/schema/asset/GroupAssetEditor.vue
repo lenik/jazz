@@ -5,7 +5,7 @@ import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { BigDecimal, long } from "skel01-core/src/lang/basetype";
 import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
-import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import { AbstractAsset_TYPE } from "./AbstractAssetTypeInfo";
 import GroupAsset from "./GroupAsset";
@@ -24,10 +24,10 @@ import DateTime from "skel01-core/src/ui/input/DateTime.vue";
 import JsonEditor from "skel01-core/src/ui/input/JsonEditor.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
-import CoEventFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoEventFieldGroup.vue";
-import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
-import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
-import GroupChooseDialog from "@lily/basic/src/net/bodz/lily/schema/account/GroupChooseDialog.vue";
+import CoEventFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoEventFieldGroup.vue";
+import CoObjectFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
+import StructRowFieldGroup from "lily-basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
+import GroupChooseDialog from "lily-basic/src/net/bodz/lily/schema/account/GroupChooseDialog.vue";
 
 import ArtifactChooseDialog from "../art/ArtifactChooseDialog.vue";
 import RegionChooseDialog from "../store/RegionChooseDialog.vue";

@@ -3,7 +3,7 @@ import { onMounted, provide, ref } from "vue";
 
 import type { BigDecimal, int } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
-import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import FabStdProcessInput from "./FabStdProcessInput";
 import { _FabStdProcessInput_stuff_TYPE } from "./_FabStdProcessInput_stuff_TypeInfo";
@@ -19,9 +19,9 @@ import FieldRow from "skel01-core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
-import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
-import ArtifactChooseDialog from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactChooseDialog.vue";
-import ArtifactModelChooseDialog from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelChooseDialog.vue";
+import StructRowFieldGroup from "lily-basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
+import ArtifactChooseDialog from "lily-violet/src/net/bodz/violet/schema/art/ArtifactChooseDialog.vue";
+import ArtifactModelChooseDialog from "lily-violet/src/net/bodz/violet/schema/art/ArtifactModelChooseDialog.vue";
 
 import FabStdProcessChooseDialog from "./FabStdProcessChooseDialog.vue";
 
