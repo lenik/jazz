@@ -16,7 +16,6 @@
     comment on table usertype is 'User Type';
     comment on column usertype.name is 'The user type name';
 
-    insert into usertype(id, name, label, description)
-        values(0, 'sys', 'System User', 'System user');
-    insert into usertype(id, name, label, description)
-        values(1, 'normal', 'Normal User', 'Normal user (default)');
+    insert into usertype(id, name, label, description) values
+        (0, 'sys', 'System User', 'System user'),
+        (1, 'normal', 'Normal User', 'Normal user (default)');

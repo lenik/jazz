@@ -53,20 +53,22 @@
     create index region_uid_acl       on region(uid, acl);
 
     -- Predefined prototypes.
-    insert into regioncat(id, label) values(0, 'Abstract');
-    insert into regioncat(id, label) values(1, 'Information');
-    insert into regioncat(id, label) values(2, 'Raw Material');
-    insert into regioncat(id, label) values(3, 'Intermediates');
-    insert into regioncat(id, label) values(4, 'Products');
-    insert into regioncat(id, label) values(5, 'Waste');
+    insert into regioncat(id, label) values
+        (0, 'Abstract'),
+        (1, 'Information'),
+        (2, 'Raw Material'),
+        (3, 'Intermediates'),
+        (4, 'Products'),
+        (5, 'Waste');
 
-    insert into region(id, cat, label) values(0, 0, 'Abstract Region Root');
-    insert into region(id, cat, label) values(1, 0, 'Default Template Root');
-    insert into region(id, cat, label) values(2, 0, 'Information');
-    insert into region(id, cat, label) values(3, 0, 'Raw Material');
-    insert into region(id, cat, label) values(4, 0, 'Intermediates');
-    insert into region(id, cat, label) values(5, 0, 'Products');
-    insert into region(id, cat, label) values(6, 0, 'Waste');
-    insert into region(id, cat, label) values(7, 0, 'Sales');
+    insert into region(id, cat, label) values
+        (0, 0, 'Abstract Region Root'),
+        (1, 0, 'Default Template Root'),
+        (2, 0, 'Information'),
+        (3, 0, 'Raw Material'),
+        (4, 0, 'Intermediates'),
+        (5, 0, 'Products'),
+        (6, 0, 'Waste'),
+        (7, 0, 'Sales');
 
 --\mixin lily.template.a-tags region

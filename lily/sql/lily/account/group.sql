@@ -26,11 +26,11 @@
     comment on column "group".parent is 'The parent group. must be acyclic';
 
     insert into "group"(id, type, name, label) values(1, 0, '_pseudo', 'Pseudo Root Node');
-    insert into "group"(parent, id, type, name, label) values(1, 100, 0, '_sysgroup', 'System Groups');
-    insert into "group"(parent, id, type, name, label) values(1, 200, 0, '_group', 'Normal Groups');
-    insert into "group"(parent, id, type, name, label) values(1, 300, 0, '_role', 'Role parent, Groups');
-    
-    insert into "group"(parent, id, type, name, label) values(100, 0, 1, 'root', 'Root');
-    insert into "group"(parent, id, type, name, label) values(100, 101, 1, 'admin', 'Administrators');
-    insert into "group"(parent, id, type, name, label) values(100, 102, 1, 'user',  'Normal Users');
-    insert into "group"(parent, id, type, name, label) values(100, 103, 1, 'guest', 'Guest Users');
+    insert into "group"(parent, id, type, name, label) values
+        (1, 100, 0, '_sysgroup', 'System Groups'),
+        (1, 200, 0, '_group', 'Normal Groups'),
+        (1, 300, 0, '_role', 'Role parent, Groups'),
+        (100, 0, 1, 'root', 'Root'),
+        (100, 101, 1, 'admin', 'Administrators'),
+        (100, 102, 1, 'user',  'Normal Users'),
+        (100, 103, 1, 'guest', 'Guest Users');

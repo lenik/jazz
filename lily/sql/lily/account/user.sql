@@ -27,13 +27,15 @@
     comment on column "user".gid0 is 'The primary user group, the default value of ownerGroup.';
     comment on column "user".referer is 'The referer user (used for promotion)';
 
-    insert into "user"(id, name, label, gid0) values(0, 'root', 'Root', 0);
-    insert into "user"(id, name, label, gid0) values(1, 'admin', 'Administrator', 101);
-    insert into "user"(id, name, label, gid0) values(2, 'user', 'Default User', 102);
-    insert into "user"(id, name, label, gid0) values(3, 'guest', 'Guest', 103);
+    insert into "user"(id, name, label, gid0) values
+        (0, 'root', 'Root', 0),
+        (1, 'admin', 'Administrator', 101),
+        (2, 'user', 'Default User', 102),
+        (3, 'guest', 'Guest', 103);
 
 --\import lily.account.usersec
-    insert into usersec(id, "user", passwd) values(0, 0, 'toor');
-    insert into usersec(id, "user", passwd) values(1, 1, 'nimda');
-    insert into usersec(id, "user", passwd) values(2, 2, 'resu');
-    insert into usersec(id, "user", passwd) values(3, 3, 'guest');
+    insert into usersec(id, "user", passwd) values
+        (0, 0, 'toor'),
+        (1, 1, 'nimda'),
+        (2, 2, 'resu'),
+        (3, 3, 'guest');

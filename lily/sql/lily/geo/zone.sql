@@ -34,6 +34,7 @@
     create index zone_depth          on zone(depth);
     create index zone_postcode       on zone(postcode);
 
-    insert into zone(id, cat, label) values(0, 1, 'World');
-    insert into zone(id, cat, label) values(86, 2, 'China');
+    insert into zone(id, cat, label) values
+        (0, 1, 'World'),
+        (86, 2, 'China');
 

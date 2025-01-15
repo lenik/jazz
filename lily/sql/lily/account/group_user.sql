@@ -32,15 +32,10 @@
     comment on column group_user."user" is 'A user who is a member to the group';
     comment on column group_user.admin is 'Whether the member is an administrator of the group';
 
-    -- root: root
-    insert into group_user("user", "group") values(0, 0);
+    insert into group_user("user", "group") values
+        (0, 0),         -- root: root
+        (1, 101),       -- admin: admin group
+        (1, 102),       -- admin: user group
+        (2, 102),       -- user: user
+        (3, 103);       -- guest: guest
 
-    -- admin: admin, user
-    insert into group_user("user", "group") values(1, 101);
-    insert into group_user("user", "group") values(1, 102);
-
-    -- user: user
-    insert into group_user("user", "group") values(2, 102);
-
-    -- guest: guest
-    insert into group_user("user", "group") values(3, 103);

@@ -66,6 +66,7 @@
   --create index art_uom            on art(uom);
 
 -- Predefined prototypes
-    insert into art(id, label) values(1, 'Abstract');
-    insert into art(id, label) values(2, 'Produced');
-    insert into art(id, label) values(3, 'Purchased');
+    insert into art(id, label) values
+        (1, 'Abstract'),
+        (2, 'Produced'),
+        (3, 'Purchased');

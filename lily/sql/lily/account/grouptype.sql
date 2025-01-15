@@ -16,11 +16,8 @@
     comment on table grouptype is 'Group Type';
     comment on column grouptype.name is 'Group type name (unique)';
 
-    insert into grouptype(id, name, label, description)
-        values(0, 'VIRTUAL', 'Virtual Group', 'Virtual abstract group');
-    insert into grouptype(id, name, label, description)
-        values(1, 'SYS', 'System Group', 'System group');
-    insert into grouptype(id, name, label, description)
-        values(2, 'GROUP', 'Normal Group', 'Normal group (default)');
-    insert into grouptype(id, name, label, description)
-        values(3, 'ROLE', 'Role Group', 'Role group');
+    insert into grouptype(id, name, label, description) values
+        (0, 'VIRTUAL', 'Virtual Group', 'Virtual abstract group'),
+        (1, 'SYS', 'System Group', 'System group'),
+        (2, 'GROUP', 'Normal Group', 'Normal group (default)'),
+        (3, 'ROLE', 'Role Group', 'Role group');
