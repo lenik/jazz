@@ -29,7 +29,7 @@ export class _UserType_stuff_TypeInfo extends CoImagedTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            name: property({ type: STRING, precision: 20, 
+            name: property({ type: STRING, precision: 20, label: "Name", 
                 description: "The user type name", 
                 validator: this.validators.validateName }),
             dummy: property({ type: INT, precision: 10, validator: this.validators.validateDummy }),

@@ -48,6 +48,7 @@ export class _Region_stuff_TypeInfo extends CoNodeTypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.Region"; }
     get icon() { return "fa-tag"; }
+    get description() { return "存放区域"; }
 
     override preamble() {
         super.preamble();

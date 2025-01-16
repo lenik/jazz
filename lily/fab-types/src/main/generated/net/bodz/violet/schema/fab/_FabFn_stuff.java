@@ -35,6 +35,7 @@ public abstract class _FabFn_stuff
     private static final int _ord_DEPTH = _ord_PARENT_ID + 1;
     private static final int _ord_REF_COUNT = _ord_DEPTH + 1;
 
+    @NotNull
     String code;
 
     @NotNull
@@ -49,14 +50,15 @@ public abstract class _FabFn_stuff
     Integer parentId;
 
     @Ordinal(_ord_CODE)
+    @NotNull
     @Precision(value = N_CODE)
     @TextInput(maxLength = N_CODE)
-    @Column(name = "code", length = N_CODE)
+    @Column(name = "code", nullable = false, length = N_CODE)
     public String getCode() {
         return code;
     }
 
-    public void setCode(String value) {
+    public void setCode(@NotNull String value) {
         this.code = value;
     }
 
@@ -113,6 +115,7 @@ public abstract class _FabFn_stuff
     }
 
     public void initNotNulls() {
+        this.code = "";
     }
 
 }

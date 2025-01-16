@@ -59,7 +59,7 @@ onMounted(() => {
     <EntityChooseDialog ref="entityChooseDialog" :type="Group.TYPE" :typeMap="typeMap" :modal="modal">
         <th data-type="INT" data-field="id">Id</th>
         <th data-type="STRING" data-field="name" title="The group name (unique)">Name</th>
-        <th data-type="GroupType" data-format="label" data-field="type">Group type like normal-group, role-group, etc.</th>
+        <th data-type="GroupType" data-format="label" data-field="type" title="Group type like normal-group, role-group, etc.">Type</th>
         <th data-type="STRING" data-field="label">Label</th>
         <th data-type="STRING" data-field="description">Description</th>
         <th data-type="STRING" data-field="icon">Icon</th>
@@ -70,7 +70,7 @@ onMounted(() => {
         <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
-        <th data-type="Group" data-format="label" data-field="parent">The parent group. must be acyclic</th>
+        <th data-type="Group" data-format="label" data-field="parent" title="The parent group. must be acyclic">Parent Group</th>
     </EntityChooseDialog>
 </template>
 

@@ -12,6 +12,7 @@ export class ZoneCategoryTypeInfo extends _ZoneCategory_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.geo.ZoneCategory"; }
     get icon() { return "fa-tag"; }
+    get description() { return ""; }
 
     override create() {
         return new ZoneCategory();

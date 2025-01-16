@@ -17,6 +17,7 @@ export class ArtifactTypeInfo extends _Artifact_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.art.Artifact"; }
     get icon() { return "fa-tag"; }
+    get description() { return "物品"; }
 
     override create() {
         return new Artifact();
@@ -25,7 +26,9 @@ export class ArtifactTypeInfo extends _Artifact_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            convMap: property({ type: MAP(Uom_TYPE, DOUBLE), validator: this.validators.validateConvMap }),
+            convMap: property({ type: MAP(Uom_TYPE, DOUBLE), 
+                description: "单位转换表", 
+                validator: this.validators.validateConvMap }),
             extras: property({ type: IArtifactExtras_TYPE, validator: this.validators.validateExtras }),
         });
     }

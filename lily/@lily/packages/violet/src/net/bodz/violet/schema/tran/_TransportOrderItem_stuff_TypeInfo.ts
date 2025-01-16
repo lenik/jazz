@@ -32,6 +32,7 @@ export class _TransportOrderItem_stuff_TypeInfo extends CoEventTypeInfo {
 
     get name() { return "net.bodz.violet.schema.tran.TransportOrderItem"; }
     get icon() { return "fa-tag"; }
+    get description() { return "送货单项目"; }
 
     override preamble() {
         super.preamble();

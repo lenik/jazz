@@ -15,6 +15,7 @@ export class ShopItemTypeInfo extends _ShopItem_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.shop.ShopItem"; }
     get icon() { return "fa-tag"; }
+    get description() { return "陈列商品"; }
 
     override create() {
         return new ShopItem();
@@ -23,7 +24,9 @@ export class ShopItemTypeInfo extends _ShopItem_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            total: property({ type: BIG_DECIMAL, validator: this.validators.validateTotal }),
+            total: property({ type: BIG_DECIMAL, 
+                description: "总额", 
+                validator: this.validators.validateTotal }),
         });
     }
 

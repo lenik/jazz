@@ -35,21 +35,17 @@ export class _Policy_stuff_TypeInfo extends CoImagedTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            name: property({ type: STRING, precision: 30, 
+            name: property({ type: STRING, precision: 30, label: "Name", 
                 description: "The policy name (unique)", 
                 validator: this.validators.validateName }),
-            controlClass: property({ type: STRING, nullable: false, precision: 80, 
+            controlClass: property({ type: STRING, nullable: false, precision: 80, label: "Control Class", 
                 description: "The control class", 
                 validator: this.validators.validateControlClass }),
-            methodName: property({ type: STRING, precision: 80, 
+            methodName: property({ type: STRING, precision: 80, label: "Method", 
                 description: "The method name", 
                 validator: this.validators.validateMethodName }),
-            allowBits: property({ type: INT, nullable: false, precision: 10, 
-                description: "allow", 
-                validator: this.validators.validateAllowBits }),
-            denyBits: property({ type: INT, nullable: false, precision: 10, 
-                description: "deny", 
-                validator: this.validators.validateDenyBits }),
+            allowBits: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateAllowBits }),
+            denyBits: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDenyBits }),
         });
     }
 

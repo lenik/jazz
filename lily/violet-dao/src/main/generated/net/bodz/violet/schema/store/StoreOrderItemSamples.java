@@ -26,7 +26,7 @@ public class StoreOrderItemSamples
         a.setOrder(order);
         a.setRegion(region);
         a.setSerial(1878756156148454194L);
-        a.setExpire(OffsetDateTime.parse("2024-01-15T23:24:27.553-04:40", DateTimes.ISO_OFFSET_DATE_TIME));
+        a.setExpire(OffsetDateTime.parse("2025-01-15T23:24:27.553-04:40", DateTimes.ISO_OFFSET_DATE_TIME));
         a.setQuantity(new BigDecimal("955192132006.54"));
         a.setPrice(new BigDecimal("85267204749"));
         a.setAmount(new BigDecimal("163328609327945331.99"));

@@ -4,7 +4,7 @@ import VoteRecord from "lily-basic/src/net/bodz/lily/concrete/VoteRecord";
 import type Artifact from "./Artifact";
 import _ArtifactVote_stuff_TypeInfo from "./_ArtifactVote_stuff_TypeInfo";
 
-export class _ArtifactVote_stuff<This> extends VoteRecord<This> {
+export class _ArtifactVote_stuff extends VoteRecord {
 
     static _typeInfo: _ArtifactVote_stuff_TypeInfo;
     static get TYPE() {

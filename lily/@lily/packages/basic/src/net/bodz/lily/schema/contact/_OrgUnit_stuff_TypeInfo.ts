@@ -27,6 +27,7 @@ export class _OrgUnit_stuff_TypeInfo extends PartyTypeInfo {
 
     get name() { return "net.bodz.lily.schema.contact.OrgUnit"; }
     get icon() { return "fa-tag"; }
+    get description() { return "部门"; }
 
     override preamble() {
         super.preamble();

@@ -16,7 +16,7 @@ export class TagGroupDefTypeInfo extends _TagGroupDef_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.meta.TagGroupDef"; }
     get icon() { return "fa-tag"; }
-    get label() { return "Tag Group"; }
+    get description() { return ""; }
 
     override create() {
         return new TagGroupDef();
@@ -25,8 +25,12 @@ export class TagGroupDefTypeInfo extends _TagGroupDef_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            ortho: property({ type: BOOLEAN, nullable: false, validator: this.validators.validateOrtho }),
-            tags: property({ type: LIST(TagDef_TYPE), validator: this.validators.validateTags }),
+            ortho: property({ type: BOOLEAN, nullable: false, 
+                description: "Orthogonal", 
+                validator: this.validators.validateOrtho }),
+            tags: property({ type: LIST(TagDef_TYPE), 
+                description: "Tag List", 
+                validator: this.validators.validateTags }),
         });
     }
 

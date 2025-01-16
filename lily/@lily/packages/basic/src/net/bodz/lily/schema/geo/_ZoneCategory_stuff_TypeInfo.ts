@@ -22,6 +22,7 @@ export class _ZoneCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 
     get name() { return "net.bodz.lily.schema.geo.ZoneCategory"; }
     get icon() { return "fa-tag"; }
+    get description() { return ""; }
 
     override preamble() {
         super.preamble();

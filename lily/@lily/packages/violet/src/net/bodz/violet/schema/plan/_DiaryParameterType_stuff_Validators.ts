@@ -13,9 +13,6 @@ export class _DiaryParameterType_stuff_Validators extends CoParameterValidators 
         return this._type as _DiaryParameterType_stuff_TypeInfo;
     }
 
-    validateName(val: string) {
-    }
-
 }
 
 export default _DiaryParameterType_stuff_Validators;

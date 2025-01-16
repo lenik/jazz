@@ -13,9 +13,6 @@ export class _PlanParameterType_stuff_Validators extends CoParameterValidators {
         return this._type as _PlanParameterType_stuff_TypeInfo;
     }
 
-    validateName(val: string) {
-    }
-
 }
 
 export default _PlanParameterType_stuff_Validators;

@@ -16,6 +16,7 @@ export class CartItemTypeInfo extends _CartItem_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.shop.CartItem"; }
     get icon() { return "fa-tag"; }
+    get description() { return "购物车项"; }
 
     override create() {
         return new CartItem();
@@ -24,7 +25,9 @@ export class CartItemTypeInfo extends _CartItem_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            amount: property({ type: BIG_DECIMAL, validator: this.validators.validateAmount }),
+            amount: property({ type: BIG_DECIMAL, 
+                description: "总额", 
+                validator: this.validators.validateAmount }),
             artifact: property({ type: Artifact_TYPE, validator: this.validators.validateArtifact }),
         });
     }

@@ -17,6 +17,7 @@ export class TransportOrderTypeInfo extends _TransportOrder_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.tran.TransportOrder"; }
     get icon() { return "fa-tag"; }
+    get description() { return "送货单"; }
 
     override create() {
         return new TransportOrder();
@@ -25,10 +26,16 @@ export class TransportOrderTypeInfo extends _TransportOrder_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            arrivedDate: property({ type: OffsetDateTime.TYPE, validator: this.validators.validateArrivedDate }),
-            items: property({ type: LIST(TransportOrderItem_TYPE), validator: this.validators.validateItems }),
+            arrivedDate: property({ type: OffsetDateTime.TYPE, 
+                description: "收货时间", 
+                validator: this.validators.validateArrivedDate }),
+            items: property({ type: LIST(TransportOrderItem_TYPE), 
+                description: "明细列表", 
+                validator: this.validators.validateItems }),
             length: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateLength }),
-            shipDate: property({ type: OffsetDateTime.TYPE, validator: this.validators.validateShipDate }),
+            shipDate: property({ type: OffsetDateTime.TYPE, 
+                description: "发货时间", 
+                validator: this.validators.validateShipDate }),
         });
     }
 

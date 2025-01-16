@@ -31,6 +31,7 @@ export class _PersonRole_stuff_TypeInfo extends IdEntityTypeInfo {
 
     get name() { return "net.bodz.lily.schema.contact.PersonRole"; }
     get icon() { return "fa-tag"; }
+    get description() { return "职位关联"; }
 
     override preamble() {
         super.preamble();

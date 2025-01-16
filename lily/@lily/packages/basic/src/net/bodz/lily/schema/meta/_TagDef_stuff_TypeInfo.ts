@@ -22,7 +22,7 @@ export class _TagDef_stuff_TypeInfo extends AbstractDefinitionTypeInfo {
 
     get name() { return "net.bodz.lily.schema.meta.TagDef"; }
     get icon() { return "fa-tag"; }
-    get label() { return "Tag"; }
+    get description() { return ""; }
 
     override preamble() {
         super.preamble();

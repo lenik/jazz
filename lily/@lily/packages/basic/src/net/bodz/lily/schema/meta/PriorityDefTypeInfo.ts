@@ -12,7 +12,7 @@ export class PriorityDefTypeInfo extends _PriorityDef_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.meta.PriorityDef"; }
     get icon() { return "fa-tag"; }
-    get label() { return "Priority"; }
+    get description() { return ""; }
 
     override create() {
         return new PriorityDef();

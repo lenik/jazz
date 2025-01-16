@@ -48,6 +48,7 @@ public abstract class _ArtifactCategory_stuff<this_t extends _ArtifactCategory_s
     private static final int _ord_SERIALFMT = _ord_BATCHFMT + 1;
     private static final int _ord_COUNT = _ord_SERIALFMT + 1;
 
+    @NotNull
     String code;
 
     String skufmt;
@@ -66,14 +67,15 @@ public abstract class _ArtifactCategory_stuff<this_t extends _ArtifactCategory_s
     int count;
 
     @Ordinal(_ord_CODE)
+    @NotNull
     @Precision(value = N_CODE)
     @TextInput(maxLength = N_CODE)
-    @Column(name = "code", length = N_CODE)
+    @Column(name = "code", nullable = false, length = N_CODE)
     public String getCode() {
         return code;
     }
 
-    public void setCode(String value) {
+    public void setCode(@NotNull String value) {
         this.code = value;
     }
 
@@ -161,6 +163,7 @@ public abstract class _ArtifactCategory_stuff<this_t extends _ArtifactCategory_s
     }
 
     public void initNotNulls() {
+        this.code = "";
     }
 
 }

@@ -1,6 +1,7 @@
 import type { InetAddress, List, int } from "skel01-core/src/lang/basetype";
 import { ValidateResult } from "skel01-core/src/ui/types";
 
+import type ExtraAttributes from "../../concrete/util/ExtraAttributes";
 import type Group from "./Group";
 import type UserOtherId from "./UserOtherId";
 import type UserRun from "./UserRun";

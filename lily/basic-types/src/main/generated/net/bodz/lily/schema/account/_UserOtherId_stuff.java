@@ -152,6 +152,7 @@ public abstract class _UserOtherId_stuff
     /**
      * Type of Open ID
      *
+     * @label Type
      * @constraint foreign key (type) references lily.useroidtype (id)
      */
     @JoinColumn(name = "type")
@@ -193,6 +194,7 @@ public abstract class _UserOtherId_stuff
     /**
      * The declaring user
      *
+     * @label User
      * @constraint foreign key (user) references lily.user (id)
      */
     @JoinColumn(name = "user")

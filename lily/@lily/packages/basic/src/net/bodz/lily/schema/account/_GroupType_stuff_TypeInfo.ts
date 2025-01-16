@@ -29,7 +29,7 @@ export class _GroupType_stuff_TypeInfo extends CoImagedTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            name: property({ type: STRING, precision: 20, 
+            name: property({ type: STRING, nullable: false, precision: 20, label: "Name", 
                 description: "Group type name (unique)", 
                 validator: this.validators.validateName }),
             dummy: property({ type: INT, precision: 10, validator: this.validators.validateDummy }),

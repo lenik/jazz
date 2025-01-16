@@ -56,9 +56,9 @@ onMounted(() => {
             <th data-type="INT" data-field="version">Version</th>
             <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
             <th data-type="STRING" data-field="controlClass" title="The control class">Control Class</th>
-            <th data-type="STRING" data-field="methodName" title="The method name">Method Name</th>
-            <th data-type="INT" data-field="allowBits" title="allow">Allow Bits</th>
-            <th data-type="INT" data-field="denyBits" title="deny">Deny Bits</th>
+            <th data-type="STRING" data-field="methodName" title="The method name">Method</th>
+            <th data-type="INT" data-field="allowBits">Allow Bits</th>
+            <th data-type="INT" data-field="denyBits">Deny Bits</th>
         </template>
         <template #preview>
             <PolicyEditor class="editor" v-model="selection" />

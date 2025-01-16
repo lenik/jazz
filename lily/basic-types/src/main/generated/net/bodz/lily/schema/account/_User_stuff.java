@@ -98,6 +98,7 @@ public abstract class _User_stuff
     /**
      * The primary user group, the default value of ownerGroup.
      *
+     * @label Primary Group
      * @constraint foreign key (gid0) references lily.group (id)
      */
     @JoinColumn(name = "gid0")
@@ -139,6 +140,7 @@ public abstract class _User_stuff
     /**
      * The referer user (used for promotion)
      *
+     * @label Referer
      * @constraint foreign key (referer) references lily.user (id)
      */
     @JoinColumn(name = "referer")
@@ -177,6 +179,7 @@ public abstract class _User_stuff
     /**
      * User type like system-user, normal-user, etc.
      *
+     * @label Type
      * @constraint foreign key (type) references lily.usertype (id)
      */
     @JoinColumn(name = "type")

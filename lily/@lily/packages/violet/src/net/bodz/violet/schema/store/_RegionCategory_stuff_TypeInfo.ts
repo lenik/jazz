@@ -22,6 +22,7 @@ export class _RegionCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.RegionCategory"; }
     get icon() { return "fa-tag"; }
+    get description() { return "区域分类"; }
 
     override preamble() {
         super.preamble();

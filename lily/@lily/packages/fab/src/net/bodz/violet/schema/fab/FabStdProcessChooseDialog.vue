@@ -8,7 +8,7 @@ import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "skel01-core/src/ui/types";
 import { Group_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
 import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
-import { ArtifactModel_TYPE } from "../art/ArtifactModelTypeInfo";
+import { ArtifactModel_TYPE } from "lily-violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
 
 import { FabFn_TYPE } from "./FabFnTypeInfo";
 import { FabStdProcess } from "./FabStdProcess";

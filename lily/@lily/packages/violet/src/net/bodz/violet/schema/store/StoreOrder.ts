@@ -15,8 +15,8 @@ export class StoreOrder extends _StoreOrder_stuff {
 
     items?: List<StoreOrderItem>
     length: int
-    totalAmount?: BigDecimal
-    totalQuantity?: BigDecimal
+    totalAmount: BigDecimal
+    totalQuantity: BigDecimal
 
     constructor(o?: any) {
         super(o);

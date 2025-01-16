@@ -47,6 +47,7 @@ export class _TransportOrder_stuff_TypeInfo extends AbstractTransportOrderTypeIn
 
     get name() { return "net.bodz.violet.schema.tran.TransportOrder"; }
     get icon() { return "fa-tag"; }
+    get description() { return "送货单"; }
 
     override preamble() {
         super.preamble();

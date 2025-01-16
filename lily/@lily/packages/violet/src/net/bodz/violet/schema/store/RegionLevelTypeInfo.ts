@@ -12,6 +12,7 @@ export class RegionLevelTypeInfo extends _RegionLevel_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.RegionLevel"; }
     get icon() { return "fa-tag"; }
+    get description() { return "区域级别"; }
 
     override create() {
         return new RegionLevel();

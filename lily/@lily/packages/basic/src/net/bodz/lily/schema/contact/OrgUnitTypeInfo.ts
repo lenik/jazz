@@ -17,6 +17,7 @@ export class OrgUnitTypeInfo extends _OrgUnit_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.contact.OrgUnit"; }
     get icon() { return "fa-tag"; }
+    get description() { return "部门"; }
 
     override create() {
         return new OrgUnit();

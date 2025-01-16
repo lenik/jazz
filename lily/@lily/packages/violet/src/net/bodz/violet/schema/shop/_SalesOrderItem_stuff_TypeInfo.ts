@@ -40,6 +40,7 @@ export class _SalesOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
 
     get name() { return "net.bodz.violet.schema.shop.SalesOrderItem"; }
     get icon() { return "fa-tag"; }
+    get description() { return "订单项"; }
 
     override preamble() {
         super.preamble();

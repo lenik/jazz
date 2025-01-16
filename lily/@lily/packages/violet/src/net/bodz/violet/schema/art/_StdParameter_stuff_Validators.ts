@@ -13,9 +13,6 @@ export class _StdParameter_stuff_Validators extends CoParameterValidators {
         return this._type as _StdParameter_stuff_TypeInfo;
     }
 
-    validateName(val: string) {
-    }
-
 }
 
 export default _StdParameter_stuff_Validators;

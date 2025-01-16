@@ -14,7 +14,7 @@ export class TransportOrderItem extends _TransportOrderItem_stuff {
         return this._typeInfo;
     }
 
-    amount?: BigDecimal
+    amount: BigDecimal
     salesOrder?: SalesOrder
     salesOrderItem?: SalesOrderItem
 

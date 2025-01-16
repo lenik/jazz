@@ -12,7 +12,7 @@ export class TagDefTypeInfo extends _TagDef_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.meta.TagDef"; }
     get icon() { return "fa-tag"; }
-    get label() { return "Tag"; }
+    get description() { return ""; }
 
     override create() {
         return new TagDef();

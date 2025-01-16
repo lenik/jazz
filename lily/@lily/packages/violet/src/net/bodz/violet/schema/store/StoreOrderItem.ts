@@ -12,7 +12,7 @@ export class StoreOrderItem extends _StoreOrderItem_stuff {
         return this._typeInfo;
     }
 
-    amount?: BigDecimal
+    amount: BigDecimal
 
     constructor(o?: any) {
         super(o);

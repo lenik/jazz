@@ -48,6 +48,7 @@ public abstract class _Group_stuff
     /**
      * The parent group. must be acyclic
      *
+     * @label Parent Group
      * @constraint foreign key (parent) references lily.group (id)
      */
     @JoinColumn(name = "parent")
@@ -86,6 +87,7 @@ public abstract class _Group_stuff
     /**
      * Group type like normal-group, role-group, etc.
      *
+     * @label Type
      * @constraint foreign key (type) references lily.grouptype (id)
      */
     @JoinColumn(name = "type")

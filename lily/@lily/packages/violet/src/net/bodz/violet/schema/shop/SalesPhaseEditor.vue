@@ -3,6 +3,7 @@ import { onMounted, provide, ref } from "vue";
 
 import type { int } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
+import { CoNode_TYPE } from "lily-basic/src/net/bodz/lily/concrete/CoNodeTypeInfo";
 import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import SalesPhase from "./SalesPhase";
@@ -63,6 +64,11 @@ onMounted(() => {
         <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
+            </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="CoNode_TYPE">
+            <FieldRow :property="meta.refCount" v-model="model.refCount">
+                <input type="number" v-model="model.refCount" disabled />
             </FieldRow>
         </FieldGroup>
         <CoCodeFieldGroup :meta="meta" v-model="model" />

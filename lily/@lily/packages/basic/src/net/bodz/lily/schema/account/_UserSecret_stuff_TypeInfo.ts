@@ -38,20 +38,20 @@ export class _UserSecret_stuff_TypeInfo extends IdEntityTypeInfo {
         super.preamble();
         this.declare({
             properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
-            password: property({ type: STRING, nullable: false, precision: 40, 
+            password: property({ type: STRING, nullable: false, precision: 40, label: "Password", 
                 description: "Password data", 
                 validator: this.validators.validatePassword }),
-            question: property({ type: STRING, precision: 100, 
-                description: "Protection question", 
+            question: property({ type: STRING, precision: 100, label: "Recover Question", 
+                description: "Recover Question", 
                 validator: this.validators.validateQuestion }),
-            answer: property({ type: STRING, precision: 30, 
-                description: "Protection answer", 
+            answer: property({ type: STRING, precision: 30, label: "Recover Answer", 
+                description: "Recover Answer", 
                 validator: this.validators.validateAnswer }),
 
-            user: property({ type: User_TYPE, nullable: false, 
+            user: property({ type: User_TYPE, nullable: false, label: "User", 
                 description: "The declaring user", 
                 validator: this.validators.validateUser }),
-            userId: property({ type: INT, nullable: false, precision: 10, 
+            userId: property({ type: INT, nullable: false, precision: 10, label: "User", 
                 description: "The declaring user" }),
         });
     }

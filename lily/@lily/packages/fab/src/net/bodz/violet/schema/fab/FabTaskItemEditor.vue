@@ -26,7 +26,7 @@ import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
 import CoEventFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoEventFieldGroup.vue";
 import CoObjectFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
 import StructRowFieldGroup from "lily-basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
-import ArtifactModelChooseDialog from "../art/ArtifactModelChooseDialog.vue";
+import ArtifactModelChooseDialog from "lily-violet/src/net/bodz/violet/schema/art/ArtifactModelChooseDialog.vue";
 
 import FabTaskChooseDialog from "./FabTaskChooseDialog.vue";
 

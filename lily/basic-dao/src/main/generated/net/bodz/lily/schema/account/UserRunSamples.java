@@ -18,7 +18,7 @@ public class UserRunSamples
         UserRun a = new UserRun();
         a.setUser(user);
         a.setScore(961999915);
-        a.setLastLoginTime(OffsetDateTime.parse("2024-01-01T12:41:49.128+02:11", DateTimes.ISO_OFFSET_DATE_TIME));
+        a.setLastLoginTime(OffsetDateTime.parse("2025-01-01T12:41:49.128+02:11", DateTimes.ISO_OFFSET_DATE_TIME));
         return a;
     }
 

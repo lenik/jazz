@@ -14,7 +14,7 @@ export class _PriorityDef_stuff_TypeInfo extends AbstractDefinitionTypeInfo {
 
     get name() { return "net.bodz.lily.schema.meta.PriorityDef"; }
     get icon() { return "fa-tag"; }
-    get label() { return "Priority"; }
+    get description() { return ""; }
 
     override preamble() {
         super.preamble();

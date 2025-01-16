@@ -16,6 +16,7 @@ export class RegionTypeInfo extends _Region_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.Region"; }
     get icon() { return "fa-tag"; }
+    get description() { return "存放区域"; }
 
     override create() {
         return new Region();
@@ -24,9 +25,15 @@ export class RegionTypeInfo extends _Region_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            bbox: property({ type: Dim3d_TYPE, validator: this.validators.validateBbox }),
-            fullPath: property({ type: STRING, validator: this.validators.validateFullPath }),
-            position: property({ type: Dim3d_TYPE, validator: this.validators.validatePosition }),
+            bbox: property({ type: Dim3d_TYPE, 
+                description: "尺寸", 
+                validator: this.validators.validateBbox }),
+            fullPath: property({ type: STRING, 
+                description: "redundant.", 
+                validator: this.validators.validateFullPath }),
+            position: property({ type: Dim3d_TYPE, 
+                description: "位置", 
+                validator: this.validators.validatePosition }),
         });
     }
 

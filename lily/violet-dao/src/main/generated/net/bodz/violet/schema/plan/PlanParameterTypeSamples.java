@@ -23,7 +23,6 @@ public class PlanParameterTypeSamples
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
         a.setUom(uom);
-        a.setName("Jj ohajroi");
         return a;
     }
 

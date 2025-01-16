@@ -40,17 +40,17 @@ export class _UserRun_stuff_TypeInfo extends CoEntityTypeInfo {
         this.declare({
             properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
             score: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateScore }),
-            lastLoginTime: property({ type: OffsetDateTime.TYPE, precision: 35, scale: 6, 
+            lastLoginTime: property({ type: OffsetDateTime.TYPE, precision: 35, scale: 6, label: "Login Time", 
                 description: "Last time of login", 
                 validator: this.validators.validateLastLoginTime }),
-            lastLoginIP: property({ type: INET_ADDRESS, 
+            lastLoginIP: property({ type: INET_ADDRESS, label: "Login IP", 
                 description: "The source IP of last login", 
                 validator: this.validators.validateLastLoginIP }),
 
-            user: property({ type: User_TYPE, nullable: false, 
+            user: property({ type: User_TYPE, nullable: false, label: "User", 
                 description: "The user", 
                 validator: this.validators.validateUser }),
-            userId: primaryKey({ type: INT, nullable: false, precision: 10, 
+            userId: primaryKey({ type: INT, nullable: false, precision: 10, label: "User", 
                 description: "The user" }),
         });
     }

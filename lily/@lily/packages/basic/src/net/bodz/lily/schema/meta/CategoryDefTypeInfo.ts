@@ -12,7 +12,7 @@ export class CategoryDefTypeInfo extends _CategoryDef_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.meta.CategoryDef"; }
     get icon() { return "fa-tag"; }
-    get label() { return "Category"; }
+    get description() { return ""; }
 
     override create() {
         return new CategoryDef();

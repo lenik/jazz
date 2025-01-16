@@ -23,7 +23,6 @@ public class PlanDoParameterTypeSamples
         a.setUom(uom);
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
-        a.setName("e. glpru'eto_ouaxim");
         return a;
     }
 

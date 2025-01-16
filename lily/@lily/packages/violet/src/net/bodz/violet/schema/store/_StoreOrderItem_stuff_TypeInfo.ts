@@ -45,6 +45,7 @@ export class _StoreOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.StoreOrderItem"; }
     get icon() { return "fa-tag"; }
+    get description() { return "库存操作项目"; }
 
     override preamble() {
         super.preamble();

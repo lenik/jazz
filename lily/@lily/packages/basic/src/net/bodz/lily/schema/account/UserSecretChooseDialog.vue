@@ -58,10 +58,10 @@ onMounted(() => {
         <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
-        <th data-type="User" data-format="label" data-field="user">The declaring user</th>
+        <th data-type="User" data-format="label" data-field="user" title="The declaring user">User</th>
         <th data-type="STRING" data-field="password" title="Password data">Password</th>
-        <th data-type="STRING" data-field="question" title="Protection question">Question</th>
-        <th data-type="STRING" data-field="answer" title="Protection answer">Answer</th>
+        <th data-type="STRING" data-field="question" title="Recover Question">Recover Question</th>
+        <th data-type="STRING" data-field="answer" title="Recover Answer">Recover Answer</th>
     </EntityChooseDialog>
 </template>
 

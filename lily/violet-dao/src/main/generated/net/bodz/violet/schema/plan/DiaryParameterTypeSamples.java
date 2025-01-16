@@ -23,7 +23,6 @@ public class DiaryParameterTypeSamples
         a.setOwnerGroup(ownerGroup);
         a.setUom(uom);
         a.setOwnerUser(ownerUser);
-        a.setName("O Xi Aaw");
         return a;
     }
 

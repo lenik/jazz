@@ -15,6 +15,7 @@ export class StoreOrderItemTypeInfo extends _StoreOrderItem_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.StoreOrderItem"; }
     get icon() { return "fa-tag"; }
+    get description() { return "库存操作项目"; }
 
     override create() {
         return new StoreOrderItem();
@@ -23,7 +24,9 @@ export class StoreOrderItemTypeInfo extends _StoreOrderItem_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            amount: property({ type: BIG_DECIMAL, precision: 20, scale: 2, validator: this.validators.validateAmount }),
+            amount: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, 
+                description: "总额", 
+                validator: this.validators.validateAmount }),
         });
     }
 

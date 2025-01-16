@@ -48,10 +48,10 @@ public abstract class _UserSecret_stuff
     @NotNull
     String password;
 
-    /** Protection question */
+    /** Recover Question */
     String question;
 
-    /** Protection answer */
+    /** Recover Answer */
     String answer;
 
     /** The declaring user */
@@ -93,7 +93,7 @@ public abstract class _UserSecret_stuff
     }
 
     /**
-     * Protection question
+     * Recover Question
      */
     @Ordinal(_ord_QUESTION)
     @Precision(value = N_QUESTION)
@@ -104,14 +104,14 @@ public abstract class _UserSecret_stuff
     }
 
     /**
-     * Protection question
+     * Recover Question
      */
     public void setQuestion(String value) {
         this.question = value;
     }
 
     /**
-     * Protection answer
+     * Recover Answer
      */
     @Ordinal(_ord_ANSWER)
     @Precision(value = N_ANSWER)
@@ -122,7 +122,7 @@ public abstract class _UserSecret_stuff
     }
 
     /**
-     * Protection answer
+     * Recover Answer
      */
     public void setAnswer(String value) {
         this.answer = value;
@@ -131,6 +131,7 @@ public abstract class _UserSecret_stuff
     /**
      * The declaring user
      *
+     * @label User
      * @constraint foreign key (user) references lily.user (id)
      */
     @JoinColumn(name = "user")

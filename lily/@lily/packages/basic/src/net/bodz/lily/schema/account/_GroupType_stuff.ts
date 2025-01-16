@@ -12,7 +12,7 @@ export class _GroupType_stuff extends CoImaged<int> {
         return this._typeInfo;
     }
 
-    name?: string;
+    name: string;
     dummy?: int;
 
     constructor(o: any) {

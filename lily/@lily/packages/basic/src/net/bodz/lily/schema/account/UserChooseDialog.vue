@@ -62,7 +62,7 @@ onMounted(() => {
 <template>
     <EntityChooseDialog ref="entityChooseDialog" :type="User.TYPE" :typeMap="typeMap" :modal="modal">
         <th data-type="INT" data-field="id">Id</th>
-        <th data-type="UserType" data-format="label" data-field="type">User type like system-user, normal-user, etc.</th>
+        <th data-type="UserType" data-format="label" data-field="type" title="User type like system-user, normal-user, etc.">Type</th>
         <th data-type="STRING" data-field="name" title="The user name (unique)">Name</th>
         <th data-type="STRING" data-field="label">Label</th>
         <th data-type="STRING" data-field="description">Description</th>
@@ -74,8 +74,8 @@ onMounted(() => {
         <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
-        <th data-type="Group" data-format="label" data-field="primaryGroup">The primary user group, the default value of ownerGroup.</th>
-        <th data-type="User" data-format="label" data-field="referer">The referer user (used for promotion)</th>
+        <th data-type="Group" data-format="label" data-field="primaryGroup" title="The primary user group, the default value of ownerGroup.">Primary Group</th>
+        <th data-type="User" data-format="label" data-field="referer" title="The referer user (used for promotion)">Referer</th>
         <th data-type="Person" data-format="label" data-field="person">Person</th>
     </EntityChooseDialog>
 </template>

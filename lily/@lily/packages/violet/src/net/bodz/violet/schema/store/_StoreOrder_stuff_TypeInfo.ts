@@ -66,6 +66,7 @@ export class _StoreOrder_stuff_TypeInfo extends IdEntityTypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.StoreOrder"; }
     get icon() { return "fa-tag"; }
+    get description() { return "库存作业"; }
 
     override preamble() {
         super.preamble();

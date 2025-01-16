@@ -16,10 +16,10 @@ public class _UserSecretCriteriaBuilder_stuff<self_t extends _UserSecretCriteria
     /** Password data */
     public final StringField password = string("passwd");
 
-    /** Protection question */
+    /** Recover Question */
     public final StringField question = string("question");
 
-    /** Protection answer */
+    /** Recover Answer */
     public final StringField answer = string("answer");
 
 }

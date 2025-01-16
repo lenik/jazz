@@ -7,7 +7,7 @@ import OffsetDateTime from "skel01-core/src/lang/time/OffsetDateTime";
 import DefaultState from "skel01-core/src/net/bodz/bas/repr/state/DefaultState";
 import { Group_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
 import { User_TYPE } from "lily-basic/src/net/bodz/lily/schema/account/UserTypeInfo";
-import { ArtifactModel_TYPE } from "./ArtifactModelTypeInfo";
+import { ArtifactModel_TYPE } from "lily-violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
 import { Artifact_TYPE } from "lily-violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
 
 import ArtifactModel from "./ArtifactModel";
@@ -20,7 +20,7 @@ export interface Props {
 
 <script setup lang="ts">
 import LilyAdmin from "skel01-dba/src/ui/lily/LilyAdmin.vue";
-import ArtifactModelEditor from "./ArtifactModelEditor.vue";
+import ArtifactModelEditor from "lily-violet/src/net/bodz/violet/schema/art/ArtifactModelEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });

@@ -47,6 +47,7 @@ export class _Artifact_stuff_TypeInfo extends CoImagedTypeInfo {
 
     get name() { return "net.bodz.violet.schema.art.Artifact"; }
     get icon() { return "fa-tag"; }
+    get description() { return "物品"; }
 
     override preamble() {
         super.preamble();

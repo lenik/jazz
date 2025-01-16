@@ -12,6 +12,7 @@ export class SellPriceTypeInfo extends _SellPrice_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.shop.SellPrice"; }
     get icon() { return "fa-tag"; }
+    get description() { return "物品销售价格"; }
 
     override create() {
         return new SellPrice();

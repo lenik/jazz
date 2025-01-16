@@ -27,6 +27,7 @@ export class _CartItem_stuff_TypeInfo extends IdEntityTypeInfo {
 
     get name() { return "net.bodz.violet.schema.shop.CartItem"; }
     get icon() { return "fa-tag"; }
+    get description() { return "购物车项"; }
 
     override preamble() {
         super.preamble();

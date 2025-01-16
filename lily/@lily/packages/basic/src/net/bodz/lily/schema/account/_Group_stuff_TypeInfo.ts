@@ -25,23 +25,22 @@ export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
 
     get name() { return "net.bodz.lily.schema.account.Group"; }
     get icon() { return "fa-tag"; }
-    get label() { return "Group (Role)"; }
     get description() { return "User Group"; }
 
     override preamble() {
         super.preamble();
         this.declare({
 
-            parent: property({ type: this, 
+            parent: property({ type: this, label: "Parent Group", 
                 description: "The parent group. must be acyclic", 
                 validator: this.validators.validateParent }),
-            parentId: property({ type: INT, precision: 10, 
+            parentId: property({ type: INT, precision: 10, label: "Parent Group", 
                 description: "The parent group. must be acyclic" }),
 
-            type: property({ type: GroupType_TYPE, nullable: false, 
+            type: property({ type: GroupType_TYPE, nullable: false, label: "Type", 
                 description: "Group type like normal-group, role-group, etc.", 
                 validator: this.validators.validateType }),
-            typeId: property({ type: INT, nullable: false, precision: 10, 
+            typeId: property({ type: INT, nullable: false, precision: 10, label: "Type", 
                 description: "Group type like normal-group, role-group, etc." }),
         });
     }

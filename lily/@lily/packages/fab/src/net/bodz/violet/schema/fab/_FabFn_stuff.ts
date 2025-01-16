@@ -13,7 +13,7 @@ export class _FabFn_stuff extends CoImaged<int> {
         return this._typeInfo;
     }
 
-    code?: string;
+    code: string;
     depth: int;
     refCount: int;
 

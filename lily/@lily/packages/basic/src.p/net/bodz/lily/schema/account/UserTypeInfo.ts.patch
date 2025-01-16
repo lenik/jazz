@@ -1,14 +1,6 @@
---- codegen//tmp/UserTypeInfo7884676764164525655.ts	2024-05-13 11:31:58.343112872 +0800
-+++ user//tmp/UserTypeInfo7884676764164525655.ts	2024-05-13 11:31:58.343112872 +0800
-@@ -1,7 +1,6 @@
- import { BOOLEAN, INET_ADDRESS, INT, LIST, SET, STRING } from "skel01-core/src/lang/baseinfo";
- import { property } from "skel01-dba/src/net/bodz/lily/entity/EntityType";
- 
--import { ExtraAttributes_TYPE } from "../../concrete/util/ExtraAttributesTypeInfo";
- import { Group_TYPE } from "./GroupTypeInfo";
- import User from "./User";
- import { UserOtherId_TYPE } from "./UserOtherIdTypeInfo";
-@@ -30,8 +29,6 @@
+--- codegen//tmp/UserTypeInfo18279423011542619691.ts	2025-01-16 19:45:40.497377593 +0800
++++ user//tmp/UserTypeInfo18279423011542619691.ts	2025-01-16 19:45:40.497377593 +0800
+@@ -29,8 +29,6 @@
      override preamble() {
          super.preamble();
          this.declare({

@@ -21,6 +21,7 @@ export class _RegionLevel_stuff_TypeInfo extends CoCodeTypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.RegionLevel"; }
     get icon() { return "fa-tag"; }
+    get description() { return "区域级别"; }
 
     override preamble() {
         super.preamble();

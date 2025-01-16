@@ -12,6 +12,7 @@ export class RegionCategoryTypeInfo extends _RegionCategory_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.RegionCategory"; }
     get icon() { return "fa-tag"; }
+    get description() { return "区域分类"; }
 
     override create() {
         return new RegionCategory();

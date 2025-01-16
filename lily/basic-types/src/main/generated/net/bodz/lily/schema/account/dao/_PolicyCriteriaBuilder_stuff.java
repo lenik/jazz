@@ -19,10 +19,8 @@ public class _PolicyCriteriaBuilder_stuff<self_t extends _PolicyCriteriaBuilder_
     /** The method name */
     public final StringField methodName = string("\"method\"");
 
-    /** allow */
     public final IntegerField allowBits = integer("allow");
 
-    /** deny */
     public final IntegerField denyBits = integer("deny");
 
 }

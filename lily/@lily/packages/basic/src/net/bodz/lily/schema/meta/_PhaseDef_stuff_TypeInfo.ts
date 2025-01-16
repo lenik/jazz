@@ -25,7 +25,7 @@ export class _PhaseDef_stuff_TypeInfo extends IdEntityTypeInfo {
 
     get name() { return "net.bodz.lily.schema.meta.PhaseDef"; }
     get icon() { return "fa-tag"; }
-    get label() { return "Phase"; }
+    get description() { return ""; }
 
     override preamble() {
         super.preamble();

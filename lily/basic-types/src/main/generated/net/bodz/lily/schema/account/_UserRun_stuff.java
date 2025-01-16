@@ -134,6 +134,7 @@ public abstract class _UserRun_stuff
     /**
      * The user
      *
+     * @label User
      * @constraint foreign key (user) references lily.user (id)
      */
     @JoinColumn(name = "user")

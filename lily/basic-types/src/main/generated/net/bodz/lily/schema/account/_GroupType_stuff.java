@@ -2,6 +2,7 @@ package net.bodz.lily.schema.account;
 
 import javax.persistence.Column;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
@@ -30,6 +31,7 @@ public abstract class _GroupType_stuff
     private static final int _ord_DUMMY = 13;
 
     /** Group type name (unique) */
+    @NotNull
     String name;
 
     Integer dummy;
@@ -38,9 +40,10 @@ public abstract class _GroupType_stuff
      * Group type name (unique)
      */
     @Ordinal(_ord_NAME)
+    @NotNull
     @Precision(value = N_NAME)
     @TextInput(maxLength = N_NAME)
-    @Column(name = "name", length = N_NAME)
+    @Column(name = "name", nullable = false, length = N_NAME)
     public String getName() {
         return name;
     }
@@ -48,7 +51,7 @@ public abstract class _GroupType_stuff
     /**
      * Group type name (unique)
      */
-    public void setName(String value) {
+    public void setName(@NotNull String value) {
         this.name = value;
     }
 
@@ -64,6 +67,7 @@ public abstract class _GroupType_stuff
     }
 
     public void initNotNulls() {
+        this.name = "";
     }
 
 }

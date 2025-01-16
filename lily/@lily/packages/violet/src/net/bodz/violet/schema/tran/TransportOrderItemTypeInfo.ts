@@ -17,6 +17,7 @@ export class TransportOrderItemTypeInfo extends _TransportOrderItem_stuff_TypeIn
 
     get name() { return "net.bodz.violet.schema.tran.TransportOrderItem"; }
     get icon() { return "fa-tag"; }
+    get description() { return "送货单项目"; }
 
     override create() {
         return new TransportOrderItem();
@@ -25,7 +26,9 @@ export class TransportOrderItemTypeInfo extends _TransportOrderItem_stuff_TypeIn
     override preamble() {
         super.preamble();
         this.declare({
-            amount: property({ type: BIG_DECIMAL, precision: 20, scale: 2, validator: this.validators.validateAmount }),
+            amount: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, 
+                description: "出货金额", 
+                validator: this.validators.validateAmount }),
             salesOrder: property({ type: SalesOrder_TYPE, validator: this.validators.validateSalesOrder }),
             salesOrderItem: property({ type: SalesOrderItem_TYPE, validator: this.validators.validateSalesOrderItem }),
         });

@@ -40,7 +40,7 @@ export class _ArtifactCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            code: property({ type: STRING, precision: 20, validator: this.validators.validateCode }),
+            code: property({ type: STRING, nullable: false, precision: 20, validator: this.validators.validateCode }),
             skufmt: property({ type: STRING, precision: 100, validator: this.validators.validateSkufmt }),
             skufmtfull: property({ type: STRING, precision: 100, validator: this.validators.validateSkufmtfull }),
             barfmt: property({ type: STRING, precision: 100, validator: this.validators.validateBarfmt }),

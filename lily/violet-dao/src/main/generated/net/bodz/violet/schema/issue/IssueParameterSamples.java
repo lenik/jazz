@@ -23,7 +23,6 @@ public class IssueParameterSamples
         a.setUom(uom);
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
-        a.setName("eh duipz iow'q vux");
         return a;
     }
 

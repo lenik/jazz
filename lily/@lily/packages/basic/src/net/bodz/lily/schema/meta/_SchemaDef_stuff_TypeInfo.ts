@@ -21,7 +21,7 @@ export class _SchemaDef_stuff_TypeInfo extends CoCodeTypeInfo {
 
     get name() { return "net.bodz.lily.schema.meta.SchemaDef"; }
     get icon() { return "fa-tag"; }
-    get label() { return "Schema"; }
+    get description() { return ""; }
 
     override preamble() {
         super.preamble();

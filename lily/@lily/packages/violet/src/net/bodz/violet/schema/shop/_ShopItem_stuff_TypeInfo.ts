@@ -36,6 +36,7 @@ export class _ShopItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
 
     get name() { return "net.bodz.violet.schema.shop.ShopItem"; }
     get icon() { return "fa-tag"; }
+    get description() { return "陈列商品"; }
 
     override preamble() {
         super.preamble();

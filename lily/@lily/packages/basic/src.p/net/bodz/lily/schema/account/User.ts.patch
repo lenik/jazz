@@ -1,13 +1,6 @@
---- codegen//tmp/User14491979376774558101.ts	2024-05-13 11:31:58.351113203 +0800
-+++ user//tmp/User14491979376774558101.ts	2024-05-13 11:31:58.351113203 +0800
-@@ -1,6 +1,5 @@
- import type { InetAddress, List, int } from "skel01-core/src/lang/basetype";
- 
--import ExtraAttributes from "../../concrete/util/ExtraAttributes";
- import Group from "./Group";
- import UserOtherId from "./UserOtherId";
- import UserRun from "./UserRun";
-@@ -17,8 +16,6 @@
+--- codegen//tmp/User5250802753588966164.ts	2025-01-16 19:45:40.521375785 +0800
++++ user//tmp/User5250802753588966164.ts	2025-01-16 19:45:40.521375785 +0800
+@@ -17,8 +17,6 @@
          return this._typeInfo;
      }
  

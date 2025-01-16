@@ -12,7 +12,7 @@ export class ParameterDefTypeInfo extends _ParameterDef_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.meta.ParameterDef"; }
     get icon() { return "fa-tag"; }
-    get label() { return "Parameter"; }
+    get description() { return ""; }
 
     override create() {
         return new ParameterDef();

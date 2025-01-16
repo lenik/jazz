@@ -13,9 +13,6 @@ export class _IssueParameter_stuff_Validators extends CoParameterValidators {
         return this._type as _IssueParameter_stuff_TypeInfo;
     }
 
-    validateName(val: string) {
-    }
-
 }
 
 export default _IssueParameter_stuff_Validators;

@@ -71,10 +71,10 @@ onMounted(() => {
         <th data-type="OffsetDateTime" data-field="endTime">End Time</th>
         <th data-type="INT" data-field="year">Year</th>
         <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
-        <th data-type="User" data-format="label" data-field="user">The declaring user</th>
-        <th data-type="UserOtherIdType" data-format="label" data-field="type">Type of Open ID</th>
-        <th data-type="STRING" data-field="otherId" title="The identity data">Other Id</th>
-        <th data-type="JSON_VARIANT" data-field="auth" title="The authentication data">Auth</th>
+        <th data-type="User" data-format="label" data-field="user" title="The declaring user">User</th>
+        <th data-type="UserOtherIdType" data-format="label" data-field="type" title="Type of Open ID">Type</th>
+        <th data-type="STRING" data-field="otherId" title="The identity data">OID</th>
+        <th data-type="JSON_VARIANT" data-field="auth" title="The authentication data">Auth Data</th>
     </EntityChooseDialog>
 </template>
 

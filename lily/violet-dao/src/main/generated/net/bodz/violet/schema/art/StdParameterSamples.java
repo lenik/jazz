@@ -23,7 +23,6 @@ public class StdParameterSamples
         a.setOwnerGroup(ownerGroup);
         a.setUom(uom);
         a.setOwnerUser(ownerUser);
-        a.setName("Mhmva");
         return a;
     }
 

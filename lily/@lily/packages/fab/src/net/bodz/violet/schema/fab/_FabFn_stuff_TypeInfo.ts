@@ -33,7 +33,7 @@ export class _FabFn_stuff_TypeInfo extends CoImagedTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            code: property({ type: STRING, precision: 20, validator: this.validators.validateCode }),
+            code: property({ type: STRING, nullable: false, precision: 20, validator: this.validators.validateCode }),
             depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
             refCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateRefCount }),
 

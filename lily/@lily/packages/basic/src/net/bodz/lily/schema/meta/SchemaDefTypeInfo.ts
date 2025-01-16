@@ -20,7 +20,7 @@ export class SchemaDefTypeInfo extends _SchemaDef_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.meta.SchemaDef"; }
     get icon() { return "fa-tag"; }
-    get label() { return "Schema"; }
+    get description() { return ""; }
 
     override create() {
         return new SchemaDef();

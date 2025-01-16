@@ -46,6 +46,7 @@ export class _SalesOrder_stuff_TypeInfo extends CoMessageTypeInfo {
 
     get name() { return "net.bodz.violet.schema.shop.SalesOrder"; }
     get icon() { return "fa-tag"; }
+    get description() { return "订单"; }
 
     override preamble() {
         super.preamble();

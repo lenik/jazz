@@ -46,7 +46,7 @@ onMounted(() => {
 <template>
     <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="User" data-format="label" data-field="user">The user</th>
+            <th data-type="User" data-format="label" data-field="user" title="The user">User</th>
             <th data-type="STRING" data-field="label">Label</th>
             <th data-type="STRING" data-field="description">Description</th>
             <th data-type="STRING" data-field="icon">Icon</th>
@@ -58,8 +58,8 @@ onMounted(() => {
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
             <th data-type="INT" data-field="score">Score</th>
-            <th data-type="OffsetDateTime" data-field="lastLoginTime" title="Last time of login">Last Login Time</th>
-            <th data-type="INET_ADDRESS" data-field="lastLoginIP" title="The source IP of last login">Last Login I P</th>
+            <th data-type="OffsetDateTime" data-field="lastLoginTime" title="Last time of login">Login Time</th>
+            <th data-type="INET_ADDRESS" data-field="lastLoginIP" title="The source IP of last login">Login IP</th>
         </template>
         <template #preview>
             <UserRunEditor class="editor" v-model="selection" />

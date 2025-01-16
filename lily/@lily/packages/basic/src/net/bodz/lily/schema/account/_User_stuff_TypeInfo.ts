@@ -31,7 +31,6 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
 
     get name() { return "net.bodz.lily.schema.account.User"; }
     get icon() { return "fa-tag"; }
-    get label() { return "User (Account)"; }
     get description() { return "User Account"; }
 
     override preamble() {
@@ -41,22 +40,22 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
             person: property({ type: Person_TYPE, validator: this.validators.validatePerson }),
             personId: property({ type: INT, precision: 10 }),
 
-            primaryGroup: property({ type: Group_TYPE, nullable: false, 
+            primaryGroup: property({ type: Group_TYPE, nullable: false, label: "Primary Group", 
                 description: "The primary user group, the default value of ownerGroup.", 
                 validator: this.validators.validatePrimaryGroup }),
-            primaryGroupId: property({ type: INT, nullable: false, precision: 10, 
+            primaryGroupId: property({ type: INT, nullable: false, precision: 10, label: "Primary Group", 
                 description: "The primary user group, the default value of ownerGroup." }),
 
-            referer: property({ type: this, 
+            referer: property({ type: this, label: "Referer", 
                 description: "The referer user (used for promotion)", 
                 validator: this.validators.validateReferer }),
-            refererId: property({ type: INT, precision: 10, 
+            refererId: property({ type: INT, precision: 10, label: "Referer", 
                 description: "The referer user (used for promotion)" }),
 
-            type: property({ type: UserType_TYPE, nullable: false, 
+            type: property({ type: UserType_TYPE, nullable: false, label: "Type", 
                 description: "User type like system-user, normal-user, etc.", 
                 validator: this.validators.validateType }),
-            typeId: property({ type: INT, nullable: false, precision: 10, 
+            typeId: property({ type: INT, nullable: false, precision: 10, label: "Type", 
                 description: "User type like system-user, normal-user, etc." }),
         });
     }

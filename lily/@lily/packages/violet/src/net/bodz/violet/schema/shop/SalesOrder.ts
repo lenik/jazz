@@ -22,8 +22,8 @@ export class SalesOrder extends _SalesOrder_stuff {
     items?: List<SalesOrderItem>
     length: int
     orderTime?: OffsetDateTime
-    totalAmount?: BigDecimal
-    totalQuantity?: BigDecimal
+    totalAmount: BigDecimal
+    totalQuantity: BigDecimal
 
     constructor(o?: any) {
         super(o);

@@ -13,7 +13,7 @@ export class SalesOrderItem extends _SalesOrderItem_stuff {
         return this._typeInfo;
     }
 
-    amount?: BigDecimal
+    amount: BigDecimal
     beginTime?: OffsetDateTime
     deadline?: OffsetDateTime
     endTime?: OffsetDateTime

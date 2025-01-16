@@ -49,11 +49,9 @@ public abstract class _Policy_stuff
     /** The method name */
     String methodName;
 
-    /** allow */
     @NotNull
     int allowBits;
 
-    /** deny */
     @NotNull
     int denyBits;
 
@@ -112,9 +110,6 @@ public abstract class _Policy_stuff
         this.methodName = value;
     }
 
-    /**
-     * allow
-     */
     @Ordinal(_ord_ALLOW_BITS)
     @Precision(value = 10)
     @Column(name = "allow", nullable = false, precision = 10)
@@ -122,16 +117,10 @@ public abstract class _Policy_stuff
         return allowBits;
     }
 
-    /**
-     * allow
-     */
     public void setAllowBits(int value) {
         this.allowBits = value;
     }
 
-    /**
-     * deny
-     */
     @Ordinal(_ord_DENY_BITS)
     @Precision(value = 10)
     @Column(name = "deny", nullable = false, precision = 10)
@@ -139,9 +128,6 @@ public abstract class _Policy_stuff
         return denyBits;
     }
 
-    /**
-     * deny
-     */
     public void setDenyBits(int value) {
         this.denyBits = value;
     }

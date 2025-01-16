@@ -73,6 +73,9 @@ onMounted(() => {
         </FieldGroup>
         <CoImagedFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="CoNode_TYPE">
+            <FieldRow :property="meta.refCount" v-model="model.refCount">
+                <input type="number" v-model="model.refCount" disabled />
+            </FieldRow>
             <FieldRow :property="meta.parent" v-model="model.parent">
                 <RefEditor :dialog="shopCategoryChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>
