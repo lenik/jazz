@@ -2,7 +2,7 @@
     create sequence grouptype_seq start with 1000;
     create table grouptype(
         id          int primary key default nextval('grouptype_seq'),
-        name        varchar(20) unique, -- not null?
+        name        varchar(20) unique not null,
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Props
         dummy       int
@@ -14,7 +14,7 @@
     create index grouptype_state        on grouptype(state);
 
     comment on table grouptype is 'Group Type';
-    comment on column grouptype.name is 'Group type name (unique)';
+    comment on column grouptype.name is 'Name: Group type name (unique)';
 
     insert into grouptype(id, name, label, description) values
         (0, 'VIRTUAL', 'Virtual Group', 'Virtual abstract group'),

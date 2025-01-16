@@ -4,7 +4,7 @@
     create sequence zone_seq start with 10000;
     create table zone(
         id          int primary key default nextval('zone_seq'),
-        code        varchar(10) unique, -- eg. 331021102
+        code        varchar(10) unique, -- Code: eg. 331021102
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
 

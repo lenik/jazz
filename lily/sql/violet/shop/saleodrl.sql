@@ -27,9 +27,9 @@
 
 --\mixin violet.store._batch
 
-        qty         numeric(20,2) not null,             -- n0
+        qty         numeric(20,2) not null,             -- Quantity: n0
         price       numeric(20,2) not null default 0,
-        amount      numeric(20,2) not null default 0,   -- cache
+        amount      numeric(20,2) not null default 0,   -- Total Price: cache
 
         -- aka. n_avail, n_unused, n_stock, n_exist
         -- this is useful for apps without store.

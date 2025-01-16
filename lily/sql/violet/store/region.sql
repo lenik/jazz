@@ -22,10 +22,10 @@
         parent      int
             references region(id) on update cascade on delete cascade,
 
-        depth       int not null default -1, -- || ancestors ||
+        depth       int not null default -1, -- Depth: || ancestors ||
 
         -- to estimate the scale of the region tree.
-        height      int not null default -1, -- || longest descendant ||
+        height      int not null default -1, -- Height: || longest descendant ||
 
         level       int not null default 0
             references regionlevel(id) on update cascade,

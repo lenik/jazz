@@ -15,8 +15,6 @@
     create index policy_label       on policy(label);
 
     comment on table policy is 'Security Policy';
-    comment on column policy.name is 'The policy name (unique)';
-    comment on column policy.cclass is 'The control class';
-    comment on column policy.method is 'The method name';
-    comment on column policy.allow is 'allow';
-    comment on column policy.deny is 'deny';
+    comment on column policy.name is 'Name: The policy name (unique)';
+    comment on column policy.cclass is 'Control Class: The control class';
+    comment on column policy.method is 'Method: The method name';

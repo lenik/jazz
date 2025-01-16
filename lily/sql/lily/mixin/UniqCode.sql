@@ -1,3 +1,3 @@
 
     -- Column-Group: UniqCode
-        code        varchar(30) unique,
+        code        varchar(30) unique,     -- Unique Code

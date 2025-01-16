@@ -23,7 +23,7 @@
     create index usersec_passwd         on usersec(passwd);
 
     comment on table usersec is 'User Secret';
-    comment on column usersec."user" is 'The declaring user';
-    comment on column usersec.passwd is 'Password data';
-    comment on column usersec.question is 'Protection question';
-    comment on column usersec.answer is 'Protection answer';
+    comment on column usersec."user" is 'User: The declaring user';
+    comment on column usersec.passwd is 'Password: Password data';
+    comment on column usersec.question is 'Recover Question';
+    comment on column usersec.answer is 'Recover Answer';

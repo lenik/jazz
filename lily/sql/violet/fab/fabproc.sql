@@ -31,8 +31,8 @@
 --\mixin violet.store._batch
         -- see also fabproc_sn*
         
-        since       timestamp with time zone not null,  -- schedule start date
-        deadline    timestamp with time zone not null,  -- schedule end date
+        since       timestamp with time zone not null,  -- Schedule Start Time
+        deadline    timestamp with time zone not null,  -- Schedule End Time
         ntrack      int         -- cache
     );
 

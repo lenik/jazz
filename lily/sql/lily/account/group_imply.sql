@@ -17,5 +17,4 @@
     );
     
     comment on table group_imply is 'Group Implication';
-    comment on column group_imply."group" is 'the group';
-    comment on column group_imply.implied is 'implied group ids';
+    comment on column group_imply.implied is 'Implied Groups';

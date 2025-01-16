@@ -6,7 +6,7 @@
     create sequence discount_seq start with 1000;
     create table discount(
         id          int primary key default nextval('discount_seq'),
-        code        varchar(20) unique, -- not null?
+        code        varchar(20) unique, -- Unique Code: not null?
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.Ver
 

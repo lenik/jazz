@@ -16,13 +16,13 @@
             references art(id) on update cascade,
 
         resale      boolean not null default false,
-        o_label     varchar(30),    -- label override
-        o_spec      varchar(80),    -- spec override
-        o_uom       varchar(30),    -- uom override
+        o_label     varchar(30),    -- Label Override: label override
+        o_spec      varchar(80),    -- Specification Override: spec override
+        o_uom       varchar(30),    -- UOM Override: uom override
         
         qty         numeric(20,2) not null,
         price       numeric(20,2) not null default 0,
-        amount      numeric(20,2) not null default 0,   -- cache
+        amount      numeric(20,2) not null default 0,   -- Total Price: cache
         
         notes       varchar(200)
     );

@@ -18,8 +18,8 @@
         api         int
             references apitype on update cascade,
         
-        message     text,       -- full message
-        err         text        -- exception dump
+        message     text,       -- Full Message
+        err         text        -- Exception Dump
     );
     
     create index vapi_log_label          on vapi_log(label);

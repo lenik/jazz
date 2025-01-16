@@ -29,7 +29,7 @@
         phase       int not null
             references tranphase(id) on update cascade,
 
-        prev        bigint             -- previous order
+        prev        bigint             -- Previous Order
             references tranodr(id) on update cascade on delete set null,
 
         saleodr     bigint

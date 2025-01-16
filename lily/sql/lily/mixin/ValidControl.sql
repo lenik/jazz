@@ -1,5 +1,5 @@
 
     -- Column-Group: ValidControl
-        valid       boolean not null default true,
-        validsince  timestamp with time zone,
-        validuntil  timestamp with time zone,
+        valid       boolean not null default true,  -- Validated
+        validsince  timestamp with time zone,       -- Validated Since
+        validuntil  timestamp with time zone,       -- Validation Expires

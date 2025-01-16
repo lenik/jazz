@@ -12,4 +12,4 @@
     create index userlog_state      on userlog(state);
 
     comment on table userlog is 'User login activity';
-    comment on column userlog.ip is 'The source IP of the login';
+    comment on column userlog.ip is 'IP Address: The source IP of the login';

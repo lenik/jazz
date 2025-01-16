@@ -1,3 +1,3 @@
 
     -- Column-Group: Props
-        props       jsonb,
+        props       jsonb,      -- Properties

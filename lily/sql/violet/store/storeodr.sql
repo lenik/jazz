@@ -22,7 +22,7 @@
         phase       int not null
             references storephase(id) on update cascade,
 
-        prev        bigint              -- previous odr
+        prev        bigint              -- Previous Order
             references storeodr(id) on update cascade on delete set null,
 
         -- aka. opportunity, or project.

@@ -20,7 +20,7 @@
 --\mixin violet.store._batch
         -- see also fabtask_sn*
         
-        ntrack      int         -- cache
+        ntrack      int         -- Track Count: cache
     );
 
     create index fabtaskl_lastmod     on fabtaskl(lastmod desc);

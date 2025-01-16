@@ -14,7 +14,7 @@
     create index usertype_state        on usertype(state);
 
     comment on table usertype is 'User Type';
-    comment on column usertype.name is 'The user type name';
+    comment on column usertype.name is 'Name: The user type name';
 
     insert into usertype(id, name, label, description) values
         (0, 'sys', 'System User', 'System user'),

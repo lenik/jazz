@@ -5,7 +5,7 @@
 --\mixin lily.mixin.Code
 --\mixin lily.mixin.LabelExVer
 
-        nref        int not null default 0 -- redundant.
+        nref        int not null default 0      -- Reference Count
     );
 
     create index $1phase_label       on $1phase(label);

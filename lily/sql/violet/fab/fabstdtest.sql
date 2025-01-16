@@ -4,7 +4,7 @@
     create sequence fabstdtest_seq start with 1000;
     create table fabstdtest(
         id          int primary key default nextval('fabstdtest_seq'),
-        code        varchar(20) unique, -- not null?
+        code        varchar(20) unique, -- Unique Code: not null?
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Props

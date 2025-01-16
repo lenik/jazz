@@ -28,9 +28,9 @@
     -- alter table "user" alter gid0 drop default;
     
     comment on table group_user is 'Group member user';
-    comment on column group_user."group" is 'The containing group';
-    comment on column group_user."user" is 'A user who is a member to the group';
-    comment on column group_user.admin is 'Whether the member is an administrator of the group';
+    comment on column group_user."group" is 'Group: The containing group';
+    comment on column group_user."user" is 'Member User: A user who is a member to the group';
+    comment on column group_user.admin is 'Adminstrator: Whether the member is an administrator of the group';
 
     insert into group_user("user", "group") values
         (0, 0),         -- root: root

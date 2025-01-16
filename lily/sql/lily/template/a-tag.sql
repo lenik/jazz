@@ -9,7 +9,7 @@
             references $1tag on update cascade on delete cascade,
 
         depth       int not null default -1,
-        nref        int not null default 0 -- redundant.
+        nref        int not null default 0      -- Reference Count
     );
 
     create index $1tag_label        on $1tag(label);

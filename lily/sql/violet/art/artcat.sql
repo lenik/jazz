@@ -3,7 +3,7 @@
     create sequence artcat_seq start with 1000;
     create table artcat(
         id          int primary key default nextval('artcat_seq'),
-        code        varchar(20) unique, -- not null?
+        code        varchar(20) unique not null,
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Props

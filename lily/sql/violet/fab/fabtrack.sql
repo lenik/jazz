@@ -14,8 +14,8 @@
         -- parent of the track, the merged one.
         proc        bigint not null
             references fabproc(id) on update cascade on delete cascade,
-        since       timestamp with time zone not null,  -- schedule start date
-        deadline    timestamp with time zone not null,  -- schedule end date
+        since       timestamp with time zone not null,  -- Schedule Start Time
+        deadline    timestamp with time zone not null,  -- Schedule End Time
         
         qty_plan    numeric(20, 2) not null,
         qty_actual  numeric(20, 2) not null,

@@ -1,4 +1,4 @@
 
     -- Column-Group: QName
-        ns          varchar(30),
-        name        varchar(30),
+        ns          varchar(30),        -- Namespace
+        name        varchar(30),        -- Local Name

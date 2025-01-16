@@ -15,5 +15,5 @@
     );
 
     comment on table policy_group is 'Enabled policy for a group';
-    comment on column policy_group.policy is 'The policy to be enabled';
-    comment on column policy_group."group" is 'The group on which the policy will be applied';
+    comment on column policy_group.policy is 'Policy: The policy to be enabled';
+    comment on column policy_group."group" is 'Group Applied: The group on which the policy will be applied';

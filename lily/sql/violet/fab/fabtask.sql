@@ -13,13 +13,13 @@
         odr         bigint not null
             references fabodr(id) on update cascade,
         
-        since       timestamp with time zone not null,  -- schedule start date
-        deadline    timestamp with time zone not null,  -- schedule end date
+        since       timestamp with time zone not null,  -- Schedule Start Time
+        deadline    timestamp with time zone not null,  -- Schedule End Time
         
         -- storelock: create locks for fabproc* should be finer.
         -- nlock       bigint
-        nproc       int,        -- cache
-        ntrack      int         -- cache
+        nproc       int,        -- Process Count: cache
+        ntrack      int         -- Track Count: cache
     );
 
     create index fabtask_label       on fabtask(label);

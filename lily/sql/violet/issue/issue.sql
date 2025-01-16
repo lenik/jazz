@@ -24,7 +24,7 @@
         nvote       int not null default 0,
         nlike       int not null default 0,
 
-        value       double precision not null default 0 -- estimated
+        value       double precision not null default 0 -- Estimated Value
         -- valmax   double precision,
     );
 

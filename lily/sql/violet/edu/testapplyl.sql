@@ -13,7 +13,7 @@
         q           bigint not null
             references testq(id) on update cascade,
         
-        ans         int, -- TODO ans[]?
+        ans         int, -- Answer Index: TODO ans[]?
         anstext     varchar(200),
         score       double precision,
         

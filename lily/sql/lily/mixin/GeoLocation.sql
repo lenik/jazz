@@ -1,7 +1,7 @@
 
     -- Column-Group: Gis
-        lng         int,    -- longitude/X
-        lat         int,    -- latitude/Y
-        _zone       int     -- (cache)
+        lng         int,    -- Longitude: Longitude/X
+        lat         int,    -- Latitude: Latitude/Y
+        _zone       int     -- Default Zone: if any (cache)
             references zone on update cascade,
 
