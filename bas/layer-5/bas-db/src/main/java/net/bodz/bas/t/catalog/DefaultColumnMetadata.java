@@ -97,10 +97,9 @@ public class DefaultColumnMetadata
 
     @Override
     public ITableMetadata getTable() {
-        if (tableOid != null)
+        if (tableOid != null || parent instanceof ITableMetadata)
             return (ITableMetadata) parent;
-        else
-            return null;
+        return null;
     }
 
     @Override
@@ -458,6 +457,17 @@ public class DefaultColumnMetadata
     }
 
     @Override
+    public String toString() {
+        ColumnOid id = getId();
+        if (id != null)
+            return id.toString();
+        return name;
+    }
+
+    /** ⇱ Implementation Of {@link interface}. */
+    /* _____________________________ */static section.iface __1__;
+
+    @Override
     public Object parseColumnValue(String s)
             throws ParseException {
         IParser<?> parser = Typers.getTyper(javaClass, IParser.class);
@@ -560,6 +570,9 @@ public class DefaultColumnMetadata
         out.endElement();
     }
 
+    /** ⇱ Implementation Of {@link interface}. */
+    /* _____________________________ */static section.iface __RS__;
+
     public void readObject(ResultSetMetaData jdbcMetadata, int columnIndex)
             throws SQLException {
         String name = jdbcMetadata.getColumnName(columnIndex);
@@ -615,6 +628,22 @@ public class DefaultColumnMetadata
                 : _nullable == ResultSetMetaData.columnNullable;
         // String isNullable = rs.getString("IS_NULLABLE"); // YES NO
         description = rs.getString("REMARKS");
+        if (description != null) {
+            description = description.trim();
+            if (description.isEmpty())
+                description = null;
+            else {
+                int colon = description.indexOf(':');
+                if (colon != -1) {
+                    label = description.substring(0, colon).trim();
+                    description = description.substring(colon + 1).trim();
+                } else {
+                    label = description;
+                    // description = null;
+                }
+            }
+        }
+
         defaultValue = rs.getString("COLUMN_DEF");
         // int sqlDataType = rs.getInt("SQL_DATA_TYPE");
         // Integer sqlDatetimeSub = (Integer) rs.getObject("SQL_DATETIME_SUB");
@@ -709,11 +738,6 @@ public class DefaultColumnMetadata
         excluded = o.a(K_EXCLUDED).getBoolean(false);
         verboseLevel = o.a(K_VERBOSE_LEVEL).getInt(0);
         joinLevel = o.a(K_JOIN_LEVEL).getInt(0);
-    }
-
-    @Override
-    public String toString() {
-        return getId().toString();
     }
 
     /** ⇱ Java runtime binding */
