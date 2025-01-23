@@ -34,7 +34,7 @@
         uom         int
             references uom(id) on update cascade,
 
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
         -- color
         -- supply.delay (days)
         -- weight.gross

@@ -10,7 +10,7 @@
         code        varchar(10),
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         path        varchar(200) not null default '?',
 

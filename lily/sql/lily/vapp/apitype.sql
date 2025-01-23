@@ -8,7 +8,7 @@
 
         -- Properties:
         --   callback: template...
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
         
         uom         varchar(30) not null default 'times'
     );

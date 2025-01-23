@@ -21,6 +21,7 @@ column-property {
 
 column-type {
     props:              net.bodz.bas.fmt.json.JsonVariant
+    files:              net.bodz.bas.fmt.json.JsonVariant
 }
 
 class-map {

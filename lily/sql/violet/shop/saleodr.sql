@@ -19,7 +19,7 @@
 --\mixin lily.mixin.Msg
 
         --
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         cat         int
             references salecat(id) on update cascade,

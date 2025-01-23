@@ -20,7 +20,7 @@
 --\mixin lily.mixin.Ver
 
 --\mixin lily.mixin.Msg
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
 
         cat         int not null

@@ -13,7 +13,7 @@
 --\mixin lily.mixin.Mi
             -- now < t0 for future items, now > t1 for expired items.
 --\mixin lily.mixin.Ver
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         -- null shop if personal, or the only shop for uid.
         shop        int

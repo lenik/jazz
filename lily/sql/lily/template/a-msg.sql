@@ -8,7 +8,7 @@
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Mi
 --\mixin lily.mixin.Msg
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 --\mixin lily.mixin.FavLike
 
         "$1"        ${2=int} not null

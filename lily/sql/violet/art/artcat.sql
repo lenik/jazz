@@ -6,7 +6,7 @@
         code        varchar(20) unique not null,
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         parent      int
             references artcat(id) on update cascade on delete cascade,

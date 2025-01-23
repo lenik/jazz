@@ -6,7 +6,7 @@
     create table testans(
         id          bigint primary key default nextval('testans_seq'),
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         q           bigint not null
             references testq(id) on update cascade on delete cascade,

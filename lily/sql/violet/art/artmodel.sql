@@ -11,7 +11,7 @@
             -- OBSOLETE := obsolete is not null
             -- EXPIRED := not between validsince and validuntil
 --\mixin lily.mixin.Mi
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
         -- price-strategy
         -- cost: { labor, elec, equip, other }
 --\mixin lily.mixin.ValidControl

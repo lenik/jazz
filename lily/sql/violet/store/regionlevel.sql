@@ -3,7 +3,7 @@
     create table regionlevel(
         id          int primary key default nextval('regionlevel_seq'),
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
         dummy       int
     );
 

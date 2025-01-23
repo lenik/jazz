@@ -9,7 +9,7 @@
         
         -- Properties:
         --   
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
         
         app         int not null
             references vapp on update cascade on delete cascade,

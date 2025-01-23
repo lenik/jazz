@@ -15,7 +15,7 @@
 
         depth       int not null default -1,
 
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
         -- default.bonus etc.
 
         -- @Redundant

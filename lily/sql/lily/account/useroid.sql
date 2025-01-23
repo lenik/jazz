@@ -10,7 +10,7 @@
         -- state: verified?
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.MomentInterval
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         "user"      int not null
             references "user" on update cascade on delete cascade,

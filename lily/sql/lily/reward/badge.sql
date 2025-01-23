@@ -5,7 +5,7 @@
     create table badge(
         id          int primary key default nextval('badge_seq'),
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         expr        varchar(255),
         val         int not null,

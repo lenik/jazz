@@ -10,7 +10,7 @@
 --\mixin lily.mixin.LabelExVer
         -- priority: "step order"
 --\mixin lily.mixin.ValidControl
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
         -- cost: { labor, elec, equip, other }
         -- help: { how to use equipment, how to operate, ... }
         output      int not null

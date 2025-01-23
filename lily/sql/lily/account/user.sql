@@ -8,7 +8,7 @@
             references usertype(id) on update cascade,
         name        varchar(32) not null unique,
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         gid0        int not null default 2
             references "group" on update cascade,

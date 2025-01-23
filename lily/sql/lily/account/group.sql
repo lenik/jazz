@@ -10,7 +10,7 @@
             references grouptype(id) on update cascade,
 
         --\mixin lily.mixin.LabelExVer
-        --\mixin lily.mixin.Props
+        --\mixin lily.mixin.PropFiles
         
         parent      int
             references "group"(id) on update cascade

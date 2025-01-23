@@ -8,7 +8,7 @@
     -- props:
         -- qty.property (aka. uomprop)
         -- qty.digits
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         prop        varchar(30) not null default 'Measure',
 

@@ -4,7 +4,7 @@
         id          int primary key default nextval('grouptype_seq'),
         name        varchar(20) unique not null,
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
         dummy       int
     );
 

@@ -11,7 +11,7 @@
             references fabstdtest(id) on update cascade on delete cascade,
         required    boolean not null default false,
         
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
         -- expected: variant
         -- format: number format if expected is numeric.
         -- range: { min, max }: variants

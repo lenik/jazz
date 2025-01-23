@@ -4,7 +4,7 @@
     create table useroidtype(
         id          int primary key default nextval('useroidtype_seq'),
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
         dummy       int
     );
 

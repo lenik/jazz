@@ -13,7 +13,7 @@
         -- re_label    varchar(30),    -- label override
         -- re_spec     varchar(80),    -- spec override
         --      notes (or comments)
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         odr         bigint not null
             references saleodr(id) on update cascade on delete cascade,

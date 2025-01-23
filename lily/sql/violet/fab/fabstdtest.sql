@@ -7,7 +7,7 @@
         code        varchar(20) unique, -- Unique Code: not null?
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
     -- bonus
 
         cat         int not null

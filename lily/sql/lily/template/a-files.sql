@@ -7,7 +7,7 @@
         id          int primary key default nextval('$1_dir_seq'),
     --\mixin lily.mixin.LabelExVer
         -- label can be null.
-    --\mixin lily.mixin.Props
+    --\mixin lily.mixin.PropFiles
 
         -- where the file data is stored.
         -- the actual storage layout is undefined.
@@ -32,7 +32,7 @@
         id          int primary key default nextval('$1_file_seq'),
 --\mixin lily.mixin.Ex
 --\mixin lily.mixin.Ver
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
         -- image.small/medium/large for thumbnails
         -- mime.type
         -- mime.encoding

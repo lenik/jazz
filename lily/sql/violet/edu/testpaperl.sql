@@ -6,7 +6,7 @@
     create table testpaperl(
         id          bigint primary key default nextval('testpaperl_seq'),
 --\mixin lily.mixin.ExVer
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         paper       int not null
             references testpaper(id) on update cascade on delete cascade,

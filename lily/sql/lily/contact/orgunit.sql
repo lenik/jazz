@@ -8,7 +8,7 @@
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Contact ""
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         org         int not null
             references org on update cascade on delete cascade,

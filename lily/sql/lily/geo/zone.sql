@@ -25,7 +25,7 @@
             -- outlines:    Point[][]
             -- population:  float -- million
             -- area:        float -- km^2
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         data        jsonb
     );

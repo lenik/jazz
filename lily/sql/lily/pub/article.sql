@@ -17,7 +17,7 @@
         -- seealso.orig: for template
         -- seealso.quote: forward/quote.
         -- files: UploadedFile[]
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
 --\mixin lily.mixin.FavLike
 

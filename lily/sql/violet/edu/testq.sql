@@ -13,7 +13,7 @@
         course      int not null
             references course(id) on update cascade,
         
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 --\mixin lily.mixin.FavLike
 
         -- insert position of the answer. num of chars to the end if negative.

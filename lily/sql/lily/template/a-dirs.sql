@@ -5,7 +5,7 @@
         id          int primary key default nextval('$1_file_seq'),
     --\mixin lily.mixin.LabelExVer
         -- label can be null.
-    --\mixin lily.mixin.Props
+    --\mixin lily.mixin.PropFiles
 
         -- where the file data is stored.
         -- the actual storage layout is undefined.

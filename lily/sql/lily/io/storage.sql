@@ -4,7 +4,7 @@
     create table "storage"(
         id          int primary key default nextval('storage_seq'),
 --\mixin lily.mixin.LabelExVer
---\mixin lily.mixin.Props
+--\mixin lily.mixin.PropFiles
 
         -- the preferred dirname for this storage.
         name        varchar(30) not null unique
