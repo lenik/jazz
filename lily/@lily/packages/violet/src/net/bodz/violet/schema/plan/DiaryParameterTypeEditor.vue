@@ -6,7 +6,6 @@ import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
 import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import DiaryParameterType from "./DiaryParameterType";
-import { _DiaryParameterType_stuff_TYPE } from "./_DiaryParameterType_stuff_TypeInfo";
 
 export const title = "Editor view of: Diary parameter type";
 export interface Props {
@@ -67,11 +66,6 @@ onMounted(() => {
             </FieldRow>
         </FieldGroup>
         <CoParameterFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_DiaryParameterType_stuff_TYPE">
-            <FieldRow :property="meta.name" v-model="model.name">
-                <input type="text" v-model="model.name" />
-            </FieldRow>
-        </FieldGroup>
     </div>
 </template>
 

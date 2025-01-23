@@ -36,7 +36,7 @@ public abstract class _CourseKit_stuff
 
     private static final int _ord_CATEGORY_ID = 15;
     private static final int _ord_COURSE_ID = _ord_CATEGORY_ID + 1;
-    private static final int _ord_FAV_COUNT = _ord_COURSE_ID + 2;
+    private static final int _ord_FAV_COUNT = _ord_COURSE_ID + 3;
     private static final int _ord_VOTE_COUNT = _ord_FAV_COUNT + 1;
     private static final int _ord_HATE_COUNT = _ord_VOTE_COUNT + 1;
     private static final int _ord_DUMMY = _ord_HATE_COUNT + 1;

@@ -37,7 +37,7 @@ public abstract class _ShopItem_stuff
     public static final int N_PRICE = 20;
     public static final int N_QUANTITY = 20;
 
-    private static final int _ord_SHOP_ID = 15;
+    private static final int _ord_SHOP_ID = 16;
     private static final int _ord_CATEGORY_ID = _ord_SHOP_ID + 1;
     private static final int _ord_ARTIFACT_ID = _ord_CATEGORY_ID + 1;
     private static final int _ord_BATCH = _ord_ARTIFACT_ID + 1;

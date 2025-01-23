@@ -19,6 +19,8 @@ public class _ArticleCriteriaBuilder_stuff<self_t extends _ArticleCriteriaBuilde
 
     public final StringField formArguments = string("formargs");
 
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
+
     public final IntegerField favCount = integer("nfav");
 
     public final IntegerField hateCount = integer("nhate");

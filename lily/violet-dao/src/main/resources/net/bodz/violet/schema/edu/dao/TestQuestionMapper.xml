@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="rawText" column="text" />
         <result property="formArguments" column="formargs" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="favCount" column="nfav" />
         <result property="voteCount" column="nvote" />
         <result property="hateCount" column="nhate" />
@@ -65,6 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.formargs, 
             a.course, 
             a.props, 
+            a.files, 
             a.nfav, 
             a.nvote, 
             a.nhate, 
@@ -83,6 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             course.id course_id, 
             course.uid course_uid, 
@@ -99,6 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             course.lastmod course_lastmod, 
             course."version" course_version, 
             course.props course_props, 
+            course.files course_files, 
             course.cat course_cat, 
             course.nfav course_nfav, 
             course.nvote course_nvote, 
@@ -132,6 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op.lastmod op_lastmod, 
             op."version" op_version, 
             op.props op_props, 
+            op.files op_files, 
             op.gid0 op_gid0, 
             op.referer op_referer, 
             op.person op_person, 
@@ -148,6 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person
@@ -180,6 +186,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.formargs, 
             a.course, 
             a.props, 
+            a.files, 
             a.nfav, 
             a.nvote, 
             a.nhate, 
@@ -198,6 +205,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             course.id course_id, 
             course.uid course_uid, 
@@ -214,6 +222,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             course.lastmod course_lastmod, 
             course."version" course_version, 
             course.props course_props, 
+            course.files course_files, 
             course.cat course_cat, 
             course.nfav course_nfav, 
             course.nvote course_nvote, 
@@ -247,6 +256,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op.lastmod op_lastmod, 
             op."version" op_version, 
             op.props op_props, 
+            op.files op_files, 
             op.gid0 op_gid0, 
             op.referer op_referer, 
             op.person op_person, 
@@ -263,6 +273,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person
@@ -318,6 +329,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             formargs,
             course,
             props,
+            files,
             nfav,
             nvote,
             nhate,
@@ -341,6 +353,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{formArguments},
             #{courseId},
             #{properties},
+            #{files},
             #{favCount},
             #{voteCount},
             #{hateCount},
@@ -369,6 +382,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             formargs = #{formArguments},
             course = #{courseId},
             props = #{properties},
+            files = #{files},
             nfav = #{favCount},
             nvote = #{voteCount},
             nhate = #{hateCount},

@@ -45,7 +45,7 @@ public abstract class _Person_stuff
     public static final int N_SSN = 20;
     public static final int N_DLN = 20;
 
-    private static final int _ord_FATHER_ID = 27;
+    private static final int _ord_FATHER_ID = 28;
     private static final int _ord_MOTHER_ID = _ord_FATHER_ID + 1;
     private static final int _ord_ROLE_COUNT = _ord_MOTHER_ID + 3;
     private static final int _ord_EMPLOYEE = _ord_ROLE_COUNT + 3;

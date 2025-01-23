@@ -61,6 +61,7 @@ onMounted(() => {
         <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
+        <th data-type="JSON_VARIANT" data-field="files">Files</th>
         <th data-type="VApp" data-format="label" data-field="app">App</th>
         <th data-type="ApiType" data-format="label" data-field="api">Api</th>
         <th data-type="STRING" data-field="callback">Callback</th>

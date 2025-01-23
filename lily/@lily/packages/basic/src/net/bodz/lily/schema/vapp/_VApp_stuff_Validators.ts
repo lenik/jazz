@@ -23,6 +23,9 @@ export class _VApp_stuff_Validators extends IdEntityValidators {
     validateProperties(val: JsonVariant) {
     }
 
+    validateFiles(val: JsonVariant) {
+    }
+
     validateSecret(val: string) {
     }
 

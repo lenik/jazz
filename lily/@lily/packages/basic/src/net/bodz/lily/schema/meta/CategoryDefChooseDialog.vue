@@ -72,6 +72,7 @@ onMounted(() => {
         <th data-type="CategoryDef" data-format="label" data-field="parent">Parent</th>
         <th data-type="INT" data-field="depth">Depth</th>
         <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+        <th class="hidden" data-type="JSON_VARIANT" data-field="files">Files</th>
         <th data-type="INT" data-field="refCount">Ref Count</th>
     </EntityChooseDialog>
 </template>

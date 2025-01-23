@@ -15,6 +15,8 @@ public class _CourseCriteriaBuilder_stuff<self_t extends _CourseCriteriaBuilder_
 
     public final IntegerField accessMode = integer("mode");
 
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
+
     public final IntegerField categoryId = integer("cat");
 
     public final IntegerField favCount = integer("nfav");

@@ -1,5 +1,6 @@
 package net.bodz.lily.schema.inet.dao;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoNodeCriteriaBuilder;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.lily.schema.inet.ExternalSite;
@@ -11,6 +12,8 @@ public class _ExternalSiteCriteriaBuilder_stuff<self_t extends _ExternalSiteCrit
     public final IntegerField ownerUserId = integer("uid");
 
     public final IntegerField accessMode = integer("mode");
+
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
 
     public final StringField urlfmt = string("urlfmt");
 

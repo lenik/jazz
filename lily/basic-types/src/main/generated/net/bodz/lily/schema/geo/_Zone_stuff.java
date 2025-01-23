@@ -46,7 +46,7 @@ public abstract class _Zone_stuff
     private static final int _ord_DEPTH = _ord_PARENT_ID + 1;
     private static final int _ord_TEL_CODE = _ord_DEPTH + 1;
     private static final int _ord_POST_CODE = _ord_TEL_CODE + 1;
-    private static final int _ord_DATA = _ord_POST_CODE + 2;
+    private static final int _ord_DATA = _ord_POST_CODE + 3;
 
     String code;
 

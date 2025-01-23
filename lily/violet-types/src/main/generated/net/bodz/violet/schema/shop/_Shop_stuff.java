@@ -32,7 +32,7 @@ public abstract class _Shop_stuff
     public static final int N_HYDM = 10;
 
     private static final int _ord_CODE = 15;
-    private static final int _ord_SUPPLIER_ORG_ID = _ord_CODE + 2;
+    private static final int _ord_SUPPLIER_ORG_ID = _ord_CODE + 3;
     private static final int _ord_SUPPLIER_ID = _ord_SUPPLIER_ORG_ID + 1;
     private static final int _ord_HYDM = _ord_SUPPLIER_ID + 1;
 

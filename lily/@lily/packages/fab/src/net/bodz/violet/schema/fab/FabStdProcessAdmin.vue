@@ -72,6 +72,7 @@ onMounted(() => {
             <th data-type="OffsetDateTime" data-field="validSince">Valid Since</th>
             <th data-type="OffsetDateTime" data-field="validUntil">Valid Until</th>
             <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="files">Files</th>
             <th data-type="ArtifactModel" data-format="label" data-field="output">Output</th>
             <th data-type="FabFn" data-format="label" data-field="function">Function</th>
             <th data-type="INT" data-field="duration">Duration</th>

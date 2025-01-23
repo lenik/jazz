@@ -1,5 +1,6 @@
 package net.bodz.lily.schema.reward.dao;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.lily.schema.reward.Badge;
@@ -9,6 +10,8 @@ public class _BadgeCriteriaBuilder_stuff<self_t extends _BadgeCriteriaBuilder_st
         extends CoImagedCriteriaBuilder<self_t> {
 
     public final IntegerField id = integer("id");
+
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
 
     public final StringField expr = string("expr");
 

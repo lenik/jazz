@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, provide, ref } from "vue";
 
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { int } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
 
@@ -18,6 +19,7 @@ export interface Props {
 <script setup lang="ts">
 import FieldRow from "skel01-core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
+import JsonEditor from "skel01-core/src/ui/input/JsonEditor.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
 
@@ -78,6 +80,9 @@ onMounted(() => {
             </FieldRow>
         </FieldGroup>
         <FieldGroup :type="_ExternalSite_stuff_TYPE">
+            <FieldRow :property="meta.files" v-model="model.files">
+                <JsonEditor v-model="model.files" />
+            </FieldRow>
             <FieldRow :property="meta.urlfmt" v-model="model.urlfmt">
                 <input type="text" v-model="model.urlfmt" />
             </FieldRow>

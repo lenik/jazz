@@ -40,7 +40,7 @@ public abstract class _ArtifactCategory_stuff<this_t extends _ArtifactCategory_s
     public static final int N_COUNT = 10;
 
     private static final int _ord_CODE = 2;
-    private static final int _ord_SKUFMT = 19;
+    private static final int _ord_SKUFMT = 20;
     private static final int _ord_SKUFMTFULL = _ord_SKUFMT + 1;
     private static final int _ord_BARFMT = _ord_SKUFMTFULL + 1;
     private static final int _ord_BARFMTFULL = _ord_BARFMT + 1;

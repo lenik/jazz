@@ -24,22 +24,27 @@ public abstract class _FabStdTestParameter_stuff
     public static final String FIELD_TEST_ID = "test";
     public static final String FIELD_REQUIRED = "required";
     public static final String FIELD_PROPERTIES = "props";
+    public static final String FIELD_FILES = "files";
     public static final String FIELD_EXPECTED = "expected";
 
     public static final int N_TEST_ID = 10;
     public static final int N_REQUIRED = 1;
     public static final int N_PROPERTIES = 2147483647;
+    public static final int N_FILES = 2147483647;
     public static final int N_EXPECTED = 100;
 
     private static final int _ord_TEST_ID = 5;
     private static final int _ord_REQUIRED = _ord_TEST_ID + 1;
     private static final int _ord_PROPERTIES = _ord_REQUIRED + 1;
-    private static final int _ord_EXPECTED = _ord_PROPERTIES + 1;
+    private static final int _ord_FILES = _ord_PROPERTIES + 1;
+    private static final int _ord_EXPECTED = _ord_FILES + 1;
 
     @NotNull
     boolean required;
 
     JsonVariant properties;
+
+    JsonVariant files;
 
     String expected;
 
@@ -70,6 +75,17 @@ public abstract class _FabStdTestParameter_stuff
 
     public void setProperties(JsonVariant value) {
         this.properties = value;
+    }
+
+    @Ordinal(_ord_FILES)
+    @Precision(value = 2147483647)
+    @Column(name = "files", precision = 2147483647)
+    public JsonVariant getFiles() {
+        return files;
+    }
+
+    public void setFiles(JsonVariant value) {
+        this.files = value;
     }
 
     @Ordinal(_ord_EXPECTED)

@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="depth" column="depth" />
         <result property="urlfmt" column="urlfmt" />
         <result property="bonus" column="bonus" />
@@ -53,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.lastmod, 
             a."version", 
             a.props, 
+            a.files, 
             a.parent, 
             a."depth", 
             a.urlfmt, 
@@ -73,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.lastmod parent_lastmod, 
             parent."version" parent_version, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent.parent parent_parent, 
             parent."depth" parent_depth, 
             parent.urlfmt parent_urlfmt, 
@@ -91,6 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
@@ -105,6 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person
@@ -132,6 +137,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.lastmod, 
             a."version", 
             a.props, 
+            a.files, 
             a.parent, 
             a."depth", 
             a.urlfmt, 
@@ -152,6 +158,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.lastmod parent_lastmod, 
             parent."version" parent_version, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent.parent parent_parent, 
             parent."depth" parent_depth, 
             parent.urlfmt parent_urlfmt, 
@@ -170,6 +177,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
@@ -184,6 +192,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person
@@ -234,6 +243,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod,
             "version",
             props,
+            files,
             parent,
             "depth",
             urlfmt,
@@ -254,6 +264,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{lastModified},
             #{version},
             #{properties},
+            #{files},
             #{parentId},
             #{depth},
             #{urlfmt},
@@ -279,6 +290,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod = #{lastModified},
             "version" = #{version},
             props = #{properties},
+            files = #{files},
             parent = #{parentId},
             "depth" = #{depth},
             urlfmt = #{urlfmt},

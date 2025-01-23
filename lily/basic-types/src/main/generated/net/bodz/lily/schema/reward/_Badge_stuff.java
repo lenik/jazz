@@ -32,7 +32,7 @@ public abstract class _Badge_stuff
     public static final int N_TRANSIENT = 1;
     public static final int N_INDEXED = 1;
 
-    private static final int _ord_EXPR = 12;
+    private static final int _ord_EXPR = 13;
     private static final int _ord_VAL = _ord_EXPR + 1;
     private static final int _ord_LEVELS = _ord_VAL + 1;
     private static final int _ord_DESCEND = _ord_LEVELS + 1;

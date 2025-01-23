@@ -48,6 +48,7 @@ onMounted(() => {
             <th data-type="STRING" data-field="description">Description</th>
             <th data-type="STRING" data-field="icon">Icon</th>
             <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="files">Files</th>
             <th data-type="STRING" data-field="property">Property</th>
             <th data-type="UomRow" data-format="label" data-field="standard">Standard</th>
             <th data-type="DOUBLE" data-field="scale">Scale</th>

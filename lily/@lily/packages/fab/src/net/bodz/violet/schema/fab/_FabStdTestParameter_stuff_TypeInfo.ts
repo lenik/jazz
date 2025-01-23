@@ -15,11 +15,13 @@ export class _FabStdTestParameter_stuff_TypeInfo extends IdEntityTypeInfo {
     static readonly FIELD_TEST_ID = "test";
     static readonly FIELD_REQUIRED = "required";
     static readonly FIELD_PROPERTIES = "props";
+    static readonly FIELD_FILES = "files";
     static readonly FIELD_EXPECTED = "expected";
 
     static readonly N_TEST_ID = 10;
     static readonly N_REQUIRED = 1;
     static readonly N_PROPERTIES = 2147483647;
+    static readonly N_FILES = 2147483647;
     static readonly N_EXPECTED = 100;
 
     readonly validators = new _FabStdTestParameter_stuff_Validators(this);
@@ -36,6 +38,7 @@ export class _FabStdTestParameter_stuff_TypeInfo extends IdEntityTypeInfo {
         this.declare({
             required: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateRequired }),
             properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
+            files: property({ type: JSON_VARIANT, validator: this.validators.validateFiles }),
             expected: property({ type: STRING, precision: 100, validator: this.validators.validateExpected }),
 
             test: property({ type: FabStdTest_TYPE, nullable: false, validator: this.validators.validateTest }),

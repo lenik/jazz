@@ -48,7 +48,7 @@ public abstract class _SalesOrder_stuff
     public static final int N_TOTAL_AMOUNT = 20;
 
     private static final int _ord_FORM_ARGUMENTS = 19;
-    private static final int _ord_CATEGORY_ID = _ord_FORM_ARGUMENTS + 2;
+    private static final int _ord_CATEGORY_ID = _ord_FORM_ARGUMENTS + 3;
     private static final int _ord_PHASE_ID = _ord_CATEGORY_ID + 1;
     private static final int _ord_PREVIOUS_ORDER_ID = _ord_PHASE_ID + 1;
     private static final int _ord_PLAN_ID = _ord_PREVIOUS_ORDER_ID + 1;

@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, provide, ref } from "vue";
 
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { int } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
 import { CoNode_TYPE } from "lily-basic/src/net/bodz/lily/concrete/CoNodeTypeInfo";
@@ -18,6 +19,7 @@ export interface Props {
 <script setup lang="ts">
 import FieldRow from "skel01-core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
+import JsonEditor from "skel01-core/src/ui/input/JsonEditor.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
 import CoImagedFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoImagedFieldGroup.vue";
@@ -83,6 +85,9 @@ onMounted(() => {
         <FieldGroup :type="_ShopItemCategory_stuff_TYPE">
             <FieldRow :property="meta.name" v-model="model.name">
                 <input type="text" v-model="model.name" />
+            </FieldRow>
+            <FieldRow :property="meta.files" v-model="model.files">
+                <JsonEditor v-model="model.files" />
             </FieldRow>
         </FieldGroup>
     </div>

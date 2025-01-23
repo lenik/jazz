@@ -80,6 +80,9 @@ onMounted(() => {
         <CoEventFieldGroup :meta="meta" v-model="model" />
         <CoImagedEventFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="_ShopItem_stuff_TYPE">
+            <FieldRow :property="meta.files" v-model="model.files">
+                <JsonEditor v-model="model.files" />
+            </FieldRow>
             <FieldRow :property="meta.batch" v-model="model.batch">
                 <JsonEditor v-model="model.batch" />
             </FieldRow>

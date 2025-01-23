@@ -73,6 +73,7 @@ onMounted(() => {
             <th data-type="STRING" data-field="telCode">Tel Code</th>
             <th data-type="STRING" data-field="postCode">Post Code</th>
             <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="files">Files</th>
             <th data-type="JSON_VARIANT" data-field="data">Data</th>
         </template>
         <template #preview>

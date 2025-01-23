@@ -1,11 +1,13 @@
 <script lang="ts">
 import { onMounted, provide, ref } from "vue";
 
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { double, int } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
 
 import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import UomRow from "./UomRow";
+import { _UomRow_stuff_TYPE } from "./_UomRow_stuff_TypeInfo";
 import { _Uom_stuff_TYPE } from "./_Uom_stuff_TypeInfo";
 
 export const title = "Editor view of: Uom row";
@@ -17,6 +19,7 @@ export interface Props {
 <script setup lang="ts">
 import FieldRow from "skel01-core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
+import JsonEditor from "skel01-core/src/ui/input/JsonEditor.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
 
@@ -80,6 +83,11 @@ onMounted(() => {
             </FieldRow>
             <FieldRow :property="meta.standard" v-model="model.standard">
                 <RefEditor :dialog="uomRowChooseDialog" v-model="model.standard" v-model:id="model.standardId" />
+            </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="_UomRow_stuff_TYPE">
+            <FieldRow :property="meta.files" v-model="model.files">
+                <JsonEditor v-model="model.files" />
             </FieldRow>
         </FieldGroup>
     </div>

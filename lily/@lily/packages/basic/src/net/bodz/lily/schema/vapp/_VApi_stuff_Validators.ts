@@ -20,6 +20,9 @@ export class _VApi_stuff_Validators extends IdEntityValidators {
     validateProperties(val: JsonVariant) {
     }
 
+    validateFiles(val: JsonVariant) {
+    }
+
     validateCallback(val: string) {
     }
 

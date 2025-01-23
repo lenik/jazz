@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="contact.email" column="email" />
         <result property="contact.emailValidated" column="emailok" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="birthday" column="birthday" />
         <result property="langTag" column="locale" />
         <result property="timeZone" column="timezone" />
@@ -94,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.email, 
             a.emailok, 
             a.props, 
+            a.files, 
             a.cat, 
             a.birthday, 
             a.father, 
@@ -137,6 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             mother.email mother_email, 
             mother.emailok mother_emailok, 
             mother.props mother_props, 
+            mother.files mother_files, 
             mother.cat mother_cat, 
             mother.birthday mother_birthday, 
             mother.father mother_father, 
@@ -169,6 +172,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             father.id father_id, 
             father.uid father_uid, 
@@ -194,6 +198,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             father.email father_email, 
             father.emailok father_emailok, 
             father.props father_props, 
+            father.files father_files, 
             father.cat father_cat, 
             father.birthday father_birthday, 
             father.father father_father, 
@@ -226,6 +231,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -245,6 +251,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.lastmod category_lastmod, 
             category."version" category_version, 
             category.props category_props, 
+            category.files category_files, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref, 
@@ -270,6 +277,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "zone".telcode zone_telcode, 
             "zone".postcode zone_postcode, 
             "zone".props zone_props, 
+            "zone".files zone_files, 
             "zone"."data" zone_data
         from person a
             left join person mother on a.mother = mother.id
@@ -307,6 +315,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.email, 
             a.emailok, 
             a.props, 
+            a.files, 
             a.cat, 
             a.birthday, 
             a.father, 
@@ -350,6 +359,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             mother.email mother_email, 
             mother.emailok mother_emailok, 
             mother.props mother_props, 
+            mother.files mother_files, 
             mother.cat mother_cat, 
             mother.birthday mother_birthday, 
             mother.father mother_father, 
@@ -382,6 +392,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             father.id father_id, 
             father.uid father_uid, 
@@ -407,6 +418,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             father.email father_email, 
             father.emailok father_emailok, 
             father.props father_props, 
+            father.files father_files, 
             father.cat father_cat, 
             father.birthday father_birthday, 
             father.father father_father, 
@@ -439,6 +451,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -458,6 +471,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.lastmod category_lastmod, 
             category."version" category_version, 
             category.props category_props, 
+            category.files category_files, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref, 
@@ -483,6 +497,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "zone".telcode zone_telcode, 
             "zone".postcode zone_postcode, 
             "zone".props zone_props, 
+            "zone".files zone_files, 
             "zone"."data" zone_data
         from person a
             left join person mother on a.mother = mother.id
@@ -543,6 +558,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             email,
             emailok,
             props,
+            files,
             cat,
             birthday,
             father,
@@ -586,6 +602,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{contact.email},
             #{contact.emailValidated},
             #{properties},
+            #{files},
             #{categoryId},
             #{birthday},
             #{fatherId},
@@ -634,6 +651,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             email = #{contact.email},
             emailok = #{contact.emailValidated},
             props = #{properties},
+            files = #{files},
             cat = #{categoryId},
             birthday = #{birthday},
             father = #{fatherId},

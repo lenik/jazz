@@ -39,7 +39,7 @@ public abstract class _Article_stuff
 
     private static final int _ord_FORM_ARGUMENTS = 22;
     private static final int _ord_CATEGORY_ID = _ord_FORM_ARGUMENTS + 1;
-    private static final int _ord_FAV_COUNT = _ord_CATEGORY_ID + 2;
+    private static final int _ord_FAV_COUNT = _ord_CATEGORY_ID + 3;
     private static final int _ord_VOTE_COUNT = _ord_FAV_COUNT + 1;
     private static final int _ord_HATE_COUNT = _ord_VOTE_COUNT + 1;
     private static final int _ord_MESSAGE_COUNT = _ord_HATE_COUNT + 1;

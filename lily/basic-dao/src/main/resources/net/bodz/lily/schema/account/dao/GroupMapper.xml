@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="typeId" column="type" />
         <result property="parentId" column="parent" />
         <association property="parent" columnPrefix="parent_" notNullColumn="id" 
@@ -42,6 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.lastmod, 
             a."version", 
             a.props, 
+            a.files, 
             a.parent, 
             parent.id parent_id, 
             parent."name" parent_name, 
@@ -56,6 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.lastmod parent_lastmod, 
             parent."version" parent_version, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent.parent parent_parent, 
             "type".id type_id, 
             "type"."name" type_name, 
@@ -69,6 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "type".lastmod type_lastmod, 
             "type"."version" type_version, 
             "type".props type_props, 
+            "type".files type_files, 
             "type".dummy type_dummy
         from "group" a
             left join "group" parent on a.parent = parent.id
@@ -91,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.lastmod, 
             a."version", 
             a.props, 
+            a.files, 
             a.parent, 
             parent.id parent_id, 
             parent."name" parent_name, 
@@ -105,6 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.lastmod parent_lastmod, 
             parent."version" parent_version, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent.parent parent_parent, 
             "type".id type_id, 
             "type"."name" type_name, 
@@ -118,6 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "type".lastmod type_lastmod, 
             "type"."version" type_version, 
             "type".props type_props, 
+            "type".files type_files, 
             "type".dummy type_dummy
         from "group" a
             left join "group" parent on a.parent = parent.id
@@ -175,6 +182,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod,
             "version",
             props,
+            files,
             parent
         ) values(
             #{name},
@@ -189,6 +197,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{lastModified},
             #{version},
             #{properties},
+            #{files},
             #{parentId}
         );
     ]]></insert>
@@ -208,6 +217,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod = #{lastModified},
             "version" = #{version},
             props = #{properties},
+            files = #{files},
             parent = #{parentId},
         </set>
         <where>

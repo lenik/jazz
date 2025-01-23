@@ -56,7 +56,7 @@ public abstract class _Artifact_stuff
     private static final int _ord_CATEGORY_ID = _ord_TYPE_ID + 1;
     private static final int _ord_PHASE_ID = _ord_CATEGORY_ID + 1;
     private static final int _ord_UOM_ID = _ord_PHASE_ID + 1;
-    private static final int _ord_FINISH = _ord_UOM_ID + 2;
+    private static final int _ord_FINISH = _ord_UOM_ID + 3;
     private static final int _ord_PRICE = _ord_FINISH + 1;
 
     String skuCode;

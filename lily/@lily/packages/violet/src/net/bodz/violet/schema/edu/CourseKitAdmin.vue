@@ -68,6 +68,7 @@ onMounted(() => {
             <th data-type="CourseKitCategory" data-format="label" data-field="category">Category</th>
             <th data-type="Course" data-format="label" data-field="course">Course</th>
             <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="files">Files</th>
             <th data-type="INT" data-field="favCount">Fav Count</th>
             <th data-type="INT" data-field="voteCount">Vote Count</th>
             <th data-type="INT" data-field="hateCount">Hate Count</th>

@@ -47,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.formargs parent_formargs, 
             parent.cat parent_cat, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent.nfav parent_nfav, 
             parent.nvote parent_nvote, 
             parent.nhate parent_nhate, 
@@ -65,6 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person
@@ -104,6 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.formargs parent_formargs, 
             parent.cat parent_cat, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent.nfav parent_nfav, 
             parent.nvote parent_nvote, 
             parent.nhate parent_nhate, 
@@ -122,6 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person

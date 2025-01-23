@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="contact.email" column="email" />
         <result property="contact.emailValidated" column="emailok" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="birthday" column="birthday" />
         <result property="langTag" column="locale" />
         <result property="timeZone" column="timezone" />
@@ -80,6 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.email, 
             a.emailok, 
             a.props, 
+            a.files, 
             a.cat, 
             a.birthday, 
             a.locale, 
@@ -107,6 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.lastmod category_lastmod, 
             category."version" category_version, 
             category.props category_props, 
+            category.files category_files, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref, 
@@ -132,6 +135,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "zone".telcode zone_telcode, 
             "zone".postcode zone_postcode, 
             "zone".props zone_props, 
+            "zone".files zone_files, 
             "zone"."data" zone_data, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
@@ -146,6 +150,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -162,6 +167,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent
         from org a
             left join partycat category on a.cat = category.id
@@ -197,6 +203,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.email, 
             a.emailok, 
             a.props, 
+            a.files, 
             a.cat, 
             a.birthday, 
             a.locale, 
@@ -224,6 +231,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.lastmod category_lastmod, 
             category."version" category_version, 
             category.props category_props, 
+            category.files category_files, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref, 
@@ -249,6 +257,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "zone".telcode zone_telcode, 
             "zone".postcode zone_postcode, 
             "zone".props zone_props, 
+            "zone".files zone_files, 
             "zone"."data" zone_data, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
@@ -263,6 +272,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -279,6 +289,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent
         from org a
             left join partycat category on a.cat = category.id
@@ -337,6 +348,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             email,
             emailok,
             props,
+            files,
             cat,
             birthday,
             locale,
@@ -372,6 +384,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{contact.email},
             #{contact.emailValidated},
             #{properties},
+            #{files},
             #{categoryId},
             #{birthday},
             #{langTag},
@@ -412,6 +425,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             email = #{contact.email},
             emailok = #{contact.emailValidated},
             props = #{properties},
+            files = #{files},
             cat = #{categoryId},
             birthday = #{birthday},
             locale = #{langTag},

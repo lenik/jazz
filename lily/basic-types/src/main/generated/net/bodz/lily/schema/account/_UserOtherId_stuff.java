@@ -45,7 +45,7 @@ public abstract class _UserOtherId_stuff
     private static final int _ord_BEGIN_TIME = 11;
     private static final int _ord_END_TIME = _ord_BEGIN_TIME + 1;
     private static final int _ord_YEAR = _ord_END_TIME + 1;
-    private static final int _ord_USER_ID = _ord_YEAR + 2;
+    private static final int _ord_USER_ID = _ord_YEAR + 3;
     private static final int _ord_TYPE_ID = _ord_USER_ID + 1;
     private static final int _ord_OTHER_ID = _ord_TYPE_ID + 1;
     private static final int _ord_AUTH = _ord_OTHER_ID + 1;

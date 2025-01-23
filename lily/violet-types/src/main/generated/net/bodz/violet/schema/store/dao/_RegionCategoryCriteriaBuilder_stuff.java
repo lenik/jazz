@@ -1,5 +1,6 @@
 package net.bodz.violet.schema.store.dao;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoCategoryCriteriaBuilder;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.violet.schema.store.RegionCategory;
@@ -13,6 +14,8 @@ public class _RegionCategoryCriteriaBuilder_stuff<self_t extends _RegionCategory
     public final IntegerField ownerUserId = integer("uid");
 
     public final IntegerField accessMode = integer("mode");
+
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
 
     public final IntegerField refCount = integer("nref");
 

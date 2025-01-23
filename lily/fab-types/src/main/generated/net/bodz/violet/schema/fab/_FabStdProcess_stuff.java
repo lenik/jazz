@@ -43,7 +43,7 @@ public abstract class _FabStdProcess_stuff
     private static final int _ord_VALID = 15;
     private static final int _ord_VALID_SINCE = _ord_VALID + 1;
     private static final int _ord_VALID_UNTIL = _ord_VALID_SINCE + 1;
-    private static final int _ord_OUTPUT_ID = _ord_VALID_UNTIL + 2;
+    private static final int _ord_OUTPUT_ID = _ord_VALID_UNTIL + 3;
     private static final int _ord_FUNCTION_ID = _ord_OUTPUT_ID + 1;
     private static final int _ord_DURATION = _ord_FUNCTION_ID + 1;
     private static final int _ord_STRICT = _ord_DURATION + 1;

@@ -60,7 +60,8 @@ onMounted(() => {
             <th data-type="OffsetDateTime" data-field="beginTime">Begin Time</th>
             <th data-type="OffsetDateTime" data-field="endTime">End Time</th>
             <th data-type="INT" data-field="year">Year</th>
-            <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th data-type="JSON_VARIANT" data-field="files">Files</th>
             <th data-type="FabOrder" data-format="label" data-field="order">Order</th>
             <th data-type="Artifact" data-format="label" data-field="artifact">Artifact</th>
             <th data-type="BOOLEAN" data-field="resale">Resale</th>

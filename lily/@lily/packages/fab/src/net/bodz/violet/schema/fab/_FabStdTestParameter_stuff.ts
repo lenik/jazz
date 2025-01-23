@@ -16,6 +16,7 @@ export class _FabStdTestParameter_stuff extends IdEntity<int> {
 
     required: boolean;
     properties?: JsonVariant;
+    files?: JsonVariant;
     expected?: string;
 
     test: FabStdTest;

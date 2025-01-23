@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="contact.email" column="email" />
         <result property="contact.emailValidated" column="emailok" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="depth" column="depth" />
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
@@ -75,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.email, 
             a.emailok, 
             a.props, 
+            a.files, 
             a.org, 
             a.parent, 
             a."depth", 
@@ -102,6 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             org.email org_email, 
             org.emailok org_emailok, 
             org.props org_props, 
+            org.files org_files, 
             org.cat org_cat, 
             org.birthday org_birthday, 
             org.locale org_locale, 
@@ -126,6 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             parent.id parent_id, 
             parent.uid parent_uid, 
@@ -151,6 +155,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.email parent_email, 
             parent.emailok parent_emailok, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent.org parent_org, 
             parent.parent parent_parent, 
             parent."depth" parent_depth, 
@@ -167,6 +172,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -192,6 +198,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "zone".telcode zone_telcode, 
             "zone".postcode zone_postcode, 
             "zone".props zone_props, 
+            "zone".files zone_files, 
             "zone"."data" zone_data
         from orgunit a
             left join org org on a.org = org.id
@@ -228,6 +235,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.email, 
             a.emailok, 
             a.props, 
+            a.files, 
             a.org, 
             a.parent, 
             a."depth", 
@@ -255,6 +263,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             org.email org_email, 
             org.emailok org_emailok, 
             org.props org_props, 
+            org.files org_files, 
             org.cat org_cat, 
             org.birthday org_birthday, 
             org.locale org_locale, 
@@ -279,6 +288,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             parent.id parent_id, 
             parent.uid parent_uid, 
@@ -304,6 +314,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.email parent_email, 
             parent.emailok parent_emailok, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent.org parent_org, 
             parent.parent parent_parent, 
             parent."depth" parent_depth, 
@@ -320,6 +331,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -345,6 +357,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "zone".telcode zone_telcode, 
             "zone".postcode zone_postcode, 
             "zone".props zone_props, 
+            "zone".files zone_files, 
             "zone"."data" zone_data
         from orgunit a
             left join org org on a.org = org.id
@@ -404,6 +417,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             email,
             emailok,
             props,
+            files,
             org,
             parent,
             "depth"
@@ -431,6 +445,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{contact.email},
             #{contact.emailValidated},
             #{properties},
+            #{files},
             #{orgId},
             #{parentId},
             #{depth}
@@ -463,6 +478,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             email = #{contact.email},
             emailok = #{contact.emailValidated},
             props = #{properties},
+            files = #{files},
             org = #{orgId},
             parent = #{parentId},
             "depth" = #{depth},

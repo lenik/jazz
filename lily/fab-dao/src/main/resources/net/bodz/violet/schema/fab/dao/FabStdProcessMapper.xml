@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="validSince" column="validsince" />
         <result property="validUntil" column="validuntil" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="duration" column="duration" />
         <result property="strict" column="strict" />
         <result property="ownerUserId" column="uid" />
@@ -65,6 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.validsince, 
             a.validuntil, 
             a.props, 
+            a.files, 
             a."output", 
             a.fn, 
             a.duration, 
@@ -83,6 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
@@ -97,6 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -118,6 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "output".t1 output_t1, 
             "output"."year" output_year, 
             "output".props output_props, 
+            "output".files output_files, 
             "output"."valid" output_valid, 
             "output".validsince output_validsince, 
             "output".validuntil output_validuntil, 
@@ -140,6 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             test.lastmod test_lastmod, 
             test."version" test_version, 
             test.props test_props, 
+            test.files test_files, 
             test.cat test_cat, 
             test.parent test_parent, 
             test."depth" test_depth, 
@@ -160,6 +166,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             fn.lastmod fn_lastmod, 
             fn."version" fn_version, 
             fn.props fn_props, 
+            fn.files fn_files, 
             fn.parent fn_parent, 
             fn."depth" fn_depth, 
             fn.nref fn_nref
@@ -192,6 +199,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.validsince, 
             a.validuntil, 
             a.props, 
+            a.files, 
             a."output", 
             a.fn, 
             a.duration, 
@@ -210,6 +218,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
@@ -224,6 +233,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -245,6 +255,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "output".t1 output_t1, 
             "output"."year" output_year, 
             "output".props output_props, 
+            "output".files output_files, 
             "output"."valid" output_valid, 
             "output".validsince output_validsince, 
             "output".validuntil output_validuntil, 
@@ -267,6 +278,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             test.lastmod test_lastmod, 
             test."version" test_version, 
             test.props test_props, 
+            test.files test_files, 
             test.cat test_cat, 
             test.parent test_parent, 
             test."depth" test_depth, 
@@ -287,6 +299,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             fn.lastmod fn_lastmod, 
             fn."version" fn_version, 
             fn.props fn_props, 
+            fn.files fn_files, 
             fn.parent fn_parent, 
             fn."depth" fn_depth, 
             fn.nref fn_nref
@@ -342,6 +355,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             validsince,
             validuntil,
             props,
+            files,
             "output",
             fn,
             duration,
@@ -365,6 +379,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{validSince},
             #{validUntil},
             #{properties},
+            #{files},
             #{outputId},
             #{functionId},
             #{duration},
@@ -393,6 +408,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             validsince = #{validSince},
             validuntil = #{validUntil},
             props = #{properties},
+            files = #{files},
             "output" = #{outputId},
             fn = #{functionId},
             duration = #{duration},

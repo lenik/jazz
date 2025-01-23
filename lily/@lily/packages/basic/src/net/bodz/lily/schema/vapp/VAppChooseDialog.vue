@@ -77,6 +77,7 @@ onMounted(() => {
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="STRING" data-field="code">Code</th>
         <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
+        <th data-type="JSON_VARIANT" data-field="files">Files</th>
         <th data-type="VAppRequest" data-format="label" data-field="req">Req</th>
         <th data-type="VAppCategory" data-format="label" data-field="category">Category</th>
         <th data-type="STRING" data-field="secret">Secret</th>

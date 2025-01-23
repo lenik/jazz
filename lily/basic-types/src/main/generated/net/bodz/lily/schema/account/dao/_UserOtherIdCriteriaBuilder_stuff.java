@@ -19,6 +19,8 @@ public class _UserOtherIdCriteriaBuilder_stuff<self_t extends _UserOtherIdCriter
 
     public final IntegerField year = integer("\"year\"");
 
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
+
     /** The declaring user */
     public final IntegerField userId = integer("\"user\"");
 

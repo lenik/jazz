@@ -25,7 +25,7 @@ public abstract class _TestAnswer_stuff
     public static final int N_QUESTION_ID = 19;
     public static final int N_VALID = 1;
 
-    private static final int _ord_QUESTION_ID = 12;
+    private static final int _ord_QUESTION_ID = 13;
     private static final int _ord_VALID = _ord_QUESTION_ID + 1;
 
     @NotNull

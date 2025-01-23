@@ -81,6 +81,9 @@ onMounted(() => {
             <FieldRow :property="meta.formArguments" v-model="model.formArguments">
                 <input type="text" v-model="model.formArguments" />
             </FieldRow>
+            <FieldRow :property="meta.files" v-model="model.files">
+                <JsonEditor v-model="model.files" />
+            </FieldRow>
             <FieldRow :property="meta.favCount" v-model="model.favCount">
                 <input type="number" v-model="model.favCount" />
             </FieldRow>

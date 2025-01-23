@@ -23,7 +23,7 @@ public abstract class _UserOtherIdType_stuff
 
     public static final int N_DUMMY = 10;
 
-    private static final int _ord_DUMMY = 12;
+    private static final int _ord_DUMMY = 13;
 
     Integer dummy;
 

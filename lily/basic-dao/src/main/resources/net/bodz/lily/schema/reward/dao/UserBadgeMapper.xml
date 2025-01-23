@@ -38,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             badge.lastmod badge_lastmod, 
             badge."version" badge_version, 
             badge.props badge_props, 
+            badge.files badge_files, 
             badge.expr badge_expr, 
             badge.val badge_val, 
             badge.levels badge_levels, 
@@ -57,6 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person
@@ -85,6 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             badge.lastmod badge_lastmod, 
             badge."version" badge_version, 
             badge.props badge_props, 
+            badge.files badge_files, 
             badge.expr badge_expr, 
             badge.val badge_val, 
             badge.levels badge_levels, 
@@ -104,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person

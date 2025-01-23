@@ -34,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person, 
@@ -53,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             shop."version" shop_version, 
             shop.code shop_code, 
             shop.props shop_props, 
+            shop.files shop_files, 
             shop.supplierorg shop_supplierorg, 
             shop.supplier shop_supplier, 
             shop.hydm shop_hydm
@@ -80,6 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person, 
@@ -99,6 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             shop."version" shop_version, 
             shop.code shop_code, 
             shop.props shop_props, 
+            shop.files shop_files, 
             shop.supplierorg shop_supplierorg, 
             shop.supplier shop_supplier, 
             shop.hydm shop_hydm

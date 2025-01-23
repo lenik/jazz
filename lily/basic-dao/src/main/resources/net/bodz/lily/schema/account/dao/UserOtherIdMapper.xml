@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="endTime" column="t1" />
         <result property="year" column="year" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="otherId" column="oid" />
         <result property="auth" column="auth" />
         <result property="userId" column="user" />
@@ -47,6 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.t1, 
             a."year", 
             a.props, 
+            a.files, 
             a."user", 
             a."type", 
             a.oid, 
@@ -62,6 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "type".lastmod type_lastmod, 
             "type"."version" type_version, 
             "type".props type_props, 
+            "type".files type_files, 
             "type".dummy type_dummy, 
             "user".id user_id, 
             "user"."type" user_type, 
@@ -76,6 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person
@@ -101,6 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.t1, 
             a."year", 
             a.props, 
+            a.files, 
             a."user", 
             a."type", 
             a.oid, 
@@ -116,6 +121,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "type".lastmod type_lastmod, 
             "type"."version" type_version, 
             "type".props type_props, 
+            "type".files type_files, 
             "type".dummy type_dummy, 
             "user".id user_id, 
             "user"."type" user_type, 
@@ -130,6 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person
@@ -178,6 +185,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             t1,
             "year",
             props,
+            files,
             "user",
             "type",
             oid,
@@ -196,6 +204,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{endTime},
             #{year},
             #{properties},
+            #{files},
             #{userId},
             #{typeId},
             #{otherId},
@@ -219,6 +228,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             t1 = #{endTime},
             "year" = #{year},
             props = #{properties},
+            files = #{files},
             "user" = #{userId},
             "type" = #{typeId},
             oid = #{otherId},

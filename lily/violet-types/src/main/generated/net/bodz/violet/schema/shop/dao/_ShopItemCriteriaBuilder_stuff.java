@@ -11,6 +11,8 @@ public class _ShopItemCriteriaBuilder_stuff<self_t extends _ShopItemCriteriaBuil
 
     public final LongField id = _long("id");
 
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
+
     public final IntegerField shopId = integer("shop");
 
     public final IntegerField categoryId = integer("cat");

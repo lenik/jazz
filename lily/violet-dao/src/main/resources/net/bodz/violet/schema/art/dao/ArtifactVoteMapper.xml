@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person, 
@@ -63,6 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.phase parent_phase, 
             parent.uom parent_uom, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent.finish parent_finish, 
             parent.price parent_price
         from art_vote a
@@ -90,6 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person, 
@@ -117,6 +120,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.phase parent_phase, 
             parent.uom parent_uom, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent.finish parent_finish, 
             parent.price parent_price
         from art_vote a

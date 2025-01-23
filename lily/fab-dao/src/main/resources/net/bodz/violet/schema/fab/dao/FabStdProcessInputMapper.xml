@@ -52,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             proc.validsince proc_validsince, 
             proc.validuntil proc_validuntil, 
             proc.props proc_props, 
+            proc.files proc_files, 
             proc."output" proc_output, 
             proc.fn proc_fn, 
             proc.duration proc_duration, 
@@ -75,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             model.t1 model_t1, 
             model."year" model_year, 
             model.props model_props, 
+            model.files model_files, 
             model."valid" model_valid, 
             model.validsince model_validsince, 
             model.validuntil model_validuntil, 
@@ -105,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.phase art_phase, 
             art.uom art_uom, 
             art.props art_props, 
+            art.files art_files, 
             art.finish art_finish, 
             art.price art_price
         from fabstdproc_in a
@@ -142,6 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             proc.validsince proc_validsince, 
             proc.validuntil proc_validuntil, 
             proc.props proc_props, 
+            proc.files proc_files, 
             proc."output" proc_output, 
             proc.fn proc_fn, 
             proc.duration proc_duration, 
@@ -165,6 +169,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             model.t1 model_t1, 
             model."year" model_year, 
             model.props model_props, 
+            model.files model_files, 
             model."valid" model_valid, 
             model.validsince model_validsince, 
             model.validuntil model_validuntil, 
@@ -195,6 +200,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.phase art_phase, 
             art.uom art_uom, 
             art.props art_props, 
+            art.files art_files, 
             art.finish art_finish, 
             art.price art_price
         from fabstdproc_in a

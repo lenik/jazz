@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="callback" column="callback" />
         <result property="appId" column="app" />
         <result property="apiId" column="api" />
@@ -28,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.lastmod, 
             a."version", 
             a.props, 
+            a.files, 
             a.app, 
             a.api, 
             a.callback, 
@@ -43,6 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             api."version" api_version, 
             api.code api_code, 
             api.props api_props, 
+            api.files api_files, 
             api.uom api_uom, 
             app.id app_id, 
             app.uid app_uid, 
@@ -60,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             app."version" app_version, 
             app.code app_code, 
             app.props app_props, 
+            app.files app_files, 
             app.req app_req, 
             app.cat app_cat, 
             app.secret app_secret
@@ -76,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.lastmod, 
             a."version", 
             a.props, 
+            a.files, 
             a.app, 
             a.api, 
             a.callback, 
@@ -91,6 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             api."version" api_version, 
             api.code api_code, 
             api.props api_props, 
+            api.files api_files, 
             api.uom api_uom, 
             app.id app_id, 
             app.uid app_uid, 
@@ -108,6 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             app."version" app_version, 
             app.code app_code, 
             app.props app_props, 
+            app.files app_files, 
             app.req app_req, 
             app.cat app_cat, 
             app.secret app_secret
@@ -147,6 +154,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod,
             "version",
             props,
+            files,
             app,
             api,
             callback
@@ -155,6 +163,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{lastModified},
             #{version},
             #{properties},
+            #{files},
             #{appId},
             #{apiId},
             #{callback}
@@ -168,6 +177,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod = #{lastModified},
             "version" = #{version},
             props = #{properties},
+            files = #{files},
             app = #{appId},
             api = #{apiId},
             callback = #{callback},

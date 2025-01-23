@@ -23,25 +23,30 @@ public abstract class _VApp_stuff
 
     public static final String FIELD_CODE = "code";
     public static final String FIELD_PROPERTIES = "props";
+    public static final String FIELD_FILES = "files";
     public static final String FIELD_REQ_ID = "req";
     public static final String FIELD_CATEGORY_ID = "cat";
     public static final String FIELD_SECRET = "secret";
 
     public static final int N_CODE = 30;
     public static final int N_PROPERTIES = 2147483647;
+    public static final int N_FILES = 2147483647;
     public static final int N_REQ_ID = 10;
     public static final int N_CATEGORY_ID = 10;
     public static final int N_SECRET = 2147483647;
 
     private static final int _ord_CODE = 15;
     private static final int _ord_PROPERTIES = _ord_CODE + 1;
-    private static final int _ord_REQ_ID = _ord_PROPERTIES + 1;
+    private static final int _ord_FILES = _ord_PROPERTIES + 1;
+    private static final int _ord_REQ_ID = _ord_FILES + 1;
     private static final int _ord_CATEGORY_ID = _ord_REQ_ID + 1;
     private static final int _ord_SECRET = _ord_CATEGORY_ID + 1;
 
     String code;
 
     JsonVariant properties;
+
+    JsonVariant files;
 
     @NotNull
     String secret;
@@ -77,6 +82,17 @@ public abstract class _VApp_stuff
 
     public void setProperties(JsonVariant value) {
         this.properties = value;
+    }
+
+    @Ordinal(_ord_FILES)
+    @Precision(value = 2147483647)
+    @Column(name = "files", precision = 2147483647)
+    public JsonVariant getFiles() {
+        return files;
+    }
+
+    public void setFiles(JsonVariant value) {
+        this.files = value;
     }
 
     @Ordinal(_ord_SECRET)

@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="favCount" column="nfav" />
         <result property="voteCount" column="nvote" />
         <result property="hateCount" column="nhate" />
@@ -59,6 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.cat, 
             a.course, 
             a.props, 
+            a.files, 
             a.nfav, 
             a.nvote, 
             a.nhate, 
@@ -76,6 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -95,6 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.lastmod category_lastmod, 
             category."version" category_version, 
             category.props category_props, 
+            category.files category_files, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref, 
@@ -113,6 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             course.lastmod course_lastmod, 
             course."version" course_version, 
             course.props course_props, 
+            course.files course_files, 
             course.cat course_cat, 
             course.nfav course_nfav, 
             course.nvote course_nvote, 
@@ -132,6 +137,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent
         from coursekit a
             left join lily."user" ownerUser on a.uid = ownerUser.id
@@ -160,6 +166,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.cat, 
             a.course, 
             a.props, 
+            a.files, 
             a.nfav, 
             a.nvote, 
             a.nhate, 
@@ -177,6 +184,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -196,6 +204,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.lastmod category_lastmod, 
             category."version" category_version, 
             category.props category_props, 
+            category.files category_files, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref, 
@@ -214,6 +223,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             course.lastmod course_lastmod, 
             course."version" course_version, 
             course.props course_props, 
+            course.files course_files, 
             course.cat course_cat, 
             course.nfav course_nfav, 
             course.nvote course_nvote, 
@@ -233,6 +243,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent
         from coursekit a
             left join lily."user" ownerUser on a.uid = ownerUser.id
@@ -284,6 +295,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             cat,
             course,
             props,
+            files,
             nfav,
             nvote,
             nhate,
@@ -305,6 +317,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{categoryId},
             #{courseId},
             #{properties},
+            #{files},
             #{favCount},
             #{voteCount},
             #{hateCount},
@@ -331,6 +344,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             cat = #{categoryId},
             course = #{courseId},
             props = #{properties},
+            files = #{files},
             nfav = #{favCount},
             nvote = #{voteCount},
             nhate = #{hateCount},

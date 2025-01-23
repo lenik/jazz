@@ -80,6 +80,9 @@ onMounted(() => {
             <FieldRow :property="meta.properties" v-model="model.properties">
                 <JsonEditor v-model="model.properties" />
             </FieldRow>
+            <FieldRow :property="meta.files" v-model="model.files">
+                <JsonEditor v-model="model.files" />
+            </FieldRow>
             <FieldRow :property="meta.secret" v-model="model.secret">
                 <input type="text" v-model="model.secret" />
             </FieldRow>

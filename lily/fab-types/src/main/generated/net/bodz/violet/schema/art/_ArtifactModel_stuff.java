@@ -36,7 +36,7 @@ public abstract class _ArtifactModel_stuff
     public static final int N_ARTIFACT_ID = 10;
     public static final int N_MODEL_NAME = 40;
 
-    private static final int _ord_VALID = 19;
+    private static final int _ord_VALID = 20;
     private static final int _ord_VALID_SINCE = _ord_VALID + 1;
     private static final int _ord_VALID_UNTIL = _ord_VALID_SINCE + 1;
     private static final int _ord_OBSOLETE_ID = _ord_VALID_UNTIL + 1;

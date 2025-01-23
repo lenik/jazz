@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="endTime" column="t1" />
         <result property="year" column="year" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="valid" column="valid" />
         <result property="validSince" column="validsince" />
         <result property="validUntil" column="validuntil" />
@@ -63,6 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.t1, 
             a."year", 
             a.props, 
+            a.files, 
             a."valid", 
             a.validsince, 
             a.validuntil, 
@@ -82,6 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -103,6 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             obsolete.t1 obsolete_t1, 
             obsolete."year" obsolete_year, 
             obsolete.props obsolete_props, 
+            obsolete.files obsolete_files, 
             obsolete."valid" obsolete_valid, 
             obsolete.validsince obsolete_validsince, 
             obsolete.validuntil obsolete_validuntil, 
@@ -122,6 +126,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             art.id art_id, 
             art.sku art_sku, 
@@ -147,6 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.phase art_phase, 
             art.uom art_uom, 
             art.props art_props, 
+            art.files art_files, 
             art.finish art_finish, 
             art.price art_price
         from artmodel a
@@ -177,6 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.t1, 
             a."year", 
             a.props, 
+            a.files, 
             a."valid", 
             a.validsince, 
             a.validuntil, 
@@ -196,6 +203,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -217,6 +225,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             obsolete.t1 obsolete_t1, 
             obsolete."year" obsolete_year, 
             obsolete.props obsolete_props, 
+            obsolete.files obsolete_files, 
             obsolete."valid" obsolete_valid, 
             obsolete.validsince obsolete_validsince, 
             obsolete.validuntil obsolete_validuntil, 
@@ -236,6 +245,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             art.id art_id, 
             art.sku art_sku, 
@@ -261,6 +271,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.phase art_phase, 
             art.uom art_uom, 
             art.props art_props, 
+            art.files art_files, 
             art.finish art_finish, 
             art.price art_price
         from artmodel a
@@ -314,6 +325,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             t1,
             "year",
             props,
+            files,
             "valid",
             validsince,
             validuntil,
@@ -338,6 +350,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{endTime},
             #{year},
             #{properties},
+            #{files},
             #{valid},
             #{validSince},
             #{validUntil},
@@ -367,6 +380,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             t1 = #{endTime},
             "year" = #{year},
             props = #{properties},
+            files = #{files},
             "valid" = #{valid},
             validsince = #{validSince},
             validuntil = #{validUntil},

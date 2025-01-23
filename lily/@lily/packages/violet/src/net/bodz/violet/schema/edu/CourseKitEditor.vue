@@ -76,6 +76,9 @@ onMounted(() => {
         </FieldGroup>
         <CoImagedFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="_CourseKit_stuff_TYPE">
+            <FieldRow :property="meta.files" v-model="model.files">
+                <JsonEditor v-model="model.files" />
+            </FieldRow>
             <FieldRow :property="meta.favCount" v-model="model.favCount">
                 <input type="number" v-model="model.favCount" />
             </FieldRow>

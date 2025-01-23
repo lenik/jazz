@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="telCode" column="telcode" />
         <result property="postCode" column="postcode" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="data" column="data" />
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
@@ -66,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.telcode, 
             a.postcode, 
             a.props, 
+            a.files, 
             a."data", 
             parent.id parent_id, 
             parent.code parent_code, 
@@ -89,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.telcode parent_telcode, 
             parent.postcode parent_postcode, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent."data" parent_data, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
@@ -103,6 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -119,6 +123,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             category.id category_id, 
             category."name" category_name, 
@@ -136,6 +141,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.lastmod category_lastmod, 
             category."version" category_version, 
             category.props category_props, 
+            category.files category_files, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref
@@ -171,6 +177,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.telcode, 
             a.postcode, 
             a.props, 
+            a.files, 
             a."data", 
             parent.id parent_id, 
             parent.code parent_code, 
@@ -194,6 +201,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.telcode parent_telcode, 
             parent.postcode parent_postcode, 
             parent.props parent_props, 
+            parent.files parent_files, 
             parent."data" parent_data, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
@@ -208,6 +216,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -224,6 +233,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             category.id category_id, 
             category."name" category_name, 
@@ -241,6 +251,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.lastmod category_lastmod, 
             category."version" category_version, 
             category.props category_props, 
+            category.files category_files, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref
@@ -299,6 +310,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             telcode,
             postcode,
             props,
+            files,
             "data"
         ) values(
             #{code},
@@ -322,6 +334,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{telCode},
             #{postCode},
             #{properties},
+            #{files},
             #{data}
         );
     ]]></insert>
@@ -350,6 +363,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             telcode = #{telCode},
             postcode = #{postCode},
             props = #{properties},
+            files = #{files},
             "data" = #{data},
         </set>
         <where>

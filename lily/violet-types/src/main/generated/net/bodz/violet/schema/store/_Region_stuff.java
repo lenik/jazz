@@ -50,7 +50,7 @@ public abstract class _Region_stuff<this_t extends _Region_stuff<this_t>>
     public static final int N_ARTIFACT_ID = 10;
 
     private static final int _ord_CODE = 2;
-    private static final int _ord_PATH = 17;
+    private static final int _ord_PATH = 18;
     private static final int _ord_PROTO_ID = _ord_PATH + 1;
     private static final int _ord_HEIGHT = _ord_PROTO_ID + 3;
     private static final int _ord_LEVEL_ID = _ord_HEIGHT + 1;

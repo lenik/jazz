@@ -11,6 +11,8 @@ public class _SalesOrderItemCriteriaBuilder_stuff<self_t extends _SalesOrderItem
 
     public final LongField id = _long("id");
 
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
+
     public final LongField orderId = _long("odr");
 
     public final LongField shopItemId = _long("shopitem");

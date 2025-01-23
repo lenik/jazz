@@ -38,7 +38,7 @@ public abstract class _TestQuestion_stuff
 
     private static final int _ord_FORM_ARGUMENTS = 16;
     private static final int _ord_COURSE_ID = _ord_FORM_ARGUMENTS + 1;
-    private static final int _ord_FAV_COUNT = _ord_COURSE_ID + 2;
+    private static final int _ord_FAV_COUNT = _ord_COURSE_ID + 3;
     private static final int _ord_VOTE_COUNT = _ord_FAV_COUNT + 1;
     private static final int _ord_HATE_COUNT = _ord_VOTE_COUNT + 1;
     private static final int _ord_POS = _ord_HATE_COUNT + 1;

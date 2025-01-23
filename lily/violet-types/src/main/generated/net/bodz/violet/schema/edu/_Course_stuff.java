@@ -34,7 +34,7 @@ public abstract class _Course_stuff
     public static final int N_CREDIT = 10;
     public static final int N_PLUGINS = 2147483647;
 
-    private static final int _ord_CATEGORY_ID = 16;
+    private static final int _ord_CATEGORY_ID = 17;
     private static final int _ord_FAV_COUNT = _ord_CATEGORY_ID + 1;
     private static final int _ord_VOTE_COUNT = _ord_FAV_COUNT + 1;
     private static final int _ord_HATE_COUNT = _ord_VOTE_COUNT + 1;

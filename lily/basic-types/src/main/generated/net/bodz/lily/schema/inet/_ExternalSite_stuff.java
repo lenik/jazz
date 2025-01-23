@@ -29,7 +29,7 @@ public abstract class _ExternalSite_stuff<this_t extends _ExternalSite_stuff<thi
     public static final int N_BONUS = 10;
     public static final int N_COUNT = 10;
 
-    private static final int _ord_URLFMT = 18;
+    private static final int _ord_URLFMT = 19;
     private static final int _ord_BONUS = _ord_URLFMT + 1;
     private static final int _ord_COUNT = _ord_BONUS + 1;
 

@@ -83,6 +83,7 @@ onMounted(() => {
             <th data-type="ArtifactPhase" data-format="label" data-field="phase">Phase</th>
             <th data-type="UomRow" data-format="label" data-field="uom">Uom</th>
             <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="files">Files</th>
             <th data-type="SHORT" data-field="finish">Finish</th>
             <th data-type="BIG_DECIMAL" data-field="price">Price</th>
         </template>

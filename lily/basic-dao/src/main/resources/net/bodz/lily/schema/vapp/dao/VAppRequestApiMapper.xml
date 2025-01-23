@@ -69,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             api."version" api_version, 
             api.code api_code, 
             api.props api_props, 
+            api.files api_files, 
             api.uom api_uom
         from vappreq_api a
             left join vappreq parent on a.parent = parent.id
@@ -123,6 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             api."version" api_version, 
             api.code api_code, 
             api.props api_props, 
+            api.files api_files, 
             api.uom api_uom
         from vappreq_api a
             left join vappreq parent on a.parent = parent.id

@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, provide, ref } from "vue";
 
+import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { BigDecimal, long } from "skel01-core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "skel01-dba/src/ui/lily/defaults";
 import { IdEntity_TYPE } from "lily-basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
@@ -17,6 +18,7 @@ export interface Props {
 <script setup lang="ts">
 import FieldRow from "skel01-core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "skel01-core/src/ui/FieldRow.vue";
+import JsonEditor from "skel01-core/src/ui/input/JsonEditor.vue";
 import RefEditor from "skel01-dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
 import CoImagedFieldGroup from "lily-basic/src/net/bodz/lily/concrete/CoImagedFieldGroup.vue";
@@ -74,6 +76,9 @@ onMounted(() => {
         </FieldGroup>
         <CoImagedFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="_TestPaperItem_stuff_TYPE">
+            <FieldRow :property="meta.files" v-model="model.files">
+                <JsonEditor v-model="model.files" />
+            </FieldRow>
             <FieldRow :property="meta.score" v-model="model.score">
                 <input type="number" v-model="model.score" />
             </FieldRow>

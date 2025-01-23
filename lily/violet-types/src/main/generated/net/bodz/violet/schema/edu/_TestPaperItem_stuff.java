@@ -29,7 +29,7 @@ public abstract class _TestPaperItem_stuff
     public static final int N_QUESTION_ID = 19;
     public static final int N_SCORE = 6;
 
-    private static final int _ord_PAPER_ID = 9;
+    private static final int _ord_PAPER_ID = 10;
     private static final int _ord_QUESTION_ID = _ord_PAPER_ID + 1;
     private static final int _ord_SCORE = _ord_QUESTION_ID + 1;
 

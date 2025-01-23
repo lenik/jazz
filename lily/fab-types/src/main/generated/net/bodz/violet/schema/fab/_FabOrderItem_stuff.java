@@ -45,7 +45,7 @@ public abstract class _FabOrderItem_stuff
     public static final int N_AMOUNT = 20;
     public static final int N_NOTES = 200;
 
-    private static final int _ord_ORDER_ID = 12;
+    private static final int _ord_ORDER_ID = 13;
     private static final int _ord_ARTIFACT_ID = _ord_ORDER_ID + 1;
     private static final int _ord_RESALE = _ord_ARTIFACT_ID + 1;
     private static final int _ord_ALT_LABEL = _ord_RESALE + 1;

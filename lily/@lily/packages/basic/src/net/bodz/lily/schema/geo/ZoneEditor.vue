@@ -91,6 +91,9 @@ onMounted(() => {
             <FieldRow :property="meta.postCode" v-model="model.postCode">
                 <input type="text" v-model="model.postCode" />
             </FieldRow>
+            <FieldRow :property="meta.files" v-model="model.files">
+                <JsonEditor v-model="model.files" />
+            </FieldRow>
             <FieldRow :property="meta.data" v-model="model.data">
                 <JsonEditor v-model="model.data" />
             </FieldRow>

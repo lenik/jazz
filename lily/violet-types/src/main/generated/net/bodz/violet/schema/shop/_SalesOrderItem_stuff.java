@@ -41,7 +41,7 @@ public abstract class _SalesOrderItem_stuff
     public static final int N_AMOUNT = 20;
     public static final int N_N1 = 20;
 
-    private static final int _ord_ORDER_ID = 9;
+    private static final int _ord_ORDER_ID = 10;
     private static final int _ord_SHOP_ITEM_ID = _ord_ORDER_ID + 1;
     private static final int _ord_ARTIFACT_ID = _ord_SHOP_ITEM_ID + 1;
     private static final int _ord_BATCH = _ord_ARTIFACT_ID + 1;

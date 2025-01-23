@@ -64,6 +64,7 @@ onMounted(() => {
             <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
             <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="files">Files</th>
             <th data-type="Group" data-format="label" data-field="primaryGroup" title="The primary user group, the default value of ownerGroup.">Primary Group</th>
             <th data-type="User" data-format="label" data-field="referer" title="The referer user (used for promotion)">Referer</th>
             <th data-type="Person" data-format="label" data-field="person">Person</th>

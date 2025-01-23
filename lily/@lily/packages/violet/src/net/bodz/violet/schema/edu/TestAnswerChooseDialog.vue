@@ -67,7 +67,8 @@ onMounted(() => {
         <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
         <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
-        <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
+        <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+        <th data-type="JSON_VARIANT" data-field="files">Files</th>
         <th data-type="TestQuestion" data-format="label" data-field="question">Question</th>
         <th data-type="BOOLEAN" data-field="valid">Valid</th>
     </EntityChooseDialog>

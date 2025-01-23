@@ -1,5 +1,6 @@
 package net.bodz.violet.schema.edu.dao;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.violet.schema.edu.TestPaper;
@@ -11,6 +12,8 @@ public class _TestPaperCriteriaBuilder_stuff<self_t extends _TestPaperCriteriaBu
     public final IntegerField ownerUserId = integer("uid");
 
     public final IntegerField accessMode = integer("mode");
+
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
 
     public final IntegerField courseId = integer("course");
 

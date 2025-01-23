@@ -27,7 +27,7 @@ public abstract class _TestPaper_stuff
     public static final int N_TIMEOUT = 10;
     public static final int N_TOTALSCORE = 10;
 
-    private static final int _ord_COURSE_ID = 16;
+    private static final int _ord_COURSE_ID = 17;
     private static final int _ord_TIMEOUT = _ord_COURSE_ID + 1;
     private static final int _ord_TOTALSCORE = _ord_TIMEOUT + 1;
 

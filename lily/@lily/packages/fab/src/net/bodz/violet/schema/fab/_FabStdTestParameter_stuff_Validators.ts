@@ -22,6 +22,9 @@ export class _FabStdTestParameter_stuff_Validators extends IdEntityValidators {
     validateProperties(val: JsonVariant) {
     }
 
+    validateFiles(val: JsonVariant) {
+    }
+
     validateExpected(val: string) {
     }
 

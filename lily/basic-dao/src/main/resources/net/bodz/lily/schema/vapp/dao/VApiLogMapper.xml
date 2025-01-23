@@ -55,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             api."version" api_version, 
             api.code api_code, 
             api.props api_props, 
+            api.files api_files, 
             api.uom api_uom, 
             app.id app_id, 
             app.uid app_uid, 
@@ -72,6 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             app."version" app_version, 
             app.code app_code, 
             app.props app_props, 
+            app.files app_files, 
             app.req app_req, 
             app.cat app_cat, 
             app.secret app_secret
@@ -109,6 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             api."version" api_version, 
             api.code api_code, 
             api.props api_props, 
+            api.files api_files, 
             api.uom api_uom, 
             app.id app_id, 
             app.uid app_uid, 
@@ -126,6 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             app."version" app_version, 
             app.code app_code, 
             app.props app_props, 
+            app.files app_files, 
             app.req app_req, 
             app.cat app_cat, 
             app.secret app_secret

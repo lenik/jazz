@@ -1,5 +1,6 @@
 package net.bodz.violet.schema.edu.dao;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.violet.schema.edu.TestPaperItem;
@@ -9,6 +10,8 @@ public class _TestPaperItemCriteriaBuilder_stuff<self_t extends _TestPaperItemCr
         extends CoImagedCriteriaBuilder<self_t> {
 
     public final LongField id = _long("id");
+
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
 
     public final IntegerField paperId = integer("paper");
 

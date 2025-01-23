@@ -38,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             coursekit.cat coursekit_cat, 
             coursekit.course coursekit_course, 
             coursekit.props coursekit_props, 
+            coursekit.files coursekit_files, 
             coursekit.nfav coursekit_nfav, 
             coursekit.nvote coursekit_nvote, 
             coursekit.nhate coursekit_nhate, 
@@ -55,6 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person
@@ -86,6 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             coursekit.cat coursekit_cat, 
             coursekit.course coursekit_course, 
             coursekit.props coursekit_props, 
+            coursekit.files coursekit_files, 
             coursekit.nfav coursekit_nfav, 
             coursekit.nvote coursekit_nvote, 
             coursekit.nhate coursekit_nhate, 
@@ -103,6 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".lastmod user_lastmod, 
             "user"."version" user_version, 
             "user".props user_props, 
+            "user".files user_files, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
             "user".person user_person

@@ -69,7 +69,8 @@ onMounted(() => {
             <th data-type="FormDef" data-format="label" data-field="form">Form</th>
             <th data-type="STRING" data-field="formArguments">Form Arguments</th>
             <th data-type="Course" data-format="label" data-field="course">Course</th>
-            <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th data-type="JSON_VARIANT" data-field="files">Files</th>
             <th data-type="INT" data-field="favCount">Fav Count</th>
             <th data-type="INT" data-field="voteCount">Vote Count</th>
             <th data-type="INT" data-field="hateCount">Hate Count</th>

@@ -77,6 +77,7 @@ onMounted(() => {
         <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+        <th class="hidden" data-type="JSON_VARIANT" data-field="files">Files</th>
         <th data-type="PartyCategory" data-format="label" data-field="category">Category</th>
         <th data-type="LocalDate" data-field="birthday">Birthday</th>
         <th data-type="STRING" data-field="langTag">Lang Tag</th>

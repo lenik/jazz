@@ -1,54 +1,6 @@
---- codegen//tmp/UserMapper18141026322936705209.xml	2024-05-14 02:26:24.023847710 +0800
-+++ user//tmp/UserMapper18141026322936705209.xml	2024-05-14 02:26:24.023847710 +0800
-@@ -37,22 +37,7 @@
- 
-     <sql id="objlist_sql"><![CDATA[
-         select
--            a.id, 
--            a."type", 
--            a."name", 
--            a.label, 
--            a.description, 
--            a.icon, 
--            a.priority, 
--            a.flags, 
--            a."state", 
--            a.creation, 
--            a.lastmod, 
--            a."version", 
--            a.props, 
--            a.gid0, 
--            a.referer, 
--            a.person, 
-+            a.*,
-             person.id person_id, 
-             person.uid person_uid, 
-             person.gid person_gid, 
-@@ -149,22 +134,7 @@
- 
-     <sql id="objedit_sql"><![CDATA[
-         select
--            a.id, 
--            a."type", 
--            a."name", 
--            a.label, 
--            a.description, 
--            a.icon, 
--            a.priority, 
--            a.flags, 
--            a."state", 
--            a.creation, 
--            a.lastmod, 
--            a."version", 
--            a.props, 
--            a.gid0, 
--            a.referer, 
--            a.person, 
-+            a.*,
-             person.id person_id, 
-             person.uid person_uid, 
-             person.gid person_gid, 
-@@ -283,6 +253,79 @@
+--- codegen//tmp/UserMapper6533000846931695734.xml	2025-01-23 20:27:31.522971209 +0800
++++ user//tmp/UserMapper6533000846931695734.xml	2025-01-23 20:27:31.522971209 +0800
+@@ -292,6 +292,79 @@
          </where>
      </select>
  

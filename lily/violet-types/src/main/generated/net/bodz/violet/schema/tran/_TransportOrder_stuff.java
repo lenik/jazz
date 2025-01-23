@@ -49,13 +49,13 @@ public abstract class _TransportOrder_stuff
     public static final int N_TOTAL_AMOUNT = 20;
 
     private static final int _ord_FORM_ARGUMENTS = 19;
-    private static final int _ord_CATEGORY_ID = _ord_FORM_ARGUMENTS + 2;
+    private static final int _ord_CATEGORY_ID = _ord_FORM_ARGUMENTS + 3;
     private static final int _ord_PHASE_ID = _ord_CATEGORY_ID + 1;
     private static final int _ord_PREV_ID = _ord_PHASE_ID + 1;
     private static final int _ord_SALES_ORDER_ID = _ord_PREV_ID + 1;
     private static final int _ord_STOREODR_ID = _ord_SALES_ORDER_ID + 1;
     private static final int _ord_SHIPPER_ID = _ord_STOREODR_ID + 1;
-    private static final int _ord_SHIPCOST = 45;
+    private static final int _ord_SHIPCOST = 46;
     private static final int _ord_LENGTH = _ord_SHIPCOST + 1;
     private static final int _ord_TOTAL_QUANTITY = _ord_LENGTH + 1;
     private static final int _ord_TOTAL_AMOUNT = _ord_TOTAL_QUANTITY + 1;

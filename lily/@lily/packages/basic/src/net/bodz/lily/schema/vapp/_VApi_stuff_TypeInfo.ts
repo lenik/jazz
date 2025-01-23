@@ -14,11 +14,13 @@ export class _VApi_stuff_TypeInfo extends IdEntityTypeInfo {
     static TABLE_NAME = "vapi";
 
     static readonly FIELD_PROPERTIES = "props";
+    static readonly FIELD_FILES = "files";
     static readonly FIELD_APP_ID = "app";
     static readonly FIELD_API_ID = "api";
     static readonly FIELD_CALLBACK = "callback";
 
     static readonly N_PROPERTIES = 2147483647;
+    static readonly N_FILES = 2147483647;
     static readonly N_APP_ID = 10;
     static readonly N_API_ID = 10;
     static readonly N_CALLBACK = 200;
@@ -36,6 +38,7 @@ export class _VApi_stuff_TypeInfo extends IdEntityTypeInfo {
         super.preamble();
         this.declare({
             properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
+            files: property({ type: JSON_VARIANT, validator: this.validators.validateFiles }),
             callback: property({ type: STRING, precision: 200, validator: this.validators.validateCallback }),
 
             api: property({ type: ApiType_TYPE, nullable: false, validator: this.validators.validateApi }),

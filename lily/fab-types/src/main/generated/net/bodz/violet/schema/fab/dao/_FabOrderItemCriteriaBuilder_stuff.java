@@ -1,5 +1,6 @@
 package net.bodz.violet.schema.fab.dao;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoImagedEventCriteriaBuilder;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.violet.schema.fab.FabOrderItem;
@@ -9,6 +10,8 @@ public class _FabOrderItemCriteriaBuilder_stuff<self_t extends _FabOrderItemCrit
         extends CoImagedEventCriteriaBuilder<self_t> {
 
     public final LongField id = _long("id");
+
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
 
     public final LongField orderId = _long("odr");
 

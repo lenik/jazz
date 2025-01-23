@@ -25,7 +25,7 @@ public abstract class _ApiType_stuff
     public static final int N_UOM = 30;
 
     private static final int _ord_CODE = 11;
-    private static final int _ord_UOM = _ord_CODE + 2;
+    private static final int _ord_UOM = _ord_CODE + 3;
 
     String code;
 

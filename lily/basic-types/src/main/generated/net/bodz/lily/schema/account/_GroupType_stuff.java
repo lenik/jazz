@@ -28,7 +28,7 @@ public abstract class _GroupType_stuff
     public static final int N_DUMMY = 10;
 
     private static final int _ord_NAME = 2;
-    private static final int _ord_DUMMY = 13;
+    private static final int _ord_DUMMY = 14;
 
     /** Group type name (unique) */
     @NotNull

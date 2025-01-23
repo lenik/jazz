@@ -1,5 +1,6 @@
 package net.bodz.violet.schema.plan.dao;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.violet.schema.plan.Diary;
@@ -17,6 +18,8 @@ public class _DiaryCriteriaBuilder_stuff<self_t extends _DiaryCriteriaBuilder_st
     public final StringField rawText = string("text");
 
     public final StringField formArguments = string("formargs");
+
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
 
     public final IntegerField value = integer("\"value\"");
 

@@ -1,5 +1,6 @@
 package net.bodz.lily.schema.account.dao;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.lily.schema.account.User;
@@ -15,6 +16,8 @@ public class _UserCriteriaBuilder_stuff<self_t extends _UserCriteriaBuilder_stuf
 
     /** The user name (unique) */
     public final StringField name = string("\"name\"");
+
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
 
     /** The primary user group, the default value of ownerGroup. */
     public final IntegerField primaryGroupId = integer("gid0");

@@ -19,6 +19,8 @@ public class _CourseKitCriteriaBuilder_stuff<self_t extends _CourseKitCriteriaBu
 
     public final IntegerField courseId = integer("course");
 
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
+
     public final IntegerField favCount = integer("nfav");
 
     public final IntegerField voteCount = integer("nvote");

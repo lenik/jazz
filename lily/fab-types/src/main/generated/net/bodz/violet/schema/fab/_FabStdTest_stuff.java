@@ -33,7 +33,7 @@ public abstract class _FabStdTest_stuff
     public static final int N_REF_COUNT = 10;
 
     private static final int _ord_CODE = 2;
-    private static final int _ord_CATEGORY_ID = 17;
+    private static final int _ord_CATEGORY_ID = 18;
     private static final int _ord_PARENT_ID = _ord_CATEGORY_ID + 1;
     private static final int _ord_DEPTH = _ord_PARENT_ID + 1;
     private static final int _ord_REF_COUNT = _ord_DEPTH + 1;

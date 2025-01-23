@@ -29,6 +29,8 @@ public class _ZoneCriteriaBuilder_stuff<self_t extends _ZoneCriteriaBuilder_stuf
 
     public final StringField postCode = string("postcode");
 
+    public final DiscreteField<JsonVariant> files = discrete("files", JsonVariant.class);
+
     public final DiscreteField<JsonVariant> data = discrete("\"data\"", JsonVariant.class);
 
 }

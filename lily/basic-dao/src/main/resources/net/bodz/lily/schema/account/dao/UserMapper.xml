@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="typeId" column="type" />
         <result property="primaryGroupId" column="gid0" />
         <result property="refererId" column="referer" />
@@ -37,7 +38,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="objlist_sql"><![CDATA[
         select
-            a.*,
+            a.id, 
+            a."type", 
+            a."name", 
+            a.label, 
+            a.description, 
+            a.icon, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.props, 
+            a.files, 
+            a.gid0, 
+            a.referer, 
+            a.person, 
             person.id person_id, 
             person.uid person_uid, 
             person.gid person_gid, 
@@ -62,6 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.email person_email, 
             person.emailok person_emailok, 
             person.props person_props, 
+            person.files person_files, 
             person.cat person_cat, 
             person.birthday person_birthday, 
             person.father person_father, 
@@ -94,6 +112,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             gid0.lastmod gid0_lastmod, 
             gid0."version" gid0_version, 
             gid0.props gid0_props, 
+            gid0.files gid0_files, 
             gid0.parent gid0_parent, 
             referer.id referer_id, 
             referer."type" referer_type, 
@@ -108,6 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             referer.lastmod referer_lastmod, 
             referer."version" referer_version, 
             referer.props referer_props, 
+            referer.files referer_files, 
             referer.gid0 referer_gid0, 
             referer.referer referer_referer, 
             referer.person referer_person, 
@@ -134,7 +154,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="objedit_sql"><![CDATA[
         select
-            a.*,
+            a.id, 
+            a."type", 
+            a."name", 
+            a.label, 
+            a.description, 
+            a.icon, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.props, 
+            a.files, 
+            a.gid0, 
+            a.referer, 
+            a.person, 
             person.id person_id, 
             person.uid person_uid, 
             person.gid person_gid, 
@@ -159,6 +195,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.email person_email, 
             person.emailok person_emailok, 
             person.props person_props, 
+            person.files person_files, 
             person.cat person_cat, 
             person.birthday person_birthday, 
             person.father person_father, 
@@ -191,6 +228,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             gid0.lastmod gid0_lastmod, 
             gid0."version" gid0_version, 
             gid0.props gid0_props, 
+            gid0.files gid0_files, 
             gid0.parent gid0_parent, 
             referer.id referer_id, 
             referer."type" referer_type, 
@@ -205,6 +243,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             referer.lastmod referer_lastmod, 
             referer."version" referer_version, 
             referer.props referer_props, 
+            referer.files referer_files, 
             referer.gid0 referer_gid0, 
             referer.referer referer_referer, 
             referer.person referer_person, 
@@ -340,6 +379,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod,
             "version",
             props,
+            files,
             gid0,
             referer,
             person
@@ -356,6 +396,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{lastModified},
             #{version},
             #{properties},
+            #{files},
             #{primaryGroupId},
             #{refererId},
             #{personId}
@@ -377,6 +418,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod = #{lastModified},
             "version" = #{version},
             props = #{properties},
+            files = #{files},
             gid0 = #{primaryGroupId},
             referer = #{refererId},
             person = #{personId},

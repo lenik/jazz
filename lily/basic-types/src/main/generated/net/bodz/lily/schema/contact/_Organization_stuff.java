@@ -27,7 +27,7 @@ public abstract class _Organization_stuff
     public static final int N_SIZE = 10;
     public static final int N_TAX_ID = 20;
 
-    private static final int _ord_ROLE_COUNT = 29;
+    private static final int _ord_ROLE_COUNT = 30;
     private static final int _ord_BANK_COUNT = _ord_ROLE_COUNT + 4;
     private static final int _ord_SIZE = _ord_BANK_COUNT + 1;
     private static final int _ord_TAX_ID = _ord_SIZE + 1;

@@ -16,6 +16,7 @@ export class _VApi_stuff extends IdEntity<long> {
     }
 
     properties?: JsonVariant;
+    files?: JsonVariant;
     callback?: string;
 
     api: ApiType;

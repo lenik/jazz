@@ -125,6 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op.lastmod op_lastmod, 
             op."version" op_version, 
             op.props op_props, 
+            op.files op_files, 
             op.gid0 op_gid0, 
             op.referer op_referer, 
             op.person op_person
@@ -225,6 +226,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op.lastmod op_lastmod, 
             op."version" op_version, 
             op.props op_props, 
+            op.files op_files, 
             op.gid0 op_gid0, 
             op.referer op_referer, 
             op.person op_person

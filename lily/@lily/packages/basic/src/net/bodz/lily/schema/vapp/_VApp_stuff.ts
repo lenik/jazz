@@ -17,6 +17,7 @@ export class _VApp_stuff extends IdEntity<int> {
 
     code?: string;
     properties?: JsonVariant;
+    files?: JsonVariant;
     secret: string;
 
     category?: VAppCategory;

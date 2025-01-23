@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="version" column="version" />
         <result property="code" column="code" />
         <result property="properties" column="props" />
+        <result property="files" column="files" />
         <result property="secret" column="secret" />
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
@@ -56,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a."version", 
             a.code, 
             a.props, 
+            a.files, 
             a.req, 
             a.cat, 
             a.secret, 
@@ -75,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.lastmod category_lastmod, 
             category."version" category_version, 
             category.props category_props, 
+            category.files category_files, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref, 
@@ -91,6 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
@@ -105,6 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -158,6 +163,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a."version", 
             a.code, 
             a.props, 
+            a.files, 
             a.req, 
             a.cat, 
             a.secret, 
@@ -177,6 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.lastmod category_lastmod, 
             category."version" category_version, 
             category.props category_props, 
+            category.files category_files, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref, 
@@ -193,6 +200,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.lastmod ownerGroup_lastmod, 
             ownerGroup."version" ownerGroup_version, 
             ownerGroup.props ownerGroup_props, 
+            ownerGroup.files ownerGroup_files, 
             ownerGroup.parent ownerGroup_parent, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
@@ -207,6 +215,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.lastmod ownerUser_lastmod, 
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
+            ownerUser.files ownerUser_files, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
@@ -283,6 +292,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "version",
             code,
             props,
+            files,
             req,
             cat,
             secret
@@ -302,6 +312,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{version},
             #{code},
             #{properties},
+            #{files},
             #{reqId},
             #{categoryId},
             #{secret}
@@ -326,6 +337,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "version" = #{version},
             code = #{code},
             props = #{properties},
+            files = #{files},
             req = #{reqId},
             cat = #{categoryId},
             secret = #{secret},

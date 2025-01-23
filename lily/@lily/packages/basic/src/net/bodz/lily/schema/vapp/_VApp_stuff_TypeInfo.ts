@@ -15,12 +15,14 @@ export class _VApp_stuff_TypeInfo extends IdEntityTypeInfo {
 
     static readonly FIELD_CODE = "code";
     static readonly FIELD_PROPERTIES = "props";
+    static readonly FIELD_FILES = "files";
     static readonly FIELD_REQ_ID = "req";
     static readonly FIELD_CATEGORY_ID = "cat";
     static readonly FIELD_SECRET = "secret";
 
     static readonly N_CODE = 30;
     static readonly N_PROPERTIES = 2147483647;
+    static readonly N_FILES = 2147483647;
     static readonly N_REQ_ID = 10;
     static readonly N_CATEGORY_ID = 10;
     static readonly N_SECRET = 2147483647;
@@ -39,6 +41,7 @@ export class _VApp_stuff_TypeInfo extends IdEntityTypeInfo {
         this.declare({
             code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
             properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
+            files: property({ type: JSON_VARIANT, validator: this.validators.validateFiles }),
             secret: property({ type: STRING, nullable: false, validator: this.validators.validateSecret }),
 
             category: property({ type: VAppCategory_TYPE, validator: this.validators.validateCategory }),

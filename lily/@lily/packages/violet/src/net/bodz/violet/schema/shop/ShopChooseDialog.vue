@@ -77,6 +77,7 @@ onMounted(() => {
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="STRING" data-field="code">Code</th>
         <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+        <th class="hidden" data-type="JSON_VARIANT" data-field="files">Files</th>
         <th data-type="Organization" data-format="label" data-field="supplierOrg">Supplier Org</th>
         <th data-type="Person" data-format="label" data-field="supplier">Supplier</th>
         <th data-type="INT" data-field="hydm">Hydm</th>
