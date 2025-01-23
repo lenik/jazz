@@ -3,14 +3,14 @@ package net.bodz.lily.entity.attachment.util;
 import java.util.List;
 
 import net.bodz.bas.meta.cache.Derived;
-import net.bodz.lily.concrete.IAttachmentsInProps;
+import net.bodz.lily.concrete.IAttachmentsInFiles;
 import net.bodz.lily.entity.attachment.Attachment;
 import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.esm.TsType;
 
-public interface IImagesInProps
+public interface IImagesInProps2
         extends
-            IAttachmentsInProps,
+            IAttachmentsInFiles,
             IImageAttachments {
 
     String K_IMAGES = "images";

@@ -9,6 +9,8 @@ import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.db.ctx.UnionDefaultContextIdsResolver;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.lily.entity.attachment.AttachmentGroup;
 import net.bodz.lily.site.DataAppHosts;
@@ -16,6 +18,8 @@ import net.bodz.lily.site.IDataAppHost;
 import net.bodz.lily.storage.IVolumeProvider;
 
 public class DataApps {
+
+    static final Logger logger = LoggerFactory.getLogger(DataApps.class);
 
     public static DataApplication getPreferred() {
         DataContext dataContext = DataHub.getPreferredHub().getMain();
@@ -32,8 +36,15 @@ public class DataApps {
                 break;
             }
         }
-        if (baseDir == null)
+        if (baseDir == null) {
+            logger.error("baseDir isn't defined. mkdir it prior to server start.");
+            for (String contextId : contextIds) {
+                File dir = new File(rootDir, contextId);
+                if (!dir.exists())
+                    logger.info("    example: mkdir " + dir);
+            }
             baseDir = new File(rootDir, "__volumes");
+        }
 
         IVolumeProvider volumeProvider = new AttachmentGroup(baseDir);
 

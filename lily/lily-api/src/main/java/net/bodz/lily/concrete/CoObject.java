@@ -225,10 +225,6 @@ public abstract class CoObject
         this.flags = flags;
     }
 
-    protected final JsonVariant createProperties() {
-        return null;
-    }
-
 //    /**
 //     * 自定义属性
 //     */

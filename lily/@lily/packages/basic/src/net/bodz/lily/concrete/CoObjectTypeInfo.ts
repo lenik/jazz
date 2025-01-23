@@ -56,6 +56,7 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
             id: property({ type: this.idType, icon: 'far-key' }),
             name: property({ type: STRING, icon: 'far-id-card' }),
             properties: property({ type: JSON_VARIANT, icon: 'fab-pagelines' }),
+            files: property({ type: JSON_VARIANT, icon: 'fa-copy' }),
 
             label: property({ type: STRING, icon: 'far-tag' }),
             description: property({ type: STRING, icon: 'far-sticky-note' }),

@@ -62,6 +62,7 @@ public class Dba
     public final EsmName EntityChooseDialog = vue("ui/lily/EntityChooseDialog.vue");
     public final EsmName FieldGroup = vue("ui/lily/FieldGroup.vue");
     public final EsmName RefEditor = vue("ui/input/RefEditor.vue");
+    public final EsmName FilesEditor = vue("ui/input/FilesEditor.vue");
 
     static final String[] domainPatterns = { //
             "net.bodz.bas.db" };

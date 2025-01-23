@@ -1,5 +1,7 @@
 package net.bodz.lily.entity.ws;
 
+import java.io.File;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,11 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.poi.ss.usermodel.Workbook;
 
+import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.type.TypeParam;
@@ -32,6 +34,7 @@ import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IPathArrivalFrameAware;
 import net.bodz.bas.html.viz.PathArrivalFrame;
+import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.ObjectType;
@@ -52,8 +55,10 @@ import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.file.ArrayPathFields;
+import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.app.DataApps;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.app.IDataApplicationAware;
 import net.bodz.lily.criteria.ICriteriaBuilder;
@@ -73,21 +78,22 @@ import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.format.excel.DefaultListingExcel;
 import net.bodz.lily.meta.DefaultLimit;
 import net.bodz.lily.security.AccessControl;
+import net.bodz.lily.storage.IVolume;
+import net.bodz.lily.storage.IVolumeItem;
 
 @AccessControl
 @VirtualHostScope
 public abstract class AbstractEntityController<T>
         extends AbstractCacheControl
-        implements
-            IEntityController,
-            IEntityCommandContext,
-            IQueryable,
-            IPathArrivalFrameAware,
-            ICacheControl,
-            IDataApplicationAware,
-            IDataContextAware,
-            IDataFetcher,
-            ITableSheetBuilder {
+        implements IEntityController,
+                   IEntityCommandContext,
+                   IQueryable,
+                   IPathArrivalFrameAware,
+                   ICacheControl,
+                   IDataApplicationAware,
+                   IDataContextAware,
+                   IDataFetcher,
+                   ITableSheetBuilder {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractEntityController.class);
 
@@ -285,6 +291,21 @@ public abstract class AbstractEntityController<T>
                         return arrival;
                 }
 
+        //
+        switch (token) {
+            case "incoming":
+                IDataApplication app = DataApps.fromRequest(request);
+                IVolume incomingVolume = app.getIncomingVolume(getEntityType());
+                String[] vec = tokens.peek(tokens.available());
+                vec = Arrays.copyOfRange(vec, 1, vec.length);
+                IPathFields pathFields = new ArrayPathFields(vec);
+                IVolumeItem item = incomingVolume.getFile(pathFields);
+                File localFile = item.getLocalFile();
+                URL resource = FileURL.toURL(localFile);
+                return PathArrival.shift(tokens.available(), previous, this, new URLResource(resource), tokens);
+        }
+        // app.getEntityVolume(getEntityType());
+
         if (hasId && (arrival = dispatchToEntity(previous, tokens, q)) != null) {
             previous = arrival;
             ResolvedEntity resolvedEntity = (ResolvedEntity) arrival.getTarget();
@@ -293,17 +314,17 @@ public abstract class AbstractEntityController<T>
             if (token == null) {
                 IEntityCommandType command = null;
                 switch (method) {
-                case "GET":
-                    command = locator.get(FetchCommand.ID);
-                    break;
-                case "PUT":
-                case "POST":
-                case "PATCH":
-                    command = locator.get(ContentSaveCommand.ID);
-                    break;
-                case "DELETE":
-                    command = locator.get(ContentDeleteCommand.ID);
-                    break;
+                    case "GET":
+                        command = locator.get(FetchCommand.ID);
+                        break;
+                    case "PUT":
+                    case "POST":
+                    case "PATCH":
+                        command = locator.get(ContentSaveCommand.ID);
+                        break;
+                    case "DELETE":
+                        command = locator.get(ContentDeleteCommand.ID);
+                        break;
                 }
                 if (command != null)
                     commands = List.of(command);

@@ -13,24 +13,25 @@ export abstract class CoImaged<Id> extends IdEntity<Id> {
     }
 
     properties: any
+    files: any
 
     constructor(o: any) {
         super(o);
     }
 
     get images(): Attachment[] | undefined {
-        let props = (this as any).properties;
+        let props = (this as any).files;
         return props?.images;
     }
 
     set images(val: Attachment[] | undefined) {
-        let props = (this as any).properties;
+        let props = (this as any).files;
         if (val == null) {
             if (props != null)
                 delete props.images;
         } else {
             if (props == null)
-                (this as any).properties = { images: val };
+                (this as any).files = { images: val };
             else
                 props.images = val;
         }

@@ -2,16 +2,16 @@ package net.bodz.lily.entity.attachment;
 
 import java.util.Collection;
 
-import net.bodz.lily.concrete.IAttachmentsInProps;
+import net.bodz.lily.concrete.IAttachmentsInProps2;
 
-public class AttachmentListingInProps
+public class AttachmentListingInProps2
         implements
             IAttachmentListing {
 
-    IAttachmentsInProps attachmentsInProps;
+    IAttachmentsInProps2 attachmentsInProps;
     String[] attachmentGroupKeys;
 
-    public AttachmentListingInProps(IAttachmentsInProps attachmentsInProps, String[] attachmentGroupKeys) {
+    public AttachmentListingInProps2(IAttachmentsInProps2 attachmentsInProps, String[] attachmentGroupKeys) {
         this.attachmentsInProps = attachmentsInProps;
         this.attachmentGroupKeys = attachmentGroupKeys;
     }

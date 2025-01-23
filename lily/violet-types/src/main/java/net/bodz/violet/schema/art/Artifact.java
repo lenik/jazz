@@ -12,10 +12,10 @@ import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.lily.concrete.IAttrInProps;
-import net.bodz.lily.entity.attachment.AttachmentListingInProps;
+import net.bodz.lily.entity.attachment.AttachmentListingInFiles;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
-import net.bodz.lily.entity.attachment.util.IDocInProps;
-import net.bodz.lily.entity.attachment.util.IVideosInProps;
+import net.bodz.lily.entity.attachment.util.IDocInFiles;
+import net.bodz.lily.entity.attachment.util.IVideosInFiles;
 import net.bodz.lily.repr.EntGroup;
 import net.bodz.lily.schema.util.Uom;
 import net.bodz.lily.schema.util.UomRow;
@@ -27,8 +27,8 @@ import net.bodz.lily.schema.util.UomRow;
 public class Artifact
         extends _Artifact_stuff
         implements
-            IVideosInProps,
-            IDocInProps,
+            IVideosInFiles,
+            IDocInFiles,
             IAttrInProps {
 
     private static final long serialVersionUID = 1L;
@@ -76,7 +76,7 @@ public class Artifact
 
     @Override
     public IAttachmentListing listAttachments() {
-        return new AttachmentListingInProps(this, attachmentGroupKeys);
+        return new AttachmentListingInFiles(this, attachmentGroupKeys);
     }
 
 }

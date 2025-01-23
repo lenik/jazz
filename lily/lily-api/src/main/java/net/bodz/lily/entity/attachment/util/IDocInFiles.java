@@ -2,12 +2,12 @@ package net.bodz.lily.entity.attachment.util;
 
 import java.util.List;
 
-import net.bodz.lily.concrete.IAttachmentsInProps;
+import net.bodz.lily.concrete.IAttachmentsInFiles;
 import net.bodz.lily.entity.attachment.IAttachment;
 
-public interface IDocInProps
+public interface IDocInFiles
         extends
-            IAttachmentsInProps,
+            IAttachmentsInFiles,
             IDocAttachments {
 
     String K_DOCS = "docs";

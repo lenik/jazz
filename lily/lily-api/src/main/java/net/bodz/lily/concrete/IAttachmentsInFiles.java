@@ -10,15 +10,15 @@ import net.bodz.lily.entity.attachment.DefaultAttachment;
 import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.attachment.IHaveAttachments;
 
-public interface IAttachmentsInProps
+public interface IAttachmentsInFiles
         extends
             IHaveAttachments,
-            IHaveProperties {
+            IHaveFiles {
 
     default List<IAttachment> getAttachmentGroup(String groupKey) {
-        JsonVariant properties = getProperties();
-        if (properties != null) {
-            JsonVariant array = properties.get(groupKey);
+        JsonVariant files = getFiles();
+        if (files != null) {
+            JsonVariant array = files.get(groupKey);
             if (array != null) {
                 List<IAttachment> list = DefaultAttachment.parseJsonArray(array.getArray());
                 return list;
@@ -28,9 +28,9 @@ public interface IAttachmentsInProps
     }
 
     default void setAttachmentGroup(String groupKey, List<IAttachment> list) {
-        JsonObject properties = properties();
+        JsonObject files = files();
         JsonArray ja = DefaultAttachment.toJsonArray(list);
-        properties.put(groupKey, ja);
+        files.put(groupKey, ja);
     }
 
 }

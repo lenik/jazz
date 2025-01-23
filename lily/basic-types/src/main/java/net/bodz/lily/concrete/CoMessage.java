@@ -28,9 +28,9 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.concrete.util.HtmlTextObject;
 import net.bodz.lily.concrete.util.TextObject;
 import net.bodz.lily.concrete.util.UserClickInfo;
-import net.bodz.lily.entity.attachment.AttachmentListingInProps;
+import net.bodz.lily.entity.attachment.AttachmentListingInFiles;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
-import net.bodz.lily.entity.attachment.util.IVideosInProps;
+import net.bodz.lily.entity.attachment.util.IVideosInFiles;
 import net.bodz.lily.meta.FieldGroupVue;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.meta.FormDef;
@@ -49,7 +49,7 @@ import net.bodz.lily.security.IUser;
 public abstract class CoMessage<Id>
         extends CoImagedEvent<Id>
         implements
-            IVideosInProps {
+            IVideosInFiles {
 
     private static final long serialVersionUID = 1L;
 
@@ -254,7 +254,7 @@ public abstract class CoMessage<Id>
 
     @Override
     public IAttachmentListing listAttachments() {
-        return new AttachmentListingInProps(this, attachmentGroupKeys);
+        return new AttachmentListingInFiles(this, attachmentGroupKeys);
     }
 
     @Override

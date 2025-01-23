@@ -7,9 +7,10 @@ import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.bas.meta.decl.TypeParamType;
 import net.bodz.bas.meta.decl.TypeParameters;
 import net.bodz.bas.meta.res.HaveAttachments;
-import net.bodz.lily.entity.attachment.AttachmentListingInProps;
+import net.bodz.lily.entity.attachment.AttachmentListingInFiles;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
-import net.bodz.lily.entity.attachment.util.IImagesInProps;
+import net.bodz.lily.entity.attachment.util.IImagesInFiles;
+import net.bodz.lily.entity.esm.DTColumn;
 import net.bodz.lily.meta.FieldGroupVue;
 
 @FieldGroupVue
@@ -19,23 +20,38 @@ import net.bodz.lily.meta.FieldGroupVue;
 public class CoImagedEvent<Id>
         extends CoEvent<Id>
         implements
-            IImagesInProps {
+            IHaveProperties,
+            IImagesInFiles {
 
     private static final long serialVersionUID = 1L;
 
     public static final String FIELD_PROPERTIES = "props";
+    public static final String FIELD_FILES = "files";
 
-    JsonVariant properties;
+    private JsonVariant properties;
+    private JsonVariant files;
 
     @Column(name = FIELD_PROPERTIES)
+    @DTColumn(hidden = true)
     @Override
-    public final JsonVariant getProperties() {
+    public JsonVariant getProperties() {
         return properties;
     }
 
     @Override
-    public final void setProperties(JsonVariant properties) {
+    public void setProperties(JsonVariant properties) {
         this.properties = properties;
+    }
+
+    @Column(name = FIELD_FILES)
+    @Override
+    public JsonVariant getFiles() {
+        return files;
+    }
+
+    @Override
+    public void setFiles(JsonVariant files) {
+        this.files = files;
     }
 
     static final String[] attachmentGroupKeys = { //
@@ -44,7 +60,7 @@ public class CoImagedEvent<Id>
 
     @Override
     public IAttachmentListing listAttachments() {
-        return new AttachmentListingInProps(this, attachmentGroupKeys);
+        return new AttachmentListingInFiles(this, attachmentGroupKeys);
     }
 
 }

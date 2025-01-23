@@ -3,12 +3,12 @@ package net.bodz.lily.entity.attachment.util;
 import java.util.List;
 
 import net.bodz.bas.meta.cache.Derived;
-import net.bodz.lily.concrete.IAttachmentsInProps;
+import net.bodz.lily.concrete.IAttachmentsInFiles;
 import net.bodz.lily.entity.attachment.IAttachment;
 
-public interface IVideosInProps
+public interface IVideosInProps2
         extends
-            IAttachmentsInProps,
+            IAttachmentsInFiles,
             IVideoAttachments {
 
     String K_VIDEOS = "videos";
