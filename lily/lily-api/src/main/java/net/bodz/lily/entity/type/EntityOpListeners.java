@@ -6,6 +6,7 @@ import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.t.order.PriorityComparator;
 
@@ -35,7 +36,8 @@ public class EntityOpListeners {
     }
 
     public static Set<IEntityOpListener<Object>> query(Class<?> type) {
-        return closureMap.meet(type);
+        Set<IEntityOpListener<Object>> set = closureMap.meet(type);
+        return set != null ? set : Collections.emptySet();
     }
 
     static Set<IEntityOpListener<Object>> getOrCreateType(Class<?> type) {
