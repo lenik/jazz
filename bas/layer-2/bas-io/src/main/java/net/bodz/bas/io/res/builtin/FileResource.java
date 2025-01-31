@@ -7,16 +7,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.OpenOption;
+import java.nio.file.Path;
 
 import net.bodz.bas.c.java.nio.CreateOptions;
 import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.AbstractIORandomResource;
+import net.bodz.bas.meta.decl.DefaultImpl;
 
 public class FileResource
-        extends AbstractIORandomResource {
+        extends AbstractIORandomResource<FileResource> {
 
     private final File file;
 
@@ -26,26 +30,24 @@ public class FileResource
         this.file = file;
     }
 
-    public FileResource(File file, Charset charset) {
-        this(file);
-        this.setCharset(charset);
-    }
-
-    public FileResource(File file, String charsetName) {
-        this(file);
-        this.setCharset(charsetName);
-    }
-
     public FileResource(String filename) {
         this(new File(filename));
     }
 
-    public FileResource(String filename, Charset charset) {
-        this(new File(filename), charset);
+    @Override
+    public boolean canRead() {
+        return file.canRead();
     }
 
-    public FileResource(String filename, String charsetName) {
-        this(new File(filename), charsetName);
+    @Override
+    public boolean canWrite() {
+        return file.canWrite();
+    }
+
+    @Override
+    public boolean isDirectory(LinkOption... options) {
+        Path path = file.toPath();
+        return Files.isDirectory(path, options);
     }
 
     public File getFile() {
@@ -53,40 +55,39 @@ public class FileResource
     }
 
     @Override
-    public long getLength() {
-        return file.length();
+    public String getPath() {
+        return file.getPath();
     }
 
     @Override
+    public Long getLength() {
+        return file.length();
+    }
+
     protected void beforeOpenOutput(OpenOption... options)
             throws IOException {
-        super.beforeOpenOutput(options);
         if (CreateOptions.isCreateParents(options)) {
             File parentFile = file.getParentFile();
-            if (parentFile != null && !parentFile.isDirectory()) {
-                if (!parentFile.mkdirs())
+            if (parentFile != null && ! parentFile.isDirectory()) {
+                if (! parentFile.mkdirs())
                     // throw ...?
                     ;
             }
         }
     }
 
+    @DefaultImpl(Files.class)
     @Override
-    public boolean isCharPreferred() {
-        return false;
+    public InputStream newInputStream(OpenOption... options)
+            throws IOException {
+        return Files.newInputStream(file.toPath());
     }
 
+    @DefaultImpl(Files.class)
     @Override
-    protected InputStream _newInputStream(OpenOption... options)
+    public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
-        return new FileInputStream(file);
-    }
-
-    @Override
-    protected OutputStream _newOutputStream(OpenOption... options)
-            throws IOException {
-        boolean append = OpenOptions.isAppend(options);
-        return new FileOutputStream(file, append);
+        return Files.newOutputStream(file.toPath(), options);
     }
 
     // XXX byte/char IOS, seeker, cropper
@@ -105,10 +106,10 @@ public class FileResource
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!(obj instanceof FileResource))
+        if (! (obj instanceof FileResource))
             return false;
         FileResource o = (FileResource) obj;
-        if (!file.equals(o.file))
+        if (! file.equals(o.file))
             return false;
         return true;
     }

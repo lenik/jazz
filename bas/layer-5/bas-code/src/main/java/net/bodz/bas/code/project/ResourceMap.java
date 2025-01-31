@@ -31,7 +31,7 @@ public class ResourceMap
                 if (!dir.mkdirs())
                     throw new IOException("can't mkdir " + dir);
 
-            if (source.isCharPreferred()) {
+            if (source.isTextMode()) {
                 String content = source.to(StreamReading.class).readString();
                 ResFn.file(file).write().writeString(content);
             } else {

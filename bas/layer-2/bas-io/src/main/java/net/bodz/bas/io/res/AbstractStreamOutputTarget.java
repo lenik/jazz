@@ -6,23 +6,11 @@ import java.nio.file.OpenOption;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.ICharIn;
 
-public abstract class AbstractStreamOutputTarget
-        extends StreamResourceTemplate
+public abstract class AbstractStreamOutputTarget<This>
+        extends AbstractResourceEntry<This>
         implements IStreamOutputTarget {
 
     public AbstractStreamOutputTarget() {
-    }
-
-    @Override
-    public IByteIn _newByteIn(OpenOption... options)
-            throws IOException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ICharIn _newCharIn(OpenOption... options)
-            throws IOException {
-        throw new UnsupportedOperationException();
     }
 
 }

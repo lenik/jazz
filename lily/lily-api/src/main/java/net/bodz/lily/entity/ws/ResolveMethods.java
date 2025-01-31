@@ -54,9 +54,10 @@ public class ResolveMethods<T> {
         try {
             idvec = typeInfo.parseIdColumns(heads);
         } catch (ParseException e) {
-            throw new PathDispatchException(String.format(//
-                    "error parse id fields %s: %s", //
-                    Arrays.asList(heads), e.getMessage()), e);
+            return null;
+//            throw new PathDispatchException(String.format(//
+//                    "error parse id fields %s: %s", //
+//                    Arrays.asList(heads), e.getMessage()), e);
         }
 
         Object id;

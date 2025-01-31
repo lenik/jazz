@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.IByteIn;
@@ -15,7 +14,7 @@ import net.bodz.bas.io.adapter.ReaderCharIn;
 import net.bodz.bas.io.res.AbstractStreamInputSource;
 
 public class InputStreamSource
-        extends AbstractStreamInputSource {
+        extends AbstractStreamInputSource<InputStreamSource>{
 
     private final InputStream in;
 
@@ -25,30 +24,11 @@ public class InputStreamSource
         this.in = in;
     }
 
-    public InputStreamSource(InputStream in, String charsetName) {
-        super(charsetName);
-        if (in == null)
-            throw new NullPointerException("in");
-        this.in = in;
-    }
-
-    public InputStreamSource(InputStream in, Charset charset) {
-        super(charset);
-        if (in == null)
-            throw new NullPointerException("in");
-        this.in = in;
-    }
-
-    @Override
-    public boolean isCharPreferred() {
-        return false;
-    }
-
     /**
      * @return {@link InputStream} with {@link InputStream#close()} filtered out.
      */
     @Override
-    protected InputStream _newInputStream(OpenOption... options)
+    public InputStream newInputStream(OpenOption... options)
             throws IOException {
         return new FilterInputStream(in) {
             @Override
@@ -59,21 +39,21 @@ public class InputStreamSource
     }
 
     @Override
-    protected Reader _newReader(OpenOption... options)
+    public Reader newReader(OpenOption... options)
             throws IOException {
         InputStream in = newInputStream(options);
         return new InputStreamReader(in, getCharset());
     }
 
     @Override
-    public IByteIn _newByteIn(OpenOption... options)
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
         InputStream in = newInputStream(options);
         return new InputStreamByteIn(in);
     }
 
     @Override
-    public ICharIn _newCharIn(OpenOption... options)
+    public ICharIn newCharIn(OpenOption... options)
             throws IOException {
         Reader in = newReader(options);
         return new ReaderCharIn(in);

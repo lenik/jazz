@@ -46,9 +46,4 @@ public class StaticFileAccessServlet
         return start;
     }
 
-    @Override
-    public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
-        return super.getCacheControl(req, url);
-    }
-
 }

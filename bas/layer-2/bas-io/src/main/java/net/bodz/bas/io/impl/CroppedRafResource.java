@@ -12,7 +12,7 @@ import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.res.AbstractIOStreamResource;
 
 public class CroppedRafResource
-        extends AbstractIOStreamResource {
+        extends AbstractIOStreamResource<CroppedRafResource> {
 
     private File file;
     private String mode;
@@ -32,36 +32,31 @@ public class CroppedRafResource
     }
 
     @Override
-    public boolean isCharPreferred() {
-        return false;
-    }
-
-    @Override
-    protected InputStream _newInputStream(OpenOption... options)
+    public InputStream newInputStream(OpenOption... options)
             throws IOException {
         return new CroppedRafIn(file, mode, start, end);
     }
 
     @Override
-    protected IByteIn _newByteIn(OpenOption... options)
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
         return new CroppedRafIn(file, mode, start, end);
     }
 
     @Override
-    protected OutputStream _newOutputStream(OpenOption... options)
+    public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
         return new CroppedRafOut(file, mode, start, end);
     }
 
     @Override
-    protected IByteOut _newByteOut(OpenOption... options)
+    public IByteOut newByteOut(OpenOption... options)
             throws IOException {
         return new CroppedRafOut(file, mode, start, end);
     }
 
     @Override
-    protected IByteIOS _newByteIOS(OpenOption... options)
+    public IByteIOS newByteIOS(OpenOption... options)
             throws IOException {
         return new CroppedRafIOS(file, mode, start, end);
     }

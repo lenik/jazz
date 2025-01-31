@@ -111,8 +111,8 @@ net.bodz.bas.io.res.builtin.StringBufferTarget
 net.bodz.bas.io.res.builtin.StringSource
 net.bodz.bas.io.res.builtin.URLResource
 net.bodz.bas.io.res.builtin.WriterTarget
-net.bodz.bas.io.res.IOpenResourceListener
-net.bodz.bas.io.res.IOpenResourceSource
+net.bodz.bas.io.res.bak.IOpenResourceListener
+net.bodz.bas.io.res.bak.IOpenResourceSource
 net.bodz.bas.io.res.IRandomResource
 net.bodz.bas.io.res.IRandomResourceWrapper
 net.bodz.bas.io.res.ISimpleStreamInputSource
@@ -124,7 +124,7 @@ net.bodz.bas.io.res.IStreamOutputTarget
 net.bodz.bas.io.res.IStreamOutputTargetWrapper
 net.bodz.bas.io.res.IStreamResource
 net.bodz.bas.io.res.IStreamResourceWrapper
-net.bodz.bas.io.res.OpenResourceEvent
+net.bodz.bas.io.res.bak.OpenResourceEvent
 net.bodz.bas.io.res.ProxyRandomResource
 net.bodz.bas.io.res.ProxyStreamResource
 net.bodz.bas.io.res.StreamResourceTemplate

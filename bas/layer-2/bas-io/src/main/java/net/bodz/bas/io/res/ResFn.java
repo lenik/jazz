@@ -20,11 +20,11 @@ public class ResFn {
     }
 
     public static FileResource file(File file, String encoding) {
-        return new FileResource(file, encoding);
+        return new FileResource(file).charset(encoding);
     }
 
     public static FileResource file(File file, Charset charset) {
-        return new FileResource(file, charset);
+        return new FileResource(file).charset(charset);
     }
 
     public static FileResource file(String file) {
@@ -32,11 +32,11 @@ public class ResFn {
     }
 
     public static FileResource file(String file, String encoding) {
-        return new FileResource(file, encoding);
+        return new FileResource(file).charset(encoding);
     }
 
     public static FileResource file(String file, Charset charset) {
-        return new FileResource(file, charset);
+        return new FileResource(file).charset(charset);
     }
 
     public static URLResource url(URL url) {
@@ -44,11 +44,11 @@ public class ResFn {
     }
 
     public static URLResource url(URL url, String encoding) {
-        return new URLResource(url, encoding);
+        return new URLResource(url).charset(encoding);
     }
 
     public static URLResource url(URL url, Charset charset) {
-        return new URLResource(url, charset);
+        return new URLResource(url).charset(charset);
     }
 
     public static URLResource url(String url)
@@ -58,12 +58,12 @@ public class ResFn {
 
     public static URLResource url(String url, String encoding)
             throws MalformedURLException {
-        return new URLResource(url, encoding);
+        return new URLResource(url).charset(encoding);
     }
 
     public static URLResource url(String url, Charset charset)
             throws MalformedURLException {
-        return new URLResource(url, charset);
+        return new URLResource(url).charset(charset);
     }
 
 }

@@ -11,18 +11,18 @@ import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.std.rfc.mime.ContentType;
 
 public class URLBlob
-        implements
-            IBlob {
+        extends AbstractBlob {
 
     URL url;
-    String filename;
-    String description;
-    ContentType contentType = null;
 
     public URLBlob(URL url) {
         if (url == null)
             throw new NullPointerException("url");
         this.url = url;
+
+        String path = url.getPath();
+        String baseName = FilePath.getBaseName(path);
+        this.filename = baseName;
     }
 
     public URL getURL() {
@@ -44,30 +44,6 @@ public class URLBlob
     }
 
     @Override
-    public String getFilename() {
-        if (filename == null) {
-            String path = url.getPath();
-            String baseName = FilePath.getBaseName(path);
-            return baseName;
-        } else {
-            return filename;
-        }
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
     public Long getLength()
             throws IOException {
         return FileURL.length(url, null);
@@ -80,21 +56,7 @@ public class URLBlob
         if (time == null)
             return null;
         else
-            return FileDate.toZonedDateTime(time.longValue()).toOffsetDateTime();
-    }
-
-    @Override
-    public ContentType getContentType() {
-        if (contentType == null) {
-            String filename = getFilename();
-            return ContentType.forName(filename);
-        } else {
-            return contentType;
-        }
-    }
-
-    public void setContentType(ContentType contentType) {
-        this.contentType = contentType;
+            return FileDate.toZonedDateTime(time).toOffsetDateTime();
     }
 
     @Override

@@ -14,35 +14,35 @@ import net.bodz.bas.io.adapter.PrintStreamPrintOut;
 import net.bodz.bas.io.adapter.WriterCharOut;
 import net.bodz.bas.io.impl.DecodedCharIn;
 
-public abstract class AbstractIOStreamResource
-        extends AbstractStreamResource {
+public abstract class AbstractIOStreamResource<This>
+        extends AbstractStreamResource<This> {
 
     /** ⇱ Implementaton Of {@link IStreamInputSource}. */
     /* _____________________________ */static section.iface __IN__;
 
     @Override
-    protected abstract InputStream _newInputStream(OpenOption... options)
+    public abstract InputStream newInputStream(OpenOption... options)
             throws IOException;
 
     @Override
-    protected final Reader _newReader(OpenOption... options)
+    public final Reader newReader(OpenOption... options)
             throws IOException {
-        InputStream in = _newInputStream(options);
+        InputStream in = newInputStream(options);
         return new InputStreamReader(in, getCharset());
     }
 
     @Override
-    protected IByteIn _newByteIn(OpenOption... options)
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
-        InputStream in = _newInputStream(options);
+        InputStream in = newInputStream(options);
         // if (in instanceof IByteIn) return (IByteIn) in;
         return new InputStreamByteIn(in);
     }
 
     @Override
-    protected final ICharIn _newCharIn(OpenOption... options)
+    public final ICharIn newCharIn(OpenOption... options)
             throws IOException {
-        IByteIn in = _newByteIn(options);
+        IByteIn in = newByteIn(options);
         return new DecodedCharIn(in, getCharset().newDecoder());
     }
 
@@ -50,35 +50,35 @@ public abstract class AbstractIOStreamResource
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
-    protected abstract OutputStream _newOutputStream(OpenOption... options)
+    public abstract OutputStream newOutputStream(OpenOption... options)
             throws IOException;
 
     @Override
-    protected final Writer _newWriter(OpenOption... options)
+    public final Writer newWriter(OpenOption... options)
             throws IOException {
-        OutputStream out = _newOutputStream(options);
+        OutputStream out = newOutputStream(options);
         return new OutputStreamWriter(out, getCharset());
     }
 
     @Override
-    protected IByteOut _newByteOut(OpenOption... options)
+    public IByteOut newByteOut(OpenOption... options)
             throws IOException {
-        OutputStream out = _newOutputStream(options);
+        OutputStream out = newOutputStream(options);
         // if (out instanceof IByteOut) return (IByteOut) out;
         return new OutputStreamByteOut(out);
     }
 
     @Override
-    protected final IPrintOut _newPrintOut(OpenOption... options)
+    public final IPrintOut newPrintOut(OpenOption... options)
             throws IOException {
-        PrintStream ps = _newPrintStream(options);
+        PrintStream ps = newPrintStream(options);
         return new PrintStreamPrintOut(ps);
     }
 
     @Override
-    protected final ICharOut _newCharOut(OpenOption... options)
+    public final ICharOut newCharOut(OpenOption... options)
             throws IOException {
-        Writer writer = _newWriter(options);
+        Writer writer = newWriter(options);
         return new WriterCharOut(writer);
     }
 

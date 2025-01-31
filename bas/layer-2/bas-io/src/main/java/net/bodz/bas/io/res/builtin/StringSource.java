@@ -11,7 +11,7 @@ import net.bodz.bas.io.impl.EncodedByteIn;
 import net.bodz.bas.io.res.AbstractStreamInputSource;
 
 public class StringSource
-        extends AbstractStreamInputSource {
+        extends AbstractStreamInputSource<StringSource> {
 
     private final String string;
 
@@ -26,12 +26,12 @@ public class StringSource
     }
 
     @Override
-    public boolean isCharPreferred() {
+    public boolean isTextModePreferred() {
         return true;
     }
 
     @Override
-    public ICharIn _newCharIn(OpenOption... options)
+    public ICharIn newCharIn(OpenOption... options)
             throws IOException {
         return new StringCharIn(string);
     }
@@ -49,9 +49,9 @@ public class StringSource
     // }
 
     @Override
-    public IByteIn _newByteIn(OpenOption... options)
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
-        ICharIn charIn = _newCharIn(options);
+        ICharIn charIn = newCharIn(options);
         CharsetEncoder encoder = getCharset().newEncoder();
         return new EncodedByteIn(charIn, encoder);
     }

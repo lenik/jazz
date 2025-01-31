@@ -6,13 +6,14 @@ import java.nio.file.OpenOption;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.io.res.AbstractInputStreamSource;
 
 public class JuzZipEntrySource
-        extends AbstractInputStreamSource {
+        extends AbstractInputStreamSource<JuzZipEntrySource> {
 
-    private ZipFile zipFile;
-    private ZipEntry zipEntry;
+    private final ZipFile zipFile;
+    private final ZipEntry zipEntry;
 
     public JuzZipEntrySource(ZipFile zipFile, ZipEntry zipEntry) {
         if (zipFile == null)
@@ -24,12 +25,19 @@ public class JuzZipEntrySource
     }
 
     @Override
-    public boolean isCharPreferred() {
-        return false;
+    public String getName() {
+        String path = zipEntry.getName();
+        String baseName = FilePath.getBaseName(path);
+        return baseName;
     }
 
     @Override
-    protected InputStream _newInputStream(OpenOption... options)
+    public String getPath() {
+        return zipEntry.getName();
+    }
+
+    @Override
+    public InputStream newInputStream(OpenOption... options)
             throws IOException {
         InputStream in = zipFile.getInputStream(zipEntry);
         return in;

@@ -35,8 +35,7 @@ public class AttachmentResolveProcess
     JsonFormOptions jsonFormOptions;
     ResolvedEntity resolvedEntity;
 
-    public AttachmentResolveProcess(AttachmentResolveCommand type, IEntityCommandContext context,
-            ResolvedEntity resolvedEntity) {
+    public AttachmentResolveProcess(AttachmentResolveCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         super(type, context);
         this.resolvedEntity = resolvedEntity;
     }
@@ -80,35 +79,24 @@ public class AttachmentResolveProcess
 
         File file = new File(objDir, remainingPath);
 
-        if (! file.exists()) {
+        if (!file.exists()) {
             logger.warn("Not-Found: " + file);
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
 
-        if (! file.canRead()) {
+        if (!file.canRead()) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not readable.");
             return null;
         }
 
-        URL url = file.toURI().toURL();
-        ICacheControl cacheControl = getCacheControl(request, url);
-        ResourceTransferer transferer = new ResourceTransferer(request, response);
-        transferer.transfer(url, cacheControl);
+        new ResourceTransferer()//
+                .request(request, response)//
+                .file(file)//
+                .transfer();
 
         // return file;
         return NoRender.INSTANCE;
-    }
-
-    /**
-     * 1 day by default.
-     */
-    private int maxAge = 86400;
-
-    public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
-        MutableContent content = new MutableContent();
-        content.setMaxAge(maxAge);
-        return content;
     }
 
     @Override

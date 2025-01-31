@@ -6,16 +6,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.res.AbstractIOStreamResource;
 
 public class URLResource
-        extends AbstractIOStreamResource {
+        extends AbstractIOStreamResource<URLResource> {
 
     private final URL url;
 
@@ -25,79 +30,53 @@ public class URLResource
         this.url = url;
     }
 
-    public URLResource(URL url, Charset charset) {
-        this(url);
-        this.setCharset(charset);
-    }
-
-    public URLResource(URL url, String charsetName) {
-        this(url);
-        this.setCharset(charsetName);
-    }
-
     public URLResource(String url)
             throws MalformedURLException {
         this(new URL(url));
-    }
-
-    public URLResource(String url, Charset charset)
-            throws MalformedURLException {
-        this(new URL(url), charset);
-    }
-
-    public URLResource(String url, String charsetName)
-            throws MalformedURLException {
-        this(new URL(url), charsetName);
     }
 
     public URL getURL() {
         return url;
     }
 
-// @Override
-// public long getLength() {
-// switch (url.getProtocol()) {
-// case "file":
-// File file = FileURL.toFile(url, null);
-// if (file != null)
-// return file.length();
-// else
-// return -1L;
-// default:
-// return -1L;
-// }
-// }
-
     @Override
-    public boolean isCharPreferred() {
-        return false;
+    public String getPath() {
+        return url.getPath();
     }
 
     @Override
-    protected InputStream _newInputStream(OpenOption... options)
+    public Long getLength() {
+        switch (url.getProtocol()) {
+            case "file":
+                File file = FileURL.toFile(url, null);
+                if (file != null)
+                    return file.length();
+                else
+                    return null;
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public InputStream newInputStream(OpenOption... options)
             throws IOException {
         return url.openStream();
     }
 
-    /**
-     * @param append
-     *            Ignored for non-file protocol URL.
-     */
     @Override
-    protected OutputStream _newOutputStream(OpenOption... options)
+    public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
-
-        boolean append = OpenOptions.isAppend(options);
-
         String protocol = url.getProtocol();
         if ("file".equals(protocol)) {
-            File file = FileURL.toFile(url, null);
-            if (file == null)
-                throw new IOException("Illegal file URL: " + url);
-            else
-                return new FileOutputStream(file, append);
+            try {
+                URI uri = url.toURI();
+                Path path = Paths.get(uri);
+                return Files.newOutputStream(path, options);
+            } catch (URISyntaxException e) {
+                throw new IllegalArgumentException("invalid url: " + url, e);
+            }
         }
-
         return url.openConnection().getOutputStream();
     }
 

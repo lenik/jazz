@@ -15,7 +15,7 @@ import net.bodz.bas.io.adapter.WriterPrintOut;
 import net.bodz.bas.io.res.AbstractStreamOutputTarget;
 
 public class WriterTarget
-        extends AbstractStreamOutputTarget {
+        extends AbstractStreamOutputTarget<WriterTarget> {
 
     private final Writer out;
 
@@ -35,7 +35,7 @@ public class WriterTarget
      * @return {@link Writer} with {@link Writer#close()} filtered out.
      */
     @Override
-    public Writer _newWriter(OpenOption... options)
+    public Writer newWriter(OpenOption... options)
             throws IOException {
         return new FilterWriter(out) {
             @Override
@@ -46,29 +46,29 @@ public class WriterTarget
     }
 
     @Override
-    protected OutputStream _newOutputStream(OpenOption... options)
+    public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
-        Writer writer = _newWriter(options);
+        Writer writer = newWriter(options);
         return new WriterOutputStream(writer, getCharset());
     }
 
     @Override
-    protected IByteOut _newByteOut(OpenOption... options)
+    public IByteOut newByteOut(OpenOption... options)
             throws IOException {
-        OutputStream outputStream = _newOutputStream(options);
+        OutputStream outputStream = newOutputStream(options);
         return new OutputStreamByteOut(outputStream);
     }
 
     @Override
-    protected ICharOut _newCharOut(OpenOption... options)
+    public ICharOut newCharOut(OpenOption... options)
             throws IOException {
-        return _newPrintOut(options);
+        return newPrintOut(options);
     }
 
     @Override
-    protected IPrintOut _newPrintOut(OpenOption... options)
+    public IPrintOut newPrintOut(OpenOption... options)
             throws IOException {
-        Writer writer = _newWriter(options);
+        Writer writer = newWriter(options);
         return new WriterPrintOut(writer);
     }
 

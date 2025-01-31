@@ -1,7 +1,9 @@
 package net.bodz.bas.io.res;
 
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Writer;
@@ -9,81 +11,156 @@ import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.file.OpenOption;
 
+import net.bodz.bas.c.java.io.DataOutputAdapter;
 import net.bodz.bas.c.java.io.IDataOutput;
 import net.bodz.bas.c.java.io.IObjectOutput;
+import net.bodz.bas.c.java.io.ObjectOutputAdapter;
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.IDataOut;
 import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.adapter.ByteOutOutputStream;
+import net.bodz.bas.io.adapter.CharOutWriter;
+import net.bodz.bas.io.data.DataOutImplBE;
+import net.bodz.bas.io.data.DataOutImplLE;
+import net.bodz.bas.io.impl.PrintOutImpl;
+import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.io.res.tools.IStreamWriting;
 import net.bodz.bas.io.res.tools.StreamWriting;
+import net.bodz.bas.meta.decl.DefaultImpl;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.sugar.IToChain;
+import net.bodz.bas.sugar.Tooling;
 
 public interface IStreamOutputTarget
-        extends
-            ISimpleStreamOutputTarget,
-            IToChain {
+        extends IResourceEntry {
 
     @Override
-    void setCharset(Charset charset);
-
-    /**
-     * @throws IllegalCharsetNameException
-     *             If <code>charsetName</code> isn't existed.
-     */
-    void setCharset(String charsetName);
+    default boolean canRead() {
+        return false;
+    }
 
     /**
      * @return non-<code>null</code> value.
      */
-    IPrintOut newPrintOut(OpenOption... options)
+    IByteOut newByteOut(OpenOption... options)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    IDataOut newDataOutLE(OpenOption... options)
+    ICharOut newCharOut(OpenOption... options)
             throws IOException;
 
-    /**
-     * @return non-<code>null</code> value.
-     */
-    IDataOut newDataOutBE(OpenOption... options)
-            throws IOException;
+    @DefaultImpl(PrintOutImpl.class)
+    @NotNull
+    default IPrintOut newPrintOut(OpenOption... options)
+            throws IOException {
+        ICharOut charOut = newCharOut(options);
+        return PrintOutImpl.from(charOut);
+    }
 
-    /**
-     * @return non-<code>null</code> value.
-     */
-    OutputStream newOutputStream(OpenOption... options)
-            throws IOException;
+    @DefaultImpl(DataOutImplLE.class)
+    @NotNull
+    default IDataOut newDataOutLE(OpenOption... options)
+            throws IOException {
+        IByteOut byteOut = newByteOut(options);
+        return DataOutImplLE.from(byteOut);
+    }
 
-    /**
-     * @return non-<code>null</code> value.
-     */
-    IDataOutput newDataOutput(OpenOption... options)
-            throws IOException;
+    @DefaultImpl(DataOutImplBE.class)
+    @NotNull
+    default IDataOut newDataOutBE(OpenOption... options)
+            throws IOException {
+        IByteOut byteOut = newByteOut(options);
+        return DataOutImplBE.from(byteOut);
+    }
 
-    /**
-     * @return non-<code>null</code> value.
-     */
-    IObjectOutput newObjectOutput(OpenOption... options)
-            throws IOException;
+    @DefaultImpl(ByteOutOutputStream.class)
+    @NotNull
+    default OutputStream newOutputStream(OpenOption... options)
+            throws IOException {
+        IByteOut byteOut = newByteOut(options);
+        if (byteOut == null)
+            throw new NullPointerException("byteOut");
+        return new ByteOutOutputStream(byteOut);
+    }
 
-    /**
-     * @return non-<code>null</code> value.
-     */
-    PrintStream newPrintStream(OpenOption... options)
-            throws IOException;
+    @DefaultImpl(DataOutputAdapter.class)
+    @NotNull
+    default IDataOutput newDataOutput(OpenOption... options)
+            throws IOException {
+        OutputStream outputStream = newOutputStream(options);
+        if (outputStream == null)
+            throw new NullPointerException("outputStream");
 
-    /**
-     * @return non-<code>null</code> value.
-     */
-    Writer newWriter(OpenOption... options)
-            throws IOException;
+        if (outputStream instanceof IDataOutput)
+            return (IDataOutput) outputStream;
 
-    /**
-     * @return non-<code>null</code> value.
-     */
-    BufferedWriter newBufferedWriter(OpenOption... options)
-            throws IOException;
+        DataOutputStream dos;
+        if (outputStream instanceof DataOutputStream)
+            dos = (DataOutputStream) outputStream;
+        else
+            dos = new DataOutputStream(outputStream);
+
+        IDataOutput dataOut = new DataOutputAdapter(dos);
+        return dataOut;
+    }
+
+    @DefaultImpl(ObjectOutputStream.class)
+    @NotNull
+    default IObjectOutput newObjectOutput(OpenOption... options)
+            throws IOException {
+        OutputStream outputStream = newOutputStream(options);
+
+        if (outputStream instanceof IObjectOutput)
+            return (IObjectOutput) outputStream;
+
+        ObjectOutputStream oos;
+        if (outputStream instanceof ObjectOutputStream)
+            oos = (ObjectOutputStream) outputStream;
+        else
+            oos = new ObjectOutputStream(outputStream);
+
+        return new ObjectOutputAdapter(oos);
+    }
+
+    @DefaultImpl(PrintStream.class)
+    @NotNull
+    default PrintStream newPrintStream(OpenOption... options)
+            throws IOException {
+        OutputStream outputStream = newOutputStream(options);
+        if (outputStream == null)
+            throw new NullPointerException("outputStream");
+        if (outputStream instanceof PrintStream)
+            return (PrintStream) outputStream;
+        return new PrintStream(outputStream);
+    }
+
+    @DefaultImpl(CharOutWriter.class)
+    @NotNull
+    default Writer newWriter(OpenOption... options)
+            throws IOException {
+        ICharOut charOut = newCharOut(options);
+        if (charOut == null)
+            throw new NullPointerException("charOut");
+        return new CharOutWriter(charOut);
+    }
+
+    @DefaultImpl(BufferedWriter.class)
+    @NotNull
+    default BufferedWriter newBufferedWriter(OpenOption... options)
+            throws IOException {
+        Writer writer = newWriter(options);
+        return new BufferedWriter(writer);
+    }
+
+    default ITreeOut newTreeOut(OpenOption... options)
+            throws IOException {
+        ICharOut charOut = newCharOut(options);
+        return TreeOutImpl.from(charOut);
+    }
 
     default IStreamWriting write() {
         return new StreamWriting(this);

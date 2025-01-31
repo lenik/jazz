@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import net.bodz.bas.html.viz.util.StreamContentBlob;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.content.MutableContent;
@@ -29,7 +30,7 @@ public abstract class AbstractFileAccessServlet
     /**
      * 1 day by default.
      */
-    private int maxAge = 86400;
+    int maxAge = 86400;
 
     @Override
     public final void init()
@@ -81,19 +82,14 @@ public abstract class AbstractFileAccessServlet
             return;
         }
 
-        URL url = file.toURI().toURL();
-        ICacheControl cacheControl = getCacheControl(req, url);
-        ResourceTransferer transferer = new ResourceTransferer(req, resp);
-        transferer.transfer(url, cacheControl);
+        new ResourceTransferer()//
+                .request(req, resp)//
+                .file(file)//
+                .maxAge(maxAge)//
+                .transfer();
     }
 
     protected abstract File getLocalRoot(HttpServletRequest req);
-
-    public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
-        MutableContent content = new MutableContent();
-        content.setMaxAge(maxAge);
-        return content;
-    }
 
     public final int getMaxAge() {
         return maxAge;

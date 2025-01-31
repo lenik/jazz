@@ -1,23 +1,41 @@
 package net.bodz.bas.io.res;
 
-import java.io.*;
-import java.nio.file.OpenOption;
-
+import net.bodz.bas.c.java.io.IDataInput;
 import net.bodz.bas.c.java.io.IDataOutput;
 import net.bodz.bas.c.java.io.IObjectInput;
 import net.bodz.bas.c.java.io.IObjectOutput;
 import net.bodz.bas.c.java.io.LineReader;
+import net.bodz.bas.io.IByteIOS;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.io.ICharIOS;
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.IDataOut;
 import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.bit.IBitIn;
 import net.bodz.bas.io.impl.LAReader;
+import net.bodz.bas.io.res.tools.IStreamReading;
+import net.bodz.bas.io.res.tools.IStreamWriting;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.t.model.IWrapper;
 
-public abstract class ProxyStreamResource
-        extends AbstractStreamResource// implements IWrapper<IStreamResource>
-{
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.file.OpenOption;
+
+public abstract class ProxyStreamResource<This>
+        implements IStreamResource,
+                   IWrapper<IStreamResource> {
 
     protected IStreamResource _orig;
 
@@ -25,117 +43,220 @@ public abstract class ProxyStreamResource
         this._orig = _orig;
     }
 
-    public IStreamResource getWrapped()
-            throws IOException {
+    public IStreamResource getWrapped() {
         return _orig;
     }
 
     @Override
-    protected IByteIn _newByteIn(OpenOption... options)
+    public String getPath() {
+        return getWrapped().getPath();
+    }
+
+    @Override
+    public String getName() {
+        return getWrapped().getName();
+    }
+
+    @Override
+    public boolean isTextModePreferred() {
+        return getWrapped().isTextModePreferred();
+    }
+
+    @Override
+    public boolean isTextMode() {
+        return getWrapped().isTextMode();
+    }
+
+    @NotNull
+    @Override
+    public Charset getPreferredCharset() {
+        return getWrapped().getPreferredCharset();
+    }
+
+    @Override
+    public Charset getCharset() {
+        return getWrapped().getCharset();
+    }
+
+    @Override
+    public Long getLength()
+            throws IOException {
+        return getWrapped().getLength();
+    }
+
+    @NotNull
+    @Override
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
         return getWrapped().newByteIn(options);
     }
 
     @Override
-    protected IByteOut _newByteOut(OpenOption... options)
+    public IByteIOS newByteIOS(OpenOption... options)
+            throws IOException {
+        return getWrapped().newByteIOS(options);
+    }
+
+    @Override
+    public ICharIOS newCharIOS(OpenOption... options)
+            throws IOException {
+        return getWrapped().newCharIOS(options);
+    }
+
+    @NotNull
+    @Override
+    public ICharIn newCharIn(OpenOption... options)
+            throws IOException {
+        return getWrapped().newCharIn(options);
+    }
+
+    @NotNull
+    @Override
+    public InputStream newInputStream(OpenOption... options)
+            throws IOException {
+        return getWrapped().newInputStream(options);
+    }
+
+    @NotNull
+    @Override
+    public IDataInput newDataInput(OpenOption... options)
+            throws IOException {
+        return getWrapped().newDataInput(options);
+    }
+
+    @NotNull
+    @Override
+    public IObjectInput newObjectInput(OpenOption... options)
+            throws IOException {
+        return getWrapped().newObjectInput(options);
+    }
+
+    @NotNull
+    @Override
+    public Reader newReader(OpenOption... options)
+            throws IOException {
+        return getWrapped().newReader(options);
+    }
+
+    @NotNull
+    @Override
+    public LAReader newLAReader(OpenOption... options)
+            throws IOException {
+        return getWrapped().newLAReader(options);
+    }
+
+    @NotNull
+    @Override
+    public BufferedReader newBufferedReader(OpenOption... options)
+            throws IOException {
+        return getWrapped().newBufferedReader(options);
+    }
+
+    @NotNull
+    @Override
+    public LineReader newLineReader(OpenOption... options)
+            throws IOException {
+        return getWrapped().newLineReader(options);
+    }
+
+    @NotNull
+    @Override
+    public IBitIn newBitIn(OpenOption... options)
+            throws IOException {
+        return getWrapped().newBitIn(options);
+    }
+
+    @Override
+    public IDataIn newDataInLE(OpenOption... options)
+            throws IOException {
+        return getWrapped().newDataInLE(options);
+    }
+
+    @Override
+    public IDataIn newDataInBE(OpenOption... options)
+            throws IOException {
+        return getWrapped().newDataInBE(options);
+    }
+
+    @Override
+    public IByteOut newByteOut(OpenOption... options)
             throws IOException {
         return getWrapped().newByteOut(options);
     }
 
     @Override
-    protected ICharIn _newCharIn(OpenOption... options)
-            throws IOException {
-        return getWrapped().newCharIn(options);
-    }
-
-    @Override
-    protected ICharOut _newCharOut(OpenOption... options)
+    public ICharOut newCharOut(OpenOption... options)
             throws IOException {
         return getWrapped().newCharOut(options);
     }
 
+    @NotNull
     @Override
-    protected InputStream _newInputStream(OpenOption... options)
-            throws IOException {
-        return getWrapped().newInputStream(options);
-    }
-
-    @Override
-    protected IPrintOut _newPrintOut(OpenOption... options)
+    public IPrintOut newPrintOut(OpenOption... options)
             throws IOException {
         return getWrapped().newPrintOut(options);
     }
 
+    @NotNull
     @Override
-    protected IObjectInput _newObjectInput(OpenOption... options)
-            throws IOException {
-        return getWrapped().newObjectInput(options);
-    }
-
-    @Override
-    protected Reader _newReader(OpenOption... options)
-            throws IOException {
-        return getWrapped().newReader(options);
-    }
-
-    @Override
-    protected IDataOut _newDataOutLE(OpenOption... options)
+    public IDataOut newDataOutLE(OpenOption... options)
             throws IOException {
         return getWrapped().newDataOutLE(options);
     }
 
+    @NotNull
     @Override
-    protected IDataOut _newDataOutBE(OpenOption... options)
+    public IDataOut newDataOutBE(OpenOption... options)
             throws IOException {
         return getWrapped().newDataOutBE(options);
     }
 
+    @NotNull
     @Override
-    protected BufferedReader _newBufferedReader(OpenOption... options)
-            throws IOException {
-        return getWrapped().newBufferedReader(options);
-    }
-
-    @Override
-    protected LineReader _newLineReader(OpenOption... options)
-            throws IOException {
-        return getWrapped().newLineReader(options);
-    }
-
-    @Override
-    protected LAReader _newLAReader(OpenOption... options)
-            throws IOException {
-        return getWrapped().newLAReader(options);
-    }
-
-    @Override
-    protected OutputStream _newOutputStream(OpenOption... options)
+    public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
         return getWrapped().newOutputStream(options);
     }
 
+    @NotNull
     @Override
-    protected IDataOutput _newDataOutput(OpenOption... options)
+    public IDataOutput newDataOutput(OpenOption... options)
             throws IOException {
         return getWrapped().newDataOutput(options);
     }
 
+    @NotNull
     @Override
-    protected IObjectOutput _newObjectOutput(OpenOption... options)
+    public IObjectOutput newObjectOutput(OpenOption... options)
             throws IOException {
         return getWrapped().newObjectOutput(options);
     }
 
+    @NotNull
     @Override
-    protected PrintStream _newPrintStream(OpenOption... options)
+    public PrintStream newPrintStream(OpenOption... options)
             throws IOException {
         return getWrapped().newPrintStream(options);
     }
 
+    @NotNull
     @Override
-    protected Writer _newWriter(OpenOption... options)
+    public Writer newWriter(OpenOption... options)
             throws IOException {
         return getWrapped().newWriter(options);
+    }
+
+    @NotNull
+    @Override
+    public BufferedWriter newBufferedWriter(OpenOption... options)
+            throws IOException {
+        return getWrapped().newBufferedWriter(options);
+    }
+
+    @Override
+    public ITreeOut newTreeOut(OpenOption... options)
+            throws IOException {
+        return getWrapped().newTreeOut(options);
     }
 
 }

@@ -13,7 +13,7 @@ import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
 
 public class CharsResource
-        extends AbstractTextResource {
+        extends AbstractTextResource<CharsResource> {
 
     private MovableCharBuffer buffer;
 
@@ -38,23 +38,18 @@ public class CharsResource
     }
 
     @Override
-    public long getLength() {
+    public Long getLength() {
         if (buffer == null)
             return 0L;
         else
-            return buffer.size();
-    }
-
-    @Override
-    public boolean isCharPreferred() {
-        return true;
+            return (long) buffer.size();
     }
 
     /**
      * @return {@link Writer} with {@link Writer#close()} filtered out.
      */
     @Override
-    protected Writer _newWriter(OpenOption... options)
+    public Writer newWriter(OpenOption... options)
             throws IOException {
         if (buffer == null)
             buffer = new MovableCharBuffer();
@@ -72,7 +67,7 @@ public class CharsResource
     }
 
     @Override
-    protected IPrintOut _newPrintOut(OpenOption... options)
+    public IPrintOut newPrintOut(OpenOption... options)
             throws IOException {
         if (buffer == null)
             buffer = new MovableCharBuffer();
@@ -90,13 +85,13 @@ public class CharsResource
     }
 
     @Override
-    protected ICharOut _newCharOut(OpenOption... options)
+    public ICharOut newCharOut(OpenOption... options)
             throws IOException {
-        return _newPrintOut(options);
+        return newPrintOut(options);
     }
 
     @Override
-    protected ICharIn _newCharIn(OpenOption... options)
+    public ICharIn newCharIn(OpenOption... options)
             throws IOException {
         if (buffer == null)
             throw new IllegalStateException("Resource isn't created, yet");

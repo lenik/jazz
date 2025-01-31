@@ -49,7 +49,7 @@ public class FilterFile
     }
 
     @Override
-    protected IRandomResource _getResource(Charset charset) {
+    public IRandomResource getResource(Charset charset) {
         return null;
     }
 

@@ -45,10 +45,10 @@ public class StaticVhostFileAccessServlet
             throws ServletException {
         super.setInitParameter(name, value);
         switch (name) {
-        case ATTRIBUTE_PATH:
-            value = FilePath.removeTrailingSlashes(value);
-            start = new File(value);
-            break;
+            case ATTRIBUTE_PATH:
+                value = FilePath.removeTrailingSlashes(value);
+                start = new File(value);
+                break;
         }
     }
 
@@ -63,11 +63,6 @@ public class StaticVhostFileAccessServlet
         if (sub != null)
             vstart = new File(vstart, sub);
         return vstart;
-    }
-
-    @Override
-    public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
-        return super.getCacheControl(req, url);
     }
 
 }

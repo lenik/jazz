@@ -158,7 +158,7 @@ class ResolveProcess
                 Charset charset = Charsets.UTF_8;
                 byte[] bin = markdown.getBytes(charset);
                 FileContent fileContent = new FileContent(fileName, ContentTypes.text_plain, bin);
-                fileContent.setEncoding(charset.name());
+                fileContent.setCharset(charset);
                 return fileContent;
             }
             return new StringContent(ContentTypes.text_plain, markdown);

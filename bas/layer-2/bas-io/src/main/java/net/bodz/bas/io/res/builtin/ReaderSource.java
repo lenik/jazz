@@ -14,7 +14,7 @@ import net.bodz.bas.io.adapter.ReaderCharIn;
 import net.bodz.bas.io.res.AbstractStreamInputSource;
 
 public class ReaderSource
-        extends AbstractStreamInputSource {
+        extends AbstractStreamInputSource<ReaderSource> {
 
     private final Reader in;
 
@@ -29,7 +29,7 @@ public class ReaderSource
     }
 
     @Override
-    public boolean isCharPreferred() {
+    public boolean isTextModePreferred() {
         return true;
     }
 
@@ -37,30 +37,29 @@ public class ReaderSource
      * @return {@link Reader} with {@link Reader#close()} filtered out.
      */
     @Override
-    protected Reader _newReader(OpenOption... options)
+    public Reader newReader(OpenOption... options)
             throws IOException {
         return new FilterReader(in) {
             @Override
-            public void close()
-                    throws IOException {
+            public void close() {
             }
         };
     }
 
     @Override
-    protected InputStream _newInputStream(OpenOption... options)
+    public InputStream newInputStream(OpenOption... options)
             throws IOException {
         return new ReaderInputStream(newReader(options), getCharset());
     }
 
     @Override
-    public IByteIn _newByteIn(OpenOption... options)
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
         return new InputStreamByteIn(newInputStream(options));
     }
 
     @Override
-    public ICharIn _newCharIn(OpenOption... options)
+    public ICharIn newCharIn(OpenOption... options)
             throws IOException {
         return new ReaderCharIn(newReader(options));
     }

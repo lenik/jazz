@@ -4,15 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.servlet.ResourceTransferer;
-import net.bodz.bas.std.rfc.http.ICacheControl;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 public class ClassResourceAccessorServlet
         extends AbstractFileAccessServlet {
@@ -56,9 +55,11 @@ public class ClassResourceAccessorServlet
             return;
         }
 
-        ResourceTransferer transferer = new ResourceTransferer(req, resp);
-        ICacheControl cacheControl = getCacheControl(req, url);
-        transferer.transfer(url, cacheControl);
+        new ResourceTransferer()//
+                .request(req, resp)//
+                .url(url)//
+                .maxAge(maxAge)//
+                .transfer();
     }
 
     protected ClassLoader getClassLoader() {
@@ -69,11 +70,6 @@ public class ClassResourceAccessorServlet
     @Override
     protected File getLocalRoot(HttpServletRequest req) {
         return null;
-    }
-
-    @Override
-    public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
-        return super.getCacheControl(req, url);
     }
 
 }

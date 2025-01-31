@@ -10,6 +10,9 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.i18n.II18nVarConsts;
 import net.bodz.bas.io.res.*;
+import net.bodz.bas.io.res.bak.IOpenResourceListener;
+import net.bodz.bas.io.res.bak.IOpenResourceSource;
+import net.bodz.bas.io.res.bak.OpenResourceEvent;
 import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.path.BadPathException;
@@ -20,7 +23,7 @@ import net.bodz.bas.vfs.util.content.LazyProbing;
 
 public abstract class AbstractFile
         extends FsObject
-        implements IFile/* , Serializable */{
+        implements IFile/* , Serializable */ {
 
     private Charset preferredCharset = Charset.defaultCharset();
 
@@ -32,8 +35,8 @@ public abstract class AbstractFile
     /**
      * @param device
      *            Non-<code>null</code> device object which this file residues on.
-     * @param path
-     *            Non-<code>null</code> path.
+     * @param baseName
+     *            Non-<code>null</code> name.
      */
     public AbstractFile(IVfsDevice device, String baseName) {
         super(device, baseName);
@@ -62,10 +65,12 @@ public abstract class AbstractFile
             if (relativePath.startsWith(IPath.SEPARATOR)) {
                 relativePath = relativePath.substring(IPath.SEPARATOR_LEN);
                 ctx = getDevice().getRootFile();
-            } else if (relativePath.startsWith(".." + IPath.SEPARATOR)) {
+            }
+            else if (relativePath.startsWith(".." + IPath.SEPARATOR)) {
                 relativePath = relativePath.substring(IPath.SEPARATOR_LEN + 2);
                 ctx = getParentFile();
-            } else
+            }
+            else
                 break;
         }
 
@@ -266,7 +271,7 @@ public abstract class AbstractFile
     /**
      * @return <code>null</code> If no resource available for this fs-entry.
      */
-    protected abstract IRandomResource _getResource(Charset charset);
+    public abstract IRandomResource getResource(Charset charset);
 
     /**
      * @return <code>null</code> If no resource available for this fs-entry.
@@ -289,15 +294,6 @@ public abstract class AbstractFile
     }
 
     @Override
-    public final IRandomResource getResource(Charset charset) {
-        IRandomResource resource = _getResource(charset);
-        if (resource == null)
-            return null;
-        bindOpenEvent(resource);
-        return resource;
-    }
-
-    @Override
     public final IStreamInputSource getInputSource() {
         Charset charset = getPreferredCharset();
         if (charset == null)
@@ -312,13 +308,7 @@ public abstract class AbstractFile
     }
 
     @Override
-    public final IStreamInputSource getInputSource(Charset charset) {
-        IStreamInputSource source = _getInputSource(charset);
-        bindOpenEvent(source);
-        return source;
-    }
-
-    protected IStreamInputSource _getInputSource(Charset charset) {
+    public IStreamInputSource getInputSource(Charset charset) {
         IStreamResource resource = getResource(charset);
         return resource;
     }
@@ -339,13 +329,7 @@ public abstract class AbstractFile
     }
 
     @Override
-    public final IStreamOutputTarget getOutputTarget(Charset charset) {
-        IStreamOutputTarget target = _getOutputTarget(charset);
-        bindOpenEvent(target);
-        return target;
-    }
-
-    protected IStreamOutputTarget _getOutputTarget(Charset charset) {
+    public IStreamOutputTarget getOutputTarget(Charset charset) {
         IStreamResource resource = getResource(charset);
         if (resource == null)
             throw new NullPointerException("resource");

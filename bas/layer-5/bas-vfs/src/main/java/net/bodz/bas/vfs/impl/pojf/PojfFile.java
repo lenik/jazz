@@ -133,7 +133,7 @@ public class PojfFile
     }
 
     @Override
-    protected IRandomResource _getResource(Charset charset) {
+    public IRandomResource getResource(Charset charset) {
         FileResource resource = ResFn.file(_file);
         resource.setCharset(charset);
         return resource;

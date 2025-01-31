@@ -34,7 +34,7 @@ public class ZipEntryFile
         extends AbstractFile {
 
     // private ZipEntryFile parentFile;
-    private Map<String, ZipEntryFile> childMap = new TreeMap<String, ZipEntryFile>();
+    private final Map<String, ZipEntryFile> childMap = new TreeMap<String, ZipEntryFile>();
 
     private ZipEntry zipEntry;
 
@@ -167,22 +167,18 @@ public class ZipEntryFile
     }
 
     @Override
-    protected IRandomResource _getResource(Charset charset) {
-        return new AbstractIORandomResource() {
+    public IRandomResource getResource(Charset charset) {
+        class Res
+                extends AbstractIORandomResource<Res> {
 
             @Override
-            public boolean isCharPreferred() {
-                return false;
-            }
-
-            @Override
-            protected InputStream _newInputStream(OpenOption... options)
+            public InputStream newInputStream(OpenOption... options)
                     throws IOException {
                 return zipEntry.getInputSource().newInputStream(options);
             }
 
             @Override
-            protected OutputStream _newOutputStream(OpenOption... options)
+            public OutputStream newOutputStream(OpenOption... options)
                     throws IOException {
                 return null;
             }
@@ -197,11 +193,12 @@ public class ZipEntryFile
                 return null;
             }
 
-        };
+        }
+        return new Res();
     }
 
     @Override
-    protected IStreamInputSource _getInputSource(Charset charset) {
+    public IStreamInputSource getInputSource(Charset charset) {
         return zipEntry.getInputSource();
     }
 

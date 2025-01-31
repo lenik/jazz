@@ -12,7 +12,7 @@ import net.bodz.bas.io.adapter.CharBufferCharIn;
 import net.bodz.bas.io.adapter.CharBufferCharOut;
 
 public class CharArrayResource
-        extends AbstractTextResource {
+        extends AbstractTextResource<CharArrayResource> {
 
     private final char[] array;
     private final int start;
@@ -53,24 +53,19 @@ public class CharArrayResource
     }
 
     @Override
-    public long getLength() {
-        return end - start;
+    public Long getLength() {
+        return (long) (end - start);
     }
 
     @Override
-    public boolean isCharPreferred() {
-        return true;
-    }
-
-    @Override
-    public ICharIn _newCharIn(OpenOption... options)
+    public ICharIn newCharIn(OpenOption... options)
             throws IOException {
         CharBuffer charBuffer = CharBuffer.wrap(array, start, end - start);
         return new CharBufferCharIn(charBuffer);
     }
 
     @Override
-    public ICharOut _newCharOut(OpenOption... options)
+    public ICharOut newCharOut(OpenOption... options)
             throws IOException {
         // XXX CharArrayResource append
         CharBuffer charBuffer = CharBuffer.wrap(array, start, end - start);

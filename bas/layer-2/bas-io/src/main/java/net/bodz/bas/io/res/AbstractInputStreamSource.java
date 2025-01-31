@@ -10,32 +10,35 @@ import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.adapter.InputStreamByteIn;
 import net.bodz.bas.io.impl.DecodedCharIn;
+import net.bodz.bas.meta.decl.DefaultImpl;
 
-public abstract class AbstractInputStreamSource
-        extends AbstractStreamInputSource {
+public abstract class AbstractInputStreamSource<This>
+        extends AbstractStreamInputSource<This> {
 
     @Override
-    protected abstract InputStream _newInputStream(OpenOption... options)
+    public abstract InputStream newInputStream(OpenOption... options)
             throws IOException;
 
+    @DefaultImpl(InputStreamReader.class)
     @Override
-    protected Reader _newReader(OpenOption... options)
+    public Reader newReader(OpenOption... options)
             throws IOException {
         InputStream in = newInputStream(options);
         return new InputStreamReader(in, getCharset());
     }
 
+    @DefaultImpl(InputStreamByteIn.class)
     @Override
-    protected IByteIn _newByteIn(OpenOption... options)
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
         InputStream in = newInputStream(options);
         return new InputStreamByteIn(in);
     }
 
     @Override
-    protected ICharIn _newCharIn(OpenOption... options)
+    public ICharIn newCharIn(OpenOption... options)
             throws IOException {
-        IByteIn in = _newByteIn(options);
+        IByteIn in = newByteIn(options);
         return new DecodedCharIn(in, getCharset().newDecoder());
     }
 

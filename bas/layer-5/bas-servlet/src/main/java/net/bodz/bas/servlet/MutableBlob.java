@@ -7,17 +7,12 @@ import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 
 public abstract class MutableBlob
-        implements
-            IBlob {
+        extends AbstractBlob {
 
     String location;
     String path;
-    String filename;
-    ContentType contentType = ContentTypes.application_octet_stream;
-    String encoding;
     Long length;
     OffsetDateTime lastModified;
-    String description;
 
     @Override
     public String getLocation() {
@@ -38,33 +33,6 @@ public abstract class MutableBlob
     }
 
     @Override
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    @Override
-    public ContentType getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(ContentType contentType) {
-        this.contentType = contentType;
-    }
-
-    @Override
-    public String getEncoding() {
-        return encoding;
-    }
-
-    public void setContentEncoding(String contentEncoding) {
-        this.encoding = contentEncoding;
-    }
-
-    @Override
     public Long getLength()
             throws IOException {
         return length;
@@ -82,16 +50,6 @@ public abstract class MutableBlob
 
     public void setLastModified(OffsetDateTime lastModified) {
         this.lastModified = lastModified;
-    }
-
-    @Override
-    public String getDescription()
-            throws IOException {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
 }

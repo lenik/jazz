@@ -13,6 +13,7 @@ import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.adapter.ByteBufferByteIn;
 import net.bodz.bas.io.adapter.ByteBufferByteOut;
+import net.bodz.bas.meta.decl.DefaultImpl;
 
 public class ByteArrayResource
         extends AbstractBinaryResource {
@@ -36,10 +37,8 @@ public class ByteArrayResource
      *             If either <code>off</code> or <code>len</code> is out of range.
      */
     public ByteArrayResource(byte[] array, int offset, int length) {
-        if (array == null)
-            throw new NullPointerException("array");
-        if (offset < 0 || offset > array.length)
-            throw new IndexOutOfBoundsException("Bad offset: " + offset);
+        if (array == null) throw new NullPointerException("array");
+        if (offset < 0 || offset > array.length) throw new IndexOutOfBoundsException("Bad offset: " + offset);
         if (length < 0 || (offset + length) > array.length)
             throw new IndexOutOfBoundsException("Bad length: " + length);
         this.array = array;
@@ -60,24 +59,20 @@ public class ByteArrayResource
     }
 
     @Override
-    public long getLength() {
-        return end - start;
+    public Long getLength() {
+        return (long) (end - start);
     }
 
+    @DefaultImpl(ByteBufferByteIn.class)
     @Override
-    public boolean isCharPreferred() {
-        return false;
-    }
-
-    @Override
-    public IByteIn _newByteIn(OpenOption... options)
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
         ByteBuffer byteBuffer = ByteBuffer.wrap(array, start, end - start);
         return new ByteBufferByteIn(byteBuffer);
     }
 
     @Override
-    public IByteOut _newByteOut(OpenOption... options)
+    public IByteOut newByteOut(OpenOption... options)
             throws IOException {
 
         boolean append = OpenOptions.isAppend(options);
@@ -89,18 +84,6 @@ public class ByteArrayResource
     }
 
     // XXX byte/char IOS, seeker, cropper
-
-    @Override
-    protected IByteIOS _newByteIOS(OpenOption... options)
-            throws IOException {
-        return null;
-    }
-
-    @Override
-    protected ICharIOS _newCharIOS(OpenOption... options)
-            throws IOException {
-        return null;
-    }
 
     @Override
     protected ISeekable getSeeker() {

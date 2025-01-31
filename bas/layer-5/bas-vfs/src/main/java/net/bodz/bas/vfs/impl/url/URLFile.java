@@ -167,19 +167,19 @@ public class URLFile
     }
 
     @Override
-    protected IRandomResource _getResource(Charset charset) {
+    public IRandomResource getResource(Charset charset) {
         throw new UnsupportedOperationException("URL resource is stream-based.");
     }
 
     @Override
-    protected IStreamInputSource _getInputSource(Charset charset) {
+    public IStreamInputSource getInputSource(Charset charset) {
         URLResource resource = ResFn.url(url);
         resource.setCharset(charset);
         return resource;
     }
 
     @Override
-    protected IStreamOutputTarget _getOutputTarget(Charset charset) {
+    public IStreamOutputTarget getOutputTarget(Charset charset) {
         URLResource resource = ResFn.url(url);
         resource.setCharset(charset);
         return resource;

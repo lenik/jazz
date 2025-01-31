@@ -104,7 +104,7 @@ public class ApacheFile
     }
 
     @Override
-    protected IRandomResource _getResource(Charset charset) {
+    public IRandomResource getResource(Charset charset) {
         FileObjectResource resource = new FileObjectResource(fileObject);
         resource.setCharset(charset);
         return resource;

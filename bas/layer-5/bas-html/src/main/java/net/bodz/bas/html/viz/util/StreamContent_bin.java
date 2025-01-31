@@ -16,8 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class StreamContent_bin
         extends AbstractHttpViewBuilder<IStreamContent>
-        implements
-            IHttpViewBuilder<IStreamContent> {
+        implements IHttpViewBuilder<IStreamContent> {
 
     @Override
     public Class<?> getValueType() {
@@ -31,20 +30,18 @@ public class StreamContent_bin
 
     @Override
     public String getEncoding(IStreamContent value) {
-        return value.getEncoding();
+        return value.getCharset().name();
     }
 
     @Override
     public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<IStreamContent> ref)
             throws ViewBuilderException, IOException {
-        HttpServletRequest req = ctx.getRequest();
-
         IStreamContent content = ref.get();
-        StreamContentBlob blob = new StreamContentBlob(content);
-
-        ResourceTransferer transferer = new ResourceTransferer(req, resp);
-
-        transferer.transfer(blob, true, content);
+        new ResourceTransferer()//
+                .request(ctx)//
+                .blob(new StreamContentBlob(content))//
+                .asAttachment()//
+                .transfer();
         return null;
     }
 

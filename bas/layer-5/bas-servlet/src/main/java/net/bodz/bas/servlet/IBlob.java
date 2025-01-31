@@ -1,11 +1,12 @@
 package net.bodz.bas.servlet;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.OffsetDateTime;
-
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.time.OffsetDateTime;
 
 public interface IBlob {
 
@@ -20,7 +21,7 @@ public interface IBlob {
         return ContentTypes.application_octet_stream;
     }
 
-    default String getEncoding() {
+    default Charset getCharset() {
         return null;
     }
 
@@ -38,8 +39,7 @@ public interface IBlob {
         return null;
     }
 
-    default String getDescription()
-            throws IOException {
+    default String getDescription() {
         return null;
     }
 

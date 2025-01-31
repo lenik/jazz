@@ -2,6 +2,7 @@ package net.bodz.bas.html.viz.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.time.OffsetDateTime;
 
 import net.bodz.bas.repr.content.IStreamContent;
@@ -30,8 +31,8 @@ public class StreamContentBlob
     }
 
     @Override
-    public String getEncoding() {
-        return content.getEncoding();
+    public Charset getCharset() {
+        return content.getCharset();
     }
 
     @Override

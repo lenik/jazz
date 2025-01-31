@@ -2,6 +2,7 @@ package net.bodz.bas.ar.zip;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.LinkOption;
 import java.nio.file.OpenOption;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
@@ -13,7 +14,7 @@ import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamResource;
 
 public class ZipEntrySource
-        extends AbstractInputStreamSource
+        extends AbstractInputStreamSource<ZipEntrySource>
         implements IZipConsts {
 
     private final IZipContext ctx;
@@ -26,6 +27,11 @@ public class ZipEntrySource
             throw new NullPointerException("entry");
         this.ctx = ctx;
         this.entry = entry;
+    }
+
+    @Override
+    public boolean isDirectory(LinkOption... options) {
+        return entry.isDirectory();
     }
 
     /** ⇱ Implementation Of {@link IStreamInputSource}. */
@@ -47,8 +53,7 @@ public class ZipEntrySource
 
         long zipLength = unarchiver.length();
         if (end > zipLength)
-            throw new IOException(String.format("Entry %s exceeds the zip file, maybe it's incompleted.",
-                    entry.getName()));
+            throw new IOException(String.format("Entry %s exceeds the zip file, maybe it's incompleted.", entry.getName()));
 
         return unarchiver.crop(start, end);
     }
@@ -68,46 +73,41 @@ public class ZipEntrySource
     }
 
     @Override
-    public boolean isCharPreferred() {
-        return false;
-    }
-
-    @Override
-    protected InputStream _newInputStream(OpenOption... options)
+    public InputStream newInputStream(OpenOption... options)
             throws IOException {
         IStreamResource src = rawcrop();
         InputStream in = src.newInputStream(options);
         in = decrypt(in);
 
         switch (entry.method) {
-        case M_STORE:
-            return in;
+            case M_STORE:
+                return in;
 
-        case M_DEFLATE:
-            return new InflaterInputStream(in, new Inflater(true));
+            case M_DEFLATE:
+                return new InflaterInputStream(in, new Inflater(true));
 
-        default:
-            throw new UnsupportedOperationException("Unknown method: " + entry.method);
+            default:
+                throw new UnsupportedOperationException("Unknown method: " + entry.method);
         }
     }
 
     @Override
-    protected IByteIn _newByteIn(OpenOption... options)
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
         IStreamResource src = rawcrop();
 
         switch (entry.method) {
-        case M_STORE:
-            return decrypt(src.newByteIn(options));
+            case M_STORE:
+                return decrypt(src.newByteIn(options));
 
-        case M_DEFLATE:
-            InputStream in = src.newInputStream(options);
-            in = decrypt(in);
-            InflaterInputStream inflated = new InflaterInputStream(in, new Inflater(true));
-            return new InputStreamByteIn(inflated);
+            case M_DEFLATE:
+                InputStream in = src.newInputStream(options);
+                in = decrypt(in);
+                InflaterInputStream inflated = new InflaterInputStream(in, new Inflater(true));
+                return new InputStreamByteIn(inflated);
 
-        default:
-            throw new UnsupportedOperationException("Unknown method: " + entry.method);
+            default:
+                throw new UnsupportedOperationException("Unknown method: " + entry.method);
         }
     }
 

@@ -7,7 +7,7 @@ import net.bodz.bas.vfs.IFsObject;
 public class CharsFile
         extends PseudoFile {
 
-    private CharsResource resource;
+    private final CharsResource _resource;
 
     public CharsFile() {
         this("(no name)", new CharsResource());
@@ -15,7 +15,7 @@ public class CharsFile
 
     public CharsFile(String name, CharsResource resource) {
         super(name, resource);
-        this.resource = resource;
+        this._resource = resource;
         setReadable(true);
         setWritable(true);
     }
@@ -25,15 +25,16 @@ public class CharsFile
 
     @Override
     public Boolean exists() {
-        return resource.isAllocated();
+        return _resource.isAllocated();
     }
 
     @Override
     public int delete(DeleteOption... options) {
-        if (resource.isAllocated()) {
-            resource.unallocate();
+        if (_resource.isAllocated()) {
+            _resource.unallocate();
             return 1;
-        } else {
+        }
+        else {
             return 0;
         }
     }

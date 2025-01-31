@@ -13,7 +13,7 @@ import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 
 public class BytesResource
-        extends AbstractBinaryResource {
+        extends AbstractBinaryResource<BytesResource> {
 
     private MovableByteBuffer buffer;
 
@@ -38,23 +38,18 @@ public class BytesResource
     }
 
     @Override
-    public long getLength() {
+    public Long getLength() {
         if (buffer == null)
-            return 0;
+            return 0L;
         else
-            return buffer.size();
-    }
-
-    @Override
-    public boolean isCharPreferred() {
-        return false;
+            return (long) buffer.size();
     }
 
     /**
      * @return {@link OutputStream} with {@link OutputStream#close()} filtered out.
      */
     @Override
-    protected OutputStream _newOutputStream(OpenOption... options)
+    public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
         if (buffer == null)
             buffer = new MovableByteBuffer();
@@ -72,7 +67,7 @@ public class BytesResource
     }
 
     @Override
-    protected IByteOut _newByteOut(OpenOption... options)
+    public IByteOut newByteOut(OpenOption... options)
             throws IOException {
         if (buffer == null)
             buffer = new MovableByteBuffer();
@@ -90,7 +85,7 @@ public class BytesResource
     }
 
     @Override
-    protected IByteIn _newByteIn(OpenOption... options)
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
         if (buffer == null)
             throw new IllegalStateException("Resource isn't created, yet.");

@@ -4,53 +4,101 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.time.OffsetDateTime;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import net.bodz.bas.c.java.io.FileDate;
 import net.bodz.bas.c.java.io.FileURL;
+import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.std.rfc.http.ContentDisposition;
 import net.bodz.bas.std.rfc.http.ContentRange;
-import net.bodz.bas.std.rfc.http.ICacheControl;
+import net.bodz.bas.std.rfc.http.MutableCacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
 
 public class ResourceTransferer {
 
-    static final Logger logger = LoggerFactory.getLogger(ResourceTransferer.class);
+    static final Logger logger = LoggerFactory.getLogger(net.bodz.bas.servlet.ResourceTransferer.class);
 
-    private HttpServletRequest req;
-    private HttpServletResponse resp;
+    HttpServletRequest req;
+    HttpServletResponse resp;
+    boolean asAttachment;
 
-    private String mode;
-    private boolean attachmentMode;
+    String filename;
+    String description;
+    MutableCacheControl cacheControl = new MutableCacheControl();
+    Integer maxAge;
 
-    public ResourceTransferer(HttpServletRequest req, HttpServletResponse resp) {
+    IBlob blob;
+    boolean canRead = true;
+
+    public ResourceTransferer() {
+        cacheControl.setMaxAge(maxAge);
+    }
+
+    public ResourceTransferer request(IHttpViewContext context) {
+        this.request(context.getRequest());
+        this.response((context.getResponse()));
+        return this;
+    }
+
+    public ResourceTransferer request(HttpServletRequest req, HttpServletResponse resp) {
+        this.request(req);
+        this.response(resp);
+        return this;
+    }
+
+    public ResourceTransferer request(HttpServletRequest req) {
         this.req = req;
-        this.resp = resp;
-        this.mode = req.getParameter("mode");
+
+        String mode = req.getParameter("mode");
         if (mode != null)
-            this.attachmentMode = "attachment".equals(mode);
+            switch (mode) {
+                case "attachment":
+                    this.asAttachment = true;
+                    break;
+            }
+
+        return this;
     }
 
-    public boolean isAttachment() {
-        return attachmentMode;
+    public ResourceTransferer response(HttpServletResponse resp) {
+        this.resp = resp;
+        return this;
     }
 
-    public void setAttachment(boolean attachment) {
-        this.attachmentMode = attachment;
+    public boolean isAsAttachment() {
+        return asAttachment;
     }
 
-    public void transfer(URL url, ICacheControl cacheControl)
-            throws IOException {
-        String filename = null;
-        String description = null;
-        if (isAttachment())
-            filename = getFilenameFromUrl(url);
-        transfer(url, filename, description, cacheControl);
+    public void setAsAttachment(boolean asAttachment) {
+        this.asAttachment = asAttachment;
+    }
+
+    public ResourceTransferer asAttachment() {
+        this.asAttachment = true;
+        return this;
+    }
+
+    public ResourceTransferer url(URL url) {
+        blob = new URLBlob(url);
+        filename = getFilenameFromUrl(url);
+
+        if ("file".equals(url.getProtocol())) {
+            File file = FileURL.toFile(url, null);
+            OffsetDateTime lastModified = FileDate.getLastModified(file).toOffsetDateTime();
+            cacheControl.setLastModified(lastModified);
+        }
+
+        return this;
     }
 
     static String getFilenameFromUrl(URL url) {
@@ -62,21 +110,80 @@ public class ResourceTransferer {
         return null;
     }
 
-    public void transfer(URL url, String filename, String description, ICacheControl cacheControl)
+    public ResourceTransferer path(Path path)
             throws IOException {
-        URLBlob blob = new URLBlob(url);
-        blob.setFilename(filename);
-        blob.setDescription(description);
-        transfer(blob, filename != null, cacheControl);
+        blob = new PathBlob(path);
+
+        OffsetDateTime lastModified = FileDate.getLastModified(path).toOffsetDateTime();
+        cacheControl.setLastModified(lastModified);
+
+        return this;
     }
 
-    public void transfer(IBlob blob, boolean attachment, ICacheControl cacheControl)
+    public ResourceTransferer file(File file) {
+        blob = new FileBlob(file);
+
+        OffsetDateTime lastModified = FileDate.getLastModified(file).toOffsetDateTime();
+        cacheControl.setLastModified(lastModified);
+
+        return this;
+    }
+
+    public ResourceTransferer inputSource(IStreamInputSource inputSource) {
+        blob = new StreamBlob(inputSource);
+        canRead = inputSource.canRead();
+
+        OffsetDateTime lastModified = inputSource.getLastModified();
+        if (lastModified != null)
+            cacheControl.setLastModified(lastModified);
+
+        return this;
+    }
+
+    public ResourceTransferer blob(IBlob blob)
             throws IOException {
-        // if (!resource.canRead()) {
-        // resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Not readable.");
-        // return;
-        // }
+        this.blob = blob;
+
+        OffsetDateTime lastModified = blob.getLastModified();
+        if (lastModified != null)
+            cacheControl.setLastModified(lastModified);
+
+        return this;
+    }
+
+    public ResourceTransferer filename(String filename) {
+        this.filename = filename;
+        return this;
+    }
+
+    public ResourceTransferer description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public ResourceTransferer maxAge(int maxAge) {
+        this.maxAge = maxAge;
+        return this;
+    }
+
+    public IBlob buildBlob() {
+        if (blob == null)
+            throw new IllegalUsageException();
+        return blob;
+    }
+
+    public void transfer()
+            throws IOException {
+        if (!canRead) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Not readable.");
+            return;
+        }
+
+        IBlob blob = buildBlob();
         resp.setHeader("Local-Resource", blob.getLocation());
+        String filename = Nullables.coalesce(this.filename, blob.getFilename());
+        String description = Nullables.coalesce(this.description, blob.getDescription());
+        int maxAge = this.maxAge != null ? this.maxAge : cacheControl.getMaxAge();
 
         ContentType contentType = blob.getContentType();
         if (contentType == null)
@@ -84,9 +191,9 @@ public class ResourceTransferer {
         if (contentType != null)
             resp.setContentType(contentType.getName());
 
-        String encoding = blob.getEncoding();
+        Charset encoding = blob.getCharset();
         if (encoding != null)
-            resp.setCharacterEncoding(encoding);
+            resp.setCharacterEncoding(encoding.name());
 
         Long length = blob.getLength();
         if (length != null)
@@ -95,23 +202,20 @@ public class ResourceTransferer {
             else
                 resp.setHeader("Content-Length", String.valueOf(length));
 
-        /**
+        /*
          * @see RFC 2183 2.10
          */
-        String filename = blob.getFilename();
-        if (filename != null && attachment) {
-            // String filename = FilePath.getBaseName(path);
-            String contentDisposition = ContentDisposition.format(filename, attachment, false);
+        if (asAttachment) {
+            String contentDisposition = ContentDisposition.format(filename, true, false);
 
             if (contentDisposition != null) {
                 resp.setHeader("Content-Disposition", contentDisposition);
 
-                if (blob.getDescription() != null)
-                    resp.setHeader("Content-Description", blob.getDescription());
+                if (description != null)
+                    resp.setHeader("Content-Description", description);
             }
         }
 
-        int maxAge = cacheControl.getMaxAge();
         resp.setHeader("Cache-Control", "max-age=" + maxAge);
         // resp.setHeader("Cache-Control", "must-revalidate");
         // resp.setHeader("Cache-Control", "no-cache");
@@ -126,14 +230,14 @@ public class ResourceTransferer {
                 return;
             }
 
-            /**
+            /*
              * @see RFC 2616 14.29
              *      <p>
              *      HTTP/1.1 servers SHOULD send Last-Modified whenever feasible
              */
             resp.setDateHeader("Last-Modified", lastModified.toInstant().toEpochMilli());
 
-            /**
+            /*
              * @see RFC 2616 14.21
              *      <p>
              *      To mark a response as "never expires," an origin server sends an Expires date approximately one year
@@ -143,7 +247,7 @@ public class ResourceTransferer {
             resp.setDateHeader("Expires", System.currentTimeMillis() + maxAge * 1000L);
         }
 
-        /**
+        /*
          * @see RFC 2616 13.3.2
          *      <p>
          *      The ETag response-header field value, an entity tag, provides for an "opaque" cache validator. This
@@ -180,7 +284,9 @@ public class ResourceTransferer {
         InputStream in = blob.openStream();
 
         try {
-            in.skip(start);
+            long skipped = in.skip(start);
+            if (skipped != start)
+                return;
 
             byte[] block = new byte[4096];
             while (remaining != 0) {
@@ -216,13 +322,13 @@ public class ResourceTransferer {
                 try {
                     in.close();
                 } catch (Exception e) {
+                    // ignore
                 }
             if (out != null)
                 try {
                     out.flush();
                 } catch (IOException e) {
-                    logger.errorf("Failed to flush out, when transfer %s: %s: %s", blob.getLocation(), e.getClass(),
-                            e.getMessage());
+                    logger.errorf("Failed to flush out, when transfer %s: %s: %s", blob.getLocation(), e.getClass(), e.getMessage());
                 }
         }
     }

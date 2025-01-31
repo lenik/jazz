@@ -11,7 +11,7 @@ import net.bodz.bas.io.impl.DecodedByteOut;
 import net.bodz.bas.io.res.AbstractStreamOutputTarget;
 
 public class StringBufferTarget
-        extends AbstractStreamOutputTarget {
+        extends AbstractStreamOutputTarget<StringBufferTarget> {
 
     private final StringBuffer buffer;
 
@@ -25,17 +25,22 @@ public class StringBufferTarget
         this.buffer = buffer;
     }
 
+    @Override
+    public boolean isTextModePreferred() {
+        return true;
+    }
+
     public StringBuffer getBuffer() {
         return buffer;
     }
 
     @Override
-    protected ICharOut _newCharOut(OpenOption... options) {
-        return _newPrintOut(options);
+    public ICharOut newCharOut(OpenOption... options) {
+        return newPrintOut(options);
     }
 
     @Override
-    protected BufCharOut _newPrintOut(OpenOption... options) {
+    public BufCharOut newPrintOut(OpenOption... options) {
         boolean append = OpenOptions.isAppend(options);
 
         if (!append)
@@ -44,8 +49,8 @@ public class StringBufferTarget
     }
 
     @Override
-    protected IByteOut _newByteOut(OpenOption... options) {
-        ICharOut charOut = _newCharOut(options);
+    public IByteOut newByteOut(OpenOption... options) {
+        ICharOut charOut = newCharOut(options);
         CharsetDecoder decoder = getCharset().newDecoder();
         return new DecodedByteOut(charOut, decoder);
     }

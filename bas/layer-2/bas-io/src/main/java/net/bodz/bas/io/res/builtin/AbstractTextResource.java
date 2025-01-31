@@ -12,29 +12,38 @@ import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.adapter.OutputStreamByteOut;
 import net.bodz.bas.io.impl.EncodedByteIn;
 import net.bodz.bas.io.res.AbstractRandomResource;
+import net.bodz.bas.meta.decl.DefaultImpl;
 
-public abstract class AbstractTextResource
-        extends AbstractRandomResource {
+public abstract class AbstractTextResource<This>
+        extends AbstractRandomResource<This> {
 
     @Override
-    protected IByteIn _newByteIn(OpenOption... options)
+    public boolean isTextModePreferred() {
+        return true;
+    }
+
+    @DefaultImpl(EncodedByteIn.class)
+    @Override
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
-        ICharIn charIn = _newCharIn(options);
+        ICharIn charIn = newCharIn(options);
         EncodedByteIn byteIn = new EncodedByteIn(charIn, getCharset());
         return byteIn;
     }
 
+    @DefaultImpl(OutputStreamByteOut.class)
     @Override
-    protected IByteOut _newByteOut(OpenOption... options)
+    public IByteOut newByteOut(OpenOption... options)
             throws IOException {
-        OutputStream outputStream = _newOutputStream(options);
+        OutputStream outputStream = newOutputStream(options);
         return new OutputStreamByteOut(outputStream);
     }
 
+    @DefaultImpl(WriterOutputStream.class)
     @Override
-    protected OutputStream _newOutputStream(OpenOption... options)
+    public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
-        Writer writer = _newWriter(options);
+        Writer writer = newWriter(options);
         return new WriterOutputStream(writer, getCharset());
     }
 

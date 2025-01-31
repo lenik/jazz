@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.nio.channels.ByteChannel;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 
@@ -16,10 +17,10 @@ import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.AbstractIORandomResource;
 
 public class PathResource
-        extends AbstractIORandomResource
+        extends AbstractIORandomResource<PathResource>
         implements IChannelResource {
 
-    private Path path;
+    private final Path path;
 
     public PathResource(Path path) {
         if (path == null)
@@ -28,30 +29,44 @@ public class PathResource
     }
 
     @Override
-    public boolean isCharPreferred() {
-        return false;
+    public String getPath() {
+        return path.toString();
     }
 
     @Override
-    protected InputStream _newInputStream(OpenOption... options)
+    public boolean canRead() {
+        return Files.isReadable(path);
+    }
+
+    @Override
+    public boolean canWrite() {
+        return Files.isWritable(path);
+    }
+
+    @Override
+    public boolean isDirectory(LinkOption... options) {
+        return Files.isDirectory(path, options);
+    }
+
+    public InputStream newInputStream(OpenOption... options)
             throws IOException {
         return Files.newInputStream(path, options);
     }
 
     @Override
-    protected OutputStream _newOutputStream(OpenOption... options)
+    public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
         return Files.newOutputStream(path, options);
     }
 
     @Override
-    protected BufferedReader _newBufferedReader(OpenOption... options)
+    public BufferedReader newBufferedReader(OpenOption... options)
             throws IOException {
         return Files.newBufferedReader(path, getCharset());
     }
 
     @Override
-    protected BufferedWriter _newBufferedWriter(OpenOption... options)
+    public BufferedWriter newBufferedWriter(OpenOption... options)
             throws IOException {
         return Files.newBufferedWriter(path, getCharset(), options);
     }

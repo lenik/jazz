@@ -5,10 +5,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.file.LinkOption;
 import java.nio.file.OpenOption;
 
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.FileType;
 import org.apache.commons.vfs.VFS;
 
 import net.bodz.bas.c.java.nio.OpenOptions;
@@ -23,7 +25,7 @@ import net.bodz.bas.io.adapter.WriterPrintOut;
 import net.bodz.bas.io.res.AbstractStreamResource;
 
 public class ApacheFileResource
-        extends AbstractStreamResource {
+        extends AbstractStreamResource<ApacheFileResource> {
 
     private final FileObject fileObject;
 
@@ -43,48 +45,80 @@ public class ApacheFileResource
     }
 
     @Override
-    public boolean isCharPreferred() {
-        return false;
+    public String getPath() {
+        return fileObject.getName().getPath();
     }
 
     @Override
-    protected InputStream _newInputStream(OpenOption... options)
+    public String getName() {
+        return fileObject.getName().getBaseName();
+    }
+
+    @Override
+    public boolean canRead() {
+        try {
+            return fileObject.isReadable();
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean canWrite() {
+        try {
+            return fileObject.isWriteable();
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isDirectory(LinkOption... options) {
+        try {
+            return fileObject.getType() == FileType.FOLDER;
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public InputStream newInputStream(OpenOption... options)
             throws IOException {
         return fileObject.getContent().getInputStream();
     }
 
     @Override
-    protected OutputStream _newOutputStream(OpenOption... options)
+    public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
         boolean append = OpenOptions.isAppend(options);
         return fileObject.getContent().getOutputStream(append);
     }
 
     @Override
-    protected IByteIn _newByteIn(OpenOption... options)
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
-        InputStream in = _newInputStream(options);
+        InputStream in = newInputStream(options);
         return new InputStreamByteIn(in);
     }
 
     @Override
-    protected IByteOut _newByteOut(OpenOption... options)
+    public IByteOut newByteOut(OpenOption... options)
             throws IOException {
-        OutputStream outputStream = _newOutputStream(options);
+        OutputStream outputStream = newOutputStream(options);
         return new OutputStreamByteOut(outputStream);
     }
 
     @Override
-    protected ICharIn _newCharIn(OpenOption... options)
+    public ICharIn newCharIn(OpenOption... options)
             throws IOException {
-        Reader reader = _newReader(options);
+        Reader reader = newReader(options);
         return new ReaderCharIn(reader);
     }
 
     @Override
-    protected IPrintOut _newCharOut(OpenOption... options)
+    public IPrintOut newCharOut(OpenOption... options)
             throws IOException {
-        Writer writer = _newWriter(options);
+        Writer writer = newWriter(options);
         return new WriterPrintOut(writer);
     }
 

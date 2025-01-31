@@ -10,8 +10,8 @@ import net.bodz.bas.vfs.MutableFile;
 public abstract class PseudoFile
         extends MutableFile {
 
-    private String localPath;
-    private IRandomResource resource;
+    protected final String localPath;
+    protected final IRandomResource resource;
 
     /**
      * @throws NullPointerException
@@ -66,7 +66,7 @@ public abstract class PseudoFile
     /* _____________________________ */static section.iface __BLOC__;
 
     @Override
-    protected IRandomResource _getResource(Charset charset) {
+    public IRandomResource getResource(Charset charset) {
         // XXX resource.setCharset(charset);
         return resource;
     }

@@ -92,7 +92,7 @@ public class MemoryFile
     }
 
     @Override
-    protected IRandomResource _getResource(Charset charset) {
+    public IRandomResource getResource(Charset charset) {
         BytesResource res = new BytesResource(data);
         // XXX - res.setCharset(charset);
         return res;

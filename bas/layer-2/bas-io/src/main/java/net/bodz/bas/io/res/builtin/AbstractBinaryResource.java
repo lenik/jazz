@@ -13,30 +13,34 @@ import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.impl.DecodedCharIn;
 import net.bodz.bas.io.impl.EncodedCharOut;
 import net.bodz.bas.io.res.AbstractRandomResource;
+import net.bodz.bas.meta.decl.DefaultImpl;
 
-public abstract class AbstractBinaryResource
-        extends AbstractRandomResource {
+public abstract class AbstractBinaryResource<This>
+        extends AbstractRandomResource<This> {
 
+    @DefaultImpl(DecodedCharIn.class)
     @Override
-    public ICharIn _newCharIn(OpenOption... options)
+    public ICharIn newCharIn(OpenOption... options)
             throws IOException {
-        IByteIn byteIn = _newByteIn(options);
+        IByteIn byteIn = newByteIn(options);
         DecodedCharIn charIn = new DecodedCharIn(byteIn, getCharset());
         return charIn;
     }
 
+    @DefaultImpl(EncodedCharOut.class)
     @Override
-    public ICharOut _newCharOut(OpenOption... options)
+    public ICharOut newCharOut(OpenOption... options)
             throws IOException {
-        IByteOut byteOut = _newByteOut(options);
+        IByteOut byteOut = newByteOut(options);
         ICharOut cout = new EncodedCharOut(byteOut, getCharset());
         return cout;
     }
 
+    @DefaultImpl(OutputStreamWriter.class)
     @Override
-    protected Writer _newWriter(OpenOption... options)
+    public Writer newWriter(OpenOption... options)
             throws IOException {
-        OutputStream outputStream = _newOutputStream(options);
+        OutputStream outputStream = newOutputStream(options);
         return new OutputStreamWriter(outputStream, getCharset());
     }
 

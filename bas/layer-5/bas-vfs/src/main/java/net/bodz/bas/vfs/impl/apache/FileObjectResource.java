@@ -3,6 +3,7 @@ package net.bodz.bas.vfs.impl.apache;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.LinkOption;
 import java.nio.file.OpenOption;
 
 import org.apache.commons.vfs.FileContent;
@@ -12,6 +13,8 @@ import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.AbstractIORandomResource;
+import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.FileType;
 
 public class FileObjectResource
         extends AbstractIORandomResource {
@@ -25,12 +28,39 @@ public class FileObjectResource
     }
 
     @Override
-    public boolean isCharPreferred() {
-        return false;
+    public String getName() {
+        return fileObject.getName().getBaseName();
     }
 
     @Override
-    protected InputStream _newInputStream(OpenOption... options)
+    public boolean canRead() {
+        try {
+            return fileObject.isReadable();
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean canWrite() {
+        try {
+            return fileObject.isWriteable();
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isDirectory(LinkOption... options) {
+        try {
+            return fileObject.getType() == FileType.FOLDER;
+        } catch (FileSystemException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public InputStream newInputStream(OpenOption... options)
             throws IOException {
         FileContent content = fileObject.getContent();
         checkOpen(content);
@@ -39,7 +69,7 @@ public class FileObjectResource
     }
 
     @Override
-    protected OutputStream _newOutputStream(OpenOption... options)
+    public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
         FileContent content = fileObject.getContent();
         checkOpen(content);

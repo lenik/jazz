@@ -9,12 +9,6 @@ import net.bodz.bas.io.ICharIOS;
 public interface IRandomResource
         extends IStreamResource {
 
-    /**
-     * @return -1 if length unknown.
-     */
-    long getLength()
-            throws IOException;
-
     IByteIOS newByteIOS(OpenOption... options)
             throws IOException;
 

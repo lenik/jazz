@@ -44,21 +44,22 @@ public class GetIncomingFileProcess
 
         File file = new File(volume.getLocalDir(), remainingPath);
 
-        if (! file.exists()) {
+        if (!file.exists()) {
             logger.warn("Not-Found: " + file);
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
 
-        if (! file.canRead()) {
+        if (!file.canRead()) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not readable.");
             return null;
         }
 
-        URL url = file.toURI().toURL();
-        ICacheControl cacheControl = getCacheControl(request, url);
-        ResourceTransferer transferer = new ResourceTransferer(request, response);
-        transferer.transfer(url, cacheControl);
+        new ResourceTransferer()//
+                .request(request, response)//
+                .file(file)//
+                .maxAge(maxAge)//
+                .transfer();
 
         // return file;
         return NoRender.INSTANCE;
@@ -67,13 +68,7 @@ public class GetIncomingFileProcess
     /**
      * 1 day by default.
      */
-    private int maxAge = 86400;
-
-    public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
-        MutableContent content = new MutableContent();
-        content.setMaxAge(maxAge);
-        return content;
-    }
+    int maxAge = 86400;
 
     @Override
     public void readObject(IVariantMap<String> map)

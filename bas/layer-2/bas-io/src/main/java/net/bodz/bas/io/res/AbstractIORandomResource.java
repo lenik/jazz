@@ -13,36 +13,40 @@ import net.bodz.bas.io.adapter.OutputStreamByteOut;
 import net.bodz.bas.io.adapter.PrintStreamPrintOut;
 import net.bodz.bas.io.adapter.WriterCharOut;
 import net.bodz.bas.io.impl.DecodedCharIn;
+import net.bodz.bas.meta.decl.DefaultImpl;
 
-public abstract class AbstractIORandomResource
-        extends AbstractRandomResource {
+public abstract class AbstractIORandomResource<This>
+        extends AbstractRandomResource<This> {
 
     /** ⇱ Implementaton Of {@link IStreamInputSource}. */
     /* _____________________________ */static section.iface __IN__;
 
     @Override
-    protected abstract InputStream _newInputStream(OpenOption... options)
+    public abstract InputStream newInputStream(OpenOption... options)
             throws IOException;
 
+    @DefaultImpl(InputStreamReader.class)
     @Override
-    protected final Reader _newReader(OpenOption... options)
+    public final Reader newReader(OpenOption... options)
             throws IOException {
-        InputStream in = _newInputStream(options);
+        InputStream in = newInputStream(options);
         return new InputStreamReader(in, getCharset());
     }
 
+    @DefaultImpl(InputStreamByteIn.class)
     @Override
-    protected IByteIn _newByteIn(OpenOption... options)
+    public IByteIn newByteIn(OpenOption... options)
             throws IOException {
-        InputStream in = _newInputStream(options);
+        InputStream in = newInputStream(options);
         // if (in instanceof IByteIn) return (IByteIn) in;
         return new InputStreamByteIn(in);
     }
 
+    @DefaultImpl(DecodedCharIn.class)
     @Override
-    protected final ICharIn _newCharIn(OpenOption... options)
+    public final ICharIn newCharIn(OpenOption... options)
             throws IOException {
-        IByteIn in = _newByteIn(options);
+        IByteIn in = newByteIn(options);
         return new DecodedCharIn(in, getCharset().newDecoder());
     }
 
@@ -50,35 +54,44 @@ public abstract class AbstractIORandomResource
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
-    protected abstract OutputStream _newOutputStream(OpenOption... options)
+    public abstract OutputStream newOutputStream(OpenOption... options)
             throws IOException;
 
+    @DefaultImpl(OutputStreamWriter.class)
     @Override
-    protected final Writer _newWriter(OpenOption... options)
+    public Writer newWriter(OpenOption... options)
             throws IOException {
-        OutputStream out = _newOutputStream(options);
+        OutputStream out = newOutputStream(options);
         return new OutputStreamWriter(out, getCharset());
     }
 
+    @DefaultImpl(OutputStreamByteOut.class)
     @Override
-    protected IByteOut _newByteOut(OpenOption... options)
+    public IByteOut newByteOut(OpenOption... options)
             throws IOException {
-        OutputStream out = _newOutputStream(options);
-        // if (out instanceof IByteOut) return (IByteOut) out;
+        OutputStream out = newOutputStream(options);
+//        if (out instanceof IByteOut)
+//            return (IByteOut) out;
         return new OutputStreamByteOut(out);
     }
 
+    @DefaultImpl(PrintStreamPrintOut.class)
     @Override
-    protected final IPrintOut _newPrintOut(OpenOption... options)
+    public final IPrintOut newPrintOut(OpenOption... options)
             throws IOException {
-        PrintStream ps = _newPrintStream(options);
+        PrintStream ps = newPrintStream(options);
+//        if (ps instanceof IPrintOut)
+//            return (IPrintOut) ps;
         return new PrintStreamPrintOut(ps);
     }
 
+    @DefaultImpl(WriterCharOut.class)
     @Override
-    protected final ICharOut _newCharOut(OpenOption... options)
+    public final ICharOut newCharOut(OpenOption... options)
             throws IOException {
-        Writer writer = _newWriter(options);
+        Writer writer = newWriter(options);
+//        if (writer instanceof ICharOut)
+//            return (ICharOut) writer;
         return new WriterCharOut(writer);
     }
 

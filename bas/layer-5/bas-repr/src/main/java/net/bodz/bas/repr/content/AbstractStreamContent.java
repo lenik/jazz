@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
 
 public abstract class AbstractStreamContent
         extends AbstractContent
@@ -27,8 +28,8 @@ public abstract class AbstractStreamContent
     public Reader newReader()
             throws IOException {
         InputStream in = newInputStream();
-        String encoding = getEncoding();
-        return new InputStreamReader(in, encoding);
+        Charset charset = getCharset();
+        return new InputStreamReader(in, charset);
     }
 
 }

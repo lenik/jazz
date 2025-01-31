@@ -156,7 +156,7 @@ public class NioFile
     }
 
     @Override
-    protected IRandomResource _getResource(Charset charset) {
+    public IRandomResource getResource(Charset charset) {
         PathResource resource = new PathResource(_path);
         resource.setCharset(charset);
         return resource;

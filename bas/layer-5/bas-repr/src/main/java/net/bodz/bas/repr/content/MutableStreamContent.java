@@ -1,6 +1,9 @@
 package net.bodz.bas.repr.content;
 
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.std.rfc.mime.ContentType;
+
+import java.nio.charset.Charset;
 
 public abstract class MutableStreamContent
         extends MutableContent
@@ -9,7 +12,7 @@ public abstract class MutableStreamContent
 
     String fileName;
     ContentType contentType;
-    String encoding = "utf-8";
+    Charset charset = Charsets.UTF_8;
 
     public MutableStreamContent(ContentType contentType) {
         this(null, contentType);
@@ -44,12 +47,12 @@ public abstract class MutableStreamContent
     }
 
     @Override
-    public String getEncoding() {
-        return encoding;
+    public Charset getCharset() {
+        return charset;
     }
 
-    public void setEncoding(String encoding) {
-        this.encoding = encoding;
+    public void setCharset(Charset charset) {
+        this.charset = charset;
     }
 
 }
