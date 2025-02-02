@@ -7,7 +7,7 @@ import net.bodz.bas.io.res.IStreamResource;
 public class StreamResourceContent
         extends MutableContent {
 
-    private IStreamResource resource;
+    private final IStreamResource resource;
     private String name;
     private URL url;
 

@@ -35,11 +35,6 @@ public abstract class AbstractXjdocContent
     }
 
     @Override
-    public int getMaxAge() {
-        return 86400;
-    }
-
-    @Override
     public OffsetDateTime getCreationDate() {
         return creationDate;
     }

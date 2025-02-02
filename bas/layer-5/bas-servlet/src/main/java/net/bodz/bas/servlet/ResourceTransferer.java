@@ -7,6 +7,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import net.bodz.bas.c.java.io.FileDate;
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.log.Logger;
@@ -26,19 +29,26 @@ import net.bodz.bas.std.rfc.mime.ContentType;
 
 public class ResourceTransferer {
 
-    static final Logger logger = LoggerFactory.getLogger(net.bodz.bas.servlet.ResourceTransferer.class);
+    static final Logger logger = LoggerFactory.getLogger(ResourceTransferer.class);
 
     HttpServletRequest req;
     HttpServletResponse resp;
-    boolean asAttachment;
 
+    // attachment attributes
+    boolean asAttachment;
     String filename;
     String description;
+
+    // cache control
     MutableCacheControl cacheControl = new MutableCacheControl();
     Integer maxAge;
 
+    // input source
     IBlob blob;
     boolean canRead = true;
+
+    // I/O options
+    int blockSize = 4096;
 
     public ResourceTransferer() {
         cacheControl.setMaxAge(maxAge);
@@ -73,14 +83,6 @@ public class ResourceTransferer {
     public ResourceTransferer response(HttpServletResponse resp) {
         this.resp = resp;
         return this;
-    }
-
-    public boolean isAsAttachment() {
-        return asAttachment;
-    }
-
-    public void setAsAttachment(boolean asAttachment) {
-        this.asAttachment = asAttachment;
     }
 
     public ResourceTransferer asAttachment() {
@@ -183,7 +185,7 @@ public class ResourceTransferer {
         resp.setHeader("Local-Resource", blob.getLocation());
         String filename = Nullables.coalesce(this.filename, blob.getFilename());
         String description = Nullables.coalesce(this.description, blob.getDescription());
-        int maxAge = this.maxAge != null ? this.maxAge : cacheControl.getMaxAge();
+        Integer maxAge = Nullables.coalesce(this.maxAge, cacheControl.getMaxAge());
 
         ContentType contentType = blob.getContentType();
         if (contentType == null)
@@ -216,10 +218,37 @@ public class ResourceTransferer {
             }
         }
 
-        resp.setHeader("Cache-Control", "max-age=" + maxAge);
-        // resp.setHeader("Cache-Control", "must-revalidate");
-        // resp.setHeader("Cache-Control", "no-cache");
-        // resp.setHeader("Cache-Control", "no-store");
+        List<String> values = new ArrayList<>();
+        switch (cacheControl.getCacheControlMode()) {
+            case NO_CACHE:
+                values.add("no-cache");
+                break;
+            case NO_STORE:
+                values.add("no-store");
+                break;
+            case PRIVATE:
+                values.add("private");
+                break;
+            case PUBLIC:
+                values.add("public");
+                break;
+        }
+        if (maxAge != null)
+            values.add("max-age=" + maxAge);
+        if (!values.isEmpty())
+            resp.setHeader("Cache-Control", StringArray.join(", ", values));
+
+        values.clear();
+        switch (cacheControl.getCacheRevalidationMode()) {
+            case NO_CACHE:
+                values.add("no-cache");
+                break;
+            case MUST_REVALIDATE:
+                values.add("must-revalidate");
+                break;
+        }
+        if (!values.isEmpty())
+            resp.setHeader("Cache-Revalidation", StringArray.join(", ", values));
 
         OffsetDateTime lastModified = blob.getLastModified();
         if (lastModified != null) {
@@ -244,7 +273,8 @@ public class ResourceTransferer {
              *      from the time the response is sent. HTTP/1.1 servers SHOULD NOT send Expires dates more than one
              *      year in the future.
              */
-            resp.setDateHeader("Expires", System.currentTimeMillis() + maxAge * 1000L);
+            if (maxAge != null)
+                resp.setDateHeader("Expires", System.currentTimeMillis() + maxAge * 1000L);
         }
 
         /*
@@ -255,8 +285,9 @@ public class ResourceTransferer {
          *      where the one-second resolution of HTTP date values is not sufficient, or where the origin server wishes
          *      to avoid certain paradoxes that might arise from the use of modification dates.
          */
-        String eTag = null;
-        // if (eTag != null) resp.setHeader("E-Tag", eTag);
+        String eTag = cacheControl.getETag();
+        if (eTag != null)
+            resp.setHeader("E-Tag", eTag);
 
         ContentRange range = null;
         String rangeHeader = req.getHeader("Range");
@@ -288,7 +319,7 @@ public class ResourceTransferer {
             if (skipped != start)
                 return;
 
-            byte[] block = new byte[4096];
+            byte[] block = new byte[blockSize];
             while (remaining != 0) {
                 int cb = block.length;
                 if (remaining != -1 && remaining < cb)

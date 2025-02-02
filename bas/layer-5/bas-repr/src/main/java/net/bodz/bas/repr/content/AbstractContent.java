@@ -17,11 +17,6 @@ public abstract class AbstractContent
     private OffsetDateTime creationDate = OffsetDateTime.now();
     private OffsetDateTime lastModified = creationDate;
 
-    @Override
-    public int getPriority() {
-        return 0;
-    }
-
     /** ⇱ Implementation Of {@link IContent}. */
     /* _____________________________ */static section.iface __CONTENT__;
 
@@ -45,11 +40,6 @@ public abstract class AbstractContent
     @Override
     public CacheRevalidationMode getCacheRevalidationMode() {
         return CacheRevalidationMode.DEFAULT;
-    }
-
-    @Override
-    public int getMaxAge() {
-        return 86400;
     }
 
     @Override

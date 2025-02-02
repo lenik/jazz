@@ -17,11 +17,6 @@ public class AbstractCacheControl
     }
 
     @Override
-    public int getMaxAge() {
-        return 0;
-    }
-
-    @Override
     public OffsetDateTime getLastModified() {
         return OffsetDateTime.now();
     }

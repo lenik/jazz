@@ -58,8 +58,8 @@ public class Sitemap
     }
 
     @Override
-    public int getMaxAge() {
-        return 86400;
+    public Integer getMaxAge() {
+        return 3600;
     }
 
     @Override

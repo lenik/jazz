@@ -160,7 +160,7 @@ public abstract class BasicSite
     /* _____________________________ */static section.iface __CACHE__;
 
     @Override
-    public int getMaxAge() {
+    public Integer getMaxAge() {
         return 3600;
     }
 

@@ -17,7 +17,7 @@ public class MutableContent
 
     CacheControlMode cacheControlMode = CacheControlMode.AUTO;
     CacheRevalidationMode cacheRevalidateMode = CacheRevalidationMode.OPTIONAL;
-    int maxAge;
+    Integer maxAge;
     String eTag;
     boolean weakValidation;
 
@@ -65,11 +65,11 @@ public class MutableContent
     }
 
     @Override
-    public int getMaxAge() {
+    public Integer getMaxAge() {
         return maxAge;
     }
 
-    public void setMaxAge(int maxAge) {
+    public void setMaxAge(Integer maxAge) {
         this.maxAge = maxAge;
     }
 

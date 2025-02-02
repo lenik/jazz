@@ -38,7 +38,8 @@ public class VioletSite
     /* _____________________________ */static section.iface __CACHE__;
 
     @Override
-    public int getMaxAge() {
+    public Integer getMaxAge() {
+        // since violet is transaction-based, max-age should commonly useless.
         return 0;
     }
 

@@ -148,7 +148,7 @@ public abstract class StructRow
     @DetailLevel(DetailLevel.EXPERT2)
     @OfGroup(StdGroup.Cache.class)
     @Override
-    public int getMaxAge() {
+    public Integer getMaxAge() {
         return 86400;
     }
 

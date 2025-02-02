@@ -9,7 +9,7 @@ public class MutableCacheControl
 
     CacheControlMode cacheControlMode = CacheControlMode.AUTO;
     CacheRevalidationMode cacheRevalidationMode = CacheRevalidationMode.OPTIONAL;
-    int maxAge;
+    Integer maxAge;
     OffsetDateTime lastModified = OffsetDateTime.now();
     boolean weakValidation;
 
@@ -32,11 +32,11 @@ public class MutableCacheControl
     }
 
     @Override
-    public int getMaxAge() {
+    public Integer getMaxAge() {
         return maxAge;
     }
 
-    public void setMaxAge(int maxAge) {
+    public void setMaxAge(Integer maxAge) {
         this.maxAge = maxAge;
     }
 

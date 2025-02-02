@@ -29,7 +29,7 @@ public enum CacheRevalidationMode {
 
     ;
 
-    String httpEquivContent;
+    final String httpEquivContent;
 
     private CacheRevalidationMode(String httpEquivContent) {
         this.httpEquivContent = httpEquivContent;

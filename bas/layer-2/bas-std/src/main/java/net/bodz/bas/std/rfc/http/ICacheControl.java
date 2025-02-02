@@ -6,6 +6,9 @@ import java.time.OffsetDateTime;
 import net.bodz.bas.c.java.time.DateTimes;
 import net.bodz.bas.meta.bean.Internal;
 
+/**
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
+ */
 public interface ICacheControl {
 
     /**
@@ -31,7 +34,9 @@ public interface ICacheControl {
      *         positive integer or zero.
      */
     @Internal
-    int getMaxAge();
+    default Integer getMaxAge() {
+        return null;
+    }
 
     /**
      * Get the last modified time in epoch milli.
