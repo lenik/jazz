@@ -8,7 +8,6 @@ import CoEventTypeInfo from './CoEventTypeInfo';
 
 export class CoImagedEventTypeInfo extends CoEventTypeInfo {
 
-    readonly idType: TypeInfo<any>;
     readonly validators = new CoImagedEventValidators(this);
 
     constructor(idType: TypeInfo<any>) {
