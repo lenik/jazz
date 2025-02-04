@@ -26,7 +26,7 @@ public class SelectOptions
     }
 
     public Orders getOrders() {
-        if (orders == null || orders.size() == 0)
+        if (orders == null || orders.isEmpty())
             return null;
         return orders;
     }
@@ -53,7 +53,7 @@ public class SelectOptions
         sb.append(super.toString());
 
         if (orders != null)
-            sb.append(", order " + orders);
+            sb.append(", order ").append(orders);
         else
             sb.append(", no-order");
 

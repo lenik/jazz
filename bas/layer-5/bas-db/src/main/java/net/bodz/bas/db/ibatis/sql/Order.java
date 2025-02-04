@@ -38,7 +38,7 @@ public class Order {
             return new Order(column, true);
         }
 
-        // field-: ascending
+        // field-: descending
         if (s.endsWith("-")) {
             String column = s.substring(0, s.length() - 1);
             return new Order(column, false);
@@ -53,7 +53,7 @@ public class Order {
         if (mod == null)
             return new Order(s);
 
-        boolean asc = true;
+        boolean asc;
         switch (mod.toLowerCase()) {
         case "a":
         case "asc":

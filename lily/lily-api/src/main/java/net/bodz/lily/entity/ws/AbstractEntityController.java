@@ -93,7 +93,7 @@ public abstract class AbstractEntityController<T>
 
     private final Class<T> entityType;
     private final IEntityTypeInfo typeInfo;
-    private boolean hasId;
+    private final boolean hasId;
 
     CommandLocator locator = new CommandLocator();
 
@@ -168,7 +168,7 @@ public abstract class AbstractEntityController<T>
             List<PropertyChain> chains = formDecl.resolvePattern(fieldProp);
             if (chains.size() != 1)
                 throw new IllegalArgumentException("wildcard isn't allowed.");
-            return chains.get(0);
+            return chains.getFirst();
         } catch (NoSuchPropertyException | ParseException e) {
             return null;
         }
@@ -306,7 +306,7 @@ public abstract class AbstractEntityController<T>
                     break;
                 }
                 if (command != null)
-                    commands = Arrays.asList(command);
+                    commands = List.of(command);
                 else
                     commands = Collections.emptySet();
             } else {
@@ -343,7 +343,7 @@ public abstract class AbstractEntityController<T>
         if (tokens.available() == 0)
             return null;
 
-        ResolveMethods<T> methods = new ResolveMethods<T>(typeInfo, getMapper());
+        ResolveMethods<T> methods = new ResolveMethods<>(typeInfo, getMapper());
 
         IPathArrival arrival = methods.byIdPath(previous, tokens, q);
         if (arrival != null)
@@ -390,7 +390,7 @@ public abstract class AbstractEntityController<T>
 
         Orders propertyOrders = selectOptions.getOrders();
         if (propertyOrders != null) {
-            Orders columnOrders = propertyOrders.mapv((String propertyName) -> findColumnForProperty(propertyName));
+            Orders columnOrders = propertyOrders.mapv(this::findColumnForProperty);
             selectOptions.setOrders(columnOrders);
         }
 
@@ -489,7 +489,7 @@ public abstract class AbstractEntityController<T>
     public void buildTableSheet(TableOfPathProps tableData, Workbook book, IVariantMap<String> q)
             throws FormatException {
         DefaultListingExcel dl = new DefaultListingExcel(tableData, typeInfo);
-        dl.build();
+        dl.buildWorkbook(book);
     }
 
 }

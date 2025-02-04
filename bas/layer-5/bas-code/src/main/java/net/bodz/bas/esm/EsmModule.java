@@ -103,7 +103,7 @@ public class EsmModule
 
         int lastSlash = path.lastIndexOf("/");
         String base = lastSlash == -1 ? path : path.substring(lastSlash + 1);
-        if (! base.endsWith(".vue"))
+        if (!base.endsWith(".vue"))
             throw new IllegalArgumentException("path should have extension .vue");
 
         String name = base.substring(0, base.length() - 4);
@@ -124,6 +124,11 @@ public class EsmModule
 
     }
 
+    /**
+     * Each domain spec in the list using a pattern format defined in {@link Domain}.
+     * @see Domain#parse(String)
+     * @return
+     */
     public String[] getExclusiveDomains() {
         return new String[0];
     }
@@ -139,10 +144,12 @@ public class EsmModule
             return true;
         if (obj == null)
             return false;
+        if (!(obj instanceof EsmModule))
+            return false;
         EsmModule other = (EsmModule) obj;
         return Objects.equals(name, other.name) //
                 && Objects.equals(baseDir, other.baseDir) //
-        ;
+                ;
     }
 
     @Override

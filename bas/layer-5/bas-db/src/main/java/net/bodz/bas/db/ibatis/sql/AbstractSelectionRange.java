@@ -178,7 +178,7 @@ public abstract class AbstractSelectionRange<self_t>
         StringBuilder sb = new StringBuilder();
 
         // offset # limit #
-        sb.append("offset");
+        sb.append("offset ");
         sb.append(offset);
 
         if (limit != UNDEFINED) {
@@ -256,10 +256,10 @@ public abstract class AbstractSelectionRange<self_t>
             setPageSize(pageSize);
 
         if (_pageIndex != null)
-            setPageIndex(_pageIndex.longValue());
+            setPageIndex(_pageIndex);
 
         if (_pageNumber != null)
-            setPageNumber(_pageNumber.longValue());
+            setPageNumber(_pageNumber);
     }
 
     @Override

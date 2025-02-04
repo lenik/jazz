@@ -38,8 +38,9 @@ public class URLResource_bin
 
     @Override
     public ContentType getContentType(HttpServletRequest request, IStreamResource value) {
-
         String name = value.getName();
+        if (name == null)
+            throw new NullPointerException("name");
         String extension = FilePath.getExtension(name);
         ContentType contentType = ContentType.forExtension(extension);
         if (contentType == null)
