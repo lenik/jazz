@@ -4,26 +4,26 @@ import net.bodz.lily.entity.IId;
 
 public class RowOpAwares {
 
-    public static boolean beforeRowOperation(Object o, JdbcRowOpEvent event)
+    public static boolean beforeRowOperation(JdbcRowOpEvent event, Object o)
             throws Exception {
         RowOpAware aRowOps = o.getClass().getAnnotation(RowOpAware.class);
         if (aRowOps != null) {
             for (Class<? extends IJdbcRowOpListener> handlerClass : aRowOps.value()) {
-                IJdbcRowOpListener handler = handlerClass.getConstructor(IId.class).newInstance(o);
-                if (! handler.beforeRowOperation(event))
+                IJdbcRowOpListener handler = handlerClass.getConstructor().newInstance();
+                if (!handler.beforeRowOperation(event, o))
                     return false;
             }
         }
         return true;
     }
 
-    public static void afterRowOperation(Object o, JdbcRowOpEvent event)
+    public static void afterRowOperation(JdbcRowOpEvent event, Object o)
             throws Exception {
         RowOpAware aRowOps = o.getClass().getAnnotation(RowOpAware.class);
         if (aRowOps != null) {
             for (Class<? extends IJdbcRowOpListener> handlerClass : aRowOps.value()) {
-                IJdbcRowOpListener handler = handlerClass.getConstructor(IId.class).newInstance(o);
-                handler.afterRowOperation(event);
+                IJdbcRowOpListener handler = handlerClass.getConstructor().newInstance();
+                handler.afterRowOperation(event, o);
             }
         }
     }

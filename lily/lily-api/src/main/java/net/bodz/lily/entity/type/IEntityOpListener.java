@@ -9,8 +9,7 @@ import net.bodz.lily.entity.manager.ForEntityType;
  */
 @IndexedType
 public interface IEntityOpListener<T>
-        extends
-            IPriority {
+        extends IPriority {
 
     Class<T> getValueType();
 
@@ -23,20 +22,26 @@ public interface IEntityOpListener<T>
     default void validate(T o) {
     }
 
-    default void beforeUpdate(T o, boolean updateExisting) {
+    default boolean beforeUpdate(T o, boolean updateExisting) {
+        return false;
     }
 
-    default void afterUpdate(T o, boolean updateExisting) {
+    default boolean afterUpdate(T o, boolean updateExisting) {
+        return false;
     }
 
     default boolean canDelete(T o) {
         return true;
     }
 
-    default void beforeDelete(T o) {
+    /** @return true if something took effect */
+    default boolean beforeDelete(T o) {
+        return false;
     }
 
-    default void afterDelete(T o) {
+    /** @return true if something took effect */
+    default boolean afterDelete(T o) {
+        return false;
     }
 
 }

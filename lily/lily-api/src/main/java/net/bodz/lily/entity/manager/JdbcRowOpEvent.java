@@ -3,6 +3,7 @@ package net.bodz.lily.entity.manager;
 import java.util.EventObject;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ctx.IDataContextAware;
 
 public class JdbcRowOpEvent
         extends EventObject {
@@ -14,6 +15,8 @@ public class JdbcRowOpEvent
 
     public JdbcRowOpEvent(Object source, JdbcRowOpType opType) {
         super(source);
+        if (source instanceof IDataContextAware aware)
+            dataContext = aware.getDataContext();
         this.opType = opType;
     }
 

@@ -78,7 +78,7 @@ public class DeleteProcess
             if (getEntityMapper().delete(id))
                 nUpdates++;
             else
-                errorIds.append(id + ",");
+                errorIds.append(id).append(",");
         }
 
         afterDelete(idMap);
@@ -96,7 +96,7 @@ public class DeleteProcess
             Object o = idMap.get(id);
             if (o == Boolean.TRUE)
                 o = null;
-            if (! canDelete(o))
+            if (!canDelete(o))
                 return o;
         }
         return null;
@@ -106,7 +106,7 @@ public class DeleteProcess
             throws Exception {
 
         if (obj != null)
-            if (! EntityOpListeners.canDelete(obj))
+            if (!EntityOpListeners.canDelete(obj))
                 return false;
 
         return true;
@@ -119,7 +119,7 @@ public class DeleteProcess
             if (o == Boolean.TRUE)
                 o = null;
             JdbcRowOpEvent event = new JdbcRowOpEvent(o, JdbcRowOpType.DELETE);
-            if (! beforeDelete(event, o))
+            if (!beforeDelete(event, o))
                 return o;
         }
         return null;
@@ -130,17 +130,17 @@ public class DeleteProcess
 
         if (obj instanceof IJdbcRowOpListener) {
             IJdbcRowOpListener l = (IJdbcRowOpListener) obj;
-            if (! l.beforeRowOperation(event))
+            if (!l.beforeRowOperation(event, obj))
                 return false;
         }
 
-        if (! RowOpAwares.beforeRowOperation(obj, event))
-            return false;
-
-        if (obj != null)
+        if (obj != null) {
+            if (!RowOpAwares.beforeRowOperation(event, obj))
+                return false;
             EntityOpListeners.beforeDelete(obj);
+        }
 
-        if (! JdbcRowOpListeners.beforeRowOperation(event))
+        if (!JdbcRowOpListeners.beforeRowOperation(event, obj))
             return false;
 
         return true;
@@ -162,15 +162,15 @@ public class DeleteProcess
 
         if (obj instanceof IJdbcRowOpListener) {
             IJdbcRowOpListener l = (IJdbcRowOpListener) obj;
-            l.afterRowOperation(event);
+            l.afterRowOperation(event, obj);
         }
 
-        RowOpAwares.afterRowOperation(obj, event);
-
-        if (obj != null)
+        if (obj != null) {
+            RowOpAwares.afterRowOperation(event, obj);
             EntityOpListeners.afterDelete(obj);
+        }
 
-        JdbcRowOpListeners.afterRowOperation(event);
+        JdbcRowOpListeners.afterRowOperation(event, obj);
     }
 
     @Override

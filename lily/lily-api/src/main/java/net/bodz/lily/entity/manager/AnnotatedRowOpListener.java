@@ -1,19 +1,12 @@
 package net.bodz.lily.entity.manager;
 
 public class AnnotatedRowOpListener
-        implements
-            IJdbcRowOpListener {
+        implements IJdbcRowOpListener {
 
     @Override
-    public boolean beforeRowOperation(JdbcRowOpEvent event)
+    public boolean beforeRowOperation(JdbcRowOpEvent event, Object context)
             throws Exception {
         return false;
-    }
-
-    @Override
-    public void afterRowOperation(JdbcRowOpEvent event)
-            throws Exception {
-        IJdbcRowOpListener.super.afterRowOperation(event);
     }
 
 }

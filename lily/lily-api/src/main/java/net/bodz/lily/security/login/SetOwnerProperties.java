@@ -13,10 +13,12 @@ public class SetOwnerProperties
     @Override
     public void onLoad(CoObject o) {
         LoginToken token = LoginToken.fromRequest();
-        IUser user = token.getUser();
-        IGroup group = user.getPrimaryGroup();
-        o.setOwnerUser(user);
-        o.setOwnerGroup(group);
+        if (token != null) {
+            IUser user = token.getUser();
+            IGroup group = user.getPrimaryGroup();
+            o.setOwnerUser(user);
+            o.setOwnerGroup(group);
+        }
     }
 
 }

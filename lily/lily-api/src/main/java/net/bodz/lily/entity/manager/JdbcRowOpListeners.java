@@ -20,20 +20,20 @@ public class JdbcRowOpListeners {
         }
     }
 
-    public static boolean beforeRowOperation(JdbcRowOpEvent event)
+    public static boolean beforeRowOperation(JdbcRowOpEvent event, Object context)
             throws Exception {
         if (enabled)
             for (IJdbcRowOpListener listener : ServiceLoader.load(IJdbcRowOpListener.class))
-                if (! listener.beforeRowOperation(event))
+                if (! listener.beforeRowOperation(event, context))
                     return false;
         return true;
     }
 
-    public static void afterRowOperation(JdbcRowOpEvent event)
+    public static void afterRowOperation(JdbcRowOpEvent event, Object context)
             throws Exception {
         if (enabled)
             for (IJdbcRowOpListener listener : ServiceLoader.load(IJdbcRowOpListener.class))
-                listener.afterRowOperation(event);
+                listener.afterRowOperation(event, context);
     }
 
 }

@@ -26,8 +26,7 @@ import net.bodz.lily.entity.type.EntityOpListeners;
 
 public class SaveProcess
         extends AbstractEntityCommandProcess
-        implements
-            IJsonForm {
+        implements IJsonForm {
 
     boolean createNew;
     boolean hasId;
@@ -48,12 +47,12 @@ public class SaveProcess
     public void setCommandPath(IPathFields path) {
         super.setCommandPath(path);
         switch (path.toString()) {
-        case "saveNew":
-            createNew = true;
-            break;
-        case "update":
-            createNew = false;
-            break;
+            case "saveNew":
+                createNew = true;
+                break;
+            case "update":
+                createNew = false;
+                break;
         }
     }
 
@@ -125,16 +124,16 @@ public class SaveProcess
 
         if (obj instanceof IJdbcRowOpListener) {
             IJdbcRowOpListener l = (IJdbcRowOpListener) obj;
-            if (! l.beforeRowOperation(event))
+            if (!l.beforeRowOperation(event, obj))
                 return false;
         }
 
-        if (! RowOpAwares.beforeRowOperation(obj, event))
+        if (!RowOpAwares.beforeRowOperation(event, obj))
             return false;
 
-        EntityOpListeners.beforeUpdate(obj, ! createNew);
+        EntityOpListeners.beforeUpdate(obj, !createNew);
 
-        JdbcRowOpListeners.beforeRowOperation(event);
+        JdbcRowOpListeners.beforeRowOperation(event, obj);
 
         return true;
     }
@@ -144,14 +143,14 @@ public class SaveProcess
 
         if (obj instanceof IJdbcRowOpListener) {
             IJdbcRowOpListener l = (IJdbcRowOpListener) obj;
-            l.afterRowOperation(event);
+            l.afterRowOperation(event, obj);
         }
 
-        RowOpAwares.afterRowOperation(obj, event);
+        RowOpAwares.afterRowOperation(event, obj);
 
-        EntityOpListeners.afterUpdate(obj, ! createNew);
+        EntityOpListeners.afterUpdate(obj, !createNew);
 
-        JdbcRowOpListeners.afterRowOperation(event);
+        JdbcRowOpListeners.afterRowOperation(event, obj);
 
     }
 
@@ -167,10 +166,10 @@ public class SaveProcess
                 String[] params = new String[names.length];
                 for (int i = 0; i < names.length; i++) {
                     String property = names[i];
-                    String param = o.getString(property);
-                    if (params == null)
+                    String value = o.getString(property);
+                    if (value == null)
                         throw new IllegalArgumentException("pk-column[" + i + "] isn't specified.");
-                    params[i] = param;
+                    params[i] = value;
                 }
                 this.id = typeInfo.parseId(params);
                 if (id == null)

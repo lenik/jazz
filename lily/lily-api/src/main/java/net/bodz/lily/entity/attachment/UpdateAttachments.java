@@ -25,16 +25,9 @@ import net.bodz.lily.storage.IVolumeItem;
  * @see RowOpAware
  */
 public class UpdateAttachments
-        implements
-            IJdbcRowOpListener {
+        implements IJdbcRowOpListener {
 
     static final Logger logger = LoggerFactory.getLogger(UpdateAttachments.class);
-
-    IId<?> context;
-
-    public <T extends IId<?>> UpdateAttachments(T obj) {
-        this.context = obj;
-    }
 
     protected String getPreferredName(IAttachment item)
             throws IOException {
@@ -55,7 +48,7 @@ public class UpdateAttachments
 //            throw new IllegalStateException("volume not set");
 
         File file = attachment.toLocalFile(volume);
-        if (! file.exists()) {
+        if (!file.exists()) {
             System.out.println(file);
         }
 
@@ -68,26 +61,31 @@ public class UpdateAttachments
     }
 
     @Override
-    public boolean beforeRowOperation(JdbcRowOpEvent event)
+    public boolean beforeRowOperation(JdbcRowOpEvent event, Object context)
             throws Exception {
-        if (! (context instanceof IHaveAttachments))
+        if (!(context instanceof IHaveAttachments))
             return true;
         IHaveAttachments owner = (IHaveAttachments) context;
 
         if (event.getOpType() != JdbcRowOpType.UPDATE)
             return true;
 
-        Object id = context.id();
+        Object id;
+        if (context instanceof IId<?> iid)
+            id = iid.id();
+        else
+            return true;
+
         if (id != null) {
             String idStr = id.toString();
-//
+
             IDataApplication app = DataApps.fromRequest();
             IVolume volume = app.getEntityVolume(context.getClass());
 
             IAttachmentListing listing = owner.listAttachments();
             for (String category : listing.getAttachmentGroupKeys()) {
                 Collection<IAttachment> group = listing.getAttachmentGroup(category);
-                if (! group.isEmpty())
+                if (!group.isEmpty())
                     for (IAttachment attachment : group) {
                         renameSubDirToId(volume, attachment, idStr);
                     }

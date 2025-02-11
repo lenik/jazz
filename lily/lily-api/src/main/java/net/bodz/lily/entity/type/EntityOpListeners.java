@@ -41,11 +41,7 @@ public class EntityOpListeners {
     }
 
     static Set<IEntityOpListener<Object>> getOrCreateType(Class<?> type) {
-        Set<IEntityOpListener<Object>> set = map.get(type);
-        if (set == null) {
-            map.put(type, set = new LinkedHashSet<>());
-        }
-        return set;
+        return map.computeIfAbsent(type, k -> new LinkedHashSet<>());
     }
 
     static Set<IEntityOpListener<Object>> computeClosure(Class<?> type) {
@@ -96,69 +92,66 @@ public class EntityOpListeners {
     }
 
     public static void onCreate(Class<?> type, Object o) {
-        for (IEntityOpListener<?> l : query(type)) {
-            @SuppressWarnings("unchecked")
-            IEntityOpListener<Object> listener = (IEntityOpListener<Object>) l;
+        for (IEntityOpListener<Object> l : query(type)) {
+            IEntityOpListener<Object> listener = l;
             listener.onCreate(o);
         }
     }
 
     public static void onLoad(Class<?> type, Object o) {
-        for (IEntityOpListener<?> l : query(type)) {
-            @SuppressWarnings("unchecked")
-            IEntityOpListener<Object> listener = (IEntityOpListener<Object>) l;
-            listener.onLoad(o);
+        for (IEntityOpListener<Object> l : query(type)) {
+            l.onLoad(o);
         }
     }
 
     public static void validate(Class<?> type, Object o) {
-        for (IEntityOpListener<?> l : query(type)) {
-            @SuppressWarnings("unchecked")
-            IEntityOpListener<Object> listener = (IEntityOpListener<Object>) l;
-            listener.validate(o);
+        for (IEntityOpListener<Object> l : query(type)) {
+            l.validate(o);
         }
     }
 
-    public static void beforeUpdate(Class<?> type, Object o, boolean updateExisting) {
-        for (IEntityOpListener<?> l : query(type)) {
-            @SuppressWarnings("unchecked")
-            IEntityOpListener<Object> listener = (IEntityOpListener<Object>) l;
-            listener.beforeUpdate(o, updateExisting);
+    public static int beforeUpdate(Class<?> type, Object o, boolean updateExisting) {
+        int n = 0;
+        for (IEntityOpListener<Object> l : query(type)) {
+            if (l.beforeUpdate(o, updateExisting))
+                n++;
         }
+        return n;
     }
 
-    public static void afterUpdate(Class<?> type, Object o, boolean updateExisting) {
-        for (IEntityOpListener<?> l : query(type)) {
-            @SuppressWarnings("unchecked")
-            IEntityOpListener<Object> listener = (IEntityOpListener<Object>) l;
-            listener.afterUpdate(o, updateExisting);
+    public static int afterUpdate(Class<?> type, Object o, boolean updateExisting) {
+        int n = 0;
+        for (IEntityOpListener<Object> l : query(type)) {
+            if (l.afterUpdate(o, updateExisting))
+                n++;
         }
+        return n;
     }
 
     public static boolean canDelete(Class<?> type, Object o) {
-        for (IEntityOpListener<?> l : query(type)) {
-            @SuppressWarnings("unchecked")
-            IEntityOpListener<Object> listener = (IEntityOpListener<Object>) l;
-            if (! listener.canDelete(o))
+        for (IEntityOpListener<Object> l : query(type)) {
+            if (!l.canDelete(o))
                 return false;
         }
         return true;
     }
 
-    public static void beforeDelete(Class<?> type, Object o) {
-        for (IEntityOpListener<?> l : query(type)) {
-            @SuppressWarnings("unchecked")
-            IEntityOpListener<Object> listener = (IEntityOpListener<Object>) l;
-            listener.beforeDelete(o);
+    public static int beforeDelete(Class<?> type, Object o) {
+        int n = 0;
+        for (IEntityOpListener<Object> l : query(type)) {
+            if (l.beforeDelete(o))
+                n++;
         }
+        return n;
     }
 
-    public static void afterDelete(Class<?> type, Object o) {
-        for (IEntityOpListener<?> l : query(type)) {
-            @SuppressWarnings("unchecked")
-            IEntityOpListener<Object> listener = (IEntityOpListener<Object>) l;
-            listener.afterDelete(o);
+    public static int afterDelete(Class<?> type, Object o) {
+        int n = 0;
+        for (IEntityOpListener<Object> l : query(type)) {
+            if (l.afterDelete(o))
+                n++;
         }
+        return n;
     }
 
 }
