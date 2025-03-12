@@ -136,13 +136,13 @@ public class Log4jLogger
         return NullLogSink.getInstance();
     }
 
-    private String getCallerFQCN() {
+    String getCallerFQCN() {
         StackTraceElement[] stackTrace = new Exception().getStackTrace();
         String lastLogClass = fqcn;
         for (int i = 1; i < stackTrace.length; i++) {
             StackTraceElement element = stackTrace[i];
             String className = element.getClassName();
-            if (! className.startsWith("net.bodz.bas.log."))
+            if (!className.startsWith("net.bodz.bas.log."))
                 break;
             lastLogClass = className;
         }

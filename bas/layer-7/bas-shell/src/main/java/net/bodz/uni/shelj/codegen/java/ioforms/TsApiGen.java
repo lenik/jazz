@@ -211,6 +211,10 @@ public class TsApiGen
             Set<Method> propertyMethods = new HashSet<>();
             for (IPropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
                 Method getter = property.getReadMethod();
+                if (getter == null)
+                    // throw new NullPointerException("getter of: " + property.getName());
+                    continue;
+
                 if (getter.getDeclaringClass() != beanClass)
                     continue;
                 logger.debug("Property " + property.getName());

@@ -44,7 +44,7 @@ public class JsonObject
 
     public Object get(String key, Object defaultValue)
             throws JSONException {
-        if (! super.has(key))
+        if (!super.has(key))
             return defaultValue;
         Object val = super.get(key);
         if (val == _JSONObject.NULL)
@@ -92,7 +92,7 @@ public class JsonObject
     public <T extends IJsonForm> T getObject(String key, T defaultValue, Class<T> clazz) {
         return getObject(key, defaultValue, () -> {
             try {
-                return clazz.newInstance();
+                return clazz.getConstructor().newInstance();
             } catch (Exception e) {
                 return defaultValue;
             }
@@ -114,7 +114,7 @@ public class JsonObject
     }
 
     public byte[] getByteArray(String key, byte[] defaultValue) {
-        if (! has(key))
+        if (!has(key))
             return defaultValue;
         List<Byte> list = getBytes(key, null);
         byte[] v = new byte[list.size()];
@@ -124,7 +124,7 @@ public class JsonObject
     }
 
     public short[] getShortArray(String key, short[] defaultValue) {
-        if (! has(key))
+        if (!has(key))
             return defaultValue;
         List<Short> list = getShorts(key, null);
         short[] v = new short[list.size()];
@@ -134,7 +134,7 @@ public class JsonObject
     }
 
     public int[] getIntArray(String key, int[] defaultValue) {
-        if (! has(key))
+        if (!has(key))
             return defaultValue;
         List<Integer> list = getInts(key, null);
         int[] v = new int[list.size()];
@@ -144,7 +144,7 @@ public class JsonObject
     }
 
     public long[] getLongArray(String key, long[] defaultValue) {
-        if (! has(key))
+        if (!has(key))
             return defaultValue;
         List<Long> list = getLongs(key, null);
         long[] v = new long[list.size()];
@@ -154,7 +154,7 @@ public class JsonObject
     }
 
     public float[] getFloatArray(String key, float[] defaultValue) {
-        if (! has(key))
+        if (!has(key))
             return defaultValue;
         List<Float> list = getFloats(key, null);
         float[] v = new float[list.size()];
@@ -164,7 +164,7 @@ public class JsonObject
     }
 
     public double[] getDoubleArray(String key, double[] defaultValue) {
-        if (! has(key))
+        if (!has(key))
             return defaultValue;
         List<Double> list = getDoubles(key, null);
         double[] v = new double[list.size()];
@@ -174,7 +174,7 @@ public class JsonObject
     }
 
     public boolean[] getBooleanArray(String key, boolean[] defaultValue) {
-        if (! has(key))
+        if (!has(key))
             return defaultValue;
         List<Boolean> list = getBooleans(key, null);
         boolean[] v = new boolean[list.size()];
@@ -184,7 +184,7 @@ public class JsonObject
     }
 
     public char[] getCharArray(String key, char[] defaultValue) {
-        if (! has(key))
+        if (!has(key))
             return defaultValue;
         List<Character> list = getChars(key, null);
         char[] v = new char[list.size()];
@@ -195,7 +195,7 @@ public class JsonObject
 
     @Override
     public String[] getStringArray(String key, String[] defaultValue) {
-        if (! has(key))
+        if (!has(key))
             return defaultValue;
         List<String> list = getStrings(key, null);
         String[] v = new String[list.size()];
@@ -319,7 +319,7 @@ public class JsonObject
     }
 
     public <T> T getVar(Class<T> type, String key, T defaultValue) {
-        if (! has(key))
+        if (!has(key))
             return defaultValue;
         Object val = get(key);
         IVarConverter<Object> converter = VarConverters.getConverter(type);
@@ -423,7 +423,12 @@ public class JsonObject
 
     public <T extends IJsonForm> T readInto(String key, T context, Supplier<T> factory)
             throws ParseException {
-        if (! has(key)) // nothing to change
+        return readInto(key, context, factory, JsonFormOptions.DEFAULT);
+    }
+
+    public <T extends IJsonForm> T readInto(String key, T context, Supplier<T> factory, JsonFormOptions opts)
+            throws ParseException {
+        if (!has(key)) // nothing to change
             return context;
 
         JsonVariant jv = getVariant(key);
@@ -433,15 +438,14 @@ public class JsonObject
         if (context == null) {
             if (factory == null) // don't auto-create
                 return null;
-            context = factory.get();
+            else
+                context = factory.get();
         }
-        context.jsonIn(jv, JsonFormOptions.XXX);
-
+        context.jsonIn(jv, opts);
         return context;
     }
 
-    public <T> Set<T> getArraySet(String key, Set<T> set, SortOrder order,
-            FunctionX<JsonVariant, T, ParseException> conv)
+    public <T> Set<T> getArraySet(String key, Set<T> set, SortOrder order, FunctionX<JsonVariant, T, ParseException> conv)
             throws ParseException {
         return readArrayInto(key, set, conv, () -> order.newSet());
     }
@@ -487,8 +491,8 @@ public class JsonObject
     }
 
     public <T extends IJsonForm> Set<T> //
-            readArrayIntoSet(String key, Set<T> set, SortOrder order, Supplier<T> vals)
-                    throws ParseException {
+    readArrayIntoSet(String key, Set<T> set, SortOrder order, Supplier<T> vals)
+            throws ParseException {
         return readArrayInto(key, set, (JsonVariant jv) -> {
             T val = vals.get();
             val.jsonIn(jv, JsonFormOptions.XXX);
@@ -497,8 +501,8 @@ public class JsonObject
     }
 
     public <T extends IJsonForm> List<T> //
-            readArrayIntoList(String key, List<T> list, Supplier<T> vals)
-                    throws ParseException {
+    readArrayIntoList(String key, List<T> list, Supplier<T> vals)
+            throws ParseException {
         return readArrayInto(key, list, (JsonVariant jv) -> {
             T val = vals.get();
             val.jsonIn(jv, JsonFormOptions.XXX);
@@ -507,10 +511,9 @@ public class JsonObject
     }
 
     public <C extends Collection<T>, T> C //
-            readArrayInto(String key, C collection, FunctionX<JsonVariant, T, ParseException> conv,
-                    Supplier<C> collectionSupplier)
-                    throws ParseException {
-        if (! has(key)) // nothing to change
+    readArrayInto(String key, C collection, FunctionX<JsonVariant, T, ParseException> conv, Supplier<C> collectionSupplier)
+            throws ParseException {
+        if (!has(key)) // nothing to change
             return collection;
 
         Object _node = get(key);
@@ -541,26 +544,26 @@ public class JsonObject
     }
 
     public Map<String, String> //
-            getMap(String key, SortOrder order)
-                    throws ParseException {
+    getMap(String key, SortOrder order)
+            throws ParseException {
         return readIntoMap(key, null, (Object o) -> Nullables.toString(o), () -> order.newMap());
     }
 
     public Map<String, String> //
-            getMap(String key, Map<String, String> map, SortOrder order)
-                    throws ParseException {
+    getMap(String key, Map<String, String> map, SortOrder order)
+            throws ParseException {
         return readIntoMap(key, map, (Object o) -> Nullables.toString(o), () -> order.newMap());
     }
 
     public <T> Map<String, T> //
-            getMap(String key, Map<String, T> map, SortOrder order, FunctionX<Object, T, ParseException> conv)
-                    throws ParseException {
+    getMap(String key, Map<String, T> map, SortOrder order, FunctionX<Object, T, ParseException> conv)
+            throws ParseException {
         return readIntoMap(key, map, conv, () -> order.newMap());
     }
 
     public <T extends IJsonForm> Map<String, T> //
-            readIntoMap(String key, Map<String, T> map, SortOrder order, Supplier<T> vals)
-                    throws ParseException {
+    readIntoMap(String key, Map<String, T> map, SortOrder order, Supplier<T> vals)
+            throws ParseException {
         return readIntoMap(key, map, (Object jsAny) -> {
             T val = vals.get();
             val.jsonIn(JsonVariant.of(jsAny), JsonFormOptions.XXX);
@@ -569,8 +572,8 @@ public class JsonObject
     }
 
     public <map_t extends Map<String, val_t>, val_t extends IJsonForm> map_t //
-            readIntoJMap(String key, map_t map, Supplier<val_t> factory)
-                    throws ParseException {
+    readIntoJMap(String key, map_t map, Supplier<val_t> factory)
+            throws ParseException {
         return readIntoMap(key, map, (Object jsAny) -> {
             val_t val = factory.get();
             val.jsonIn(JsonVariant.of(jsAny), null);
@@ -579,16 +582,15 @@ public class JsonObject
     }
 
     public <map_t extends Map<String, val_t>, val_t> map_t //
-            readIntoMap(String key, map_t map, FunctionX<Object, val_t, ParseException> js2Val)
-                    throws ParseException {
+    readIntoMap(String key, map_t map, FunctionX<Object, val_t, ParseException> js2Val)
+            throws ParseException {
         return readIntoMap(key, map, js2Val, null);
     }
 
     public <map_t extends Map<String, val_t>, val_t> map_t //
-            readIntoMap(String key, map_t map, FunctionX<Object, val_t, ParseException> js2Val,
-                    Supplier<map_t> mapSupplier)
-                    throws ParseException {
-        if (! has(key)) // nothing to change
+    readIntoMap(String key, map_t map, FunctionX<Object, val_t, ParseException> js2Val, Supplier<map_t> mapSupplier)
+            throws ParseException {
+        if (!has(key)) // nothing to change
             return map;
 
         Object _node = get(key);

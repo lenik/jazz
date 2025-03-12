@@ -75,6 +75,11 @@ public interface IJsonForm {
         return true;
     }
 
+    default void jsonOutValue(IJsonOut out)
+            throws IOException, FormatException {
+        jsonOutValue(out, JsonFormOptions.DEFAULT);
+    }
+
     default void jsonOutValue(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         if (wantObjectContext())

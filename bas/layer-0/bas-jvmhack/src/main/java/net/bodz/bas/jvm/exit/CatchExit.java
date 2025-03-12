@@ -4,13 +4,16 @@ import net.bodz.bas.err.control.ControlExit;
 import net.bodz.bas.fn.IExecutableX;
 import net.bodz.bas.proxy.java.security.SecurityManagerProxy;
 
+@Deprecated
 public class CatchExit
         extends SecurityManagerProxy {
 
+    @Deprecated
     public CatchExit() {
         this(System.getSecurityManager());
     }
 
+    @Deprecated
     public CatchExit(SecurityManager proxy) {
         super(proxy);
     }
@@ -23,10 +26,11 @@ public class CatchExit
 
     /**
      * Capture exit() calls and convert to {@link ControlExit} exception.
-     * 
+     *
      * @throws ControlExit
      *             If exit() is called.
      */
+    @Deprecated
     public <X extends Exception> void catchExit(IExecutableX<X> executable)
             throws X {
         SecurityManager security0 = System.getSecurityManager();

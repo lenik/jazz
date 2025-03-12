@@ -66,18 +66,12 @@ public class XmlLoader {
 
     public static <T extends IXmlForm> T load(T obj, File file)
             throws LoaderException {
-        FileInputStream in = null;
-        try {
-            in = new FileInputStream(file);
+        try (FileInputStream in = new FileInputStream(file)) {
             load(obj, new InputSource(in));
         } catch (IOException e) {
             throw new LoaderException(e.getMessage(), e);
-        } finally {
-            try {
-                in.close();
-            } catch (IOException e) {
-                throw new LoaderException(e.getMessage(), e);
-            }
+//        } finally{
+//            Closeables.close(in);
         }
         return obj;
     }

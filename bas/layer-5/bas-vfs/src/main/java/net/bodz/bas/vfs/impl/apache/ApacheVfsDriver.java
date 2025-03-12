@@ -9,6 +9,7 @@ import org.apache.commons.vfs.FileSystemManager;
 import org.apache.commons.vfs.VFS;
 
 import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.c.java.util.Sets;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.vfs.AbstractVfsDriver;
 import net.bodz.bas.vfs.FileResolveException;
@@ -32,7 +33,7 @@ public class ApacheVfsDriver
         if (manager == null)
             throw new NullPointerException("manager");
         this.fileSystemManager = manager;
-        this.supportedSchemes = Collections.unmodifiableSet(Collections.toHashSet( //
+        this.supportedSchemes = Collections.unmodifiableSet(Sets.toHashSet( //
                 manager.getSchemes()));
         this.schemeMap = new HashMap<String, ApacheVfsDevice>();
     }

@@ -10,7 +10,8 @@ public class CatchExitTest
         extends Assert {
 
     static class TestProgram
-            implements IExecutable {
+            implements
+                IExecutable {
 
         private int status;
 
@@ -18,12 +19,14 @@ public class CatchExitTest
             this.status = status;
         }
 
+        @Override
         public void execute() {
             System.exit(status);
         }
 
     }
 
+    @Deprecated
     @Test(expected = ControlExit.class)
     public void test1()
             throws Exception {
@@ -32,6 +35,7 @@ public class CatchExitTest
         catcher.catchExit(program);
     }
 
+    @Deprecated
     @Test
     public void test2()
             throws Exception {

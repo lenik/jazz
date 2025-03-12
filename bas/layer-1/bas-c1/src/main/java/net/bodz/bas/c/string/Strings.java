@@ -181,14 +181,24 @@ public class Strings {
     }
 
     /**
-     * @throws IndexOutOfBoundsException
-     *             if tokenIndex is out of bounds.
+     * @return null if tokenIndex is out of bounds.
      */
     public static PosRange selectToken(String s, int tokenIndex, char delim) {
+        return selectToken(s, tokenIndex, delim, false);
+    }
+
+    /**
+     * @throws IndexOutOfBoundsException
+     *             if tokenIndex is out of bounds and raiseError is true.
+     */
+    public static PosRange selectToken(String s, int tokenIndex, char delim, boolean raiseError) {
         if (s == null)
             throw new NullPointerException("s");
         if (tokenIndex < 0)
-            throw new IndexOutOfBoundsException(String.valueOf(tokenIndex));
+            if (raiseError)
+                throw new IndexOutOfBoundsException(String.valueOf(tokenIndex));
+            else
+                return null;
 
         int currentIndex = 0;
         int begin = 0;
@@ -196,7 +206,10 @@ public class Strings {
 
         while (true) {
             if (begin > len)
-                throw new IndexOutOfBoundsException(String.valueOf(tokenIndex));
+                if (raiseError)
+                    throw new IndexOutOfBoundsException(String.valueOf(tokenIndex));
+                else
+                    return null;
 
             int end = s.indexOf(delim, begin);
             if (end == -1)

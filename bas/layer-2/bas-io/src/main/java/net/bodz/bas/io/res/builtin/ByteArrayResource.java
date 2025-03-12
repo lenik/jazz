@@ -5,10 +5,8 @@ import java.nio.ByteBuffer;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.nio.OpenOptions;
-import net.bodz.bas.io.IByteIOS;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
-import net.bodz.bas.io.ICharIOS;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.adapter.ByteBufferByteIn;
@@ -16,7 +14,7 @@ import net.bodz.bas.io.adapter.ByteBufferByteOut;
 import net.bodz.bas.meta.decl.DefaultImpl;
 
 public class ByteArrayResource
-        extends AbstractBinaryResource {
+        extends AbstractBinaryResource<ByteArrayResource> {
 
     private final byte[] array;
     private final int start;

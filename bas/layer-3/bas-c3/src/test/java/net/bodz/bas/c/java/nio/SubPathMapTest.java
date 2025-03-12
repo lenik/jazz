@@ -3,7 +3,7 @@ package net.bodz.bas.c.java.nio;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.c.java.util.Sets;
 
 public class SubPathMapTest
         extends Assert {
@@ -27,9 +27,9 @@ public class SubPathMapTest
 
     @Test
     public void testJoin() {
-        assertEquals(Collections.toSet("bar", "baz"), map.joinValueSet("/usr/lib/"));
-        assertEquals(Collections.toSet(), map.joinValueSet("/usr/lib/ba"));
-        assertEquals(Collections.toSet("foo", "foo-bar"), map.joinValueSet("/usr/foo"));
+        assertEquals(Sets.toSet("bar", "baz"), map.joinValueSet("/usr/lib/"));
+        assertEquals(Sets.toSet(), map.joinValueSet("/usr/lib/ba"));
+        assertEquals(Sets.toSet("foo", "foo-bar"), map.joinValueSet("/usr/foo"));
     }
 
 }

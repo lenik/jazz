@@ -11,8 +11,10 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.shell.runner.IProgramRunner;
 
+@Deprecated
 public class Main
-        implements IExecutableVarArgsX<String, Exception> {
+        implements
+            IExecutableVarArgsX<String, Exception> {
 
     static final Logger logger = LoggerFactory.getLogger(Main.class);
 

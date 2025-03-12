@@ -4,6 +4,7 @@ import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.SortOrder;
 
 public final class JsonVariant {
@@ -69,36 +70,60 @@ public final class JsonVariant {
         return type == JsonVariantType.SCALAR;
     }
 
+    @NotNull
+    public JsonObject getObject1() {
+        switch (type) {
+            case NULL:
+                throw new IllegalUsageException("expect non-null");
+            case OBJECT:
+                return (JsonObject) value;
+            default:
+                throw new IllegalUsageException("expect Json Object.");
+        }
+    }
+
     public JsonObject getObject() {
         switch (type) {
-        case NULL:
-            return null;
-        case OBJECT:
-            return (JsonObject) value;
-        default:
-            throw new IllegalUsageException("expect Json Object.");
+            case NULL:
+                return null;
+            case OBJECT:
+                return (JsonObject) value;
+            default:
+                throw new IllegalUsageException("expect Json Object.");
+        }
+    }
+
+    @NotNull
+    public JsonArray getArray1() {
+        switch (type) {
+            case NULL:
+                throw new IllegalUsageException("expect non-null");
+            case ARRAY:
+                return (JsonArray) value;
+            default:
+                throw new IllegalUsageException("expect Json Array.");
         }
     }
 
     public JsonArray getArray() {
         switch (type) {
-        case NULL:
-            return null;
-        case ARRAY:
-            return (JsonArray) value;
-        default:
-            throw new IllegalUsageException("expect Json Array.");
+            case NULL:
+                return null;
+            case ARRAY:
+                return (JsonArray) value;
+            default:
+                throw new IllegalUsageException("expect Json Array.");
         }
     }
 
     public Object getScalar() {
         switch (type) {
-        case NULL:
-            return null;
-        case SCALAR:
-            return value;
-        default:
-            throw new IllegalUsageException("expect scalar.");
+            case NULL:
+                return null;
+            case SCALAR:
+                return value;
+            default:
+                throw new IllegalUsageException("expect scalar.");
         }
     }
 
@@ -183,19 +208,19 @@ public final class JsonVariant {
 
     public String toJson() {
         switch (type) {
-        case NULL:
-            return "null";
-        case OBJECT:
-            JsonObject jo = (JsonObject) value;
-            return jo.toString();
-        case ARRAY:
-            JsonArray ja = (JsonArray) value;
-            return ja.toString();
-        case SCALAR:
-        default:
-            JsonBuffer buf = new JsonBuffer();
-            buf.value(value);
-            return buf.toString();
+            case NULL:
+                return "null";
+            case OBJECT:
+                JsonObject jo = (JsonObject) value;
+                return jo.toString();
+            case ARRAY:
+                JsonArray ja = (JsonArray) value;
+                return ja.toString();
+            case SCALAR:
+            default:
+                JsonBuffer buf = new JsonBuffer();
+                buf.value(value);
+                return buf.toString();
         }
     }
 

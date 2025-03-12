@@ -6,9 +6,11 @@ import java.security.Permission;
 
 import net.bodz.bas.t.model.IWrapper;
 
+@Deprecated // (since = "17")
 public class SecurityManagerProxy
         extends SecurityManager
-        implements IWrapper<SecurityManager> {
+        implements
+            IWrapper<SecurityManager> {
 
     protected final SecurityManager _orig;
 

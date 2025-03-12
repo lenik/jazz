@@ -53,7 +53,7 @@ class Node
     }
 
     @Override
-    public IPathInfo getParent() {
+    public Node getParent() {
         return parent;
     }
 

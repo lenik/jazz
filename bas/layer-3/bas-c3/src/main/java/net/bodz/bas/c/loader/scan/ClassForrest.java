@@ -15,8 +15,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.object.IdentityObjectSet;
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
@@ -191,7 +191,7 @@ public class ClassForrest
             if (annotatedSet == null)
                 return;
 
-            if (! base.isAnnotation() && ! Collections.isEmpty(annotatedSet))
+            if (! base.isAnnotation() && ! Nullables.isEmpty(annotatedSet))
                 throw new IllegalUsageException(String.format(//
                         "A non-annotation %s is used to annotate on: %s", base, annotatedSet));
 

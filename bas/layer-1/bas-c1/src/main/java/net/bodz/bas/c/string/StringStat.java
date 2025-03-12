@@ -22,7 +22,7 @@ public class StringStat {
         return count;
     }
 
-    public static int count(String s, byte charCategory) {
+    public static int countByCategory(String s, int charCategory) {
         int count = 0;
         int index = 0;
         while ((index = StringSearch.indexOf(s, charCategory, index)) != -1) {

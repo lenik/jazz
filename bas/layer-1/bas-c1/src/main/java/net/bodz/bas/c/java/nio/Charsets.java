@@ -14,6 +14,8 @@ import java.util.Set;
 
 import net.bodz.bas.err.IllegalArgumentTypeException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.meta.decl.Nullable;
 
 public class Charsets {
 
@@ -21,33 +23,38 @@ public class Charsets {
 
     public static Charset DEFAULT = Charset.defaultCharset();
 
-    public static final Charset US_ASCII = declare("US-ASCII", true);
-    public static final Charset ISO_8859_1 = declare("ISO-8859-1", true);
-    public static final Charset UTF_8 = declare("UTF-8", true);
-    public static final Charset UTF_16 = declare("UTF-16", true);
-    public static final Charset UTF_16LE = declare("UTF-16LE", true);
-    public static final Charset UTF_16BE = declare("UTF-16BE", true);
-    public static final Charset UTF_32 = declare("UTF-16", true);
-    public static final Charset UTF_32LE = declare("UTF-32LE", true);
-    public static final Charset UTF_32BE = declare("UTF-32BE", true);
+    public static final Charset US_ASCII = declare("US-ASCII");
+    public static final Charset ISO_8859_1 = declare("ISO-8859-1");
+    public static final Charset UTF_8 = declare("UTF-8");
+    public static final Charset UTF_16 = declare("UTF-16");
+    public static final Charset UTF_16LE = declare("UTF-16LE");
+    public static final Charset UTF_16BE = declare("UTF-16BE");
+    public static final Charset UTF_32 = declare("UTF-16");
+    public static final Charset UTF_32LE = declare("UTF-32LE");
+    public static final Charset UTF_32BE = declare("UTF-32BE");
 
-    public static final Charset BIG5 = declare("Big5", false);
-    public static final Charset EUC_KR = declare("EUC-KR", false);
-    public static final Charset GB2312 = declare("GB2312", false);
-    public static final Charset GB18030 = declare("GB18030", false);
-    public static final Charset GBK = declare("GBK", false);
-    public static final Charset SHIFT_JIS = declare("Shift_JIS", false);
+    public static final Charset BIG5 = declareOptional("Big5");
+    public static final Charset EUC_KR = declareOptional("EUC-KR");
+    public static final Charset GB2312 = declareOptional("GB2312");
+    public static final Charset GB18030 = declareOptional("GB18030");
+    public static final Charset GBK = declareOptional("GBK");
+    public static final Charset SHIFT_JIS = declareOptional("Shift_JIS");
 
-    static Charset declare(String name, boolean required) {
+    @NotNull
+    static Charset declare(String name) {
+        Charset charset = Charset.forName(name);
+        String canonicalName = charset.name();
+        declaredCharsetNames.add(canonicalName);
+        return charset;
+    }
+
+    @Nullable
+    static Charset declareOptional(String name) {
         Charset charset;
-        if (required) {
+        try {
             charset = Charset.forName(name);
-        } else {
-            try {
-                charset = Charset.forName(name);
-            } catch (UnsupportedCharsetException e) {
-                return null;
-            }
+        } catch (UnsupportedCharsetException e) {
+            return null;
         }
         String canonicalName = charset.name();
         declaredCharsetNames.add(canonicalName);

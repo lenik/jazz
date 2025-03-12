@@ -1,7 +1,16 @@
 package net.bodz.bas.c.java.beans;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.ImageProducer;
+import java.io.IOException;
+import java.net.URL;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+
 import com.googlecode.openbeans.SimpleBeanInfo;
 
+@SuppressWarnings("removal")
 public class AbstractBeanInfo
         extends SimpleBeanInfo {
 
@@ -36,27 +45,42 @@ public class AbstractBeanInfo
         // return null;
     }
 
-    public static java.awt.Image loadImage(final Class<?> c, final String resourceName) {
-        try {
-            java.awt.image.ImageProducer ip = (java.awt.image.ImageProducer) java.security.AccessController
-                    .doPrivileged(new java.security.PrivilegedAction<Object>() {
-                        public Object run() {
-                            java.net.URL url;
-                            if ((url = c.getResource(resourceName)) == null) {
-                                return null;
-                            } else {
-                                try {
-                                    return url.getContent();
-                                } catch (java.io.IOException ioe) {
-                                    return null;
-                                }
-                            }
-                        }
-                    });
-            if (ip == null)
+    static class GetContent
+            implements
+                PrivilegedAction<Object> {
+        Class<?> c;
+        String resourceName;
+
+        public GetContent(Class<?> c, String resourceName) {
+            super();
+            this.c = c;
+            this.resourceName = resourceName;
+        }
+
+        @Override
+        public Object run() {
+            URL url;
+            if ((url = c.getResource(resourceName)) == null) {
                 return null;
-            java.awt.Toolkit tk = java.awt.Toolkit.getDefaultToolkit();
-            return tk.createImage(ip);
+            } else {
+                try {
+                    return url.getContent();
+                } catch (IOException ioe) {
+                    return null;
+                }
+            }
+        }
+    }
+
+    public static Image loadImage(final Class<?> c, final String resourceName) {
+        try {
+            @SuppressWarnings({ "deprecation" })
+            ImageProducer producer = (ImageProducer) AccessController.doPrivileged(//
+                    new GetContent(c, resourceName));
+            if (producer == null)
+                return null;
+            Toolkit tk = Toolkit.getDefaultToolkit();
+            return tk.createImage(producer);
         } catch (Exception ex) {
             return null;
         }

@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.c.java.util.Lists;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.ITreeOut;
@@ -25,7 +26,7 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 public class ServletDiag {
 
     public static <E extends Comparable<E>> List<E> sort(Enumeration<E> enm) {
-        List<E> list = Collections.toList(enm);
+        List<E> list = Lists.toList(enm);
         Collections.sort(list);
         return list;
     }
@@ -85,7 +86,7 @@ public class ServletDiag {
             out.println("headers: ");
             {
                 out.enter();
-                for (String headerName : Collections.toList(req.getHeaderNames())) {
+                for (String headerName : Lists.toList(req.getHeaderNames())) {
                     out.println(headerName + " = " + req.getHeader(headerName));
                 }
                 out.leave();
@@ -98,7 +99,7 @@ public class ServletDiag {
             out.println("locales: ");
             {
                 out.enter();
-                for (Locale locale : Collections.toList(req.getLocales())) {
+                for (Locale locale : Lists.toList(req.getLocales())) {
                     out.println(locale);
                 }
                 out.leave();

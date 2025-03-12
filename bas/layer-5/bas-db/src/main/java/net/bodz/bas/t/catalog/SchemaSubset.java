@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.c.java.util.Lists;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
@@ -141,8 +141,8 @@ public class SchemaSubset
             throws IOException, FormatException {
         out.entry("schemaName", schemaName);
         out.entry("all", all);
-        out.entry("names", Collections.sortCopy(names));
-        out.entry("patterns", Collections.sortCopy(patterns, PatternComparator.INSTANCE));
+        out.entry("names", Lists.sortCopy(names));
+        out.entry("patterns", Lists.sortCopy(patterns, PatternComparator.INSTANCE));
         out.entry("ignoreCase", ignoreCase);
     }
 

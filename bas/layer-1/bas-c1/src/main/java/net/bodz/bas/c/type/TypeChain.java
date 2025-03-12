@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.c.java.util.Arrays;
-import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.c.java.util.Lists;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class TypeChain {
@@ -34,7 +35,7 @@ public class TypeChain {
 
     public static Class<?>[] supersFromRoot(Class<?> clazz, Class<?> rootClass) {
         Class<?>[] list = supersToRoot(clazz, rootClass);
-        Arrays.<Class<?>> reverse(list);
+        Arrays.<Class<?>>reverse(list);
         return list;
     }
 
@@ -71,11 +72,12 @@ public class TypeChain {
     public static Iterable<Class<?>> ancestors(final Class<?> type, Class<?>... deferred) {
         final List<Class<?>> deferredList;
         if (deferred != null && deferred.length != 0)
-            deferredList = Collections.toList(deferred);
+            deferredList = Lists.toList(deferred);
         else
             deferredList = null;
 
         return new Iterable<Class<?>>() {
+            @NotNull
             @Override
             public Iterator<Class<?>> iterator() {
                 return new AncestorIterator(type, deferredList);
@@ -105,7 +107,7 @@ class AncestorIterator
     AncestorIterator(Class<?> start, List<Class<?>> deferred) {
         this(start);
 
-        if (deferred != null && ! deferred.isEmpty()) {
+        if (deferred != null && !deferred.isEmpty()) {
             this.deferredQueue = deferred;
             for (Class<?> ex : deferred)
                 markSet.add(ex);
@@ -148,8 +150,7 @@ class AncestorIterator
 }
 
 class ImpliedTypes
-        implements
-            Iterable<Class<?>> {
+        implements Iterable<Class<?>> {
 
     private final Class<?> type;
     private Set<Class<?>> all;
@@ -170,7 +171,7 @@ class ImpliedTypes
     }
 
     void traverse(Class<?> type) {
-        if (! all.add(type)) // already added
+        if (!all.add(type)) // already added
             return;
 
         if (type.isInterface())
