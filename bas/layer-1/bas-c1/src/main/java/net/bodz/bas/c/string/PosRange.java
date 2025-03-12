@@ -17,9 +17,13 @@ public class PosRange {
         return end - begin;
     }
 
+    public String run(String s) {
+        return s.substring(begin, end);
+    }
+
     @Override
     public String toString() {
-        return String.format("[%d, %c)", begin, end);
+        return String.format("[%d, %d)", begin, end);
     }
 
 }
