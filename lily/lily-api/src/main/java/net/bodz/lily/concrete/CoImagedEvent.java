@@ -2,14 +2,18 @@ package net.bodz.lily.concrete;
 
 import javax.persistence.Column;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.bas.meta.decl.TypeParamType;
 import net.bodz.bas.meta.decl.TypeParameters;
 import net.bodz.bas.meta.res.HaveAttachments;
-import net.bodz.lily.entity.attachment.AttachmentListingInFiles;
-import net.bodz.lily.entity.attachment.IAttachmentListing;
-import net.bodz.lily.entity.attachment.util.IImagesInFiles;
+import net.bodz.lily.entity.attachment.DefaultAttachmentManifest;
+import net.bodz.lily.entity.attachment.IHaveAttachments;
+import net.bodz.lily.entity.attachment.IHaveImages;
+import net.bodz.lily.entity.attachment.IHaveVideos;
+import net.bodz.lily.entity.attachment.MutableAttachment;
 import net.bodz.lily.entity.esm.DTColumn;
 import net.bodz.lily.meta.FieldGroupVue;
 
@@ -19,9 +23,11 @@ import net.bodz.lily.meta.FieldGroupVue;
 @TypeParameters({ TypeParamType.ID_TYPE })
 public class CoImagedEvent<Id>
         extends CoEvent<Id>
-        implements
-            IHaveProperties,
-            IImagesInFiles {
+        implements IHaveProperties,
+                   IHaveAttachments,
+                   IHaveImages<MutableAttachment>,
+                   IHaveVideos<MutableAttachment>,
+                   IHaveFiles {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,7 +35,7 @@ public class CoImagedEvent<Id>
     public static final String FIELD_FILES = "files";
 
     private JsonVariant properties;
-    private JsonVariant files;
+    private DefaultAttachmentManifest attachmentManifest;
 
     @Column(name = FIELD_PROPERTIES)
     @DTColumn(hidden = true)
@@ -45,22 +51,23 @@ public class CoImagedEvent<Id>
 
     @Column(name = FIELD_FILES)
     @Override
-    public JsonVariant getFiles() {
-        return files;
+    public synchronized JsonVariant getFiles() {
+        return JsonFn.toJsonVar(attachmentManifest);
     }
 
     @Override
-    public void setFiles(JsonVariant files) {
-        this.files = files;
+    public synchronized void setFiles(JsonVariant files)
+            throws ParseException {
+        attachmentManifest = new DefaultAttachmentManifest();
+        attachmentManifest.jsonIn(files);
     }
 
-    static final String[] attachmentGroupKeys = { //
-            K_IMAGES, //
-    };
-
     @Override
-    public IAttachmentListing listAttachments() {
-        return new AttachmentListingInFiles(this, attachmentGroupKeys);
+    public synchronized DefaultAttachmentManifest attachmentManifest(boolean create) {
+        if (attachmentManifest == null)
+            if (create)
+                attachmentManifest = new DefaultAttachmentManifest();
+        return attachmentManifest;
     }
 
 }

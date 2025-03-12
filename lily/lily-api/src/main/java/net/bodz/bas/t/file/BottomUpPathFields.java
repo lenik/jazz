@@ -30,19 +30,11 @@ public class BottomUpPathFields
     }
 
     public BottomUpPathFields(IPathFields o) {
-        this.dirName = o.getDirName();
-        this.name = o.getName();
-        this.extension = o.getExtension();
-        this._pathCache = o.getPath();
-        this._fileNameCache = o.getFileName();
+        setPath(o);
     }
 
     public BottomUpPathFields(BottomUpPathFields o) {
-        this.dirName = o.dirName;
-        this.name = o.name;
-        this.extension = o.extension;
-        this._pathCache = o._pathCache;
-        this._fileNameCache = o._fileNameCache;
+        setPath(o);
     }
 
     @Override
@@ -81,6 +73,22 @@ public class BottomUpPathFields
         this.name = name;
         this.extension = extension;
         updateFileName();
+    }
+
+    public void setPath(IPathFields o) {
+        this.dirName = o.getDirName();
+        this.name = o.getName();
+        this.extension = o.getExtension();
+        this._pathCache = o.getPath();
+        this._fileNameCache = o.getFileName();
+    }
+
+    public void setPath(BottomUpPathFields o) {
+        this.dirName = o.dirName;
+        this.name = o.name;
+        this.extension = o.extension;
+        this._pathCache = o._pathCache;
+        this._fileNameCache = o._fileNameCache;
     }
 
     void updatePath() {

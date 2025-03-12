@@ -12,10 +12,7 @@ import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.lily.concrete.IAttrInProps;
-import net.bodz.lily.entity.attachment.AttachmentListingInFiles;
-import net.bodz.lily.entity.attachment.IAttachmentListing;
-import net.bodz.lily.entity.attachment.util.IDocInFiles;
-import net.bodz.lily.entity.attachment.util.IVideosInFiles;
+import net.bodz.lily.entity.attachment.IHaveAttachments;
 import net.bodz.lily.repr.EntGroup;
 import net.bodz.lily.schema.util.Uom;
 import net.bodz.lily.schema.util.UomRow;
@@ -26,10 +23,8 @@ import net.bodz.lily.schema.util.UomRow;
 @Table(schema = Artifact.SCHEMA_NAME, name = Artifact.TABLE_NAME)
 public class Artifact
         extends _Artifact_stuff
-        implements
-            IVideosInFiles,
-            IDocInFiles,
-            IAttrInProps {
+        implements IHaveAttachments,        // already defined in CoImaged.
+                   IAttrInProps {
 
     private static final long serialVersionUID = 1L;
 
@@ -70,13 +65,6 @@ public class Artifact
                 return Artifact.this.getProperties();
             }
         };
-    }
-
-    static final String[] attachmentGroupKeys = { K_IMAGES, K_VIDEOS, K_DOCS };
-
-    @Override
-    public IAttachmentListing listAttachments() {
-        return new AttachmentListingInFiles(this, attachmentGroupKeys);
     }
 
 }

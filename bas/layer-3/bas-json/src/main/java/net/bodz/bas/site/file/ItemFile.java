@@ -1,7 +1,7 @@
 package net.bodz.bas.site.file;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,18 +13,20 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.t.tuple.Split;
 
 public class ItemFile
-        implements
-            IJsonForm {
+        implements IJsonForm {
 
-    private File file;
+    Path file;
+    String dir;
+    String name;
+    long size;
+    String sha1;
 
-    private String dir;
-    private String name;
-    private long size;
-    private String sha1;
-    private String label;
+    String origName;
+    String label;
+    String description;
 
     public ItemFile() {
     }
@@ -35,16 +37,30 @@ public class ItemFile
         this.name = o.name;
         this.size = o.size;
         this.sha1 = o.sha1;
+        this.origName = o.origName;
         this.label = o.label;
+        this.description = o.description;
     }
 
-    public File getFile() {
+    public Path getFile() {
         return file;
     }
 
-    public void setFile(File file) {
+    public void setFile(Path file) {
         this.file = file;
-        this.name = file.getName();
+    }
+
+    public String getPath() {
+        if (dir == null)
+            return name;
+        else
+            return dir + "/" + name;
+    }
+
+    public void setPath(String path) {
+        Split dirBase = Split.dirBase(path);
+        this.dir = dirBase.a;
+        this.name = dirBase.b;
     }
 
     public String getDir() {
@@ -79,12 +95,28 @@ public class ItemFile
         this.sha1 = sha1;
     }
 
+    public String getOrigName() {
+        return origName;
+    }
+
+    public void setOrigName(String origName) {
+        this.origName = origName;
+    }
+
     public String getLabel() {
         return label;
     }
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -110,7 +142,7 @@ public class ItemFile
     public static List<ItemFile> convert(JsonArray array)
             throws ParseException {
         List<ItemFile> items = new ArrayList<ItemFile>();
-        for (JsonObject o : JsonFn.<JsonObject> iterate(array)) {
+        for (JsonObject o : JsonFn.<JsonObject>iterate(array)) {
             ItemFile item = new ItemFile();
             item.jsonIn(JsonVariant.of(o), JsonFormOptions.DEFAULT);
             items.add(item);
@@ -120,7 +152,7 @@ public class ItemFile
 
     @Override
     public String toString() {
-        return String.format("(%s)/%s: size %,d bytes", dir, name, size);
+        return String.format("(%s/) %s: size %,d bytes", dir, name, size);
     }
 
 }

@@ -40,7 +40,7 @@ import net.bodz.bas.t.catalog.TableOid;
 import net.bodz.bas.t.catalog.TableType;
 import net.bodz.bas.t.tuple.Split;
 import net.bodz.lily.entity.attachment.AttachmentGroup;
-import net.bodz.lily.entity.attachment.DefaultAttachment;
+import net.bodz.lily.entity.attachment.MutableAttachment;
 import net.bodz.lily.storage.IVolume;
 
 /**
@@ -138,7 +138,7 @@ public class Item2Attachment
                             ItemFile item = new ItemFile();
                             item.jsonIn(oldValArrayItem, null);
 
-                            DefaultAttachment attachment = new DefaultAttachment();
+                            MutableAttachment attachment = new MutableAttachment();
                             attachment.setLabel(item.getLabel());
                             // default dir is Foo/ID.
                             // attachment.setDirName(item.getDir());

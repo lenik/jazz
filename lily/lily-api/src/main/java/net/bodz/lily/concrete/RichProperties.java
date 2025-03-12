@@ -10,7 +10,7 @@ import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.site.json.JsonMap;
-import net.bodz.lily.entity.attachment.DefaultAttachment;
+import net.bodz.lily.entity.attachment.MutableAttachment;
 import net.bodz.lily.entity.attachment.IAttachment;
 
 /**
@@ -85,7 +85,7 @@ public class RichProperties
         case K_VIDEOS:
         case K_PDFS:
             JsonArray array = j.getArrayFor(key);
-            List<IAttachment> attachments = DefaultAttachment.parseJsonArray(array);
+            List<MutableAttachment> attachments = MutableAttachment.parseAttachments(array);
             setAttribute(key, attachments);
             return true;
         }

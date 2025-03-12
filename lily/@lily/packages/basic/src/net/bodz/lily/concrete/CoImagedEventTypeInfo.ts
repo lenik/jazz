@@ -22,8 +22,26 @@ export class CoImagedEventTypeInfo extends CoEventTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            images: property({ type: LIST(Attachment.TYPE), nullable: true, icon: "far-images" }),
-            image: property({ type: Attachment.TYPE, nullable: true, icon: "far-image" }),
+            images: property({
+                type: LIST(Attachment.TYPE), nullable: true,
+                icon: "far-images",
+                validator: this.validators.validateImages,
+            }),
+            image: property({
+                type: Attachment.TYPE, nullable: true,
+                icon: "far-image",
+                validator: this.validators.validateImage,
+            }),
+            videos: property({
+                type: LIST(Attachment.TYPE), nullable: true,
+                icon: "far-photo-video",
+                validator: this.validators.validateVideos,
+            }),
+            video: property({
+                type: Attachment.TYPE, nullable: true,
+                icon: "far-film",
+                validator: this.validators.validateVideo,
+            }),
         });
     }
 

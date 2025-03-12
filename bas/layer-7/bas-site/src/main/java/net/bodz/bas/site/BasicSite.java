@@ -1,6 +1,7 @@
 package net.bodz.bas.site;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
@@ -37,10 +38,9 @@ import net.bodz.bas.typer.std.MutableTypedAttributes;
 
 public abstract class BasicSite
         extends AbstractXjdocContent
-        implements
-            IQueryable,
-            ICrawlable,
-            ISiteRoot {
+        implements IQueryable,
+                   ICrawlable,
+                   ISiteRoot {
 
     public static final String K_ROBOTS = "robots.txt";
     public static final String K_SERVICES = "serviceMap";
@@ -159,9 +159,16 @@ public abstract class BasicSite
     /** ⇱ Implementation Of {@link ICacheControl}. */
     /* _____________________________ */static section.iface __CACHE__;
 
+    protected boolean isDebug() {
+        return true;
+    }
+
     @Override
     public Integer getMaxAge() {
-        return 3600;
+        if (isDebug())
+            return 0;
+        else
+            return 3600;
     }
 
     /** ⇱ Implementation Of {@link IQueryable}. */
@@ -201,37 +208,42 @@ public abstract class BasicSite
 
         Object target = null;
         switch (token) {
-        case K_SITEMAP:
-            target = getSitemap();
-            break;
+            case K_SITEMAP:
+                target = getSitemap();
+                break;
 
-        case K_SERVICES:
-            target = serviceMap;
-            break;
+            case K_SERVICES:
+                target = serviceMap;
+                break;
 
-        case K_ROBOTS:
-            break;
+            case K_ROBOTS:
+                break;
 
-        case K_SET_LOCALE:
-            String lang = tokens.peekAhead(1);
-            if (lang != null) {
-                Locale locale = Locale.forLanguageTag(lang); // non-null.
-                request.setAttribute(LocaleVars.LOCALE.getName(), locale);
-                return PathArrival.shift(2, previous, this, this, tokens);
-            }
-            break;
+            case K_SET_LOCALE:
+                String lang = tokens.peekAhead(1);
+                if (lang != null) {
+                    Locale locale = Locale.forLanguageTag(lang); // non-null.
+                    request.setAttribute(LocaleVars.LOCALE.getName(), locale);
+                    return PathArrival.shift(2, previous, this, this, tokens);
+                }
+                break;
 
-        case K_UPLOAD:
-            DefaultSiteDirs siteDirs = DefaultSiteDirs.getInstance();
-            File localDir = siteDirs.getUploadDir(request);
-            IAnchor anchor = siteDirs.getUploadedAnchor(request);
-            UploadHandler uploadHandler = new UploadHandler(localDir, anchor);
-            try {
-                target = uploadHandler.handlePostRequest(request);
-            } catch (Exception e) {
-                throw new ServiceTargetException("upload handler: " + e.getMessage(), e);
-            }
-            break;
+            case K_UPLOAD:
+                DefaultSiteDirs siteDirs = DefaultSiteDirs.getInstance();
+                Path localDir = null;
+                try {
+                    localDir = siteDirs.getUploadDir(request);
+                } catch (IOException e) {
+                    throw new PathDispatchException(e);
+                }
+                IAnchor anchor = siteDirs.getUploadedAnchor(request);
+                UploadHandler uploadHandler = new UploadHandler(localDir, anchor);
+                try {
+                    target = uploadHandler.handlePostRequest(request);
+                } catch (Exception e) {
+                    throw new ServiceTargetException("upload handler: " + e.getMessage(), e);
+                }
+                break;
         }
 
         if (target != null)

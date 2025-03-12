@@ -21,7 +21,6 @@ export abstract class CoNode<This, Id> extends IdEntity<Id> {
     }
 
     children: This[]
-    properties: any
 
     refCount?: int
 

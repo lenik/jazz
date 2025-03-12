@@ -1,4 +1,4 @@
-import { int } from 'skel01-core/src/lang/basetype';
+import type { int } from 'skel01-core/src/lang/basetype';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import CoEvent from './CoEvent';
 import User from '../schema/account/User';

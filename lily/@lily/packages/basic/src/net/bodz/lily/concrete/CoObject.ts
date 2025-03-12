@@ -3,12 +3,15 @@ import type { Moment } from "moment-timezone";
 
 import type { int } from 'skel01-core/src/lang/basetype';
 
+import type { $Attachment } from "skel01-core/src/net/bodz/lily/entity/Attachment";
+import Attachment from "skel01-core/src/net/bodz/lily/entity/Attachment";
+// import AttachmentManifestTypeInfo from "skel01-core/src/net/bodz/lily/entity/AttachmentManifestTypeInfo";
+import AttachmentManifest from "skel01-core/src/net/bodz/lily/entity/AttachmentManifest";
+
 import StructRow from './StructRow';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 import User from '../schema/account/User';
 import Group from '../schema/account/Group';
-import Attachment from "skel01-core/src/net/bodz/lily/entity/Attachment";
-import IAttachment from "skel01-core/src/net/bodz/lily/entity/IAttachment";
 
 export abstract class CoObject extends StructRow {
 
@@ -21,21 +24,14 @@ export abstract class CoObject extends StructRow {
 
     //
 
-    name?: string
-    properties?: any
-    files?: any
+    name?: string;
+    properties?: any;
+    files?: AttachmentManifest;
 
-    get images() {
-        this.files ||= {};
-        return (this.files['images'] ||= []) as IAttachment[];
-    }
-    get videos() {
-        this.files ||= {};
-        return (this.files['videos'] ||= []) as IAttachment[];
-    }
-    get docs() {
-        this.files ||= {};
-        return (this.files['docs'] ||= []) as IAttachment[];
+    createFiles() {
+        if (this.files == null)
+            this.files = new AttachmentManifest();
+        return this.files;
     }
 
     // UI

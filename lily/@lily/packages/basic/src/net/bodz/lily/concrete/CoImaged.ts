@@ -1,6 +1,7 @@
-import { int } from 'skel01-core/src/lang/basetype';
+// import type { int } from 'skel01-core/src/lang/basetype';
 import IdEntity from './IdEntity';
-import Attachment from 'skel01-core/src/net/bodz/lily/entity/Attachment';
+import Attachment, { TYPE_IMAGE, TYPE_VIDEO } from 'skel01-core/src/net/bodz/lily/entity/Attachment';
+import AttachmentManifest from 'skel01-core/src/net/bodz/lily/entity/AttachmentManifest';
 import CoImagedTypeInfo from './CoImagedTypeInfo';
 
 export abstract class CoImaged<Id> extends IdEntity<Id> {
@@ -12,47 +13,47 @@ export abstract class CoImaged<Id> extends IdEntity<Id> {
         return this._typeInfo;
     }
 
-    properties: any
-    files: any
-
     constructor(o: any) {
         super(o);
     }
 
-    get images(): Attachment[] | undefined {
-        let props = (this as any).files;
-        return props?.images;
+    get images(): Attachment[] {
+        return this.files?.filter(TYPE_IMAGE) || [];
     }
 
-    set images(val: Attachment[] | undefined) {
-        let props = (this as any).files;
-        if (val == null) {
-            if (props != null)
-                delete props.images;
-        } else {
-            if (props == null)
-                (this as any).files = { images: val };
-            else
-                props.images = val;
-        }
+    set images(val: Attachment[]) {
+        this.createFiles().filter(TYPE_IMAGE, val);
     }
 
     get image(): Attachment | undefined {
-        if (this.images == null)
-            return undefined;
-        else
-            return this.images[0];
+        return this.files?.find(0, TYPE_IMAGE);
     }
 
     set image(val: Attachment | undefined) {
         if (val == null) {
-            if (this.images != null)
-                this.images.splice(0, 1);
+            this.images = [];
         } else {
-            if (this.images == null)
-                this.images = [val];
-            else
-                this.images[0] = val;
+            this.createFiles().find(0, TYPE_IMAGE, val, true);
+        }
+    }
+
+    get videos(): Attachment[] {
+        return this.files?.filter(TYPE_VIDEO) || [];
+    }
+
+    set videos(val: Attachment[]) {
+        this.createFiles().filter(TYPE_VIDEO, val);
+    }
+
+    get video(): Attachment | undefined {
+        return this.files?.find(0, TYPE_VIDEO);
+    }
+
+    set video(val: Attachment | undefined) {
+        if (val == null) {
+            this.videos = [];
+        } else {
+            this.createFiles().find(0, TYPE_VIDEO, val, true);
         }
     }
 

@@ -3,6 +3,7 @@ package net.bodz.lily.entity.attachment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import net.bodz.bas.c.org.json.JsonStringer;
 import net.bodz.bas.err.FormatException;
@@ -16,61 +17,39 @@ import net.bodz.bas.t.file.BottomUpPathFields;
 import net.bodz.lily.storage.IVolume;
 import net.bodz.lily.storage.IVolumeItem;
 
-public class DefaultAttachment
+public class DefaultBackedFile
         extends BottomUpPathFields
-        implements
-            IAttachment {
-
-    String label;
-    String description;
+        implements IBackedFile {
 
     long size;
     String sha1;
 
-    public DefaultAttachment() {
+    public DefaultBackedFile() {
     }
 
-    public DefaultAttachment(String dirName, String fileName) {
+    public DefaultBackedFile path(String dirName, String fileName) {
         setPath(dirName, fileName);
+        return this;
     }
 
-    public DefaultAttachment(String path) {
+    public DefaultBackedFile path(String path) {
         setPath(path);
+        return this;
     }
 
-    public DefaultAttachment(DefaultAttachment o) {
-        super(o);
-        this.label = o.label;
-        this.description = o.description;
+    public DefaultBackedFile assign(IBackedFile o)
+            throws IOException {
+        setPath(o);
+        this.size = o.getFileSize();
+        this.sha1 = o.getFileSHA1();
+        return this;
+    }
+
+    public DefaultBackedFile assign(DefaultBackedFile o) {
+        setPath(o);
         this.size = o.size;
         this.sha1 = o.sha1;
-    }
-
-    public DefaultAttachment(IAttachment o)
-            throws IOException {
-        setPath(o.getPath());
-        this.label = o.getLabel();
-        this.description = o.getDescription();
-    }
-
-    @Override
-    public String getLabel() {
-        return label;
-    }
-
-    @Override
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public void setDescription(String description) {
-        this.description = description;
+        return this;
     }
 
     @Override
@@ -92,11 +71,6 @@ public class DefaultAttachment
     }
 
     @Override
-    public IAttachment getPreviewImage(int desiredWidth, int desiredHeight) {
-        return null;
-    }
-
-    @Override
     public synchronized void update(IVolume volume)
             throws IOException {
         IVolumeItem vf = toVolumeFile(volume);
@@ -112,29 +86,50 @@ public class DefaultAttachment
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts) {
         super.jsonIn(o, opts);
-        label = o.getString(K_LABEL);
-        description = o.getString(K_DESCRIPTION);
         size = o.getLong(K_FILE_SIZE, size);
         sha1 = o.getString(K_FILE_SHA1);
     }
 
-    public static List<IAttachment> parseJsonArray(JsonArray array) {
-        if (array == null)
-            return null;
-        List<IAttachment> items = new ArrayList<>();
-        for (JsonObject o : JsonFn.<JsonObject> iterate(array)) {
-            DefaultAttachment item = new DefaultAttachment();
-            item.jsonIn(o, JsonFormOptions.DEFAULT);
-            items.add(item);
+    public static List<DefaultBackedFile> parseBackedFiles(JsonArray array) {
+        List<DefaultBackedFile> result = new ArrayList<>();
+        try {
+            parseJsonArray(array, result, DefaultBackedFile::new);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
-        return items;
+        return result;
     }
 
-    public static JsonArray toJsonArray(List<IAttachment> items) {
+    public static void parseBackedFiles(JsonArray array, List<DefaultBackedFile> result) {
+        try {
+            parseJsonArray(array, result, DefaultBackedFile::new);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T extends IBackedFile> List<T> parseJsonArray(JsonArray array, Supplier<T> factory)
+            throws ParseException {
+        List<T> result = new ArrayList<>();
+        parseJsonArray(array, result, factory);
+        return result;
+    }
+
+    public static <T extends IBackedFile> void parseJsonArray(JsonArray array, List<T> result, Supplier<T> factory)
+            throws ParseException {
+        if (array != null)
+            for (JsonObject o : JsonFn.<JsonObject>iterate(array)) {
+                T item = factory.get();
+                item.jsonIn(o, JsonFormOptions.DEFAULT);
+                result.add(item);
+            }
+    }
+
+    public static JsonArray toJsonArray(List<? extends IBackedFile> items) {
         JsonArray ja = new JsonArray();
         if (items == null)
             return null;
-        for (IAttachment item : items) {
+        for (IBackedFile item : items) {
             JsonStringer buf = new JsonStringer();
             try {
                 item.jsonOut(buf);

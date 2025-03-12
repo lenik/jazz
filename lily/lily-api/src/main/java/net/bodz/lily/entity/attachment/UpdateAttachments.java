@@ -1,10 +1,10 @@
 package net.bodz.lily.entity.attachment;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
+import java.nio.file.Path;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -47,8 +47,8 @@ public class UpdateAttachments
 //        if (volume == null)
 //            throw new IllegalStateException("volume not set");
 
-        File file = attachment.toLocalFile(volume);
-        if (!file.exists()) {
+        Path file = attachment.toPath(volume);
+        if (FileFn.notExists(file)) {
             System.out.println(file);
         }
 
@@ -82,13 +82,9 @@ public class UpdateAttachments
             IDataApplication app = DataApps.fromRequest();
             IVolume volume = app.getEntityVolume(context.getClass());
 
-            IAttachmentListing listing = owner.listAttachments();
-            for (String category : listing.getAttachmentGroupKeys()) {
-                Collection<IAttachment> group = listing.getAttachmentGroup(category);
-                if (!group.isEmpty())
-                    for (IAttachment attachment : group) {
-                        renameSubDirToId(volume, attachment, idStr);
-                    }
+            IAttachmentManifest listing = owner.attachmentManifest();
+            for (IAttachment attachment : listing.getData()) {
+                renameSubDirToId(volume, attachment, idStr);
             }
         }
         return true;

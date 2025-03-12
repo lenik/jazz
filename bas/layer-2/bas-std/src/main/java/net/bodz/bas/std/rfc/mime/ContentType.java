@@ -6,14 +6,22 @@ import java.io.Serializable;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.meta.decl.Nullable;
 
 public class ContentType
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final String name;
-    private final String preferredExtension;
+    @NotNull
+    public final String name;
+
+    @NotNull
+    public final String preferredExtension;
+
+    @NotNull
+    public final ContentCategory category;
 
     public ContentType(String name, String preferredExtension) {
         if (name == null)
@@ -22,19 +30,46 @@ public class ContentType
             throw new NullPointerException("preferredExtension");
         this.name = name.intern();
         this.preferredExtension = preferredExtension.intern();
+
+        int slash = name.indexOf('/');
+        String major = slash == -1 ? name : name.substring(0, slash);
+        this.category = ContentCategory.parse(major);
     }
 
+    @NotNull
     public String getName() {
         return name;
     }
 
     /**
      * The preferred extension name.
-     * 
+     *
      * @return The extension name, without the dot(.).
      */
+    @NotNull
     public String getPreferredExtension() {
         return preferredExtension;
+    }
+
+    @NotNull
+    public ContentCategory getCategory() {
+        return category;
+    }
+
+    public boolean isText() {
+        return category == ContentCategory.TEXT;
+    }
+
+    public boolean isImage() {
+        return category == ContentCategory.IMAGE;
+    }
+
+    public boolean isAudio() {
+        return category == ContentCategory.AUDIO;
+    }
+
+    public boolean isVideo() {
+        return category == ContentCategory.VIDEO;
     }
 
     public void applyTo(HttpServletResponse response, ContentType... excludes) {
@@ -48,8 +83,7 @@ public class ContentType
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((preferredExtension == null) ? 0 : preferredExtension.hashCode());
+        result = prime * result + name.hashCode();
         return result;
     }
 
@@ -59,15 +93,11 @@ public class ContentType
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
+        if (!(obj instanceof ContentType))
             return false;
-
         ContentType o = (ContentType) obj;
-        if (name != o.name)
+        if (!o.name.equals(name))
             return false;
-        if (preferredExtension != o.preferredExtension)
-            return false;
-
         return true;
     }
 
@@ -78,13 +108,13 @@ public class ContentType
 
     public static final ContentType DEFAULT = ContentTypes.application_octet_stream;
 
-    public static ContentType forFile(File file) {
+    @NotNull
+    public static ContentType forFile(@NotNull File file) {
         return forName(file.getName());
     }
 
-    public static ContentType forPath(String path) {
-        if (path == null)
-            throw new NullPointerException("path");
+    @NotNull
+    public static ContentType forPath(@NotNull String path) {
         String extension = FilePath.getExtension(path);
         if (extension != null) {
             return forExtension(extension);
@@ -94,18 +124,28 @@ public class ContentType
         }
     }
 
-    public static ContentType forName(String name) {
+    @NotNull
+    public static ContentType forName(@NotNull String name) {
+        return forName(name, ContentType.DEFAULT);
+    }
+
+    @NotNull
+    public static ContentType forName(@Nullable String name, @NotNull ContentType fallback) {
+        if (name == null)
+            return fallback;
         ContentType contentType = ContentTypes.nameMap.get(name);
         return contentType == null ? DEFAULT : contentType;
     }
 
-    /**
-     * @param extension
-     *            Without dot.
-     */
-    public static ContentType forExtension(String extension) {
+    @NotNull
+    public static ContentType forExtension(@NotNull String extension) {
+        return forExtension(extension, ContentType.DEFAULT);
+    }
+
+    @NotNull
+    public static ContentType forExtension(@Nullable String extension, @NotNull ContentType fallback) {
         if (extension == null)
-            throw new NullPointerException("extension");
+            return fallback;
         extension = extension.toLowerCase();
         ContentType contentType = ContentTypes.extensionMap.get(extension);
         return contentType == null ? DEFAULT : contentType;

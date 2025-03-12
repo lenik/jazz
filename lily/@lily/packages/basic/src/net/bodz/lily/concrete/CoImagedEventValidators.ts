@@ -26,6 +26,19 @@ export class CoImagedEventValidators extends CoEventValidators {
         }
     }
 
+    validateVideos(val: Attachment[]) {
+        if (val == null) return;
+        for (let item of val)
+            this.validateVideo(item);
+    }
+
+    validateVideo(val: Attachment) {
+        if (val.name != null) {
+            if (val.name.includes('/'))
+                throw new Error("name can't contains slash(/).");
+        }
+    }
+
 }
 
 export default CoImagedEventValidators;

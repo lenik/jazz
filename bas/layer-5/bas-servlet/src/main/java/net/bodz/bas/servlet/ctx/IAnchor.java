@@ -1,5 +1,7 @@
 package net.bodz.bas.servlet.ctx;
 
+import java.nio.file.Path;
+
 import jakarta.servlet.ServletContext;
 
 /**
@@ -26,7 +28,7 @@ public interface IAnchor {
     }
 
     /**
-    
+
      */
     default String toWebPath() {
         ServletContext servletContext = CurrentHttpService.getServletContext();
@@ -34,7 +36,7 @@ public interface IAnchor {
         // empty or "/foo".
         String contextPath = servletContext.getContextPath();
         String uriPath = toUriPath();
-        if (! uriPath.startsWith("/"))
+        if (!uriPath.startsWith("/"))
             throw new IllegalArgumentException("invalid uriPath: " + uriPath);
 
         return PathUtils.hrefFrom(contextPath, uriPath);
@@ -61,5 +63,9 @@ public interface IAnchor {
     IAnchor enter();
 
     IAnchor join(String spec);
+
+    default IAnchor join(Path spec) {
+        return join(spec.toString());
+    }
 
 }
