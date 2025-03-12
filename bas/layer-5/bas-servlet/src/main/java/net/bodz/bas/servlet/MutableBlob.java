@@ -3,9 +3,6 @@ package net.bodz.bas.servlet;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 
-import net.bodz.bas.std.rfc.mime.ContentType;
-import net.bodz.bas.std.rfc.mime.ContentTypes;
-
 public abstract class MutableBlob
         extends AbstractBlob {
 

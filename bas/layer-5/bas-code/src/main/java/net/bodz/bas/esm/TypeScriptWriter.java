@@ -1,7 +1,5 @@
 package net.bodz.bas.esm;
 
-import java.lang.reflect.Type;
-
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.esm.util.TsTypeInfoResolver;
 import net.bodz.bas.esm.util.TsTypeResolver;

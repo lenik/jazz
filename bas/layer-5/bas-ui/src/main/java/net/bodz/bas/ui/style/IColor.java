@@ -2,7 +2,19 @@ package net.bodz.bas.ui.style;
 
 import java.io.Serializable;
 
-import net.bodz.bas.ui.style.color.*;
+import net.bodz.bas.ui.style.color.IAlphaChannel;
+import net.bodz.bas.ui.style.color.IColor_CMYK32;
+import net.bodz.bas.ui.style.color.IColor_CMYK64;
+import net.bodz.bas.ui.style.color.IColor_HSL24;
+import net.bodz.bas.ui.style.color.IColor_HSL3f;
+import net.bodz.bas.ui.style.color.IColor_HSLA32;
+import net.bodz.bas.ui.style.color.IColor_HSLA4f;
+import net.bodz.bas.ui.style.color.IColor_RGB24;
+import net.bodz.bas.ui.style.color.IColor_RGB3f;
+import net.bodz.bas.ui.style.color.IColor_RGB48;
+import net.bodz.bas.ui.style.color.IColor_RGBA32;
+import net.bodz.bas.ui.style.color.IColor_RGBA4f;
+import net.bodz.bas.ui.style.color.IColor_RGBA64;
 
 public interface IColor
         extends IAlphaChannel, Serializable {

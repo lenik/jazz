@@ -1,14 +1,12 @@
 package net.bodz.bas.servlet.io;
 
 import java.io.File;
-import java.net.URL;
-
-import net.bodz.bas.c.java.io.FilePath;
-import net.bodz.bas.err.IllegalConfigException;
-import net.bodz.bas.std.rfc.http.ICacheControl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.err.IllegalConfigException;
 
 public class StaticFileAccessServlet
         extends AbstractFileAccessServlet {

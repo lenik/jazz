@@ -1,12 +1,8 @@
 package net.bodz.bas.servlet;
 
-import net.bodz.bas.std.rfc.mime.ContentType;
-import net.bodz.bas.std.rfc.mime.ContentTypes;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.time.OffsetDateTime;
+
+import net.bodz.bas.std.rfc.mime.ContentType;
 
 public interface IMutableBlob
         extends IBlob {

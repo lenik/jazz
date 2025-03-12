@@ -1,12 +1,10 @@
 package net.bodz.bas.servlet;
 
-import net.bodz.bas.io.res.IStreamInputSource;
-import net.bodz.bas.std.rfc.mime.ContentType;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.time.OffsetDateTime;
+
+import net.bodz.bas.io.res.IStreamInputSource;
 
 public class StreamBlob
         extends AbstractBlob {

@@ -6,8 +6,14 @@ import java.io.IOException;
 
 import javax.script.ScriptException;
 
-import org.graalvm.polyglot.*;
+import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Context.Builder;
+import org.graalvm.polyglot.EnvironmentAccess;
+import org.graalvm.polyglot.HostAccess;
+import org.graalvm.polyglot.PolyglotAccess;
+import org.graalvm.polyglot.PolyglotException;
+import org.graalvm.polyglot.Source;
+import org.graalvm.polyglot.Value;
 
 import net.bodz.bas.fn.EvalException;
 import net.bodz.bas.log.Logger;

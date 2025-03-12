@@ -3,6 +3,7 @@ package net.bodz.bas.script.io;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.nio.file.IPath;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.log.Logger;
@@ -112,7 +114,7 @@ public class ResourceResolver {
 
         if (searchPomDir)
             if (pomDir != null) {
-                File mainResourceDir = pomDir.getResourceDir(getClass());
+                Path mainResourceDir = pomDir.getResourceDir(getClass());
                 fileSearcher.addSearchDir(mainResourceDir);
             }
 
@@ -199,7 +201,7 @@ public class ResourceResolver {
         else
             fileSearcher = getFileSearcherForBareNames();
         logger.debugf("find %s from file searcher %s", filename, fileSearcher);
-        for (File file : fileSearcher.search(filename))
+        for (Path file : fileSearcher.search(filename))
             return new ResourceVariant(file);
 
         logger.warn("failed to resolve resource " + filename);

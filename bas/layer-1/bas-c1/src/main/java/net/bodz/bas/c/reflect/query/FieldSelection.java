@@ -4,7 +4,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
-import net.bodz.bas.c.reflect.query.predicate.*;
+import net.bodz.bas.c.reflect.query.predicate.IStringPredicate;
+import net.bodz.bas.c.reflect.query.predicate.ITypePredicate;
+import net.bodz.bas.c.reflect.query.predicate.StringEndsWith;
+import net.bodz.bas.c.reflect.query.predicate.StringEquals;
+import net.bodz.bas.c.reflect.query.predicate.StringStartsWith;
+import net.bodz.bas.c.reflect.query.predicate.TypeAncestorOf;
+import net.bodz.bas.c.reflect.query.predicate.TypeDerivedFrom;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.t.iterator.immed.AbstractMitable;
 

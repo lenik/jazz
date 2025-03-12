@@ -15,7 +15,13 @@ import org.eclipse.swt.widgets.Shell;
 import net.bodz.swt.c.canvas.Canvas;
 import net.bodz.swt.c.canvas.ICanvasMode;
 import net.bodz.swt.c.resources.SWTResources;
-import net.bodz.swt.draw.app.tools.*;
+import net.bodz.swt.draw.app.tools.DrawCircle3P;
+import net.bodz.swt.draw.app.tools.DrawLine;
+import net.bodz.swt.draw.app.tools.DrawPoint;
+import net.bodz.swt.draw.app.tools.DrawRectangle;
+import net.bodz.swt.draw.app.tools.DrawTriangle;
+import net.bodz.swt.draw.app.tools.EditMajor;
+import net.bodz.swt.draw.app.tools.Select;
 
 public class DesignerToolbox2f {
 

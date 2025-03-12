@@ -11,7 +11,23 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 
 import net.bodz.bas.err.TypeConvertException;
-import net.bodz.bas.t.variant.conv.*;
+import net.bodz.bas.t.variant.conv.BigDecimalVarConverter;
+import net.bodz.bas.t.variant.conv.BigIntegerVarConverter;
+import net.bodz.bas.t.variant.conv.BooleanVarConverter;
+import net.bodz.bas.t.variant.conv.ByteVarConverter;
+import net.bodz.bas.t.variant.conv.CharacterVarConverter;
+import net.bodz.bas.t.variant.conv.DateVarConverter;
+import net.bodz.bas.t.variant.conv.DoubleVarConverter;
+import net.bodz.bas.t.variant.conv.FloatVarConverter;
+import net.bodz.bas.t.variant.conv.InstantVarConverter;
+import net.bodz.bas.t.variant.conv.IntegerVarConverter;
+import net.bodz.bas.t.variant.conv.LocalDateTimeVarConverter;
+import net.bodz.bas.t.variant.conv.LocalDateVarConverter;
+import net.bodz.bas.t.variant.conv.LocalTimeVarConverter;
+import net.bodz.bas.t.variant.conv.LongVarConverter;
+import net.bodz.bas.t.variant.conv.OffsetDateTimeVarConverter;
+import net.bodz.bas.t.variant.conv.ShortVarConverter;
+import net.bodz.bas.t.variant.conv.ZonedDateTimeVarConverter;
 
 // @GeneratedBy(cg.VariantMapGenerator.class)
 public abstract class AutoConvVariant

@@ -1,9 +1,8 @@
 package net.bodz.bas.servlet;
 
-import net.bodz.bas.std.rfc.mime.ContentType;
-import net.bodz.bas.std.rfc.mime.ContentTypes;
-
 import java.nio.charset.Charset;
+
+import net.bodz.bas.std.rfc.mime.ContentType;
 
 public abstract class AbstractBlob
         implements IMutableBlob {

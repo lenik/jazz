@@ -8,7 +8,20 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.c.type.testtype.*;
+import net.bodz.bas.c.type.testtype.C;
+import net.bodz.bas.c.type.testtype.CI;
+import net.bodz.bas.c.type.testtype.CJ;
+import net.bodz.bas.c.type.testtype.CJz;
+import net.bodz.bas.c.type.testtype.CJzKI;
+import net.bodz.bas.c.type.testtype.Cat;
+import net.bodz.bas.c.type.testtype.D;
+import net.bodz.bas.c.type.testtype.DIJ;
+import net.bodz.bas.c.type.testtype.DIJy;
+import net.bodz.bas.c.type.testtype.Dog;
+import net.bodz.bas.c.type.testtype.Dx;
+import net.bodz.bas.c.type.testtype.DxKI;
+import net.bodz.bas.c.type.testtype.DxKIx;
+import net.bodz.bas.c.type.testtype.I;
 import net.bodz.bas.t.iterator.Iterables;
 
 public class TypeVectorPoMapTest

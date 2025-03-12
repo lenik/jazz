@@ -15,7 +15,13 @@ import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 
-import org.joox.*;
+import org.joox.Content;
+import org.joox.Context;
+import org.joox.Each;
+import org.joox.FastFilter;
+import org.joox.Filter;
+import org.joox.Mapper;
+import org.joox.Match;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

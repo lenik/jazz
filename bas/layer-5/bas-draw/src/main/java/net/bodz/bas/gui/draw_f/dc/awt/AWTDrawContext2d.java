@@ -2,7 +2,13 @@ package net.bodz.bas.gui.draw_f.dc.awt;
 
 import java.awt.Graphics2D;
 
-import net.bodz.bas.geom.spec1_f.*;
+import net.bodz.bas.geom.spec1_f.IPointRef2d;
+import net.bodz.bas.geom.spec1_f.IPolygon2d;
+import net.bodz.bas.geom.spec1_f.Line2d;
+import net.bodz.bas.geom.spec1_f.Point2d;
+import net.bodz.bas.geom.spec1_f.Polygon2d;
+import net.bodz.bas.geom.spec1_f.Rectangle2d;
+import net.bodz.bas.geom.spec1_f.Triangle2d;
 import net.bodz.bas.gui.draw_f.dc.AbstractDrawContext2d;
 import net.bodz.bas.gui.draw_f.dc.DrawException;
 import net.bodz.bas.t.pojo.Pair;

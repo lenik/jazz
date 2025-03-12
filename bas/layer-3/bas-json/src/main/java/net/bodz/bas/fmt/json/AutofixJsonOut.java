@@ -6,8 +6,8 @@ import java.util.Random;
 
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.t.list.LinkedStack;
 import net.bodz.bas.t.list.IStack;
+import net.bodz.bas.t.list.LinkedStack;
 import net.bodz.bas.t.model.IWrapper;
 import net.bodz.fork.org.json.JSONException;
 

@@ -1,8 +1,8 @@
 package net.bodz.bas.site.vhost;
 
-import net.bodz.bas.c.object.Nullables;
-
 import jakarta.servlet.http.HttpServletRequest;
+
+import net.bodz.bas.c.object.Nullables;
 
 public class HostSpecifier {
 

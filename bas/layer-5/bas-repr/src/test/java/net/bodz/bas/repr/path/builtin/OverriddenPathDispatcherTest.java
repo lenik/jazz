@@ -5,9 +5,9 @@ import org.junit.Test;
 
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
-import net.bodz.bas.repr.path.IPathDispatcher;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.repr.path.IPathDispatcher;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public class OverriddenPathDispatcherTest

@@ -1,6 +1,14 @@
 package net.bodz.bas.fmt.xml.xq;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.TypeInfo;
+import org.w3c.dom.UserDataHandler;
 
 import net.bodz.bas.t.variant.IVariant;
 import net.bodz.bas.t.variant.MutableVariant;

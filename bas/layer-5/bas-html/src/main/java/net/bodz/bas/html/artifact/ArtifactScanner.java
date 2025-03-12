@@ -1,6 +1,13 @@
 package net.bodz.bas.html.artifact;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.Stack;
 
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;

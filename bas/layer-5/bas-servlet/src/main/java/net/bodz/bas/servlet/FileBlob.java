@@ -1,15 +1,12 @@
 package net.bodz.bas.servlet;
 
-import net.bodz.bas.c.java.io.FileDate;
-import net.bodz.bas.c.java.io.FilePath;
-import net.bodz.bas.c.java.io.FileURL;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.nio.file.Files;
 import java.time.OffsetDateTime;
+
+import net.bodz.bas.c.java.io.FileDate;
 
 public class FileBlob
         extends AbstractBlob {

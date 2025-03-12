@@ -1,5 +1,6 @@
 package net.bodz.bas.vfs.impl.apache;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -8,7 +9,6 @@ import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileSystemManager;
 import org.apache.commons.vfs.VFS;
 
-import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.java.util.Sets;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.vfs.AbstractVfsDriver;

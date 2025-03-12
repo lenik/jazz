@@ -1,7 +1,14 @@
 package net.bodz.bas.t.set;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class FullSearchTaggedSet<V>
         extends AbstractTaggedSet<V> {

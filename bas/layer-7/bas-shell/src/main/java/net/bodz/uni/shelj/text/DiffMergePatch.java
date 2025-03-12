@@ -1,6 +1,15 @@
 package net.bodz.uni.shelj.text;
 
-import net.bodz.bas.compare.dmp.*;
+import net.bodz.bas.compare.dmp.CharsComparator;
+import net.bodz.bas.compare.dmp.DMPConfig;
+import net.bodz.bas.compare.dmp.EditList;
+import net.bodz.bas.compare.dmp.LinesComparator;
+import net.bodz.bas.compare.dmp.Patch;
+import net.bodz.bas.compare.dmp.PatchApplyResult;
+import net.bodz.bas.compare.dmp.PatchApplyStatus;
+import net.bodz.bas.compare.dmp.PatchList;
+import net.bodz.bas.compare.dmp.RowEdit;
+import net.bodz.bas.compare.dmp.TrimmedLinesComparator;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.res.ResFn;

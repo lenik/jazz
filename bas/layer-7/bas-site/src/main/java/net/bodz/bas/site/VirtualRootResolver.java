@@ -1,10 +1,10 @@
 package net.bodz.bas.site;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.site.vhost.IVirtualHostResolver;
 import net.bodz.bas.site.vhost.VirtualHostManager;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 public class VirtualRootResolver
         implements

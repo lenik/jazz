@@ -2,21 +2,17 @@ package net.bodz.bas.servlet.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-
-import net.bodz.bas.html.viz.util.StreamContentBlob;
-import net.bodz.bas.log.Logger;
-import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.repr.content.MutableContent;
-import net.bodz.bas.servlet.HttpServlet;
-import net.bodz.bas.servlet.ResourceTransferer;
-import net.bodz.bas.std.rfc.http.ICacheControl;
-import net.bodz.bas.t.iterator.Iterables;
 
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.servlet.HttpServlet;
+import net.bodz.bas.servlet.ResourceTransferer;
+import net.bodz.bas.t.iterator.Iterables;
 
 public abstract class AbstractFileAccessServlet
         extends HttpServlet {

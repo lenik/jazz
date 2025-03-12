@@ -1,7 +1,5 @@
 package net.bodz.lily.entity.manager;
 
-import net.bodz.lily.entity.IId;
-
 public class RowOpAwares {
 
     public static boolean beforeRowOperation(JdbcRowOpEvent event, Object o)

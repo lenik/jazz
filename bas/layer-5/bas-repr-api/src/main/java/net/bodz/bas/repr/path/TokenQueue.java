@@ -3,9 +3,9 @@ package net.bodz.bas.repr.path;
 import java.net.URI;
 import java.net.URL;
 
-import net.bodz.bas.meta.decl.ThreadUnsafe;
-
 import jakarta.servlet.http.HttpServletRequest;
+
+import net.bodz.bas.meta.decl.ThreadUnsafe;
 
 @ThreadUnsafe
 public class TokenQueue

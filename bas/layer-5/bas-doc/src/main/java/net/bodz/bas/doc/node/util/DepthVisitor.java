@@ -1,6 +1,22 @@
 package net.bodz.bas.doc.node.util;
 
-import net.bodz.bas.doc.node.*;
+import net.bodz.bas.doc.node.AbstractDocVisitor;
+import net.bodz.bas.doc.node.Document;
+import net.bodz.bas.doc.node.FontEnv;
+import net.bodz.bas.doc.node.FontStyleEnv;
+import net.bodz.bas.doc.node.Hr;
+import net.bodz.bas.doc.node.IDocVisitor;
+import net.bodz.bas.doc.node.Image;
+import net.bodz.bas.doc.node.ListItem;
+import net.bodz.bas.doc.node.ListPar;
+import net.bodz.bas.doc.node.Part;
+import net.bodz.bas.doc.node.PartGroup;
+import net.bodz.bas.doc.node.RunGroup;
+import net.bodz.bas.doc.node.Table;
+import net.bodz.bas.doc.node.TableRow;
+import net.bodz.bas.doc.node.TextBox;
+import net.bodz.bas.doc.node.TextPar;
+import net.bodz.bas.doc.node.TextRun;
 
 public class DepthVisitor
         extends AbstractDocVisitor {

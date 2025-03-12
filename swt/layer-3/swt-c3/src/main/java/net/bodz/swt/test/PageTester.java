@@ -11,7 +11,16 @@ import org.eclipse.swt.widgets.Text;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.t.pojo.PathEntries;
-import net.bodz.swt.c.pageflow.*;
+import net.bodz.swt.c.pageflow.AbstractPage;
+import net.bodz.swt.c.pageflow.BadPathEvent;
+import net.bodz.swt.c.pageflow.IBadPathListener;
+import net.bodz.swt.c.pageflow.IBook;
+import net.bodz.swt.c.pageflow.IPage;
+import net.bodz.swt.c.pageflow.NavigatorComposite;
+import net.bodz.swt.c.pageflow.PageException;
+import net.bodz.swt.c.pageflow.PageMethod;
+import net.bodz.swt.c.pageflow.ServiceContext;
+import net.bodz.swt.c.pageflow.SimpleBook;
 import net.bodz.swt.c.test.WidgetTester;
 
 public class PageTester

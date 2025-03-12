@@ -1,6 +1,21 @@
 package net.bodz.bas.t.stack;
 
-import net.bodz.bas.doc.node.*;
+import net.bodz.bas.doc.node.Document;
+import net.bodz.bas.doc.node.FontEnv;
+import net.bodz.bas.doc.node.FontStyleEnv;
+import net.bodz.bas.doc.node.IHavePars;
+import net.bodz.bas.doc.node.IHaveRuns;
+import net.bodz.bas.doc.node.INode;
+import net.bodz.bas.doc.node.IPar;
+import net.bodz.bas.doc.node.IRun;
+import net.bodz.bas.doc.node.ListItem;
+import net.bodz.bas.doc.node.ListPar;
+import net.bodz.bas.doc.node.NodeType;
+import net.bodz.bas.doc.node.Part;
+import net.bodz.bas.doc.node.PartGroup;
+import net.bodz.bas.doc.node.Table;
+import net.bodz.bas.doc.node.TableCell;
+import net.bodz.bas.doc.node.TableRow;
 import net.bodz.bas.doc.property.PartLevel;
 import net.bodz.bas.sugar.IConstants;
 

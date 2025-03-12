@@ -114,7 +114,7 @@ net.bodz.bas.t.tree.AbstractMutableTreeNode
 net.bodz.bas.t.tree.AbstractTreeNode
 net.bodz.bas.t.tree.AbstractTreeNodeFormatter
 net.bodz.bas.t.tree.IMutableTreeNode
-net.bodz.bas.t.tree.IPathInfo
+net.bodz.bas.t.tree.PathInfo
 net.bodz.bas.t.tree.ITreeNode
 net.bodz.bas.t.tree.legacy.ArrayTreeNode
 net.bodz.bas.t.tree.legacy.ITreeCallback

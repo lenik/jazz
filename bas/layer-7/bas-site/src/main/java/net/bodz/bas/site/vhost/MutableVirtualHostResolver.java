@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import net.bodz.bas.c.autowire.ProjectList;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.FormatException;
@@ -18,8 +20,6 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.t.specmap.InetPort32;
 import net.bodz.bas.t.specmap.NetSpecMap;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @ExcludedFromIndex
 public class MutableVirtualHostResolver

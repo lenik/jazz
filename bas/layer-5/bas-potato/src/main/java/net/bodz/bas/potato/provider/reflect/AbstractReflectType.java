@@ -6,7 +6,17 @@ import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.ITypeProvider;
-import net.bodz.bas.potato.element.*;
+import net.bodz.bas.potato.element.AbstractType;
+import net.bodz.bas.potato.element.IAnnotated;
+import net.bodz.bas.potato.element.IConstructorMap;
+import net.bodz.bas.potato.element.IEventMap;
+import net.bodz.bas.potato.element.IMethodMap;
+import net.bodz.bas.potato.element.IPropertyMap;
+import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.element.MutableConstructorMap;
+import net.bodz.bas.potato.element.MutableMethodMap;
+import net.bodz.bas.potato.element.MutablePropertyMap;
+import net.bodz.bas.potato.element.NullEventMap;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.mda.xjdoc.model.IClassDoc;
 

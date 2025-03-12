@@ -5,7 +5,17 @@ import java.math.BigInteger;
 import java.util.Date;
 
 import net.bodz.bas.err.TypeConvertException;
-import net.bodz.bas.t.variant.conv.*;
+import net.bodz.bas.t.variant.conv.BigDecimalVarConverter;
+import net.bodz.bas.t.variant.conv.BigIntegerVarConverter;
+import net.bodz.bas.t.variant.conv.BooleanVarConverter;
+import net.bodz.bas.t.variant.conv.ByteVarConverter;
+import net.bodz.bas.t.variant.conv.CharacterVarConverter;
+import net.bodz.bas.t.variant.conv.DateVarConverter;
+import net.bodz.bas.t.variant.conv.DoubleVarConverter;
+import net.bodz.bas.t.variant.conv.FloatVarConverter;
+import net.bodz.bas.t.variant.conv.IntegerVarConverter;
+import net.bodz.bas.t.variant.conv.LongVarConverter;
+import net.bodz.bas.t.variant.conv.ShortVarConverter;
 
 // @GeneratedBy(cg.VariantMapGenerator.class)
 public abstract class AutoConvVariantList

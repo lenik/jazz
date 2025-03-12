@@ -8,7 +8,6 @@ import java.time.OffsetDateTime;
 import net.bodz.bas.c.java.io.FileDate;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileURL;
-import net.bodz.bas.std.rfc.mime.ContentType;
 
 public class URLBlob
         extends AbstractBlob {

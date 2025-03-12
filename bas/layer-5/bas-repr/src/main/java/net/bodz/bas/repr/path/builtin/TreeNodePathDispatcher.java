@@ -1,10 +1,10 @@
 package net.bodz.bas.repr.path.builtin;
 
 import net.bodz.bas.repr.path.IPathArrival;
-import net.bodz.bas.repr.path.IPathDispatcher;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.repr.path.IPathDispatcher;
 import net.bodz.bas.t.tree.ITreeNode;
 import net.bodz.bas.t.variant.IVariantMap;
 

@@ -1,9 +1,9 @@
 package net.bodz.bas.site.vhost;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.t.order.IPriority;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @IndexedType
 public interface IVirtualHostResolver

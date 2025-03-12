@@ -1,6 +1,12 @@
 package net.bodz.bas.t.pojo;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class PairX<K, V>
         extends Pair<K, V> {
