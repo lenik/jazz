@@ -7,8 +7,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Writer;
-import java.nio.charset.Charset;
-import java.nio.charset.IllegalCharsetNameException;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.c.java.io.DataOutputAdapter;
@@ -30,8 +28,6 @@ import net.bodz.bas.io.res.tools.IStreamWriting;
 import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.meta.decl.DefaultImpl;
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.sugar.IToChain;
-import net.bodz.bas.sugar.Tooling;
 
 public interface IStreamOutputTarget
         extends IResourceEntry {
@@ -44,12 +40,14 @@ public interface IStreamOutputTarget
     /**
      * @return non-<code>null</code> value.
      */
+    @NotNull
     IByteOut newByteOut(OpenOption... options)
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
+    @NotNull
     ICharOut newCharOut(OpenOption... options)
             throws IOException;
 
@@ -82,8 +80,6 @@ public interface IStreamOutputTarget
     default OutputStream newOutputStream(OpenOption... options)
             throws IOException {
         IByteOut byteOut = newByteOut(options);
-        if (byteOut == null)
-            throw new NullPointerException("byteOut");
         return new ByteOutOutputStream(byteOut);
     }
 
@@ -92,9 +88,6 @@ public interface IStreamOutputTarget
     default IDataOutput newDataOutput(OpenOption... options)
             throws IOException {
         OutputStream outputStream = newOutputStream(options);
-        if (outputStream == null)
-            throw new NullPointerException("outputStream");
-
         if (outputStream instanceof IDataOutput)
             return (IDataOutput) outputStream;
 
@@ -131,8 +124,6 @@ public interface IStreamOutputTarget
     default PrintStream newPrintStream(OpenOption... options)
             throws IOException {
         OutputStream outputStream = newOutputStream(options);
-        if (outputStream == null)
-            throw new NullPointerException("outputStream");
         if (outputStream instanceof PrintStream)
             return (PrintStream) outputStream;
         return new PrintStream(outputStream);
@@ -143,8 +134,6 @@ public interface IStreamOutputTarget
     default Writer newWriter(OpenOption... options)
             throws IOException {
         ICharOut charOut = newCharOut(options);
-        if (charOut == null)
-            throw new NullPointerException("charOut");
         return new CharOutWriter(charOut);
     }
 
@@ -156,12 +145,14 @@ public interface IStreamOutputTarget
         return new BufferedWriter(writer);
     }
 
+    @NotNull
     default ITreeOut newTreeOut(OpenOption... options)
             throws IOException {
         ICharOut charOut = newCharOut(options);
         return TreeOutImpl.from(charOut);
     }
 
+    @NotNull
     default IStreamWriting write() {
         return new StreamWriting(this);
     }

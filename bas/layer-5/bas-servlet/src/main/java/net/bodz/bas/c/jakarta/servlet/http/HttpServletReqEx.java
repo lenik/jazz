@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 
 import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.IWrapper;
 
 public class HttpServletReqEx
@@ -31,6 +32,7 @@ public class HttpServletReqEx
             return new HttpServletReqEx(req);
     }
 
+    @NotNull
     @Override
     public HttpServletRequest getWrapped() {
         return wrapped;

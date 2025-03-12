@@ -2,6 +2,8 @@ package net.bodz.bas.t.model;
 
 import java.io.Serializable;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 /**
  * Decorator Pattern:
  *
@@ -21,6 +23,7 @@ public abstract class AbstractDecorator<T>
         this._orig = _orig;
     }
 
+    @NotNull
     @Override
     public T getWrapped() {
         return _orig;

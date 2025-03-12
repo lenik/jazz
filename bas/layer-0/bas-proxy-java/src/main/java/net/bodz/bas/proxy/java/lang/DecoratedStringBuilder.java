@@ -1,5 +1,6 @@
 package net.bodz.bas.proxy.java.lang;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.IWrapper;
 
 public class DecoratedStringBuilder
@@ -11,6 +12,7 @@ public class DecoratedStringBuilder
         this._orig = _orig;
     }
 
+    @NotNull
     @Override
     public StringBuilder getWrapped() {
         return _orig;

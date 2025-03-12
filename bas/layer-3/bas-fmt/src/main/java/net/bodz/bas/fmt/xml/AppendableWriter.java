@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.CharBuffer;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.IWrapper;
 
 public class AppendableWriter
@@ -17,6 +18,7 @@ public class AppendableWriter
         this._orig = _orig;
     }
 
+    @NotNull
     @Override
     public Appendable getWrapped() {
         return _orig;

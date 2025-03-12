@@ -12,6 +12,7 @@ import net.bodz.bas.io.adapter.InputStreamByteIn;
 import net.bodz.bas.io.res.AbstractInputStreamSource;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class ZipEntrySource
         extends AbstractInputStreamSource<ZipEntrySource>
@@ -72,6 +73,7 @@ public class ZipEntrySource
         return new DecryptedByteIn(in, key);
     }
 
+    @NotNull
     @Override
     public InputStream newInputStream(OpenOption... options)
             throws IOException {
@@ -91,6 +93,7 @@ public class ZipEntrySource
         }
     }
 
+    @NotNull
     @Override
     public IByteIn newByteIn(OpenOption... options)
             throws IOException {

@@ -1,23 +1,20 @@
 package net.bodz.bas.io.res.builtin;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 
 import net.bodz.bas.c.java.nio.CreateOptions;
-import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.AbstractIORandomResource;
 import net.bodz.bas.meta.decl.DefaultImpl;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class FileResource
         extends AbstractIORandomResource<FileResource> {
@@ -76,6 +73,7 @@ public class FileResource
         }
     }
 
+    @NotNull
     @DefaultImpl(Files.class)
     @Override
     public InputStream newInputStream(OpenOption... options)
@@ -83,6 +81,7 @@ public class FileResource
         return Files.newInputStream(file.toPath());
     }
 
+    @NotNull
     @DefaultImpl(Files.class)
     @Override
     public OutputStream newOutputStream(OpenOption... options)

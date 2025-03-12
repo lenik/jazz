@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.element;
 
 import net.bodz.bas.c.reflect.MethodSignature;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class DecoratedConstructor
         extends DecoratedPotatoElement
@@ -12,6 +13,7 @@ public class DecoratedConstructor
         super(_orig);
     }
 
+    @NotNull
     @Override
     public IConstructor getWrapped() {
         return (IConstructor) _orig; // super.getWrapped();

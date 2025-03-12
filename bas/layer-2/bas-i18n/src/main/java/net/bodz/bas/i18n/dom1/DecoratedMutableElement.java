@@ -1,6 +1,7 @@
 package net.bodz.bas.i18n.dom1;
 
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class DecoratedMutableElement
         extends DecoratedElement
@@ -12,6 +13,7 @@ public class DecoratedMutableElement
         super(_orig);
     }
 
+    @NotNull
     @Override
     public IMutableElement getWrapped() {
         return (IMutableElement) super.getWrapped();

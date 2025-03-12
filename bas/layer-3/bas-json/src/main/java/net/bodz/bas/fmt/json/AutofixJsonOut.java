@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 import net.bodz.bas.c.string.StringQuote;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.list.LinkedStack;
 import net.bodz.bas.t.list.IStack;
 import net.bodz.bas.t.model.IWrapper;
@@ -36,6 +37,7 @@ public class AutofixJsonOut
             states.push(startState);
     }
 
+    @NotNull
     @Override
     public IJsonOut getWrapped() {
         return out;

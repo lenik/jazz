@@ -7,6 +7,7 @@ import net.bodz.bas.geom.spec1_f.Point2d;
 import net.bodz.bas.geom.spec1_f.Polygon2d;
 import net.bodz.bas.geom.spec1_f.Rectangle2d;
 import net.bodz.bas.geom.spec1_f.Triangle2d;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class DecoratedBaseDrawContext2d
         extends DecoratedTransformedView2d
@@ -18,6 +19,7 @@ public class DecoratedBaseDrawContext2d
         super(_orig);
     }
 
+    @NotNull
     @Override
     public IBaseDrawContext2d getWrapped() {
         return (IBaseDrawContext2d) _orig;

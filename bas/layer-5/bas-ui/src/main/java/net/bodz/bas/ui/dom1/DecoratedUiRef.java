@@ -2,6 +2,7 @@ package net.bodz.bas.ui.dom1;
 
 import java.lang.annotation.Annotation;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.potato.element.IAnnotated;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
@@ -18,6 +19,7 @@ public abstract class DecoratedUiRef<T>
         super(_orig);
     }
 
+    @NotNull
     @SuppressWarnings("unchecked")
     @Override
     public IUiRef<T> getWrapped() {

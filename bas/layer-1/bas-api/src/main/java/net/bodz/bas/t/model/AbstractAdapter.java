@@ -1,5 +1,7 @@
 package net.bodz.bas.t.model;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 /**
  * Adapter Pattern:
  * 
@@ -20,6 +22,7 @@ public abstract class AbstractAdapter<S>
         this._orig = _orig;
     }
 
+    @NotNull
     @Override
     public S getWrapped() {
         return _orig;

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.IWrapper;
 
 public class MutableVariantMap<K>
@@ -33,6 +34,7 @@ public class MutableVariantMap<K>
             return new MutableVariantMap<K>(map);
     }
 
+    @NotNull
     @Override
     public Map<K, Object> getWrapped() {
         return map;

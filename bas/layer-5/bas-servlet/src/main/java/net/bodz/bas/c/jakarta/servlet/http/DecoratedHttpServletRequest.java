@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpUpgradeHandler;
 import jakarta.servlet.http.Part;
 
 import net.bodz.bas.c.jakarta.servlet.DecoratedServletRequest;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class DecoratedHttpServletRequest
         extends DecoratedServletRequest
@@ -26,6 +27,7 @@ public class DecoratedHttpServletRequest
         super(_orig);
     }
 
+    @NotNull
     @Override
     public HttpServletRequest getWrapped() {
         return (HttpServletRequest) super.getWrapped();

@@ -8,6 +8,7 @@ import java.util.zip.ZipFile;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.io.res.AbstractInputStreamSource;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class JuzZipEntrySource
         extends AbstractInputStreamSource<JuzZipEntrySource> {
@@ -36,6 +37,7 @@ public class JuzZipEntrySource
         return zipEntry.getName();
     }
 
+    @NotNull
     @Override
     public InputStream newInputStream(OpenOption... options)
             throws IOException {

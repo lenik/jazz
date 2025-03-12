@@ -9,6 +9,7 @@ import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.StringCharIn;
 import net.bodz.bas.io.impl.EncodedByteIn;
 import net.bodz.bas.io.res.AbstractStreamInputSource;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class StringSource
         extends AbstractStreamInputSource<StringSource> {
@@ -30,6 +31,7 @@ public class StringSource
         return true;
     }
 
+    @NotNull
     @Override
     public ICharIn newCharIn(OpenOption... options)
             throws IOException {
@@ -48,6 +50,7 @@ public class StringSource
     // return new ByteBufferByteIn(byteBuffer);
     // }
 
+    @NotNull
     @Override
     public IByteIn newByteIn(OpenOption... options)
             throws IOException {

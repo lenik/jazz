@@ -8,6 +8,8 @@ import java.sql.*;
 import java.util.Calendar;
 import java.util.Map;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 public class DecoratedCallableStatement
         extends DecoratedPreparedStatement
         implements CallableStatement {
@@ -18,6 +20,7 @@ public class DecoratedCallableStatement
         super(_orig);
     }
 
+    @NotNull
     @Override
     public CallableStatement getWrapped() {
         return (CallableStatement) super.getWrapped();

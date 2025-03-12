@@ -3,6 +3,7 @@ package net.bodz.bas.potato.element;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.c.reflect.MethodSignature;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class DecoratedMethod
         extends DecoratedPotatoElement
@@ -15,6 +16,7 @@ public class DecoratedMethod
         super(_orig);
     }
 
+    @NotNull
     @Override
     public IMethod getWrapped() {
         return (IMethod) _orig; // super.getWrapped();

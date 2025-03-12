@@ -2,6 +2,7 @@ package net.bodz.bas.potato.element;
 
 import java.lang.reflect.Type;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 
 public class DecoratedProperty
@@ -15,6 +16,7 @@ public class DecoratedProperty
         super(_orig);
     }
 
+    @NotNull
     @Override
     public IProperty getWrapped() {
         return (IProperty) _orig; // super.getWrapped();

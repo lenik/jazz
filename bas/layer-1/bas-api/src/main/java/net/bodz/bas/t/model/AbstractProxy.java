@@ -1,5 +1,7 @@
 package net.bodz.bas.t.model;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 /**
  * Proxy Pattern:
  * 
@@ -18,6 +20,7 @@ public abstract class AbstractProxy<T>
         this._orig = _orig;
     }
 
+    @NotNull
     @Override
     public T getWrapped() {
         return _orig;

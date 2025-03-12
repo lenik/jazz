@@ -1,5 +1,6 @@
 package net.bodz.bas.gui.draw_f.dc;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.ui.style.IColor;
 import net.bodz.bas.ui.style.IFillType;
 import net.bodz.bas.ui.style.IFontType;
@@ -15,6 +16,7 @@ public abstract class DecoratedDrawContext2d
         super(_orig);
     }
 
+    @NotNull
     @Override
     public IDrawContext2d getWrapped() {
         return (IDrawContext2d) _orig;

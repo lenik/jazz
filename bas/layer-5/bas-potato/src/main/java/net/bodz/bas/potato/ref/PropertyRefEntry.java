@@ -3,6 +3,7 @@ package net.bodz.bas.potato.ref;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
@@ -23,6 +24,7 @@ public class PropertyRefEntry<T>
         this.property = property;
     }
 
+    @NotNull
     @Override
     public IProperty getWrapped() {
         return (IProperty) super.getWrapped();

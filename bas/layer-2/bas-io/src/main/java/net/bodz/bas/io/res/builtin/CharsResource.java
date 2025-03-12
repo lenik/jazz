@@ -10,6 +10,7 @@ import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.ISeekable;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
 
 public class CharsResource
@@ -48,6 +49,7 @@ public class CharsResource
     /**
      * @return {@link Writer} with {@link Writer#close()} filtered out.
      */
+    @NotNull
     @Override
     public Writer newWriter(OpenOption... options)
             throws IOException {
@@ -66,6 +68,7 @@ public class CharsResource
         return new MovableCharBufferWriter(buffer, pos);
     }
 
+    @NotNull
     @Override
     public IPrintOut newPrintOut(OpenOption... options)
             throws IOException {
@@ -84,12 +87,14 @@ public class CharsResource
         return new MovableCharBufferPrintOut(buffer, pos);
     }
 
+    @NotNull
     @Override
     public ICharOut newCharOut(OpenOption... options)
             throws IOException {
         return newPrintOut(options);
     }
 
+    @NotNull
     @Override
     public ICharIn newCharIn(OpenOption... options)
             throws IOException {

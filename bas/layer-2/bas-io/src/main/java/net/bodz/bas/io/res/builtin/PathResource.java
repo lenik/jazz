@@ -98,12 +98,14 @@ public class PathResource
     /** ⇱ Implementation Of {@link IChannelResource}. */
     /* _____________________________ */static section.iface __CHANNEL__;
 
+    @NotNull
     @Override
     public final ByteChannel newByteChannel(OpenOption... options)
             throws IOException {
         return newSeekableByteChannel(options);
     }
 
+    @NotNull
     @Override
     public SeekableByteChannel newSeekableByteChannel(OpenOption... options)
             throws IOException {

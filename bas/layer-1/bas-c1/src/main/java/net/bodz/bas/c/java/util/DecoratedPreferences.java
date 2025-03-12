@@ -7,6 +7,7 @@ import java.util.prefs.NodeChangeListener;
 import java.util.prefs.PreferenceChangeListener;
 import java.util.prefs.Preferences;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.IWrapper;
 
 public class DecoratedPreferences
@@ -22,6 +23,7 @@ public class DecoratedPreferences
         this.wrapped = wrapped;
     }
 
+    @NotNull
     @Override
     public Preferences getWrapped() {
         return wrapped;

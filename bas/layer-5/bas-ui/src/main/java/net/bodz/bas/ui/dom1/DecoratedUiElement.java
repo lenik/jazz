@@ -2,6 +2,7 @@ package net.bodz.bas.ui.dom1;
 
 import net.bodz.bas.i18n.dom1.DecoratedElement;
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 
 public abstract class DecoratedUiElement
@@ -14,6 +15,7 @@ public abstract class DecoratedUiElement
         super(_orig);
     }
 
+    @NotNull
     @Override
     public IUiElement getWrapped() {
         return (IUiElement) _orig;

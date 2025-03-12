@@ -1,17 +1,12 @@
 package net.bodz.bas.io.res;
 
-import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.io.IByteIOS;
-import net.bodz.bas.io.IByteIn;
-import net.bodz.bas.io.IByteOut;
-import net.bodz.bas.io.ICharIOS;
-import net.bodz.bas.io.ICharIn;
-import net.bodz.bas.io.ICroppable;
-import net.bodz.bas.io.ISeekable;
-import net.bodz.bas.io.impl.MergedByteIOS;
-
 import java.io.IOException;
 import java.nio.file.OpenOption;
+
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.io.IByteIOS;
+import net.bodz.bas.io.ICharIOS;
+import net.bodz.bas.meta.decl.NotNull;
 
 public interface IStreamResource
         extends IStreamInputSource,
@@ -27,11 +22,13 @@ public interface IStreamResource
         return true;
     }
 
+    @NotNull
     default IByteIOS newByteIOS(OpenOption... options)
             throws IOException {
         throw new NotImplementedException();
     }
 
+    @NotNull
     default ICharIOS newCharIOS(OpenOption... options)
             throws IOException {
         throw new NotImplementedException();

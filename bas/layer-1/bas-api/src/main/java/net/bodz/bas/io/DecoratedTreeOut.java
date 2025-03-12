@@ -1,5 +1,7 @@
 package net.bodz.bas.io;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 public class DecoratedTreeOut
         extends DecoratedPrintOut
         implements
@@ -11,6 +13,7 @@ public class DecoratedTreeOut
         super(_orig);
     }
 
+    @NotNull
     @Override
     public ITreeOut getWrapped() {
         return (ITreeOut) _orig;

@@ -13,6 +13,8 @@ import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.AbstractIORandomResource;
+import net.bodz.bas.meta.decl.NotNull;
+
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileType;
 
@@ -59,6 +61,7 @@ public class FileObjectResource
         }
     }
 
+    @NotNull
     @Override
     public InputStream newInputStream(OpenOption... options)
             throws IOException {
@@ -68,6 +71,7 @@ public class FileObjectResource
         return in;
     }
 
+    @NotNull
     @Override
     public OutputStream newOutputStream(OpenOption... options)
             throws IOException {

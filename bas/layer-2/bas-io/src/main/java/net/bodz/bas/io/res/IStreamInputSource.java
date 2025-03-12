@@ -27,7 +27,6 @@ import net.bodz.bas.io.res.tools.IStreamReading;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.meta.decl.DefaultImpl;
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.sugar.IToChain;
 
 public interface IStreamInputSource
         extends IResourceEntry {
@@ -73,16 +72,14 @@ public interface IStreamInputSource
     default IObjectInput newObjectInput(OpenOption... options)
             throws IOException {
         InputStream inputStream = newInputStream(options);
-        if (inputStream == null)
-            throw new NullPointerException("inputStream");
         if (inputStream instanceof IObjectInput)
             return (IObjectInput) inputStream;
         ObjectInputStream in = new ObjectInputStream(inputStream);
         return new ObjectInputAdapter(in, in);
     }
 
-    @NotNull
     @DefaultImpl(CharInReader.class)
+    @NotNull
     default Reader newReader(OpenOption... options)
             throws IOException {
         ICharIn charIn = newCharIn(options);
@@ -119,8 +116,8 @@ public interface IStreamInputSource
         return new LineReader(reader);
     }
 
-    @NotNull
     @DefaultImpl(BitInImpl.class)
+    @NotNull
     default IBitIn newBitIn(OpenOption... options)
             throws IOException {
         IByteIn byteIn = newByteIn(options);
@@ -128,6 +125,7 @@ public interface IStreamInputSource
     }
 
     @DefaultImpl(DataInImplLE.class)
+    @NotNull
     default IDataIn newDataInLE(OpenOption... options)
             throws IOException {
         IByteIn byteIn = newByteIn(options);
@@ -135,12 +133,14 @@ public interface IStreamInputSource
     }
 
     @DefaultImpl(DataInImplBE.class)
+    @NotNull
     default IDataIn newDataInBE(OpenOption... options)
             throws IOException {
         IByteIn byteIn = newByteIn(options);
         return DataInImplBE.from(byteIn);
     }
 
+    @NotNull
     default IStreamReading read() {
         return new StreamReading(this);
     }

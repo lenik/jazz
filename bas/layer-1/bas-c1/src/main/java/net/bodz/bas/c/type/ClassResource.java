@@ -52,6 +52,8 @@ public class ClassResource {
             loader = ClassLoader.getSystemClassLoader();
 
         URL classBytesUrl = loader.getResource(classBytesName);
+        if (classBytesUrl == null)
+            throw new UnexpectedException("can't find class bytes for " + clazz);
 
         String rootUrl = classBytesUrl.toString();
 

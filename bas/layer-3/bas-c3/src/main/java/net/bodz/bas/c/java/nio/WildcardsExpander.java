@@ -12,6 +12,7 @@ import java.util.List;
 import net.bodz.bas.ctx.sys.UserDirVars;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.iterator.Iterators;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 import net.bodz.bas.t.iterator.StackedIterator;
@@ -22,9 +23,9 @@ public class WildcardsExpander
     static Logger _logger = LoggerFactory.getLogger(WildcardsExpander.class);
     public Logger logger = _logger;
 
-    private boolean wildcardsEnabled = true;
+    private final boolean wildcardsEnabled = true;
 
-    private String expr;
+    private final String expr;
     private Path startPath;
     private boolean bareName;
     private PathMatcher matcher;
@@ -70,6 +71,7 @@ public class WildcardsExpander
             startPath = fileSystem.getPath(start, spec);
     }
 
+    @NotNull
     @Override
     public Iterator<String> iterator() {
         return new Iter();

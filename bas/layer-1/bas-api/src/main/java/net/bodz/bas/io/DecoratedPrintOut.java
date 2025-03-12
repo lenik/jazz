@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 public abstract class DecoratedPrintOut
         extends DecoratedCharOut
         implements
@@ -15,6 +17,7 @@ public abstract class DecoratedPrintOut
         super(_orig);
     }
 
+    @NotNull
     @Override
     public IPrintOut getWrapped() {
         return (IPrintOut) _orig;

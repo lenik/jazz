@@ -2,6 +2,8 @@ package net.bodz.bas.io.res;
 
 import java.io.IOException;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 public abstract class ProxyRandomResource
         extends ProxyStreamResource<ProxyRandomResource>
         implements IRandomResource {
@@ -10,6 +12,7 @@ public abstract class ProxyRandomResource
         super(_orig);
     }
 
+    @NotNull
     public IRandomResource getWrapped() {
         return (IRandomResource) _orig;
     }

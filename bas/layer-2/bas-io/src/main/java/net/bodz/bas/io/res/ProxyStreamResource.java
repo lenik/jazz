@@ -1,5 +1,16 @@
 package net.bodz.bas.io.res;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.file.OpenOption;
+
 import net.bodz.bas.c.java.io.IDataInput;
 import net.bodz.bas.c.java.io.IDataOutput;
 import net.bodz.bas.c.java.io.IObjectInput;
@@ -17,21 +28,8 @@ import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.bit.IBitIn;
 import net.bodz.bas.io.impl.LAReader;
-import net.bodz.bas.io.res.tools.IStreamReading;
-import net.bodz.bas.io.res.tools.IStreamWriting;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.IWrapper;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.Reader;
-import java.io.Writer;
-import java.nio.charset.Charset;
-import java.nio.file.OpenOption;
 
 public abstract class ProxyStreamResource<This>
         implements IStreamResource,
@@ -43,6 +41,7 @@ public abstract class ProxyStreamResource<This>
         this._orig = _orig;
     }
 
+    @NotNull
     public IStreamResource getWrapped() {
         return _orig;
     }
@@ -91,12 +90,14 @@ public abstract class ProxyStreamResource<This>
         return getWrapped().newByteIn(options);
     }
 
+    @NotNull
     @Override
     public IByteIOS newByteIOS(OpenOption... options)
             throws IOException {
         return getWrapped().newByteIOS(options);
     }
 
+    @NotNull
     @Override
     public ICharIOS newCharIOS(OpenOption... options)
             throws IOException {
@@ -166,24 +167,28 @@ public abstract class ProxyStreamResource<This>
         return getWrapped().newBitIn(options);
     }
 
+    @NotNull
     @Override
     public IDataIn newDataInLE(OpenOption... options)
             throws IOException {
         return getWrapped().newDataInLE(options);
     }
 
+    @NotNull
     @Override
     public IDataIn newDataInBE(OpenOption... options)
             throws IOException {
         return getWrapped().newDataInBE(options);
     }
 
+    @NotNull
     @Override
     public IByteOut newByteOut(OpenOption... options)
             throws IOException {
         return getWrapped().newByteOut(options);
     }
 
+    @NotNull
     @Override
     public ICharOut newCharOut(OpenOption... options)
             throws IOException {
@@ -253,6 +258,7 @@ public abstract class ProxyStreamResource<This>
         return getWrapped().newBufferedWriter(options);
     }
 
+    @NotNull
     @Override
     public ITreeOut newTreeOut(OpenOption... options)
             throws IOException {

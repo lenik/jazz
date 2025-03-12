@@ -23,6 +23,7 @@ import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.AbstractIORandomResource;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFileAttributes;
 import net.bodz.bas.vfs.IFsBlob;
@@ -171,12 +172,14 @@ public class ZipEntryFile
         class Res
                 extends AbstractIORandomResource<Res> {
 
+            @NotNull
             @Override
             public InputStream newInputStream(OpenOption... options)
                     throws IOException {
                 return zipEntry.getInputSource().newInputStream(options);
             }
 
+            @NotNull
             @Override
             public OutputStream newOutputStream(OpenOption... options)
                     throws IOException {

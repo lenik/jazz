@@ -10,6 +10,7 @@ import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.adapter.CharBufferCharIn;
 import net.bodz.bas.io.adapter.CharBufferCharOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class CharArrayResource
         extends AbstractTextResource<CharArrayResource> {
@@ -57,6 +58,7 @@ public class CharArrayResource
         return (long) (end - start);
     }
 
+    @NotNull
     @Override
     public ICharIn newCharIn(OpenOption... options)
             throws IOException {
@@ -64,6 +66,7 @@ public class CharArrayResource
         return new CharBufferCharIn(charBuffer);
     }
 
+    @NotNull
     @Override
     public ICharOut newCharOut(OpenOption... options)
             throws IOException {

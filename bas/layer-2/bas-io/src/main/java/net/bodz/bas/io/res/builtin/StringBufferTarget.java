@@ -9,6 +9,7 @@ import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.impl.DecodedByteOut;
 import net.bodz.bas.io.res.AbstractStreamOutputTarget;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class StringBufferTarget
         extends AbstractStreamOutputTarget<StringBufferTarget> {
@@ -34,11 +35,13 @@ public class StringBufferTarget
         return buffer;
     }
 
+    @NotNull
     @Override
     public ICharOut newCharOut(OpenOption... options) {
         return newPrintOut(options);
     }
 
+    @NotNull
     @Override
     public BufCharOut newPrintOut(OpenOption... options) {
         boolean append = OpenOptions.isAppend(options);
@@ -48,6 +51,7 @@ public class StringBufferTarget
         return new BufCharOut(buffer);
     }
 
+    @NotNull
     @Override
     public IByteOut newByteOut(OpenOption... options) {
         ICharOut charOut = newCharOut(options);

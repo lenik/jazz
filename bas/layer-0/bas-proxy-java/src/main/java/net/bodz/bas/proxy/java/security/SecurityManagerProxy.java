@@ -4,6 +4,7 @@ import java.io.FileDescriptor;
 import java.net.InetAddress;
 import java.security.Permission;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.IWrapper;
 
 @Deprecated // (since = "17")
@@ -22,6 +23,7 @@ public class SecurityManagerProxy
         this._orig = _orig;
     }
 
+    @NotNull
     @Override
     public SecurityManager getWrapped() {
         return _orig;

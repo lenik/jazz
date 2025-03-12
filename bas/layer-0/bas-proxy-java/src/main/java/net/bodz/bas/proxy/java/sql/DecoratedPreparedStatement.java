@@ -7,6 +7,8 @@ import java.net.URL;
 import java.sql.*;
 import java.util.Calendar;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 public class DecoratedPreparedStatement
         extends DecoratedStatement
         implements PreparedStatement {
@@ -17,6 +19,7 @@ public class DecoratedPreparedStatement
         super(_orig);
     }
 
+    @NotNull
     @Override
     public PreparedStatement getWrapped() {
         return (PreparedStatement) super.getWrapped();

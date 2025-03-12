@@ -1,6 +1,7 @@
 package net.bodz.bas.log;
 
 import net.bodz.bas.io.DecoratedTreeOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class DecoratedLogSink
         extends DecoratedTreeOut
@@ -12,6 +13,7 @@ public class DecoratedLogSink
         super(_orig);
     }
 
+    @NotNull
     @Override
     public ILogSink getWrapped() {
         return (ILogSink) _orig;

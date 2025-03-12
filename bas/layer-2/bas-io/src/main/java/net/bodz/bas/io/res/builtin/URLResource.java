@@ -1,7 +1,6 @@
 package net.bodz.bas.io.res.builtin;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,15 +8,14 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import net.bodz.bas.c.java.io.FileURL;
-import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.res.AbstractIOStreamResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class URLResource
         extends AbstractIOStreamResource<URLResource> {
@@ -58,12 +56,14 @@ public class URLResource
         }
     }
 
+    @NotNull
     @Override
     public InputStream newInputStream(OpenOption... options)
             throws IOException {
         return url.openStream();
     }
 
+    @NotNull
     @Override
     public OutputStream newOutputStream(OpenOption... options)
             throws IOException {

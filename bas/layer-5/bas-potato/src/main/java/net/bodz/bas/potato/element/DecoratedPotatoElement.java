@@ -6,6 +6,7 @@ import java.util.Map;
 import net.bodz.bas.c.reflect.DecoratedAnnotatedElement;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
@@ -19,6 +20,7 @@ public class DecoratedPotatoElement
         super(_orig);
     }
 
+    @NotNull
     @Override
     public IPotatoElement getWrapped() {
         return (IPotatoElement) _orig; // super.getWrapped();
