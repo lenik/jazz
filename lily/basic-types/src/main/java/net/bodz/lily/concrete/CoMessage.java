@@ -9,7 +9,6 @@ import javax.persistence.ManyToOne;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
@@ -28,9 +27,9 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.concrete.util.HtmlTextObject;
 import net.bodz.lily.concrete.util.TextObject;
 import net.bodz.lily.concrete.util.UserClickInfo;
-import net.bodz.lily.entity.attachment.AttachmentListingInFiles;
-import net.bodz.lily.entity.attachment.IAttachmentListing;
-import net.bodz.lily.entity.attachment.util.IVideosInFiles;
+import net.bodz.lily.entity.attachment.IHaveAudios;
+import net.bodz.lily.entity.attachment.IHaveDocs;
+import net.bodz.lily.entity.attachment.MutableAttachment;
 import net.bodz.lily.meta.FieldGroupVue;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.meta.FormDef;
@@ -48,8 +47,8 @@ import net.bodz.lily.security.IUser;
 @TypeParameters({ TypeParamType.ID_TYPE })
 public abstract class CoMessage<Id>
         extends CoImagedEvent<Id>
-        implements
-            IVideosInFiles {
+        implements IHaveAudios<MutableAttachment>,
+                   IHaveDocs<MutableAttachment> {
 
     private static final long serialVersionUID = 1L;
 
@@ -67,15 +66,13 @@ public abstract class CoMessage<Id>
     private User op;
     private String subject;
     private String rawText;
-    private FormDef form;
+    private volatile FormDef form;
     Integer formId;
     private ParameterMap parameters;
-    private UserClickInfo clickInfo;
+    private volatile UserClickInfo clickInfo;
 
     private ZonedDateTime sentTime;
     private ZonedDateTime receivedTime;
-
-    JsonVariant properties;
 
     public CoMessage() {
     }
@@ -112,7 +109,7 @@ public abstract class CoMessage<Id>
         if (op != null) {
             Integer opId = op.getId();
             if (opId != null)
-                return opId.intValue();
+                return opId;
         }
         return opId;
     }
@@ -248,13 +245,6 @@ public abstract class CoMessage<Id>
 
     public void setReceivedTime(ZonedDateTime receivedTime) {
         this.receivedTime = receivedTime;
-    }
-
-    static final String[] attachmentGroupKeys = { K_IMAGES, K_VIDEOS };
-
-    @Override
-    public IAttachmentListing listAttachments() {
-        return new AttachmentListingInFiles(this, attachmentGroupKeys);
     }
 
     @Override

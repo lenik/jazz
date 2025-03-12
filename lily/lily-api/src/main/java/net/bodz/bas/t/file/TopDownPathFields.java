@@ -62,18 +62,24 @@ public class TopDownPathFields
 
     @Override
     public String[] toArray() {
+        if (path == null)
+            return new String[0];
         String[] array = path.split(File.separator);
         return array;
     }
 
     @Override
     public int length() {
+        if (path == null)
+            return 0;
         int slashCount = StringStat.count(path, File.separator);
         return slashCount;
     }
 
     @Override
     public String getField(int index) {
+        if (path == null)
+            return null;
         PosRange range = Strings.selectToken(path, index, '/');
         if (range == null)
             return null;
@@ -83,7 +89,11 @@ public class TopDownPathFields
 
     @Override
     public void setField(int index, String field) {
+        if (path == null)
+            throw new IllegalStateException("path wan't init");
         PosRange range = Strings.selectToken(path, index, '/');
+        if (range == null)
+            throw new IndexOutOfBoundsException(index);
         String left_ = path.substring(0, range.begin);
         String _right = path.substring(range.end);
         String rename = left_ + field + _right;
@@ -92,6 +102,8 @@ public class TopDownPathFields
 
     @Override
     public String getDirName() {
+        if (path == null)
+            return null;
         int lastSlash = path.lastIndexOf(File.separatorChar);
         if (lastSlash == -1)
             return null;
@@ -107,6 +119,8 @@ public class TopDownPathFields
 
     @Override
     public String getFileName() {
+        if (path == null)
+            return null;
         int lastSlash = path.lastIndexOf(File.separatorChar);
         if (lastSlash == -1)
             return path;

@@ -6,6 +6,8 @@ import { INT, STRING, UNDEFINED } from 'skel01-core/src/lang/baseinfo';
 import { JSON_VARIANT } from 'skel01-core/src/lang/bas-info';
 import Group from '../schema/account/Group';
 import User from '../schema/account/User';
+import AttachmentManifest from 'skel01-core/src/net/bodz/lily/entity/AttachmentManifest';
+import AttachmentManifestTypeInfo from 'skel01-core/src/net/bodz/lily/entity/AttachmentManifestTypeInfo';
 
 class IconType extends TypeInfo<string> {
 
@@ -56,7 +58,7 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
             id: property({ type: this.idType, icon: 'far-key' }),
             name: property({ type: STRING, icon: 'far-id-card' }),
             properties: property({ type: JSON_VARIANT, icon: 'fab-pagelines' }),
-            files: property({ type: JSON_VARIANT, icon: 'fa-copy' }),
+            files: property({ type: AttachmentManifestTypeInfo.INSTANCE, icon: 'fa-copy' }),
 
             label: property({ type: STRING, icon: 'far-tag' }),
             description: property({ type: STRING, icon: 'far-sticky-note' }),

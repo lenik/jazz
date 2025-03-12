@@ -1,5 +1,5 @@
 
-import { IEntityType } from 'skel01-dba/src/net/bodz/lily/entity/IEntityType';
+import type { IEntityType } from 'skel01-dba/src/net/bodz/lily/entity/IEntityType';
 import { CoObjectValidators } from './CoObjectValidators';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 

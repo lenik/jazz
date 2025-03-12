@@ -1,5 +1,5 @@
 import { EntityType, property } from 'skel01-dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from 'skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap';
+// import type { EntityPropertyMap } from 'skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import StructRowValidators from './StructRowValidators';
 import { INT } from 'skel01-core/src/lang/baseinfo';
 import OffsetDateTime from 'skel01-core/src/lang/time/OffsetDateTime';

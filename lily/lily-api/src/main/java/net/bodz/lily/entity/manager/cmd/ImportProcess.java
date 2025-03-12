@@ -2,6 +2,7 @@ package net.bodz.lily.entity.manager.cmd;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class ImportProcess
     public Object execute()
             throws Exception {
         IVolume volume = dataApp.getIncomingVolume(typeInfo.getEntityClass());
-        File localDir = volume.getLocalDir();
+        Path localDir = volume.getLocalDir();
         IAnchor anchor = volume.getVolumeAnchor();
         UploadHandler uploadHandler = new UploadHandler(localDir, anchor);
         UploadResult uploadResult;
@@ -87,7 +88,8 @@ public class ImportProcess
         JsonResult result = new JsonResult();
 
         for (UploadedFileInfo fileInfo : uploadResult) {
-            File file = fileInfo.getFile();
+            Path filePath = fileInfo.getFile();
+            File file = filePath.toFile();
             String extension = FilePath.getExtension(file);
             if (extension == null)
                 return result.fail("file without extension.");
@@ -149,7 +151,7 @@ public class ImportProcess
             throws ParseException {
         table = reshapeTable(table);
         prepareTableType((DefaultTableMetadata) table.getMetadata());
-        if (! parsed)
+        if (!parsed)
             parseTableCells(table);
         List<StructRow> objects = buildObjects(table);
         return importObjects(objects);
@@ -248,7 +250,7 @@ public class ImportProcess
 
                 Class<?> propType = fieldProp.getPropertyClass();
                 Class<?> boxed = Primitives.box(propType);
-                if (cellVal != null && ! boxed.isAssignableFrom(cellVal.getClass()))
+                if (cellVal != null && !boxed.isAssignableFrom(cellVal.getClass()))
                     throw new IllegalUsageException(String.format(//
                             "Invalid cell %s[%d] %s, expected %s", //
                             column.getName(), iCol, //

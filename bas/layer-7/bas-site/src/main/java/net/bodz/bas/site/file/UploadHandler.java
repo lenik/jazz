@@ -1,9 +1,16 @@
 package net.bodz.bas.site.file;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import jakarta.servlet.MultipartConfigElement;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Part;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.data.codec.builtin.HexCodec;
@@ -12,28 +19,18 @@ import net.bodz.bas.io.res.builtin.InputStreamSource;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.site.IBasicSiteAnchors;
+import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VariantMaps;
 
-import jakarta.servlet.MultipartConfigElement;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.Part;
-
 /**
- *
- * Parameters:
- *
- * @param scheme
- *
- *            Check out <a href="https://blueimp.github.io/jQuery-File-Upload/">blueimp file
- *            upload</a>
+ * @see <a href="https://blueimp.github.io/jQuery-File-Upload/">blueimp file upload</a>
  */
 public class UploadHandler
         implements
             IBasicSiteAnchors {
 
-    File localDir;
+    Path localDir;
     IAnchor anchor;
     boolean renameSha1 = true;
 
@@ -43,13 +40,21 @@ public class UploadHandler
      *            with file separator.
      */
     public UploadHandler(File localDir, String absoluteHref) {
+        this(localDir.toPath(), absoluteHref);
+    }
+
+    public UploadHandler(Path localDir, String absoluteHref) {
         this(localDir, _webApp_.join(absoluteHref));
     }
 
     public UploadHandler(File localDir, IAnchor anchor) {
+        this(localDir.toPath(), anchor);
+    }
+
+    public UploadHandler(Path localDir, IAnchor anchor) {
         if (localDir == null)
             throw new NullPointerException("localDir");
-        if (! localDir.isDirectory())
+        if (!Files.isDirectory(localDir))
             throw new IllegalArgumentException("Not a local directory: " + localDir);
         if (anchor == null)
             throw new NullPointerException("anchor");
@@ -67,9 +72,7 @@ public class UploadHandler
             request.setAttribute("org.eclipse.jetty.multipartConfig", mce);
         }
 
-        /**
-         * the max bytes to transfer in a second.
-         */
+        // the max bytes to transfer in a second.
         int maxSpeed = q.getInt("maxSpeed", 0);
 
         UploadResult result = new UploadResult();
@@ -81,11 +84,12 @@ public class UploadHandler
             if (fileName.isEmpty())
                 throw new IllegalArgumentException("empty filename.");
 
-            File localFile = new File(localDir, fileName);
+            String safeName = safeName(fileName);
+            Path localFile = localDir.resolve(safeName);
 
             long beginTime = System.currentTimeMillis();
             long totalSize = 0;
-            try (FileOutputStream out = new FileOutputStream(localFile)) {
+            try (OutputStream out = Files.newOutputStream(localFile)) {
                 InputStream in = part.getInputStream();
                 InputStreamSource source = new InputStreamSource(in);
                 for (byte[] block : source.read().blocks()) {
@@ -109,41 +113,53 @@ public class UploadHandler
             if (maxSpeed != 0)
                 System.out.println();
 
-            RenameResult renameResult = renameToSha1(localFile);
-            localFile = renameResult.newFile;
+            ArchiveResult archiveResult = archive(localFile);
+            // localFile = archiveResult.archived;
+            // String sha1Name = archiveResult.archived.getFileName().toString();
 
             UploadedFileInfo fileInfo = new UploadedFileInfo(part);
             fileInfo.setFile(localFile);
-            fileInfo.setSha1(renameResult.sha1);
             // fileInfo.setDir(dirWithinSchema);
+            fileInfo.setOrigName(fileName); // orig. upload name.
+            fileInfo.setName(safeName);
+            fileInfo.setSha1(archiveResult.sha1);
 
-            fileInfo.url = anchor.join(renameResult.newFile.getName()).toUriPath();
+            Split nameExtension = Split.nameExtension(fileName);
+            fileInfo.setLabel(nameExtension.a);
+
+            fileInfo.url = anchor.join(safeName).toUriPath();
+
+            // use the same URL to delete.
+            // but when it is necessary, some guard strings may be applied.
             fileInfo.deleteUrl = fileInfo.url;
-
-            // TODO image auto-scale...?
-            fileInfo.thumbnail = fileInfo.url;
 
             result.add(fileInfo);
         }
         return result;
     }
 
+    static String safeName(String name) {
+        return name;
+    }
+
     static final HexCodec hexCodec = new HexCodec("");
 
-    RenameResult renameToSha1(File file)
+    ArchiveResult archive(Path src)
             throws IOException {
-        byte[] sha1 = ResFn.file(file).to(StreamReading.class).sha1();
+//        ResFn.path
+        byte[] sha1 = ResFn.path(src).to(StreamReading.class).sha1();
         String sha1str = hexCodec.encode(sha1);
 
-        File dir = file.getParentFile();
-        String dotExt = FilePath.getExtension(file, true);
+        Path parentDir = src.getParent();
+        String dotExt = FilePath.getExtension(src.getFileName().toString(), true);
 
-        File newName = new File(dir, sha1str + dotExt);
-        if (! file.renameTo(newName))
-            throw new IOException(String.format("Can't rename file %s to %s.", //
-                    file, newName));
+        Path sha1File = parentDir.resolve(sha1str + dotExt);
 
-        return new RenameResult(file, newName, sha1str);
+//        if (!file.renameTo(sha1File))
+//            throw new IOException(String.format("Can't rename file %s to %s.", file, sha1File));
+        Files.createLink(sha1File, src);
+
+        return new ArchiveResult(src, sha1File, sha1str);
     }
 
 }

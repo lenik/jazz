@@ -59,25 +59,25 @@ public abstract class LilyStartSite
 
         Object target = null;
         switch (token) {
-        case K_SYSMAN:
-            target = new SysManager();
-            break;
+            case K_SYSMAN:
+                target = new SysManager();
+                break;
 
-        case K_EVENT_LOGS:
-            target = EventLogger.getInstance();
-            break;
+            case K_EVENT_LOGS:
+                target = EventLogger.getInstance();
+                break;
 
-        case K_UPLOAD:
-            String fileClass = q.getString("class");
-            IVolume volume = getDataApp().getIncomingVolume(fileClass);
-            UploadHandler uploadHandler = new UploadHandler(//
-                    volume.getLocalDir(), volume.getVolumeAnchor());
-            try {
-                target = uploadHandler.handlePostRequest(request);
-            } catch (Exception e) {
-                throw new ServiceTargetException("upload handler: " + e.getMessage(), e);
-            }
-            break;
+            case K_UPLOAD:
+                String fileClass = q.getString("class");
+                IVolume volume = getDataApp().getIncomingVolume(fileClass);
+                UploadHandler uploadHandler = new UploadHandler(//
+                        volume.getLocalDir(), volume.getVolumeAnchor());
+                try {
+                    target = uploadHandler.handlePostRequest(request);
+                } catch (Exception e) {
+                    throw new ServiceTargetException("upload handler: " + e.getMessage(), e);
+                }
+                break;
 
         }
 
@@ -94,7 +94,7 @@ public abstract class LilyStartSite
 
     void setupServices() {
         serviceMap.install("mapper", new MapperService(dataContext));
-        serviceMap.install("service-map", serviceMap);
+        // serviceMap.install("service-map", serviceMap);
         serviceMap.install("ws-doc", new WsDocSite());
 
         LoginManagerWs man = new LoginManagerWs();

@@ -11,8 +11,7 @@ export abstract class CoPrincipal extends CoImaged<int> {
         return this._typeInfo;
     }
 
-    name?: string
-    properties: any
+    // name?: string
 
     get uniqueName() { return this.name; }
     set uniqueName(val: string | undefined) { this.name = val; }

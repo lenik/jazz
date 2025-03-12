@@ -4,17 +4,16 @@ import java.io.IOException;
 
 import javax.xml.stream.XMLStreamException;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.meta.decl.Nullable;
 
 public interface IPathFields
-        extends
-            IJsonForm,
-            IXmlForm {
+        extends IJsonForm,
+                IXmlForm {
 
     String getPath();
 
@@ -44,6 +43,7 @@ public interface IPathFields
 
     void setName(String name);
 
+    @Nullable
     String getExtension();
 
     default String getExtension(String fallback) {
@@ -61,7 +61,7 @@ public interface IPathFields
 
     @Override
     default void jsonOut(IJsonOut out, JsonFormOptions opts)
-            throws IOException, FormatException {
+            throws IOException {
         String dirName = getDirName();
         String fileName = getFileName();
         if (dirName == null || fileName == null) {
@@ -81,7 +81,7 @@ public interface IPathFields
 
     @Override
     default void writeObject(IXmlOutput out)
-            throws XMLStreamException, FormatException {
+            throws XMLStreamException {
         String dirName = getDirName();
         String fileName = getFileName();
         if (dirName == null || fileName == null) {

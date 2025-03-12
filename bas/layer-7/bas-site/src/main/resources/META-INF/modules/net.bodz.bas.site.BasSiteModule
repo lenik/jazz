@@ -34,7 +34,7 @@ net.bodz.bas.site.file.IFileNameListener
 net.bodz.bas.site.file.IIncomingFileHandler
 net.bodz.bas.site.file.IncomingSaver
 net.bodz.bas.site.file.IUploadHandlerExtension
-net.bodz.bas.site.file.RenameResult
+net.bodz.bas.site.file.ArchiveResult
 net.bodz.bas.site.file.UploadedFileInfo
 net.bodz.bas.site.file.UploadFn
 net.bodz.bas.site.file.UploadHandler

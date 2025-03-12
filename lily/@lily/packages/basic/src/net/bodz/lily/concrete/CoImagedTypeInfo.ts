@@ -31,6 +31,16 @@ export class CoImagedTypeInfo extends IdEntityTypeInfo {
                 icon: "far-image",
                 validator: this.validators.validateImage,
             }),
+            videos: property({
+                type: LIST(Attachment.TYPE), nullable: true,
+                icon: "far-photo-video",
+                validator: this.validators.validateVideos,
+            }),
+            video: property({
+                type: Attachment.TYPE, nullable: true,
+                icon: "far-film",
+                validator: this.validators.validateVideo,
+            }),
         });
     }
 

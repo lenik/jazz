@@ -301,7 +301,7 @@ public abstract class AbstractEntityController<T>
                 vec = Arrays.copyOfRange(vec, 1, vec.length);
                 IPathFields pathFields = new ArrayPathFields(vec);
                 IVolumeItem item = incomingVolume.getFile(pathFields);
-                Path localFile = item.getLocalFile();
+                Path localFile = item.toPath();
                 URL resource = FileURL.toURL(localFile);
                 return PathArrival.shift(tokens.available(), previous, this, new URLResource(resource), tokens);
         }

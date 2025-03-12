@@ -1,6 +1,6 @@
 package net.bodz.lily.entity.manager.cmd;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.repr.path.ServiceTargetException;
@@ -23,7 +23,7 @@ public class UploadProcess
     @Override
     public Object execute()
             throws Exception {
-        File localDir;
+        Path localDir;
         IAnchor anchor;
 
         if (id == null) {
@@ -34,7 +34,7 @@ public class UploadProcess
             IVolume volume = dataApp.getEntityVolume(typeInfo.getEntityClass());
             localDir = volume.getLocalDir();
             anchor = volume.getVolumeAnchor();
-            localDir = new File(localDir, id);
+            localDir = localDir.resolve(id);
             anchor = anchor.join(id).enter();
         }
 

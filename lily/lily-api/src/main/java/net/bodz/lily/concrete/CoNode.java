@@ -126,7 +126,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     }
 
     public boolean hasChild() {
-        return children != null && ! children.isEmpty();
+        return children != null && !children.isEmpty();
     }
 
     /**
@@ -234,8 +234,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
             node = node.getParent();
             depth++;
             if (depth >= safeDepth)
-                throw new IllegalUsageException(
-                        "Exceeds the max depth of a tree, maybe there's dead loop? Last node = " + node);
+                throw new IllegalUsageException("Exceeds the max depth of a tree, maybe there's dead loop? Last node = " + node);
         }
         return depth;
     }
@@ -345,14 +344,14 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
         StringBuilder buf = new StringBuilder();
 
-        if (! isLast())
+        if (!isLast())
             buf.append(" -| "); // _|-_
         else
             buf.append(" -` "); // _`-_
 
         self_t node = parent;
         while (node != null) {
-            if (! node.isLast())
+            if (!node.isLast())
                 buf.append("  | "); // _|__
             else
                 buf.append("    "); // ____
@@ -405,14 +404,12 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     protected void checkNode(boolean child, self_t node) {
         if (child) {
             Class<?> parentType = getClass();
-            if (! parentType.isInstance(node))
-                throw new IllegalArgumentException(
-                        "Inconsistent node type: parent=" + parentType + ", child=" + node.getClass());
+            if (!parentType.isInstance(node))
+                throw new IllegalArgumentException("Inconsistent node type: parent=" + parentType + ", child=" + node.getClass());
         } else {
             Class<?> parentType = node.getClass();
-            if (! parentType.isInstance(this))
-                throw new IllegalArgumentException(
-                        "Inconsistent node type: parent=" + parentType + ", child=" + getClass());
+            if (!parentType.isInstance(this))
+                throw new IllegalArgumentException("Inconsistent node type: parent=" + parentType + ", child=" + getClass());
         }
     }
 
@@ -464,13 +461,13 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     public boolean accept(ICoNodeVisitor<? super self_t> visitor) {
         @SuppressWarnings("unchecked")
         self_t self = (self_t) this;
-        if (! visitor.beginNode(self))
+        if (!visitor.beginNode(self))
             return false;
 
-        if (! children.isEmpty())
+        if (!children.isEmpty())
             if (visitor.beginChildren(self)) {
                 for (self_t child : getChildren())
-                    if (! child.accept(visitor))
+                    if (!child.accept(visitor))
                         break;
                 visitor.endChildren(self);
             }
@@ -479,12 +476,12 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     }
 
     public <other_t extends CoNode<other_t, other_id>, other_id> //
-    /*    */other_t convert(Function<? super self_t, other_t> factory, int maxDepth) {
+        /*    */other_t convert(Function<? super self_t, other_t> factory, int maxDepth) {
         return _convert(factory, maxDepth, 0);
     }
 
     <other_t extends CoNode<other_t, other_id>, other_id> //
-    /*    */other_t _convert(Function<? super self_t, other_t> factory, int maxDepth, int depth) {
+        /*    */other_t _convert(Function<? super self_t, other_t> factory, int maxDepth, int depth) {
         @SuppressWarnings("unchecked")
         other_t other = factory.apply((self_t) this);
         depth++;

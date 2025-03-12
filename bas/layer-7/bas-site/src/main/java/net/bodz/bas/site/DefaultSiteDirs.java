@@ -1,9 +1,14 @@
 package net.bodz.bas.site;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+import jakarta.servlet.http.HttpServletRequest;
+
+import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.DuplicatedKeyException;
@@ -15,8 +20,6 @@ import net.bodz.bas.site.file.AttachmentSettings;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.site.vhost.VirtualHostManager;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 /**
  * @see VhostResourceMappings#siteFilesAlias
  */
@@ -26,16 +29,15 @@ public class DefaultSiteDirs
 
     static final String K_FILE_CLASS = "class";
 
-    File clusterDataDir;
+    Path clusterDataDir;
     Map<String, AttachmentSettings> fileClassMap = new HashMap<>();
     boolean strict = false;
 
-    public DefaultSiteDirs() {
-        File baseDir = SysProps.userHome;
+    protected DefaultSiteDirs() {
+        Path baseDir = SysProps.userHome;
         // File baseDir=SysProps.userWorkDir;
         // TODO appdata/APP/sites/SITE/files/<fileClass>/...
-        clusterDataDir = new File(baseDir, "sites");
-        clusterDataDir.mkdirs();
+        clusterDataDir = baseDir.resolve("sites");
 
         for (Class<?> uploadable : IndexedTypes.list(HaveAttachments.class, true)) {
             HaveAttachments aHaveAttachments = uploadable.getAnnotation(HaveAttachments.class);
@@ -47,20 +49,26 @@ public class DefaultSiteDirs
         }
     }
 
+    public DefaultSiteDirs setUp()
+            throws IOException {
+        Files.createDirectories(clusterDataDir);
+        return this;
+    }
+
     /**
      * Where upload and other data files goes to.
      *
      * @see #getUploadDir(String, String)
      */
-    public File getDataDir(String instanceName) {
-        return new File(clusterDataDir, instanceName);
+    public Path getDataDir(String instanceName) {
+        return clusterDataDir.resolve(instanceName);
     }
 
-    public File getDataDir(HttpServletRequest request) {
+    public Path getDataDir(HttpServletRequest request) {
         IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
-        return new File(clusterDataDir, vhost.getName());
+        return clusterDataDir.resolve(vhost.getName());
     }
 
     /**
@@ -90,23 +98,25 @@ public class DefaultSiteDirs
         if (fileClass == null)
             throw new NullPointerException(K_FILE_CLASS);
         if (strict)
-            if (! fileClassMap.containsKey(fileClass))
+            if (!fileClassMap.containsKey(fileClass))
                 throw new IllegalArgumentException("Invalid " + K_FILE_CLASS + " name: " + fileClass);
     }
 
-    public File getUploadDir(String instanceName, String fileClass) {
+    public Path getUploadDir(String instanceName, String fileClass)
+            throws IOException {
         if (instanceName == null)
             throw new NullPointerException("instanceName");
         checkFileClass(fileClass);
 
-        File dataDir = getDataDir(instanceName);
-        // File filesDir = new File(dataDir, "files/" + location);
-        File filesDir = new File(dataDir, fileClass);
-        filesDir.mkdirs();
+        Path dataDir = getDataDir(instanceName);
+        Path filesDir = dataDir.resolve(fileClass);
+        if (!FileFn.mkdirs(filesDir, true))
+            throw new IOException("Failed to mkdir " + filesDir);
         return filesDir;
     }
 
-    public File getUploadDir(HttpServletRequest request) {
+    public Path getUploadDir(HttpServletRequest request)
+            throws IOException {
         IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
@@ -115,16 +125,17 @@ public class DefaultSiteDirs
         if (location == null)
             throw new IllegalArgumentException("Missing " + K_FILE_CLASS + " parameter");
 
-        File dir = getUploadDir(vhost.getName(), location);
+        Path dir = getUploadDir(vhost.getName(), location);
         return dir;
     }
 
-    public File getUploadDir(HttpServletRequest request, String location) {
+    public Path getUploadDir(HttpServletRequest request, String location)
+            throws IOException {
         IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
 
-        File dir = getUploadDir(vhost.getName(), location);
+        Path dir = getUploadDir(vhost.getName(), location);
         return dir;
     }
 

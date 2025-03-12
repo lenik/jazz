@@ -11,6 +11,13 @@ export class StructRow {
         return this._typeInfo;
     }
 
+    // _class: StructRowTypeInfo;
+
+    getClass() {
+        // return this._class;
+        return (this.constructor as any).TYPE;
+    }
+
     // content
 
     creationDate: OffsetDateTime = OffsetDateTime.now()
@@ -20,6 +27,7 @@ export class StructRow {
     constructor(o?: any) {
         if (o != null)
             Object.assign(this, o);
+        // this._class = (this.constructor as any).TYPE;
     }
 }
 

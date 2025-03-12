@@ -1,5 +1,5 @@
-import { int } from 'skel01-core/src/lang/basetype';
-import { IEntityType } from 'skel01-dba/src/net/bodz/lily/entity/IEntityType';
+import type { int } from 'skel01-core/src/lang/basetype';
+import type { IEntityType } from 'skel01-dba/src/net/bodz/lily/entity/IEntityType';
 import StructRowValidators from './StructRowValidators';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 import CoObject from './CoObject';

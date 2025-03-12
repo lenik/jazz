@@ -29,18 +29,10 @@ public interface IVolume {
 
     Path getLocalDir();
 
-//    default File getLocalDir2() {
-//        return getLocalDir().toFile();
-//    }
-
     /**
      * @return <code>null</code> if the attachment doesn't exist as a local file.
      */
     Path getLocalFile(String path);
-
-//    default File getLocalFile2(String path) {
-//        return getLocalFile(path).toFile();
-//    }
 
     boolean exists(String path);
 
