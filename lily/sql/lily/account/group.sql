@@ -25,12 +25,15 @@
     comment on column "group".type is 'Type: Group type like normal-group, role-group, etc.';
     comment on column "group".parent is 'Parent Group: The parent group. must be acyclic';
 
-    insert into "group"(id, type, name, label) values(1, 0, '_pseudo', 'Pseudo Root Node');
-    insert into "group"(parent, id, type, name, label) values
-        (1, 100, 0, '_sysgroup', 'System Groups'),
-        (1, 200, 0, '_group', 'Normal Groups'),
-        (1, 300, 0, '_role', 'Role parent, Groups'),
-        (100, 0, 1, 'root', 'Root'),
-        (100, 101, 1, 'admin', 'Administrators'),
-        (100, 102, 1, 'user',  'Normal Users'),
-        (100, 103, 1, 'guest', 'Guest Users');
+    insert into "group"
+        (       id,     type, name,     icon,           label) values
+        (       1,      0,  '_pseudo',  'fab-adn',      'Pseudo Root Node');
+    insert into "group"
+        (parent, id,    type, name,     icon,           label) values
+        (1,     100,    0,  '_sysgroup','fa-cubes',     'System Groups'),
+        (1,     200,    0,  '_group',   'fa-cubes',     'Normal Groups'),
+        (1,     300,    0,  '_role',    'fa-cubes',     'Role parent, Groups'),
+        (100,   0,      1,  'root',     'far-users-cog','Root'),
+        (100,   101,    1,  'admin',    'far-users-cog','Administrators'),
+        (100,   102,    1,  'user',     'far-users',    'Normal Users'),
+        (100,   103,    1,  'guest',    'far-male',     'Guest Users');
