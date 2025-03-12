@@ -2,6 +2,7 @@ net.bodz.uni.shelj.codegen.java.ToCodegen
 net.bodz.uni.shelj.codegen.java.i18n.Xjdoc2TextMap
 net.bodz.uni.shelj.codegen.java.i18n.XjdocDumper
 net.bodz.uni.shelj.codegen.java.ioforms.IOFormsGenerator
+net.bodz.uni.shelj.codegen.java.ioforms.TsApiGen
 net.bodz.uni.shelj.codegen.java.service.TypeCollectorApp
 net.bodz.uni.shelj.codegen.maven.LibUpdater
 net.bodz.uni.shelj.codegen.win32.Fix_BatBB
