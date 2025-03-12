@@ -2,9 +2,11 @@ package net.bodz.bas.vfs.impl.mem;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.builtin.BytesResource;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.buffer.IMovableBuffer;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 import net.bodz.bas.vfs.*;
@@ -35,6 +37,13 @@ public class MemoryFile
     @Override
     public MemoryPath getPath() {
         return path;
+    }
+
+    @NotNull
+    @Override
+    public Path toPath()
+            throws PathUnsupportedException {
+        throw new PathUnsupportedException();
     }
 
     /** ⇱ Implementation Of {@link IFsBlob}. */

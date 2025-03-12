@@ -20,6 +20,7 @@ import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.*;
 
@@ -29,6 +30,7 @@ import net.bodz.bas.vfs.*;
 public class PojfFile
         extends AbstractFile {
 
+    @NotNull
     private final java.io.File _file;
 
     /**
@@ -85,6 +87,13 @@ public class PojfFile
         if (_file.isDirectory())
             path = (PojfPath) path.enter();
         return path;
+    }
+
+    @NotNull
+    @Override
+    public Path toPath()
+            throws PathUnsupportedException {
+        return _file.toPath();
     }
 
     @Override

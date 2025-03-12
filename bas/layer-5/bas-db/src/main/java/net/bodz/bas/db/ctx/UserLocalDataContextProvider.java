@@ -1,5 +1,7 @@
 package net.bodz.bas.db.ctx;
 
+import java.io.IOException;
+
 import net.bodz.bas.db.Config;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -11,8 +13,9 @@ public class UserLocalDataContextProvider
 
     static final Logger logger = LoggerFactory.getLogger(UserLocalDataContextProvider.class);
 
-    public UserLocalDataContextProvider() {
-        super(Config.getConfigDir());
+    public UserLocalDataContextProvider()
+            throws IOException {
+        super(Config.getOrCreateConfigDir());
     }
 
 }

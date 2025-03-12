@@ -2,13 +2,16 @@ package net.bodz.bas.vfs.impl.filter;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 
 import net.bodz.bas.io.res.IRandomResource;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IFileAttributes;
 import net.bodz.bas.vfs.IFsBlob;
+import net.bodz.bas.vfs.PathUnsupportedException;
 import net.bodz.bas.vfs.path.IPath;
 
 public class FilterFile
@@ -24,6 +27,13 @@ public class FilterFile
     @Override
     public IPath getPath() {
         return null;
+    }
+
+    @NotNull
+    @Override
+    public Path toPath()
+            throws PathUnsupportedException {
+        throw new PathUnsupportedException();
     }
 
     @Override

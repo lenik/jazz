@@ -1,6 +1,5 @@
 package net.bodz.lily.storage;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.bodz.bas.t.file.BottomUpPathFields;
@@ -67,7 +66,7 @@ public class DefaultVolumeFile
 
     @Override
     public long getSize()
-            throws FileNotFoundException {
+            throws IOException {
         if (size == null)
             if (volume == null)
                 return 0;

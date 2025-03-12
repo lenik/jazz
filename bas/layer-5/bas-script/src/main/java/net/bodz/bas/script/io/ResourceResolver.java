@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 import net.bodz.bas.c.java.io.FilePath;
-import net.bodz.bas.c.java.nio.file.IPath;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.log.Logger;

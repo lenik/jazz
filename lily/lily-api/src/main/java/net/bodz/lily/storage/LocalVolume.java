@@ -1,7 +1,6 @@
 package net.bodz.lily.storage;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,16 +14,16 @@ import net.bodz.bas.t.file.IPathFields;
 public class LocalVolume
         extends AbstractVolume {
 
-    File baseDir;
+    Path baseDir;
 
-    public LocalVolume(String id, IAnchor baseAnchor, File baseDir) {
+    public LocalVolume(String id, IAnchor baseAnchor, Path baseDir) {
         super(id, baseAnchor);
         if (baseDir == null)
             throw new NullPointerException("baseDir");
         this.baseDir = baseDir;
     }
 
-    public LocalVolume(String id, String baseWebPath, File baseDir) {
+    public LocalVolume(String id, String baseWebPath, Path baseDir) {
         super(id, baseWebPath);
         if (baseDir == null)
             throw new NullPointerException("baseDir");
@@ -38,41 +37,40 @@ public class LocalVolume
     }
 
     @Override
-    public File getLocalDir() {
+    public Path getLocalDir() {
         return baseDir;
     }
 
     @Override
-    public File getLocalFile(String path) {
-        File file = new File(baseDir, path);
-        return file;
+    public Path getLocalFile(String path) {
+        return baseDir.resolve(path);
     }
 
     @Override
     public boolean exists(String path) {
-        File file = getLocalFile(path);
-        return file.exists();
+        Path file = getLocalFile(path);
+        return Files.exists(file);
     }
 
     @Override
     public boolean isSymLink(String path) {
-        File file = getLocalFile(path);
-        return Files.isSymbolicLink(file.toPath());
+        Path file = getLocalFile(path);
+        return Files.isSymbolicLink(file);
     }
 
     @Override
     public String getSymLinkTarget(String path)
             throws IOException {
-        File file = getLocalFile(path);
-        Path target = Files.readSymbolicLink(file.toPath());
+        Path file = getLocalFile(path);
+        Path target = Files.readSymbolicLink(file);
         return target.toString();
     }
 
     @Override
     public long getSize(String path)
-            throws FileNotFoundException {
-        File file = getLocalFile(path);
-        return file.length();
+            throws IOException {
+        Path file = getLocalFile(path);
+        return Files.size(file);
     }
 
     static final HexCodec hexCodec = new HexCodec("");
@@ -80,33 +78,33 @@ public class LocalVolume
     @Override
     public String getSHA1(String path)
             throws IOException {
-        File file = getLocalFile(path);
-        byte[] sha1 = ResFn.file(file).to(StreamReading.class).sha1();
+        Path file = getLocalFile(path);
+        byte[] sha1 = ResFn.path(file).to(StreamReading.class).sha1();
         String sha1str = hexCodec.encode(sha1);
         return sha1str;
     }
 
     @Override
-    public boolean rename(String path, String newFileName)
+    public void renameTo(String path, String newFileName)
             throws IOException {
-        File file = getLocalFile(path);
-        File dir = file.getParentFile();
-        File dest = new File(dir, newFileName);
-        return moveTo(file, dest);
+        Path file = getLocalFile(path);
+        Path dir = file.getParent();
+        Path dest = dir.resolve(newFileName);
+        moveTo(file, dest);
     }
 
     @Override
-    public boolean moveTo(String path, String newPath)
+    public void moveTo(String path, String newPath)
             throws IOException {
-        File file = getLocalFile(path);
-        File dest = getLocalFile(newPath);
-        return moveTo(file, dest);
+        Path file = getLocalFile(path);
+        Path dest = getLocalFile(newPath);
+        moveTo(file, dest);
     }
 
     @Override
-    public boolean moveTo(String path, String newDirName, String newFileName)
+    public void moveTo(String path, String newDirName, String newFileName)
             throws IOException {
-        File file = getLocalFile(path);
+        Path file = getLocalFile(path);
 
         String newPath = newFileName;
         if (newDirName != null) {
@@ -114,23 +112,26 @@ public class LocalVolume
                 newDirName = newDirName.substring(0, newDirName.length() - 1);
             newPath = newDirName + "/" + newFileName;
         }
-        File dest = getLocalFile(newPath);
+        Path dest = getLocalFile(newPath);
 
-        return moveTo(file, dest);
+        moveTo(file, dest);
     }
 
-    boolean moveTo(File src, File dest)
+    void moveTo(Path src, Path dest)
             throws IOException {
-        if (src.renameTo(dest))
-            return true;
-        return false;
+        Files.move(src, dest);
+    }
+
+    void moveTo(File src, File dest)
+            throws IOException {
+        src.renameTo(dest);
     }
 
     @Override
-    public boolean delete(String path)
+    public void delete(String path)
             throws IOException {
-        File file = getLocalFile(path);
-        return file.delete();
+        Path file = getLocalFile(path);
+        Files.delete(file);
     }
 
 }

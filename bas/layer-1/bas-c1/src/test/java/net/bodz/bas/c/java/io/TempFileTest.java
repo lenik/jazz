@@ -1,37 +1,40 @@
 package net.bodz.bas.c.java.io;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.c.java.nio.file.FileFn;
+
 public class TempFileTest
         extends Assert {
 
-    static void touch(File dir, String path)
+    static void touch(Path dir, String path)
             throws IOException {
-        File f = FilePath.joinHref(dir, path);
-        f.getParentFile().mkdirs();
-        FileWriter out = new FileWriter(f);
-        out.write("stuff\n");
-        out.close();
+        Path f = FilePath.joinHref(dir, path);
+        FileFn.mkdirs(f.getParent());
+        try (Writer out = Files.newBufferedWriter(f)) {
+            out.write("stuff\n");
+        }
     }
 
     @Test
     public void testDeleteTree_ContainSubdirs()
             throws IOException {
-        File tmpdir = TempFile.createTempDirectory();
+        Path tmpdir = TempFile.createTempDirectory();
 
         touch(tmpdir, "a/b/c");
         touch(tmpdir, "d/e/f");
         touch(tmpdir, "d/g/h");
-        assertTrue("Prepare", new File(tmpdir, "d/e").isDirectory());
-        assertTrue("Prepare", new File(tmpdir, "d/g/h").isFile());
+        assertTrue("Prepare", Files.isDirectory(tmpdir.resolve("d/e")));
+        assertTrue("Prepare", Files.isRegularFile(tmpdir.resolve("d/g/h")));
 
         TempFile.deleteTree(tmpdir);
-        assertFalse(tmpdir.exists());
+        assertFalse(Files.exists(tmpdir));
     }
 
 }

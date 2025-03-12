@@ -13,6 +13,7 @@ import net.bodz.bas.io.adapter.OutputStreamByteOut;
 import net.bodz.bas.io.impl.EncodedByteIn;
 import net.bodz.bas.io.res.AbstractRandomResource;
 import net.bodz.bas.meta.decl.DefaultImpl;
+import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class AbstractTextResource<This>
         extends AbstractRandomResource<This> {
@@ -22,6 +23,7 @@ public abstract class AbstractTextResource<This>
         return true;
     }
 
+    @NotNull
     @DefaultImpl(EncodedByteIn.class)
     @Override
     public IByteIn newByteIn(OpenOption... options)
@@ -31,6 +33,7 @@ public abstract class AbstractTextResource<This>
         return byteIn;
     }
 
+    @NotNull
     @DefaultImpl(OutputStreamByteOut.class)
     @Override
     public IByteOut newByteOut(OpenOption... options)
@@ -39,6 +42,7 @@ public abstract class AbstractTextResource<This>
         return new OutputStreamByteOut(outputStream);
     }
 
+    @NotNull
     @DefaultImpl(WriterOutputStream.class)
     @Override
     public OutputStream newOutputStream(OpenOption... options)

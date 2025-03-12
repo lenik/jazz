@@ -1,5 +1,6 @@
 package net.bodz.bas.meta.build;
 
+import java.io.IOException;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -41,7 +42,8 @@ public @interface ProgramName {
                 IEtcFilesInstaller {
 
         @Override
-        public void install(Class<?> clazz, IEtcFilesEditor editor) {
+        public void install(Class<?> clazz, IEtcFilesEditor editor)
+                throws IOException {
             ProgramName aProgramName = clazz.getAnnotation(ProgramName.class);
             String ns = "main";
             String sym = aProgramName.value();

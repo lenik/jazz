@@ -1,10 +1,11 @@
 package net.bodz.bas.c.org.eclipse;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +22,7 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileRelation;
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.java.io.FileZip;
+import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
@@ -29,7 +31,7 @@ import net.bodz.bas.err.UnexpectedException;
 public class JavaProject
         extends EclipseProject {
 
-    File defaultOutput;
+    Path defaultOutput;
     List<JavaProjectSourceFolder> sourceFolders = new ArrayList<JavaProjectSourceFolder>();
     List<JavaProject> projectRefs = new ArrayList<JavaProject>();
     List<JavaProjectLibraryRef> libraryRefs = new ArrayList<JavaProjectLibraryRef>();
@@ -40,14 +42,14 @@ public class JavaProject
         super();
     }
 
-    public JavaProject(File baseDir)
+    public JavaProject(Path baseDir)
             throws IOException, ParseException {
         super(baseDir);
 
-        File classpathFile = new File(baseDir, ".classpath");
-        File manifestFile = new File(baseDir, "META-INF/MANIFEST.MF");
+        Path classpathFile = baseDir.resolve(".classpath");
+        Path manifestFile = baseDir.resolve("META-INF/MANIFEST.MF");
 
-        if (classpathFile.exists())
+        if (FileFn.exists(classpathFile))
             try {
                 SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
                 InputSource inputSource = new InputSource(FileURL.toURL(classpathFile).toString());
@@ -57,8 +59,8 @@ public class JavaProject
                 throw new ParseException(e.getMessage(), e);
             }
 
-        if (manifestFile.exists()) {
-            Manifest manifest = new Manifest(new FileInputStream(manifestFile));
+        if (FileFn.exists(manifestFile)) {
+            Manifest manifest = new Manifest(Files.newInputStream(manifestFile));
 
             java.util.jar.Attributes attributes = manifest.getMainAttributes();
 
@@ -80,7 +82,7 @@ public class JavaProject
     public static JavaProject forClass(Class<?> clazz) {
         JavaProject project = new JavaProject();
 
-        File rootFile = ClassResource.getRootFile(clazz);
+        Path rootFile = ClassResource.getRootPath(clazz);
         JavaProjectLibraryRef main = new JavaProjectLibraryRef();
         main.path = rootFile;
 
@@ -88,11 +90,11 @@ public class JavaProject
         return project;
     }
 
-    public File getDefaultOutput() {
+    public Path getDefaultOutput() {
         return defaultOutput;
     }
 
-    public void setDefaultOutput(File defaultOutput) {
+    public void setDefaultOutput(Path defaultOutput) {
         this.defaultOutput = defaultOutput;
     }
 
@@ -125,14 +127,14 @@ public class JavaProject
         if (buildPathEntry == null)
             return null;
 
-        File javaFile = buildPathEntry.getSourcePath();
+        Path javaFile = buildPathEntry.getSourcePath();
         if (javaFile == null)
             return null;
 
         return findSourceFolder(javaFile);
     }
 
-    public JavaProjectSourceFolder findSourceFolder(File sourceFile) {
+    public JavaProjectSourceFolder findSourceFolder(Path sourceFile) {
         sourceFile = FilePath.canoniOf(sourceFile);
         for (JavaProjectSourceFolder sourceFolder : sourceFolders) {
             if (FileRelation.isChildOf(sourceFile, sourceFolder.path))
@@ -162,9 +164,7 @@ public class JavaProject
                     throw new RuntimeException("java source file is missing: " + javaFile);
                 return FileURL.toURL(javaFile);
             }
-        }
-
-        else if ("jar".equals(protocol)) {
+        } else if ("jar".equals(protocol)) {
             String embeddedURL = "jar:" + parentURL + "!/" + fqcn_java;
             try {
                 return new URL(embeddedURL);
@@ -212,19 +212,19 @@ public class JavaProject
         return null;
     }
 
-    static boolean isUnder(String childName, File parent) {
+    static boolean isUnder(String childName, Path parent) {
         if (childName == null)
             throw new NullPointerException("childName");
         if (parent == null)
             throw new NullPointerException("parent");
 
-        if (!parent.exists())
+        if (!Files.exists(parent))
             return false;
 
-        if (parent.isDirectory())
-            return new File(parent, childName).exists();
+        if (Files.isDirectory(parent))
+            return Files.exists(parent.resolve(childName));
 
-        if (parent.isFile())
+        if (Files.isRegularFile(parent))
             try {
                 if (FileZip.containsAnyEntry(parent, childName))
                     return true;
@@ -235,9 +235,9 @@ public class JavaProject
         return false;
     }
 
-    public List<File> getClasspath()
+    public List<Path> getClasspath()
             throws ParseException {
-        List<File> list = new ArrayList<File>();
+        List<Path> list = new ArrayList<>();
         if (defaultOutput != null)
             list.add(defaultOutput);
         for (JavaProjectSourceFolder source : sourceFolders)
@@ -253,10 +253,10 @@ public class JavaProject
      */
     public URL[] getURLClasspath()
             throws ParseException {
-        List<File> classpaths = getClasspath();
+        List<Path> classpaths = getClasspath();
         URL[] urls = new URL[classpaths.size()];
         int i = 0;
-        for (File classpath : classpaths) {
+        for (Path classpath : classpaths) {
             URL url = FileURL.toURL(classpath, null);
             urls[i++] = url;
         }

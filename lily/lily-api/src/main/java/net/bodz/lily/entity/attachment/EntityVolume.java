@@ -1,6 +1,6 @@
 package net.bodz.lily.entity.attachment;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.servlet.ctx.PathUtils;
@@ -12,11 +12,11 @@ public class EntityVolume
 
     static final String DIR_ATTACHMENT = "attachment";
 
-    public EntityVolume(String id, IAnchor baseAnchor, File baseDir) {
+    public EntityVolume(String id, IAnchor baseAnchor, Path baseDir) {
         super(id, baseAnchor, baseDir);
     }
 
-    public EntityVolume(String id, String baseHref, File baseDir) {
+    public EntityVolume(String id, String baseHref, Path baseDir) {
         super(id, baseHref, baseDir);
     }
 

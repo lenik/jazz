@@ -1,10 +1,11 @@
 package net.bodz.lily.app;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Collection;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
@@ -24,14 +25,14 @@ public class DataApps {
     public static DataApplication getPreferred() {
         DataContext dataContext = DataHub.getPreferredHub().getMain();
 
-        File rootDir = SysProps.dataDir;
-        File baseDir = null;
+        Path rootDir = SysProps.dataDir;
+        Path baseDir = null;
 
         Collection<String> contextIds = //
                 UnionDefaultContextIdsResolver.getInstance().resolveContextIds();
         for (String contextId : contextIds) {
-            File dir = new File(rootDir, contextId);
-            if (dir.isDirectory()) {
+            Path dir = rootDir.resolve(contextId);
+            if (FileFn.isDirectory(dir)) {
                 baseDir = dir;
                 break;
             }
@@ -39,11 +40,11 @@ public class DataApps {
         if (baseDir == null) {
             logger.error("baseDir isn't defined. mkdir it prior to server start.");
             for (String contextId : contextIds) {
-                File dir = new File(rootDir, contextId);
-                if (!dir.exists())
+                Path dir = rootDir.resolve(contextId);
+                if (FileFn.notExists(dir))
                     logger.info("    example: mkdir " + dir);
             }
-            baseDir = new File(rootDir, "__volumes");
+            baseDir = rootDir.resolve("__volumes");
         }
 
         IVolumeProvider volumeProvider = new AttachmentGroup(baseDir);

@@ -1,6 +1,7 @@
 package net.bodz.bas.c.m2;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,20 +15,20 @@ public class MavenPomDirTest
 
     @Test
     public void testGetClassFile() {
-        File file = ClassResource.getClassBytesFile(MavenPomDirTest.class);
-        assertTrue(file.exists());
+        Path file = ClassResource.getClassBytesLocalFile(MavenPomDirTest.class);
+        assertTrue(Files.exists(file));
     }
 
     @Test
     public void testGetSourceFile() {
-        File file = pomDir.getSourceFile(MavenPomDirTest.class);
-        assertTrue(file.exists());
+        Path file = pomDir.getSourceFile(MavenPomDirTest.class);
+        assertTrue(Files.exists(file));
     }
 
     @Test
     public void testGetResourceDir() {
-        File file = pomDir.getResourceDir(MavenPomDirTest.class);
-        assertTrue(file.isDirectory());
+        Path file = pomDir.getResourceDir(MavenPomDirTest.class);
+        assertTrue(Files.isDirectory(file));
     }
 
 }

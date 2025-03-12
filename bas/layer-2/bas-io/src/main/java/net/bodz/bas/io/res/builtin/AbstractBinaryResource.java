@@ -14,10 +14,12 @@ import net.bodz.bas.io.impl.DecodedCharIn;
 import net.bodz.bas.io.impl.EncodedCharOut;
 import net.bodz.bas.io.res.AbstractRandomResource;
 import net.bodz.bas.meta.decl.DefaultImpl;
+import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class AbstractBinaryResource<This>
         extends AbstractRandomResource<This> {
 
+    @NotNull
     @DefaultImpl(DecodedCharIn.class)
     @Override
     public ICharIn newCharIn(OpenOption... options)
@@ -28,6 +30,7 @@ public abstract class AbstractBinaryResource<This>
     }
 
     @DefaultImpl(EncodedCharOut.class)
+    @NotNull
     @Override
     public ICharOut newCharOut(OpenOption... options)
             throws IOException {
@@ -36,6 +39,7 @@ public abstract class AbstractBinaryResource<This>
         return cout;
     }
 
+    @NotNull
     @DefaultImpl(OutputStreamWriter.class)
     @Override
     public Writer newWriter(OpenOption... options)

@@ -2,6 +2,7 @@ package net.bodz.bas.c.m2;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
@@ -30,6 +31,11 @@ public class MavenPomXml {
 
     public MavenPomXml(Document doc) {
         this.doc = doc;
+    }
+
+    public static MavenPomXml open(Path file)
+            throws SAXException, IOException {
+        return open(file.toFile());
     }
 
     public static MavenPomXml open(File file)

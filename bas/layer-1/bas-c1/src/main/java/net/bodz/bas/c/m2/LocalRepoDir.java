@@ -1,6 +1,7 @@
 package net.bodz.bas.c.m2;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileRelation;
@@ -8,9 +9,10 @@ import net.bodz.bas.c.system.SysProps;
 
 public class LocalRepoDir {
 
-    File startDir;
+    Path startDir;
 
-    public LocalRepoDir(File startDir) {
+    //    public LocalRepoDir(File startDir) {
+    public LocalRepoDir(Path startDir) {
         if (startDir == null)
             throw new NullPointerException("startDir");
         this.startDir = startDir;
@@ -19,22 +21,22 @@ public class LocalRepoDir {
     /**
      * @return <code>null</code> if not found.
      */
-    public static LocalRepoDir closest(File dir) {
+    public static LocalRepoDir closest(Path dir) {
         if (dir == null)
             return null;
-        if (dir.isFile())
-            return closest(dir.getParentFile());
+        if (Files.isRegularFile(dir))
+            return closest(dir.getParent());
 
-        File repoXml = new File(dir, "repository.xml");
-        if (repoXml.exists()) {
-            File fullPath = dir.getAbsoluteFile();
+        Path repoXml = dir.resolve("repository.xml");
+        if (Files.exists(repoXml)) {
+            Path fullPath = dir.toAbsolutePath();
             return new LocalRepoDir(fullPath);
         }
-        return closest(dir.getParentFile());
+        return closest(dir.getParent());
     }
 
-    public ArtifactId getQualifiedName(File jar) {
-        File common = FileRelation.getCommonParentFile(startDir, jar);
+    public ArtifactId getQualifiedName(Path jar) {
+        Path common = FileRelation.getCommonParentFile(startDir, jar);
         if (common == null)
             return null;
 
@@ -42,20 +44,20 @@ public class LocalRepoDir {
         if (!common.equals(startDir))
             return null;
 
-        File versionDir = jar.getParentFile();
-        File artifactDir = versionDir.getParentFile();
-        File groupDir = artifactDir.getParentFile();
+        Path versionDir = jar.getParent();
+        Path artifactDir = versionDir.getParent();
+        Path groupDir = artifactDir.getParent();
 
-        String startPath = startDir.getPath();
-        String groupPath = groupDir.getPath();
+        String startPath = startDir.toString();
+        String groupPath = groupDir.toString();
         groupPath = groupPath.substring(startPath.length() + 1);
 
         ArtifactId id = new ArtifactId();
         id.groupId = groupPath.replace(SysProps.fileSep, ".");
-        id.artifactId = artifactDir.getName();
-        id.version = versionDir.getName();
+        id.artifactId = artifactDir.getFileName().toString();
+        id.version = versionDir.getFileName().toString();
 
-        String name = jar.getName();
+        String name = jar.getFileName().toString();
         id.packaging = FilePath.getExtension(name, false);
 
         name = FilePath.stripExtension(name);

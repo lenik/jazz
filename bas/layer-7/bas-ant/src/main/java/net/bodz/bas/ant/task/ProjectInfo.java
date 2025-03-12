@@ -1,13 +1,13 @@
 package net.bodz.bas.ant.task;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Map;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
-import org.apache.tools.ant.types.Path;
 
+import net.bodz.bas.c.java.nio.file.PathFn;
 import net.bodz.bas.c.org.eclipse.JavaProject;
 import net.bodz.bas.c.org.eclipse.JavaProjectBaseDir;
 import net.bodz.bas.ctx.sys.UserDirVars;
@@ -17,9 +17,9 @@ public class ProjectInfo {
 
     private Project antProject;
 
-    private File baseDir;
-    private Path classpath;
-    private Path classpathWithTest;
+    private Path baseDir;
+    private AntPath classpath;
+    private AntPath classpathWithTest;
 
     private Map<String, Module> modules;
 
@@ -35,7 +35,7 @@ public class ProjectInfo {
         this(antProject, UserDirVars.getInstance().get());
     }
 
-    public ProjectInfo(Project antProject, File searchStart)
+    public ProjectInfo(Project antProject, Path searchStart)
             throws ParseException, IOException {
         if (antProject == null)
             throw new NullPointerException("project");
@@ -54,26 +54,26 @@ public class ProjectInfo {
     void parse()
             throws ParseException, IOException {
         JavaProject project = new JavaProject(baseDir);
-        classpath = new Path(antProject);
-        classpathWithTest = new Path(antProject);
-        for (File f : project.getClasspath()) {
-            boolean nonTest = !f.getName().contains("test"); // test.bin
-            Path path = new Path(antProject, f.getPath());
+        classpath = new AntPath(antProject);
+        classpathWithTest = new AntPath(antProject);
+        for (Path f : project.getClasspath()) {
+            boolean nonTest = !PathFn.baseName(f).contains("test"); // test.bin
+            AntPath antPath = new AntPath(antProject, f.toString());
             if (nonTest)
-                classpath.add(path);
-            classpathWithTest.add(path);
+                classpath.add(antPath);
+            classpathWithTest.add(antPath);
         }
     }
 
-    public File getBase() {
+    public Path getBase() {
         return baseDir;
     }
 
-    public Path getClasspath() {
+    public AntPath getClasspath() {
         return classpath;
     }
 
-    public Path getClasspathWithTest() {
+    public AntPath getClasspathWithTest() {
         return classpathWithTest;
     }
 

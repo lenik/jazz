@@ -3,6 +3,7 @@ package net.bodz.bas.c.org.eclipse;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +29,7 @@ public class JarStuffTest
 
     private String magic = "MaGiC-GoOd..";
 
-    private File baseDir;
+    private Path baseDir;
     JavaProject project;
 
     public JarStuffTest() {

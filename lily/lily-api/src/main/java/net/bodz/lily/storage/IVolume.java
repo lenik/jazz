@@ -1,8 +1,7 @@
 package net.bodz.lily.storage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.servlet.ctx.IAnchor;
@@ -28,12 +27,20 @@ public interface IVolume {
 
     IStreamInputSource getInputSource(String path);
 
-    File getLocalDir();
+    Path getLocalDir();
+
+//    default File getLocalDir2() {
+//        return getLocalDir().toFile();
+//    }
 
     /**
      * @return <code>null</code> if the attachment doesn't exist as a local file.
      */
-    File getLocalFile(String path);
+    Path getLocalFile(String path);
+
+//    default File getLocalFile2(String path) {
+//        return getLocalFile(path).toFile();
+//    }
 
     boolean exists(String path);
 
@@ -43,21 +50,21 @@ public interface IVolume {
             throws IOException;
 
     long getSize(String path)
-            throws FileNotFoundException;
+            throws IOException;
 
     String getSHA1(String path)
             throws IOException;
 
-    boolean rename(String path, String newFileName)
+    void renameTo(String path, String newFileName)
             throws IOException;
 
-    boolean moveTo(String path, String newPath)
+    void moveTo(String path, String newPath)
             throws IOException;
 
-    boolean moveTo(String path, String newDirName, String newFileName)
+    void moveTo(String path, String newDirName, String newFileName)
             throws IOException;
 
-    boolean delete(String path)
+    void delete(String path)
             throws IOException;
 
 }

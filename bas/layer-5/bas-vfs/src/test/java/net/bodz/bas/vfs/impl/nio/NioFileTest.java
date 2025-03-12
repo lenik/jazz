@@ -1,11 +1,9 @@
 package net.bodz.bas.vfs.impl.nio;
 
-import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.junit.Assert;
 
@@ -17,10 +15,11 @@ public class NioFileTest
     public static void main(String[] args)
             throws Exception {
         MavenPomDir pomDir = MavenPomDir.fromClass(NioFileTest.class);
-        File baseDir = pomDir.getBaseDir();
-        Path baseDirPath = Paths.get(baseDir.getPath());
+        if (pomDir == null)
+            throw new NullPointerException("pomDir");
 
-        Path pomXml = baseDirPath.resolve("pom.xml");
+        Path baseDir = pomDir.getBaseDir();
+        Path pomXml = baseDir.resolve("pom.xml");
 
         SeekableByteChannel ch = Files.newByteChannel(pomXml);
 

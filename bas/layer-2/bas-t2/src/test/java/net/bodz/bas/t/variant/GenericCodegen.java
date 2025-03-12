@@ -81,7 +81,8 @@ public abstract class GenericCodegen {
 
         otherTypes = conv( //
                 Class.class, //
-                Path.class, //
+                File.class, //
+                // Path.class, //
                 String.class, //
                 null);
 
@@ -112,10 +113,10 @@ public abstract class GenericCodegen {
         }
     }
 
-    File findSourceFile() {
+    Path findSourceFile() {
         Class<?> clazz = getClass();
         MavenPomDir pomDir = MavenPomDir.fromClass(clazz);
-        File sourceFile = pomDir.getSourceFile(clazz);
+        Path sourceFile = pomDir.getSourceFile(clazz);
         return sourceFile;
     }
 
@@ -134,8 +135,8 @@ public abstract class GenericCodegen {
 
     Map<String, List<String>> loadTemplatesFromSource()
             throws IOException {
-        File sourceFile = findSourceFile();
-        List<String> lines = Files.readAllLines(sourceFile.toPath());
+        Path sourceFile = findSourceFile();
+        List<String> lines = Files.readAllLines(sourceFile);
 
         Map<String, List<String>> templates = new LinkedHashMap<>();
         String templateName = null;
@@ -176,8 +177,8 @@ public abstract class GenericCodegen {
     void loadMethodsToGenerateFromSource()
             throws IOException {
         JavaProjectBuilder project = new JavaProjectBuilder();
-        File sourceFile = findSourceFile();
-        project.addSource(sourceFile);
+        Path sourceFile = findSourceFile();
+        project.addSource(sourceFile.toFile());
 
         Class<?> clazz = getClass();
         JavaClass javaClass = project.getClassByName(clazz.getName());
@@ -194,7 +195,7 @@ public abstract class GenericCodegen {
                     break;
                 }
             }
-            if (! generated)
+            if (!generated)
                 continue;
 
             list.add(method);

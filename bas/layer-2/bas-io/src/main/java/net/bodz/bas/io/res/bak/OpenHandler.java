@@ -1,12 +1,12 @@
 package net.bodz.bas.io.res.bak;
 
-import net.bodz.bas.io.res.IStreamInputSource;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 import java.util.ArrayList;
 import java.util.List;
+
+import net.bodz.bas.io.res.IStreamInputSource;
 
 public class OpenHandler {
 

@@ -1,6 +1,7 @@
 package net.bodz.bas.site.config;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.servlet.config.AbstractResourceMappings;
@@ -22,8 +23,8 @@ public class UserResourceMappings
 
     ServletContextConfig config;
 
-    File homeDir = SysProps.userHome;
-    File filesDir = new File(homeDir, FILES_DIRNAME);
+    Path homeDir = SysProps.userHome;
+    Path filesDir = homeDir.resolve(FILES_DIRNAME);
 
     ServletDescriptor homeLink;
     ServletDescriptor filesLink;
@@ -32,8 +33,8 @@ public class UserResourceMappings
     public void servlets(ServletContextConfig config) {
         this.config = config;
 
-        if (new File(homeDir, "_public_").exists())
-            homeLink = fn.dirAlias(config, "/.home", homeDir.getPath(), 30);
+        if (Files.exists(homeDir.resolve("_public_")))
+            homeLink = fn.dirAlias(config, "/.home", homeDir.toString(), 30);
 
         // if ((filesDir.isDirectory())) {
         // // if (!filesDir.mkdirs())

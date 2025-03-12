@@ -31,7 +31,6 @@ public interface IFile
     /**
      * @throws UnsupportedOperationException
      *             If not iterable.
-     * @see #isTraversible()
      */
     @Override
     Iterable<? extends IFile> children()
@@ -40,7 +39,6 @@ public interface IFile
     /**
      * @throws UnsupportedOperationException
      *             If not iterable.
-     * @see #isTraversible()
      */
     @Override
     Iterable<? extends IFile> children(IFilenameFilter nameFilter)
@@ -49,7 +47,6 @@ public interface IFile
     /**
      * @throws UnsupportedOperationException
      *             If not iterable.
-     * @see #isTraversible()
      */
     Iterable<? extends IFile> children(IFilter<IFile> fileFilter)
             throws VFSException;
@@ -71,7 +68,7 @@ public interface IFile
     /**
      * Create a (symbolic) link to the target.
      *
-     * @param targetPath
+     * @param target
      *            Relative path string to the target.
      * @param symbolic
      *            Create a symbolic link rather then hard link.

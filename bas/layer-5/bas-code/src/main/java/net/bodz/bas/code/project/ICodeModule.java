@@ -1,11 +1,11 @@
 package net.bodz.bas.code.project;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 public interface ICodeModule {
 
-    void prepareFiles(File projectDir)
+    void prepareFiles(Path projectDir)
             throws IOException;
 
 }

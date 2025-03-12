@@ -1,6 +1,6 @@
 package net.bodz.bas.tex.dom;
 
-import java.io.File;
+import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -8,21 +8,23 @@ import java.nio.file.Path;
 
 import net.bodz.bas.c.java.io.FileTree;
 import net.bodz.bas.c.java.nio.TreeDeleteOption;
+import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
-public class TeXCompiler {
+public class TeXCompiler
+        implements Closeable {
 
     static final Logger logger = LoggerFactory.getLogger(TeXCompiler.class);
 
     String jobName;
-    File workDir;
+    Path workDir;
     boolean autoClean;
 
-    public TeXCompiler(String jobName, File workdir, boolean autoClean) {
+    public TeXCompiler(String jobName, Path workdir, boolean autoClean) {
         if (jobName == null)
             throw new NullPointerException("jobName");
         this.jobName = jobName;
@@ -40,13 +42,13 @@ public class TeXCompiler {
 
     public byte[] compile(String src)
             throws IOException {
-        File texFile = new File(workDir, jobName + ".tex");
-        ResFn.file(texFile).to(StreamWriting.class).writeString(src);
+        Path texFile = workDir.resolve(jobName + ".tex");
+        ResFn.path(texFile).to(StreamWriting.class).writeString(src);
 
-        File pdfFile = new File(workDir, jobName + ".pdf");
-        pdfFile.delete();
+        Path pdfFile = workDir.resolve(jobName + ".pdf");
+        FileFn.delete(pdfFile);
 
-        String[] cmdv = { "cooltex", "-abj", jobName, texFile.getPath() };
+        String[] cmdv = { "cooltex", "-abj", jobName, texFile.toString() };
         try {
             Process process = new ProcessBuilder().command(cmdv).start();
             process.waitFor();
@@ -55,21 +57,18 @@ public class TeXCompiler {
             return null;
         }
 
-        if (! pdfFile.exists())
+        if (Files.notExists(pdfFile))
             return null;
 
-        byte[] pdf = ResFn.file(pdfFile).to(StreamReading.class).read();
+        byte[] pdf = ResFn.path(pdfFile).to(StreamReading.class).read();
 
         if (autoClean) {
-            DirectoryStream<Path> dirStream = Files.newDirectoryStream(workDir.toPath(), jobName + ".*");
-            try {
+            try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(workDir, jobName + ".*")) {
                 for (Path path : dirStream)
-                    path.toFile().delete();
-            } finally {
-                dirStream.close();
+                    FileFn.delete(path);
             }
             // if (workDir.list().length == 0)
-            workDir.delete(); // only empty dir can be deleted.
+            FileFn.delete(workDir); // only empty dir can be deleted.
         }
 
         return pdf;
@@ -80,9 +79,16 @@ public class TeXCompiler {
     }
 
     @Override
+    public void close()
+            throws IOException {
+        clean();
+    }
+
+    @SuppressWarnings("removal")
+    @Override
     protected void finalize()
             throws Throwable {
-        clean();
+        close();
     }
 
 }

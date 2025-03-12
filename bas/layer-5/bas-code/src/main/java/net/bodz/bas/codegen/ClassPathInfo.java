@@ -1,6 +1,6 @@
 package net.bodz.bas.codegen;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import net.bodz.bas.t.tuple.QualifiedName;
 
@@ -12,7 +12,7 @@ public class ClassPathInfo
     public final String packageName;
     public final String name;
 
-    public final File baseDir;
+    public final Path baseDir;
 
     public final String javaDir;
     public final String testJavaDir;
@@ -23,7 +23,7 @@ public class ClassPathInfo
     public final String scriptDir;
     public final String testScriptDir;
 
-    public ClassPathInfo(QualifiedName qName, File baseDir, String javaDir, String testJavaDir, String resourceDir,
+    public ClassPathInfo(QualifiedName qName, Path baseDir, String javaDir, String testJavaDir, String resourceDir,
             String testResourceDir, String scriptDir, String testScriptDir) {
         this.qName = qName;
         this.packageName = qName.packageName;
@@ -43,7 +43,7 @@ public class ClassPathInfo
     public static class Builder {
 
         QualifiedName qName;
-        File baseDir;
+        Path baseDir;
         String javaDir;
         String testJavaDir;
         String resourceDir;
@@ -61,7 +61,7 @@ public class ClassPathInfo
             return this;
         }
 
-        public Builder baseDir(File baseDir) {
+        public Builder baseDir(Path baseDir) {
             this.baseDir = baseDir;
             return this;
         }
@@ -96,7 +96,7 @@ public class ClassPathInfo
             return this;
         }
 
-        public Builder maven(File baseDir) {
+        public Builder maven(Path baseDir) {
             this.baseDir = baseDir;
             this.javaDir = "src/main/java";
             this.resourceDir = "src/main/resources";
@@ -107,7 +107,7 @@ public class ClassPathInfo
             return this;
         }
 
-        public Builder npm(File packageDir) {
+        public Builder npm(Path packageDir) {
             this.baseDir = packageDir;
             this.javaDir = null;
             this.resourceDir = null;
@@ -148,28 +148,29 @@ public class ClassPathInfo
     }
 
     @Override
-    public File getPreferredDir(String extension, boolean test) {
-        File parent;
+    public Path getPreferredDir(String extension, boolean test) {
+        Path parent;
         switch (extension) {
         case "java":
-            parent = new File(baseDir, test ? testJavaDir : javaDir);
+            parent = baseDir.resolve(test ? testJavaDir : javaDir);
             break;
 
         case "ts":
         case "vue":
-            parent = new File(baseDir, test ? testScriptDir : scriptDir);
+            parent = baseDir.resolve(test ? testScriptDir : scriptDir);
             break;
 
         default:
-            parent = new File(baseDir, test ? testResourceDir : resourceDir);
+            parent = baseDir.resolve(test ? testResourceDir : resourceDir);
         }
         return parent;
     }
 
     @Override
-    public File getPreferredFile(String extension, boolean test) {
-        File parent = getPreferredDir(extension, test);
-        return qName.toFile(parent, extension);
+    public Path getPreferredFile(String extension, boolean test) {
+        Path parent = getPreferredDir(extension, test);
+        Path path = qName.toPath(parent, extension);
+        return path;
     }
 
     @Override
@@ -178,7 +179,7 @@ public class ClassPathInfo
     }
 
     @Override
-    public File getBaseDir() {
+    public Path getBaseDir() {
         return baseDir;
     }
 

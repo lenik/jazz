@@ -1,10 +1,10 @@
 package net.bodz.mda.xjdoc.user;
 
-import java.io.File;
 import java.util.ServiceLoader;
 
 import org.junit.Assert;
 
+import java.nio.file.Path;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.fmt.flatf.FlatfOutput;
 import net.bodz.bas.io.BCharOut;
@@ -48,11 +48,11 @@ public class QdoxDog
 
         MavenPomDir pomDir = MavenPomDir.fromClass(Animal.class);
 
-        File animalSource = pomDir.getSourceFile(Animal.class);
-        File dogSource = pomDir.getSourceFile(Dog.class);
+        Path animalSource = pomDir.getSourceFile(Animal.class);
+        Path dogSource = pomDir.getSourceFile(Dog.class);
 
-        projectBuilder.addSource(animalSource);
-        projectBuilder.addSource(dogSource);
+        projectBuilder.addSource(animalSource.toFile());
+        projectBuilder.addSource(dogSource.toFile());
         // javaDocBuilder.addSourceTree(file)
 
         for (JavaSource jsource : projectBuilder.getSources()) {

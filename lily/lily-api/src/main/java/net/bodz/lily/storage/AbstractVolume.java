@@ -1,6 +1,6 @@
 package net.bodz.lily.storage;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.ResFn;
@@ -94,11 +94,11 @@ public abstract class AbstractVolume
 
     @Override
     public IStreamInputSource getInputSource(String path) {
-        File file = getLocalFile(path);
+        Path file = getLocalFile(path);
         if (file == null)
             return null;
         else
-            return ResFn.file(file);
+            return ResFn.path(file);
     }
 
     @Override

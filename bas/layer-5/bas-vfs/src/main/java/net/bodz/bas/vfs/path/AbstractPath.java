@@ -76,7 +76,7 @@ public abstract class AbstractPath
 
     /**
      * Create a path with another local path.
-     * 
+     *
      * @param localPath
      *            Non-<code>null</code> path with-in the same volume.
      * @return Non-<code>null</code> {@link IPath} instance.
@@ -318,14 +318,15 @@ public abstract class AbstractPath
     public URL toURL()
             throws MalformedURLException {
         String url = getURLString();
-        return new URL(url);
+        URI uri = URI.create(url);
+        return uri.toURL();
     }
 
     @Override
     public URI toURI()
             throws URISyntaxException {
         String url = getURLString();
-        return new URI(url);
+        return URI.create(url);
     }
 
     @Override
@@ -360,7 +361,7 @@ public abstract class AbstractPath
 
     /**
      * Format local path.
-     * 
+     *
      * @return Non-<code>null</code> formatted local path with the specific format.
      */
     protected String formatLocal(PathFormat format) {

@@ -8,6 +8,8 @@ import java.nio.file.OpenOption;
 
 import org.apache.commons.vfs.FileContent;
 import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.FileType;
 
 import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.ICroppable;
@@ -15,11 +17,8 @@ import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.AbstractIORandomResource;
 import net.bodz.bas.meta.decl.NotNull;
 
-import org.apache.commons.vfs.FileSystemException;
-import org.apache.commons.vfs.FileType;
-
 public class FileObjectResource
-        extends AbstractIORandomResource {
+        extends AbstractIORandomResource<FileObjectResource> {
 
     private final FileObject fileObject;
 

@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.Collections;
@@ -22,7 +26,17 @@ import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.URLResource;
-import net.bodz.bas.vfs.*;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.FileResolveOptions;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileAttributes;
+import net.bodz.bas.vfs.IFilenameFilter;
+import net.bodz.bas.vfs.IFsBlob;
+import net.bodz.bas.vfs.IFsDir;
+import net.bodz.bas.vfs.PathUnsupportedException;
+import net.bodz.bas.vfs.VFSException;
 
 public class URLFile
         extends AbstractFile {
@@ -56,6 +70,18 @@ public class URLFile
         return path;
     }
 
+    @NotNull
+    @Override
+    public Path toPath()
+            throws PathUnsupportedException {
+        try {
+            URI uri = path.toURI();
+            return Paths.get(uri);
+        } catch (URISyntaxException e) {
+            throw new PathUnsupportedException(e);
+        }
+    }
+
     static String _getName(URL url) {
         String name = url.getFile();
         int slash = name.lastIndexOf('/');
@@ -73,38 +99,38 @@ public class URLFile
     public int delete(DeleteOption... options)
             throws IOException {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            if (file == null)
-                return 0;
-            else
-                return FileTree.delete(file, options);
-
-        case "jar":
-            // jar/zip is read-only.
-            return 0;
-
-        case "http":
-        case "https":
-            URLConnection connection = url.openConnection();
-
-            if (connection instanceof HttpURLConnection) {
-                HttpURLConnection http = (HttpURLConnection) connection;
-                http.setRequestMethod("DELETE");
-                int responseCode = http.getResponseCode();
-                if (responseCode < 300)
-                    return 1;
-                if (responseCode == 404) // Not found
+            case "file":
+                File file = FileURL.toFile(url, null);
+                if (file == null)
                     return 0;
-                // http.getErrorStream();
-                throw new IOException(http.getResponseMessage());
-            } // HTTP
+                else
+                    return FileTree.delete(file, options);
 
-            else
+            case "jar":
+                // jar/zip is read-only.
                 return 0;
 
-        default:
-            return 0;
+            case "http":
+            case "https":
+                URLConnection connection = url.openConnection();
+
+                if (connection instanceof HttpURLConnection) {
+                    HttpURLConnection http = (HttpURLConnection) connection;
+                    http.setRequestMethod("DELETE");
+                    int responseCode = http.getResponseCode();
+                    if (responseCode < 300)
+                        return 1;
+                    if (responseCode == 404) // Not found
+                        return 0;
+                    // http.getErrorStream();
+                    throw new IOException(http.getResponseMessage());
+                } // HTTP
+
+                else
+                    return 0;
+
+            default:
+                return 0;
         }
     }
 
@@ -115,26 +141,26 @@ public class URLFile
     public long getLength()
             throws IOException {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            if (file == null)
-                return -1L;
-            else
-                return file.length();
+            case "file":
+                File file = FileURL.toFile(url, null);
+                if (file == null)
+                    return -1L;
+                else
+                    return file.length();
 
-            // case "jar":
-            // case "zip":
-            // ZipFile...
-        default:
-            URLConnection connection = url.openConnection();
+                // case "jar":
+                // case "zip":
+                // ZipFile...
+            default:
+                URLConnection connection = url.openConnection();
 
-            long length;
-            if (SystemProperties.javaVersion7OrAbove)
-                length = connection.getContentLengthLong();
-            else
-                length = connection.getContentLength();
+                long length;
+                if (SystemProperties.javaVersion7OrAbove)
+                    length = connection.getContentLengthLong();
+                else
+                    length = connection.getContentLength();
 
-            return length;
+                return length;
         }
     }
 
@@ -142,13 +168,13 @@ public class URLFile
     public boolean setLength(long newLength)
             throws IOException {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            if (file != null)
-                return FileData.setLength(file, newLength);
+            case "file":
+                File file = FileURL.toFile(url, null);
+                if (file != null)
+                    return FileData.setLength(file, newLength);
 
-        default:
-            return false;
+            default:
+                return false;
         }
     }
 
@@ -156,13 +182,13 @@ public class URLFile
     public boolean mkblob(boolean touch)
             throws IOException {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            if (file != null)
-                return FileData.touch(file, touch);
+            case "file":
+                File file = FileURL.toFile(url, null);
+                if (file != null)
+                    return FileData.touch(file, touch);
 
-        default:
-            return false;
+            default:
+                return false;
         }
     }
 
@@ -220,24 +246,24 @@ public class URLFile
     @Override
     public boolean mkdir() {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            if (file != null)
-                return file.mkdir();
-        default:
-            return false;
+            case "file":
+                File file = FileURL.toFile(url, null);
+                if (file != null)
+                    return file.mkdir();
+            default:
+                return false;
         }
     }
 
     @Override
     public boolean mkdirs() {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            if (file != null)
-                return file.mkdirs();
-        default:
-            return false;
+            case "file":
+                File file = FileURL.toFile(url, null);
+                if (file != null)
+                    return file.mkdirs();
+            default:
+                return false;
         }
     }
 
@@ -247,44 +273,44 @@ public class URLFile
     @Override
     public boolean isReadable() {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            return file == null ? false : file.canRead();
-        default:
-            return true;
+            case "file":
+                File file = FileURL.toFile(url, null);
+                return file == null ? false : file.canRead();
+            default:
+                return true;
         }
     }
 
     @Override
     public boolean isWritable() {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            return file == null ? false : file.canWrite();
-        default:
-            return false;
+            case "file":
+                File file = FileURL.toFile(url, null);
+                return file == null ? false : file.canWrite();
+            default:
+                return false;
         }
     }
 
     @Override
     public boolean isExecutable() {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            return file == null ? false : file.canExecute();
-        default:
-            return false;
+            case "file":
+                File file = FileURL.toFile(url, null);
+                return file == null ? false : file.canExecute();
+            default:
+                return false;
         }
     }
 
     @Override
     public boolean isRandomAccessible() {
         switch (url.getProtocol()) {
-        case "file":
-        case "jar":
-            return true;
-        default:
-            return false;
+            case "file":
+            case "jar":
+                return true;
+            default:
+                return false;
         }
     }
 
@@ -304,24 +330,24 @@ public class URLFile
     @Override
     public boolean isRegularFile() {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            return file == null ? false : file.isFile();
+            case "file":
+                File file = FileURL.toFile(url, null);
+                return file == null ? false : file.isFile();
 
-        default:
-            return true;
+            default:
+                return true;
         }
     }
 
     @Override
     public boolean isDirectory() {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            return file == null ? false : file.isDirectory();
+            case "file":
+                File file = FileURL.toFile(url, null);
+                return file == null ? false : file.isDirectory();
 
-        default:
-            return false;
+            default:
+                return false;
         }
     }
 
@@ -334,11 +360,11 @@ public class URLFile
     public void setTimes(FileTime lastModifiedTime, FileTime lastAccessTime, FileTime createTime)
             throws IOException {
         switch (url.getProtocol()) {
-        case "file":
-            File file = FileURL.toFile(url, null);
-            if (file != null)
-                file.setLastModified(lastModifiedTime.toMillis());
-            break;
+            case "file":
+                File file = FileURL.toFile(url, null);
+                if (file != null)
+                    file.setLastModified(lastModifiedTime.toMillis());
+                break;
         }
     }
 

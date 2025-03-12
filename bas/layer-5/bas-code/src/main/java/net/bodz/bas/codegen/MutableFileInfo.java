@@ -2,6 +2,7 @@ package net.bodz.bas.codegen;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.system.SysProps;
@@ -13,11 +14,11 @@ public class MutableFileInfo
 
     static final String FS = SysProps.fileSep;
 
-    File baseDir;
+    Path baseDir;
     String localDirectory;
     String fileName;
 
-    public MutableFileInfo(File baseDir, String localDirectory, String fileName) {
+    public MutableFileInfo(Path baseDir, String localDirectory, String fileName) {
         if (fileName == null)
             throw new NullPointerException("fileName");
         this.baseDir = baseDir;
@@ -25,7 +26,7 @@ public class MutableFileInfo
         this.fileName = fileName;
     }
 
-    public MutableFileInfo(File baseDir, String localPath) {
+    public MutableFileInfo(Path baseDir, String localPath) {
         if (localPath == null)
             throw new NullPointerException("localPath");
         this.baseDir = baseDir;
@@ -33,11 +34,11 @@ public class MutableFileInfo
     }
 
     @Override
-    public File getBaseDir() {
+    public Path getBaseDir() {
         return baseDir;
     }
 
-    public void setBaseDir(File baseDir) {
+    public void setBaseDir(Path baseDir) {
         this.baseDir = baseDir;
     }
 
@@ -100,11 +101,11 @@ public class MutableFileInfo
     public void setDotExtension(String dotExtension) {
         int lastDot = fileName.lastIndexOf('.');
         if (lastDot == -1) {
-            if (! Nullables.isEmpty(dotExtension))
+            if (!Nullables.isEmpty(dotExtension))
                 fileName += dotExtension;
         } else {
             String name = fileName.substring(0, lastDot);
-            if (! Nullables.isEmpty(dotExtension))
+            if (!Nullables.isEmpty(dotExtension))
                 name += dotExtension;
             fileName = name;
         }
@@ -142,7 +143,8 @@ public class MutableFileInfo
 
     @Override
     public Path toPath() {
-        return toFile().toPath();
+        String path = getPath();
+        return Paths.get(path);
     }
 
     @Override

@@ -12,7 +12,6 @@ public interface IFsDir
     /**
      * @throws UnsupportedOperationException
      *             If not iterable.
-     * @see #isTraversible()
      */
     Iterable<? extends IFsObject> children()
             throws VFSException;
@@ -20,7 +19,6 @@ public interface IFsDir
     /**
      * @throws UnsupportedOperationException
      *             If not iterable.
-     * @see #isTraversible()
      */
     Iterable<? extends IFsObject> children(IFilenameFilter nameFilter)
             throws VFSException;

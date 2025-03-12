@@ -1,6 +1,9 @@
 package net.bodz.bas.ctx.sys;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.bas.c.system.SystemProperties;
@@ -9,17 +12,19 @@ import net.bodz.bas.ctx.scope.ScopedRef;
 import net.bodz.bas.ctx.scope.Scopes;
 
 public class UserDirVars
-        extends ScopedRef<File> {
+        extends ScopedRef<Path> {
 
     public UserDirVars() {
-        super(File.class);
+        super(Path.class);
     }
 
     @Override
-    public File getDefaultValue() {
+    public Path getDefaultValue() {
         String userDir = SystemProperties.getUserDir();
-        File defaultUserDir = userDir == null ? new File(".") : new File(userDir);
-        return defaultUserDir;
+        if (userDir == null)
+            return Paths.get(".");
+        else
+            return Paths.get(userDir);
     }
 
     public static boolean isAbsolutePath(String path) {
@@ -43,25 +48,26 @@ public class UserDirVars
         return !isAbsolutePath(path);
     }
 
-    static File join(File cwd, String name) {
-        return new File(cwd, name);
+    @Override
+    public void set(IScopeInstance scope, Path value) {
+        super.set(scope, value);
     }
 
-    public File join(IScopeInstance scope, String name) {
+    public Path join(IScopeInstance scope, String name) {
         if (name == null)
             throw new NullPointerException("name");
-        File cwd = get(scope);
-        return join(cwd, name);
+        Path cwd = get(scope);
+        return cwd.resolve(name);
     }
 
     /**
      * @throws IllegalArgumentException
      *             If <code>dir</code> isn't a {@link File#isDirectory() directory}.
      */
-    public void chdir(IScopeInstance scope, File dir) {
+    public void chdir(IScopeInstance scope, Path dir) {
         if (dir == null)
             throw new NullPointerException("dir");
-        if (!dir.isDirectory())
+        if (!Files.isDirectory(dir))
             throw new IllegalArgumentException("Not a directory: " + dir);
         set(scope, dir);
     }
@@ -75,21 +81,21 @@ public class UserDirVars
     public void chdir(IScopeInstance scope, String path) {
         if (path == null)
             throw new NullPointerException("path");
-        File cwd = get(scope);
+        Path cwd = get(scope);
         if (isRelativePath(path))
-            cwd = new File(cwd, path);
+            cwd = cwd.resolve(path);
         else
-            cwd = new File(path);
+            cwd = Paths.get(path);
         chdir(scope, cwd);
     }
 
     // Shortcuts for DefaultContext
 
-    public File join(String name) {
+    public Path join(String name) {
         return join(getCurrentScope(), name);
     }
 
-    public void chdir(File dir) {
+    public void chdir(Path dir) {
         chdir(getCurrentScope(), dir);
     }
 
@@ -99,11 +105,11 @@ public class UserDirVars
 
     // Shortcuts for ClassContext
 
-    public File join(Class<?> classContext, String name) {
+    public Path join(Class<?> classContext, String name) {
         return join(Scopes.from(classContext), name);
     }
 
-    public void chdir(Class<?> classContext, File dir) {
+    public void chdir(Class<?> classContext, Path dir) {
         chdir(Scopes.from(classContext), dir);
     }
 

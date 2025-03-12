@@ -8,7 +8,7 @@ public interface IFileInfo {
     /**
      * Can be the entire directory.
      */
-    File getBaseDir();
+    Path getBaseDir();
 
     /**
      * Can be filename only.

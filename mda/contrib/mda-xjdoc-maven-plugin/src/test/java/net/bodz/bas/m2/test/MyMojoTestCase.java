@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
+import java.nio.file.Path;
 import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.meta.codegen.CopyAndPaste;
 
@@ -15,11 +16,11 @@ public abstract class MyMojoTestCase
      */
     @CopyAndPaste
     protected static File getResourceDir(Class<?> clazz) {
-        File classFile = ClassResource.getClassBytesFile(clazz);
+        Path classFile = ClassResource.getClassBytesLocalFile(clazz);
 
         // foo/target/classes/ => foo/src/main/java/
         // foo/target/test-classes/ => foo/src/test/java/
-        String path = classFile.getPath();
+        String path = classFile.toString();
 
         int i;
         do {

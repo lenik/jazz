@@ -1,7 +1,7 @@
 package net.bodz.bas.c.org.eclipse;
 
-import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.junit.Assert;
@@ -16,7 +16,7 @@ public class JavaProjectTest
     @Before
     public void init()
             throws Exception {
-        File baseDir = JavaProjectBaseDir.forClass(JavaProject.class);
+        Path baseDir = JavaProjectBaseDir.forClass(JavaProject.class);
 
         System.out.println("Project base: " + baseDir);
         project = new JavaProject(baseDir);
@@ -32,7 +32,7 @@ public class JavaProjectTest
         String sourcePath = null;
 
         if (project == null) {
-            File baseDir = JavaProjectBaseDir.forClass(clazz);
+            Path baseDir = JavaProjectBaseDir.forClass(clazz);
             if (baseDir != null)
                 project = new JavaProject(baseDir);
         }

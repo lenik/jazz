@@ -1,6 +1,13 @@
 package net.bodz.bas.io.res;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.IByteIn;
@@ -13,6 +20,7 @@ import net.bodz.bas.io.adapter.OutputStreamByteOut;
 import net.bodz.bas.io.adapter.PrintStreamPrintOut;
 import net.bodz.bas.io.adapter.WriterCharOut;
 import net.bodz.bas.io.impl.DecodedCharIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class AbstractIOStreamResource<This>
         extends AbstractStreamResource<This> {
@@ -20,10 +28,12 @@ public abstract class AbstractIOStreamResource<This>
     /** ⇱ Implementaton Of {@link IStreamInputSource}. */
     /* _____________________________ */static section.iface __IN__;
 
+    @NotNull
     @Override
     public abstract InputStream newInputStream(OpenOption... options)
             throws IOException;
 
+    @NotNull
     @Override
     public final Reader newReader(OpenOption... options)
             throws IOException {
@@ -31,6 +41,7 @@ public abstract class AbstractIOStreamResource<This>
         return new InputStreamReader(in, getCharset());
     }
 
+    @NotNull
     @Override
     public IByteIn newByteIn(OpenOption... options)
             throws IOException {
@@ -39,6 +50,7 @@ public abstract class AbstractIOStreamResource<This>
         return new InputStreamByteIn(in);
     }
 
+    @NotNull
     @Override
     public final ICharIn newCharIn(OpenOption... options)
             throws IOException {
@@ -49,10 +61,12 @@ public abstract class AbstractIOStreamResource<This>
     /** ⇱ Implementaton Of {@link IStreamOutputTarget}. */
     /* _____________________________ */static section.iface __OUT__;
 
+    @NotNull
     @Override
     public abstract OutputStream newOutputStream(OpenOption... options)
             throws IOException;
 
+    @NotNull
     @Override
     public final Writer newWriter(OpenOption... options)
             throws IOException {
@@ -60,6 +74,7 @@ public abstract class AbstractIOStreamResource<This>
         return new OutputStreamWriter(out, getCharset());
     }
 
+    @NotNull
     @Override
     public IByteOut newByteOut(OpenOption... options)
             throws IOException {
@@ -68,6 +83,7 @@ public abstract class AbstractIOStreamResource<This>
         return new OutputStreamByteOut(out);
     }
 
+    @NotNull
     @Override
     public final IPrintOut newPrintOut(OpenOption... options)
             throws IOException {
@@ -75,6 +91,7 @@ public abstract class AbstractIOStreamResource<This>
         return new PrintStreamPrintOut(ps);
     }
 
+    @NotNull
     @Override
     public final ICharOut newCharOut(OpenOption... options)
             throws IOException {

@@ -394,7 +394,7 @@ public abstract class BasicGUI
     static URL WWW_BODZ_NET;
     static {
         try {
-            WWW_BODZ_NET = new URL("http://www.bodz.net/");
+            WWW_BODZ_NET = URI.create("http://www.bodz.net/").toURL();
         } catch (MalformedURLException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

@@ -1,7 +1,7 @@
 package net.bodz.bas.esm.util;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.time.ZoneId;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class TsConfig {
     /**
      * Find out the context module by looking into package.json.
      */
-    public static EsmDomainMap buildDomainMap(File webDir) {
+    public static EsmDomainMap buildDomainMap(Path webDir) {
         NpmDir npmDir = NpmDir.closest(webDir);
         EsmModule contextModule = null;
 

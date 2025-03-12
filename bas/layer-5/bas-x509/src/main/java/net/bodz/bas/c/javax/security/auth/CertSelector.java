@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.security.KeyStore;
 import java.security.KeyStore.Builder;
@@ -107,7 +108,7 @@ public class CertSelector
                     storeFile = null;
                 } else if (storePath.contains("://"))
                     try {
-                        URL url = new URL(storePath);
+                        URL url = URI.create(storePath).toURL();
                         storeFile = FileURL.toFile(url, null);
                         if (storeFile == null)
                             ; // create a temp file when necessary?

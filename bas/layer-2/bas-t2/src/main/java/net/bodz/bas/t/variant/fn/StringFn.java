@@ -319,7 +319,7 @@ public class StringFn {
         if (s == null)
             return null;
         try {
-            return new URL(s);
+            return URI.create(s).toURL();
         } catch (MalformedURLException e) {
             throw new ParseException("error parse " + s, e);
         }
@@ -329,7 +329,7 @@ public class StringFn {
         if (s == null)
             return fallback;
         try {
-            return new URL(s);
+            return URI.create(s).toURL();
         } catch (MalformedURLException e) {
             return fallback;
         }
@@ -546,7 +546,7 @@ public class StringFn {
         if (val == null)
             throw new ParseException("bad boolean value: " + in);
         else
-            return val.booleanValue();
+            return val;
     }
 
     public static boolean parseBoolean(String in, boolean fallback) {

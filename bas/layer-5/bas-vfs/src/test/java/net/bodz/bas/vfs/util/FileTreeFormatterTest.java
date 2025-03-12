@@ -1,7 +1,7 @@
 package net.bodz.bas.vfs.util;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import org.junit.Assert;
 
@@ -16,7 +16,10 @@ public class FileTreeFormatterTest
     public void dumpPomDir()
             throws IOException {
         MavenPomDir pomDir = MavenPomDir.fromClass(FileTreeFormatterTest.class);
-        File baseDir = pomDir.getBaseDir();
+        if (pomDir == null)
+            throw new NullPointerException("pomDir");
+
+        Path baseDir = pomDir.getBaseDir();
 
         // IFile start = new PojfFile(projectDir);
         IFile start = new NioFile(baseDir);

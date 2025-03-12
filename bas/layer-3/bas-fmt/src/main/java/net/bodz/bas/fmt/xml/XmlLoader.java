@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -62,6 +64,18 @@ public class XmlLoader {
     public static <T extends IXmlForm> T load(T obj, InputStream in)
             throws LoaderException {
         return load(obj, new InputSource(in));
+    }
+
+    public static <T extends IXmlForm> T load(T obj, Path file)
+            throws LoaderException {
+        try (InputStream in = Files.newInputStream(file)) {
+            load(obj, new InputSource(in));
+        } catch (IOException e) {
+            throw new LoaderException(e.getMessage(), e);
+//        } finally{
+//            Closeables.close(in);
+        }
+        return obj;
     }
 
     public static <T extends IXmlForm> T load(T obj, File file)

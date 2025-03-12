@@ -1,33 +1,35 @@
 package net.bodz.bas.c.org.eclipse;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.err.ParseException;
 
 public class JavaProjectBaseDir {
 
-    public static File fromWorkdir()
+    public static Path fromWorkdir()
             throws ParseException {
-        File baseDir = findParents(new File("."));
+        Path baseDir = findParents(Paths.get("."));
         if (baseDir == null)
-            throw new RuntimeException("can\'t find the project");
+            throw new RuntimeException("can't find the project");
         return baseDir;
     }
 
-    public static File findParents(File dir) {
-        if (dir != null && !dir.isDirectory())
+    public static Path findParents(Path dir) {
+        if (dir != null && !Files.isDirectory(dir))
             return null;
         while (dir != null) {
-            if (new File(dir, ".project").exists())
+            if (Files.exists(dir.resolve(".project")))
                 return dir;
-            dir = dir.getParentFile();
+            dir = dir.getParent();
         }
         return null;
     }
 
-    public static File forClass(Class<?> clazz) {
-        File rootFile = ClassResource.getRootFile(clazz);
+    public static Path forClass(Class<?> clazz) {
+        Path rootFile = ClassResource.getRootPath(clazz);
         return findParents(rootFile);
     }
 

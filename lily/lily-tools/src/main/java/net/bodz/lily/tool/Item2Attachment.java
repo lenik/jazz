@@ -3,6 +3,7 @@ package net.bodz.lily.tool;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -95,7 +96,7 @@ public class Item2Attachment
     JsonFormOptions inOpts = JsonFormOptions.DEFAULT;
     JsonFormOptions outOpts = JsonFormOptions.DEFAULT;
 
-    AttachmentGroup anyGroup = new AttachmentGroup(new File("."));
+    AttachmentGroup anyGroup = new AttachmentGroup(Paths.get("."));
 
     public void processTable(ITableMetadata table)
             throws IOException, SQLException, ParseException, FormatException {

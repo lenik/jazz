@@ -2,6 +2,7 @@ package net.bodz.bas.pdf.viz;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,7 +39,7 @@ public abstract class TeXPdfViewBuilder<T>
         String tex = texBuf.toString();
 
         Integer reuse = q.getInt("reuse");
-        File workDir = workDirManager.getWorkDir(reuse);
+        Path workDir = workDirManager.makeWorkDir(reuse);
 
         TeXCompiler compiler = new TeXCompiler("tex2pdf", workDir, reuse == null);
         try {

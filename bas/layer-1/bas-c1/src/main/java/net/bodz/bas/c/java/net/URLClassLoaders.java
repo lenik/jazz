@@ -4,12 +4,15 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.c.java.io.FileURL;
+import net.bodz.bas.c.java.io.URLs;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.BCharOut;
@@ -33,35 +36,35 @@ public class URLClassLoaders {
         return null;
     }
 
-    public static List<File> getUserClassPath(ClassLoader cl) {
+    public static List<Path> getUserClassPath(ClassLoader cl) {
         URLClassLoader ucl = findFirstURLClassLoader(cl);
         if (ucl == null)
             return getJavaClassPath();
-        List<File> localFileList = new ArrayList<File>();
+        List<Path> localFileList = new ArrayList<Path>();
         for (URL url : ucl.getURLs()) {
             File localFile = FileURL.toFile(url, null);
             if (localFile != null)
-                localFileList.add(localFile);
+                localFileList.add(localFile.toPath());
         }
         return localFileList;
     }
 
-    public static List<File> getJavaClassPath() {
+    public static List<Path> getJavaClassPath() {
         String javaClassPath = SystemProperties.getJavaClassPath();
         String[] entries = javaClassPath.split(File.pathSeparator);
-        List<File> files = new ArrayList<>(entries.length);
+        List<Path> files = new ArrayList<>(entries.length);
         for (String entry : entries)
-            files.add(new File(entry));
+            files.add(Paths.get(entry));
         return files;
     }
 
     @Deprecated
-    public static List<File> getLocalURLs(ClassLoader cl) {
+    public static List<Path> getLocalURLs(ClassLoader cl) {
         return getLocalURLs(cl, 1000);
     }
 
-    static List<File> getLocalURLs(ClassLoader cl, int size) {
-        List<File> localFileList = new ArrayList<File>();
+    static List<Path> getLocalURLs(ClassLoader cl, int size) {
+        List<Path> localFileList = new ArrayList<Path>();
         int i = 0;
         while (cl != null) {
             if (cl instanceof URLClassLoader) {
@@ -71,7 +74,7 @@ public class URLClassLoaders {
                 for (URL url : ucl.getURLs()) {
                     File localFile = FileURL.toFile(url, null);
                     if (localFile != null)
-                        localFileList.add(localFile);
+                        localFileList.add(localFile.toPath());
                 }
             }
 
@@ -94,7 +97,7 @@ public class URLClassLoaders {
             if (loader instanceof URLClassLoader) {
                 URLClassLoader ucl = (URLClassLoader) loader;
                 for (URL u : ucl.getURLs())
-                    if (url.equals(u))
+                    if (URLs.equals(url, u))
                         return ucl;
             }
             loader = loader.getParent();
@@ -114,7 +117,7 @@ public class URLClassLoaders {
             throw new NullPointerException("url");
 
         for (URL u : urlClassLoader.getURLs())
-            if (url.equals(u))
+            if (URLs.equals(url, u))
                 return true;
 
         return false;
@@ -140,7 +143,7 @@ public class URLClassLoaders {
             URLClassLoader_addURL = clazz.getDeclaredMethod("addURL", URL.class);
             URLClassLoader_addURL.setAccessible(true);
         } catch (Throwable e) {
-            throw new Error("can\'t access URLClassLoader.addURL(): " + e.getMessage(), e);
+            throw new Error("can't access URLClassLoader.addURL(): " + e.getMessage(), e);
         }
 
         int added = 0;
@@ -159,6 +162,7 @@ public class URLClassLoaders {
     }
 
     public static final Set<String> stopClassLoaderNames;
+
     static {
         stopClassLoaderNames = new HashSet<String>();
         stopClassLoaderNames.add("sun.misc.Launcher$ExtClassLoader");
@@ -199,8 +203,7 @@ public class URLClassLoaders {
     }
 
     private static class Dumper
-            implements
-                IClassLoaderContentHandler {
+            implements IClassLoaderContentHandler {
 
         private final IPrintOut out;
         private boolean cont;

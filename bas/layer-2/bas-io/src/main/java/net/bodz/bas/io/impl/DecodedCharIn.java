@@ -10,6 +10,7 @@ import java.nio.charset.CharsetDecoder;
 import net.bodz.bas.io.AbstractCharIn;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 /**
  * The chars read from this {@link ICharIn}, is decoded from a {@link IByteIn}.
@@ -21,9 +22,9 @@ public class DecodedCharIn
     private final CharsetDecoder decoder;
 
     /** The encode input buffer */
-    private ByteBuffer byteBuffer;
+    private final ByteBuffer byteBuffer;
     /** The encode output buffer */
-    private CharBuffer charBuffer;
+    private final CharBuffer charBuffer;
 
     int __chunks;
 
@@ -61,7 +62,7 @@ public class DecodedCharIn
     }
 
     @Override
-    public int read(char[] buf, int off, int len)
+    public int read(@NotNull char[] buf, int off, int len)
             throws IOException {
         int pos = off;
         while (len > 0) {

@@ -1,9 +1,8 @@
 package net.bodz.bas.io.res;
 
-import net.bodz.bas.meta.decl.NotNull;
-
 import java.nio.charset.Charset;
-import java.time.OffsetDateTime;
+
+import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class AbstractResourceEntry<This>
         implements IMutableResourceEntry<This> {

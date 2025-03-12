@@ -3,8 +3,12 @@ package net.bodz.bas.vfs.impl.zip;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.Map;
@@ -29,6 +33,7 @@ import net.bodz.bas.vfs.IFileAttributes;
 import net.bodz.bas.vfs.IFsBlob;
 import net.bodz.bas.vfs.IFsDir;
 import net.bodz.bas.vfs.IFsObject;
+import net.bodz.bas.vfs.PathUnsupportedException;
 import net.bodz.bas.vfs.VFSException;
 
 public class ZipEntryFile
@@ -90,6 +95,18 @@ public class ZipEntryFile
 
         ZipEntryPath path = new ZipEntryPath(device.getProtocol(), zipName, entryName);
         return path;
+    }
+
+    @NotNull
+    @Override
+    public Path toPath()
+            throws PathUnsupportedException {
+        try {
+            URI uri = getPath().toURI();
+            return Paths.get(uri);
+        } catch (URISyntaxException e) {
+            throw new PathUnsupportedException(e);
+        }
     }
 
     @Override
@@ -263,7 +280,7 @@ public class ZipEntryFile
 
     /**
      * Generally, a zip entry can only be accessed in streaming like.
-     *
+     * <p>
      * However, it may implement the random access interface.
      */
     @Override

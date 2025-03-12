@@ -4,12 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.jar.Manifest;
 
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.meta.decl.Nullable;
 
 public class ClassResource {
 
@@ -20,22 +24,17 @@ public class ClassResource {
         URL url = clazz.getResource("/META-INF/MANIFEST.MF");
         if (url == null)
             return null;
-        InputStream in = null;
-        try {
-            in = url.openStream();
+        try (InputStream in = url.openStream()) {
             Manifest manifest = new Manifest(in);
-            in.close();
             return manifest;
         } catch (IOException e) {
             throw new IllegalStateException("Bad manifest: " + clazz, e);
-        } finally {
-            if (in != null)
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
         }
+    }
+
+    public static Path getRootPath(Class<?> clazz) {
+        URL rootURL = getRootURL(clazz);
+        return FileURL.toNearestFilePath(rootURL);
     }
 
     public static File getRootFile(Class<?> clazz) {
@@ -68,7 +67,7 @@ public class ClassResource {
         }
 
         try {
-            return new URL(rootUrl);
+            return URI.create(rootUrl).toURL();
         } catch (MalformedURLException e) {
             throw new UnexpectedException(e);
         }
@@ -85,7 +84,7 @@ public class ClassResource {
         String packageUrl = classBytesUrl.substring(0, lastSlash);
 
         try {
-            return new URL(packageUrl);
+            return URI.create(packageUrl).toURL();
         } catch (MalformedURLException e) {
             throw new UnexpectedException(e);
         }
@@ -94,21 +93,25 @@ public class ClassResource {
     /**
      * Same as {@link #getDataURLBySuffix(Class, String)} with ".class" as <code>extension</code>.
      */
+    @NotNull
     public static URL getClassBytesURL(Class<?> clazz) {
         String name = clazz.getName(); // keep '$' as is.
         int lastDot = name.lastIndexOf('.');
         String base = lastDot == -1 ? name : name.substring(lastDot + 1);
         URL url = clazz.getResource(base + ".class");
+        if (url == null)
+            throw new UnexpectedException("class bytes not found for " + clazz);
         return url;
     }
 
     /**
      * @return <code>null</code> if the class bytes isn't located in a local file.
      */
-    public static File getClassBytesFile(Class<?> clazz) {
+    @Nullable
+    public static Path getClassBytesLocalFile(Class<?> clazz) {
         URL url = getClassBytesURL(clazz);
         File file = FileURL.toFile(url, null);
-        return file;
+        return file.toPath();
     }
 
     public static URL getClassDirURL(Class<?> clazz) {
@@ -118,7 +121,7 @@ public class ClassResource {
         String classDirUrl = classBytesUrl.substring(0, classBytesUrl.length() - 6) + ".d";
 
         try {
-            return new URL(classDirUrl);
+            return URI.create(classDirUrl).toURL();
         } catch (MalformedURLException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }

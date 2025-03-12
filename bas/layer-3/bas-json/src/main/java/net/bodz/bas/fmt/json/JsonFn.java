@@ -2,8 +2,6 @@ package net.bodz.bas.fmt.json;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -13,6 +11,9 @@ import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -307,13 +308,13 @@ public class JsonFn {
 
     public static <T extends IJsonForm> T load(T obj, String fileName, JsonFormOptions opts)
             throws IOException, ParseException {
-        File file = new File(fileName);
+        Path file = Paths.get(fileName);
         return load(obj, file, opts);
     }
 
-    public static <T extends IJsonForm> T load(T obj, File file, JsonFormOptions opts)
+    public static <T extends IJsonForm> T load(T obj, Path file, JsonFormOptions opts)
             throws IOException, ParseException {
-        try (FileInputStream in = new FileInputStream(file)) {
+        try (InputStream in = Files.newInputStream(file)) {
             load(obj, in, DEFAULT_ENCODING, opts);
         }
         return obj;
@@ -345,14 +346,24 @@ public class JsonFn {
         save(obj, file, DEFAULT_ENCODING, opts);
     }
 
+    public static void save(IJsonForm obj, Path file, JsonFormOptions opts)
+            throws IOException, FormatException {
+        save(obj, file, DEFAULT_ENCODING, opts);
+    }
+
     public static void save(IJsonForm obj, String file, String encoding, JsonFormOptions opts)
             throws IOException, FormatException {
-        save(obj, new File(file), encoding, opts);
+        save(obj, Paths.get(file), encoding, opts);
     }
 
     public static void save(IJsonForm obj, File file, String encoding, JsonFormOptions opts)
             throws IOException, FormatException {
-        try (FileOutputStream fos = new FileOutputStream(file)) {
+        save(obj, file.toPath(), encoding, opts);
+    }
+
+    public static void save(IJsonForm obj, Path file, String encoding, JsonFormOptions opts)
+            throws IOException, FormatException {
+        try (OutputStream fos = Files.newOutputStream(file)) {
             Writer writer = new OutputStreamWriter(fos, encoding);
             IJsonOut out = new JsonWriter(writer);
             obj.jsonOutValue(out, opts);

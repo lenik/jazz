@@ -1,6 +1,8 @@
 package net.bodz.bas.t.tuple;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 import net.bodz.bas.c.object.Nullables;
@@ -132,11 +134,11 @@ public class QualifiedName {
             return packageName.replace(".", FS) + FS + baseName;
     }
 
-    public File getPackageDir(File baseDir) {
+    public Path getPackageDir(Path baseDir) {
         if (baseDir == null)
-            return new File(getDirName());
+            return Paths.get(getDirName());
         else
-            return new File(baseDir, getDirName());
+            return baseDir.resolve(getDirName());
     }
 
     public Class<?> getJavaClass() {
@@ -154,8 +156,14 @@ public class QualifiedName {
         }
     }
 
+    public Path toPath(Path baseDir, String extension) {
+        Path packageDir = getPackageDir(baseDir);
+        String baseName = getBaseName(extension);
+        return packageDir.resolve(baseName);
+    }
+
     public File toFile(File baseDir, String extension) {
-        return new File(getPackageDir(baseDir), getBaseName(extension));
+        return toPath(baseDir.toPath(), extension).toFile();
     }
 
     @Override

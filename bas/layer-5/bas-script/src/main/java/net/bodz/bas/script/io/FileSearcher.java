@@ -2,6 +2,9 @@ package net.bodz.bas.script.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -13,12 +16,13 @@ import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class FileSearcher {
 
     static final Logger logger = LoggerFactory.getLogger(FileSearcher.class);
 
-    List<File> dirs = new ArrayList<>();
+    List<Path> dirs = new ArrayList<>();
 
     static final String pathSeparator = SystemProperties.getPathSeparator();
 
@@ -83,39 +87,43 @@ public class FileSearcher {
         return count;
     }
 
-    public boolean addSearchDir(String dir) {
-        return addSearchDir(new File(dir));
+    public boolean addSearchDir(@NotNull String dir) {
+        return addSearchDir(Paths.get(dir));
     }
 
-    public boolean addSearchDir(File dir) {
+    public boolean addSearchDir(@NotNull File dir) {
+        return addSearchDir(dir.toPath());
+    }
+
+    public boolean addSearchDir(@NotNull Path dir) {
         if (dir == null)
             throw new NullPointerException("dir");
         return dirs.add(dir);
     }
 
-    public Set<File> search(String name, String... extraDirs) {
-        List<File> extraDirsList = null;
+    public Set<Path> search(String name, String... extraDirs) {
+        List<Path> extraDirsList = null;
         if (extraDirs != null && extraDirs.length > 0) {
             extraDirsList = new ArrayList<>();
             for (String d : extraDirs) {
-                File dir = new File(d);
+                Path dir = Paths.get(d);
                 extraDirsList.add(dir);
             }
         }
         return search(name, extraDirsList);
     }
 
-    public Set<File> search(String name, List<File> extraDirs) {
-        Set<File> hits = new LinkedHashSet<>();
-        for (File dir : dirs) {
-            File file = new File(dir, name);
-            if (file.exists())
+    public Set<Path> search(String name, List<Path> extraDirs) {
+        Set<Path> hits = new LinkedHashSet<>();
+        for (Path dir : dirs) {
+            Path file = dir.resolve(name);
+            if (Files.exists(file))
                 hits.add(file);
         }
         if (extraDirs != null)
-            for (File dir : extraDirs) {
-                File file = new File(dir, name);
-                if (file.exists())
+            for (Path dir : extraDirs) {
+                Path file = dir.resolve(name);
+                if (Files.exists(file))
                     hits.add(file);
             }
         return hits;

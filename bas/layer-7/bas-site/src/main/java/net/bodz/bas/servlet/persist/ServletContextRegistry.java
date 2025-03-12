@@ -1,15 +1,16 @@
 package net.bodz.bas.servlet.persist;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
 
 import net.bodz.bas.c.jakarta.servlet.http.AbstractServletContextListener;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletContextEvent;
 
 public class ServletContextRegistry
         extends AbstractServletContextListener {
@@ -30,11 +31,11 @@ public class ServletContextRegistry
     public ServletContextRegistry() {
     }
 
-    public ServletContextRegistry(File homeDir) {
+    public ServletContextRegistry(Path homeDir) {
         init(homeDir);
     }
 
-    void init(File homeDir) {
+    void init(Path homeDir) {
         scheme = new RegistryScheme(homeDir);
         persistor = new AppPersistor(scheme);
     }
@@ -49,7 +50,7 @@ public class ServletContextRegistry
                         "Init-param %s isn't set.", PARAM_PATH));
             // String contextName = toContextName(servletContext.getContextPath());
             // scheme = RegistryScheme.getInstance(contextName);
-            File homeDir = new File(paramPath);
+            Path homeDir = Paths.get(paramPath);
             init(homeDir);
         }
 

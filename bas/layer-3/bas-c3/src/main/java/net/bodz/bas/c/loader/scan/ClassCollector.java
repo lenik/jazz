@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.net.URLClassLoader;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -50,8 +51,16 @@ public class ClassCollector {
         this.showPaths = showPaths;
     }
 
+    public void includeDirToScan(Path dir) {
+        scanOptions.includePath(dir.toAbsolutePath().normalize().toString());
+    }
+
     public void includeDirToScan(File dir) {
         scanOptions.includePath(dir.getAbsolutePath());
+    }
+
+    public void excludeDirToScan(Path dir) {
+        scanOptions.excludePath(dir.toAbsolutePath().normalize().toString());
     }
 
     public void excludeDirToScan(File dir) {
@@ -75,7 +84,7 @@ public class ClassCollector {
                 if (reason.isExcluded())
                     break;
 
-                Pair<ExcludeReason, File> reasonAndFile;
+                Pair<ExcludeReason, Path> reasonAndFile;
                 reason = (reasonAndFile = IndexedTypeUtil.checkDir(clazz)).first;
                 if (reason.isExcluded())
                     break;
@@ -100,7 +109,7 @@ public class ClassCollector {
 
     }
 
-    protected FileCacheMap publishEtcFiles(ClassFileMap filterMap, Class<?> baseClass) {
+    protected FileCacheMap<Path> publishEtcFiles(ClassFileMap filterMap, Class<?> baseClass) {
         IndexedType aIndexedType = baseClass.getAnnotation(IndexedType.class);
         if (aIndexedType == null)
             throw new NullPointerException("aIndexedType");
@@ -108,17 +117,23 @@ public class ClassCollector {
         String publishDir = aIndexedType.publishDir();
         if (publishDir.isEmpty())
             publishDir = null;
-        else if (! publishDir.endsWith("/"))
+        else if (!publishDir.endsWith("/"))
             publishDir += "/";
 
-        FileCacheMap fileContentMap = new FileCacheMap();
+        FileCacheMap<Path> fileContentMap = FileCacheMap.createPathIndexed();
         for (Class<?> derivedClass : filterMap.keySet()) {
-            File resDir = filterMap.get(derivedClass);
+            Path resDir = filterMap.get(derivedClass);
 
             if (publishDir != null) {
-                File listFile = new File(resDir, publishDir + baseClass.getName());
-                boolean init = ! fileContentMap.containsFile(listFile);
-                List<String> lines = fileContentMap.loadCache(listFile);
+                Path listFile = resDir.resolve(publishDir + baseClass.getName());
+                boolean init = !fileContentMap.containsFile(listFile);
+                List<String> lines;
+                try {
+                    lines = fileContentMap.loadLinesCached(listFile);
+                } catch (IOException e) {
+                    logger.error(e, "Error loading " + listFile + ", skipped.");
+                    continue;
+                }
 
                 if (init) // Refresh: remove included packages before re-add.
                     beforeRefresh(lines);
@@ -131,26 +146,32 @@ public class ClassCollector {
             }
 
             Class<? extends IEtcFilesInstaller> etcFilesClass = aIndexedType.etcFiles();
-            if (etcFilesClass != null && ! Modifier.isAbstract(etcFilesClass.getModifiers())) {
+            if (etcFilesClass != null && !Modifier.isAbstract(etcFilesClass.getModifiers())) {
                 IEtcFilesInstaller etcFiles = CachedInstantiator.getInstance().instantiate(etcFilesClass);
 
                 IEtcFilesEditor editor = new IEtcFilesEditor() {
                     @Override
-                    public void clear(String path) {
-                        File file = FilePath.joinHref(resDir, path);
-                        List<String> lines = fileContentMap.loadCache(file);
+                    public void clear(String path)
+                            throws IOException {
+                        Path file = FilePath.joinHref(resDir, path);
+                        List<String> lines = fileContentMap.loadLinesCached(file);
                         lines.clear();
                     }
 
                     @Override
-                    public void addLine(String path, String s) {
-                        File file = FilePath.joinHref(resDir, path);
-                        List<String> lines = fileContentMap.loadCache(file);
+                    public void addLine(String path, String s)
+                            throws IOException {
+                        Path file = FilePath.joinHref(resDir, path);
+                        List<String> lines = fileContentMap.loadLinesCached(file);
                         lines.add(s);
                     }
                 };
 
-                etcFiles.install(derivedClass, editor);
+                try {
+                    etcFiles.install(derivedClass, editor);
+                } catch (IOException e) {
+                    logger.error(e, "Error install " + derivedClass + " of type " + etcFilesClass);
+                }
             } // etc-files
         } // for derivations
 
@@ -179,7 +200,7 @@ public class ClassCollector {
 
     static boolean isMavenTest() {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        List<File> userClassPath = URLClassLoaders.getUserClassPath(classLoader);
+        List<Path> userClassPath = URLClassLoaders.getUserClassPath(classLoader);
         String head = userClassPath.get(0).toString();
         if (head.contains("/test-classes")) {
             logger.info("Detect test mode, create test class loader.");
@@ -228,7 +249,7 @@ public class ClassCollector {
         ClassFileMap filterMap = filter(classes, baseClass);
         // filterMap.subMap(baseDir);
 
-        FileCacheMap contents = publishEtcFiles(filterMap, baseClass);
+        FileCacheMap<Path> contents = publishEtcFiles(filterMap, baseClass);
         if (contents.isEmpty())
             return Collections.emptyList();
 
@@ -237,7 +258,7 @@ public class ClassCollector {
         if (showPaths)
             for (Class<?> extension : filterMap.keySet()) {
                 MavenPomDir pomDir = MavenPomDir.fromClass(extension);
-                File sourceFile = pomDir.getSourceFile(extension);
+                Path sourceFile = pomDir.getSourceFile(extension);
                 System.out.println(sourceFile);
             }
         return filterMap.keySet();

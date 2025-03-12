@@ -208,7 +208,7 @@ public class PropertyBeanTask
         final Project project = getProject();
         File baseDir = project.getBaseDir();
         if (baseDir != null)
-            UserDirVars.getInstance().chdir(baseDir);
+            UserDirVars.getInstance().chdir(baseDir.toPath());
 
         try {
             Class<?>[] tryProjectTypes = { Project.class };

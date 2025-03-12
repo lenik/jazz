@@ -11,14 +11,17 @@ import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.adapter.InputStreamByteIn;
 import net.bodz.bas.io.impl.DecodedCharIn;
 import net.bodz.bas.meta.decl.DefaultImpl;
+import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class AbstractInputStreamSource<This>
         extends AbstractStreamInputSource<This> {
 
+    @NotNull
     @Override
     public abstract InputStream newInputStream(OpenOption... options)
             throws IOException;
 
+    @NotNull
     @DefaultImpl(InputStreamReader.class)
     @Override
     public Reader newReader(OpenOption... options)
@@ -27,6 +30,7 @@ public abstract class AbstractInputStreamSource<This>
         return new InputStreamReader(in, getCharset());
     }
 
+    @NotNull
     @DefaultImpl(InputStreamByteIn.class)
     @Override
     public IByteIn newByteIn(OpenOption... options)
@@ -35,6 +39,7 @@ public abstract class AbstractInputStreamSource<This>
         return new InputStreamByteIn(in);
     }
 
+    @NotNull
     @Override
     public ICharIn newCharIn(OpenOption... options)
             throws IOException {

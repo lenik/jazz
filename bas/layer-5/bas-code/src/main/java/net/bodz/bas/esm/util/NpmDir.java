@@ -2,6 +2,9 @@ package net.bodz.bas.esm.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.ParseException;
@@ -13,57 +16,64 @@ public class NpmDir {
 
     static final String PACKAGE_JSON = "package.json";
 
-    private File packageFile;
-    private File baseDir;
+    private Path packageFile;
+    private Path baseDir;
 
-    public NpmDir(File baseDir) {
+    public NpmDir(Path baseDir) {
         if (baseDir == null)
             throw new NullPointerException("baseDir");
         this.baseDir = baseDir;
-        this.packageFile = new File(baseDir, PACKAGE_JSON);
+        this.packageFile = baseDir.resolve(PACKAGE_JSON);
     }
 
     public String getName() {
-        String name = baseDir.getName();
+        String name = baseDir.getFileName().toString();
         return name;
     }
 
-    public File getBaseDir() {
+    public Path getBaseDir() {
         return baseDir;
     }
 
-    public File getPackageFile() {
+    public Path getPackageFile() {
         return packageFile;
     }
 
-    public File find(String name) {
-        return new File(baseDir, name);
+    public Path find(String name) {
+        return baseDir.resolve(name);
     }
 
-    public File getPreferredPackageDir(String packageName) {
+    public Path getPreferredPackageDir(String packageName) {
         String dir = packageName.replace('.', '/');
-        return new File(baseDir, "src/" + dir);
+        return baseDir.resolve("src/" + dir);
     }
 
     public JsonObject resolve()
             throws ParseException, IOException {
-        if (! packageFile.exists())
+        if (!Files.isRegularFile(packageFile))
             return null;
-        String json = ResFn.file(packageFile).read().readString();
+        String json = ResFn.path(packageFile).read().readString();
         return JsonFn.parseObject(json);
     }
 
     public static NpmDir closest(String child) {
-        return closest(new File(child));
+        return closest(Paths.get(child));
     }
 
-    public static NpmDir closest(File child) {
+    public static NpmDir closest(Path child) {
         while (child != null) {
             if (isPackageDir(child))
                 return new NpmDir(child);
-            child = child.getParentFile();
+            child = child.getParent();
         }
         return null;
+    }
+
+    public static boolean isPackageDir(Path dir) {
+        Path packageJson = dir.resolve(PACKAGE_JSON);
+        if (Files.isRegularFile(packageJson))
+            return true;
+        return false;
     }
 
     public static boolean isPackageDir(File dir) {
@@ -91,9 +101,9 @@ public class NpmDir {
         if (getClass() != obj.getClass())
             return false;
         NpmDir other = (NpmDir) obj;
-        if (! Nullables.equals(baseDir, other.baseDir))
+        if (!Nullables.equals(baseDir, other.baseDir))
             return false;
-        if (! Nullables.equals(packageFile, other.packageFile))
+        if (!Nullables.equals(packageFile, other.packageFile))
             return false;
         return true;
     }

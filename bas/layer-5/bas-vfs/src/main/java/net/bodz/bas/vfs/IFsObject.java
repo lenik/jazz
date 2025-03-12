@@ -2,9 +2,11 @@ package net.bodz.bas.vfs;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.TreeDeleteOption;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
@@ -14,7 +16,7 @@ public interface IFsObject
 
     /**
      * Get the VFS device which this file entry belongs to.
-     * 
+     *
      * @return Non-<code>null</code> vfs device.
      */
     IVfsDevice getDevice();
@@ -24,9 +26,27 @@ public interface IFsObject
      */
     IPath getPath();
 
+    @NotNull
+    Path toPath()
+            throws PathUnsupportedException;
+
+    default Path toPath(Path fallback) {
+        try {
+            return toPath();
+        } catch (PathUnsupportedException e) {
+            return fallback;
+        }
+    }
+
+    default File toFile()
+            throws PathUnsupportedException {
+        Path path = toPath();
+        return path == null ? null : path.toFile();
+    }
+
     /**
      * The same as {@link #getPath()}, {@link IPath#getBaseName()}
-     * 
+     *
      * @return <code>null</code> if file doesn't have a name
      */
     String getName();
@@ -36,7 +56,7 @@ public interface IFsObject
      * <p>
      * Some flag bits are expensive to test, so only the interesting bits should be specified to
      * reduce the test cost.
-     * 
+     *
      * @param mask
      *            Bit mask to select which file flags are interesting and will be tested.
      * @return Modifier bits, may contains the bits which are not interesting.
@@ -49,7 +69,7 @@ public interface IFsObject
 
     /**
      * Get all file flags.
-     * 
+     *
      * @see FileFlags
      */
     int getFlags();
@@ -69,7 +89,7 @@ public interface IFsObject
      * Get the parent fs entry which this entry resides in.
      * <p>
      * Generally, this is the same as: <code>getPath().getParent().toFile()</code>.
-     * 
+     *
      * @return Parent {@link IFsDir} object or <code>null</code> if there's none.
      * @throws VFSException
      *             If faield to resolve the parent file.
@@ -85,7 +105,7 @@ public interface IFsObject
      * <p>
      * If {@link TreeDeleteOption#REMOVE_EMPTY_PARENTS remove empty parents} option isn't specified,
      * delete an empty directory should preserve any empty parent dirs.
-     * 
+     *
      * @return Count of fs objects actually been deleted.
      * @see File#delete()
      */
@@ -97,7 +117,7 @@ public interface IFsObject
      * should therefore be used with care.
      * <p>
      * <i>Don't use delete on exit feature whenever possible. </i>
-     * 
+     *
      * @return <code>false</code> If delete on exit isn't supported by underlying system.
      * @see File#deleteOnExit()
      */
@@ -106,13 +126,13 @@ public interface IFsObject
 
     /**
      * Renames the file denoted by this abstract pathname.
-     * 
+     * <p>
      * Many aspects of the behavior of this method are inherently platform-dependent: The rename
      * operation might not be able to move a file from one filesystem to another, it might not be
      * atomic, and it might not succeed if a file with the destination abstract pathname already
      * exists. The return value should always be checked to make sure that the rename operation was
      * successful.
-     * 
+     *
      * @see File#renameTo(File)
      */
     boolean renameTo(String target)

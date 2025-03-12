@@ -1,13 +1,15 @@
 package net.bodz.uni.shelj.codegen.maven;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.m2.ArtifactId;
 import net.bodz.bas.io.res.ResFn;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.builtin.PathResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -15,7 +17,7 @@ public class ProjectDirMap {
 
     static final Logger logger = LoggerFactory.getLogger(ProjectDirMap.class);
 
-    File mapFile;
+    Path mapFile;
     Map<String, String> qNameDirMap = new HashMap<>();
     Map<String, String> nameDirMap = new HashMap<>();
 
@@ -34,16 +36,16 @@ public class ProjectDirMap {
 
     public void parseMapFile(String fileName)
             throws IOException {
-        parseMapFile(new File(fileName));
+        parseMapFile(Paths.get(fileName));
     }
 
-    public void parseMapFile(File file)
+    public void parseMapFile(Path file)
             throws IOException {
         this.mapFile = file;
         logger.debug("parse map file " + mapFile);
 
-        FileResource mapFile = ResFn.file(file);
-        if (!mapFile.getFile().exists())
+        PathResource mapFile = ResFn.path(file);
+        if (Files.notExists(mapFile.getPathObject()))
             return;
 
         for (String line : mapFile.read().readLines()) {

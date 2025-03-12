@@ -18,6 +18,7 @@ import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.PathResource;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.*;
 
@@ -58,7 +59,14 @@ public class NioFile
         this._path = _path;
     }
 
-    public Path getInternalPath() {
+    @NotNull
+    @Override
+    public Path toPath() {
+        return _path;
+    }
+
+    @Override
+    public Path toPath(Path fallback) {
         return _path;
     }
 
@@ -174,8 +182,7 @@ public class NioFile
     }
 
     static class Path2NioFile
-            implements
-                Function<Path, NioFile> {
+            implements Function<Path, NioFile> {
 
         @Override
         public NioFile apply(Path input)

@@ -10,6 +10,7 @@ import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 
 public class BytesResource
@@ -48,6 +49,7 @@ public class BytesResource
     /**
      * @return {@link OutputStream} with {@link OutputStream#close()} filtered out.
      */
+    @NotNull
     @Override
     public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
@@ -66,6 +68,7 @@ public class BytesResource
         return new MovableByteBufferOutputStream(buffer, pos);
     }
 
+    @NotNull
     @Override
     public IByteOut newByteOut(OpenOption... options)
             throws IOException {
@@ -84,6 +87,7 @@ public class BytesResource
         return new MovableByteBufferByteOut(buffer, pos);
     }
 
+    @NotNull
     @Override
     public IByteIn newByteIn(OpenOption... options)
             throws IOException {

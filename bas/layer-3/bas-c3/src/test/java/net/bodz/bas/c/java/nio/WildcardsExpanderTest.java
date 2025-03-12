@@ -1,6 +1,5 @@
 package net.bodz.bas.c.java.nio;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,7 +8,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.ctx.sys.UserDirVars;
 
 public class WildcardsExpanderTest
@@ -18,8 +16,7 @@ public class WildcardsExpanderTest
     @Test
     public void testMatcher()
             throws IOException {
-        Path tmpWorkDirPath = Files.createTempDirectory("wildtest");
-        File tmpWorkDir = tmpWorkDirPath.toFile();
+        Path tmpWorkDir = Files.createTempDirectory("wildtest");
 
         UserDirVars.getInstance().set(tmpWorkDir);
 
@@ -37,10 +34,10 @@ public class WildcardsExpanderTest
         assertFalse(foundList.contains("b.txt"));
     }
 
-    static void touch(File parent, String fileName)
+    static void touch(Path parent, String fileName)
             throws IOException {
-        File file = new File(parent, fileName);
-        file.getParentFile().mkdirs();
+        Path file = parent.resolve(fileName);
+        Files.createDirectories(file.getParent());
         FileData.writeString(file, "test");
     }
 

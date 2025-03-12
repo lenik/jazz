@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs.context;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.bas.ctx.scope.IScopeInstance;
@@ -10,7 +10,7 @@ import net.bodz.bas.ctx.sys.UserDirVars;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
-import net.bodz.bas.vfs.impl.pojf.PojfFile;
+import net.bodz.bas.vfs.impl.nio.NioFile;
 import net.bodz.bas.vfs.path.BadPathException;
 
 public class WorkingDirVars
@@ -22,8 +22,8 @@ public class WorkingDirVars
 
     @Override
     public IFile getDefaultValue() {
-        File systemWorkDir = UserDirVars.getInstance().get();
-        PojfFile dir = new PojfFile(systemWorkDir);
+        Path systemWorkDir = UserDirVars.getInstance().get();
+        NioFile dir = new NioFile(systemWorkDir);
         return dir;
     }
 

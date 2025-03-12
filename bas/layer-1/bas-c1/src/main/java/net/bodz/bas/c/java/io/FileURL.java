@@ -6,10 +6,13 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.t.pojo.Pair;
 
@@ -44,9 +47,45 @@ public class FileURL {
         }
     }
 
+    public static URL toURL(Path path) {
+        URI uri = path.toUri();
+        try {
+            return uri.toURL();
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public static URL toURL(Path path, URL fallback) {
+        URI uri = path.toUri();
+        try {
+            return uri.toURL();
+        } catch (MalformedURLException e) {
+            // throw new UnexpectedException("Can't convert File to URL", e);
+            return fallback;
+        }
+    }
+
     /**
      * Convert the url to file is possible, otherwise return <code>null</code>.
-     * 
+     *
+     * @return The corresponding file, or <code>null</code> if not available.
+     */
+    public static Path toPath(URL url, Path fallback) {
+        if (url == null)
+            return null;
+
+        try {
+            URI uri = url.toURI();
+            return Paths.get(uri);
+        } catch (URISyntaxException e) {
+            return fallback;
+        }
+    }
+
+    /**
+     * Convert the url to file when possible, otherwise return <code>null</code>.
+     *
      * @return The corresponding file, or <code>null</code> if not available.
      */
     public static File toFile(URL url, File fallback) {
@@ -68,7 +107,17 @@ public class FileURL {
 
     /**
      * If url is an entry of a jar file, then the jar file is returned.
-     * 
+     *
+     * @return The nearest local file for the url. If no such file exists, returns <code>null</code>
+     */
+    public static Path toNearestFilePath(URL url) {
+        File file = toNearestFile(url);
+        return FileFn.toPath(file);
+    }
+
+    /**
+     * If url is an entry of a jar file, then the jar file is returned.
+     *
      * @return The nearest local file for the url. If no such file exists, returns <code>null</code>
      */
     public static File toNearestFile(URL url) {
@@ -85,6 +134,11 @@ public class FileURL {
         return null;
     }
 
+    public static Path toNearestFilePath(URL url, String removeSubPath, File fallback) {
+        File file = toNearestFile(url, removeSubPath, fallback);
+        return FileFn.toPath(file);
+    }
+
     public static File toNearestFile(URL url, String removeSubPath, File fallback) {
         if (removeSubPath == null || removeSubPath.isEmpty())
             return toFile(url, fallback);
@@ -94,7 +148,7 @@ public class FileURL {
         String s = url.toExternalForm();
         // s=file:/C:/abc/dir/example.jar!/com/example/Name.class
         if (!s.endsWith(removeSubPath))
-            throw new IllegalArgumentException(String.format("URL isn\'t end with %s: %s", removeSubPath, url));
+            throw new IllegalArgumentException(String.format("URL isn't end with %s: %s", removeSubPath, url));
 
         int rlen = removeSubPath.length();
         // s=file:/C:/abc/dir/example.jar!/, or file:/C:/abc/dir/
@@ -109,7 +163,7 @@ public class FileURL {
 
         URL truncatedURL;
         try {
-            truncatedURL = new URL(s);
+            truncatedURL = URI.create(s).toURL();
         } catch (MalformedURLException e) {
             throw new UnexpectedException("Truncated url became invalid: " + s, e);
         }
@@ -179,7 +233,7 @@ public class FileURL {
         if (excl != -1) // assert
             s = s.substring(0, excl); // path = file:/...
         try {
-            URL truncatedURL = new URL(s);
+            URL truncatedURL = URI.create(s).toURL();
             return FilePath.canoniOf(truncatedURL);
         } catch (MalformedURLException e) {
             throw new UnexpectedException(e);
@@ -199,15 +253,12 @@ public class FileURL {
         String zipFileName = path.substring(5, excl); // path = file:/...
         String entryName = path.substring(excl + 1);
 
-        ZipFile zipFile = new ZipFile(zipFileName);
-        try {
+        try (ZipFile zipFile = new ZipFile(zipFileName)) {
             ZipEntry zipEntry = zipFile.getEntry(entryName);
             if (zipEntry == null)
                 return null;
             else
                 return Pair.of(zipFile, zipEntry);
-        } finally {
-            zipFile.close();
         }
     }
 

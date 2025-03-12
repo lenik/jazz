@@ -1,11 +1,12 @@
 package net.bodz.lily.entity.attachment;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
@@ -22,9 +23,9 @@ public class AttachmentGroup
         implements
             IVolumeProvider {
 
-    File baseDir;
+    Path baseDir;
 
-    public AttachmentGroup(File baseDir) {
+    public AttachmentGroup(Path baseDir) {
         this.baseDir = baseDir;
     }
 
@@ -36,14 +37,14 @@ public class AttachmentGroup
         String protocol = protocolOther.a;
         String name = protocolOther.b;
         switch (protocol) {
-        case "entity":
-            return resolveEntityVolume(name);
+            case "entity":
+                return resolveEntityVolume(name);
 
-        case "incoming":
-            return resolveIncomingVolume(name);
+            case "incoming":
+                return resolveIncomingVolume(name);
 
-        default:
-            throw new NoSuchKeyException(volumeId);
+            default:
+                throw new NoSuchKeyException(volumeId);
         }
     }
 
@@ -54,7 +55,7 @@ public class AttachmentGroup
         EntityVolume volume = entityCache.get(name);
         if (volume == null) {
             IAnchor anchor = IBasicSiteAnchors._webApp_.join(name).enter();
-            File entityBaseDir = new File(baseDir, name);
+            Path entityBaseDir = baseDir.resolve(name);
             String id = "entity:" + name;
             volume = new EntityVolume(id, anchor, entityBaseDir);
             entityCache.put(name, volume);
@@ -66,9 +67,9 @@ public class AttachmentGroup
         EntityVolume volume = incomingCache.get(name);
         if (volume == null) {
             IAnchor anchor = IBasicSiteAnchors._webApp_.join(name).enter().join("incoming/");
-            File incomingDir = new File(baseDir, name + "/tmp");
-            if (! incomingDir.exists()) {
-                incomingDir.mkdirs();
+            Path incomingDir = baseDir.resolve(name + "/tmp");
+            if (FileFn.notExists(incomingDir)) {
+                FileFn.mkdirs(incomingDir);
             }
             String id = "incoming:" + name;
             volume = new EntityVolume(id, anchor, incomingDir);
@@ -77,7 +78,7 @@ public class AttachmentGroup
         return volume;
     }
 
-    static Map<File, AttachmentGroup> baseDirCache = new HashMap<>();
+    static Map<Path, AttachmentGroup> baseDirCache = new HashMap<>();
 
     public static synchronized AttachmentGroup forRequest() {
         HttpServletRequest request = CurrentHttpService.getRequest();
@@ -88,7 +89,7 @@ public class AttachmentGroup
         IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalUsageException("unknown virtual host");
-        File baseDir = DefaultSiteDirs.getInstance().getDataDir(vhost.getName());
+        Path baseDir = DefaultSiteDirs.getInstance().getDataDir(vhost.getName());
         AttachmentGroup group = baseDirCache.get(baseDir);
         if (group == null) {
             group = new AttachmentGroup(baseDir);

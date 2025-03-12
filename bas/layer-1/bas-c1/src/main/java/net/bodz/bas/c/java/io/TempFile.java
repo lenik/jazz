@@ -2,11 +2,20 @@ package net.bodz.bas.c.java.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import net.bodz.bas.c.java.nio.file.FileFn;
+import net.bodz.bas.c.java.util.stream.iterable.Stream;
+import net.bodz.bas.err.ErrorHandlers;
+import net.bodz.bas.err.IErrorHandler;
 
 public class TempFile {
 
     private static String tempPath;
-    private static File tempRoot = null;
+    private static Path tempRoot = null;
+
     static {
         tempPath = System.getenv("TEMP");
         if (tempPath == null) {
@@ -14,70 +23,70 @@ public class TempFile {
             if (tempPath == null)
                 tempPath = "/tmp";
         }
-        tempRoot = new File(tempPath);
+        tempRoot = Paths.get(tempPath);
     }
 
     /**
      * @see File#createTempFile(String, String)
      * @see File#createTempFile(String, String, File)
      */
-    public static File getTempRoot() {
+    public static Path getTempRoot() {
         assert tempRoot != null;
-        if (!tempRoot.exists())
-            if (!tempRoot.mkdirs())
+        if (Files.notExists(tempRoot))
+            if (!FileFn.mkdirs(tempRoot))
                 throw new RuntimeException("Can't initialize temporary directory: " + tempRoot);
         return tempRoot;
     }
 
-    public static File createTempFile(String prefix, String suffix)
+    public static Path createTempFile(String prefix, String suffix)
             throws IOException {
-        return File.createTempFile(prefix, suffix, tempRoot);
+        return Files.createTempFile(tempRoot, prefix, suffix);
     }
 
-    public static File createTempFile(String prefix, String suffix, File directory)
+    public static Path createTempFile(String prefix, String suffix, Path directory)
             throws IOException {
-        return File.createTempFile(prefix, suffix, directory);
+        return Files.createTempFile(directory, prefix, suffix);
     }
 
-    public static File createTempDirectory(String prefix, String suffix)
+    public static Path createTempDirectory(String prefix, String suffix)
             throws IOException {
         return createTempDirectory(prefix, suffix, tempRoot);
     }
 
-    public static File createTempDirectory(String prefix, String suffix, File directory)
+    public static Path createTempDirectory(String prefix, String suffix, Path directory)
             throws IOException {
-        File tempFile = File.createTempFile(prefix, suffix);
+        Path tempFile = Files.createTempFile(prefix, suffix);
         return _mktmpdir(tempFile);
     }
 
-    static File _mktmpdir(File tmpfile)
+    static Path _mktmpdir(Path tmpfile)
             throws IOException {
-        tmpfile.delete();
+        FileFn.delete(tmpfile);
 
-        File parent = tmpfile.getParentFile();
-        String name = tmpfile.getName();
-        File tmpdir = new File(parent, name + ".d");
+        Path parent = tmpfile.getParent();
+        String name = tmpfile.getFileName().toString();
+        Path tmpdir = parent.resolve(name + ".d");
 
         int index = 0;
-        while (tmpdir.exists())
-            tmpdir = new File(parent, name + index++ + ".d");
+        while (Files.exists(tmpdir))
+            tmpdir = parent.resolve(name + index++ + ".d");
 
-        if (!tmpdir.mkdir())
+        if (!FileFn.mkdir(tmpdir))
             throw new IOException("Failed to mkdir " + tmpdir);
 
-        tmpdir.deleteOnExit();
+        FileFn.deleteOnExit(tmpdir);
 
         return tmpdir;
     }
 
     // Shortcuts
 
-    public static File createTempFile()
+    public static Path createTempFile()
             throws IOException {
         return createTempFile("bas", null);
     }
 
-    public static File createTempDirectory()
+    public static Path createTempDirectory()
             throws IOException {
         return createTempDirectory("bas", null);
     }
@@ -85,20 +94,35 @@ public class TempFile {
     /**
      * Delete the file and all children files.
      */
-    public static boolean deleteTree(File start) {
+    public static int deleteTree(Path start) {
+        return deleteTree(start, ErrorHandlers.<Throwable, Path>pass());
+    }
+
+    public static int deleteTree(Path start, IErrorHandler<? super IOException, Path> handler) {
         assert start != null;
-        if (!start.exists())
-            return false;
-        if (start.isFile())
-            return start.delete();
-        assert start.isDirectory();
-        File[] children = start.listFiles();
-        boolean succ = true;
-        for (File child : children) {
-            succ = deleteTree(child) && succ;
+        if (Files.notExists(start))
+            return 1;
+
+        if (!Files.isDirectory(start))
+            return FileFn.delete(start) ? 0 : 1;
+
+        int errorCount = 0;
+        try (Stream<Path> stream = FileFn.list(start)) {
+            for (Path child : stream) {
+                errorCount += deleteTree(child, handler);
+            }
+        } catch (IOException e) {
+            handler.handleError(e, start);
+            return ++errorCount;
         }
-        succ = start.delete() && succ;
-        return succ;
+
+        try {
+            Files.delete(start);
+        } catch (IOException e) {
+            handler.handleError(e, start);
+            ++errorCount;
+        }
+        return errorCount;
     }
 
 }

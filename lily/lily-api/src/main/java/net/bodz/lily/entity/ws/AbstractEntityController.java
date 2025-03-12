@@ -1,7 +1,7 @@
 package net.bodz.lily.entity.ws;
 
-import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.poi.ss.usermodel.Workbook;
@@ -141,7 +142,7 @@ public abstract class AbstractEntityController<T>
     }
 
     void addCommand(IEntityCommandType cmd, boolean replaceExisting) {
-        if (! replaceExisting) {
+        if (!replaceExisting) {
             locator.checkConflict(cmd);
         }
         locator.add(cmd);
@@ -300,7 +301,7 @@ public abstract class AbstractEntityController<T>
                 vec = Arrays.copyOfRange(vec, 1, vec.length);
                 IPathFields pathFields = new ArrayPathFields(vec);
                 IVolumeItem item = incomingVolume.getFile(pathFields);
-                File localFile = item.getLocalFile();
+                Path localFile = item.getLocalFile();
                 URL resource = FileURL.toURL(localFile);
                 return PathArrival.shift(tokens.available(), previous, this, new URLResource(resource), tokens);
         }

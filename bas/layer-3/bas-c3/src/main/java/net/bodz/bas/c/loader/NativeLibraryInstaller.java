@@ -1,62 +1,66 @@
 package net.bodz.bas.c.loader;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.c.java.io.TempFile;
+import net.bodz.bas.c.java.nio.file.FileFn;
+import net.bodz.bas.c.java.util.stream.iterable.Stream;
 
 public class NativeLibraryInstaller {
 
     private static boolean IGNORE_CASE;
-    private static String LIB_EXTENSION;
-    private static File DEFAULT_INSTALL_DIR;
+    private static final String LIB_EXTENSION;
+    private static final Path DEFAULT_INSTALL_DIR;
+
     static {
         String osName = System.getProperty("os.name");
         if (osName != null) {
             if (osName.startsWith("Windows"))
                 IGNORE_CASE = true;
         }
-        LIB_EXTENSION = System.mapLibraryName("a").substring(1);
+        String aName = System.mapLibraryName("a").substring(1);
         if (IGNORE_CASE)
-            LIB_EXTENSION = LIB_EXTENSION.toLowerCase();
+            aName = aName.toLowerCase();
+        LIB_EXTENSION = aName;
 
-        DEFAULT_INSTALL_DIR = new File(TempFile.getTempRoot(), "BundledLib");
-        DEFAULT_INSTALL_DIR.mkdirs();
+        DEFAULT_INSTALL_DIR = TempFile.getTempRoot().resolve("BundledLib");
+        FileFn.mkdirs(DEFAULT_INSTALL_DIR);
     }
 
-    private File installDir;
-    private List<ClassLoader> loaders = new ArrayList<ClassLoader>();
-    private Map<String, File> installedLibraries = new HashMap<String, File>();
+    final Path installDir;
+    final List<ClassLoader> loaders = new ArrayList<ClassLoader>();
+    final Map<String, Path> installedLibraries = new HashMap<>();
 
     public NativeLibraryInstaller() {
         this(DEFAULT_INSTALL_DIR);
     }
 
-    public NativeLibraryInstaller(File installDir) {
+    public NativeLibraryInstaller(Path installDir) {
         this.installDir = installDir;
 
-        File[] existedFiles = installDir.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
+        try (Stream<Path> stream = FileFn.list(installDir)) {
+            for (Path child : stream) {
+                String name = child.getFileName().toString();
                 if (IGNORE_CASE)
                     name = name.toLowerCase();
-                return name.endsWith(LIB_EXTENSION);
-            }
-        });
+                if (LIB_EXTENSION != null)
+                    if (!name.endsWith(LIB_EXTENSION))
+                        continue;
 
-        for (File file : existedFiles) {
-            String name = file.getName();
-            String existedLibname = name.substring(0, name.length() - LIB_EXTENSION.length());
-            installedLibraries.put(existedLibname, file);
+                String existedLibname = name.substring(0, name.length() - LIB_EXTENSION.length());
+                installedLibraries.put(existedLibname, child);
+            }
+        } catch (IOException e) {
+            // ignore.
         }
     }
 
@@ -92,7 +96,7 @@ public class NativeLibraryInstaller {
      * @return <code>null</code> if not found.
      * @throws IOException
      */
-    public synchronized File install(String libname)
+    public synchronized Path install(String libname)
             throws IOException {
         String filename = System.mapLibraryName(libname);
 
@@ -105,43 +109,27 @@ public class NativeLibraryInstaller {
         if (resource == null)
             return null;
 
-        File installedFile = installedLibraries.get(libname);
+        Path installedFile = installedLibraries.get(libname);
 
         if (installedFile == null) {
-            installedFile = new File(installDir, filename);
+            installedFile = installDir.resolve(filename);
 
-            InputStream in = null;
-            OutputStream out = null;
-
-            try {
-                in = resource.openStream();
-                out = new FileOutputStream(installedFile);
-
-                byte[] block = new byte[8192];
-                int cb;
-                while ((cb = in.read(block)) != -1) {
-                    out.write(block, 0, cb);
+            try (InputStream in = resource.openStream()) {
+                try (OutputStream out = Files.newOutputStream(installedFile)) {
+                    byte[] block = new byte[8192];
+                    int cb;
+                    while ((cb = in.read(block)) != -1) {
+                        out.write(block, 0, cb);
+                    }
                 }
-            } finally {
-                if (out != null)
-                    try {
-                        out.close();
-                    } catch (IOException e) {
-                    }
-                if (in != null)
-                    try {
-                        in.close();
-                    } catch (IOException e) {
-                    }
             }
-
             installedLibraries.put(libname, installedFile);
         }
-
         return installedFile;
     }
 
     static final NativeLibraryInstaller instance = new NativeLibraryInstaller();
+
     static {
         instance.addParallelLoader();
     }

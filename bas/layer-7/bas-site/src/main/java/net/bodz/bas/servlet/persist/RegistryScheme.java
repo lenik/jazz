@@ -1,23 +1,23 @@
 package net.bodz.bas.servlet.persist;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.c.system.SysProps;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class RegistryScheme {
 
-    static File rootDir;
+    static Path rootDir;
 
     String id;
-    File homeDir;
+    Path homeDir;
     String extension = ".json";
 
-    public RegistryScheme(File homeDir) {
-        if (homeDir == null)
-        throw new NullPointerException("homeDir");
-        this.homeDir=homeDir;
+    public RegistryScheme(@NotNull Path homeDir) {
+        this.homeDir = homeDir;
     }
 
     RegistryScheme(String id) {
@@ -26,69 +26,65 @@ public class RegistryScheme {
         this.id = id;
     }
 
-    public File getHomeDir() {
+    public Path getHomeDir() {
         return homeDir;
     }
 
-    public void setHomeDir(File homeDir) {
+    public void setHomeDir(Path homeDir) {
         this.homeDir = homeDir;
     }
 
-    public File getContextFile() {
+    public Path getContextFile() {
         checkInit();
-        File file = new File(homeDir, "context" + extension);
+        Path file = homeDir.resolve("context" + extension);
         return prepare(file);
     }
 
-    public File getVhostFile(String vhostId) {
+    public Path getVhostFile(String vhostId) {
         checkInit();
-        File file = new File(homeDir, "vhost/" + vhostId + extension);
+        Path file = homeDir.resolve("vhost/" + vhostId + extension);
         return prepare(file);
     }
 
-    public File getSessionFile(String sessionId) {
+    public Path getSessionFile(String sessionId) {
         checkInit();
-        File file = new File(homeDir, "session/" + sessionId + extension);
+        Path file = homeDir.resolve("session/" + sessionId + extension);
         return prepare(file);
     }
 
-    public File getRequestFile(String requestId) {
+    public Path getRequestFile(String requestId) {
         checkInit();
-        File file = new File(homeDir, "request/" + requestId + extension);
+        Path file = homeDir.resolve("request/" + requestId + extension);
         return prepare(file);
     }
 
     synchronized void checkInit() {
         if (homeDir == null) {
             if (rootDir != null)
-                homeDir = new File(rootDir + "/" + id);
+                homeDir = rootDir.resolve(id);
             else
                 throw new IllegalStateException(String.format(//
                         "Home dir of appRegistry %s isn't initialized.", id));
         }
     }
 
-    File prepare(File file) {
+    Path prepare(Path file) {
         // file = file.getAbsoluteFile();
-        File dir = file.getParentFile();
-        dir.mkdirs();
+        Path dir = file.getParent();
+        FileFn.mkdirs(dir);
         return file;
     }
 
     static void useDefaultRootDir() {
-        rootDir = new File(SysProps.userHome, ".config/bas-site/registry");
+        Path home = SysProps.userHome;
+        rootDir = home.resolve(".config/bas-site/registry");
     }
 
     static Map<String, RegistryScheme> map = new HashMap<>();
 
     @Deprecated
     public static synchronized RegistryScheme getInstance(String id) {
-        RegistryScheme registry = map.get(id);
-        if (registry == null) {
-            registry = new RegistryScheme(id);
-            map.put(id, registry);
-        }
-        return registry;
+        return map.computeIfAbsent(id, RegistryScheme::new);
     }
 
 }

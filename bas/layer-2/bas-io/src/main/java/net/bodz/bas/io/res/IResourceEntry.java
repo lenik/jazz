@@ -1,14 +1,14 @@
 package net.bodz.bas.io.res;
 
-import net.bodz.bas.c.java.nio.Charsets;
-import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.sugar.IToChain;
-import net.bodz.bas.sugar.Tooling;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.LinkOption;
 import java.time.OffsetDateTime;
+
+import net.bodz.bas.c.java.nio.Charsets;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.sugar.IToChain;
+import net.bodz.bas.sugar.Tooling;
 
 public interface IResourceEntry
         extends IToChain {

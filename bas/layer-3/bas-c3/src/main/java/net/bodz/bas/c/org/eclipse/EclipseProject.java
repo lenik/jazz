@@ -1,21 +1,21 @@
 package net.bodz.bas.c.org.eclipse;
 
-import java.io.File;
+import java.nio.file.Path;
 
 public class EclipseProject {
 
-    File baseDir;
+    Path baseDir;
 
     public EclipseProject() {
     }
 
-    public EclipseProject(File baseDir) {
+    public EclipseProject(Path baseDir) {
         if (baseDir == null)
             throw new NullPointerException("baseDir");
         this.baseDir = baseDir;
     }
 
-    public File getBaseDir() {
+    public Path getBaseDir() {
         return baseDir;
     }
 

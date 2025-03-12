@@ -1,10 +1,11 @@
 package net.bodz.uni.shelj.codegen.java.service;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.c.loader.scan.ClassCollector;
@@ -75,7 +76,7 @@ public class TypeCollectorApp
      *
      * @option -d --dir =PATH
      */
-    List<File> scanDirs = new ArrayList<>();
+    List<Path> scanDirs = new ArrayList<>();
 
     ClassLoader classLoader;
     TypeIndex typeIndex;
@@ -102,17 +103,17 @@ public class TypeCollectorApp
             logger.info("Search-Package: ", pkg);
 
         if (scanPackages.isEmpty() && scanDirs.isEmpty()) {
-            File workDir = SysProps.userWorkDir;
+            Path workDir = SysProps.userWorkDir;
             MavenPomDir pomDir = MavenPomDir.closest(workDir);
             if (pomDir == null) {
                 logger.error("Not with-in a maven project: " + workDir);
                 _exit(1);
             }
-            File targetDir = new File(pomDir.getBaseDir(), "target");
+            Path targetDir = pomDir.getBaseDir().resolve("target");
             scanDirs.add(targetDir);
         }
 
-        for (File dir : scanDirs)
+        for (Path dir : scanDirs)
             logger.info("Search-Dir: ", dir);
 
         if (indexedTypes.isEmpty())
@@ -124,15 +125,15 @@ public class TypeCollectorApp
         for (String pkg : scanPackages)
             collector.includePackageToScan(pkg);
 
-        for (File dir : scanDirs) {
-            dir = dir.getCanonicalFile();
+        for (Path dir : scanDirs) {
+            dir = FilePath.canoniOf(dir);
             collector.includeDirToScan(dir);
         }
 
         ClassForrest forrest = collector.scan(classLoader);
 
         for (Class<?> baseClass : indexedTypes) {
-            if (! baseClass.isAnnotationPresent(IndexedType.class)) {
+            if (!baseClass.isAnnotationPresent(IndexedType.class)) {
                 logger.error("@IndexedType not present on " + baseClass);
                 continue;
             }

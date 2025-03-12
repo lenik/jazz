@@ -12,6 +12,7 @@ import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.adapter.ByteBufferByteIn;
 import net.bodz.bas.io.adapter.ByteBufferByteOut;
 import net.bodz.bas.meta.decl.DefaultImpl;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class ByteArrayResource
         extends AbstractBinaryResource<ByteArrayResource> {
@@ -61,6 +62,7 @@ public class ByteArrayResource
         return (long) (end - start);
     }
 
+    @NotNull
     @DefaultImpl(ByteBufferByteIn.class)
     @Override
     public IByteIn newByteIn(OpenOption... options)
@@ -69,6 +71,7 @@ public class ByteArrayResource
         return new ByteBufferByteIn(byteBuffer);
     }
 
+    @NotNull
     @Override
     public IByteOut newByteOut(OpenOption... options)
             throws IOException {

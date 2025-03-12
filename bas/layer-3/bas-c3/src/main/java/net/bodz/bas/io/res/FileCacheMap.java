@@ -2,7 +2,7 @@ package net.bodz.bas.io.res;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Path;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -10,17 +10,31 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.Predicate;
 
-import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.util.Collections;
-import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 
-public class FileCacheMap {
+public class FileCacheMap<T extends Comparable<T>> {
 
     static final Logger logger = LoggerFactory.getLogger(FileCacheMap.class);
 
-    Map<File, List<String>> map = new TreeMap<>();
+    Map<T, List<String>> map = new TreeMap<>();
+    final IResourceType<T> type;
+
+    public FileCacheMap(@NotNull IResourceType<T> type) {
+        if (type == null)
+            throw new NullPointerException("type");
+        this.type = type;
+    }
+
+    public static FileCacheMap<File> create() {
+        return new FileCacheMap<File>(FileResourceType.INSTANCE);
+    }
+
+    public static FileCacheMap<Path> createPathIndexed() {
+        return new FileCacheMap<Path>(PathResourceType.INSTANCE);
+    }
 
     public int size() {
         return map.size();
@@ -30,18 +44,22 @@ public class FileCacheMap {
         return map.isEmpty();
     }
 
-    public Set<File> fileSet() {
+    public Set<T> keySet() {
         return map.keySet();
     }
 
-    public boolean containsFile(File file) {
+    public boolean containsFile(T file) {
         return map.containsKey(file);
     }
 
-    public FileCacheMap grep(Predicate<File> p) {
-        FileCacheMap sub = new FileCacheMap();
-        for (File file : map.keySet()) {
-            if (p.test(file)) {
+    protected FileCacheMap<T> newMap() {
+        return new FileCacheMap<T>(type);
+    }
+
+    public FileCacheMap<T> grep(Predicate<T> filePredicate) {
+        FileCacheMap<T> sub = newMap();
+        for (T file : map.keySet()) {
+            if (filePredicate.test(file)) {
                 List<String> data = map.get(file);
                 sub.map.put(file, data);
             }
@@ -49,16 +67,11 @@ public class FileCacheMap {
         return sub;
     }
 
-    public List<String> loadCache(File file) {
+    public List<String> loadLinesCached(T file)
+            throws IOException {
         List<String> list = map.get(file);
         if (list == null) {
-            list = new ArrayList<String>();
-
-            if (file.exists())
-                for (String line : ResFn.file(file).to(StreamReading.class).lines()) {
-                    list.add(line.trim());
-                }
-
+            list = type.loadLines(file);
             map.put(file, list);
         }
         return list;
@@ -71,15 +84,15 @@ public class FileCacheMap {
 
     public void save(ISaveOptions options)
             throws IOException {
-        for (Map.Entry<File, List<String>> entry : map.entrySet()) {
-            File file = entry.getKey();
+        for (Map.Entry<T, List<String>> entry : map.entrySet()) {
+            T file = entry.getKey();
 
             List<String> lines = entry.getValue();
             Collections.sort(lines);
 
             if (lines.isEmpty() && options.isPurgeEmpty()) {
                 logger.info("delete " + file);
-                if (! file.delete())
+                if (!type.delete(file))
                     logger.error("can't delete " + file);
                 continue;
             }
@@ -92,10 +105,10 @@ public class FileCacheMap {
             String content = buf.toString();
 
             if (options.isCompare()) {
-                if (file.exists()) {
+                if (type.exists(file)) {
                     String old;
                     try {
-                        old = FileData.readString(file);
+                        old = type.loadText(file);
                         if (content.equals(old)) {
                             logger.debug("unchanged: " + file);
                             continue;
@@ -113,12 +126,12 @@ public class FileCacheMap {
             try {
                 logger.info("update file " + file);
                 if (options.isMkdirs())
-                    file.getParentFile().mkdirs();
+                    type.createParentDirs(file);
 
                 if (options.getEncoding() == null)
-                    FileData.writeString(file, content);
+                    type.saveText(file, content);
                 else
-                    FileData.writeString(file, content, options.getEncoding());
+                    type.saveText(file, content, options.getEncoding());
             } catch (IOException e) {
                 logger.error("error writing file " + file, e);
                 if (options.getErrorHandler() != null)

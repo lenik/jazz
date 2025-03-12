@@ -1,7 +1,7 @@
 package net.bodz.bas.c.org.eclipse;
 
-import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -10,7 +10,7 @@ import org.junit.Test;
 public class JavaProjectBaseDirTest
         extends Assert {
 
-    File baseDir;
+    Path baseDir;
     JavaProject project;
 
     public JavaProjectBaseDirTest()

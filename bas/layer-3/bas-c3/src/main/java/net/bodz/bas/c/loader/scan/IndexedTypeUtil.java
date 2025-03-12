@@ -3,6 +3,7 @@ package net.bodz.bas.c.loader.scan;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
+import java.nio.file.Path;
 
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.io.res.ContainerItems;
@@ -35,13 +36,13 @@ public class IndexedTypeUtil {
         return ExcludeReason.Accepted;
     }
 
-    public static Pair<ExcludeReason, File> checkDir(Class<?> clazz) {
+    public static Pair<ExcludeReason, Path> checkDir(Class<?> clazz) {
         MavenPomDir pomDir = MavenPomDir.fromClass(clazz);
         if (pomDir == null)
             // logger.debug("Not belongs to maven project. Maybe in the jar: " + clazz);
             return Pair.of(ExcludeReason.NotMaven, null);
 
-        final File resourceDir = pomDir.getResourceDir(clazz);
+        final Path resourceDir = pomDir.getResourceDir(clazz);
         if (resourceDir == null)
             // logger.debug("Can't determine the corresponding resource dir for " + clazz);
             return Pair.of(ExcludeReason.NoResourceDir, null);

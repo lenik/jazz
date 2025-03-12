@@ -1,6 +1,14 @@
 package net.bodz.bas.c.java.io;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 
 public class FileData {
@@ -89,7 +97,7 @@ public class FileData {
     /**
      * Trim the file to the length, or extend the file, the extension part may be filled with
      * unknown bytes. If the file isn't existed, a new file may be created.
-     * 
+     *
      * @param newLength
      *            New length to be set. The length should be >= <code>0</code>.
      * @return <code>false</code> If the given file object does not denote an existing, writable
@@ -100,40 +108,21 @@ public class FileData {
      */
     public static boolean setLength(File file, long newLength)
             throws IOException {
-        RandomAccessFile raf = null;
-        try {
-            raf = new RandomAccessFile(file, "rw");
+        try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
             raf.setLength(newLength);
+            return true;
         } catch (FileNotFoundException e) {
             return false;
-        } finally {
-            try {
-                raf.close();
-            } catch (IOException e) {
-            }
         }
-        return true;
     }
 
     public static boolean touch(File file, boolean updateLastModifiedTime)
             throws IOException {
-        if (!file.exists()) {
-            FileOutputStream out = null;
-            try {
-                out = new FileOutputStream(file);
-            } catch (FileNotFoundException e) {
-                return false;
-            } finally {
-                if (out != null)
-                    try {
-                        out.close();
-                    } catch (IOException e) {
-                    }
-            }
-        } else {
-            if (updateLastModifiedTime)
-                file.setLastModified(System.currentTimeMillis());
+        try (OutputStream out = new FileOutputStream(file, true)) {
+            return true;
+        } catch (FileNotFoundException e) {
+            return false;
         }
-        return true;
     }
+
 }

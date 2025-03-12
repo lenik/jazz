@@ -1,8 +1,7 @@
 package net.bodz.lily.storage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.t.file.IPathFields;
@@ -20,7 +19,7 @@ public interface IVolumeItem
         return getVolume().getVolumeAnchor().join(path);
     }
 
-    default File getLocalFile() {
+    default Path getLocalFile() {
         return getVolume().getLocalFile(getPath());
     }
 
@@ -39,29 +38,29 @@ public interface IVolumeItem
      * @return 0 if unknown.
      */
     long getSize()
-            throws FileNotFoundException;
+            throws IOException;
 
     String getSHA1()
             throws IOException;
 
-    default boolean rename(String newFileName)
+    default void renameTo(String newFileName)
             throws IOException {
-        return getVolume().rename(getPath(), newFileName);
+        getVolume().renameTo(getPath(), newFileName);
     }
 
-    default boolean moveTo(String newPath)
+    default void moveTo(String newPath)
             throws IOException {
-        return getVolume().moveTo(getPath(), newPath);
+        getVolume().moveTo(getPath(), newPath);
     }
 
-    default boolean moveTo(String newDirName, String newFileName)
+    default void moveTo(String newDirName, String newFileName)
             throws IOException {
-        return getVolume().moveTo(getPath(), newDirName, newFileName);
+        getVolume().moveTo(getPath(), newDirName, newFileName);
     }
 
-    default boolean delete()
+    default void delete()
             throws IOException {
-        return getVolume().delete(getPath());
+        getVolume().delete(getPath());
     }
 
 }

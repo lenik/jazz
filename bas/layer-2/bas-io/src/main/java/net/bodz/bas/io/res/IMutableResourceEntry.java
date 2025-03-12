@@ -1,13 +1,6 @@
 package net.bodz.bas.io.res;
 
-import net.bodz.bas.meta.decl.DefaultImpl;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
-import java.util.Objects;
 
 public interface IMutableResourceEntry<This>
         extends IResourceEntry {

@@ -1,28 +1,32 @@
 package net.bodz.bas.codegen;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.Closeable;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.io.process.MyProcessBuilder;
 import net.bodz.bas.io.process.ProcessWrapper;
 import net.bodz.bas.io.res.ResFn;
 
-public class UnixPatchUpdater {
+public class UnixPatchUpdater
+        implements Closeable {
 
-    File baseDir;
+    Path baseDir;
 
-    File file1;
+    Path file1;
     String file1Path;
     boolean tmp1;
 
-    File file2;
+    Path file2;
     String file2Path;
     boolean tmp2;
 
-    File patchFile;
+    Path patchFile;
     Charset charset;
     String prefix1;
     String prefix2;
@@ -30,8 +34,7 @@ public class UnixPatchUpdater {
     boolean deleteEmptyPatch;
     boolean ignoreSameBody;
 
-    UnixPatchUpdater(File baseDir, File file1, String file1Path, boolean tmp1, File file2, String file2Path,
-            boolean tmp2, File patchFile, Charset charset, String prefix1, String prefix2) {
+    UnixPatchUpdater(Path baseDir, Path file1, String file1Path, boolean tmp1, Path file2, String file2Path, boolean tmp2, Path patchFile, Charset charset, String prefix1, String prefix2) {
         if (baseDir == null)
             throw new NullPointerException("baseDir");
         if (file1Path == null)
@@ -65,18 +68,18 @@ public class UnixPatchUpdater {
 
     public void update()
             throws IOException {
-        File patchDir = patchFile.getParentFile();
-        if (! patchDir.exists())
-            patchDir.mkdirs();
+        Path patchDir = patchFile.getParent();
+        if (Files.notExists(patchDir))
+            FileFn.mkdirs(patchDir);
 
         String oldPatchText = null;
-        if (patchFile.exists())
-            oldPatchText = ResFn.file(patchFile, charset).read().readString();
+        if (Files.exists(patchFile))
+            oldPatchText = ResFn.path(patchFile).charset(charset).read().readString();
 
         ByteArrayOutputStream newPatchData = new ByteArrayOutputStream();
         ProcessWrapper diffProcess = new MyProcessBuilder() //
                 .command("diff", "-u", file1Path, file2Path) //
-                .directory(baseDir) //
+                .directory(baseDir.toFile()) //
                 .captureOutput((_buf, off, len) -> {
                     newPatchData.write(_buf, off, len);
                 }) //
@@ -84,7 +87,7 @@ public class UnixPatchUpdater {
         try {
             int diffStatus = diffProcess.waitFor(true);
             if (diffStatus == 0 && deleteEmptyPatch) {
-                patchFile.delete();
+                FileFn.delete(patchFile);
             } else {
                 // update the patch file.
                 String newPatchText = new String(newPatchData.toByteArray(), charset);
@@ -93,7 +96,7 @@ public class UnixPatchUpdater {
                 } else {
                     if (prefix1 != null && prefix2 != null)
                         newPatchText = UnixPatches.modifyDiffPath(newPatchText, prefix1, prefix2);
-                    ResFn.file(patchFile).write().write(newPatchText.getBytes(charset));
+                    ResFn.path(patchFile).write().write(newPatchText.getBytes(charset));
                 }
             }
         } catch (InterruptedException e) {
@@ -102,39 +105,52 @@ public class UnixPatchUpdater {
     }
 
     @Override
+    public void close()
+            throws IOException {
+        if (tmp1) {
+            FileFn.delete(file1);
+            tmp1 = false;
+            file1 = null;
+        }
+        if (tmp2) {
+            FileFn.delete(file2);
+            tmp2 = false;
+            file2 = null;
+        }
+    }
+
+    @SuppressWarnings("removal")
+    @Override
     protected void finalize()
             throws Throwable {
-        if (tmp1)
-            file1.delete();
-        if (tmp2)
-            file2.delete();
+        close();
     }
 
     public static class Builder {
 
-        File baseDir;
+        Path baseDir;
 
-        File file1;
+        Path file1;
         String path1;
         String file1Content;
         boolean tmp1;
 
-        File file2;
+        Path file2;
         String path2;
         String file2Content;
         boolean tmp2;
 
-        File patchFile;
+        Path patchFile;
         Charset charset = Charset.defaultCharset();
         String prefix1;
         String prefix2;
 
-        public Builder baseDir(File baseDir) {
+        public Builder baseDir(Path baseDir) {
             this.baseDir = baseDir;
             return this;
         }
 
-        public Builder file1(File file1) {
+        public Builder file1(Path file1) {
             this.file1 = file1;
             return this;
         }
@@ -157,7 +173,7 @@ public class UnixPatchUpdater {
             return this;
         }
 
-        public Builder file2(File file2) {
+        public Builder file2(Path file2) {
             this.file2 = file2;
             return this;
         }
@@ -179,7 +195,7 @@ public class UnixPatchUpdater {
             return this;
         }
 
-        public Builder patchFile(File patchFile) {
+        public Builder patchFile(Path patchFile) {
             this.patchFile = patchFile;
             return this;
         }
@@ -212,31 +228,30 @@ public class UnixPatchUpdater {
             if (file1 == null && path1 == null)
                 throw new NullPointerException("file1 or path1");
             if (file1 == null)
-                file1 = new File(baseDir, path1);
+                file1 = baseDir.resolve(path1);
             if (path1 == null)
-                path1 = file1.getPath();
+                path1 = file1.toString();
 
             if (file2 == null && path2 == null) {
             } else {
                 if (file2 == null)
-                    file2 = new File(baseDir, path2);
+                    file2 = baseDir.resolve(path2);
                 if (path2 == null)
-                    path2 = file2.getPath();
+                    path2 = file2.toString();
             }
 
-            return new UnixPatchUpdater(baseDir, file1, path1, tmp1, file2, path2, tmp2, patchFile, charset, prefix1,
-                    prefix2);
+            return new UnixPatchUpdater(baseDir, file1, path1, tmp1, file2, path2, tmp2, patchFile, charset, prefix1, prefix2);
         }
 
-        static File makeTempLike(String path, String content)
+        static Path makeTempLike(String path, String content)
                 throws IOException {
             String baseName = FilePath.getBaseName(path);
             int lastDot = baseName.lastIndexOf('.');
             String name = lastDot == -1 ? baseName : baseName.substring(0, lastDot);
             String dotExtension = lastDot == -1 ? "" : baseName.substring(lastDot);
-            File tempFile = File.createTempFile(name, dotExtension);
+            Path tempFile = Files.createTempFile(name, dotExtension);
             if (content != null)
-                ResFn.file(tempFile).write().writeString(content);
+                ResFn.path(tempFile).write().writeString(content);
             return tempFile;
         }
 

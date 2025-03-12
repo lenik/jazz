@@ -5,19 +5,37 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import net.bodz.bas.c.java.nio.file.FileFn;
+
 public class FilePath {
 
-    private static String fileSeparator;
-    private static char fileSeparatorChar;
+    private static final String fileSeparator;
+    private static final char fileSeparatorChar;
+
     static {
         fileSeparator = System.getProperty("file.separator");
         if (fileSeparator == null || fileSeparator.isEmpty())
             fileSeparatorChar = '/';
         else
             fileSeparatorChar = fileSeparator.charAt(0);
+    }
+
+    public static Path canoniOf(Path f) {
+        return f == null ? null : f.toAbsolutePath().normalize();
+    }
+
+    public static Path canoniOf(Path f, boolean toRealPath, LinkOption... options)
+            throws IOException {
+        if (f == null)
+            return null;
+        if (toRealPath)
+            return f.toRealPath(options);
+        else
+            return f.toAbsolutePath().normalize();
     }
 
     /**
@@ -50,6 +68,11 @@ public class FilePath {
         if (url == null)
             throw new NullPointerException();
         return canoniOf(url.getFile());
+    }
+
+    public static Path canoniOf(Path parent, String childPath) {
+        parent = canoniOf(parent);
+        return canoniOf(parent.resolve(childPath));
     }
 
     public static File canoniOf(File parent, String childPath) {
@@ -131,6 +154,14 @@ public class FilePath {
         return getRelativePath(path, ref, fileSeparatorChar);
     }
 
+    public static String getRelativePath(Path file, Path ref) {
+        String path = canoniOf(file).toString();
+        String refPath = canoniOf(ref).toString();
+        if (Files.isDirectory(ref))
+            refPath += fileSeparatorChar;
+        return getRelativePath(path, refPath, fileSeparatorChar);
+    }
+
     /**
      * @return <code>null</code> if the given <code>file</code> isn't with-in the
      *         <code>origFile</code>, or the relative representation of <code>file</code> relative
@@ -166,6 +197,26 @@ public class FilePath {
      */
     public static String getRelativePath(URI uri, URI ref) {
         return getRelativePath(uri.getPath(), ref.getPath(), '/');
+    }
+
+    /**
+     * @param href
+     *            If doesn't specified (empty or <code>null</code>), the <code>startFile</code> is
+     *            returned.
+     */
+    public static Path joinHref(Path startFile, String href) {
+        if (href == null || href.isEmpty())
+            return startFile;
+
+        File test = new File(href);
+        if (test.isAbsolute())
+            return FileFn.toPath(test);
+
+        Path startDir = startFile;
+        if (!Files.isDirectory(startFile))
+            startDir = startFile.getParent();
+        Path file = startDir.resolve(href);
+        return file;
     }
 
     /**
@@ -226,6 +277,14 @@ public class FilePath {
     }
 
     /**
+     * @return The extension name without the dot(.). If file has no extension, returns
+     *         <code>null</code>.
+     */
+    public static String getExtension(String path) {
+        return getExtension(path, false);
+    }
+
+    /**
      * Get the extension name from the given path string.
      *
      * @param path
@@ -240,23 +299,13 @@ public class FilePath {
     public static String getExtension(String path, boolean includeDot) {
         if (path == null)
             throw new NullPointerException("path");
-        int dot = path.lastIndexOf('.');
+        int slash = path.lastIndexOf('/');
+        String name = slash == -1 ? path : path.substring(slash + 1);
+        int dot = name.lastIndexOf('.');
         if (dot == -1)
             return includeDot ? "" : null;
         else
-            return path.substring(includeDot ? dot : dot + 1);
-    }
-
-    public static String getExtension(File file, boolean includeDot) {
-        return getExtension(file.getPath(), includeDot);
-    }
-
-    /**
-     * @return The extension name without the dot(.). If file has no extension, returns
-     *         <code>null</code>.
-     */
-    public static String getExtension(String path) {
-        return getExtension(path, false);
+            return name.substring(includeDot ? dot : dot + 1);
     }
 
     /**
@@ -264,7 +313,35 @@ public class FilePath {
      *         <code>null</code>.
      */
     public static String getExtension(File file) {
-        return getExtension(file.getPath());
+        return getExtension(file, false);
+    }
+
+    public static String getExtension(File file, boolean includeDot) {
+        return getExtension(file.getName(), includeDot);
+    }
+
+    /**
+     * @return The extension name without the dot(.). If file has no extension, returns
+     *         <code>null</code>.
+     */
+    public static String getExtension(Path path) {
+        return getExtension(path, false);
+    }
+
+    /**
+     * @return The extension name without the dot(.). If file has no extension, returns
+     *         <code>null</code>.
+     */
+    public static String getExtension(Path path, boolean includeDot) {
+        Path fileName = path.getFileName();
+        if (fileName == null)
+            return null;
+        String name = fileName.toString();
+        int dot = name.lastIndexOf('.');
+        if (dot == -1)
+            return includeDot ? "" : null;
+        else
+            return name.substring(includeDot ? dot : dot + 1);
     }
 
     /**
@@ -345,8 +422,9 @@ public class FilePath {
 
     static File[] environPathArray;
     static String[] environPathExtArray;
+
     static {
-        String ps = System.getProperty("path.separator");
+        String ps = File.pathSeparator;
         if (ps == null)
             ps = ":";
         String pathenv = System.getenv("PATH");

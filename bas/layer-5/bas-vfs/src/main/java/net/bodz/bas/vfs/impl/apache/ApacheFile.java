@@ -1,19 +1,37 @@
 package net.bodz.bas.vfs.impl.apache;
 
 import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.Arrays;
 
-import org.apache.commons.vfs.*;
+import org.apache.commons.vfs.FileContent;
+import org.apache.commons.vfs.FileName;
+import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.FileSelectInfo;
+import org.apache.commons.vfs.FileSelector;
+import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.Selectors;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.DeleteOptions;
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.res.IRandomResource;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.iterator.Iterables;
-import net.bodz.bas.vfs.*;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFileAttributes;
+import net.bodz.bas.vfs.IFilenameFilter;
+import net.bodz.bas.vfs.IFsBlob;
+import net.bodz.bas.vfs.IFsDir;
+import net.bodz.bas.vfs.PathUnsupportedException;
+import net.bodz.bas.vfs.VFSException;
 
 public class ApacheFile
         extends AbstractFile {
@@ -38,6 +56,19 @@ public class ApacheFile
     public ApachePath getPath() {
         FileName fileName = fileObject.getName();
         return new ApachePath(fileName);
+    }
+
+    @NotNull
+    @Override
+    public Path toPath()
+            throws PathUnsupportedException {
+        URI uri = null;
+        try {
+            uri = fileObject.getURL().toURI();
+            return Paths.get(uri);
+        } catch (Exception e) {
+            throw new PathUnsupportedException(e);
+        }
     }
 
     @Override
@@ -146,8 +177,7 @@ public class ApacheFile
     }
 
     class VfsNameSelector
-            implements
-                FileSelector {
+            implements FileSelector {
 
         private final IFilenameFilter vfsFilter;
         private final IFile parentDir;
@@ -176,8 +206,7 @@ public class ApacheFile
     }
 
     class VfsFileSelector
-            implements
-                FileSelector {
+            implements FileSelector {
 
         private final IFilter<IFile> vfsFilter;
 

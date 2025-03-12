@@ -1,10 +1,12 @@
 package net.bodz.bas.code.project;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 
+import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.URLResource;
@@ -18,25 +20,25 @@ public class ResourceMap
     private static final long serialVersionUID = 1L;
 
     @Override
-    public void prepareFiles(File projectDir)
+    public void prepareFiles(Path projectDir)
             throws IOException {
         for (Entry<String, IStreamInputSource> entry : this.entrySet()) {
             String name = entry.getKey();
             IStreamInputSource source = entry.getValue();
 
-            File file = new File(projectDir, name).getAbsoluteFile();
-            File dir = file.getParentFile();
+            Path file = projectDir.resolve(name).toAbsolutePath().normalize();
+            Path dir = file.getParent();
 
-            if (!dir.exists())
-                if (!dir.mkdirs())
+            if (Files.notExists(dir))
+                if (!FileFn.mkdirs(dir))
                     throw new IOException("can't mkdir " + dir);
 
             if (source.isTextMode()) {
                 String content = source.to(StreamReading.class).readString();
-                ResFn.file(file).write().writeString(content);
+                ResFn.path(file).write().writeString(content);
             } else {
                 byte[] content = source.to(StreamReading.class).read();
-                ResFn.file(file).write().write(content);
+                ResFn.path(file).write().write(content);
             }
         }
     }

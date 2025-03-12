@@ -1,6 +1,6 @@
 package net.bodz.bas.program.skel;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.ServiceLoader;
 
 import org.junit.Assert;
@@ -45,9 +45,9 @@ public class QdoxTest
 
         MavenPomDir pomDir = MavenPomDir.fromClass(BasicCLI.class);
 
-        File sourceFile = pomDir.getSourceFile(BasicCLI.class);
+        Path sourceFile = pomDir.getSourceFile(BasicCLI.class);
 
-        projectBuilder.addSource(sourceFile);
+        projectBuilder.addSource(sourceFile.toFile());
         // javaDocBuilder.addSourceTree(file)
 
         for (JavaSource jsource : projectBuilder.getSources()) {

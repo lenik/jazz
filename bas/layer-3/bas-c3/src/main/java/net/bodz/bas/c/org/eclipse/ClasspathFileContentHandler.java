@@ -1,6 +1,6 @@
 package net.bodz.bas.c.org.eclipse;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -12,7 +12,7 @@ public class ClasspathFileContentHandler
         extends DefaultHandler {
 
     JavaProject project;
-    File baseDir;
+    Path baseDir;
 
     public ClasspathFileContentHandler(JavaProject project) {
         if (project == null)

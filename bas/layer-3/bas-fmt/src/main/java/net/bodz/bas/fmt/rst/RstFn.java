@@ -1,6 +1,14 @@
 package net.bodz.bas.fmt.rst;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
@@ -66,7 +74,12 @@ public class RstFn {
 
     public static void saveToRst(IRstForm obj, File file)
             throws IOException, FormatException {
-        try (FileOutputStream fos = new FileOutputStream(file)) {
+        saveToRst(obj, file.toPath());
+    }
+
+    public static void saveToRst(IRstForm obj, Path file)
+            throws IOException, FormatException {
+        try (OutputStream fos = Files.newOutputStream(file)) {
             OutputStreamWriter osw = new OutputStreamWriter(fos, "utf-8");
             IPrintOut out = new WriterPrintOut(osw);
             IRstOutput rstOutput = RstOutputImpl.from(out);
@@ -77,12 +90,17 @@ public class RstFn {
 
     public static void loadFromRst(IRstForm ctx, File file)
             throws IOException, ElementHandlerException, ParseException {
-        if (!file.exists())
+        loadFromRst(ctx, file.toPath());
+    }
+
+    public static void loadFromRst(IRstForm ctx, Path file)
+            throws IOException, ElementHandlerException, ParseException {
+        if (Files.notExists(file))
             return;
 
         RstLoader rstLoader = new RstLoader();
 
-        try (FileInputStream in = new FileInputStream(file)) {
+        try (InputStream in = Files.newInputStream(file)) {
             InputStreamReader reader = new InputStreamReader(in, "utf-8");
             RstInput rstInput = new RstInput(reader);
             rstLoader.load(rstInput, ctx.getElementHandler());

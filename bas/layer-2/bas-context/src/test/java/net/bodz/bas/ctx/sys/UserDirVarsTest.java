@@ -1,6 +1,7 @@
 package net.bodz.bas.ctx.sys;
 
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,10 +16,10 @@ public class UserDirVarsTest
     @Test
     public void testCwd()
             throws Exception {
-        File defaultWorkdir = UserDirVars.getInstance().get(IScopeInstance.STATIC);
+        Path defaultWorkdir = UserDirVars.getInstance().get(IScopeInstance.STATIC);
         assert defaultWorkdir != null;
         String userDir = System.getProperty("user.dir");
-        assertEquals(userDir, defaultWorkdir.getPath());
+        assertEquals(userDir, defaultWorkdir.toString());
     }
 
     @Test
@@ -26,27 +27,27 @@ public class UserDirVarsTest
             throws Exception {
 
         class Inner {
-            File getcwd() {
+            Path getcwd() {
                 ClassScopeInstance innerContext = Scopes.caller();
                 return UserDirVars.getInstance().get(innerContext);
             }
 
-            void chdir(File dir) {
+            void chdir(Path dir) {
                 ClassScopeInstance innerContext = Scopes.caller();
                 UserDirVars.getInstance().chdir(innerContext, dir);
             }
         }
 
         Inner inner = new Inner();
-        File userDir = new File(System.getProperty("user.dir"));
-        File innercwd = inner.getcwd();
+        Path userDir = Paths.get(System.getProperty("user.dir"));
+        Path innercwd = inner.getcwd();
         assertEquals(userDir, innercwd);
 
         ClassScopeInstance outerContext = Scopes.caller();
-        File outercwd = UserDirVars.getInstance().get(outerContext);
+        Path outercwd = UserDirVars.getInstance().get(outerContext);
         assertEquals(userDir, innercwd);
 
-        inner.chdir(new File("/"));
+        inner.chdir(Paths.get("/"));
         outercwd = UserDirVars.getInstance().get(outerContext);
         assertEquals(userDir, outercwd);
     }

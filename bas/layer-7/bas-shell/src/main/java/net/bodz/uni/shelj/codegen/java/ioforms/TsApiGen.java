@@ -1,6 +1,5 @@
 package net.bodz.uni.shelj.codegen.java.ioforms;
 
-import java.io.File;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -8,6 +7,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.Type;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -47,15 +47,16 @@ public class TsApiGen
 
     static final Logger logger = LoggerFactory.getLogger(TsApiGen.class);
 
-
     /**
-     *  Specify the output dir.
+     * Specify the output dir.
+     *
      * @option -O --outdir =DIR
      */
-    File baseDir;
+    Path baseDir;
 
     /**
      * Class mode, with empty implementation.
+     *
      * @option -c
      */
     boolean classMode;

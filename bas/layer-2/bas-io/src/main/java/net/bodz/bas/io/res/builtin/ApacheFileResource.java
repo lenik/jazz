@@ -17,12 +17,13 @@ import net.bodz.bas.c.java.nio.OpenOptions;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICharIn;
-import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.adapter.InputStreamByteIn;
 import net.bodz.bas.io.adapter.OutputStreamByteOut;
 import net.bodz.bas.io.adapter.ReaderCharIn;
 import net.bodz.bas.io.adapter.WriterPrintOut;
 import net.bodz.bas.io.res.AbstractStreamResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class ApacheFileResource
         extends AbstractStreamResource<ApacheFileResource> {
@@ -81,12 +82,14 @@ public class ApacheFileResource
         }
     }
 
+    @NotNull
     @Override
     public InputStream newInputStream(OpenOption... options)
             throws IOException {
         return fileObject.getContent().getInputStream();
     }
 
+    @NotNull
     @Override
     public OutputStream newOutputStream(OpenOption... options)
             throws IOException {
@@ -94,6 +97,7 @@ public class ApacheFileResource
         return fileObject.getContent().getOutputStream(append);
     }
 
+    @NotNull
     @Override
     public IByteIn newByteIn(OpenOption... options)
             throws IOException {
@@ -101,6 +105,7 @@ public class ApacheFileResource
         return new InputStreamByteIn(in);
     }
 
+    @NotNull
     @Override
     public IByteOut newByteOut(OpenOption... options)
             throws IOException {
@@ -108,6 +113,7 @@ public class ApacheFileResource
         return new OutputStreamByteOut(outputStream);
     }
 
+    @NotNull
     @Override
     public ICharIn newCharIn(OpenOption... options)
             throws IOException {
@@ -115,8 +121,9 @@ public class ApacheFileResource
         return new ReaderCharIn(reader);
     }
 
+    @NotNull
     @Override
-    public IPrintOut newCharOut(OpenOption... options)
+    public ICharOut newCharOut(OpenOption... options)
             throws IOException {
         Writer writer = newWriter(options);
         return new WriterPrintOut(writer);

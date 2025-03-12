@@ -1,6 +1,6 @@
 package net.bodz.bas.codegen;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import net.bodz.bas.t.tuple.QualifiedName;
 
@@ -8,7 +8,7 @@ public interface IClassPathInfo {
 
     QualifiedName getQName();
 
-    File getBaseDir();
+    Path getBaseDir();
 
     String getJavaDir();
 
@@ -22,8 +22,8 @@ public interface IClassPathInfo {
 
     String getTestScriptDir();
 
-    File getPreferredDir(String extension, boolean test);
+    Path getPreferredDir(String extension, boolean test);
 
-    File getPreferredFile(String extension, boolean test);
+    Path getPreferredFile(String extension, boolean test);
 
 }

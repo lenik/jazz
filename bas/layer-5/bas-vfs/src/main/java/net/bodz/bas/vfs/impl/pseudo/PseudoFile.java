@@ -1,11 +1,14 @@
 package net.bodz.bas.vfs.impl.pseudo;
 
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.io.res.IRandomResource;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.IFsBlob;
 import net.bodz.bas.vfs.MutableFile;
+import net.bodz.bas.vfs.PathUnsupportedException;
 
 public abstract class PseudoFile
         extends MutableFile {
@@ -44,6 +47,13 @@ public abstract class PseudoFile
     public PseudoPath getPath() {
         PseudoVfsDevice device = getDevice();
         return new PseudoPath(device.getProtocol(), device.getScopeName(), localPath, this);
+    }
+
+    @NotNull
+    @Override
+    public Path toPath()
+            throws PathUnsupportedException {
+        throw new PathUnsupportedException();
     }
 
     /**

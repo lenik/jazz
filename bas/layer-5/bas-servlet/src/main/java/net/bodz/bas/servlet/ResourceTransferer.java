@@ -220,6 +220,9 @@ public class ResourceTransferer {
 
         List<String> values = new ArrayList<>();
         switch (cacheControl.getCacheControlMode()) {
+//            case AUTO:
+//                values.add("auto");
+//                break;
             case NO_CACHE:
                 values.add("no-cache");
                 break;
@@ -246,6 +249,12 @@ public class ResourceTransferer {
             case MUST_REVALIDATE:
                 values.add("must-revalidate");
                 break;
+//            case PROXY_REVALIDATE:
+//                values.add("proxy-revalidate");
+//                break;
+//            case OPTIONAL:
+//                values.add("optional");
+//                break;
         }
         if (!values.isEmpty())
             resp.setHeader("Cache-Revalidation", StringArray.join(", ", values));
@@ -359,7 +368,8 @@ public class ResourceTransferer {
                 try {
                     out.flush();
                 } catch (IOException e) {
-                    logger.errorf("Failed to flush out, when transfer %s: %s: %s", blob.getLocation(), e.getClass(), e.getMessage());
+                    logger.errorf("Failed to flush out, when transfer %s: %s: %s", blob.getLocation(), e.getClass(),
+                            e.getMessage());
                 }
         }
     }

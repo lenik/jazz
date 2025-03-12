@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 
 import net.bodz.bas.io.res.builtin.ByteArrayResource;
+import net.bodz.bas.io.res.builtin.CharArrayResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.PathResource;
 import net.bodz.bas.io.res.builtin.StringSource;
@@ -32,6 +33,14 @@ public class ResFn {
 
     public static ByteArrayResource bytes(byte[] buf, int off, int len) {
         return new ByteArrayResource(buf, off, len);
+    }
+
+    public static CharArrayResource chars(char[] buf) {
+        return chars(buf, 0, buf.length);
+    }
+
+    public static CharArrayResource chars(char[] buf, int off, int len) {
+        return new CharArrayResource(buf, off, len);
     }
 
     public static PathResource path(Path path) {
@@ -81,7 +90,6 @@ public class ResFn {
     public static FileResource file(String file, Charset charset) {
         return new FileResource(file).charset(charset);
     }
-
 
     public static URLResource url(URL url) {
         return new URLResource(url);

@@ -1,6 +1,8 @@
 package net.bodz.bas.db;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,33 +16,38 @@ public class Config {
 
     static final Logger logger = LoggerFactory.getLogger(Config.class);
 
-    static File dataDir = SysProps.dataDir;
-    static File configDir = new File(dataDir, "config");
+    static Path dataDir = SysProps.dataDir;
+    static Path configDir = dataDir.resolve("config");
 
     static final boolean autoMkdirs = true;
 
-    public static File getDataDir() {
+    public static Path getDataDir() {
         return dataDir;
     }
 
-    public static File getConfigDir() {
-        if (autoMkdirs && ! configDir.exists()) {
+    public static Path getConfigDir() {
+        return configDir;
+    }
+
+    public static Path getOrCreateConfigDir()
+            throws IOException {
+        if (autoMkdirs && !Files.exists(configDir)) {
             logger.info("create directory " + configDir);
-            configDir.mkdirs();
+            Files.createDirectories(configDir);
         }
         return configDir;
     }
 
-    public static File getConfigDir(String contextId) {
-        File dir = new File(configDir, contextId);
+    public static Path getConfigDir(String contextId) {
+        Path dir = configDir.resolve(contextId);
         return dir;
     }
 
-    public static List<File> getDefaultConfigDirs() {
+    public static List<Path> getDefaultConfigDirs() {
         Collection<String> contextIds = DefaultContextIds.resolve();
-        List<File> dirs = new ArrayList<>();
+        List<Path> dirs = new ArrayList<>();
         for (String contextId : contextIds) {
-            File dir = getConfigDir(contextId);
+            Path dir = getConfigDir(contextId);
             dirs.add(dir);
         }
         return dirs;

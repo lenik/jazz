@@ -1,11 +1,12 @@
 package net.bodz.bas.fmt.xml;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -109,6 +110,11 @@ public class XmlFn
         save(obj, file, DEFAULT_ENCODING);
     }
 
+    public static void save(IXmlForm obj, Path file)
+            throws IOException, XMLStreamException, FormatException {
+        save(obj, file, DEFAULT_ENCODING);
+    }
+
     public static void save(IXmlForm obj, String file, String encoding)
             throws IOException, XMLStreamException, FormatException {
         save(obj, new File(file), encoding);
@@ -116,13 +122,15 @@ public class XmlFn
 
     public static void save(IXmlForm obj, File file, String encoding)
             throws IOException, XMLStreamException, FormatException {
-        FileOutputStream fos = new FileOutputStream(file);
-        try {
+        save(obj, file.toPath(), encoding);
+    }
+
+    public static void save(IXmlForm obj, Path file, String encoding)
+            throws IOException, XMLStreamException, FormatException {
+        try (OutputStream fos = Files.newOutputStream(file)) {
             IXmlOutput out = XmlOutputImpl.from(fos, encoding);
             obj.writeObjectBoxed(out);
             out.flush();
-        } finally {
-            fos.close();
         }
     }
 

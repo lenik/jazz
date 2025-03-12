@@ -1,8 +1,9 @@
 package net.bodz.mda.xjdoc.conv;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
+import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.err.ParseException;
 import net.bodz.mda.xjdoc.AbstractXjdocProvider;
@@ -22,10 +23,10 @@ public class MavenXjdocProvider
         if (pomDir == null) // Not in a maven project.
             return null;
 
-        File sourceFile = pomDir.getSourceFile(clazz);
+        Path sourceFile = pomDir.getSourceFile(clazz);
         if (sourceFile == null) // Not belong to the maven project.
             return null;
-        if (! sourceFile.exists())
+        if (FileFn.notExists(sourceFile))
             return null;
 
         ClassLoader classLoader = clazz.getClassLoader();
@@ -35,7 +36,7 @@ public class MavenXjdocProvider
         projectBuilder.addClassLoader(classLoader);
 
         try {
-            projectBuilder.addSource(sourceFile);
+            projectBuilder.addSource(sourceFile.toFile());
         } catch (IOException e) {
             throw new XjdocLoaderException("Failed to add source " + sourceFile, e);
         }

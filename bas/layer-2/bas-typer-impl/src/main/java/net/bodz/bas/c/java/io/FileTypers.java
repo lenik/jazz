@@ -16,8 +16,8 @@ public class FileTypers
      * The context cwd.
      */
     @ParameterType(File.class)
-    public static final String textformContextDirectory = "textform.contextDirectory";
-    public static final File defaultTextformContextDirectory = UserDirVars.getInstance().get();
+    public static final String textformContextDirectoryKey = "textform.contextDirectory";
+    public static final File defaultTextformContextDirectory = UserDirVars.getInstance().get().toFile();
 
     public FileTypers() {
         super(File.class);
@@ -26,8 +26,8 @@ public class FileTypers
     @Override
     protected Object queryInt(int typerIndex) {
         switch (typerIndex) {
-        case IParser.typerIndex:
-            return this;
+            case IParser.typerIndex:
+                return this;
         }
         return null;
     }
@@ -43,7 +43,8 @@ public class FileTypers
         if (file.isAbsolute())
             return file;
 
-        File contextDirectory = options.get(textformContextDirectory, defaultTextformContextDirectory);
+        File contextDirectory = options.get(textformContextDirectoryKey, //
+                defaultTextformContextDirectory);
         file = new File(contextDirectory, text);
         return file;
     }
