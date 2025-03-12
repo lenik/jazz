@@ -2,15 +2,16 @@ package net.bodz.bas.bean.java;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 
 import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.bean.api.IPropertyEditor;
 import net.bodz.bas.bean.api.IntrospectionException;
+import net.bodz.bas.err.UnexpectedException;
 
 public class JbPropertyDescriptor
         extends JbFeatureDescriptor
-        implements
-            IPropertyDescriptor {
+        implements IPropertyDescriptor {
 
     PropertyDescriptor pd;
     int position;
@@ -29,6 +30,23 @@ public class JbPropertyDescriptor
     @Override
     public Class<?> getPropertyType() {
         return pd.getPropertyType();
+    }
+
+    @Override
+    public Type getPropertyGenericType() {
+        Type type;
+        Method getter = pd.getReadMethod();
+        if (getter != null)
+            type = getter.getGenericReturnType();
+        else {
+            Method setter = pd.getWriteMethod();
+            if (setter != null) {
+                Type[] pv = setter.getGenericParameterTypes();
+                type = pv[0];
+            } else
+                throw new UnexpectedException();
+        }
+        return type;
     }
 
     @Override

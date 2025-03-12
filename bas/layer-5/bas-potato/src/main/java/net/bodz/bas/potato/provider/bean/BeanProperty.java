@@ -94,19 +94,7 @@ public class BeanProperty
 
     @Override
     public Type getPropertyGenericType() {
-        Type type;
-        Method getter = propertyDescriptor.getReadMethod();
-        if (getter != null)
-            type = getter.getGenericReturnType();
-        else {
-            Method setter = propertyDescriptor.getWriteMethod();
-            if (setter != null) {
-                Type[] pv = setter.getGenericParameterTypes();
-                type = pv[0];
-            } else
-                throw new UnexpectedException();
-        }
-        return type;
+        return propertyDescriptor.getPropertyGenericType();
     }
 
     @Override

@@ -3,6 +3,7 @@ package net.bodz.bas.bean.api;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 
 public interface IPropertyDescriptor
         extends
@@ -11,6 +12,9 @@ public interface IPropertyDescriptor
             AnnotatedElement {
 
     Class<?> getPropertyType();
+
+    // lenik add
+    Type getPropertyGenericType();
 
     Method getReadMethod();
 

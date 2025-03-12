@@ -43,7 +43,12 @@ public class BeanTypeProvider
     }
 
     @Override
-    public IType loadType(Class<?> clazz, Object obj, int infoset) {
+    public BeanType loadType(Class<?> clazz) {
+        return (BeanType) super.loadType(clazz);
+    }
+
+    @Override
+    public BeanType loadType(Class<?> clazz, Object obj, int infoset) {
         try {
             IBeanInfo beanInfo = Introspectors.getBeanInfo(clazz);
 
@@ -61,11 +66,11 @@ public class BeanTypeProvider
         }
     }
 
-    public IType loadType(IBeanInfo beanInfo) {
+    public BeanType loadType(IBeanInfo beanInfo) {
         return loadType(beanInfo, null, getDefaultInfoset());
     }
 
-    public IType loadType(IBeanInfo beanInfo, Object obj, int infoset) {
+    public BeanType loadType(IBeanInfo beanInfo, Object obj, int infoset) {
         Class<?> clazz = beanInfo.getBeanDescriptor().getBeanClass();
 
         ClassDoc classDoc = null;
