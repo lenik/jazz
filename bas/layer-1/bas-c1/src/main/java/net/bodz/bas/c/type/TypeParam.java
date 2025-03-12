@@ -3,6 +3,7 @@ package net.bodz.bas.c.type;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
@@ -78,8 +79,11 @@ public class TypeParam {
         if (type instanceof ParameterizedType)
             type = ((ParameterizedType) type).getRawType();
 
+        if (type instanceof WildcardType)
+            type = Any.class; //  ((WildcardType) type).getLowerBounds()[0]; // ?
+
         if (!(type instanceof Class<?>))
-            throw new Error("Failed to get type bound: " + type);
+            throw new Error("Failed to get type bound: " + type + ", it's a " + type.getClass().getSimpleName());
 
         @SuppressWarnings("unchecked")
         Class<T> cast = (Class<T>) type;
@@ -246,7 +250,8 @@ public class TypeParam {
 
     static Type[] reorder(TypeVariable<?>[] declVars, Type[] actualv, Type[] argv) {
         Type[] mapped = new Type[actualv.length];
-        V: for (int i = 0; i < actualv.length; i++) {
+V:
+        for (int i = 0; i < actualv.length; i++) {
             Type actual = actualv[i];
             if (actual instanceof TypeVariable<?>) {
 

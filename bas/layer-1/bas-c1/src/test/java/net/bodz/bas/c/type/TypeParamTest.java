@@ -11,11 +11,14 @@ import java.util.TreeMap;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.c.java.util.Arrays;
+
 public class TypeParamTest
         extends Assert {
 
     String str;
     ArrayList<String> strList;
+    Class<?> wild;
 
     TreeMap<Integer, Long> getMap(TreeMap<Short, Boolean> input) {
         return null;
@@ -67,6 +70,16 @@ public class TypeParamTest
         Field field = TypeParamTest.class.getDeclaredField("strList");
         Class<?>[] bounds = TypeParam.genericBaseBounds(field.getGenericType());
         assertArrayEquals(new Object[] { String.class }, bounds);
+    }
+
+    @Test
+    public void testWild()
+            throws Exception {
+        Field field = TypeParamTest.class.getDeclaredField("wild");
+        Type type = field.getGenericType();
+        Class<?>[] bounds = TypeParam.bounds(type);
+        System.out.println(type);
+        System.out.println(Arrays.asList(bounds));
     }
 
 }
