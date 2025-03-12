@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
-import EntityPropertyMap from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import type { EntityPropertyMap } from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { CoEvent_TYPE } from "./CoEventTypeInfo";
 import CoEvent from "./CoEvent";
 

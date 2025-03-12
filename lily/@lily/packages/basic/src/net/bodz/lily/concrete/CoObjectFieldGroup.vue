@@ -1,8 +1,10 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
-import EntityPropertyMap from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { EntityPropertyMap } from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { CoObject_TYPE } from "./CoObjectTypeInfo";
 import CoObject from "./CoObject";
+import GroupTypeInfo from "../schema/account/GroupTypeInfo";
+import UserTypeInfo from "../schema/account/UserTypeInfo";
 
 export interface Props {
     meta: EntityPropertyMap
@@ -41,11 +43,8 @@ onMounted(() => {
 
 <template>
     <FieldGroup :type="CoObject_TYPE" ref="rootElement">
-        <FieldRow :property="meta.accessMode" v-model="model.accessMode">
-            <input type="number" v-model="model.accessMode" />
-        </FieldRow>
-        <FieldRow :property="meta.acl" v-model="model.acl">
-            <input type="number" v-model="model.acl" />
+        <FieldRow :property="meta.icon" v-model="model.icon">
+            <input type="text" v-model="model.icon" />
         </FieldRow>
         <FieldRow :property="meta.label" v-model="model.label">
             <input type="text" v-model="model.label" />
@@ -53,9 +52,7 @@ onMounted(() => {
         <FieldRow :property="meta.description" v-model="model.description">
             <input type="text" v-model="model.description" />
         </FieldRow>
-        <FieldRow :property="meta.icon" v-model="model.icon">
-            <input type="text" v-model="model.icon" />
-        </FieldRow>
+
         <FieldRow :property="meta.priority" v-model="model.priority">
             <input type="number" v-model="model.priority" />
         </FieldRow>
@@ -65,11 +62,21 @@ onMounted(() => {
         <FieldRow :property="meta.state" v-model="model.state">
             <input type="number" v-model="model.state" />
         </FieldRow>
+
         <FieldRow :property="meta.ownerUser" v-model="model.ownerUser">
-            <RefEditor :dialog="userChooseDialog" v-model="model.ownerUser" v-model:id="model.ownerUserId" />
+            <RefEditor :type="UserTypeInfo.INSTANCE" :dialog="userChooseDialog" :quick="false"
+                v-model="model.ownerUser" v-model:id="model.ownerUserId" />
         </FieldRow>
         <FieldRow :property="meta.ownerGroup" v-model="model.ownerGroup">
-            <RefEditor :dialog="groupChooseDialog" v-model="model.ownerGroup" v-model:id="model.ownerGroupId" />
+            <RefEditor :type="GroupTypeInfo.INSTANCE" :dialog="groupChooseDialog" :quick="false"
+                v-model="model.ownerGroup" v-model:id="model.ownerGroupId" />
+        </FieldRow>
+
+        <FieldRow :property="meta.accessMode" v-model="model.accessMode">
+            <input type="number" v-model="model.accessMode" />
+        </FieldRow>
+        <FieldRow :property="meta.acl" v-model="model.acl">
+            <input type="number" v-model="model.acl" />
         </FieldRow>
     </FieldGroup>
     <UserChooseDialog ref="userChooseDialog" />

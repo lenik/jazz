@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
-import EntityPropertyMap from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import type { EntityPropertyMap } from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { CoImaged_TYPE } from "./CoImagedTypeInfo";
 import CoImaged from "./CoImaged";
 

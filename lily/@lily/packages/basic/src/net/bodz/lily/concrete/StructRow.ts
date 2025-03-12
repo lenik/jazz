@@ -1,4 +1,4 @@
-import { int } from 'skel01-core/src/lang/basetype';
+import type { int } from 'skel01-core/src/lang/basetype';
 import StructRowTypeInfo from './StructRowTypeInfo';
 import { OffsetDateTime } from "skel01-core/src/lang/time";
 

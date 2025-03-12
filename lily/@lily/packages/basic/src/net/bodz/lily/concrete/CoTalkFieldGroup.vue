@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
-import EntityPropertyMap from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import type { EntityPropertyMap } from "skel01-dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import type { JsonVariant } from "skel01-core/src/lang/bas-type";
 import type { int } from "skel01-core/src/lang/basetype";
 import type { Timestamp } from "skel01-core/src/lang/time";
@@ -22,7 +22,7 @@ import FieldGroup from "skel01-dba/src/ui/lily/FieldGroup.vue";
 import GroupChooseDialog from "../schema/account/GroupChooseDialog.vue";
 import UserChooseDialog from "../schema/account/UserChooseDialog.vue";
 
-const model = defineModel<CoTalk>({ required: true });
+const model = defineModel<CoTalk<any>>({ required: true });
 
 const props = withDefaults(defineProps<Props>(), {
 });
