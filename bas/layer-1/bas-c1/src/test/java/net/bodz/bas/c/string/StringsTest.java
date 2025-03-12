@@ -96,7 +96,7 @@ public class StringsTest
     }
 
     void testSelectToken(String input, char ch, int ind, String expected) {
-        PosRange range = Strings.selectToken(input, ch, ind);
+        PosRange range = Strings.selectToken(input, ind, ch);
         if (expected == null)
             assertNull(range);
         else {

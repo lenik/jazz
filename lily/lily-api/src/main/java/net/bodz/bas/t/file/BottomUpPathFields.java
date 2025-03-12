@@ -17,8 +17,7 @@ import net.bodz.bas.t.tuple.Split;
  * Up: path/filename.
  */
 public class BottomUpPathFields
-        implements
-            IPathFields {
+        implements IPathFields {
 
     String dirName;
     String name; // without extension
@@ -105,7 +104,7 @@ public class BottomUpPathFields
 
     @Override
     public String getField(int index) {
-        PosRange range = Strings.selectToken(_pathCache, '/', index);
+        PosRange range = Strings.selectToken(_pathCache, index, '/');
         if (range == null)
             return null;
         String token = _pathCache.substring(range.begin, range.end);
@@ -114,7 +113,7 @@ public class BottomUpPathFields
 
     @Override
     public void setField(int index, String field) {
-        PosRange range = Strings.selectToken(_pathCache, '/', index);
+        PosRange range = Strings.selectToken(_pathCache, index, '/');
         String left_ = _pathCache.substring(0, range.begin);
         String _right = _pathCache.substring(range.end);
         String rename = left_ + field + _right;

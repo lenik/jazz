@@ -73,11 +73,11 @@ public class Strings {
         if (s == null)
             return null;
         switch (s.length()) {
-        case 0:
-            return s;
+            case 0:
+                return s;
 
-        case 1:
-            return s.toLowerCase();
+            case 1:
+                return s.toLowerCase();
         }
 
         char lcfirst = Character.toLowerCase(s.charAt(0));
@@ -104,7 +104,7 @@ public class Strings {
             boolean isLetter = Character.isLetter(c);
             if (boundary && isLetter)
                 c = Character.toUpperCase(c);
-            boundary = ! isLetter;
+            boundary = !isLetter;
             buf.append(c);
         }
         return buf.toString();
@@ -176,11 +176,15 @@ public class Strings {
         return -1;
     }
 
+    public static PosRange selectToken(String s, int tokenIndex) {
+        return selectToken(s, tokenIndex, '/');
+    }
+
     /**
      * @throws IndexOutOfBoundsException
      *             if tokenIndex is out of bounds.
      */
-    public static PosRange selectToken(String s, char delim, int tokenIndex) {
+    public static PosRange selectToken(String s, int tokenIndex, char delim) {
         if (s == null)
             throw new NullPointerException("s");
         if (tokenIndex < 0)
@@ -194,7 +198,7 @@ public class Strings {
             if (begin > len)
                 throw new IndexOutOfBoundsException(String.valueOf(tokenIndex));
 
-            int end = s.indexOf('/', begin);
+            int end = s.indexOf(delim, begin);
             if (end == -1)
                 end = s.length();
 
@@ -217,7 +221,7 @@ public class Strings {
         }
         for (int i = 0; i < end; i++) {
             char ch = s.charAt(i);
-            if (! Character.isWhitespace(ch))
+            if (!Character.isWhitespace(ch))
                 return s.substring(0, i);
         }
         return s.substring(0, end);
@@ -234,7 +238,7 @@ public class Strings {
         }
         for (int i = end - 1; i >= 0; i++) {
             char ch = s.charAt(i);
-            if (! Character.isWhitespace(ch))
+            if (!Character.isWhitespace(ch))
                 return s.substring(i + 1, end);
         }
         return s.substring(0, end);

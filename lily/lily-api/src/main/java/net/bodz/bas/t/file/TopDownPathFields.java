@@ -17,8 +17,7 @@ import net.bodz.bas.json.JsonObject;
  * down: dir/name/extension
  */
 public class TopDownPathFields
-        implements
-            IPathFields {
+        implements IPathFields {
 
     String path;
 
@@ -75,7 +74,7 @@ public class TopDownPathFields
 
     @Override
     public String getField(int index) {
-        PosRange range = Strings.selectToken(path, '/', index);
+        PosRange range = Strings.selectToken(path, index, '/');
         if (range == null)
             return null;
         String token = path.substring(range.begin, range.end);
@@ -84,7 +83,7 @@ public class TopDownPathFields
 
     @Override
     public void setField(int index, String field) {
-        PosRange range = Strings.selectToken(path, '/', index);
+        PosRange range = Strings.selectToken(path, index, '/');
         String left_ = path.substring(0, range.begin);
         String _right = path.substring(range.end);
         String rename = left_ + field + _right;
