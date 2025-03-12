@@ -1,21 +1,31 @@
 package net.bodz.bas.esm;
 
+import java.lang.reflect.Type;
+
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.esm.util.TsTypeInfoResolver;
+import net.bodz.bas.esm.util.TsTypeResolver;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.DecoratedTreeOut;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.tuple.QualifiedName;
 
 public class TypeScriptWriter
         extends DecoratedTreeOut
-        implements
-            ITsImporter {
+        implements ITsImporter {
 
     private static final long serialVersionUID = 1L;
+
+    static final Logger logger = LoggerFactory.getLogger(TypeScriptWriter.class);
 
     public final EsmImports im;
     public final EsmDomainMap domainMap;
     final QualifiedName contextQName;
+
+    public final TsTypeResolver typeResolver;
+    public final TsTypeInfoResolver typeInfoResolver;
 
     public TypeScriptWriter(QualifiedName qName, ITreeOut _orig) {
         this(qName, _orig, EsmImports.forLocal(qName), new EsmDomainMap());
@@ -35,6 +45,9 @@ public class TypeScriptWriter
         this.domainMap = domainMap;
 
         this.contextQName = qName;
+
+        this.typeResolver = new TsTypeResolver(this);
+        this.typeInfoResolver = new TsTypeInfoResolver(this);
     }
 
     public String name(EsmName name) {
