@@ -14,7 +14,7 @@ import net.bodz.bas.err.LazyLoadException;
 /**
  * Naming convention for class-local: cls-VAR. Where cls means 'class-local storage'.
  *
- * aka. <code>ClassLocal</code>.
+ * <p>aka. <code>ClassLocal</code>.
  */
 public class LazyTypeMap<T>
         extends LazyHashMap<Class<?>, T> {
@@ -34,8 +34,8 @@ public class LazyTypeMap<T>
      * @throws IllegalUsageException
      *             If <code>metadataClass</code> doesn't have desired constructor.
      */
-    public LazyTypeMap(Class<?> metadataClass) {
-        super(new MetadataClassEntryLoader<T>(metadataClass));
+    public static <_T> LazyTypeMap<_T> instantiate(Class<_T> metadataClass) {
+        return new LazyTypeMap<>(new MetadataClassEntryLoader<>(metadataClass));
     }
 
     /**
@@ -47,12 +47,12 @@ public class LazyTypeMap<T>
      * @throws IllegalUsageException
      *             If the method don't accept a single {@link Class} parameter.
      */
-    public LazyTypeMap(Method classParserMethod) {
-        super(new ClassParserEntryLoader<T>(classParserMethod));
+    public static <_T> LazyTypeMap<_T> factory(Method classParserMethod) {
+        return new LazyTypeMap<>(new ClassParserEntryLoader<>(classParserMethod));
     }
 
     /**
-     * Used by {@link LazyTypeMap#ClassLocal(Class)}.
+     * Used by {@link LazyTypeMap#instantiate(Class)}.
      */
     private static class MetadataClassEntryLoader<V>
             implements IMapEntryLoader<Class<?>, V> {
@@ -86,7 +86,7 @@ public class LazyTypeMap<T>
     }
 
     /**
-     * Used by {@link LazyTypeMap#ClassLocal(Method)}.
+     * Used by {@link LazyTypeMap#factory(Method)}.
      */
     private static class ClassParserEntryLoader<V>
             implements IMapEntryLoader<Class<?>, V> {
@@ -116,23 +116,22 @@ public class LazyTypeMap<T>
 
     }
 
-    Set<String> registeredIds;
+    volatile Set<String> registeredIds;
 
     public Set<String> getRegisteredIds() {
-        if (registeredIds == null) {
+        if (registeredIds == null)
             synchronized (this) {
                 if (registeredIds == null) {
-                    registeredIds = new TreeSet<String>();
+                    registeredIds = new TreeSet<>();
                 }
             }
-        }
         return registeredIds;
     }
 
     /**
      * Get a registered id.
      *
-     * If there are multiple registered ids, one of them is returned. However, it's picked randomly.
+     * <p>If there are multiple registered ids, one of them is returned. However, it's picked randomly.
      *
      * @return One of the registered id. Return <code>null</code> if this class-local isn't
      *         registered at all.

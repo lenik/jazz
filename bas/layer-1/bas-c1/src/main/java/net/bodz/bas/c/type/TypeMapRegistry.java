@@ -9,21 +9,21 @@ import net.bodz.bas.err.IllegalUsageException;
 
 /**
  * Examples:
- * 
+ *
  * <pre>
  * TypeMap-Registry:
  *     "..IdPool":
  *         Map: Class -> IdPool
- * 
+ *
  *     "..RecvUtil"
  *         Map: Class -> IMethod  // IType .. recv(Object)
- *         
+ *
  *     "..ClassDocToOptionsConverter"
  *         Map: Class -> IOptionGroup
- *     
+ *
  *     "..FieldPathDispatcher.EntryLoader"
  *         Map: Class -> Map<String, Field>
- *     
+ *
  *     "..SimpleConstructorMap"
  *         Map: Class -> SimpleConstructorMap
  * </pre>
@@ -38,7 +38,7 @@ public class TypeMapRegistry
     }
 
     /**
-     * @see LazyTypeMap#ClassLocal(IMapEntryLoader)
+     * @see LazyTypeMap#LazyTypeMap(IMapEntryLoader)
      */
     public static <T> LazyTypeMap<T> createMap(IMapEntryLoader<Class<?>, T> entryLoader) {
         // Canonical name maybe null, so here we use normal name.
@@ -47,23 +47,23 @@ public class TypeMapRegistry
     }
 
     /**
-     * @see LazyTypeMap#ClassLocal(IMapEntryLoader)
+     * @see LazyTypeMap#LazyTypeMap(IMapEntryLoader)
      */
     public static <T> LazyTypeMap<T> createMap(String id, IMapEntryLoader<Class<?>, T> entryLoader) {
-        LazyTypeMap<T> map = new LazyTypeMap<T>(entryLoader);
+        LazyTypeMap<T> map = new LazyTypeMap<>(entryLoader);
         addMap(id, map);
         return map;
     }
 
     /**
      * Each entry holds a metadata of <code>metadataClass</code>.
-     * 
+     *
      * @param metadataClass
      *            The metadata class. The class must have a public constructor with a single
      *            Class-type parameter.
-     * @see LazyTypeMap#ClassLocal(Class)
+     * @see LazyTypeMap#instantiate(Class) (Class)
      */
-    public static <T> LazyTypeMap<T> createMap(Class<?> metadataClass) {
+    public static <T> LazyTypeMap<T> createMap(Class<T> metadataClass) {
         // Canonical name of the metadata class maybe null.
         String className = metadataClass.getName();
         return createMap(className, metadataClass);
@@ -71,36 +71,36 @@ public class TypeMapRegistry
 
     /**
      * Each entry holds a metadata of <code>metadataClass</code>.
-     * 
+     *
      * @param id
      *            The class-local-id, by default, it's the canonical name of the
      *            <code>metadataClass</code>.
      * @param metadataClass
      *            The metadata class. The class must have a public constructor with a single
      *            Class-type parameter.
-     * @see LazyTypeMap#ClassLocal(Class)
+     * @see LazyTypeMap#instantiate(Class) (Class)
      */
-    public static <T> LazyTypeMap<T> createMap(String id, Class<?> metadataClass) {
-        LazyTypeMap<T> map = new LazyTypeMap<T>(metadataClass);
+    public static <T> LazyTypeMap<T> createMap(String id, Class<T> metadataClass) {
+        LazyTypeMap<T> map = LazyTypeMap.instantiate(metadataClass);
         addMap(id, map);
         return map;
     }
 
     /**
      * Each entry holds value returned from the parser method.
-     * 
-     * @param classParserMethod
+     *
+     * @param parserMethod
      *            A public static method which receives a single {@link Class} parameter, and
      *            returns the parsed entry value.
      * @throws IllegalUsageException
      *             If the method don't accept a single {@link Class} parameter.
-     * @see LazyTypeMap#ClassLocal(Method)
+     * @see LazyTypeMap#factory(Method)
      */
     public static <T> LazyTypeMap<T> createMap(Method parserMethod) {
         // Canonical name maybe null.
         String className = parserMethod.getDeclaringClass().getName();
 
-        String signature = new MethodSignature(parserMethod).toString();
+        String signature = MethodSignature.of(parserMethod).toString();
         String id = className + "." + signature;
 
         return createMap(id, parserMethod);
@@ -108,23 +108,23 @@ public class TypeMapRegistry
 
     /**
      * Each entry holds value returned from the parser method.
-     * 
-     * @param classParserMethod
+     *
+     * @param parserMethod
      *            A public static method which receives a single {@link Class} parameter, and
      *            returns the parsed entry value.
      * @throws IllegalUsageException
      *             If the method don't accept a single {@link Class} parameter.
-     * @see LazyTypeMap#ClassLocal(Method)
+     * @see LazyTypeMap#factory(Method)
      */
     public static <T> LazyTypeMap<T> createMap(String id, Method parserMethod) {
-        LazyTypeMap<T> map = new LazyTypeMap<T>(parserMethod);
+        LazyTypeMap<T> map = LazyTypeMap.factory(parserMethod);
         addMap(id, map);
         return map;
     }
 
     /**
      * Register a class-local map with given id.
-     * 
+     *
      * @param id
      *            Non-<code>null</code> class-local-id to be registered. The id must be unique.
      * @param map
@@ -149,7 +149,7 @@ public class TypeMapRegistry
 
     /**
      * Remove class-local map from global cache.
-     * 
+     *
      * @param id
      *            Non-<code>null</code> class-local-id to remove.
      * @return Removed class-local. Return <code>null</code> if the class-local with given id isn't
@@ -167,7 +167,7 @@ public class TypeMapRegistry
         return map;
     }
 
-    private static TypeMapRegistry instance = new TypeMapRegistry();
+    private static final TypeMapRegistry instance = new TypeMapRegistry();
 
     public static TypeMapRegistry getInstance() {
         return instance;
