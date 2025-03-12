@@ -50,15 +50,15 @@ public class MethodSignature {
         this(null, name, parameterTypes);
     }
 
-    public MethodSignature(Method method) {
-        this(method.getReturnType(), method.getName(), method.getParameterTypes());
+    public static MethodSignature of(Method method) {
+        return new MethodSignature(method.getReturnType(), method.getName(), method.getParameterTypes());
     }
 
     /**
      * The method name is set to the full qualified name of the declaring class of the constructor.
      */
-    public MethodSignature(Constructor<?> ctor) {
-        this(ctor.getName(), ctor.getParameterTypes());
+    public static MethodSignature of(Constructor<?> ctor) {
+        return new MethodSignature(ctor.getName(), ctor.getParameterTypes());
     }
 
     public String getName() {
@@ -77,7 +77,7 @@ public class MethodSignature {
         return wild;
     }
 
-    private transient Integer hash;
+    private volatile Integer hash;
 
     @Override
     public int hashCode() {
@@ -127,7 +127,7 @@ public class MethodSignature {
         if (!Nullables.equals(name, method.getName()))
             return false;
 
-        MethodSignature other = new MethodSignature(method);
+        MethodSignature other = MethodSignature.of(method);
         return equals(other);
     }
 
@@ -135,7 +135,7 @@ public class MethodSignature {
         Class<?> declaringClass = ctor.getDeclaringClass();
         if (name != null && !name.equals(declaringClass.getSimpleName()))
             throw new IllegalArgumentException("Not a constructor method for " + declaringClass);
-        MethodSignature o = new MethodSignature(ctor);
+        MethodSignature o = MethodSignature.of(ctor);
         return equals(o);
     }
 
