@@ -50,8 +50,11 @@ public abstract class SourceBuilder<model_t> {
         String displayPath = FilePath.getRelativePath(file.getPath(), fileInfo.getBaseDir().getPath() + "/");
 
         File dir = file.getParentFile();
-        if (! dir.exists())
-            dir.mkdirs();
+        if (!dir.exists())
+            if (!dir.mkdirs()) {
+                logger.error("error mkdirs " + dir);
+                return false;
+            }
 
         PatchList<String> patchList = null;
         StringRow oldGenLines = null;
@@ -59,29 +62,29 @@ public abstract class SourceBuilder<model_t> {
 
         if (file.exists()) {
             switch (updateMethod) {
-            case NO_UPDATE:
-                return false;
+                case NO_UPDATE:
+                    return false;
 
-            case OVERWRITE:
-                logger.debug("    overwrite " + displayPath);
-                break;
+                case OVERWRITE:
+                    logger.debug("    overwrite " + displayPath);
+                    break;
 
-            case DIFF_MERGE:
-                File origCopy = getOrigFile(fileInfo);
-                if (! origCopy.exists()) {
-                    // logger.warn("can't do diff/merge: not able to read " + origCopy);
-                    updateMethod = UpdateMethod.OVERWRITE;
-                } else {
-                    oldGenLines = readLines(origCopy);
+                case DIFF_MERGE:
+                    File origCopy = getOrigFile(fileInfo);
+                    if (!origCopy.exists()) {
+                        // logger.warn("can't do diff/merge: not able to read " + origCopy);
+                        updateMethod = UpdateMethod.OVERWRITE;
+                    } else {
+                        oldGenLines = readLines(origCopy);
+                        oldFileLines = readLines(file);
+                        patchList = FileDiff.createPatchByLines(oldGenLines, oldFileLines);
+                    }
+                    break;
+
+                case DIFF_PATCH_CREATE:
+                case DIFF_PATCH_UPGRADE:
                     oldFileLines = readLines(file);
-                    patchList = FileDiff.createPatchByLines(oldGenLines, oldFileLines);
-                }
-                break;
-
-            case DIFF_PATCH_CREATE:
-            case DIFF_PATCH_UPGRADE:
-                oldFileLines = readLines(file);
-                break;
+                    break;
             }
         }
 
@@ -89,7 +92,10 @@ public abstract class SourceBuilder<model_t> {
 
         BCharOut buf = new BCharOut(4096);
         ITreeOut out = TreeOutImpl.from(buf);
-        build(out, model);
+
+        if (!build(out, model))
+            return false;
+
         out.flush();
         String genText = buf.toString();
 
@@ -97,73 +103,72 @@ public abstract class SourceBuilder<model_t> {
         IRow<String> patchedLines = genLines;
 
         File patchFile = getPatchFile(fileInfo);
-        int patchStatus = 0;
+        int patchStatus;
 
         switch (updateMethod) {
-        case DIFF_MERGE:
-            if (patchList != null && patchList.isDifferent()) {
-                logger.debug("    patch on " + displayPath);
-                PatchApplyResult<String> result = patchList.apply(genLines);
-                for (; result.isError()
-                        && patchList.config.Match_Threshold < 0.9; patchList.config.Match_Threshold += 0.05) {
-                    logger.warn("Patch failed at threshold " + patchList.config.Match_Threshold);
-                    result = patchList.apply(genLines);
-                }
-                if (result.isError()) {
-                    logger.error("Patch failed. ");
-                    printResult(Stdio.cout.indented(), "Patch failed:", result, null);
-                    return false;
-                }
-                patchedLines = result.getPatchedRow();
-            }
-            boolean saveOrigCg = true;
-            if (saveOrigCg) {
-                File origCopy = getOrigFile(fileInfo);
-                if (FileDiff.compareByLines(genLines, oldGenLines).isDifferent()) {
-                    logger.info("    save original backup at " + origCopy);
-
-                    File origDir = origCopy.getParentFile();
-                    origDir.mkdirs();
-
-                    ResFn.file(origCopy).write().writeString(genLines);
-                }
-            }
-            break;
-
-        case DIFF_PATCH_CREATE:
-            patchedLines = oldFileLines;
-            break;
-
-        case DIFF_PATCH_UPGRADE:
-            if (patchFile.exists()) {
-                // String patchLocalPath = fileInfo.getLocalPath() + ".patch";
-                File tmpGenFile = File.createTempFile(fileInfo.getName(), fileInfo.getDotExtension());
-                ResFn.file(tmpGenFile).write().writeString(genText);
-
-                Process patchProcess = new ProcessBuilder()//
-                        .command("patch", tmpGenFile.getPath()) //
-                        .directory(fileInfo.getBaseDir()) //
-                        .redirectInput(patchFile) //
-                        .start();
-                try {
-                    patchStatus = patchProcess.waitFor();
-                    if (patchStatus != 0) {
-                        logger.errorf("Patch failed (error %d), but result is always saved.", patchStatus);
+            case DIFF_MERGE:
+                if (patchList != null && patchList.isDifferent()) {
+                    logger.debug("    patch on " + displayPath);
+                    PatchApplyResult<String> result = patchList.apply(genLines);
+                    for (; result.isError() && patchList.config.Match_Threshold < 0.9; patchList.config.Match_Threshold += 0.05f) {
+                        logger.warn("Patch failed at threshold " + patchList.config.Match_Threshold);
+                        result = patchList.apply(genLines);
                     }
-                } catch (InterruptedException e) {
-                    throw new IOException(e.getMessage(), e);
+                    if (result.isError()) {
+                        logger.error("Patch failed. ");
+                        printResult(Stdio.cout.indented(), "Patch failed:", result, null);
+                        return false;
+                    }
+                    patchedLines = result.getPatchedRow();
                 }
+                boolean saveOrigCg = true;
+                if (saveOrigCg) {
+                    File origCopy = getOrigFile(fileInfo);
+                    if (FileDiff.compareByLines(genLines, oldGenLines).isDifferent()) {
+                        logger.info("    save original backup at " + origCopy);
 
-                StringRow tmpGenPatchedLines = new StringRow();
-                for (String line : ResFn.file(tmpGenFile).read().readLines())
-                    tmpGenPatchedLines.append(line);
-                patchedLines = tmpGenPatchedLines;
+                        File origDir = origCopy.getParentFile();
+                        origDir.mkdirs();
 
-                tmpGenFile.delete();
-            }
-            break;
+                        ResFn.file(origCopy).write().writeString(genLines);
+                    }
+                }
+                break;
 
-        default:
+            case DIFF_PATCH_CREATE:
+                patchedLines = oldFileLines;
+                break;
+
+            case DIFF_PATCH_UPGRADE:
+                if (patchFile.exists()) {
+                    // String patchLocalPath = fileInfo.getLocalPath() + ".patch";
+                    File tmpGenFile = File.createTempFile(fileInfo.getName(), fileInfo.getDotExtension());
+                    ResFn.file(tmpGenFile).write().writeString(genText);
+
+                    Process patchProcess = new ProcessBuilder()//
+                            .command("patch", tmpGenFile.getPath()) //
+                            .directory(fileInfo.getBaseDir()) //
+                            .redirectInput(patchFile) //
+                            .start();
+                    try {
+                        patchStatus = patchProcess.waitFor();
+                        if (patchStatus != 0) {
+                            logger.errorf("Patch failed (error %d), but result is always saved.", patchStatus);
+                        }
+                    } catch (InterruptedException e) {
+                        throw new IOException(e.getMessage(), e);
+                    }
+
+                    StringRow tmpGenPatchedLines = new StringRow();
+                    for (String line : ResFn.file(tmpGenFile).read().readLines())
+                        tmpGenPatchedLines.append(line);
+                    patchedLines = tmpGenPatchedLines;
+
+                    tmpGenFile.delete();
+                }
+                break;
+
+            default:
         }
 
         if (oldFileLines == null)
@@ -177,13 +182,13 @@ public abstract class SourceBuilder<model_t> {
         boolean updatePatch = false;
 
         switch (updateMethod) {
-        case DIFF_PATCH_CREATE:
-            updatePatch = true;
-            break;
-        case DIFF_PATCH_UPGRADE:
-            updatePatch = patchFile.exists();
-            break;
-        default:
+            case DIFF_PATCH_CREATE:
+                updatePatch = true;
+                break;
+            case DIFF_PATCH_UPGRADE:
+                updatePatch = patchFile.exists();
+                break;
+            default:
         }
 
         if (updatePatch) {
@@ -218,7 +223,7 @@ public abstract class SourceBuilder<model_t> {
         return patchFile;
     }
 
-    public abstract void build(ITreeOut out, model_t model);
+    public abstract boolean build(ITreeOut out, model_t model);
 
     private static StringRow readLines(File file) {
         StringRow row = new StringRow();
