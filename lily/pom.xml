@@ -7,7 +7,7 @@
         <relativePath></relativePath>
     </parent>
     <groupId>net.bodz.lily</groupId>
-    <artifactId>project</artifactId>
+    <artifactId>lily</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <dependencyManagement>

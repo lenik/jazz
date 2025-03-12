@@ -4,10 +4,10 @@
         <groupId>net.bodz.bas</groupId>
         <artifactId>bas-parent</artifactId>
         <version>0.5-SNAPSHOT</version>
-        <relativePath></relativePath>
+        <relativePath/>
     </parent>
-    <groupId>net.bodz</groupId>
-    <artifactId>parent</artifactId>
+    <groupId>net.bodz.env</groupId>
+    <artifactId>ff21</artifactId>
     <version>1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
@@ -17,15 +17,7 @@
         <ffdir.test>src/test/generated</ffdir.test>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-    
-    <name>Jazz Parent</name>
+    <name>Jazz Env :: Flatf Java-21</name>
 
     <profiles>
         <profile>

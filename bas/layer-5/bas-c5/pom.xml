@@ -9,8 +9,8 @@
     <dependencies>
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk16</artifactId>
-            <version>1.46</version>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>1.80</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -35,6 +35,7 @@
     <name>BAS :: Layer 5 :: C5</name>
     <profiles>
         <profile>
+            <id>enable-crypto</id>
             <activation>
                 <jdk>16</jdk>
             </activation>

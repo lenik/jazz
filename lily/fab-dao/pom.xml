@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.lily</groupId>
-        <artifactId>project</artifactId>
+        <artifactId>lily</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>fab-dao</artifactId>

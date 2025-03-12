@@ -26,5 +26,5 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 7 :: ESM-Skeljs</name>
+    <name>BAS :: Layer 7 :: ESM-Skel01</name>
 </project>
