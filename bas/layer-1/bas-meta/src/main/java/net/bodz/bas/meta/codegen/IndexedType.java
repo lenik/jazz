@@ -13,8 +13,8 @@ import java.lang.annotation.Target;
  *
  * The result index file is <code>META-INF/services/&lt;base-type&gt;</code> by default.
  *
- * @see net.bodz.bas.c.type.IndexTypes
- * @see tcoll: net.bodz.bas.shell.util.TypeCollectorCLI
+ * @see net.bodz.bas.c.type.IndexedTypes
+ * @see net.bodz.uni.shelj.codegen.java.service.TypeCollectorApp
  */
 @Documented
 @IndexedType(publishDir = PublishDir.features, includeAbstract = true, includeAnnotation = true)

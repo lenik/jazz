@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import net.bodz.bas.c.java.io.FilePath;
@@ -20,7 +19,6 @@ import net.bodz.bas.io.res.FileCacheMap;
 import net.bodz.bas.io.res.SaveOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.meta.codegen.IEtcFilesEditor;
 import net.bodz.bas.meta.codegen.IEtcFilesInstaller;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.t.pojo.Pair;
@@ -120,75 +118,50 @@ public class ClassCollector {
         else if (!publishDir.endsWith("/"))
             publishDir += "/";
 
-        FileCacheMap<Path> fileContentMap = FileCacheMap.createPathIndexed();
+        FileCacheMap<Path> fileCaches = FileCacheMap.createPathIndexed();
         for (Class<?> derivedClass : filterMap.keySet()) {
             Path resDir = filterMap.get(derivedClass);
 
             if (publishDir != null) {
                 Path listFile = resDir.resolve(publishDir + baseClass.getName());
-                boolean init = !fileContentMap.containsFile(listFile);
-                List<String> lines;
+                boolean newFile = !fileCaches.containsFile(listFile);
+                List<String> classList;
                 try {
-                    lines = fileContentMap.loadLinesCached(listFile);
+                    classList = fileCaches.loadLinesCached(listFile);
                 } catch (IOException e) {
                     logger.error(e, "Error loading " + listFile + ", skipped.");
                     continue;
                 }
 
-                if (init) // Refresh: remove included packages before re-add.
-                    beforeRefresh(lines);
+                if (newFile) // Refresh: remove included packages before re-add.
+                    beforeRefresh(classList);
 
                 if (aIndexedType.obsoleted()) {
                     // lines.add("# " + extension.getName());
                 } else {
-                    lines.add(derivedClass.getName());
+                    classList.add(derivedClass.getName());
                 }
             }
 
-            Class<? extends IEtcFilesInstaller> etcFilesClass = aIndexedType.etcFiles();
-            if (etcFilesClass != null && !Modifier.isAbstract(etcFilesClass.getModifiers())) {
-                IEtcFilesInstaller etcFiles = CachedInstantiator.getInstance().instantiate(etcFilesClass);
-
-                IEtcFilesEditor editor = new IEtcFilesEditor() {
-                    @Override
-                    public void clear(String path)
-                            throws IOException {
-                        Path file = FilePath.joinHref(resDir, path);
-                        List<String> lines = fileContentMap.loadLinesCached(file);
-                        lines.clear();
-                    }
-
-                    @Override
-                    public void addLine(String path, String s)
-                            throws IOException {
-                        Path file = FilePath.joinHref(resDir, path);
-                        List<String> lines = fileContentMap.loadLinesCached(file);
-                        lines.add(s);
-                    }
-                };
-
+            Class<? extends IEtcFilesInstaller> installerClass = aIndexedType.etcFiles();
+            if (installerClass != null && !Modifier.isAbstract(installerClass.getModifiers())) {
+                IEtcFilesInstaller installer = CachedInstantiator.getInstance().instantiate(installerClass);
                 try {
-                    etcFiles.install(derivedClass, editor);
+                    installer.install(derivedClass, name -> {
+                        Path path = FilePath.joinHref(resDir, name);
+                        return fileCaches.loadLinesCached(path);
+                    });
                 } catch (IOException e) {
-                    logger.error(e, "Error install " + derivedClass + " of type " + etcFilesClass);
+                    logger.error(e, "Error install " + derivedClass + " of type " + installerClass);
                 }
             } // etc-files
         } // for derivations
 
-        return fileContentMap;
+        return fileCaches;
     }
 
     void beforeRefresh(List<String> list) {
-        if (includeFqcnPrefixes.isEmpty()) {
-            list.clear();
-            return;
-        }
-        Iterator<String> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            String line = iterator.next();
-            if (isClassNameIncluded(line))
-                iterator.remove();
-        }
+        list.removeIf(this::isClassNameIncluded);
     }
 
     boolean isClassNameIncluded(String className) {
@@ -233,6 +206,7 @@ public class ClassCollector {
     }
 
     SaveOptions saveOptions = new SaveOptions();
+
     {
         saveOptions.setPurgeEmpty(deleteEmptyFiles);
         saveOptions.setCompare(true);
@@ -258,6 +232,10 @@ public class ClassCollector {
         if (showPaths)
             for (Class<?> extension : filterMap.keySet()) {
                 MavenPomDir pomDir = MavenPomDir.fromClass(extension);
+                if (pomDir == null) {
+                    logger.error("No maven source module for " + extension);
+                    continue;
+                }
                 Path sourceFile = pomDir.getSourceFile(extension);
                 System.out.println(sourceFile);
             }

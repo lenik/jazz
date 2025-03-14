@@ -15,16 +15,14 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class FileCacheMap<T extends Comparable<T>> {
+public class FileCacheMap<K extends Comparable<K>> {
 
     static final Logger logger = LoggerFactory.getLogger(FileCacheMap.class);
 
-    Map<T, List<String>> map = new TreeMap<>();
-    final IResourceType<T> type;
+    final Map<K, List<String>> map = new TreeMap<>();
+    final IResourceType<K> type;
 
-    public FileCacheMap(@NotNull IResourceType<T> type) {
-        if (type == null)
-            throw new NullPointerException("type");
+    public FileCacheMap(@NotNull IResourceType<K> type) {
         this.type = type;
     }
 
@@ -44,21 +42,21 @@ public class FileCacheMap<T extends Comparable<T>> {
         return map.isEmpty();
     }
 
-    public Set<T> keySet() {
+    public Set<K> keySet() {
         return map.keySet();
     }
 
-    public boolean containsFile(T file) {
+    public boolean containsFile(K file) {
         return map.containsKey(file);
     }
 
-    protected FileCacheMap<T> newMap() {
-        return new FileCacheMap<T>(type);
+    protected FileCacheMap<K> newMap() {
+        return new FileCacheMap<K>(type);
     }
 
-    public FileCacheMap<T> grep(Predicate<T> filePredicate) {
-        FileCacheMap<T> sub = newMap();
-        for (T file : map.keySet()) {
+    public FileCacheMap<K> grep(Predicate<K> filePredicate) {
+        FileCacheMap<K> sub = newMap();
+        for (K file : map.keySet()) {
             if (filePredicate.test(file)) {
                 List<String> data = map.get(file);
                 sub.map.put(file, data);
@@ -67,7 +65,7 @@ public class FileCacheMap<T extends Comparable<T>> {
         return sub;
     }
 
-    public List<String> loadLinesCached(T file)
+    public List<String> loadLinesCached(K file)
             throws IOException {
         List<String> list = map.get(file);
         if (list == null) {
@@ -84,8 +82,8 @@ public class FileCacheMap<T extends Comparable<T>> {
 
     public void save(ISaveOptions options)
             throws IOException {
-        for (Map.Entry<T, List<String>> entry : map.entrySet()) {
-            T file = entry.getKey();
+        for (Map.Entry<K, List<String>> entry : map.entrySet()) {
+            K file = entry.getKey();
 
             List<String> lines = entry.getValue();
             Collections.sort(lines);

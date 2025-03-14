@@ -5,10 +5,12 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.List;
 
-import net.bodz.bas.meta.codegen.IEtcFilesEditor;
 import net.bodz.bas.meta.codegen.IEtcFilesInstaller;
+import net.bodz.bas.meta.codegen.INamedTextBuffers;
 import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.meta.decl.NotNull;
 
 @IndexedType(publishDir = "", etcFiles = ProgramName.ProgramEtcFiles.class)
 @Retention(RetentionPolicy.RUNTIME)
@@ -38,18 +40,19 @@ public @interface ProgramName {
     }
 
     public class ProgramEtcFiles
-            implements
-                IEtcFilesInstaller {
+            implements IEtcFilesInstaller {
 
         @Override
-        public void install(Class<?> clazz, IEtcFilesEditor editor)
+        public void install(@NotNull Class<?> clazz, @NotNull INamedTextBuffers textBuffers)
                 throws IOException {
             ProgramName aProgramName = clazz.getAnnotation(ProgramName.class);
             String ns = "main";
             String sym = aProgramName.value();
             String fqcn = clazz.getCanonicalName();
             String line = String.format("%s %s = %s", ns, sym, fqcn);
-            editor.addLine(mainSymsResource, line);
+            List<String> buffer = textBuffers.loadText(mainSymsResource);
+            if (!buffer.contains(line))
+                buffer.add(line);
         }
 
     }

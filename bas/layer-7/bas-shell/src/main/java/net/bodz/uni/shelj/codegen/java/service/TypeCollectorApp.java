@@ -55,12 +55,12 @@ public class TypeCollectorApp
 
     /**
      * Include packages to be scaned.
-     *
+     * <p>
      * Default to search all packages in the working project.
      *
      * <p lang="zh-cn">
      * 指定要收集的包名列表。
-     *
+     * <p>
      * 默认收集当前工作项目。
      *
      * @option -p --package =FQPN
@@ -71,7 +71,7 @@ public class TypeCollectorApp
 
     /**
      * Include directories to be scanned.
-     *
+     * <p>
      * Default to search all dirs/projects.
      *
      * @option -d --dir =PATH
@@ -108,6 +108,7 @@ public class TypeCollectorApp
             if (pomDir == null) {
                 logger.error("Not with-in a maven project: " + workDir);
                 _exit(1);
+                return;
             }
             Path targetDir = pomDir.getBaseDir().resolve("target");
             scanDirs.add(targetDir);
@@ -117,8 +118,7 @@ public class TypeCollectorApp
             logger.info("Search-Dir: ", dir);
 
         if (indexedTypes.isEmpty())
-            for (Class<?> type : typeIndex.listAnnodated(IndexedType.class))
-                indexedTypes.add(type);
+            indexedTypes.addAll(typeIndex.listAnnodated(IndexedType.class));
 
         ClassCollector collector = new ClassCollector();
 

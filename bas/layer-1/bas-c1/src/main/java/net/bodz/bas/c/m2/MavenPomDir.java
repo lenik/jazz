@@ -15,12 +15,13 @@ import net.bodz.bas.meta.decl.Nullable;
 
 public class MavenPomDir {
 
+    @NotNull
     private final Path pomFile;
+
+    @NotNull
     private final Path baseDir;
 
-    public MavenPomDir(Path baseDir) {
-        if (baseDir == null)
-            throw new NullPointerException("baseDir");
+    public MavenPomDir(@NotNull Path baseDir) {
         this.baseDir = baseDir;
         this.pomFile = baseDir.resolve("pom.xml");
     }
@@ -30,15 +31,18 @@ public class MavenPomDir {
         return name;
     }
 
+    @NotNull
     public Path getBaseDir() {
         return baseDir;
     }
 
+    @NotNull
     public Path getPomFile() {
         return pomFile;
     }
 
-    public Path find(String name) {
+    @NotNull
+    public Path resolve(@NotNull String name) {
         return baseDir.resolve(name);
     }
 
@@ -206,8 +210,8 @@ public class MavenPomDir {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((baseDir == null) ? 0 : baseDir.hashCode());
-        result = prime * result + ((pomFile == null) ? 0 : pomFile.hashCode());
+        result = prime * result + baseDir.hashCode();
+        result = prime * result + pomFile.hashCode();
         return result;
     }
 
