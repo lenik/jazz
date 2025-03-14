@@ -1,6 +1,7 @@
 package net.bodz.lily.entity.attachment;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -19,6 +20,9 @@ public class AttPreviewSet
         extends LinkedHashMap<String, AttPreview>
         implements Iterable<AttPreview>,
                    IJsonForm {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public List<AttPreview> matchSort(VideoType type) {
         VideoLikeTypeComparator order = new VideoLikeTypeComparator(type);

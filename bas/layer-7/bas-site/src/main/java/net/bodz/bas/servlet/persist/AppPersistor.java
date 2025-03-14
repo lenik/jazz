@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpSession;
 
 import net.bodz.bas.c.jakarta.servlet.DecoratedServletContext;
 import net.bodz.bas.c.jakarta.servlet.http.DecoratedHttpSession;
-import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.c.util.IAttributes;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
@@ -52,14 +51,14 @@ public class AppPersistor {
     public void loadServletContext(ServletContext servletContext)
             throws IOException, ParseException {
         Path file = registry.getContextFile();
-        if (FileFn.exists(file))
+        if (Files.exists(file))
             load(file, new DecoratedServletContext(servletContext));
     }
 
     public void loadSession(HttpSession session)
             throws IOException, ParseException {
         Path file = registry.getSessionFile(session.getId());
-        if (FileFn.exists(file))
+        if (Files.exists(file))
             load(file, new DecoratedHttpSession(session));
     }
 

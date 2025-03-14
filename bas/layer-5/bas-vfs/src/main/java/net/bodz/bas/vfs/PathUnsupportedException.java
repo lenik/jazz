@@ -3,6 +3,8 @@ package net.bodz.bas.vfs;
 public class PathUnsupportedException
         extends Exception {
 
+    private static final long serialVersionUID = 1L;
+
     public PathUnsupportedException() {
     }
 

@@ -1,6 +1,7 @@
 package net.bodz.lily.entity.attachment;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -19,6 +20,9 @@ public class AttScreenpackSet
         extends LinkedHashMap<String, AttScreenpack>
         implements Iterable<AttScreenpack>,
                    IJsonForm {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @NotNull
     @Override

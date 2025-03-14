@@ -7,6 +7,8 @@ public class MutableCacheControl
         implements ICacheControl,
                    Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     CacheControlMode cacheControlMode = CacheControlMode.AUTO;
     CacheRevalidationMode cacheRevalidationMode = CacheRevalidationMode.OPTIONAL;
     Integer maxAge;

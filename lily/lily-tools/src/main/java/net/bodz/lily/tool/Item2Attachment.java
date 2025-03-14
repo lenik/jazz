@@ -18,7 +18,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.io.res.AbstractStreamResource;
+import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
@@ -192,7 +192,7 @@ public class Item2Attachment
         for (String arg : args) {
             if (arg.startsWith("@")) {
                 String path = arg.substring(1);
-                AbstractStreamResource resource;
+                IStreamResource resource;
 
                 if (new File(path).exists()) {
                     resource = ResFn.file(new File(path));
