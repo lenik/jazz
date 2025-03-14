@@ -13,6 +13,11 @@
             <version>1</version>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
     <name>BAS :: Layer 1 :: Meta</name>
 </project>

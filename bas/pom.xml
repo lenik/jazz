@@ -2,11 +2,12 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.bodz.bas</groupId>
-        <artifactId>bas-parent</artifactId>
+        <groupId>net.bodz.env</groupId>
+        <artifactId>base8</artifactId>
         <version>0.5-SNAPSHOT</version>
-        <relativePath>bas-parent</relativePath>
+        <relativePath>../env/base8</relativePath>
     </parent>
+    <groupId>net.bodz.bas</groupId>
     <artifactId>bas</artifactId>
     <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -34,8 +35,8 @@
         <module>build</module>
     </modules>
     <properties>
-        <ffdir>src/main/generated</ffdir>
-        <ffdir.test>src/test/generated</ffdir.test>
+        <ffdir>src/main/generated-resources</ffdir>
+        <ffdir.test>src/test/generated-resources</ffdir.test>
     </properties>
     <build>
         <pluginManagement>

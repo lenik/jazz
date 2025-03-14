@@ -1,23 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.bodz.bas</groupId>
-        <artifactId>bas-parent</artifactId>
+        <groupId>net.bodz.env</groupId>
+        <artifactId>base8</artifactId>
         <version>0.5-SNAPSHOT</version>
-        <relativePath/>
+        <relativePath>../base8</relativePath>
     </parent>
-    <groupId>net.bodz.env</groupId>
     <artifactId>ff21</artifactId>
     <version>1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <ffdir>src/main/generated</ffdir>
-        <ffdir.test>src/test/generated</ffdir.test>
+        <ffdir>src/main/generated-resources</ffdir>
+        <ffdir.test>src/test/generated-resources</ffdir.test>
     </properties>
 
-    <name>Jazz Env :: Flatf Java-21</name>
+    <name>boDz Env :: Flatf Java-21</name>
 
     <profiles>
         <profile>

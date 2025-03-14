@@ -2,8 +2,8 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!-- The Basics -->
-    <groupId>net.bodz.bas</groupId>
-    <artifactId>bas-parent</artifactId>
+    <groupId>net.bodz.env</groupId>
+    <artifactId>base8</artifactId>
     <version>0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
@@ -101,6 +101,21 @@
                 <version>1.0</version>
             </dependency>
             <dependency>
+                <groupId>com.datastax.cassandra</groupId>
+                <artifactId>cassandra-driver-core</artifactId>
+                <version>3.11.5</version>
+            </dependency>
+            <dependency>
+                <groupId>com.datastax.cassandra</groupId>
+                <artifactId>cassandra-driver-mapping</artifactId>
+                <version>3.11.5</version>
+            </dependency>
+            <dependency>
+                <groupId>com.datastax.cassandra</groupId>
+                <artifactId>cassandra-driver-extras</artifactId>
+                <version>3.11.5</version>
+            </dependency>
+            <dependency>
                 <groupId>com.googlecode.sli4j</groupId>
                 <artifactId>sli4j-slf4j</artifactId>
                 <version>2.0</version>
@@ -113,23 +128,24 @@
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
-                <version>4.9.2</version>
+                <version>4.12.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.vladsch.flexmark</groupId>
+                <artifactId>flexmark</artifactId>
+                <version>0.64.8</version>
             </dependency>
             <dependency>
                 <groupId>com.vladsch.flexmark</groupId>
                 <artifactId>flexmark-docx-converter</artifactId>
-                <version>0.62.2</version>
+                <version>0.64.8</version>
                 <exclusions>
-                    <exclusion>
-                        <groupId>log4j</groupId>
-                        <artifactId>log4j</artifactId>
-                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.vladsch.flexmark</groupId>
                 <artifactId>flexmark-pdf-converter</artifactId>
-                <version>0.62.2</version>
+                <version>0.64.8</version>
                 <exclusions>
                     <exclusion>
                         <groupId>com.openhtmltopdf</groupId>
@@ -137,6 +153,33 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-handler</artifactId>
+                <version>4.1.119.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-common</artifactId>
+                <version>4.1.119.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec</artifactId>
+                <version>4.1.119.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-buffer</artifactId>
+                <version>4.1.119.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport</artifactId>
+                <version>4.1.119.Final</version>
+            </dependency>
+            
             <dependency>
                 <groupId>java3d</groupId>
                 <artifactId>vecmath</artifactId>
@@ -168,6 +211,11 @@
                 <version>4.01</version>
             </dependency>
             <dependency>
+                <groupId>net.sourceforge.nekohtml</groupId>
+                <artifactId>nekohtml</artifactId>
+                <version>1.9.22</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>3.13.0</version>
@@ -179,12 +227,27 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-1.2-api</artifactId>
+                <version>2.24.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>2.24.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
                 <version>2.24.3</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-slf4j-impl</artifactId>
+                <version>2.24.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j2-impl</artifactId>
                 <version>2.24.3</version>
             </dependency>
             <dependency>
@@ -218,6 +281,11 @@
                         <artifactId>xml-apis</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-classworlds</artifactId>
+                <version>2.8.0</version>
             </dependency>
             <dependency>
                 <groupId>org.codehaus.xfire</groupId>
@@ -504,6 +572,46 @@
                             </sources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/test/generated</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-resource</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/generated-resources</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-test-resource</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>add-test-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/test/generated-resources</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
@@ -528,7 +636,7 @@
                 </excludes>
             </resource>
             <resource>
-                <directory>src/main/generated</directory>
+                <directory>src/main/generated-resources</directory>
                 <filtering>true</filtering>
                 <!-- filtering: perform variable replacement on resouces -->
                 <includes>
@@ -537,10 +645,9 @@
                 </includes>
             </resource>
             <resource>
-                <directory>src/main/generated</directory>
+                <directory>src/main/generated-resources</directory>
                 <filtering>false</filtering>
                 <excludes>
-                    <exclude>**/*.java</exclude>
                     <exclude>**/.template/</exclude>
                     <exclude>**/node_modules/.bin/</exclude>
                     <exclude>**/*.properties</exclude>
@@ -565,10 +672,29 @@
                     <exclude>**/*.xml</exclude>
                 </excludes>
             </testResource>
+            <testResource>
+                <directory>src/test/generated-resources</directory>
+                <filtering>true</filtering>
+                <!-- filtering: perform variable replacement on resouces -->
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </testResource>
+            <testResource>
+                <directory>src/test/generated-resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/.template/</exclude>
+                    <exclude>**/node_modules/.bin/</exclude>
+                    <exclude>**/*.properties</exclude>
+                    <exclude>**/*.xml</exclude>
+                </excludes>
+            </testResource>
         </testResources>
     </build>
     <!-- More Project Information -->
-    <name>BAS Parent</name>
+    <name>boDz Env :: Base Java-8</name>
     <url>http://bas.bodz.net/</url>
     <organization>
         <name>boDz Software Foundation</name>
