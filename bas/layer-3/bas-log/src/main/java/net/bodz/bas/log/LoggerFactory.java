@@ -22,8 +22,10 @@ public class LoggerFactory {
     public static void init() {
         if (inited)
             return;
-        for (ILoggingSystemConfigurer listener : ServiceLoader.load(ILoggingSystemConfigurer.class))
+        for (ILoggingSystemConfigurer listener : ServiceLoader.load(ILoggingSystemConfigurer.class)) {
+            // System.out.println("Init: " + listener);
             listener.initLoggingSystem();
+        }
         inited = true;
     }
 
