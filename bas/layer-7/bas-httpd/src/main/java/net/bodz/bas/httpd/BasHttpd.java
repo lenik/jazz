@@ -2,7 +2,7 @@ package net.bodz.bas.httpd;
 
 import jakarta.servlet.ServletContext;
 
-import org.eclipse.jetty.server.handler.ContextHandler.Context;
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.servlet.config.ServletContextConfig;
@@ -56,7 +56,7 @@ public abstract class BasHttpd
         EchoServer server = new EchoServer(config);
         server.start();
 
-        Context servletContext = server.getServletContextHandler().getServletContext();
+        ServletContextHandler.ServletContextApi servletContext = server.getServletContextHandler().getContext().getServletContext();
         onContextStart(servletContext);
     }
 
