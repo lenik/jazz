@@ -48,6 +48,12 @@ public class PathResource
     }
 
     @Override
+    public boolean isPathPresent() {
+        return true;
+    }
+
+    @NotNull
+    @Override
     public String getPath() {
         return path.toString();
     }

@@ -52,6 +52,12 @@ public class FileResource
     }
 
     @Override
+    public boolean isPathPresent() {
+        return true;
+    }
+
+    @NotNull
+    @Override
     public String getPath() {
         return file.getPath();
     }
@@ -65,8 +71,8 @@ public class FileResource
             throws IOException {
         if (CreateOptions.isCreateParents(options)) {
             File parentFile = file.getParentFile();
-            if (parentFile != null && ! parentFile.isDirectory()) {
-                if (! parentFile.mkdirs())
+            if (parentFile != null && !parentFile.isDirectory()) {
+                if (!parentFile.mkdirs())
                     // throw ...?
                     ;
             }
@@ -105,10 +111,10 @@ public class FileResource
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (! (obj instanceof FileResource))
+        if (!(obj instanceof FileResource))
             return false;
         FileResource o = (FileResource) obj;
-        if (! file.equals(o.file))
+        if (!file.equals(o.file))
             return false;
         return true;
     }

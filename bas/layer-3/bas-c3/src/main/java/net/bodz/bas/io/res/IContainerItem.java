@@ -33,7 +33,7 @@ public interface IContainerItem {
 
     default String getContainerName() {
         String path = getContainerPath();
-        return path == null ? null : FilePath.getBaseName(path);
+        return FilePath.baseName(path);
     }
 
     File getItemFile();
@@ -48,7 +48,7 @@ public interface IContainerItem {
 
     default String getItemName() {
         String path = getItemPath();
-        return path == null ? null : FilePath.getBaseName(path);
+        return FilePath.baseName(path);
     }
 
     URI getItemURI();

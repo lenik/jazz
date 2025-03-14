@@ -41,8 +41,8 @@ public class JavaProjectBuildPathEntry {
         if (sourceLoc == null) {
             Path parentDir = targetLoc.getParent();
             String base = targetLoc.getFileName().toString();
-            String baseName = FilePath.stripExtension(base);
-            String baseExt = FilePath.getExtension(base, true);
+            String baseName = FilePath.name(base);
+            String baseExt = FilePath.dotExtension(base);
             for (String suffix : searchSourceDirSuffixes) {
                 Path f = parentDir.resolve(baseName + suffix + baseExt);
                 if (Files.exists(f)) {
@@ -62,8 +62,8 @@ public class JavaProjectBuildPathEntry {
         if (sourceLoc == null) {
             File parentDir = targetLoc.getParentFile();
             String base = targetLoc.getName();
-            String baseName = FilePath.stripExtension(base);
-            String baseExt = FilePath.getExtension(base, true);
+            String baseName = FilePath.name(base);
+            String baseExt = FilePath.dotExtension(base);
             for (String suffix : searchSourceDirSuffixes) {
                 File f = new File(parentDir, baseName + suffix + baseExt);
                 if (f.exists()) {

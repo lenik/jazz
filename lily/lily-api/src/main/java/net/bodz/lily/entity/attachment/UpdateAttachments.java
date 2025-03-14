@@ -34,7 +34,7 @@ public class UpdateAttachments
         String name = item.getName();
         if (name == null)
             return null;
-        String ext = FilePath.getExtension(name, true);
+        String ext = FilePath.dotExtensionOfPath(name);
         return item.getFileSHA1() + ext;
     }
 

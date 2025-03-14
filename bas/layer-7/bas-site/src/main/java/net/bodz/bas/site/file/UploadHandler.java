@@ -151,7 +151,7 @@ public class UploadHandler
         String sha1str = hexCodec.encode(sha1);
 
         Path parentDir = src.getParent();
-        String dotExt = FilePath.getExtension(src.getFileName().toString(), true);
+        String dotExt = FilePath.dotExtension(src);
 
         Path sha1File = parentDir.resolve(sha1str + dotExt);
 

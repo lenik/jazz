@@ -28,6 +28,7 @@ public class FileObjectResource
         this.fileObject = fileObject;
     }
 
+    @NotNull
     @Override
     public String getName() {
         return fileObject.getName().getBaseName();

@@ -46,11 +46,13 @@ public abstract class ProxyStreamResource<This>
         return _orig;
     }
 
+    @NotNull
     @Override
     public String getPath() {
         return getWrapped().getPath();
     }
 
+    @NotNull
     @Override
     public String getName() {
         return getWrapped().getName();

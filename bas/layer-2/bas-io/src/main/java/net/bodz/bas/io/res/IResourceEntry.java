@@ -13,12 +13,18 @@ import net.bodz.bas.sugar.Tooling;
 public interface IResourceEntry
         extends IToChain {
 
+    boolean isPathPresent();
+
+    default boolean isNamePresent() {
+        return isPathPresent();
+    }
+
+    @NotNull
     String getPath();
 
+    @NotNull
     default String getName() {
         String path = getPath();
-        if (path == null)
-            return null;
         int sep = path.lastIndexOf('/');
         return sep == -1 ? path : path.substring(sep + 1);
     }

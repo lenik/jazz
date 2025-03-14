@@ -38,6 +38,12 @@ public class URLResource
     }
 
     @Override
+    public boolean isPathPresent() {
+        return true;
+    }
+
+    @NotNull
+    @Override
     public String getPath() {
         return url.getPath();
     }

@@ -57,13 +57,14 @@ public class LocalRepoDir {
         id.artifactId = artifactDir.getFileName().toString();
         id.version = versionDir.getFileName().toString();
 
-        String name = jar.getFileName().toString();
-        id.packaging = FilePath.getExtension(name, false);
+        String baseName = jar.getFileName().toString();
+        id.packaging = FilePath.extension(baseName);
 
-        name = FilePath.stripExtension(name);
-        String suffix = name.substring(id.artifactId.length() + 1 + id.version.length());
-        if (!suffix.isEmpty())
-            id.scope = suffix.substring(1);
+        // artifact-version-scope.jar
+        String name = FilePath.name(baseName);
+        String nameSuffix = name.substring(id.artifactId.length() + 1 + id.version.length());
+        if (!nameSuffix.isEmpty())
+            id.scope = nameSuffix.substring(1);
         return id;
     }
 

@@ -193,7 +193,7 @@ public class ResourceResolver {
             }
         }
 
-        String extension = FilePath.getExtension(filename, false);
+        String extension = FilePath.extensionOfPath(filename);
         FileSearcher fileSearcher;
         if (extension != null)
             fileSearcher = getFileSearcherForExtension(extension);

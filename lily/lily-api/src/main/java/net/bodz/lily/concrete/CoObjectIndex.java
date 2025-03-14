@@ -121,7 +121,7 @@ public abstract class CoObjectIndex<T extends CoObject>
             return PathArrival.shift(previous, this, this, tokens);
         }
 
-        String name = FilePath.stripExtension(token);
+        String name = FilePath.name(token);
         if (StringPred.isDecimal(name)) {
             Long id = Long.parseLong(name);
 
