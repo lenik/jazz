@@ -22,7 +22,6 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileRelation;
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.c.java.io.FileZip;
-import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
@@ -49,7 +48,7 @@ public class JavaProject
         Path classpathFile = baseDir.resolve(".classpath");
         Path manifestFile = baseDir.resolve("META-INF/MANIFEST.MF");
 
-        if (FileFn.exists(classpathFile))
+        if (Files.exists(classpathFile))
             try {
                 SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
                 InputSource inputSource = new InputSource(FileURL.toURL(classpathFile).toString());
@@ -59,7 +58,7 @@ public class JavaProject
                 throw new ParseException(e.getMessage(), e);
             }
 
-        if (FileFn.exists(manifestFile)) {
+        if (Files.exists(manifestFile)) {
             Manifest manifest = new Manifest(Files.newInputStream(manifestFile));
 
             java.util.jar.Attributes attributes = manifest.getMainAttributes();

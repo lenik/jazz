@@ -96,7 +96,7 @@ public class TypeParam {
             TypeVariable<?> tvar = (TypeVariable<?>) type;
 
             StringBuilder sb = new StringBuilder();
-            sb.append(tvar + "(");
+            sb.append(tvar).append("(");
 
             Type[] bounds = tvar.getBounds();
             for (int i = 0; i < bounds.length; i++) {
@@ -121,7 +121,7 @@ public class TypeParam {
 
     public static Class<?>[] infer(Type type, Class<?> interesting) {
         Type[] typeArgs = getTypeArgs(type, interesting);
-        Class<?> v[] = new Class<?>[typeArgs.length];
+        Class<?>[] v = new Class<?>[typeArgs.length];
         for (int i = 0; i < typeArgs.length; i++)
             v[i] = bound1(typeArgs[i]);
         return v;

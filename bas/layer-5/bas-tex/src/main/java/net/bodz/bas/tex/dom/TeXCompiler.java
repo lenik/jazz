@@ -84,11 +84,4 @@ public class TeXCompiler
         clean();
     }
 
-    @SuppressWarnings("removal")
-    @Override
-    protected void finalize()
-            throws Throwable {
-        close();
-    }
-
 }

@@ -119,13 +119,6 @@ public class UnixPatchUpdater
         }
     }
 
-    @SuppressWarnings("removal")
-    @Override
-    protected void finalize()
-            throws Throwable {
-        close();
-    }
-
     public static class Builder {
 
         Path baseDir;
