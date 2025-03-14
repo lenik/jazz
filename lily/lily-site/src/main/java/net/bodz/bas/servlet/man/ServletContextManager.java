@@ -3,9 +3,9 @@ package net.bodz.bas.servlet.man;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
-import org.eclipse.jetty.server.handler.ContextHandler.Context;
 
 import net.bodz.bas.c.jakarta.servlet.DecoratedServletContext;
 import net.bodz.bas.c.org.json.JsonBuffer;
@@ -59,8 +59,8 @@ public class ServletContextManager
             break;
 
         case "stop":
-            if (servletContext instanceof Context) {
-                Context context = (Context) servletContext;
+            if (servletContext instanceof ServletContextHandler.ServletContextApi) {
+                ServletContextHandler.ServletContextApi context = (ServletContextHandler.ServletContextApi) servletContext;
                 ContextHandler contextHandler = context.getContextHandler();
                 Server server = contextHandler.getServer();
                 try {
