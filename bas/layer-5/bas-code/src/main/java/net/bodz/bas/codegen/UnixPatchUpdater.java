@@ -245,7 +245,7 @@ public class UnixPatchUpdater
 
         static Path makeTempLike(String path, String content)
                 throws IOException {
-            String baseName = FilePath.getBaseName(path);
+            String baseName = FilePath.baseName(path);
             int lastDot = baseName.lastIndexOf('.');
             String name = lastDot == -1 ? baseName : baseName.substring(0, lastDot);
             String dotExtension = lastDot == -1 ? "" : baseName.substring(lastDot);

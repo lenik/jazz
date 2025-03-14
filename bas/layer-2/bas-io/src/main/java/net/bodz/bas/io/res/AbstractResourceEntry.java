@@ -26,6 +26,12 @@ public abstract class AbstractResourceEntry<This>
     }
 
     @Override
+    public boolean isPathPresent() {
+        return path != null;
+    }
+
+    @NotNull
+    @Override
     public String getPath() {
         return path;
     }

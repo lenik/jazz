@@ -55,7 +55,7 @@ public class JarStuffTest
 
         classpath = ClassResource.getRootFile(Object.class);
         System.out.println("[outbase] Object.class => " + classpath);
-        assertEquals(".jar", FilePath.getExtension(classpath, true));
+        assertEquals(".jar", FilePath.dotExtension(classpath));
     }
 
     @Test

@@ -5,6 +5,8 @@ import java.net.URI;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 public class JarEntryItem
         implements
             IContainerItem {
@@ -41,6 +43,7 @@ public class JarEntryItem
         return jarFile;
     }
 
+    @NotNull
     @Override
     public String getContainerPath() {
         return jarFile.getName();
@@ -61,6 +64,7 @@ public class JarEntryItem
         return entry;
     }
 
+    @NotNull
     @Override
     public String getItemPath() {
         return entry.getName();

@@ -50,8 +50,8 @@ public class ArtifactBuilder {
                 continue;
             IAnchor a = start.join(file);
             String version = "x";
-            String base = FilePath.getBaseName(file);
-            String ext = FilePath.getExtension(file, true);
+            String base = FilePath.baseName(file);
+            String ext = FilePath.dotExtension(base);
             String fragmentName = name + "/" + base;
             IMutableArtifact fragment;
             if (".js".equals(ext))

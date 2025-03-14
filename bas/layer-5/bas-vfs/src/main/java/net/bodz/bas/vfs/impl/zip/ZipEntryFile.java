@@ -46,7 +46,7 @@ public class ZipEntryFile
 
     public ZipEntryFile(ZipVfsDevice device, String entryName)
             throws IOException {
-        super(device, FilePath.getBaseName(entryName));
+        super(device, FilePath.baseName(entryName));
         // XXX should be getZipArchiver.
         this.zipEntry = new ZipEntry(device.archiver());
     }
@@ -60,7 +60,7 @@ public class ZipEntryFile
      *             if <code>pojfPath</code> is <code>null</code>
      */
     public ZipEntryFile(ZipVfsDevice device, ZipEntry zipEntry) {
-        super(device, FilePath.getBaseName(zipEntry.getName()));
+        super(device, FilePath.baseName(zipEntry.getName()));
         this.zipEntry = zipEntry;
     }
 

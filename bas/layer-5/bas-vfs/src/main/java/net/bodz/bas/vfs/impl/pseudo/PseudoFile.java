@@ -29,7 +29,7 @@ public abstract class PseudoFile
      *             If <code>localPath</code> is <code>null</code>.
      */
     public PseudoFile(PseudoVfsDevice device, String localPath, IRandomResource resource) {
-        super(device, FilePath.getBaseName(localPath), null);
+        super(device, FilePath.baseName(localPath), null);
 
         if (resource == null)
             throw new NullPointerException("resource");

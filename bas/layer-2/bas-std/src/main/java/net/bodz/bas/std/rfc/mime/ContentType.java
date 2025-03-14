@@ -115,11 +115,11 @@ public class ContentType
 
     @NotNull
     public static ContentType forPath(@NotNull String path) {
-        String extension = FilePath.getExtension(path);
+        String extension = FilePath.extensionOfPath(path);
         if (extension != null) {
             return forExtension(extension);
         } else {
-            String name = FilePath.getBaseName(path);
+            String name = FilePath.baseName(path);
             return forName(name);
         }
     }

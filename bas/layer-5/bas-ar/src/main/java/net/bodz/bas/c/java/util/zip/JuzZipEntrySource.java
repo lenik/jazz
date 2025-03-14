@@ -25,13 +25,15 @@ public class JuzZipEntrySource
         this.zipEntry = zipEntry;
     }
 
+    @NotNull
     @Override
     public String getName() {
         String path = zipEntry.getName();
-        String baseName = FilePath.getBaseName(path);
+        String baseName = FilePath.baseName(path);
         return baseName;
     }
 
+    @NotNull
     @Override
     public String getPath() {
         return zipEntry.getName();

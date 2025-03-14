@@ -20,7 +20,7 @@ public class URLBlob
         this.url = url;
 
         String path = url.getPath();
-        String baseName = FilePath.getBaseName(path);
+        String baseName = FilePath.baseName(path);
         this.filename = baseName;
     }
 

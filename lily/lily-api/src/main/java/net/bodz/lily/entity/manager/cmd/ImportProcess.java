@@ -90,7 +90,7 @@ public class ImportProcess
         for (UploadedFileInfo fileInfo : uploadResult) {
             Path filePath = fileInfo.getFile();
             File file = filePath.toFile();
-            String extension = FilePath.getExtension(file);
+            String extension = FilePath.extension(file);
             if (extension == null)
                 return result.fail("file without extension.");
 

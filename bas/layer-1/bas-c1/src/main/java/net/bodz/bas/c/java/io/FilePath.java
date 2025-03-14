@@ -4,12 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import net.bodz.bas.c.java.nio.file.FileFn;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.meta.decl.Nullable;
 
 public class FilePath {
 
@@ -17,7 +20,7 @@ public class FilePath {
     private static final char fileSeparatorChar;
 
     static {
-        fileSeparator = System.getProperty("file.separator");
+        fileSeparator = FileSystems.getDefault().getSeparator();
         if (fileSeparator == null || fileSeparator.isEmpty())
             fileSeparatorChar = '/';
         else
@@ -256,19 +259,23 @@ public class FilePath {
         return start + fileSeparatorChar + href;
     }
 
-    public static String getDirName(String path) {
-        if (path == null)
-            throw new NullPointerException("path");
-        int lastSlash = path.lastIndexOf('/');
-        if (lastSlash == -1)
-            return ".";
-        else
-            return path.substring(0, lastSlash);
+    public static String dirName(String path) {
+        return dirNameOr(path, ".");
     }
 
-    public static String getBaseName(String path) {
+    public static String dirNameOr(String path, String defaultDir) {
         if (path == null)
-            throw new NullPointerException("path");
+            return defaultDir;
+
+        int lastSlash = path.lastIndexOf('/');
+        if (lastSlash == -1)
+            return defaultDir;
+
+        return path.substring(0, lastSlash);
+    }
+
+    @NotNull
+    public static String baseName(@NotNull String path) {
         int lastSlash = path.lastIndexOf('/');
         if (lastSlash == -1)
             return path;
@@ -276,106 +283,114 @@ public class FilePath {
             return path.substring(lastSlash + 1);
     }
 
-    /**
-     * @return The extension name without the dot(.). If file has no extension, returns
-     *         <code>null</code>.
-     */
-    public static String getExtension(String path) {
-        return getExtension(path, false);
+    @NotNull
+    public static String name(@NotNull String baseName) {
+        int dot = baseName.lastIndexOf('.');
+        return dot == -1 ? baseName : baseName.substring(0, dot);
     }
 
-    /**
-     * Get the extension name from the given path string.
-     *
-     * @param path
-     *            The path string, can't be <code>null</code>.
-     * @param includeDot
-     *            Whether dot(.) is included in the return value.
-     * @return If file has no extension, returns <code>null</code> if includeDot is
-     *         <code>false</code>, or "" if includeDot is <code>true</code>.
-     * @throws NullPointerException
-     *             If <code>path</code> is <code>null</code>.
-     */
-    public static String getExtension(String path, boolean includeDot) {
-        if (path == null)
-            throw new NullPointerException("path");
-        int slash = path.lastIndexOf('/');
-        String name = slash == -1 ? path : path.substring(slash + 1);
-        int dot = name.lastIndexOf('.');
-        if (dot == -1)
-            return includeDot ? "" : null;
-        else
-            return name.substring(includeDot ? dot : dot + 1);
-    }
-
-    /**
-     * @return The extension name without the dot(.). If file has no extension, returns
-     *         <code>null</code>.
-     */
-    public static String getExtension(File file) {
-        return getExtension(file, false);
-    }
-
-    public static String getExtension(File file, boolean includeDot) {
-        return getExtension(file.getName(), includeDot);
-    }
-
-    /**
-     * @return The extension name without the dot(.). If file has no extension, returns
-     *         <code>null</code>.
-     */
-    public static String getExtension(Path path) {
-        return getExtension(path, false);
-    }
-
-    /**
-     * @return The extension name without the dot(.). If file has no extension, returns
-     *         <code>null</code>.
-     */
-    public static String getExtension(Path path, boolean includeDot) {
-        Path fileName = path.getFileName();
-        if (fileName == null)
+    public static String extension(String baseName) {
+        if (baseName == null)
             return null;
-        String name = fileName.toString();
-        int dot = name.lastIndexOf('.');
-        if (dot == -1)
-            return includeDot ? "" : null;
-        else
-            return name.substring(includeDot ? dot : dot + 1);
+        int dot = baseName.lastIndexOf('.');
+        return dot == -1 ? null : baseName.substring(dot + 1);
     }
 
-    /**
-     * Get the base name without extension
-     */
-    public static String stripExtension(String name) {
-        int dot = name.lastIndexOf('.');
-        if (dot != -1)
-            return name.substring(0, dot);
-        return name;
+    @NotNull
+    public static String dotExtension(@NotNull String baseName) {
+        int dot = baseName.lastIndexOf('.');
+        return dot == -1 ? "" : baseName.substring(dot);
     }
 
-    /**
-     * Get the base name without extension
-     */
-    public static String stripExtension(File file) {
-        if (file == null)
-            throw new NullPointerException("file");
-        String name = file.getName();
-        return stripExtension(name);
+    public static String extensionOfPath(String path) {
+        if (path == null)
+            return null;
+        String baseName = baseName(path);
+        return extension(baseName);
     }
 
-    /**
-     * @throws NullPointerException
-     *             If <code>path</code> is <code>null</code>.
-     */
-    public static NameExtension splitExtension(String path) {
+    @NotNull
+    public static String dotExtensionOfPath(@NotNull String path) {
+        String baseName = baseName(path);
+        return dotExtension(baseName);
+    }
+
+    public static String extension(Path path) {
+        if (path == null)
+            return null;
+        Path fileName = path.getFileName();
+        return fileName == null ? null : extension(fileName.toString());
+    }
+
+    public static String extension(File file) {
+        return file == null ? null : extension(file.getName());
+    }
+
+    public static String extension(URI uri) {
+        return uri == null ? null : extensionOfPath(uri.getPath());
+    }
+
+    public static String extension(URL url) {
+        return url == null ? null : extensionOfPath(url.getPath());
+    }
+
+    @NotNull
+    public static String dotExtension(@NotNull Path path) {
+        Path fileName = path.getFileName();
+        return fileName == null ? "" : dotExtension(fileName.toString());
+    }
+
+    @NotNull
+    public static String dotExtension(@NotNull File file) {
+        return dotExtension(file.getName());
+    }
+
+    @NotNull
+    public static String dotExtension(@NotNull URI uri) {
+        return dotExtensionOfPath(uri.getPath());
+    }
+
+    @NotNull
+    public static String dotExtension(@NotNull URL url) {
+        return dotExtensionOfPath(url.getPath());
+    }
+
+    @NotNull
+    public static String nameOfPath(@NotNull String path) {
+        String baseName = baseName(path);
+        return name(baseName);
+    }
+
+    @Nullable
+    public static String name(@NotNull Path path) {
+        Path fileName = path.getFileName();
+        return fileName == null ? null : nameOfPath(fileName.toString());
+    }
+
+    @NotNull
+    public static String name(@NotNull File file) {
+        return name(file.getName());
+    }
+
+    @NotNull
+    public static String name(@NotNull URI uri) {
+        return nameOfPath(uri.getPath());
+    }
+
+    @NotNull
+    public static String name(@NotNull URL url) {
+        return nameOfPath(url.getPath());
+    }
+
+    @NotNull
+    public static NameExtension splitExtension(@NotNull String path) {
         int dot = path.lastIndexOf('.');
         if (dot == -1)
             return new NameExtension(path, null);
         return new NameExtension(path.substring(0, dot), path.substring(dot + 1));
     }
 
-    public static File alterDirectory(File file, File newDir) {
+    public static File dirName(@NotNull File file, @NotNull File newDir) {
         String name = file.getName();
         if (newDir == null)
             return new File(name);
@@ -383,24 +398,60 @@ public class FilePath {
             return new File(newDir, name);
     }
 
-    public static File alterName(File file, String newName) {
+    public static File baseName(@NotNull File file, String newBaseName) {
         File dir = file.getParentFile();
         if (dir == null)
-            return new File(newName);
+            return new File(newBaseName);
         else
-            return new File(dir, newName);
+            return new File(dir, newBaseName);
     }
 
-    /**
-     * @param newExtension
-     *            should contain the dot(.).
-     */
-    public static File alterExtension(File file, String newExtension) {
+    @NotNull
+    public static String extension(@NotNull String path, String newExtension) {
+        return dotExtension(path, newExtension == null ? "" : ('.' + newExtension));
+    }
+
+    @NotNull
+    public static File extension(@NotNull File file, String newExtension) {
+        return dotExtension(file, newExtension == null ? "" : ('.' + newExtension));
+    }
+
+    @NotNull
+    public static Path extension(@NotNull Path path, String newExtension) {
+        return dotExtension(path, newExtension == null ? "" : ('.' + newExtension));
+    }
+
+    @NotNull
+    public static String dotExtension(@NotNull String path, @NotNull String newDotExtension) {
+        String dir = dirName(path);
+        String baseName = baseName(path);
+
+        String name = name(baseName);
+        String newBaseName = name + newDotExtension;
+        return dir == null ? newBaseName : (dir + '/' + newBaseName);
+    }
+
+    @NotNull
+    public static File dotExtension(@NotNull File file, @NotNull String newDotExtension) {
         File dir = file.getParentFile();
-        String name = file.getName();
-        String nameWoExt = FilePath.stripExtension(name);
-        String newName = nameWoExt + newExtension;
-        return dir == null ? new File(newName) : new File(dir, newName);
+        String baseName = file.getName();
+        String name = name(baseName);
+        String newBaseName = name + newDotExtension;
+        return dir == null ? new File(newBaseName) : new File(dir, newBaseName);
+    }
+
+    @NotNull
+    public static Path dotExtension(@NotNull Path path, @NotNull String newDotExtension) {
+        Path fileName = path.getFileName();
+        if (fileName == null)
+            return path;
+
+        Path dir = path.getParent();
+        String baseName = fileName.toString();
+
+        String name = name(baseName);
+        String newBaseName = name + newDotExtension;
+        return dir == null ? Paths.get(newBaseName) : dir.resolve(newBaseName);
     }
 
     public static String toUnixStyle(String path) {

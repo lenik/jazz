@@ -46,10 +46,17 @@ public class ApacheFileResource
     }
 
     @Override
+    public boolean isPathPresent() {
+        return true;
+    }
+
+    @NotNull
+    @Override
     public String getPath() {
         return fileObject.getName().getPath();
     }
 
+    @NotNull
     @Override
     public String getName() {
         return fileObject.getName().getBaseName();

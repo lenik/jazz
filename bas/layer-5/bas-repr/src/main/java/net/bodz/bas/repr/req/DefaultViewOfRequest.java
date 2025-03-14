@@ -86,7 +86,7 @@ public class DefaultViewOfRequest
                 contentType = ContentType.forName(accept);
         }
         if (contentType == null) {
-            String extension = FilePath.getExtension(request.getRequestURI());
+            String extension = FilePath.extensionOfPath(request.getRequestURI());
             if (extension != null)
                 contentType = ContentType.forExtension(extension);
         }

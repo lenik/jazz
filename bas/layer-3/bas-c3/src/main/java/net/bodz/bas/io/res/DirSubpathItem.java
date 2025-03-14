@@ -5,6 +5,8 @@ import java.net.URI;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 public class DirSubpathItem
         implements
             IContainerItem {
@@ -37,6 +39,7 @@ public class DirSubpathItem
         return null;
     }
 
+    @NotNull
     @Override
     public String getContainerPath() {
         return baseDir == null ? null : baseDir.getPath();
@@ -69,6 +72,7 @@ public class DirSubpathItem
         return null;
     }
 
+    @NotNull
     @Override
     public String getItemPath() {
         return subPath;
