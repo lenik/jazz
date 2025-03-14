@@ -48,4 +48,9 @@ public class ModelPropertyProfileActivator
         return false;
     }
 
+    @Override
+    public boolean presentInConfig(Profile profile, ProfileActivationContext context, ModelProblemCollector problems) {
+        return false;
+    }
+
 }
