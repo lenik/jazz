@@ -95,8 +95,8 @@ public class FileRelation {
         if (!Files.isDirectory(parent))
             return false;
 
-        child = child.toAbsolutePath();
-        parent = parent.toAbsolutePath();
+        child = child.toAbsolutePath().normalize();
+        parent = parent.toAbsolutePath().normalize();
         return _isChildOf(child, parent);
     }
 
@@ -114,18 +114,24 @@ public class FileRelation {
         return _isChildOf(child, parent);
     }
 
-    private static boolean _isChildOf(Path child, Path parent) {
-        Path f = child.getParent();
-        if (f.equals(parent))
-            return true;
-        return _isChildOf(f, parent);
+    static boolean _isChildOf(Path sub, Path sup) {
+        Path ancestor = sub;
+        while (ancestor != null) {
+            if (ancestor.equals(sup))
+                return true;
+            ancestor = ancestor.getParent();
+        }
+        return false;
     }
 
-    private static boolean _isChildOf(File child, File parent) {
-        File f = child.getParentFile();
-        if (f.equals(parent))
-            return true;
-        return _isChildOf(f, parent);
+    static boolean _isChildOf(File child, File parent) {
+        File ancestor = child;
+        while (ancestor != null) {
+            if (ancestor.equals(parent))
+                return true;
+            ancestor = ancestor.getParentFile();
+        }
+        return false;
     }
 
 }
