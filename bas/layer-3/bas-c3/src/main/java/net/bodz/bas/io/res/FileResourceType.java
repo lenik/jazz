@@ -2,24 +2,40 @@ package net.bodz.bas.io.res;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
+
+import net.bodz.bas.c.java.io.FileRelation;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class FileResourceType
         implements
             IResourceType<File> {
 
     @Override
-    public boolean delete(File resource) {
+    public Path toPath(@NotNull File resource) {
+        return resource.toPath();
+    }
+
+    @Override
+    public boolean delete(@NotNull File resource) {
         return resource.delete();
     }
 
     @Override
-    public boolean exists(File resource) {
+    public boolean exists(@NotNull File resource) {
         return resource.exists();
     }
 
     @Override
-    public boolean createParentDirs(File resource) {
+    public boolean in(@NotNull File sub, @NotNull File sup) {
+        Path _sub = sub.getAbsoluteFile().toPath();
+        Path _sup = sup.getAbsoluteFile().toPath();
+        return FileRelation.isChildOf(_sub, _sup);
+    }
+
+    @Override
+    public boolean createParentDirs(@NotNull File resource) {
         File parentFile = resource.getParentFile();
         if (parentFile == null)
             return true;
@@ -30,25 +46,25 @@ public class FileResourceType
     }
 
     @Override
-    public String loadText(File resource)
+    public String loadText(@NotNull File resource)
             throws IOException {
         return ResFn.file(resource).read().readString();
     }
 
     @Override
-    public List<String> loadLines(File resource)
+    public List<String> loadLines(@NotNull File resource)
             throws IOException {
         return ResFn.file(resource).read().readLines();
     }
 
     @Override
-    public void saveText(File resource, String text)
+    public void saveText(@NotNull File resource, @NotNull String text)
             throws IOException {
         ResFn.file(resource).write().writeString(text);
     }
 
     @Override
-    public void saveText(File resource, String text, String encoding)
+    public void saveText(@NotNull File resource, @NotNull String text, String encoding)
             throws IOException {
         ResFn.file(resource).charset(encoding).write().writeString(text);
     }

@@ -1,26 +1,33 @@
 package net.bodz.bas.io.res;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
+
+import net.bodz.bas.meta.decl.NotNull;
 
 public interface IResourceType<T> {
 
-    boolean delete(T resource);
+    Path toPath(@NotNull T resource);
 
-    boolean exists(T resource);
+    boolean delete(@NotNull T resource);
 
-    boolean createParentDirs(T resource);
+    boolean exists(@NotNull T resource);
 
-    String loadText(T resource)
+    boolean in(@NotNull T sub, @NotNull T sup);
+
+    boolean createParentDirs(@NotNull T resource);
+
+    String loadText(@NotNull T resource)
             throws IOException;
 
-    List<String> loadLines(T resource)
+    List<String> loadLines(@NotNull T resource)
             throws IOException;
 
-    void saveText(T resource, String text)
+    void saveText(@NotNull T resource, @NotNull String text)
             throws IOException;
 
-    void saveText(T resource, String text, String encoding)
+    void saveText(@NotNull T resource, @NotNull String text, String encoding)
             throws IOException;
 
 }

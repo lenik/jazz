@@ -5,12 +5,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import net.bodz.bas.c.java.io.FileRelation;
+import net.bodz.bas.meta.decl.NotNull;
+
 public class PathResourceType
-        implements
-            IResourceType<Path> {
+        implements IResourceType<Path> {
 
     @Override
-    public boolean delete(Path resource) {
+    public Path toPath(@NotNull Path resource) {
+        return resource;
+    }
+
+    @Override
+    public boolean delete(@NotNull Path resource) {
         if (Files.notExists(resource))
             return false;
         try {
@@ -22,12 +29,19 @@ public class PathResourceType
     }
 
     @Override
-    public boolean exists(Path resource) {
+    public boolean exists(@NotNull Path resource) {
         return Files.exists(resource);
     }
 
     @Override
-    public boolean createParentDirs(Path resource) {
+    public boolean in(@NotNull Path sub, @NotNull Path sup) {
+        Path _sub = sub.toAbsolutePath().normalize();
+        Path _sup = sup.toAbsolutePath().normalize();
+        return FileRelation.isChildOf(_sub, _sup);
+    }
+
+    @Override
+    public boolean createParentDirs(@NotNull Path resource) {
         Path parent = resource.getParent();
         if (parent == null)
             return true;
@@ -42,25 +56,25 @@ public class PathResourceType
     }
 
     @Override
-    public String loadText(Path resource)
+    public String loadText(@NotNull Path resource)
             throws IOException {
         return ResFn.path(resource).read().readString();
     }
 
     @Override
-    public List<String> loadLines(Path resource)
+    public List<String> loadLines(@NotNull Path resource)
             throws IOException {
         return ResFn.path(resource).read().readLines();
     }
 
     @Override
-    public void saveText(Path resource, String text)
+    public void saveText(@NotNull Path resource, @NotNull String text)
             throws IOException {
         ResFn.path(resource).write().writeString(text);
     }
 
     @Override
-    public void saveText(Path resource, String text, String encoding)
+    public void saveText(@NotNull Path resource, @NotNull String text, String encoding)
             throws IOException {
         ResFn.path(resource).charset(encoding).write().writeString(text);
     }

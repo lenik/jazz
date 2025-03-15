@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.Predicate;
 
+import net.bodz.bas.c.java.io.FileRelation;
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -85,6 +86,21 @@ public class FileCacheMap<K extends Comparable<K>> {
         for (Map.Entry<K, List<String>> entry : map.entrySet()) {
             K file = entry.getKey();
 
+            if (!options.isUpdateAll()) {
+                Path path = type.toPath(file);
+                if (path != null) {
+                    List<Path> updateDirs = options.getUpdateDirs();
+                    boolean inAny = false;
+                    for (Path updateDir : updateDirs)
+                        if (FileRelation.isChildOf(path, updateDir)) {
+                            inAny = true;
+                            break;
+                        }
+                    if (!inAny) // skip elsewhere
+                        continue;
+                }
+            }
+
             List<String> lines = entry.getValue();
             Collections.sort(lines);
 
@@ -102,7 +118,7 @@ public class FileCacheMap<K extends Comparable<K>> {
             }
             String content = buf.toString();
 
-            if (options.isCompare()) {
+            if (options.isSaveChangedOnly()) {
                 if (type.exists(file)) {
                     String old;
                     try {
@@ -123,7 +139,7 @@ public class FileCacheMap<K extends Comparable<K>> {
 
             try {
                 logger.info("update file " + file);
-                if (options.isMkdirs())
+                if (options.isCreateParentDirs())
                     type.createParentDirs(file);
 
                 if (options.getEncoding() == null)

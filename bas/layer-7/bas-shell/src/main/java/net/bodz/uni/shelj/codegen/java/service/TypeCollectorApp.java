@@ -45,6 +45,18 @@ public class TypeCollectorApp
     boolean listOnly;
 
     /**
+     * Update all files reachable. By default only files under cwd will be updated.
+     * @option -a
+     */
+    boolean updateAll;
+
+    /**
+     * Save files only if it's in one of the updates dirs.
+     * @option
+     */
+    List<Path> updateDirs = new ArrayList<>();
+
+    /**
      * Base types to be scanned.
      * <p lang="zh-cn">
      * 指定要收集的基类。
@@ -97,6 +109,9 @@ public class TypeCollectorApp
         if (logger.getLevel().compareTo(LogLevel.DEBUG) >= 0)
             URLClassLoaders.dump(classLoader, Stdio.cout);
 
+        if (updateDirs.isEmpty())
+            updateDirs.add(SysProps.userWorkDir);
+
         buildPackageList(scanPackages);
 
         for (String pkg : scanPackages)
@@ -121,6 +136,9 @@ public class TypeCollectorApp
             indexedTypes.addAll(typeIndex.listAnnodated(IndexedType.class));
 
         ClassCollector collector = new ClassCollector();
+        // collector.includeDirToScan(SysProps.userWorkDir);
+        collector.setUpdateAllFiles(updateAll);
+        collector.setUpdateDirs(updateDirs);
 
         for (String pkg : scanPackages)
             collector.includePackageToScan(pkg);

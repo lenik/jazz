@@ -21,6 +21,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IEtcFilesInstaller;
 import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.pojo.Pair;
 
 public class ClassCollector {
@@ -35,6 +36,8 @@ public class ClassCollector {
     boolean scanned;
 
     boolean showPaths;
+    boolean updateAllFiles;
+    List<Path> updateDirs = new ArrayList<>();
     boolean deleteEmptyFiles = true;
 
     public ClassCollector() {
@@ -47,6 +50,23 @@ public class ClassCollector {
 
     public void setShowPaths(boolean showPaths) {
         this.showPaths = showPaths;
+    }
+
+    public boolean isUpdateAllFiles() {
+        return updateAllFiles;
+    }
+
+    public void setUpdateAllFiles(boolean updateAllFiles) {
+        this.updateAllFiles = updateAllFiles;
+    }
+
+    @NotNull
+    public List<Path> getUpdateDirs() {
+        return updateDirs;
+    }
+
+    public void setUpdateDirs(@NotNull List<Path> updateDirs) {
+        this.updateDirs = updateDirs;
     }
 
     public void includeDirToScan(Path dir) {
@@ -205,15 +225,6 @@ public class ClassCollector {
         return scanner;
     }
 
-    SaveOptions saveOptions = new SaveOptions();
-
-    {
-        saveOptions.setPurgeEmpty(deleteEmptyFiles);
-        saveOptions.setCompare(true);
-        saveOptions.setMkdirs(true);
-        saveOptions.setEncoding("utf-8");
-    }
-
     public Collection<Class<?>> collect(ClassForrest forrest, Class<?> baseClass)
             throws IOException {
         logger.info("For " + baseClass.getCanonicalName());
@@ -227,6 +238,14 @@ public class ClassCollector {
         if (contents.isEmpty())
             return Collections.emptyList();
 
+
+        SaveOptions saveOptions = new SaveOptions();
+        saveOptions.setUpdateAll(updateAllFiles);
+        saveOptions.setUpdateDirs(updateDirs);
+        saveOptions.setPurgeEmpty(deleteEmptyFiles);
+        saveOptions.setSaveChangedOnly(true);
+        saveOptions.setCreateParentDirs(true);
+        saveOptions.setEncoding("utf-8");
         contents.save(saveOptions);
 
         if (showPaths)
