@@ -112,10 +112,8 @@ public class FileCacheMap<K extends Comparable<K>> {
             }
 
             StringBuilder buf = new StringBuilder(lines.size() * 100);
-            for (String line : new LinkedHashSet<String>(lines)) {
-                buf.append(line);
-                buf.append('\n');
-            }
+            for (String line : new LinkedHashSet<String>(lines))
+                buf.append(line).append('\n');
             String content = buf.toString();
 
             if (options.isSaveChangedOnly()) {

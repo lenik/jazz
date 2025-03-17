@@ -64,7 +64,7 @@ public class PathResourceType
     @Override
     public List<String> loadLines(@NotNull Path resource)
             throws IOException {
-        return ResFn.path(resource).read().readLines();
+        return ResFn.path(resource).read().readLines(true);
     }
 
     @Override

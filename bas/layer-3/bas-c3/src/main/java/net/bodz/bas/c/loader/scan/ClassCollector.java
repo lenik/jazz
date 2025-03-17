@@ -93,7 +93,7 @@ public class ClassCollector {
         excludeFqcnPrefixes.remove(packageName);
     }
 
-    protected ClassFileMap filter(Collection<Class<?>> classes, Class<?> baseClass) {
+    protected ClassFileMap selectIncludedSubclasses(Collection<Class<?>> classes, Class<?> baseClass) {
         ClassFileMap selection = new ClassFileMap();
         for (Class<?> clazz : classes) {
             ExcludeReason reason;
@@ -127,7 +127,7 @@ public class ClassCollector {
 
     }
 
-    protected FileCacheMap<Path> publishEtcFiles(ClassFileMap filterMap, Class<?> baseClass) {
+    protected FileCacheMap<Path> publishEtcFiles(ClassFileMap subclassFileMap, Class<?> baseClass) {
         IndexedType aIndexedType = baseClass.getAnnotation(IndexedType.class);
         if (aIndexedType == null)
             throw new NullPointerException("aIndexedType");
@@ -135,16 +135,14 @@ public class ClassCollector {
         String publishDir = aIndexedType.publishDir();
         if (publishDir.isEmpty())
             publishDir = null;
-        else if (!publishDir.endsWith("/"))
-            publishDir += "/";
 
         FileCacheMap<Path> fileCaches = FileCacheMap.createPathIndexed();
-        for (Class<?> derivedClass : filterMap.keySet()) {
-            Path resDir = filterMap.get(derivedClass);
+        for (Class<?> derivedClass : subclassFileMap.keySet()) {
+            Path resDir = subclassFileMap.get(derivedClass);
 
             if (publishDir != null) {
-                Path listFile = resDir.resolve(publishDir + baseClass.getName());
-                boolean newFile = !fileCaches.containsFile(listFile);
+                Path listFile = resDir.resolve(publishDir).resolve(baseClass.getName());
+                boolean prepared = fileCaches.containsFile(listFile);
                 List<String> classList;
                 try {
                     classList = fileCaches.loadLinesCached(listFile);
@@ -153,8 +151,11 @@ public class ClassCollector {
                     continue;
                 }
 
-                if (newFile) // Refresh: remove included packages before re-add.
-                    beforeRefresh(classList);
+                if (!prepared) {
+                    // remove included packages before re-add.
+                    classList.removeIf(this::isClassNameIncluded);
+                    prepared = true;
+                }
 
                 if (aIndexedType.obsoleted()) {
                     // lines.add("# " + extension.getName());
@@ -178,10 +179,6 @@ public class ClassCollector {
         } // for derivations
 
         return fileCaches;
-    }
-
-    void beforeRefresh(List<String> list) {
-        list.removeIf(this::isClassNameIncluded);
     }
 
     boolean isClassNameIncluded(String className) {
@@ -231,13 +228,12 @@ public class ClassCollector {
 
         Collection<Class<?>> classes = forrest.listFilteredDerivations(baseClass);
 
-        ClassFileMap filterMap = filter(classes, baseClass);
-        // filterMap.subMap(baseDir);
+        ClassFileMap subclassFileMap = selectIncludedSubclasses(classes, baseClass);
+        // subclassFileMap.subMap(baseDir);
 
-        FileCacheMap<Path> contents = publishEtcFiles(filterMap, baseClass);
+        FileCacheMap<Path> contents = publishEtcFiles(subclassFileMap, baseClass);
         if (contents.isEmpty())
             return Collections.emptyList();
-
 
         SaveOptions saveOptions = new SaveOptions();
         saveOptions.setUpdateAll(updateAllFiles);
@@ -249,7 +245,7 @@ public class ClassCollector {
         contents.save(saveOptions);
 
         if (showPaths)
-            for (Class<?> extension : filterMap.keySet()) {
+            for (Class<?> extension : subclassFileMap.keySet()) {
                 MavenPomDir pomDir = MavenPomDir.fromClass(extension);
                 if (pomDir == null) {
                     logger.error("No maven source module for " + extension);
@@ -258,7 +254,7 @@ public class ClassCollector {
                 Path sourceFile = pomDir.getSourceFile(extension);
                 System.out.println(sourceFile);
             }
-        return filterMap.keySet();
+        return subclassFileMap.keySet();
     }
 
 }

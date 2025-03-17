@@ -54,7 +54,7 @@ public class FileResourceType
     @Override
     public List<String> loadLines(@NotNull File resource)
             throws IOException {
-        return ResFn.file(resource).read().readLines();
+        return ResFn.file(resource).read().readLines(true);
     }
 
     @Override
