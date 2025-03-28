@@ -6,6 +6,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.list.ArrayStack;
 import net.bodz.bas.t.list.IStack;
 
@@ -14,7 +15,7 @@ public abstract class Criterion
             ICriterion {
 
     @Override
-    public final void jsonIn(JsonVariant in, JsonFormOptions opts)
+    public final void jsonIn(@NotNull JsonVariant in, JsonFormOptions opts)
             throws ParseException {
         IStack<String> fieldNameStack = new ArrayStack<>();
         jsonIn(in, (stack) -> Object.class, fieldNameStack);

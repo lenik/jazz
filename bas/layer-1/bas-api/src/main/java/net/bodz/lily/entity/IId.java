@@ -1,6 +1,6 @@
 package net.bodz.lily.entity;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import net.bodz.bas.c.object.Nullables;
@@ -18,7 +18,8 @@ public interface IId<Id> {
     @Derived
     @Internal
     default List<Object> getIdComponents() {
-        return Arrays.asList(id());
+        Id id = id();
+        return Collections.singletonList(id);
     }
 
     @Derived

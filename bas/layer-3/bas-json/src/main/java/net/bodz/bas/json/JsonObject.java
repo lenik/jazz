@@ -20,7 +20,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonVariant;
-import net.bodz.bas.fn.FunctionX;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
@@ -42,7 +42,7 @@ public class JsonObject
         super(map);
     }
 
-    public Object get(String key, Object defaultValue)
+    public Object get(@NotNull String key, Object defaultValue)
             throws JSONException {
         if (!super.has(key))
             return defaultValue;
@@ -54,21 +54,21 @@ public class JsonObject
         return val;
     }
 
-    public JsonVariant getVariant(String key) {
+    public JsonVariant getVariant(@NotNull String key) {
         Object any = super.get(key);
         if (any == null)
             return null; // JsonVariant.NULL;
         return JsonVariant.of(any);
     }
 
-    public JsonVariant getVariant(String key, Object defaultValue) {
+    public JsonVariant getVariant(@NotNull String key, Object defaultValue) {
         Object any = super.get(key, defaultValue);
         if (any == null)
             return null; // JsonVariant.NULL;
         return JsonVariant.of(any);
     }
 
-    public <T extends IJsonForm> T getObject(String key, Class<T> clazz)
+    public <T extends IJsonForm> T getObject(@NotNull String key, Class<T> clazz)
             throws ParseException {
         return getObject(key, () -> {
             try {
@@ -79,7 +79,7 @@ public class JsonObject
         });
     }
 
-    public <T extends IJsonForm> T getObject(String key, Supplier<T> factory)
+    public <T extends IJsonForm> T getObject(@NotNull String key, Supplier<T> factory)
             throws ParseException {
         JsonVariant jv = getVariant(key);
         if (jv == null)
@@ -89,7 +89,7 @@ public class JsonObject
         return instance;
     }
 
-    public <T extends IJsonForm> T getObject(String key, T defaultValue, Class<T> clazz) {
+    public <T extends IJsonForm> T getObject(@NotNull String key, T defaultValue, Class<T> clazz) {
         return getObject(key, defaultValue, () -> {
             try {
                 return clazz.getConstructor().newInstance();
@@ -99,7 +99,7 @@ public class JsonObject
         });
     }
 
-    public <T extends IJsonForm> T getObject(String key, T defaultValue, Supplier<T> factory) {
+    public <T extends IJsonForm> T getObject(@NotNull String key, T defaultValue, Supplier<T> factory) {
         JsonVariant jv = getVariant(key);
         if (jv == null)
             return defaultValue;
@@ -113,7 +113,7 @@ public class JsonObject
         return instance;
     }
 
-    public byte[] getByteArray(String key, byte[] defaultValue) {
+    public byte[] getByteArray(@NotNull String key, byte[] defaultValue) {
         if (!has(key))
             return defaultValue;
         List<Byte> list = getBytes(key, null);
@@ -123,7 +123,7 @@ public class JsonObject
         return v;
     }
 
-    public short[] getShortArray(String key, short[] defaultValue) {
+    public short[] getShortArray(@NotNull String key, short[] defaultValue) {
         if (!has(key))
             return defaultValue;
         List<Short> list = getShorts(key, null);
@@ -133,7 +133,7 @@ public class JsonObject
         return v;
     }
 
-    public int[] getIntArray(String key, int[] defaultValue) {
+    public int[] getIntArray(@NotNull String key, int[] defaultValue) {
         if (!has(key))
             return defaultValue;
         List<Integer> list = getInts(key, null);
@@ -143,7 +143,7 @@ public class JsonObject
         return v;
     }
 
-    public long[] getLongArray(String key, long[] defaultValue) {
+    public long[] getLongArray(@NotNull String key, long[] defaultValue) {
         if (!has(key))
             return defaultValue;
         List<Long> list = getLongs(key, null);
@@ -153,7 +153,7 @@ public class JsonObject
         return v;
     }
 
-    public float[] getFloatArray(String key, float[] defaultValue) {
+    public float[] getFloatArray(@NotNull String key, float[] defaultValue) {
         if (!has(key))
             return defaultValue;
         List<Float> list = getFloats(key, null);
@@ -163,7 +163,7 @@ public class JsonObject
         return v;
     }
 
-    public double[] getDoubleArray(String key, double[] defaultValue) {
+    public double[] getDoubleArray(@NotNull String key, double[] defaultValue) {
         if (!has(key))
             return defaultValue;
         List<Double> list = getDoubles(key, null);
@@ -173,7 +173,7 @@ public class JsonObject
         return v;
     }
 
-    public boolean[] getBooleanArray(String key, boolean[] defaultValue) {
+    public boolean[] getBooleanArray(@NotNull String key, boolean[] defaultValue) {
         if (!has(key))
             return defaultValue;
         List<Boolean> list = getBooleans(key, null);
@@ -183,7 +183,7 @@ public class JsonObject
         return v;
     }
 
-    public char[] getCharArray(String key, char[] defaultValue) {
+    public char[] getCharArray(@NotNull String key, char[] defaultValue) {
         if (!has(key))
             return defaultValue;
         List<Character> list = getChars(key, null);
@@ -194,7 +194,7 @@ public class JsonObject
     }
 
     @Override
-    public String[] getStringArray(String key, String[] defaultValue) {
+    public String[] getStringArray(@NotNull String key, String[] defaultValue) {
         if (!has(key))
             return defaultValue;
         List<String> list = getStrings(key, null);
@@ -204,7 +204,7 @@ public class JsonObject
         return v;
     }
 
-    public List<Byte> getBytes(String key, List<Byte> list) {
+    public List<Byte> getBytes(@NotNull String key, List<Byte> list) {
         if (list == null)
             list = new ArrayList<Byte>();
         JsonArray array = getJsonArray(key);
@@ -216,7 +216,7 @@ public class JsonObject
         return list;
     }
 
-    public List<Short> getShorts(String key, List<Short> list) {
+    public List<Short> getShorts(@NotNull String key, List<Short> list) {
         if (list == null)
             list = new ArrayList<Short>();
         JsonArray array = getJsonArray(key);
@@ -228,7 +228,7 @@ public class JsonObject
         return list;
     }
 
-    public List<Integer> getInts(String key, List<Integer> list) {
+    public List<Integer> getInts(@NotNull String key, List<Integer> list) {
         if (list == null)
             list = new ArrayList<Integer>();
         JsonArray array = getJsonArray(key);
@@ -240,7 +240,7 @@ public class JsonObject
         return list;
     }
 
-    public List<Long> getLongs(String key, List<Long> list) {
+    public List<Long> getLongs(@NotNull String key, List<Long> list) {
         if (list == null)
             list = new ArrayList<Long>();
         JsonArray array = getJsonArray(key);
@@ -252,7 +252,7 @@ public class JsonObject
         return list;
     }
 
-    public List<Float> getFloats(String key, List<Float> list) {
+    public List<Float> getFloats(@NotNull String key, List<Float> list) {
         if (list == null)
             list = new ArrayList<Float>();
         JsonArray array = getJsonArray(key);
@@ -264,7 +264,7 @@ public class JsonObject
         return list;
     }
 
-    public List<Double> getDoubles(String key, List<Double> list) {
+    public List<Double> getDoubles(@NotNull String key, List<Double> list) {
         if (list == null)
             list = new ArrayList<Double>();
         JsonArray array = getJsonArray(key);
@@ -276,7 +276,7 @@ public class JsonObject
         return list;
     }
 
-    public List<Boolean> getBooleans(String key, List<Boolean> list) {
+    public List<Boolean> getBooleans(@NotNull String key, List<Boolean> list) {
         if (list == null)
             list = new ArrayList<Boolean>();
         JsonArray array = getJsonArray(key);
@@ -288,7 +288,7 @@ public class JsonObject
         return list;
     }
 
-    public List<Character> getChars(String key, List<Character> list) {
+    public List<Character> getChars(@NotNull String key, List<Character> list) {
         if (list == null)
             list = new ArrayList<Character>();
         JsonArray array = getJsonArray(key);
@@ -302,7 +302,7 @@ public class JsonObject
         return list;
     }
 
-    public List<String> getStrings(String key, List<String> list) {
+    public List<String> getStrings(@NotNull String key, List<String> list) {
         if (list == null)
             list = new ArrayList<String>();
         JsonArray array = getJsonArray(key);
@@ -314,11 +314,11 @@ public class JsonObject
         return list;
     }
 
-    public <T> T getVar(Class<T> type, String key) {
+    public <T> T getVar(Class<T> type, @NotNull String key) {
         return getVar(type, key, null);
     }
 
-    public <T> T getVar(Class<T> type, String key, T defaultValue) {
+    public <T> T getVar(Class<T> type, @NotNull String key, T defaultValue) {
         if (!has(key))
             return defaultValue;
         Object val = get(key);
@@ -336,81 +336,81 @@ public class JsonObject
     }
 
     @Override
-    public Date getDate(String key) {
+    public Date getDate(@NotNull String key) {
         return getDate(key, null);
     }
 
     @Override
-    public Date getDate(String key, Date defaultValue) {
+    public Date getDate(@NotNull String key, Date defaultValue) {
         return getVar(Date.class, key, defaultValue);
     }
 
     @Override
-    public Instant getInstant(String key) {
+    public Instant getInstant(@NotNull String key) {
         return getInstant(key, null);
     }
 
     @Override
-    public Instant getInstant(String key, Instant defaultValue) {
+    public Instant getInstant(@NotNull String key, Instant defaultValue) {
         return getVar(Instant.class, key, defaultValue);
     }
 
     @Override
-    public ZonedDateTime getZonedDateTime(String key) {
+    public ZonedDateTime getZonedDateTime(@NotNull String key) {
         return getZonedDateTime(key, null);
     }
 
     @Override
-    public ZonedDateTime getZonedDateTime(String key, ZonedDateTime defaultValue) {
+    public ZonedDateTime getZonedDateTime(@NotNull String key, ZonedDateTime defaultValue) {
         return getVar(ZonedDateTime.class, key, defaultValue);
     }
 
     @Override
-    public OffsetDateTime getOffsetDateTime(String key) {
+    public OffsetDateTime getOffsetDateTime(@NotNull String key) {
         return getOffsetDateTime(key, null);
     }
 
     @Override
-    public OffsetDateTime getOffsetDateTime(String key, OffsetDateTime defaultValue) {
+    public OffsetDateTime getOffsetDateTime(@NotNull String key, OffsetDateTime defaultValue) {
         return getVar(OffsetDateTime.class, key, defaultValue);
     }
 
     @Override
-    public LocalDateTime getLocalDateTime(String key) {
+    public LocalDateTime getLocalDateTime(@NotNull String key) {
         return getLocalDateTime(key, null);
     }
 
     @Override
-    public LocalDateTime getLocalDateTime(String key, LocalDateTime defaultValue) {
+    public LocalDateTime getLocalDateTime(@NotNull String key, LocalDateTime defaultValue) {
         return getVar(LocalDateTime.class, key, defaultValue);
     }
 
     @Override
-    public LocalDate getLocalDate(String key) {
+    public LocalDate getLocalDate(@NotNull String key) {
         return getLocalDate(key, null);
     }
 
     @Override
-    public LocalDate getLocalDate(String key, LocalDate defaultValue) {
+    public LocalDate getLocalDate(@NotNull String key, LocalDate defaultValue) {
         return getVar(LocalDate.class, key, defaultValue);
     }
 
     @Override
-    public LocalTime getLocalTime(String key) {
+    public LocalTime getLocalTime(@NotNull String key) {
         return getLocalTime(key, null);
     }
 
     @Override
-    public LocalTime getLocalTime(String key, LocalTime defaultValue) {
+    public LocalTime getLocalTime(@NotNull String key, LocalTime defaultValue) {
         return getVar(LocalTime.class, key, defaultValue);
     }
 
-    public <T extends IJsonForm> T readInto(String key, T context)
+    public <T extends IJsonForm> T readInto(@NotNull String key, T context)
             throws ParseException {
         return readInto(key, context, (Supplier<T>) null);
     }
 
-    public <T extends IJsonForm> T readInto(String key, T context, Class<T> factory)
+    public <T extends IJsonForm> T readInto(@NotNull String key, T context, Class<T> factory)
             throws ParseException {
         return readInto(key, context, () -> {
             try {
@@ -421,12 +421,12 @@ public class JsonObject
         });
     }
 
-    public <T extends IJsonForm> T readInto(String key, T context, Supplier<T> factory)
+    public <T extends IJsonForm> T readInto(@NotNull String key, T context, Supplier<T> factory)
             throws ParseException {
         return readInto(key, context, factory, JsonFormOptions.DEFAULT);
     }
 
-    public <T extends IJsonForm> T readInto(String key, T context, Supplier<T> factory, JsonFormOptions opts)
+    public <T extends IJsonForm> T readInto(@NotNull String key, T context, Supplier<T> factory, JsonFormOptions opts)
             throws ParseException {
         if (!has(key)) // nothing to change
             return context;
@@ -445,41 +445,41 @@ public class JsonObject
         return context;
     }
 
-    public <T> Set<T> getArraySet(String key, Set<T> set, SortOrder order, FunctionX<JsonVariant, T, ParseException> conv)
+    public <T> Set<T> getArraySet(@NotNull String key, Set<T> set, SortOrder order, IJsonParser<T> conv)
             throws ParseException {
-        return readArrayInto(key, set, conv, () -> order.newSet());
+        return readArrayInto(key, set, conv, order::newSet);
     }
 
-    public final <T> List<T> getArrayList(String key, FunctionX<JsonVariant, T, ParseException> conv)
+    public final <T> List<T> getArrayList(@NotNull String key, IJsonParser<T> conv)
             throws ParseException {
         return getArrayList(key, null, conv);
     }
 
-    public final <T> List<T> getArrayList(String key, List<T> list, FunctionX<JsonVariant, T, ParseException> conv)
+    public final <T> List<T> getArrayList(@NotNull String key, List<T> list, IJsonParser<T> conv)
             throws ParseException {
-        return readArrayInto(key, list, conv, () -> new ArrayList<>());
+        return readArrayInto(key, list, conv, ArrayList::new);
     }
 
-    public final <T extends IJsonForm> List<T> getArrayList(String key, Supplier<T> itemFactory)
+    public final <T extends IJsonForm> List<T> getArrayList(@NotNull String key, Supplier<T> itemFactory)
             throws ParseException {
         return getArrayList(key, null, itemFactory);
     }
 
-    public final <T extends IJsonForm> List<T> getArrayList(String key, List<T> list, Supplier<T> itemFactory)
+    public final <T extends IJsonForm> List<T> getArrayList(@NotNull String key, List<T> list, Supplier<T> itemFactory)
             throws ParseException {
         return readArrayInto(key, list, (JsonVariant _item) -> {
             T item = itemFactory.get();
             item.jsonIn(_item);
             return item;
-        }, () -> new ArrayList<>());
+        }, ArrayList::new);
     }
 
-    public final <T extends IJsonForm> List<T> getArrayList(String key, Class<T> itemType)
+    public final <T extends IJsonForm> List<T> getArrayList(@NotNull String key, @NotNull Class<T> itemType)
             throws ParseException {
         return getArrayList(key, null, itemType);
     }
 
-    public final <T extends IJsonForm> List<T> getArrayList(String key, List<T> list, Class<T> itemType)
+    public final <T extends IJsonForm> List<T> getArrayList(@NotNull String key, List<T> list, @NotNull Class<T> itemType)
             throws ParseException {
         return getArrayList(key, list, () -> {
             try {
@@ -491,27 +491,27 @@ public class JsonObject
     }
 
     public <T extends IJsonForm> Set<T> //
-    readArrayIntoSet(String key, Set<T> set, SortOrder order, Supplier<T> vals)
+    readArrayIntoSet(@NotNull String key, Set<T> set, @NotNull SortOrder order, @NotNull Supplier<T> valueFactory)
             throws ParseException {
         return readArrayInto(key, set, (JsonVariant jv) -> {
-            T val = vals.get();
+            T val = valueFactory.get();
             val.jsonIn(jv, JsonFormOptions.XXX);
             return val;
-        }, () -> order.newSet());
+        }, order::newSet);
     }
 
     public <T extends IJsonForm> List<T> //
-    readArrayIntoList(String key, List<T> list, Supplier<T> vals)
+    readArrayIntoList(@NotNull String key, List<T> list, Supplier<T> valueFactory)
             throws ParseException {
         return readArrayInto(key, list, (JsonVariant jv) -> {
-            T val = vals.get();
+            T val = valueFactory.get();
             val.jsonIn(jv, JsonFormOptions.XXX);
             return val;
-        }, () -> new ArrayList<>());
+        }, ArrayList::new);
     }
 
     public <C extends Collection<T>, T> C //
-    readArrayInto(String key, C collection, FunctionX<JsonVariant, T, ParseException> conv, Supplier<C> collectionSupplier)
+    readArrayInto(@NotNull String key, C collection, IJsonParser<T> parser, Supplier<C> collectionFactory)
             throws ParseException {
         if (!has(key)) // nothing to change
             return collection;
@@ -523,9 +523,9 @@ public class JsonObject
         if (_node instanceof JsonArray) {
             JsonArray array = (JsonArray) _node;
             if (collection == null) {
-                if (collectionSupplier == null) // don't auto-create
+                if (collectionFactory == null) // don't auto-create
                     return null;
-                collection = collectionSupplier.get();
+                collection = collectionFactory.get();
             } else {
                 collection.clear();
             }
@@ -535,7 +535,7 @@ public class JsonObject
             for (int i = 0; i < n; i++) {
                 Object node = array.get(i);
                 JsonVariant jv = JsonVariant.of(node);
-                T obj = conv.apply(jv);
+                T obj = parser.parse(jv);
                 collection.add(obj);
             }
         }
@@ -544,51 +544,53 @@ public class JsonObject
     }
 
     public Map<String, String> //
-    getMap(String key, SortOrder order)
+    getMap(@NotNull String key, SortOrder order)
             throws ParseException {
-        return readIntoMap(key, null, (Object o) -> Nullables.toString(o), () -> order.newMap());
+        return readIntoMap(key, null, Nullables::toString, order::newMap);
     }
 
     public Map<String, String> //
-    getMap(String key, Map<String, String> map, SortOrder order)
+    getMap(@NotNull String key, Map<String, String> map, SortOrder order)
             throws ParseException {
-        return readIntoMap(key, map, (Object o) -> Nullables.toString(o), () -> order.newMap());
+        return readIntoMap(key, map, Nullables::toString, order::newMap);
     }
 
     public <T> Map<String, T> //
-    getMap(String key, Map<String, T> map, SortOrder order, FunctionX<Object, T, ParseException> conv)
+    getMap(@NotNull String key, Map<String, T> map, SortOrder order, IJsonParser<T> conv)
             throws ParseException {
-        return readIntoMap(key, map, conv, () -> order.newMap());
+        return readIntoMap(key, map, conv, order::newMapDefault);
     }
 
     public <T extends IJsonForm> Map<String, T> //
-    readIntoMap(String key, Map<String, T> map, SortOrder order, Supplier<T> vals)
+    readIntoMap(@NotNull String key, Map<String, T> map, SortOrder order, Supplier<T> vals)
             throws ParseException {
-        return readIntoMap(key, map, (Object jsAny) -> {
+        return readIntoMap(key, map, jv -> {
             T val = vals.get();
-            val.jsonIn(JsonVariant.of(jsAny), JsonFormOptions.XXX);
+            val.jsonIn(jv, JsonFormOptions.XXX);
             return val;
-        }, () -> order.newMap());
+        }, order::newMap);
     }
 
     public <map_t extends Map<String, val_t>, val_t extends IJsonForm> map_t //
-    readIntoJMap(String key, map_t map, Supplier<val_t> factory)
+    readIntoJMap(@NotNull String key, map_t map, Supplier<val_t> factory)
             throws ParseException {
-        return readIntoMap(key, map, (Object jsAny) -> {
+        return readIntoMap(key, map, jv -> {
+            if (jv.isNull())
+                return null;
             val_t val = factory.get();
-            val.jsonIn(JsonVariant.of(jsAny), null);
+            val.jsonIn(jv, null);
             return val;
         }, null);
     }
 
     public <map_t extends Map<String, val_t>, val_t> map_t //
-    readIntoMap(String key, map_t map, FunctionX<Object, val_t, ParseException> js2Val)
+    readIntoMap(@NotNull String key, map_t map, IJsonParser<val_t> parser)
             throws ParseException {
-        return readIntoMap(key, map, js2Val, null);
+        return readIntoMap(key, map, parser, null);
     }
 
     public <map_t extends Map<String, val_t>, val_t> map_t //
-    readIntoMap(String key, map_t map, FunctionX<Object, val_t, ParseException> js2Val, Supplier<map_t> mapSupplier)
+    readIntoMap(@NotNull String key, map_t map, IJsonParser<val_t> parser, Supplier<map_t> mapSupplier)
             throws ParseException {
         if (!has(key)) // nothing to change
             return map;
@@ -607,11 +609,13 @@ public class JsonObject
                 map.clear();
             }
 
-            for (Object _k : o.keySet()) {
-                String k = (String) _k;
+            for (String k : o.keySet()) {
                 Object jsObj = o.get(k);
-                val_t obj = js2Val.apply(jsObj);
-                map.put(k, obj);
+                if (jsObj != null) {
+                    JsonVariant jsVar = JsonVariant.of(jsObj);
+                    val_t obj = parser.parse(jsVar);
+                    map.put(k, obj);
+                }
             }
         }
 

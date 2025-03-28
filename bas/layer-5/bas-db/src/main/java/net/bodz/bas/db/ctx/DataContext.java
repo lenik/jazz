@@ -31,29 +31,29 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.rtx.IAttributed;
 import net.bodz.bas.rtx.IMutableAttributes;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.MutableAttributes;
 
 public class DataContext
-        implements
-            IQueryable,
-            Closeable,
-            IMutableAttributes,
-            IJsonForm,
-            SqlSessionFactory {
+        implements IQueryable,
+                   Closeable,
+                   IMutableAttributes,
+                   IJsonForm,
+                   SqlSessionFactory {
 
 //    public static final String ATTRIBUTE_KEY = DataContext.class.getName();
 
     static int nextId = 1;
     int id;
 
-    private ConnectOptions options;
-    private IDataSourceProvider dataSourceProvider;
-    private DataSource dataSource;
-    private IbatisMapperProvider mapperProvider;
-    private MutableAttributes attributes;
+    private final ConnectOptions options;
+    private final IDataSourceProvider dataSourceProvider;
+    private final DataSource dataSource;
+    private final IbatisMapperProvider mapperProvider;
+    private final MutableAttributes attributes;
 
     public DataContext(ConnectOptions opts) {
         if (opts == null)
@@ -195,7 +195,7 @@ public class DataContext
         JsonObject _options = o.getJsonObject("options");
         if (_options != null)
             options.jsonIn(_options, opts);
-        o.getMap("attributes", attributes.getAttributeMap(), null, (Object jso) -> jso);
+        o.getMap("attributes", attributes.getAttributeMap(), SortOrder.KEEP, jv -> jv);
     }
 
     @Override
@@ -207,7 +207,7 @@ public class DataContext
     }
 
     /** ⇱ Implementation Of {@link SqlSessionFactory}. */
-/* _____________________________ */static section.iface __SESSION_FACTORY__;
+    /* _____________________________ */static section.iface __SESSION_FACTORY__;
 
     public SqlSessionFactory getSessionFactory() {
         return mapperProvider.getSqlSessionFactory();

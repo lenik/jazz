@@ -6,6 +6,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Internal;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.source.SerializableForm;
 
 @SerializableForm
@@ -41,8 +42,12 @@ public interface IJsonForm {
      * @throws NullPointerException
      *             if <code>o</code> is null.
      */
-    default void jsonIn(JsonVariant in, JsonFormOptions opts)
+    default void jsonIn(@NotNull JsonVariant in, JsonFormOptions opts)
             throws ParseException {
+        if (in.isNull()) {
+            // jsonInNull ?
+            return;
+        }
         jsonIn(in.getObject(), opts);
     }
 

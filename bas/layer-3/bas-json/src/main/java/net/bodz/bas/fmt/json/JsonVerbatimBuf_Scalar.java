@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class JsonVerbatimBuf_Scalar
         implements
@@ -16,7 +17,7 @@ public class JsonVerbatimBuf_Scalar
     }
 
     @Override
-    public void jsonIn(JsonVariant j, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonVariant j, JsonFormOptions opts)
             throws ParseException {
         String json = j.toJson();
         buf.setLength(0);

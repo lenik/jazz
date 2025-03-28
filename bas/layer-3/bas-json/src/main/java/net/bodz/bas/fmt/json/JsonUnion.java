@@ -7,6 +7,7 @@ import java.util.List;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class JsonUnion
         implements
@@ -25,7 +26,7 @@ public class JsonUnion
     }
 
     @Override
-    public void jsonIn(JsonVariant j, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonVariant j, JsonFormOptions opts)
             throws ParseException {
         for (IJsonForm item : list)
             item.jsonIn(j, opts);

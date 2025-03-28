@@ -16,6 +16,7 @@ import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class MutableRow
@@ -234,7 +235,7 @@ public class MutableRow
     }
 
     @Override
-    public void jsonIn(JsonVariant in, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonVariant in, JsonFormOptions opts)
             throws ParseException {
         JsonArray jarray = in.getArray();
         int jn = jarray.length();

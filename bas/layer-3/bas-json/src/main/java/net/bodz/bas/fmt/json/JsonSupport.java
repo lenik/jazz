@@ -7,13 +7,14 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class JsonSupport
         implements
             IJsonForm {
 
     @Override
-    public void jsonIn(JsonVariant j, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonVariant j, JsonFormOptions opts)
             throws ParseException {
         new BeanJsonLoader().parse(this, j);
     }

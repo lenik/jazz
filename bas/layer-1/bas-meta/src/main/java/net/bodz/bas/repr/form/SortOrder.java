@@ -43,6 +43,10 @@ public enum SortOrder {
         return NONE;
     }
 
+    public <K, V> Map<K, V> newMapDefault() {
+        return newMap(0, null);
+    }
+
     public <K, V> Map<K, V> newMap() {
         return newMap(0, null);
     }
@@ -57,32 +61,36 @@ public enum SortOrder {
 
     public <K, V> Map<K, V> newMap(int initialCapacity, Comparator<? super K> cmp) {
         switch (this) {
-        case SORTED:
-        case ASCENDING:
-            if (cmp == null)
-                return new TreeMap<>();
-            else
-                return new TreeMap<>(cmp);
+            case SORTED:
+            case ASCENDING:
+                if (cmp == null)
+                    return new TreeMap<>();
+                else
+                    return new TreeMap<>(cmp);
 
-        case DESCENDING:
-            if (cmp == null)
-                return new TreeMap<>(Collections.reverseOrder());
-            else
-                return new TreeMap<>(Collections.reverseOrder(cmp));
+            case DESCENDING:
+                if (cmp == null)
+                    return new TreeMap<>(Collections.reverseOrder());
+                else
+                    return new TreeMap<>(Collections.reverseOrder(cmp));
 
-        case KEEP:
-            if (initialCapacity == 0)
-                return new LinkedHashMap<>();
-            else
-                return new LinkedHashMap<>(initialCapacity);
+            case KEEP:
+                if (initialCapacity == 0)
+                    return new LinkedHashMap<>();
+                else
+                    return new LinkedHashMap<>(initialCapacity);
 
-        default:
-        case NONE:
-            if (initialCapacity == 0)
-                return new HashMap<>();
-            else
-                return new HashMap<>(initialCapacity);
+            default:
+            case NONE:
+                if (initialCapacity == 0)
+                    return new HashMap<>();
+                else
+                    return new HashMap<>(initialCapacity);
         }
+    }
+
+    public <V> Set<V> newSetDefault() {
+        return newSet(0, null);
     }
 
     public <V> Set<V> newSet() {
@@ -99,31 +107,31 @@ public enum SortOrder {
 
     public <V> Set<V> newSet(int initialCapacity, Comparator<? super V> cmp) {
         switch (this) {
-        case SORTED:
-        case ASCENDING:
-            if (cmp == null)
-                return new TreeSet<>();
-            else
-                return new TreeSet<>(cmp);
+            case SORTED:
+            case ASCENDING:
+                if (cmp == null)
+                    return new TreeSet<>();
+                else
+                    return new TreeSet<>(cmp);
 
-        case DESCENDING:
-            if (cmp == null)
-                return new TreeSet<>(Collections.reverseOrder());
-            else
-                return new TreeSet<>(Collections.reverseOrder(cmp));
+            case DESCENDING:
+                if (cmp == null)
+                    return new TreeSet<>(Collections.reverseOrder());
+                else
+                    return new TreeSet<>(Collections.reverseOrder(cmp));
 
-        case KEEP:
-            if (initialCapacity == 0)
-                return new LinkedHashSet<>();
-            else
-                return new LinkedHashSet<>(initialCapacity);
+            case KEEP:
+                if (initialCapacity == 0)
+                    return new LinkedHashSet<>();
+                else
+                    return new LinkedHashSet<>(initialCapacity);
 
-        default:
-        case NONE:
-            if (initialCapacity == 0)
-                return new HashSet<>();
-            else
-                return new HashSet<>(initialCapacity);
+            default:
+            case NONE:
+                if (initialCapacity == 0)
+                    return new HashSet<>();
+                else
+                    return new HashSet<>(initialCapacity);
         }
     }
 
