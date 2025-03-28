@@ -22,7 +22,7 @@ export abstract class CoImaged<Id> extends IdEntity<Id> {
     }
 
     set images(val: Attachment[]) {
-        this.createFiles().filter(TYPE_IMAGE, val);
+        this.attachmentManifest.filter(TYPE_IMAGE, val);
     }
 
     get image(): Attachment | undefined {
@@ -33,7 +33,7 @@ export abstract class CoImaged<Id> extends IdEntity<Id> {
         if (val == null) {
             this.images = [];
         } else {
-            this.createFiles().find(0, TYPE_IMAGE, val, true);
+            this.attachmentManifest.find(0, TYPE_IMAGE, val, true);
         }
     }
 
@@ -42,7 +42,7 @@ export abstract class CoImaged<Id> extends IdEntity<Id> {
     }
 
     set videos(val: Attachment[]) {
-        this.createFiles().filter(TYPE_VIDEO, val);
+        this.attachmentManifest.filter(TYPE_VIDEO, val);
     }
 
     get video(): Attachment | undefined {
@@ -53,7 +53,7 @@ export abstract class CoImaged<Id> extends IdEntity<Id> {
         if (val == null) {
             this.videos = [];
         } else {
-            this.createFiles().find(0, TYPE_VIDEO, val, true);
+            this.attachmentManifest.find(0, TYPE_VIDEO, val, true);
         }
     }
 

@@ -11,6 +11,10 @@ export abstract class IdEntity<Id> extends CoObject {
         return this._typeInfo;
     }
 
+    override getClass(): IdEntityTypeInfo {
+        return super._getClass() as IdEntityTypeInfo;
+    }
+
     id?: Id
 
     constructor(o: any) {

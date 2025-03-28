@@ -3,16 +3,20 @@ import type { IEntityType } from 'skel01-dba/src/net/bodz/lily/entity/IEntityTyp
 import StructRowTypeInfo from './StructRowTypeInfo';
 import { OffsetDateTime } from 'skel01-core/src/lang/time';
 
+const TYPE = Symbol('type');
+
 export class StructRowValidators {
 
-    _type: IEntityType
-
     constructor(type: StructRowTypeInfo) {
-        this._type = type;
+        this[TYPE] = type;
+    }
+
+    get _type(): StructRowTypeInfo {
+        return this[TYPE] as StructRowTypeInfo;
     }
 
     get type(): StructRowTypeInfo {
-        return this._type as StructRowTypeInfo;
+        return this[TYPE] as StructRowTypeInfo;
     }
 
     validateCreationDate(val: OffsetDateTime) {

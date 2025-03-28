@@ -5,9 +5,9 @@ import TypeInfo from 'skel01-core/src/lang/TypeInfo';
 import { INT, UNDEFINED } from 'skel01-core/src/lang/baseinfo';
 import { JSON_VARIANT } from 'skel01-core/src/lang/bas-info';
 
+
 export class CoNodeTypeInfo extends IdEntityTypeInfo {
 
-    readonly selfType: TypeInfo<any> = this;
     readonly validators = new CoNodeValidators(this);
 
     constructor(idType: TypeInfo<any>) {
@@ -23,7 +23,7 @@ export class CoNodeTypeInfo extends IdEntityTypeInfo {
         super.preamble();
         this.declare({
             parent: property({
-                type: this.selfType, icon: "far-tree",
+                type: this, icon: "far-tree",
                 validator: this.validators.validateParent
             }),
             refCount: property({

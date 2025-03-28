@@ -22,13 +22,17 @@ export abstract class CoObject extends StructRow {
         return this._typeInfo;
     }
 
+    override getClass(): CoObjectTypeInfo {
+        return super._getClass() as CoObjectTypeInfo;
+    }
+
     //
 
     name?: string;
     properties?: any;
     files?: AttachmentManifest;
 
-    createFiles() {
+    get attachmentManifest() {
         if (this.files == null)
             this.files = new AttachmentManifest();
         return this.files;

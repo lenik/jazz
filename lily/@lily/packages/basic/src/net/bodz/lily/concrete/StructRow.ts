@@ -13,11 +13,18 @@ export class StructRow {
 
     // _class: StructRowTypeInfo;
 
-    getClass() {
+    getClass(): StructRowTypeInfo {
+        return this._getClass();
+    }
+
+    protected _getClass(): StructRowTypeInfo {
         // return this._class;
         return (this.constructor as any).TYPE;
     }
 
+    get className() {
+        return this._getClass().name;
+    }
     // content
 
     creationDate: OffsetDateTime = OffsetDateTime.now()
