@@ -259,7 +259,7 @@ public class DefaultAttachmentManifest
     }
 
     @Override
-    public void jsonIn(JsonVariant in, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonVariant in, JsonFormOptions opts)
             throws ParseException {
         if (in.isArray())
             reloadData(in.getArray1(), opts);

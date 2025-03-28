@@ -10,11 +10,12 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.lily.storage.IVolume;
 
 public class MutableAttachment
         extends DefaultBackedFile
-        implements IAttachment {
+        implements IMutableAttachment {
 
     String label;
     String description;
@@ -78,13 +79,13 @@ public class MutableAttachment
         return viewType.cast(view);
     }
 
-    public <T> void setView(Class<T> viewType, T view) {
+    public <T> void setView(@NotNull Class<T> viewType, @NotNull T view) {
         if (views == null)
             views = new LinkedHashMap<>();
         views.put(viewType, view);
     }
 
-    public <T> void addView(T view) {
+    public <T> void addView(@NotNull T view) {
         @SuppressWarnings("unchecked")
         Class<T> viewType = (Class<T>) view.getClass();
         setView(viewType, view);
