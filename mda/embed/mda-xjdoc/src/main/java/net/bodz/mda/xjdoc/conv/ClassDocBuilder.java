@@ -30,7 +30,7 @@ import com.thoughtworks.qdox.model.JavaType;
  */
 public class ClassDocBuilder {
 
-    private ITagLibrary tagLibrary;
+    private final ITagLibrary tagLibrary;
     private iString missingDoc;
 
     public ClassDocBuilder(ITagLibrary tagLibrary) {
@@ -68,7 +68,7 @@ public class ClassDocBuilder {
             classDoc.setFieldDoc(fieldName, fieldDoc);
         }
 
-        /**
+        /*
          * <pre>
          * 1. parameter types => import-map
          * 2. javaMethod => method-doc
@@ -145,9 +145,7 @@ public class ClassDocBuilder {
                 throw new IllegalUsageException(String.format(//
                         "Undefined tag @%s occurred in %s %s, taglib = %s", //
                         tagName, javaEntity.getClass().getSimpleName(), name, tagLibrary.getName()));
-            }
-
-            else if (tagName.startsWith(rootTagName)) {
+            } else if (tagName.startsWith(rootTagName)) {
                 extension = tagName.substring(rootTagName.length());
                 if (extension.startsWith("."))
                     extension = extension.substring(1);

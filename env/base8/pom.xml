@@ -131,6 +131,11 @@
                 <version>4.12.0</version>
             </dependency>
             <dependency>
+                <groupId>com.thoughtworks.qdox</groupId>
+                <artifactId>qdox</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+            <dependency>
                 <groupId>com.vladsch.flexmark</groupId>
                 <artifactId>flexmark</artifactId>
                 <version>0.64.8</version>

@@ -9,6 +9,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.mda.xjdoc.AbstractXjdocProvider;
 import net.bodz.mda.xjdoc.XjdocLoaderException;
 import net.bodz.mda.xjdoc.model.ClassDoc;
+import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
@@ -30,7 +31,8 @@ public class MavenXjdocProvider
             return null;
 
         ClassLoader classLoader = clazz.getClassLoader();
-        ClassDocBuilder classDocBuilder = new ClassDocBuilder(getTagLibrary());
+        ITagLibrary tagLib = getTagLibrary();
+        ClassDocBuilder classDocBuilder = new ClassDocBuilder(tagLib);
 
         JavaProjectBuilder projectBuilder = new JavaProjectBuilder();
         projectBuilder.addClassLoader(classLoader);

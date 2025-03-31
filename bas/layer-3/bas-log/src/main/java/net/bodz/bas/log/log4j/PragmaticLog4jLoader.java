@@ -12,14 +12,14 @@ import net.bodz.bas.log.ILoggingSystemConfigurer;
 import net.bodz.bas.t.order.PriorityComparator;
 
 public class PragmaticLog4jLoader
-        implements
-            ILoggingSystemConfigurer {
+        implements ILoggingSystemConfigurer {
 
     static final Logger logger = Logger.getLogger(PragmaticLog4jLoader.class.getName());
 
     final boolean enabled;
 
     static List<ILog4jConfigurer> configurers = new ArrayList<>();
+
     static {
         for (ILog4jConfigurer c : ServiceLoader.load(ILog4jConfigurer.class)) {
             configurers.add(c);
@@ -43,8 +43,8 @@ public class PragmaticLog4jLoader
         if (!enabled)
             return;
         logger.fine("Init logging system.");
-        ConfigurationFactory.setConfigurationFactory(//
-                new PragmaticLog4jConfigurationFactory());
+        ConfigurationFactory factory = new PragmaticLog4jConfigurationFactory();
+        ConfigurationFactory.setConfigurationFactory(factory);
     }
 
 }
