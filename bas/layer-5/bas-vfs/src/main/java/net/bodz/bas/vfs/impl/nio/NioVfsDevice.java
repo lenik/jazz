@@ -71,7 +71,7 @@ public class NioVfsDevice
     @Override
     public NioFile _resolveNoRec(IPath _path)
             throws FileResolveException {
-        return _resolveNoRec(_path.getLocalPath());
+        return _resolveNoRec(_path.joinEntries());
     }
 
     @Override

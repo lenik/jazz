@@ -1,14 +1,12 @@
 package net.bodz.bas.vfs.path;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Arrays;
 
 import net.bodz.bas.c.string.StringPart;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.IFile;
@@ -21,15 +19,6 @@ public abstract class AbstractPath
 
     private static final long serialVersionUID = 1L;
 
-    private boolean entered;
-
-    public AbstractPath() {
-    }
-
-    public AbstractPath(boolean entered) {
-        this.entered = entered;
-    }
-
     @Override
     public String getDeviceSpec() {
         return null;
@@ -41,20 +30,15 @@ public abstract class AbstractPath
     }
 
     @Override
-    public final IFile resolve()
+    public final IFile toFile()
             throws FileResolveException {
-        return resolve(FileResolveOptions.DEFAULT);
+        return toFile(FileResolveOptions.DEFAULT);
     }
 
     @Override
-    public IFile resolve(FileResolveOptions options)
+    public IFile toFile(FileResolveOptions options)
             throws FileResolveException {
         return VFS.resolve(this, options);
-    }
-
-    @Override
-    public IPathAlignment getAlignment() {
-        return IPathAlignment.ROOT_LAYER;
     }
 
     @Override
@@ -81,8 +65,34 @@ public abstract class AbstractPath
      *            Non-<code>null</code> path with-in the same volume.
      * @return Non-<code>null</code> {@link IPath} instance.
      */
+    @NotNull
     protected abstract IPath createLocal(String localPath)
             throws BadPathException;
+
+    /**
+     * Create a path with another local path.
+     *
+     * @param localEntries
+     *            Non-<code>null</code> path entries with-in the same volume.
+     * @return Non-<code>null</code> {@link IPath} instance.
+     */
+    @NotNull
+    protected abstract IPath createLocal(String[] localEntries, boolean entered);
+
+    /**
+     * Create a path with another local path.
+     *
+     * @param localEntries
+     *            Non-<code>null</code> path entries with-in the same volume.
+     * @return Non-<code>null</code> {@link IPath} instance.
+     */
+    @NotNull
+    protected final IPath createLocal(String[] entries, int start, int end, boolean entered)
+            throws BadPathException {
+        if (start != 0 || end != entries.length)
+            entries = Arrays.copyOfRange(entries, start, end);
+        return createLocal(entries, entered);
+    }
 
     @Override
     public IPath getRoot() {
@@ -95,7 +105,7 @@ public abstract class AbstractPath
 
     @Override
     public IPath getParent() {
-        String localPath = getLocalPath();
+        String localPath = joinEntries();
         try {
             int last = localPath.lastIndexOf(SEPARATOR_CHAR);
             if (last == -1)
@@ -121,57 +131,53 @@ public abstract class AbstractPath
     }
 
     @Override
-    public int getLocalEntryCount() {
-        return getLocalEntries().length;
-    }
-
-    @Override
-    public String getLocalEntry(int index) {
-        String[] entries = getLocalEntries();
-        return entries[index];
-    }
-
-    @Override
     public String getDirName() {
-        String path = getLocalPath();
-        assert path != null;
-        int slash = path.lastIndexOf(SEPARATOR_CHAR);
-        if (slash == -1)
+        String path = joinEntries();
+        if (isEntered())
+            return path;
+        int lastSlash = path.lastIndexOf(SEPARATOR_CHAR);
+        if (lastSlash == -1)
             return null;
-        String dirName = path.substring(0, slash - 1);
+        String dirName = path.substring(0, lastSlash - 1);
         return dirName;
     }
 
     @Override
     public String getBaseName() {
-        int n = getLocalEntryCount();
+        if (isEntered())
+            return null;
+        int n = getEntryCount();
         if (n == 0)
             return "";
         else
-            return getLocalEntry(n - 1);
+            return getEntry(n - 1);
     }
 
     @Override
-    public String getStrippedName() {
-        String name = getBaseName();
-        int dot = name.lastIndexOf('.');
-        if (dot != -1)
-            name = name.substring(0, dot - 1);
-        return name;
+    public String getName() {
+        if (isEntered())
+            return null;
+        String baseName = getBaseName();
+        int dot = baseName.lastIndexOf('.');
+        if (dot == -1)
+            return baseName;
+        else
+            return baseName.substring(0, dot - 1);
     }
 
     @Override
-    public String getExtension() {
-        return getExtension(false, 1);
+    public String getExtension(int maxWords) {
+        return _extension(false, maxWords);
     }
 
+    @NotNull
     @Override
-    public String getExtension(boolean withDot) {
-        return getExtension(withDot, 1);
+    public String getDotExtension(int maxWords) {
+        String extension = _extension(true, maxWords);
+        return extension == null ? "" : extension;
     }
 
-    @Override
-    public String getExtension(boolean withDot, int maxWords) {
+    private String _extension(boolean withDot, int maxWords) {
         if (maxWords < 1)
             throw new IllegalArgumentException("maxWords is less than 1.");
 
@@ -179,93 +185,110 @@ public abstract class AbstractPath
         if (baseName == null)
             return null;
 
-        int pos = baseName.length();
+        int len = baseName.length();
+        int pos = len;
         while (maxWords-- > 0) {
             int dot = baseName.lastIndexOf('.', pos);
             if (dot == -1)
                 break;
             pos = dot;
         }
-        if (!withDot)
-            pos++;
-        if (pos < baseName.length())
-            baseName.substring(pos);
-        return "";
+        if (pos >= len)
+            return withDot ? "" : null;
+
+        return baseName.substring(withDot ? pos : (pos + 1));
     }
 
-    @Override
-    public boolean isEntered() {
-        return entered;
-    }
-
-    public void setEntered(boolean entered) {
-        this.entered = entered;
-    }
-
+    @NotNull
     @Override
     public IPath enter() {
-        if (entered)
+        if (isEntered())
             return this;
         else
-            return createLocal(getLocalPath() + "/");
+            return createLocal(getEntryArray(), true);
+    }
+
+    @NotNull
+    @Override
+    public IPath escape() {
+        if (!isEntered())
+            return this;
+        else
+            return createLocal(getEntryArray(), false);
+    }
+
+    @NotNull
+    @Override
+    public IPath normalize() {
+        String[] newEntries = new String[getEntryCount()];
+        int out = 0;
+        for (String entry : getEntryList()) {
+            switch (entry) {
+                case ".":
+                    continue;
+                case "..":
+                    if (out > 0) {
+                        out--;
+                        continue;
+                    }
+            }
+            newEntries[out++] = entry;
+        }
+        return createLocal(newEntries, 0, out, isEntered());
     }
 
     @Override
-    public IPath join(String spec)
+    public IPath resolve(@NotNull String other)
             throws BadPathException {
-        if (spec == null)
-            throw new NullPointerException("spec");
-        String localPath = getLocalPath();
+        String localPath = joinEntries();
 
         String joinedLocalPath;
-        if (spec.startsWith(SEPARATOR))
-            joinedLocalPath = spec;
+        if (other.startsWith(SEPARATOR))
+            joinedLocalPath = other;
         else {
             String localDir = localPath;
-            if (!entered)
+            if (!isEntered())
                 localDir = StringPart.beforeLast(localDir, SEPARATOR);
 
             if (localDir == null)
-                joinedLocalPath = spec;
+                joinedLocalPath = other;
             else
-                joinedLocalPath = localDir + SEPARATOR + spec;
+                joinedLocalPath = localDir + SEPARATOR + other;
         }
 
         return createLocal(joinedLocalPath);
     }
 
     @Override
-    public IPath join(String... specs)
+    public IPath resolve(@NotNull String... others)
             throws BadPathException {
         IPath joined = this;
-        for (String spec : specs)
+        for (String spec : others)
             if (spec != null)
-                joined = joined.join(spec);
+                joined = joined.resolve(spec);
         return joined;
     }
 
     @Override
-    public IPath join(IPath spec)
+    public IPath resolve(@NotNull IPath other)
             throws BadPathException {
-        if (spec == null)
-            throw new NullPointerException("spec");
-        IPath alignedContext = spec.getAlignment().align(this);
-        IPath joined = alignedContext.join(spec);
+        IPath alignedContext = other.getAlignment().align(this);
+        IPath joined = alignedContext.resolve(other);
         return joined;
     }
 
     @Override
-    public IPath join(IPath... specs)
+    public IPath resolve(@NotNull IPath... others)
             throws BadPathException {
         IPath joined = this;
-        for (IPath spec : specs)
+        for (IPath spec : others)
             if (spec != null)
-                joined = joined.join(spec);
+                joined = joined.resolve(spec);
         return joined;
     }
 
     @Override
-    public IPath getRelativePathTo(IPath basePath2) {
+    public IPath getRelativePathTo(@NotNull IPath basePath2) {
         IPathAlignment align1 = getAlignment();
         IPathAlignment align2 = basePath2.getAlignment();
         Class<?> alignType1 = align1.getClass();
@@ -279,17 +302,17 @@ public abstract class AbstractPath
             int p1 = parentAlign1.getParents();
             int p2 = parentAlign2.getParents();
             if (p1 > p2) {
-                int abs2 = -p2 + basePath2.getLocalEntryCount();
+                int abs2 = -p2 + basePath2.getEntryCount();
                 int goUp = p1 - (-abs2);
-                RelativePath path = new RelativePath(goUp, getLocalEntries(), isEntered());
+                RelativePath path = new RelativePath(goUp, getEntryArray(), isEntered());
                 return path;
             } else {
                 return null;
             }
         }
 
-        String[] entries1 = getLocalEntries();
-        String[] entries2 = basePath2.getLocalEntries();
+        String[] entries1 = getEntryArray();
+        String[] entries2 = basePath2.getEntryArray();
         int minLen = Math.min(entries1.length, entries2.length);
 
         int gcd;
@@ -307,6 +330,7 @@ public abstract class AbstractPath
         return relativePath;
     }
 
+    @NotNull
     @Override
     public String getURLString() {
         PathFormat urlFormatOptions = new PathFormat();
@@ -314,14 +338,7 @@ public abstract class AbstractPath
         return url;
     }
 
-    @Override
-    public URL toURL()
-            throws MalformedURLException {
-        String url = getURLString();
-        URI uri = URI.create(url);
-        return uri.toURL();
-    }
-
+    @NotNull
     @Override
     public URI toURI()
             throws URISyntaxException {
@@ -329,12 +346,7 @@ public abstract class AbstractPath
         return URI.create(url);
     }
 
-    @Override
-    public IPath canonicalize(PathCanonicalizeOptions canonicalizeOptions)
-            throws FileResolveException {
-        throw new NotImplementedException();
-    }
-
+    @NotNull
     @Override
     public final String format(PathFormat pathFormat) {
         StringBuilder result = new StringBuilder(200);
@@ -344,7 +356,7 @@ public abstract class AbstractPath
             result.append(":");
         }
         format(result, pathFormat);
-        if (entered)
+        if (isEntered())
             result.append(SEPARATOR);
         return result.toString();
     }
@@ -365,7 +377,7 @@ public abstract class AbstractPath
      * @return Non-<code>null</code> formatted local path with the specific format.
      */
     protected String formatLocal(PathFormat format) {
-        return getLocalPath();
+        return joinEntries();
     }
 
     /**

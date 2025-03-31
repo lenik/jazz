@@ -12,7 +12,7 @@ public interface IPathAlignment
 
     /**
      * Get the aligned context path (or, parent-path).
-     * 
+     *
      * @return non-<code>null</code> path object.
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
@@ -22,14 +22,16 @@ public interface IPathAlignment
     /**
      * The same as: <code>align(context).join(path)</code>.
      */
-    // IPath join(IPath context, IPath path);
+     default IPath join(IPath context, IPath path) {
+         return align(context).resolve(path);
+     }
 
     /**
      * Format a bare path to a path with the alignment hint.
-     * 
+     * <p>
      * The returned path string should be parsable by the path system, and it should be parsed to a
      * path with the same alignment.
-     * 
+     *
      * @return Non-<code>null</code> path string with alignment info.
      * @throws NullPointerException
      *             If <code>barePath</code> is <code>null</code>.
@@ -40,7 +42,7 @@ public interface IPathAlignment
 
     // IPath precalc(IPath path, IPathAlignment newAnchor);
 
-    ParentAlignment RELATIVE = new ParentAlignment(0);
+    RelativeAlignment RELATIVE = new RelativeAlignment();
     RootAlignment ROOT = new RootAlignment();
     RootLayerAlignment ROOT_LAYER = new RootLayerAlignment();
 

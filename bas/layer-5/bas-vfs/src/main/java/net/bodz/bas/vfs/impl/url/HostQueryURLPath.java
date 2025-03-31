@@ -1,5 +1,6 @@
 package net.bodz.bas.vfs.impl.url;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.PathFormat;
 
@@ -26,7 +27,7 @@ public class HostQueryURLPath
     public HostQueryURLPath(String scheme, String[] entries, boolean entered) {
         super(scheme, entries, entered);
 
-        String localPath = getLocalPath();
+        String localPath = joinEntries();
         int quest = localPath.lastIndexOf('?');
         if (quest != -1) {
             query = localPath.substring(quest + 1);
@@ -36,12 +37,14 @@ public class HostQueryURLPath
         }
     }
 
+    @NotNull
     @Override
     protected HostQueryURLPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
         return new HostQueryURLPath(realPath, entries, entered);
     }
 
+    @NotNull
     @Override
     protected HostQueryURLPath createLocal(String localPath)
             throws BadPathException {
@@ -60,7 +63,7 @@ public class HostQueryURLPath
     protected String formatLocal(PathFormat format) {
         String result;
         if (format.isQuery()) {
-            result = getLocalPath();
+            result = joinEntries();
         } else {
             result = realPath;
         }

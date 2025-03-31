@@ -78,7 +78,7 @@ public class PojfVfsDevice
     @Override
     public PojfFile _resolveNoRec(IPath _path)
             throws FileResolveException {
-        return _resolveNoRec(_path.getLocalPath());
+        return _resolveNoRec(_path.joinEntries());
     }
 
     @Override

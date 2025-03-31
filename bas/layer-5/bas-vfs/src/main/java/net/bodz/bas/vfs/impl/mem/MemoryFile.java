@@ -112,7 +112,7 @@ public class MemoryFile
 
     @Override
     public IFile getChild(String childName) {
-        MemoryPath childPath = (MemoryPath) path.enter().join(childName);
+        MemoryPath childPath = (MemoryPath) path.enter().resolve(childName);
         return new MemoryFile(getDevice(), childPath);
     }
 

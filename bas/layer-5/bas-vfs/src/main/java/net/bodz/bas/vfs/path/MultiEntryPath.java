@@ -1,5 +1,6 @@
 package net.bodz.bas.vfs.path;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.pojo.PathEntries;
 
 /**
@@ -27,6 +28,7 @@ public class MultiEntryPath
         return protocol;
     }
 
+    @NotNull
     @Override
     protected IPath createLocal(String[] entries, boolean entered)
             throws BadPathException {

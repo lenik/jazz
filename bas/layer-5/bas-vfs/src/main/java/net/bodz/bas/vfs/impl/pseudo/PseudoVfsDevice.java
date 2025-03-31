@@ -68,7 +68,7 @@ public class PseudoVfsDevice
     @Override
     public PseudoFile _resolveNoRec(IPath _path)
             throws FileResolveException {
-        return _resolveNoRec(_path.getLocalPath());
+        return _resolveNoRec(_path.joinEntries());
     }
 
     /**

@@ -3,6 +3,7 @@ package net.bodz.bas.vfs.impl.nio;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.MultiEntryPath;
@@ -38,6 +39,7 @@ public class NioPath
         return "/";
     }
 
+    @NotNull
     @Override
     protected IPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
@@ -45,7 +47,7 @@ public class NioPath
     }
 
     public Path toPath() {
-        String _pathstr = rootName + "/" + getLocalPath();
+        String _pathstr = rootName + "/" + joinEntries();
         return Paths.get(_pathstr);
     }
 

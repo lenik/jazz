@@ -75,7 +75,7 @@ public class ZipVfsDriver
         String deviceName = path.getDeviceSpec();
         ZipVfsDevice device = resolveDevice(deviceName);
 
-        ZipEntryFile file = (ZipEntryFile) device.resolve(path.getLocalPath());
+        ZipEntryFile file = (ZipEntryFile) device.resolve(path.joinEntries());
 
         return file;
     }

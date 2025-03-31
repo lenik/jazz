@@ -5,6 +5,7 @@ import java.net.URL;
 
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.VFS;
@@ -43,10 +44,12 @@ public abstract class URLPath
         this.scheme = scheme;
     }
 
+    @NotNull
     @Override
     protected abstract URLPath createLocal(String[] entries, boolean entered)
             throws BadPathException;
 
+    @NotNull
     @Override
     protected abstract URLPath createLocal(String localPath)
             throws BadPathException;
@@ -122,7 +125,7 @@ public abstract class URLPath
     }
 
     public void setQuery(String query) {
-        String[] entries = getLocalEntries();
+        String[] entries = getEntryArray();
         assert entries.length != 0;
         int lastEntry = entries.length - 1;
         String entry = entries[lastEntry];
@@ -146,13 +149,14 @@ public abstract class URLPath
     }
 
     @Override
-    public URLFile resolve(FileResolveOptions options)
+    public URLFile toFile(FileResolveOptions options)
             throws FileResolveException {
         URLVfsDriver driver = URLVfsDriver.getInstance();
         URLFile file = driver.resolve(this, options);
         return file;
     }
 
+    @NotNull
     @Override
     public synchronized URL toURL() {
         if (url == null) {

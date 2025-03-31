@@ -22,7 +22,7 @@ public class FileWrapper {
             return new PojfFile((File) var);
 
         if (var instanceof URL)
-            return URLPath.parse((URL) var).resolve();
+            return URLPath.parse((URL) var).toFile();
 
         if (var instanceof String)
             return new InputStringFile((String) var);

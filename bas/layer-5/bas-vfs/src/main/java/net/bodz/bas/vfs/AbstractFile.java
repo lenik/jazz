@@ -102,7 +102,7 @@ public abstract class AbstractFile
         if (parentPath == null)
             return null;
         try {
-            return parentPath.resolve(FileResolveOptions.NO_FOLLOW_LINKS);
+            return parentPath.toFile(FileResolveOptions.NO_FOLLOW_LINKS);
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
@@ -206,8 +206,8 @@ public abstract class AbstractFile
         if (!srcDev.equals(dstDev))
             return false;
 
-        String srcPath = getPath().getLocalPath();
-        String dstPath = target.getPath().getLocalPath();
+        String srcPath = getPath().joinEntries();
+        String dstPath = target.getPath().joinEntries();
         try {
             getDevice().move(srcPath, dstPath);
             return true;
@@ -219,14 +219,14 @@ public abstract class AbstractFile
     @Override
     public boolean linkTo(String target, boolean symbolic)
             throws IOException {
-        String localPath = getPath().getLocalPath();
+        String localPath = getPath().joinEntries();
         return getDevice().createLink(localPath, target, symbolic);
     }
 
     @Override
     public String readSymbolicLink()
             throws IOException {
-        String localPath = getPath().getLocalPath();
+        String localPath = getPath().joinEntries();
         String targetSpec = getDevice().readSymbolicLink(localPath);
         return targetSpec;
     }

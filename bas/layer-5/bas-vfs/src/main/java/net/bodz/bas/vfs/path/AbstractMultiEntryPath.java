@@ -1,27 +1,37 @@
 package net.bodz.bas.vfs.path;
 
 import java.util.Arrays;
+import java.util.List;
 
 import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class AbstractMultiEntryPath
-        extends AbstractPath {
+        extends AbstractPath
+        implements IMutablePathEntries {
 
     private static final long serialVersionUID = 1L;
 
     protected String[] entries;
+    boolean entered;
 
     public AbstractMultiEntryPath(String localPath) {
         setLocalPath(localPath);
     }
 
     public AbstractMultiEntryPath(String[] entries, boolean entered) {
-        super(entered);
         if (entries == null)
             throw new NullPointerException("entries");
-        setLocalEntries(entries);
+        this.entered = entered;
+        this.entries = entries;
     }
 
+    @Override
+    public boolean isEntered() {
+        return entered;
+    }
+
+    @NotNull
     @Override
     protected IPath createLocal(String localPath)
             throws BadPathException {
@@ -39,12 +49,48 @@ public abstract class AbstractMultiEntryPath
         return createLocal(entries, entered);
     }
 
-    protected abstract IPath createLocal(String[] entries, boolean entered)
-            throws BadPathException;
+    @Override
+    public String[] getEntryArray() {
+        return entries;
+    }
 
     @Override
+    public List<String> getEntryList() {
+        return Arrays.asList(entries);
+    }
+
+    @Override
+    public int getEntryCount() {
+        return entries.length;
+    }
+
+    @Override
+    public String getEntry(int index) {
+        return entries[index];
+    }
+
+    @Override
+    public void setEntry(int index, String entry) {
+        entries[index] = entry;
+    }
+
+    @NotNull
+    @Override
+    public String joinEntries(String sep) {
+        return StringArray.join(sep, entries);
+    }
+
+    void setEntries(@NotNull String[] entries) {
+        this.entries = entries;
+    }
+
+    @NotNull
+    @Override
     public String getLocalPath() {
-        return StringArray.join(SEPARATOR, entries);
+        String path = joinEntries();
+        if (isEntered())
+            path += SEPARATOR;
+        return path;
     }
 
     void setLocalPath(String localPath) {
@@ -58,22 +104,11 @@ public abstract class AbstractMultiEntryPath
 
         if (localPath.isEmpty()) {
             entries = new String[0];
-            setEntered(true);
+            this.entered = true;
         } else {
             entries = StringArray.splitRaw(localPath, SEPARATOR);
-            setEntered(entered);
+            this.entered = entered;
         }
-    }
-
-    @Override
-    public String[] getLocalEntries() {
-        return entries;
-    }
-
-    void setLocalEntries(String... entries) {
-        if (entries == null)
-            throw new NullPointerException("entries");
-        this.entries = entries;
     }
 
     @Override

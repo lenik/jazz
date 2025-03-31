@@ -35,7 +35,7 @@ public class NestedURLPathTest
             throws Exception {
         URL expected = Test.class.getResource("Assert.class");
 
-        IPath path2 = path.join("Assert.class");
+        IPath path2 = path.resolve("Assert.class");
         URL url2 = path2.toURL();
         assertEquals(expected, url2);
     }

@@ -154,7 +154,7 @@ public class DefaultVfsFacade
         IVfsDevice srcDev = src.getDevice();
         IVfsDevice dstDev = dst.getDevice();
         if (srcDev.equals(dstDev)) {
-            String dstLocalPath = dst.getPath().getLocalPath();
+            String dstLocalPath = dst.getPath().joinEntries();
             return src.renameTo(dstLocalPath);
         }
 

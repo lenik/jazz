@@ -44,20 +44,27 @@ public class PathFormat
     private boolean query = true;
     private boolean range;
 
-    private Map<String, Object> attributes;
+    private final Map<String, Object> attributes;
 
     public PathFormat() {
         attributes = new TreeMap<String, Object>();
     }
 
-    public PathFormat(PathFormat baseFormat) {
-        if (baseFormat == null)
+    public PathFormat(PathFormat o) {
+        if (o == null)
             throw new NullPointerException("baseFormat");
-        encodeCharset = baseFormat.encodeCharset;
-        encodeOptions = baseFormat.encodeOptions;
-        displaySafe = baseFormat.displaySafe;
-        spaceMode = baseFormat.spaceMode;
-        attributes = new TreeMap<String, Object>(baseFormat.attributes);
+        encodeCharset = o.encodeCharset;
+        encodeOptions = o.encodeOptions;
+        spaceMode = o.spaceMode;
+        displaySafe = o.displaySafe;
+        attributes = new TreeMap<String, Object>(o.attributes);
+
+        // optional
+        locked = o.locked;
+        query = o.query;
+        range = o.range;
+        attributes.clear();
+        attributes.putAll(o.attributes);
     }
 
     public void lock() {

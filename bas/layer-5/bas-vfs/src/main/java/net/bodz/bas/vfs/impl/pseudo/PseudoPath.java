@@ -2,6 +2,7 @@ package net.bodz.bas.vfs.impl.pseudo;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.FileResolveOptions;
 import net.bodz.bas.vfs.IFile;
@@ -37,10 +38,11 @@ public class PseudoPath
         return SCOPE_SEPARATOR;
     }
 
+    @NotNull
     @Override
     protected PseudoPath createLocal(String localPath)
             throws BadPathException {
-        if (Nullables.equals(getLocalPath(), localPath))
+        if (Nullables.equals(joinEntries(), localPath))
             return this;
         else {
             PseudoVfsDriver driver = PseudoVfsDriver.getInstance();
@@ -50,6 +52,7 @@ public class PseudoPath
         }
     }
 
+    @NotNull
     @Override
     protected PseudoPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
@@ -60,7 +63,7 @@ public class PseudoPath
     }
 
     @Override
-    public IFile resolve(FileResolveOptions options)
+    public IFile toFile(FileResolveOptions options)
             throws FileResolveException {
         // XXX follow-symlink?
         return file;

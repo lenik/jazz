@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs.impl.url;
 
 import net.bodz.bas.c.string.StringPart;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.path.PathFormat;
 
 public class HostPathQueryURLPath
@@ -49,7 +50,7 @@ public class HostPathQueryURLPath
         this.host = host;
         this.port = port;
 
-        String localPath = getLocalPath();
+        String localPath = joinEntries();
         int quest = localPath.lastIndexOf('?');
         if (quest != -1) {
             query = localPath.substring(quest + 1);
@@ -75,11 +76,13 @@ public class HostPathQueryURLPath
         }
     }
 
+    @NotNull
     @Override
     protected HostPathQueryURLPath createLocal(String localPath) {
         return new HostPathQueryURLPath(scheme, user, password, host, port, localPath);
     }
 
+    @NotNull
     @Override
     protected HostPathQueryURLPath createLocal(String[] entries, boolean entered) {
         return new HostPathQueryURLPath(scheme, user, password, host, port, entries, entered);
@@ -177,7 +180,7 @@ public class HostPathQueryURLPath
     protected String formatLocal(PathFormat format) {
         String result;
         if (format.isQuery()) {
-            result = getLocalPath();
+            result = joinEntries();
         } else {
             result = realPath;
         }

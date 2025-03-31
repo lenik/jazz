@@ -19,7 +19,7 @@ public class LazyProbing
     @Override
     public String getContentType()
             throws IOException {
-        String extension = file.getPath().getExtension(false, 1);
+        String extension = file.getPath().getExtension(1);
         ContentType contentType = ContentType.forExtension(extension);
         return contentType.getName();
     }

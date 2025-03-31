@@ -1,5 +1,6 @@
 package net.bodz.bas.vfs.impl.url;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormats;
@@ -25,12 +26,14 @@ public class NestedURLPath
         this.nestedPath = nestedPath;
     }
 
+    @NotNull
     @Override
     protected NestedURLPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
         return new NestedURLPath(scheme, nestedPath, entries, entered);
     }
 
+    @NotNull
     @Override
     protected NestedURLPath createLocal(String localPath)
             throws BadPathException {

@@ -1,5 +1,6 @@
 package net.bodz.bas.vfs.impl.url;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.path.BadPathException;
 
 public class PlainURLPath
@@ -25,12 +26,14 @@ public class PlainURLPath
         return "/";
     }
 
+    @NotNull
     @Override
     protected PlainURLPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
         return new PlainURLPath(scheme, entries, entered);
     }
 
+    @NotNull
     @Override
     protected PlainURLPath createLocal(String localPath)
             throws BadPathException {

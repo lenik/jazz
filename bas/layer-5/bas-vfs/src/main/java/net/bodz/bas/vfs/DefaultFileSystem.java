@@ -111,7 +111,7 @@ public class DefaultFileSystem
         }
 
         IPath context = getContextPath();
-        return context.join(path);
+        return context.resolve(path);
     }
 
     @Override

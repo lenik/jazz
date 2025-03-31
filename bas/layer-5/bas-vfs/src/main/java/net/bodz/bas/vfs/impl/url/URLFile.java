@@ -225,7 +225,7 @@ public class URLFile
             throw new FileResolveException(e.getMessage(), e);
         }
         URLPath childUrlPath = URLPath.parse(childUrl);
-        URLFile childFile = (URLFile) childUrlPath.resolve();
+        URLFile childFile = (URLFile) childUrlPath.toFile();
         return childFile;
     }
 

@@ -105,12 +105,12 @@ public class URLVfsDevice
     }
 
     public String _parse(String localPath) {
-        URLPath joined = (URLPath) rootPath.join(localPath);
+        URLPath joined = (URLPath) rootPath.resolve(localPath);
         return joined.getURLString();
     }
 
     public URL _resolve(String localPath) {
-        URLPath joined = (URLPath) rootPath.join(localPath);
+        URLPath joined = (URLPath) rootPath.resolve(localPath);
         return joined.toURL();
     }
 

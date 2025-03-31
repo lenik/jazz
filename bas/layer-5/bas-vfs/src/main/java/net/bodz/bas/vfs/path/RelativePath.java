@@ -3,6 +3,7 @@ package net.bodz.bas.vfs.path;
 import java.util.Arrays;
 
 import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
 
@@ -11,8 +12,7 @@ public class RelativePath
 
     private static final long serialVersionUID = 1L;
 
-    // int parents;
-    IPathAlignment alignment;
+    private final IPathAlignment alignment;
 
     public RelativePath(String[] entries, boolean entered) {
         this(0, entries, entered);
@@ -70,6 +70,7 @@ public class RelativePath
      * @param entries
      *            The local entries. These entries should not start with "." or ".." entries.
      */
+    @NotNull
     @Override
     protected IPath createLocal(String[] entries, boolean entered)
             throws BadPathException {
@@ -96,26 +97,27 @@ public class RelativePath
             pathstr = pathstr.substring(0, pathstr.length() - SEPARATOR_LEN);
 
         int slash;
-        L: while (!pathstr.isEmpty()) {
+L:
+        while (!pathstr.isEmpty()) {
             slash = pathstr.indexOf(SEPARATOR_CHAR);
             switch (slash) {
-            case -1:
-                break L;
-            case 0:
-                break;
-            case 1:
-                if (pathstr.charAt(0) == '.') // "./", ignore
-                    break;
-                else
+                case -1:
                     break L;
-            case 2:
-                if (pathstr.charAt(0) == '.' && pathstr.charAt(1) == '.') { // "../", parent+1
-                    parents++;
+                case 0:
                     break;
-                } else
+                case 1:
+                    if (pathstr.charAt(0) == '.') // "./", ignore
+                        break;
+                    else
+                        break L;
+                case 2:
+                    if (pathstr.charAt(0) == '.' && pathstr.charAt(1) == '.') { // "../", parent+1
+                        parents++;
+                        break;
+                    } else
+                        break L;
+                default:
                     break L;
-            default:
-                break L;
             }
             pathstr = pathstr.substring(slash + 1);
         }

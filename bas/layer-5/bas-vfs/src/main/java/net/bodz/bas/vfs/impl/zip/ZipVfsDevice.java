@@ -84,7 +84,7 @@ public class ZipVfsDevice
             throws FileResolveException {
         if (_path == null)
             throw new NullPointerException("_path");
-        return _resolveNoRec(_path.getLocalPath());
+        return _resolveNoRec(_path.joinEntries());
     }
 
     @Override
