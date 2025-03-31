@@ -1,5 +1,6 @@
 package net.bodz.bas.c.system;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -19,10 +20,28 @@ public class SysProps {
         userHome = Paths.get(SystemProperties.getUserHome());
 
         String dataDirProperty = System.getProperty("data.dir");
-        if (dataDirProperty == null)
-            dataDir = userHome.resolve("data");
-        else
+        if (dataDirProperty != null) {
             dataDir = Paths.get(dataDirProperty);
+        } else {
+            Path homeDir = Paths.get("/home");
+
+            Path[] search = {//
+                    userHome, //
+                    homeDir,//
+            };
+            Path defaultDataDir = Paths.get("/home/data");
+
+
+            Path foundDataDir = null;
+            for (Path s : search) {
+                Path dataConfigDir = s.resolve("data/config");
+                if (Files.isDirectory(dataConfigDir)) {
+                    foundDataDir = s.resolve("data");
+                    break;
+                }
+            }
+            dataDir = foundDataDir != null ? foundDataDir : defaultDataDir;
+        }
     }
 
 }

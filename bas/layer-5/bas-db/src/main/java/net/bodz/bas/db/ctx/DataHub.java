@@ -2,7 +2,6 @@ package net.bodz.bas.db.ctx;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -37,7 +36,7 @@ public class DataHub
         dataContextProviders = new ArrayList<>();
         for (IDataContextProvider provider : ServiceLoader.load(IDataContextProvider.class))
             dataContextProviders.add(provider);
-        Collections.sort(dataContextProviders, PriorityComparator.INSTANCE);
+        dataContextProviders.sort(PriorityComparator.INSTANCE);
     }
 
     @Override
