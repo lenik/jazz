@@ -143,7 +143,7 @@ public class ContentType
     }
 
     @NotNull
-    public static ContentType forExtension(@Nullable String extension, @NotNull ContentType fallback) {
+    public static ContentType forExtension(String extension, @NotNull ContentType fallback) {
         if (extension == null)
             return fallback;
         extension = extension.toLowerCase();

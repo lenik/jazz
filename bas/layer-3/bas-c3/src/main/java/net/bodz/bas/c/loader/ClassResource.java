@@ -4,6 +4,7 @@ import java.net.URL;
 
 import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class ClassResource
         extends net.bodz.bas.c.type.ClassResource {
@@ -13,12 +14,10 @@ public class ClassResource
      *
      * @return <code>null</code> if the resource isn't existed.
      */
+    @NotNull
     public static URLResource getClassBytes(Class<?> clazz) {
         URL url = getClassBytesURL(clazz);
-        if (url == null)
-            return null;
-        else
-            return ResFn.url(url);
+        return ResFn.url(url);
     }
 
     /**
