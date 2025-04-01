@@ -14,15 +14,14 @@ import net.bodz.bas.meta.decl.NotNull;
 public class StringBufferTarget
         extends AbstractStreamOutputTarget<StringBufferTarget> {
 
+    @NotNull
     private final StringBuffer buffer;
 
     public StringBufferTarget() {
         this.buffer = new StringBuffer();
     }
 
-    public StringBufferTarget(StringBuffer buffer) {
-        if (buffer == null)
-            throw new NullPointerException("buffer");
+    public StringBufferTarget(@NotNull StringBuffer buffer) {
         this.buffer = buffer;
     }
 
@@ -31,6 +30,7 @@ public class StringBufferTarget
         return true;
     }
 
+    @NotNull
     public StringBuffer getBuffer() {
         return buffer;
     }

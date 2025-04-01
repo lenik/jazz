@@ -23,26 +23,22 @@ public class PathResource
         extends AbstractIORandomResource<PathResource>
         implements IChannelResource {
 
+    @NotNull
     private final Path path;
 
-    public PathResource(Path path) {
-        if (path == null)
-            throw new NullPointerException("path");
+    public PathResource(@NotNull Path path) {
         this.path = path;
     }
 
-    public PathResource(String first, String... more) {
-        if (first == null)
-            throw new NullPointerException("first");
+    public PathResource(@NotNull String first, String... more) {
         this.path = Paths.get(first, more);
     }
 
-    public PathResource(URI uri) {
-        if (uri == null)
-            throw new NullPointerException("uri");
+    public PathResource(@NotNull URI uri) {
         this.path = Paths.get(uri);
     }
 
+    @NotNull
     public Path getPathObject() {
         return path;
     }

@@ -17,16 +17,16 @@ import net.bodz.bas.meta.decl.NotNull;
 public class ReaderSource
         extends AbstractStreamInputSource<ReaderSource> {
 
+    @NotNull
     private final Reader in;
 
-    /**
-     * @throws NullPointerException
-     *             If <code>reader</code> is <code>null</code>.
-     */
-    public ReaderSource(Reader in) {
-        if (in == null)
-            throw new NullPointerException("in");
-        this.in = in;
+    public ReaderSource(@NotNull Reader reader) {
+        this.in = reader;
+    }
+
+    @NotNull
+    public Reader getReader() {
+        return in;
     }
 
     @Override

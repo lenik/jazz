@@ -18,16 +18,16 @@ import net.bodz.bas.meta.decl.NotNull;
 public class WriterTarget
         extends AbstractStreamOutputTarget<WriterTarget> {
 
-    private final Writer out;
+    @NotNull
+    private final Writer writer;
 
-    /**
-     * @throws NullPointerException
-     *             If <code>out</code> is <code>null</code>.
-     */
-    public WriterTarget(Writer out) {
-        if (out == null)
-            throw new NullPointerException("out");
-        this.out = out;
+    public WriterTarget(@NotNull Writer writer) {
+        this.writer = writer;
+    }
+
+    @NotNull
+    public Writer getWriter() {
+        return writer;
     }
 
     /**
@@ -39,7 +39,7 @@ public class WriterTarget
     @Override
     public Writer newWriter(OpenOption... options)
             throws IOException {
-        return new FilterWriter(out) {
+        return new FilterWriter(writer) {
             @Override
             public void close()
                     throws IOException {

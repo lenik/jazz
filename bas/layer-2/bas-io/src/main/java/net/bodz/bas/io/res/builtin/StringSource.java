@@ -14,16 +14,16 @@ import net.bodz.bas.meta.decl.NotNull;
 public class StringSource
         extends AbstractStreamInputSource<StringSource> {
 
+    @NotNull
     private final String string;
 
-    /**
-     * @throws NullPointerException
-     *             If <code>string</code> is <code>null</code>.
-     */
-    public StringSource(String string) {
-        if (string == null)
-            throw new NullPointerException("string");
+    public StringSource(@NotNull String string) {
         this.string = string;
+    }
+
+    @NotNull
+    public String getString() {
+        return string;
     }
 
     @Override

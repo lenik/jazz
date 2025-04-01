@@ -17,12 +17,16 @@ import net.bodz.bas.meta.decl.NotNull;
 public class InputStreamSource
         extends AbstractStreamInputSource<InputStreamSource>{
 
+    @NotNull
     private final InputStream in;
 
-    public InputStreamSource(InputStream in) {
-        if (in == null)
-            throw new NullPointerException("in");
+    public InputStreamSource(@NotNull  InputStream in) {
         this.in = in;
+    }
+
+    @NotNull
+    public InputStream getInputStream() {
+        return in;
     }
 
     /**

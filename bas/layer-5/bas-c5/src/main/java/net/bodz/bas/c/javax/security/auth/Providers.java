@@ -91,7 +91,7 @@ public class Providers
                 throws IOException {
             File tempFile = File.createTempFile("bcconf", ".ini");
             Charset utf8 = Charsets.UTF_8;
-            TempOut tempOut = new TempOut(tempFile, utf8);
+            TempOut tempOut = new TempOut(tempFile.toPath(), utf8);
             return tempOut;
         }
 

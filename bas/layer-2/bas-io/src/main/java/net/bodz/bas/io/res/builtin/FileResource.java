@@ -19,15 +19,14 @@ import net.bodz.bas.meta.decl.NotNull;
 public class FileResource
         extends AbstractIORandomResource<FileResource> {
 
+    @NotNull
     private final File file;
 
-    public FileResource(File file) {
-        if (file == null)
-            throw new NullPointerException("file");
+    public FileResource(@NotNull File file) {
         this.file = file;
     }
 
-    public FileResource(String filename) {
+    public FileResource(@NotNull String filename) {
         this(new File(filename));
     }
 
@@ -47,6 +46,7 @@ public class FileResource
         return Files.isDirectory(path, options);
     }
 
+    @NotNull
     public File getFile() {
         return file;
     }

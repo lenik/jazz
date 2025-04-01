@@ -20,19 +20,19 @@ import net.bodz.bas.meta.decl.NotNull;
 public class URLResource
         extends AbstractIOStreamResource<URLResource> {
 
+    @NotNull
     private final URL url;
 
-    public URLResource(URL url) {
-        if (url == null)
-            throw new NullPointerException("url");
+    public URLResource(@NotNull  URL url) {
         this.url = url;
     }
 
-    public URLResource(String url)
+    public URLResource(@NotNull  String url)
             throws MalformedURLException {
         this(new URL(url));
     }
 
+    @NotNull
     public URL getURL() {
         return url;
     }

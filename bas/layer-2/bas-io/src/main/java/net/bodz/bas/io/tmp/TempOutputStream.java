@@ -1,28 +1,37 @@
 package net.bodz.bas.io.tmp;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import net.bodz.bas.c.java.nio.file.FileFn;
 
 public class TempOutputStream
         extends FilterOutputStream {
 
-    private File file;
+    private final Path file;
     private boolean cleaned;
 
     public TempOutputStream(String fileName)
             throws IOException {
-        this(new File(fileName));
+        this(Paths.get(fileName));
     }
 
     public TempOutputStream(File file)
             throws IOException {
-        super(new FileOutputStream(file));
+        this(file.toPath());
+    }
+
+    public TempOutputStream(Path file)
+            throws IOException {
+        super(Files.newOutputStream(file));
         this.file = file;
     }
 
-    public File getFile() {
+    public Path getFile() {
         return file;
     }
 
@@ -30,23 +39,14 @@ public class TempOutputStream
     public void close()
             throws IOException {
         super.close();
-    }
-
-    @Override
-    protected void finalize()
-            throws Throwable {
-        tryClean();
-    }
-
-    private void tryClean() {
-        if (!cleaned && file.exists()) {
+        if (!cleaned && Files.exists(file)) {
             if (clean(file))
                 cleaned = true;
         }
     }
 
-    protected boolean clean(File file) {
-        return file.delete();
+    protected boolean clean(Path file) {
+        return FileFn.delete(file);
     }
 
 }

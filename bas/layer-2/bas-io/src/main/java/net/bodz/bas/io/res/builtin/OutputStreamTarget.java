@@ -18,16 +18,16 @@ import net.bodz.bas.meta.decl.NotNull;
 public class OutputStreamTarget
         extends AbstractStreamOutputTarget<OutputStreamTarget> {
 
+    @NotNull
     private final OutputStream out;
 
-    /**
-     * @throws NullPointerException
-     *             If <code>out</code> is <code>null</code>.
-     */
-    public OutputStreamTarget(OutputStream out) {
-        if (out == null)
-            throw new NullPointerException("out");
+    public OutputStreamTarget(@NotNull  OutputStream out) {
         this.out = out;
+    }
+
+    @NotNull
+    public OutputStream getOutputStream() {
+        return out;
     }
 
     /**

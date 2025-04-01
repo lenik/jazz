@@ -28,11 +28,10 @@ import net.bodz.bas.meta.decl.NotNull;
 public class ApacheFileResource
         extends AbstractStreamResource<ApacheFileResource> {
 
+    @NotNull
     private final FileObject fileObject;
 
-    public ApacheFileResource(FileObject vfile) {
-        if (vfile == null)
-            throw new NullPointerException("vfile");
+    public ApacheFileResource(@NotNull FileObject vfile) {
         this.fileObject = vfile;
     }
 
@@ -41,6 +40,7 @@ public class ApacheFileResource
         this(VFS.getManager().resolveFile(vpath));
     }
 
+    @NotNull
     public FileObject getFileObject() {
         return fileObject;
     }
