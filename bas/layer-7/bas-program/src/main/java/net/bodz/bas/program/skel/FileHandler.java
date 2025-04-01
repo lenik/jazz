@@ -9,6 +9,7 @@ import java.nio.charset.Charset;
 import java.nio.file.CopyOption;
 import java.nio.file.OpenOption;
 import java.nio.file.StandardCopyOption;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -31,6 +32,7 @@ import net.bodz.bas.io.res.tools.IStreamReading;
 import net.bodz.bas.io.res.tools.IStreamWriting;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.io.res.tools.StreamWriting;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
 import net.bodz.bas.vfs.IFile;
@@ -39,8 +41,7 @@ import net.bodz.bas.vfs.facade.IVfsFacade;
 import net.bodz.bas.vfs.util.TempFile;
 
 public class FileHandler
-        implements
-            Closeable {
+        implements Closeable {
 
     private String pathSpec;
     private IFile sourceFile;
@@ -77,7 +78,7 @@ public class FileHandler
     private CopyOption[] copyOptions = { StandardCopyOption.REPLACE_EXISTING };
     private DeleteOption[] deleteOptions = {};
 
-    private IVfsFacade vfs = DefaultVfsFacade.getInstance();
+    private final IVfsFacade vfs = DefaultVfsFacade.getInstance();
 
     public FileHandler(String pathSpec, IFile sourceFile, IFile targetFile) {
         if (sourceFile == null)
@@ -131,16 +132,16 @@ public class FileHandler
             throws IOException {
 
         switch (getBufferMode()) {
-        case DIRECT:
-            return targetFile;
+            case DIRECT:
+                return targetFile;
 
-        case TMP_FILE:
-            return getTmpFile();
+            case TMP_FILE:
+                return getTmpFile();
 
-        case CHAR_BUFFER:
-        case BYTE_BUFFER:
-        default:
-            throw new IllegalUsageException("No output file");
+            case CHAR_BUFFER:
+            case BYTE_BUFFER:
+            default:
+                throw new IllegalUsageException("No output file");
         }
     }
 
@@ -248,7 +249,7 @@ public class FileHandler
     IFile createTmpFile()
             throws IOException {
         String prefix = tmpPrefix == null ? pathSpec : tmpPrefix;
-        String dotExt = sourceFile.getPath().getExtension(true);
+        String dotExt = sourceFile.getPath().getDotExtension();
         IFile tmpFile = TempFile.createTempFile(prefix, dotExt, tmpDir);
 
         if (targetFile != null) {
@@ -276,12 +277,13 @@ public class FileHandler
         getExceptionLog().log(exception);
     }
 
+    @NotNull
     public ExceptionLog getExceptionLog() {
         return exceptions;
     }
 
     public boolean isErrored() {
-        return exceptions != null && !exceptions.isEmpty();
+        return !exceptions.isEmpty();
     }
 
     public IListComparator<String, String> getDiffComparator() {
@@ -298,8 +300,7 @@ public class FileHandler
 
     public void setTags(String... tags) {
         this.tags.clear();
-        for (String tag : tags)
-            this.tags.add(tag);
+        Collections.addAll(this.tags, tags);
     }
 
     public void addTag(String tag) {
@@ -390,24 +391,24 @@ public class FileHandler
             throws IOException {
         if (outputTarget == null)
             switch (getBufferMode()) {
-            case DIRECT:
-                outputTarget = getTargetFile().getOutputTarget();
-                break;
+                case DIRECT:
+                    outputTarget = getTargetFile().getOutputTarget();
+                    break;
 
-            case TMP_FILE:
-                outputTarget = getTmpFile().getOutputTarget();
-                break;
+                case TMP_FILE:
+                    outputTarget = getTmpFile().getOutputTarget();
+                    break;
 
-            case BYTE_BUFFER:
-                outputTarget = new BytesResource(getByteBuffer());
-                break;
+                case BYTE_BUFFER:
+                    outputTarget = new BytesResource(getByteBuffer());
+                    break;
 
-            case CHAR_BUFFER:
-                outputTarget = new CharsResource(getCharBuffer());
-                break;
+                case CHAR_BUFFER:
+                    outputTarget = new CharsResource(getCharBuffer());
+                    break;
 
-            default:
-                assert false;
+                default:
+                    assert false;
             }
         return outputTarget;
     }
@@ -511,48 +512,44 @@ public class FileHandler
                 return;
 
             switch (getBufferMode()) {
-            case DIRECT:
-                if (sourceFile != null && targetFile != null) {
+                case DIRECT:
+                    if (sourceFile != null && targetFile != null) {
 
-                    if (!targetFile.isExisted())
-                        throw new IllegalStateException("Target file isn't created.");
+                        if (!targetFile.isExisted())
+                            throw new IllegalStateException("Target file isn't created.");
 
-                    modified = checkDiffOnce(sourceFile, targetFile);
-                }
-                break;
+                        modified = checkDiffOnce(sourceFile, targetFile);
+                    }
+                    break;
 
-            case TMP_FILE:
-                if (!tmpFile.isExisted())
-                    throw new IllegalStateException("No output (to tmp file).");
+                case TMP_FILE:
+                    if (!tmpFile.isExisted())
+                        throw new IllegalStateException("No output (to tmp file).");
 
-                modified = checkDiffOnce(tmpFile, targetFile);
-                if (modified)
-                    // vfs.move(tmpFile, targetFile, copyOptions);
-                    vfs.copy(tmpFile, targetFile, copyOptions);
-                break;
+                    modified = checkDiffOnce(tmpFile, targetFile);
+                    if (modified)
+                        // vfs.move(tmpFile, targetFile, copyOptions);
+                        vfs.copy(tmpFile, targetFile, copyOptions);
+                    break;
 
-            case BYTE_BUFFER:
-                MovableByteBuffer byteBuffer = getByteBuffer();
-                OutputStream targetOut = targetFile.getOutputTarget().newOutputStream(outputOpenOptions);
-                try {
-                    byteBuffer.writeTo(targetOut);
-                } finally {
-                    targetOut.close();
-                }
-                break;
+                case BYTE_BUFFER:
+                    MovableByteBuffer byteBuffer = getByteBuffer();
+                    try (OutputStream targetOut = targetFile//
+                            .getOutputTarget().newOutputStream(outputOpenOptions)) {
+                        byteBuffer.writeTo(targetOut);
+                    }
+                    break;
 
-            case CHAR_BUFFER:
-                MovableCharBuffer charBuffer = getCharBuffer();
-                Writer targetWriter = targetFile.getOutputTarget().newWriter(outputOpenOptions);
-                try {
-                    charBuffer.writeTo(targetWriter);
-                } finally {
-                    targetWriter.close();
-                }
-                break;
+                case CHAR_BUFFER:
+                    MovableCharBuffer charBuffer = getCharBuffer();
+                    try (Writer targetWriter = targetFile//
+                            .getOutputTarget().newWriter(outputOpenOptions)) {
+                        charBuffer.writeTo(targetWriter);
+                    }
+                    break;
 
-            default:
-                assert false;
+                default:
+                    assert false;
             }
         } catch (IOException e) {
             logException(e);
@@ -599,25 +596,25 @@ public class FileHandler
             IStreamInputSource source2;
 
             switch (getBufferMode()) {
-            case DIRECT:
-                source2 = targetFile.getInputSource();
-                break;
+                case DIRECT:
+                    source2 = targetFile.getInputSource();
+                    break;
 
-            case TMP_FILE:
-                source1 = tmpFile.getInputSource();
-                source2 = targetFile.getInputSource();
-                break;
+                case TMP_FILE:
+                    source1 = tmpFile.getInputSource();
+                    source2 = targetFile.getInputSource();
+                    break;
 
-            case BYTE_BUFFER:
-                source2 = new BytesResource(getByteBuffer());
-                break;
+                case BYTE_BUFFER:
+                    source2 = new BytesResource(getByteBuffer());
+                    break;
 
-            case CHAR_BUFFER:
-                source2 = new CharsResource(getCharBuffer());
-                break;
+                case CHAR_BUFFER:
+                    source2 = new CharsResource(getCharBuffer());
+                    break;
 
-            default:
-                throw new UnexpectedEnumException();
+                default:
+                    throw new UnexpectedEnumException();
             }
             List<String> v0 = source1.read().readLines();
             List<String> v1 = source2.read().readLines();
@@ -680,7 +677,7 @@ public class FileHandler
         }
 
         if (outputStream != null) {
-            outputStream = null;
+            outputStream.close();
             outputStream = null;
         }
 
@@ -690,6 +687,7 @@ public class FileHandler
         }
     }
 
+    @SuppressWarnings("removal")
     @Override
     protected void finalize()
             throws IOException {
