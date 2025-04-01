@@ -1,6 +1,8 @@
 package net.bodz.bas.program;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -62,7 +64,7 @@ public class ClassLoaderDumper {
 
     void dumpEntry(Appendable out, ClassLoader classLoader, String prefix, boolean more)
             throws IOException {
-        String name = classLoader.getClass().getSimpleName() + "@" + System.identityHashCode(classLoader);
+        String name = classLoader.getClass().getName() + "@" + System.identityHashCode(classLoader);
 
         out.append(name);
 
@@ -72,13 +74,36 @@ public class ClassLoaderDumper {
         prefix += more ? " |  " : "    ";
 
         URL[] urls = {};
-        if (classLoader instanceof URLClassLoader)
-            urls = ((URLClassLoader) classLoader).getURLs();
+
+        Class<?> clazz = classLoader.getClass();
+        switch (clazz.getName()) {
+            case "jdk.internal.loader.ClassLoaders$AppClassLoader":
+                clazz = clazz.getSuperclass();
+            case "jdk.internal.loader.BuiltinClassLoader":
+                try {
+                    Field ucpField = clazz.getDeclaredField("ucp");
+                    ucpField.setAccessible(true);
+                    Object urlClassPath = ucpField.get(classLoader);
+
+                    Class<?> urlClassPathClass = urlClassPath.getClass();
+                    Method getURLs = urlClassPathClass.getMethod("getURLs");
+                    urls = (URL[]) getURLs.invoke(urlClassPath);
+                    break;
+                } catch (ReflectiveOperationException e) {
+                    // not supported. just ignore, try default method.
+                }
+
+            default:
+                if (classLoader instanceof URLClassLoader) {
+                    urls = ((URLClassLoader) classLoader).getURLs();
+                }
+        }
 
         for (int i = 0; i < urls.length; i++) {
             boolean _more = i < urls.length - 1;
-            out.append("\n" + prefix + (_more ? " |- " : " `- ") //
-                    + "URL: " + urls[i]);
+            out.append("\n") //
+                    .append(prefix).append(_more ? " |- " : " `- ").append("URL: ") //
+                    .append(String.valueOf(urls[i]));
         }
     }
 
