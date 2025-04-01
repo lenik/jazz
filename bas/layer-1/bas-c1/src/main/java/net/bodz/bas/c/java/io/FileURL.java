@@ -1,6 +1,7 @@
 package net.bodz.bas.c.java.io;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -14,21 +15,25 @@ import java.util.zip.ZipFile;
 
 import net.bodz.bas.c.java.nio.file.FileFn;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.pojo.Pair;
 
 public class FileURL {
 
-    public static URL toURL(String pathname) {
+    @NotNull
+    public static URL toURL(@NotNull String pathname) {
         File file = new File(pathname);
         return toURL(file);
     }
 
-    public static URL toURL(String pathname, URL fallback) {
+    @NotNull
+    public static URL toURL(@NotNull String pathname, URL fallback) {
         File file = new File(pathname);
         return toURL(file, fallback);
     }
 
-    public static URL toURL(File file) {
+    @NotNull
+    public static URL toURL(@NotNull File file) {
         URI uri = file.toURI();
         try {
             return uri.toURL();
@@ -37,7 +42,7 @@ public class FileURL {
         }
     }
 
-    public static URL toURL(File file, URL fallback) {
+    public static URL toURL(@NotNull File file, URL fallback) {
         URI uri = file.toURI();
         try {
             return uri.toURL();
@@ -47,7 +52,8 @@ public class FileURL {
         }
     }
 
-    public static URL toURL(Path path) {
+    @NotNull
+    public static URL toURL(@NotNull Path path) {
         URI uri = path.toUri();
         try {
             return uri.toURL();
@@ -56,7 +62,7 @@ public class FileURL {
         }
     }
 
-    public static URL toURL(Path path, URL fallback) {
+    public static URL toURL(@NotNull Path path, URL fallback) {
         URI uri = path.toUri();
         try {
             return uri.toURL();
@@ -71,10 +77,7 @@ public class FileURL {
      *
      * @return The corresponding file, or <code>null</code> if not available.
      */
-    public static Path toPath(URL url, Path fallback) {
-        if (url == null)
-            return null;
-
+    public static Path toPath(@NotNull URL url, Path fallback) {
         try {
             URI uri = url.toURI();
             return Paths.get(uri);
@@ -88,10 +91,7 @@ public class FileURL {
      *
      * @return The corresponding file, or <code>null</code> if not available.
      */
-    public static File toFile(URL url, File fallback) {
-        if (url == null)
-            return null;
-
+    public static File toFile(@NotNull URL url, File fallback) {
         String protocol = url.getProtocol();
         if ("file".equals(protocol)) {
             URI uri;
@@ -110,7 +110,7 @@ public class FileURL {
      *
      * @return The nearest local file for the url. If no such file exists, returns <code>null</code>
      */
-    public static Path toNearestFilePath(URL url) {
+    public static Path toNearestFilePath(@NotNull URL url) {
         File file = toNearestFile(url);
         return FileFn.toPath(file);
     }
@@ -120,10 +120,7 @@ public class FileURL {
      *
      * @return The nearest local file for the url. If no such file exists, returns <code>null</code>
      */
-    public static File toNearestFile(URL url) {
-        if (url == null)
-            return null;
-
+    public static File toNearestFile(@NotNull URL url) {
         String protocol = url.getProtocol();
         if ("file".equals(protocol))
             return new File(url.getFile());
@@ -134,12 +131,12 @@ public class FileURL {
         return null;
     }
 
-    public static Path toNearestFilePath(URL url, String removeSubPath, File fallback) {
+    public static Path toNearestFilePath(@NotNull URL url, String removeSubPath, File fallback) {
         File file = toNearestFile(url, removeSubPath, fallback);
         return FileFn.toPath(file);
     }
 
-    public static File toNearestFile(URL url, String removeSubPath, File fallback) {
+    public static File toNearestFile(@NotNull URL url, String removeSubPath, File fallback) {
         if (removeSubPath == null || removeSubPath.isEmpty())
             return toFile(url, fallback);
 
@@ -171,10 +168,8 @@ public class FileURL {
         return dir;
     }
 
-    public static Long length(URL url, Long notExisted)
+    public static Long length(@NotNull URL url, Long notExisted)
             throws IOException {
-        if (url == null)
-            throw new NullPointerException("url");
         String protocol = url.getProtocol();
         if ("file".equals(protocol)) {
             File file = FileURL.toFile(url, null);
@@ -185,9 +180,12 @@ public class FileURL {
         }
 
         if ("jar".equals(protocol)) {
-            Entry<ZipFile, ZipEntry> pair = openEntry(url);
-            if (pair == null)
+            Entry<ZipFile, ZipEntry> pair;
+            try {
+                pair = openEntry(url);
+            } catch (FileNotFoundException e) {
                 return null;
+            }
             ZipFile zipFile = pair.getKey();
             ZipEntry zipEntry = pair.getValue();
             long size = zipEntry.getSize();
@@ -198,10 +196,8 @@ public class FileURL {
         return null;
     }
 
-    public static Long lastModified(URL url, Long notExisted)
+    public static Long lastModified(@NotNull URL url, Long notExisted)
             throws IOException {
-        if (url == null)
-            throw new NullPointerException("url");
         String protocol = url.getProtocol();
         if ("file".equals(protocol)) {
             File file = FileURL.toFile(url, null);
@@ -212,9 +208,12 @@ public class FileURL {
         }
 
         if ("jar".equals(protocol)) {
-            Entry<ZipFile, ZipEntry> pair = openEntry(url);
-            if (pair == null)
+            Entry<ZipFile, ZipEntry> pair;
+            try {
+                pair = openEntry(url);
+            } catch (FileNotFoundException e) {
                 return null;
+            }
             ZipFile zipFile = pair.getKey();
             ZipEntry zipEntry = pair.getValue();
             long time = zipEntry.getTime();
@@ -225,7 +224,8 @@ public class FileURL {
         return null;
     }
 
-    static File getJarFile(URL jarURL) {
+    @NotNull
+    static File getJarFile(@NotNull URL jarURL) {
         assert "jar".equals(jarURL.getProtocol());
         String s = jarURL.getPath(); // path = file:/...!...
         assert s.startsWith("file:");
@@ -240,7 +240,8 @@ public class FileURL {
         }
     }
 
-    public static Entry<ZipFile, ZipEntry> openEntry(URL zipURL)
+    @NotNull
+    public static Entry<ZipFile, ZipEntry> openEntry(@NotNull URL zipURL)
             throws IOException {
         if (!"jar".equals(zipURL.getProtocol()))
             throw new IllegalArgumentException("Not a zip URL: " + zipURL);
@@ -256,7 +257,7 @@ public class FileURL {
         try (ZipFile zipFile = new ZipFile(zipFileName)) {
             ZipEntry zipEntry = zipFile.getEntry(entryName);
             if (zipEntry == null)
-                return null;
+                throw new FileNotFoundException(zipURL.toString());
             else
                 return Pair.of(zipFile, zipEntry);
         }

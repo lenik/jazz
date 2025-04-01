@@ -28,11 +28,7 @@ public class PathFn {
     public static String field(@Nullable Path path, int index) {
         if (path == null)
             return null;
-
         Path name = path.getName(index);
-        if (name == null)
-            return null;
-
         return name.toString();
     }
 
