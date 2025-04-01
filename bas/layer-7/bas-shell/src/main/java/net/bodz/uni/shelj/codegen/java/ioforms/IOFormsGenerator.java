@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.bodz.bas.bean.api.IBeanInfo;
@@ -21,7 +20,6 @@ import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.uni.shelj.codegen.java.JavaCodeWriter;
 import net.bodz.uni.shelj.codegen.java.member.BeanPropertyMember;
 import net.bodz.uni.shelj.codegen.java.member.FieldMember;
-import net.bodz.uni.shelj.codegen.java.member.IMember;
 
 /**
  * Generate fields with various serialization forms.
@@ -29,8 +27,7 @@ import net.bodz.uni.shelj.codegen.java.member.IMember;
 @ProgramName("ioforms")
 public class IOFormsGenerator
         extends BasicCLI
-        implements
-            IJavaCodegen<JavaCodeWriter, Collection<IMember>> {
+        implements IJavaCodegen<JavaCodeWriter, MemberSelection> {
 
     /**
      * Specify the class to read.
@@ -48,7 +45,7 @@ public class IOFormsGenerator
 
     /**
      * Select members declared on the class and specified depth number of superclasses.
-     *
+     *<p>
      * (default public members)
      *
      * @option -d
@@ -97,7 +94,7 @@ public class IOFormsGenerator
      */
     boolean xmlForm;
 
-    List<IMember> members = new ArrayList<>();
+    MemberSelection members;
 
     public IOFormsGenerator() {
     }
@@ -116,6 +113,7 @@ public class IOFormsGenerator
         }
 
         for (Class<?> inputClass : inputClasses) {
+            members = new MemberSelection(inputClass);
 
             if (beanProperties) {
                 IBeanInfo beanInfo = Introspectors.getBeanInfo(inputClass);
@@ -155,7 +153,7 @@ public class IOFormsGenerator
             BCharOut buf = new BCharOut();
             ITreeOut out = buf.indented();
 
-            boolean classDecl = ! noSkel;
+            boolean classDecl = !noSkel;
             if (classDecl) {
                 out.enterln("class " + inputClass.getSimpleName() + "Fields " + "{");
             }
@@ -175,13 +173,8 @@ public class IOFormsGenerator
         }
     }
 
-    public static void main(String[] args)
-            throws Exception {
-        new IOFormsGenerator().execute(args);
-    }
-
     @Override
-    public void generateJavaSource(JavaCodeWriter out, Collection<IMember> model)
+    public void generateJavaSource(JavaCodeWriter out, MemberSelection model)
             throws IOException {
         KConsts constKeys = new KConsts();
         run(out, constKeys);
@@ -214,6 +207,11 @@ public class IOFormsGenerator
         builder.setMembers(members);
         out.println();
         builder.build(out);
+    }
+
+    public static void main(String[] args)
+            throws Exception {
+        new IOFormsGenerator().execute(args);
     }
 
 }

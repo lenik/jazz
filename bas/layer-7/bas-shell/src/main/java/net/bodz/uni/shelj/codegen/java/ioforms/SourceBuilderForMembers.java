@@ -1,20 +1,17 @@
 package net.bodz.uni.shelj.codegen.java.ioforms;
 
-import java.util.Collection;
-
 import net.bodz.uni.shelj.codegen.java.JavaCodeBuilder;
-import net.bodz.uni.shelj.codegen.java.member.IMember;
 
 public abstract class SourceBuilderForMembers
         extends JavaCodeBuilder {
 
-    protected Collection<IMember> members;
+    protected MemberSelection members;
 
-    public Collection<IMember> getMembers() {
+    public MemberSelection getMembers() {
         return members;
     }
 
-    public void setMembers(Collection<IMember> members) {
+    public void setMembers(MemberSelection members) {
         this.members = members;
     }
 

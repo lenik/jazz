@@ -24,6 +24,7 @@ public class JsonFormTypeInfo {
             clazz.getMethod("from", JsonObject.class, String.class);
             info.hasFrom_JoKey = true;
         } catch (NoSuchMethodException e) {
+            //
         }
         return info;
     }

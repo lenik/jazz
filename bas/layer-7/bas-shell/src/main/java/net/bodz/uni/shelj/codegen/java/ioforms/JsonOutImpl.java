@@ -5,6 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.uni.shelj.codegen.java.JavaCodeWriter;
 import net.bodz.uni.shelj.codegen.java.member.IMember;
 
@@ -17,7 +18,9 @@ public class JsonOutImpl
         out.println("@Override");
         out.println("public void jsonOut(IJsonOut out, JsonFormOptions opts)");
         out.enterln("        throws IOException, FormatException {");
-        out.println("super.jsonOut(out, opts);");
+
+        if (IJsonForm.class.isAssignableFrom(members.clazz.getSuperclass()))
+            out.println("super.jsonOut(out, opts);");
 
         for (IMember member : members) {
             Phrase nam = Phrase.fooBar(member.getName());
@@ -26,17 +29,17 @@ public class JsonOutImpl
             if (type.isPrimitive()) {
                 String entryFn = "entry";
                 switch (TypeKind.getTypeId(type)) {
-                case TypeId._byte:
-                case TypeId._short:
-                case TypeId._int:
-                case TypeId._long:
-                case TypeId._float:
-                case TypeId._double:
-                    entryFn = "entryNot0";
-                    break;
-                case TypeId._boolean:
-                    entryFn = "entryTrue";
-                    break;
+                    case TypeId._byte:
+                    case TypeId._short:
+                    case TypeId._int:
+                    case TypeId._long:
+                    case TypeId._float:
+                    case TypeId._double:
+                        entryFn = "entryNot0";
+                        break;
+                    case TypeId._boolean:
+                        entryFn = "entryTrue";
+                        break;
                 }
                 out.printLineWithJavaGet(member, //
                         "out.%s(%s, \\?);", entryFn, keyName);
