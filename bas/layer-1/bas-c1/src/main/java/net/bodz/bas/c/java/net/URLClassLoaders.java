@@ -36,15 +36,23 @@ public class URLClassLoaders {
         return null;
     }
 
-    public static List<Path> getUserClassPath(ClassLoader cl) {
-        URLClassLoader ucl = findFirstURLClassLoader(cl);
+    public static List<Path> getUserClassPath(ClassLoader loader) {
+        URLClassLoader ucl = findFirstURLClassLoader(loader);
         if (ucl == null)
             return getJavaClassPath();
-        List<Path> localFileList = new ArrayList<Path>();
-        for (URL url : ucl.getURLs()) {
-            File localFile = FileURL.toFile(url, null);
-            if (localFile != null)
-                localFileList.add(localFile.toPath());
+
+        List<Path> localFileList = new ArrayList<>();
+        while (loader != null) {
+            if (loader instanceof URLClassLoader) {
+                ucl = (URLClassLoader) loader;
+                for (URL url : ucl.getURLs()) {
+                    File localFile = FileURL.toFile(url, null);
+                    if (localFile != null)
+                        localFileList.add(localFile.toPath());
+                }
+                break; // only-first
+            }
+            loader = loader.getParent();
         }
         return localFileList;
     }

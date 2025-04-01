@@ -110,8 +110,8 @@ public class ClassResource {
     @Nullable
     public static Path getClassBytesLocalFile(Class<?> clazz) {
         URL url = getClassBytesURL(clazz);
-        Path file = FileURL.toPath(url, null);
-        return file;
+        File file = FileURL.toFile(url, null);
+        return file == null ? null : file.toPath();
     }
 
     public static URL getClassDirURL(Class<?> clazz) {
