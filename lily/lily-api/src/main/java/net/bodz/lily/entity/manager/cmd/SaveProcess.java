@@ -1,6 +1,10 @@
 package net.bodz.lily.entity.manager.cmd;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
 
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.FormatException;
@@ -10,6 +14,8 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.file.IPathFields;
 import net.bodz.lily.concrete.StructRow;
 import net.bodz.lily.entity.IId;
@@ -29,7 +35,7 @@ public class SaveProcess
         implements IJsonForm {
 
     boolean createNew;
-    boolean hasId;
+    boolean hasIdProperty;
     Object id;
 
     ResolvedEntity resolvedEntity;
@@ -38,7 +44,7 @@ public class SaveProcess
     public SaveProcess(IEntityCommandType type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         super(type, context);
         Class<?> entityClass = typeInfo.getEntityClass();
-        hasId = IId.class.isAssignableFrom(entityClass);
+        hasIdProperty = IId.class.isAssignableFrom(entityClass);
 
         this.resolvedEntity = resolvedEntity;
     }
@@ -111,7 +117,7 @@ public class SaveProcess
 
         afterRowOp(event, obj);
 
-        if (hasId)
+        if (hasIdProperty)
             result.setHeader("id", id);
 
         result.setData(obj);
@@ -161,17 +167,43 @@ public class SaveProcess
             // createNew = undefined;
             // createNew = false;
         } else {
-            if (hasId) {
+            if (hasIdProperty) {
                 String[] names = typeInfo.getPrimaryKeyPropertyNames();
-                String[] params = new String[names.length];
+                IProperty[] properties = typeInfo.getPrimaryKeyProperties();
+                String[] paramStrs = new String[names.length];
+                List<IProperty> notNullInvalidates = new ArrayList<>();
+                int notNullCount = 0;
                 for (int i = 0; i < names.length; i++) {
-                    String property = names[i];
-                    String value = o.getString(property);
-                    if (value == null)
-                        throw new IllegalArgumentException("pk-column[" + i + "] isn't specified.");
-                    params[i] = value;
+                    String propertyName = names[i];
+                    String paramStr = o.getString(propertyName);
+                    paramStrs[i] = paramStr;
+
+                    if (paramStr != null) {
+                        notNullCount++;
+                    } else {
+                        IProperty property = properties[i];
+                        boolean notNull = property.isAnnotationPresent(NotNull.class);
+                        if (!notNull) {
+                            Column aColumn = property.getAnnotation(Column.class);
+                            if (aColumn != null && !aColumn.nullable())
+                                notNull = true;
+                        }
+                        if (notNull)
+                            notNullInvalidates.add(property);
+                    }
                 }
-                this.id = typeInfo.parseId(params);
+
+                if (notNullCount != 0) {
+                    if (!notNullInvalidates.isEmpty()) {
+                        StringBuilder errorMsg = new StringBuilder();
+                        for (IProperty property : notNullInvalidates)
+                            errorMsg.append("Missing `value for required primary column property ") //
+                                    .append(property.getName()).append(". ");
+                        throw new ParseException(errorMsg.toString());
+                    }
+                    this.id = typeInfo.parseId(paramStrs);
+                }
+
                 if (id == null)
                     this.createNew = true;
             } else {

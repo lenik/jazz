@@ -19,7 +19,6 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.meta.cache.Derived;
-import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.content.IContent;
 import net.bodz.bas.repr.form.NullConvertion;
@@ -175,11 +174,8 @@ public abstract class CoObject
         Object id = id();
         if (id == null)
             return "new";
-        StringBuilder sb = new StringBuilder(80);
-        sb.append(id);
-        sb.append(" - ");
-        sb.append(getLabel());
-        return sb.toString();
+        String sb = id + " - " + getLabel();
+        return sb;
     }
 
     /** ⇱ Implementation Of {@link IContent}. */
@@ -198,7 +194,6 @@ public abstract class CoObject
     @Column(name = FIELD_PRIORITY, nullable = false)
     @Face("Priority")
     @FormInput(textWidth = 4)
-    @NotNull
     @NumericInput(min = -1000, max = 1000)
     @OfGroup(StdGroup.Schedule.class)
     @Override
@@ -253,8 +248,6 @@ public abstract class CoObject
     }
 
     public void setState(State state) {
-        if (state == null)
-            throw new NullPointerException("state");
         this.state = state;
     }
 
@@ -334,7 +327,7 @@ public abstract class CoObject
     /**
      * <p lang="zh">
      * 指定属主、属组和其它人对该信息的访问权限。
-     *
+     *<br>
      * 已定义的访问权限有：
      * <dl>
      * <dt>公开
@@ -443,8 +436,8 @@ public abstract class CoObject
             priority = o.getInt("priority", priority);
             state = StateJsonFn.getFrom(o, "state", state);
 
-            ownerUser = o.readInto("ownerUser", ownerUser, () -> Users.newUser());
-            ownerGroup = o.readInto("ownerGroup", ownerGroup, () -> Users.newGroup());
+            ownerUser = o.readInto("ownerUser", ownerUser, Users::newUser);
+            ownerGroup = o.readInto("ownerGroup", ownerGroup, Users::newGroup);
             acl = o.getInt("acl", acl);
             accessMode = o.getInt("accessMode", accessMode);
 
