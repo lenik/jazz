@@ -11,13 +11,21 @@
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-flow</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.netty</groupId>
-            <artifactId>netty</artifactId>
-            <version>3.2.10.Final</version>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-program</artifactId>
+            <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-shell</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.netty</groupId>-->
+<!--            <artifactId>netty</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
     <name>BAS :: Layer 7 :: Netserv</name>
 </project>
