@@ -1,17 +1,17 @@
 package net.bodz.bas.vcs;
 
-import java.io.File;
+import java.nio.file.Path;
 
 public abstract class AbstractVcsProvider
         implements IVcsProvider {
 
     @Override
-    public IVcsWorkingCopy getWorkingCopy(File workDir) {
+    public IVcsWorkingCopy getWorkingCopy(Path workDir) {
         if (!isWorkingCopy(workDir))
             throw new IllegalArgumentException("Not a working copy: " + workDir);
         return newWorkingCopy(workDir);
     }
 
-    protected abstract IVcsWorkingCopy newWorkingCopy(File workDir);
+    protected abstract IVcsWorkingCopy newWorkingCopy(Path workDir);
 
 }

@@ -1,11 +1,11 @@
 package net.bodz.bas.vcs;
 
-import java.io.File;
+import java.nio.file.Path;
 
 public interface IVcsProvider {
 
-    boolean isWorkingCopy(File workDir);
+    boolean isWorkingCopy(Path workDir);
 
-    IVcsWorkingCopy getWorkingCopy(File workDir);
+    IVcsWorkingCopy getWorkingCopy(Path workDir);
 
 }

@@ -3,6 +3,7 @@ package net.bodz.bas.io.process;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ProcessBuilder.Redirect;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,11 @@ public class NonFinalProcessBuilder<this_t> {
 
     public this_t directory(File directory) {
         pb.directory(directory);
+        return (this_t) this;
+    }
+
+    public this_t directory(Path directory) {
+        pb.directory(directory.toFile());
         return (this_t) this;
     }
 

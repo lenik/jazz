@@ -2,6 +2,8 @@ package net.bodz.bas.vcs.git;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +22,15 @@ public class NativeGitVcsWorkingCopy
 
     static final Logger logger = LoggerFactory.getLogger(NativeGitVcsWorkingCopy.class);
 
-    public NativeGitVcsWorkingCopy(File directory) {
+    public NativeGitVcsWorkingCopy(Path directory) {
         super(directory);
     }
 
     @Override
     public Iterable<IVcsLogEntry> log(String name, VcsLogOptions options)
             throws IOException, InterruptedException {
-        File file = new File(getDirectory(), name);
-        if (! file.exists())
+        Path file = getDirectory().resolve(name);
+        if (Files.notExists(file))
             logger.warn("Non-existing file: " + file);
 
         List<String> cmdl = new ArrayList<String>();
@@ -69,8 +71,8 @@ public class NativeGitVcsWorkingCopy
     @Override
     public Iterable<String> getDiff(String name, String version)
             throws IOException, InterruptedException {
-        File file = new File(getDirectory(), name);
-        if (! file.exists())
+        Path file = getDirectory().resolve(name);
+        if (Files.notExists(file))
             logger.warn("Non-existing file: " + file);
 
         List<String> cmdl = new ArrayList<String>();

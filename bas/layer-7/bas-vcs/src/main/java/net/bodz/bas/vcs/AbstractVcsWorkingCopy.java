@@ -1,20 +1,20 @@
 package net.bodz.bas.vcs;
 
-import java.io.File;
+import java.nio.file.Path;
 
 public abstract class AbstractVcsWorkingCopy
         implements IVcsWorkingCopy {
 
-    private File directory;
+    private Path directory;
 
-    public AbstractVcsWorkingCopy(File directory) {
+    public AbstractVcsWorkingCopy(Path directory) {
         if (directory == null)
             throw new NullPointerException("directory");
         this.directory = directory;
     }
 
     @Override
-    public File getDirectory() {
+    public Path getDirectory() {
         return directory;
     }
 

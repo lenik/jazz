@@ -1,6 +1,7 @@
 package net.bodz.bas.vcs.git;
 
 import java.io.File;
+import java.nio.file.Paths;
 
 import org.junit.Assert;
 
@@ -16,7 +17,7 @@ public class NativeGitVcsWorkingCopyTest
     public static void main(String[] args)
             throws Exception {
         NativeGitVcsProvider gitVcsProvider = new NativeGitVcsProvider();
-        IVcsWorkingCopy jazzWc = gitVcsProvider.getWorkingCopy(new File(jazzDir));
+        IVcsWorkingCopy jazzWc = gitVcsProvider.getWorkingCopy(Paths.get(jazzDir));
 
         VcsLogOptions logOptions = new VcsLogOptions();
         Iterable<IVcsLogEntry> logs = jazzWc.log("bas/layer-7/bas-program", logOptions);
