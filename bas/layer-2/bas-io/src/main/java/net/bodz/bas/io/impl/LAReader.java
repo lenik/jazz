@@ -7,11 +7,12 @@ import java.io.StringReader;
 import java.nio.CharBuffer;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.io.ILookable;
+import net.bodz.bas.io.ILookAhead;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class LAReader
         extends FilterReader
-        implements ILookable {
+        implements ILookAhead {
 
     // LA(cap)
     protected final int cap;
@@ -98,7 +99,7 @@ public class LAReader
     }
 
     @Override
-    public int read(char[] cbuf)
+    public int read(@NotNull char[] cbuf)
             throws IOException {
         return read(cbuf, 0, cbuf.length);
     }
@@ -238,7 +239,7 @@ public class LAReader
 
     /**
      * Get compacted look-ahead buffer
-     * 
+     *
      * @return available content in lab
      */
     public String lookFilled() {

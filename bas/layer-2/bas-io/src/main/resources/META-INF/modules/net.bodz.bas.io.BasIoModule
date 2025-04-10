@@ -54,7 +54,7 @@ net.bodz.bas.io.data._WriteUtfStringImpl
 net.bodz.bas.io.IByteIOS
 net.bodz.bas.io.ICharIOS
 net.bodz.bas.io.ICroppable
-net.bodz.bas.io.ILookable
+net.bodz.bas.io.ILookAhead
 net.bodz.bas.io.impl.CroppedRafIn
 net.bodz.bas.io.impl.CroppedRafIOS
 net.bodz.bas.io.impl.CroppedRafOut
