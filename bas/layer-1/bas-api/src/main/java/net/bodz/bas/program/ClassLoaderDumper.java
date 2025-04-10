@@ -89,7 +89,7 @@ public class ClassLoaderDumper {
                     Method getURLs = urlClassPathClass.getMethod("getURLs");
                     urls = (URL[]) getURLs.invoke(urlClassPath);
                     break;
-                } catch (ReflectiveOperationException e) {
+                } catch (ReflectiveOperationException | RuntimeException e) {
                     // not supported. just ignore, try default method.
                 }
 
