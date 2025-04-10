@@ -3,9 +3,11 @@ package net.bodz.bas.io.res;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.c.java.io.FileRelation;
+import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class PathResourceType
@@ -58,13 +60,20 @@ public class PathResourceType
     @Override
     public String loadText(@NotNull Path resource)
             throws IOException {
-        return ResFn.path(resource).read().readString();
+        if (!Files.exists(resource) || !Files.isRegularFile(resource))
+            return null;
+        else
+            return ResFn.path(resource).read().readString();
     }
 
+    @NotNull
     @Override
     public List<String> loadLines(@NotNull Path resource)
             throws IOException {
-        return ResFn.path(resource).read().readLines(true);
+        if (!Files.exists(resource) || !Files.isRegularFile(resource))
+            return new ArrayList<>();
+        else
+            return ResFn.path(resource).read().readLines(true);
     }
 
     @Override

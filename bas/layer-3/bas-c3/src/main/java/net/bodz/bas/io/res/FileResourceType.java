@@ -3,14 +3,15 @@ package net.bodz.bas.io.res;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.bodz.bas.c.java.io.FileRelation;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class FileResourceType
-        implements
-            IResourceType<File> {
+        implements IResourceType<File> {
 
     @Override
     public Path toPath(@NotNull File resource) {
@@ -48,13 +49,20 @@ public class FileResourceType
     @Override
     public String loadText(@NotNull File resource)
             throws IOException {
-        return ResFn.file(resource).read().readString();
+        if (!resource.exists() || !resource.isFile())
+            return null;
+        else
+            return ResFn.file(resource).read().readString();
     }
 
+    @NotNull
     @Override
     public List<String> loadLines(@NotNull File resource)
             throws IOException {
-        return ResFn.file(resource).read().readLines(true);
+        if (!resource.exists() || !resource.isFile())
+            return new ArrayList<>();
+        else
+            return ResFn.file(resource).read().readLines(true);
     }
 
     @Override

@@ -21,6 +21,7 @@ public interface IResourceType<T> {
     String loadText(@NotNull T resource)
             throws IOException;
 
+    @NotNull
     List<String> loadLines(@NotNull T resource)
             throws IOException;
 
