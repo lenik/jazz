@@ -247,7 +247,7 @@ public final class TableKey
             tableName.readFromJDBC(rs);
 
             String column = rs.getString("COLUMN_NAME");
-            List<String> list = map.getOrCreate(tableName);
+            List<String> list = map.list(tableName);
             list.add(column);
         }
 

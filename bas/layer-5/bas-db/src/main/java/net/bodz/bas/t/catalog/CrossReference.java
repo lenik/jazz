@@ -468,7 +468,7 @@ public class CrossReference
                 List<CrossReferenceRow> rows = rawMap.get2(k1, k2);
                 CrossReference ref = new CrossReference();
                 ref.readObject(rows);
-                refMap.add2(k1, ref);
+                refMap.addToList(k1, ref);
             }
         }
         return refMap;

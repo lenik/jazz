@@ -18,8 +18,7 @@ import net.bodz.bas.typer.std.IParser;
 
 public class ListMap_JX<K, V extends IJsonForm>
         extends ListMap<K, V>
-        implements
-            IJsonForm {
+        implements IJsonForm {
 
     Class<K> keyType;
     Supplier<V> factory;
@@ -40,6 +39,7 @@ public class ListMap_JX<K, V extends IJsonForm>
 
     protected K parseKey(String s)
             throws ParseException {
+        @SuppressWarnings("unchecked")
         IParser<K> parser = Typers.getTyper(keyType, IParser.class);
         return parser.parse(s);
     }
@@ -49,7 +49,7 @@ public class ListMap_JX<K, V extends IJsonForm>
             throws ParseException {
         for (String key : o.keySet()) {
             K k1 = parseKey(key);
-            List<V> list = getOrCreate(k1);
+            List<V> list = list(k1);
             JsonArray array = o.getJsonArray(key);
             int n = array.length();
             for (int i = 0; i < n; i++) {
