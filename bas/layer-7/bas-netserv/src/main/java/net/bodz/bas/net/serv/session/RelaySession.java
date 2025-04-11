@@ -4,36 +4,55 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.util.Iterator;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.net.serv.Session;
-import net.bodz.bas.parser.Command;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.ISocketConnector;
+import net.bodz.bas.net.io.ISocketReader;
+import net.bodz.bas.net.serv.AbstractSession;
+import net.bodz.bas.net.io.ISocketPoller;
 
 public class RelaySession
-        extends Session {
+        extends AbstractSession {
 
-    InetSocketAddress destAddr;
+    InetSocketAddress targetAddr;
 
-    public RelaySession(SocketChannel channel, InetSocketAddress destAddr) {
-        super(channel);
-        this.destAddr = destAddr;
+    public RelaySession(String id, SocketChannel channel, @NotNull InetSocketAddress targetAddr, ISocketPoller poller)
+            throws IOException {
+        super(id, channel);
+        this.targetAddr = targetAddr;
+
+        SocketChannel targetChannel = SocketChannel.open(targetAddr);
+        targetChannel.configureBlocking(false);
+
+        poller.register(targetChannel, (ISocketConnector) this::connectTarget);
+        poller.register(targetChannel, (ISocketReader) this::readTarget);
+    }
+
+    boolean connectTarget(SocketChannel channel)
+            throws IOException {
+        return true;
+    }
+
+    boolean readTarget(SocketChannel channel)
+            throws IOException {
+        return true;
     }
 
     @Override
-    public void onDataReady(SocketChannel channel)
+    public boolean read(SocketChannel channel)
             throws IOException, ParseException {
-        ByteBuffer aByte = ByteBuffer.allocate(1);
-        int numBytesRead = channel.read(aByte);
-        if (numBytesRead == -1)                        // The client has closed the connection
-        {
-            stop();
-            return;
+        ByteBuffer byteBuf = ByteBuffer.allocate(4096);
+        int numBytesRead = channel.read(byteBuf);
+        switch (numBytesRead) {
+            case -1:
+                close();
+            case 0:
+                return true;
         }
-        if (numBytesRead == 0)
-            return;
 
-        byte b = aByte.get();
+        byteBuf.flip();
+        return true;
     }
 
 }

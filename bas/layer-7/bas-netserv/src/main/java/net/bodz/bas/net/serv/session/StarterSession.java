@@ -7,51 +7,73 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.net.serv.Session;
+import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.serv.AbstractSession;
+import net.bodz.bas.net.io.ISocketPoller;
+import net.bodz.bas.net.serv.ISessionManager;
 import net.bodz.bas.parser.CmdQueue;
 import net.bodz.bas.parser.Command;
 
 public class StarterSession
-        extends Session {
+        extends AbstractSession {
+
+    @NotNull
+    ISessionManager sessionManager;
+
+    @NotNull
+    ISocketPoller poller;
 
     CmdQueue cmds = new CmdQueue();
 
-    public StarterSession(SocketChannel channel) {
-        super(channel);
+    public StarterSession(String id, SocketChannel channel, @NotNull ISessionManager sessionManager, @NotNull ISocketPoller poller) {
+        super(id, channel);
+        this.sessionManager = sessionManager;
+        this.poller = poller;
     }
 
     @Override
-    public void onDataReady(SocketChannel channel)
+    public boolean read(SocketChannel channel)
             throws IOException, ParseException {
         ByteBuffer aByte = ByteBuffer.allocate(1);
-        int numBytesRead = channel.read(aByte);
-        if (numBytesRead == -1)                        // The client has closed the connection
-        {
-            stop();
-            return;
-        }
-        if (numBytesRead == 0)
-            return;
 
-        byte b = aByte.get();
-        cmds.putOctet(b & 0xFF);
+        while (true) {
+            int numBytesRead = channel.read(aByte);
+            switch (numBytesRead) {
+                case -1:            // The client has closed the connection
+                    close();
+                case 0:
+                    return true;
 
-        cmds.parse();
+                case 1:
+                    aByte.flip();
+                    byte b = aByte.get();
+                    aByte.clear();
+                    cmds.putOctet(b);
+                    break;
 
-        if (cmds.isNotEmpty()) {
-            Iterator<Command> cmdIterator = cmds.iterator();
-            while (cmdIterator.hasNext()) {
-                Command cmd = cmdIterator.next();
-                cmdIterator.remove();
-                switch (cmd.getName()) {
-                    case "echo":
-                        byte[] args = cmd.getArgumentsLine().getBytes();
-                        channel.write(ByteBuffer.wrap(args));
-                        break;
+                default:
+                    throw new UnexpectedException();
+            }
 
-                    case "relay":
-                        // relay PORT [hostname]
-                        relay(cmd);
+            cmds.parse();
+            if (cmds.isNotEmpty()) {
+                Iterator<Command> cmdIterator = cmds.iterator();
+                while (cmdIterator.hasNext()) {
+                    Command cmd = cmdIterator.next();
+                    cmdIterator.remove();
+                    switch (cmd.getName()) {
+                        case "echo":
+                            echo(cmd);
+                            break;
+
+                        case "relay":
+                            relay(cmd);
+                            break;
+
+                        default:
+                            illegal(cmd);
+                    }
                 }
             }
         }
@@ -86,8 +108,14 @@ public class StarterSession
         if (cmd.isArgumentPresent(1))
             host = cmd.getArgument(1);
         InetSocketAddress destAddr = new InetSocketAddress(host, port);
-        RelaySession relaySession = new RelaySession(channel, destAddr);
+        RelaySession relaySession = new RelaySession(id, channel, destAddr, poller);
         sessionManager.replaceSession(this, relaySession);
+    }
+
+    void illegal(Command cmd)
+            throws IOException {
+        String message = "Illegal command; " + cmd.getName() + "\n";
+        channel.write(ByteBuffer.wrap(message.getBytes()));
     }
 
 }

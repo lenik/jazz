@@ -1,20 +1,10 @@
 package net.bodz.bas.net.serv;
 
+import java.nio.channels.Channel;
+
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface ISessionManager {
-
-    @NotNull
-    String addSession(@NotNull ISession session);
-
-    /**
-     * Gets the ID associated with a given session.
-     *
-     * @param session The session for which to retrieve the ID.
-     * @return The ID associated with the session.
-     */
-    @NotNull
-    String getSessionId(@NotNull ISession session);
 
     /**
      * Retrieves a session from the manager using its ID.
@@ -24,20 +14,26 @@ public interface ISessionManager {
      */
     ISession getSession(@NotNull String id);
 
+    ISession getSession(@NotNull Channel channel);
+
     /**
-     * Sets a session in the manager using its ID and new value.
-     *
-     * @param id      The ID of the session to be set.
      * @param session The new value for the session.
+     * @return true if add new, false if updating
      */
-    void setSession(@NotNull String id, @NotNull ISession session);
+    boolean addSession(@NotNull ISession session);
 
     /**
      * Removes a session from the manager using its ID.
      *
      * @param id The ID of the session to be removed.
+     * @return true if exists
      */
-    void removeSession(@NotNull String id);
+    boolean removeSession(@NotNull String id);
+
+    /**
+     * @return true if exists
+     */
+    boolean removeSession(@NotNull Channel channel);
 
     /**
      * Default method that removes a session from the manager using its instance. It first retrieves the ID associated
@@ -45,14 +41,18 @@ public interface ISessionManager {
      *
      * @param session The session to be removed.
      */
-    default void removeSession(@NotNull ISession session) {
-        String id = getSessionId(session);
-        removeSession(id);
+    default boolean removeSession(@NotNull ISession session) {
+        String id = session.getId();
+        return removeSession(id);
     }
 
     default void replaceSession(ISession session, ISession newSession) {
-        String id = getSessionId(session);
-        setSession(id, newSession);
+        String id = session.getId();
+        String newId = newSession.getId();
+        if (!id.equals(newId))
+            throw new IllegalArgumentException("replace with a session different id");
+        removeSession(id);
+        addSession(newSession);
     }
 
 }

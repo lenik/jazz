@@ -2,22 +2,19 @@ package net.bodz.bas.net.serv;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.channels.SelectableChannel;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.net.io.DefaultPoller;
+import net.bodz.bas.net.io.ISocketAccepter;
+import net.bodz.bas.net.io.ISocketReader;
 import net.bodz.bas.net.serv.session.StarterSession;
+import net.bodz.bas.parser.IErrorRecoverer;
 
 public class NetServer {
 
@@ -25,16 +22,17 @@ public class NetServer {
 
     List<InetSocketAddress> localAddrs = new ArrayList<>();
 
-    Selector selector;
-    List<ServerSocketChannel> serverChannels = new ArrayList<>();
-    boolean exitRequest;
+    DefaultPoller poller;
+
+    ISessionManager sessionManager = new DefaultSessionManager();
+    int nextId = 1;
 
     void setupLocal() {
     }
 
     void start()
             throws IOException {
-        selector = Selector.open();
+        poller = new DefaultPoller();
 
         for (InetSocketAddress localAddr : localAddrs) {
             // Open a server socket channel and bind it to the port
@@ -42,51 +40,53 @@ public class NetServer {
             serverChannel.configureBlocking(false);
             serverChannel.socket().bind(localAddr);
 
-            // Register the server socket with the selector for ACCEPT events
-            serverChannel.register(selector, SelectionKey.OP_ACCEPT);
-
             logger.info("Listen on " + localAddr.toString());
-
-            serverChannels.add(serverChannel);
+            poller.register(serverChannel, (ISocketAccepter) this::onAccept);
         }
 
-        Map<SocketChannel, Session> sessions = new HashMap<>();
+        poller.mainLoop();
+    }
 
-        while (!exitRequest) {
-            int numSelectedKeys = selector.select();
-            if (numSelectedKeys == 0)
-                continue;
+    boolean onAccept(ServerSocketChannel serverChannel)
+            throws IOException {
+        SocketChannel clientChannel = serverChannel.accept();
+        clientChannel.configureBlocking(false);
 
-            Set<SelectionKey> selectedKeys = selector.selectedKeys();
-            Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
+        poller.register(clientChannel, (ISocketReader) this::onReceive);
 
-            for (; keyIterator.hasNext(); keyIterator.remove()) {
-                SelectionKey key = keyIterator.next();
+        String id = String.valueOf(nextId++);
+        StarterSession session = new StarterSession(id, clientChannel, sessionManager, poller);
+        sessionManager.addSession(session);
 
-                SelectableChannel _channel = key.channel();
+        return true;
+    }
 
-                if (key.isAcceptable()) {
-                    ServerSocketChannel serverChannel = (ServerSocketChannel) _channel;
-                    SocketChannel clientChannel = serverChannel.accept();
-                    clientChannel.configureBlocking(false);
+    boolean onReceive(SocketChannel channel)
+            throws IOException {
+        ISession session = sessionManager.getSession(channel);
+        if (session == null)
+            // already closed, or unmanaged channels.
+            return true;
 
-                    // Register the client channel for READ events
-                    clientChannel.register(selector, SelectionKey.OP_READ);
-                    continue;
+        while (true) {
+            try {
+                session.read(channel);
+            } catch (ParseException e) {
+                if (session instanceof IErrorRecoverer) {
+                    IErrorRecoverer recoverer = (IErrorRecoverer) session;
+                    if (recoverer.recoverError(e))
+                        continue;
                 }
-
-                if (key.isReadable()) {
-                    // Data is available to be read from a client
-                    SocketChannel channel = (SocketChannel) _channel;
-                    Session session = sessions.computeIfAbsent(channel, StarterSession::new);
-                    try {
-                        session.onDataReady(channel);
-                    } catch (ParseException e) {
-                        session.onError(channel, e);
-                    }
-                }
+                logger.error(e);
+                session.close();
             }
+            break;
         }
+
+        if (session.isClosed())
+            sessionManager.removeSession(session);
+
+        return true;
     }
 
 }

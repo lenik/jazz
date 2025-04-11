@@ -25,6 +25,11 @@ public abstract class BufferedLineParser
     }
 
     @Override
+    public void putOctet(byte octet) {
+        lineBuffer.append(octet);
+    }
+
+    @Override
     public void putOctet(int octet) {
         lineBuffer.append(octet);
     }

@@ -4,50 +4,42 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.ByteBuffer;
-import java.nio.channels.Channel;
 import java.nio.channels.SocketChannel;
-import java.util.Iterator;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public abstract class Session
+public abstract class AbstractSession
         implements ISession {
 
-    protected ISessionManager sessionManager;
-    protected SocketChannel channel;
+    protected final String id;
+    protected final SocketChannel channel;
 
-    boolean stopped;
+    boolean closed;
 
-    public Session(@NotNull SocketChannel channel) {
+    public AbstractSession(@NotNull String id, @NotNull SocketChannel channel) {
+        this.id = id;
         this.channel = channel;
     }
 
     @Override
-    public ISessionManager getManager() {
-        return sessionManager;
+    public String getId() {
+        return id;
     }
 
-    public boolean isStopped() {
-        return stopped;
-    }
-
-    public void stop() {
-        stopped = true;
+    @NotNull
+    @Override
+    public SocketChannel getChannel() {
+        return channel;
     }
 
     @Override
-    public void onConnect(SocketChannel channel) {
-
+    public void close() {
+        closed = true;
     }
 
     @Override
-    public void onError(SocketChannel channel,Throwable e) {
-
-    }
-
-    @Override
-    public void onDisconnect(SocketChannel channel) {
-
+    public boolean isClosed() {
+        return closed;
     }
 
     protected void error(String message)

@@ -1,8 +1,21 @@
 package net.bodz.bas.net.serv;
 
-public interface ISession
-        extends IChannelListener {
+import java.nio.channels.Channel;
 
-    ISessionManager getManager();
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.ISocketReader;
+
+public interface ISession
+        extends ISocketReader {
+
+    @NotNull
+    String getId();
+
+    @NotNull
+    Channel getChannel();
+
+    void close();
+
+    boolean isClosed();
 
 }

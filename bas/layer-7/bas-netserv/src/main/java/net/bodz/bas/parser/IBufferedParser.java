@@ -22,6 +22,13 @@ public interface IBufferedParser {
     void putOctet(int octet);
 
     /**
+     * Adds an octet to the buffer.
+     *
+     * @param octet The byte value to be added to the buffer.
+     */
+    void putOctet(byte octet);
+
+    /**
      * Adds a sequence of octets to the buffer.
      *
      * @param octets The array containing the octets to be added to the buffer.

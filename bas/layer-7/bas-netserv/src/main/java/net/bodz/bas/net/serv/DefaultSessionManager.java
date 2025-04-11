@@ -1,5 +1,6 @@
 package net.bodz.bas.net.serv;
 
+import java.nio.channels.Channel;
 import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,26 +10,8 @@ import net.bodz.bas.meta.decl.NotNull;
 public class DefaultSessionManager
         implements ISessionManager {
 
-    Map<String, Session> sessionMap = new LinkedHashMap<>();
-    Map<ISession, String> idMap = new IdentityHashMap<>();
-    int nextId = 1;
-
-    @NotNull
-    public String addSession(@NotNull ISession _session) {
-        if (!(_session instanceof Session))
-            throw new IllegalArgumentException();
-        Session session = (Session) _session;
-        String id = String.valueOf(nextId++);
-        idMap.put(_session, id);
-        sessionMap.put(id, session);
-        return id;
-    }
-
-    @NotNull
-    @Override
-    public String getSessionId(@NotNull ISession session) {
-        return idMap.get(session);
-    }
+    Map<String, ISession> sessionMap = new LinkedHashMap<>();
+    Map<Channel, ISession> channelMap = new IdentityHashMap<>();
 
     @Override
     public ISession getSession(@NotNull String id) {
@@ -36,24 +19,39 @@ public class DefaultSessionManager
     }
 
     @Override
-    public void setSession(@NotNull String id, @NotNull ISession _session) {
-        if (!(_session instanceof Session))
-            throw new IllegalArgumentException();
-        Session session = (Session) _session;
-
-        ISession oldSession = sessionMap.get(id);
-        if (oldSession != null)
-            idMap.remove(oldSession);
-
-        sessionMap.put(id, session);
-        idMap.put(_session, id);
+    public ISession getSession(@NotNull Channel channel) {
+        return channelMap.get(channel);
     }
 
     @Override
-    public void removeSession(@NotNull String id) {
+    public boolean addSession(@NotNull ISession session) {
+        String id = session.getId();
+        ISession oldSession = sessionMap.get(id);
+        if (oldSession != null) {
+            sessionMap.remove(oldSession.getId());
+            channelMap.remove(oldSession.getChannel());
+        }
+        sessionMap.put(session.getId(), session);
+        channelMap.put(session.getChannel(), session);
+        return oldSession == null;
+    }
+
+    @Override
+    public boolean removeSession(@NotNull String id) {
         ISession session = sessionMap.remove(id);
-        if (session != null)
-            idMap.remove(session);
+        if (session == null)
+            return false;
+        channelMap.remove(session.getChannel());
+        return true;
+    }
+
+    @Override
+    public boolean removeSession(Channel channel) {
+        ISession session = channelMap.remove(channel);
+        if (session == null)
+            return false;
+        sessionMap.remove(session.getId());
+        return true;
     }
 
 }

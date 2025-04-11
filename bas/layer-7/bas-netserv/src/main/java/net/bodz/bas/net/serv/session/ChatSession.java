@@ -8,44 +8,47 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.net.serv.Session;
+import net.bodz.bas.net.serv.AbstractSession;
 import net.bodz.bas.parser.LineQueue;
 
 public class ChatSession
-        extends Session {
+        extends AbstractSession {
 
     LineQueue lines = new LineQueue();
 
-    public ChatSession(SocketChannel channel) {
-        super(channel);
+    public ChatSession(String id, SocketChannel channel) {
+        super(id, channel);
     }
 
     @Override
-    public void onDataReady(SocketChannel channel)
+    public boolean read(SocketChannel channel)
             throws IOException, ParseException {
         ByteBuffer buf = ByteBuffer.allocate(1024);
-        int numBytesRead = channel.read(buf);
-        if (numBytesRead == -1)                        // The client has closed the connection
-        {
-            stop();
-            return;
-        }
-        if (numBytesRead == 0)
-            return;
+        while (true) {
+            int numBytesRead = channel.read(buf);
+            switch (numBytesRead) {
+                case -1:
+                    close();
+                case 0:
+                    return true;
+            }
 
-        while (buf.hasRemaining()) {
-            byte b = buf.get();
-            lines.putOctet(b & 0xFF);
-        }
+            buf.flip();
+            while (buf.hasRemaining()) {
+                byte b = buf.get();
+                lines.putOctet(b & 0xFF);
+            }
+            buf.clear();
 
-        lines.parse();
+            lines.parse();
 
-        if (lines.isNotEmpty()) {
-            Iterator<String> lineIterator = lines.iterator();
-            while (lineIterator.hasNext()) {
-                String line = lineIterator.next();
-                lineIterator.remove();
-                onReceivedLine(line);
+            if (lines.isNotEmpty()) {
+                Iterator<String> lineIterator = lines.iterator();
+                while (lineIterator.hasNext()) {
+                    String line = lineIterator.next();
+                    lineIterator.remove();
+                    onReceivedLine(line);
+                }
             }
         }
     }
@@ -64,7 +67,7 @@ public class ChatSession
                     break;
                 case "bye":
                     echo("good boy!");
-                    stop();
+                    close();
                     break;
                 default:
                     echo("umm.. I couldn't understand yet.");
