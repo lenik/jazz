@@ -1,6 +1,6 @@
 package net.bodz.bas.servlet.config;
 
-import net.bodz.bas.c.object.IdentityHashSet;
+import net.bodz.bas.t.set.IdentityHashSet;
 
 public abstract class AbstractPluginDescriptor
         implements

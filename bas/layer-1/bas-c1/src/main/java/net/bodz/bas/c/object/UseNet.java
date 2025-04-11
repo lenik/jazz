@@ -7,6 +7,8 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.t.set.IdentityHashSet;
+
 public class UseNet<T>
         implements Serializable {
 

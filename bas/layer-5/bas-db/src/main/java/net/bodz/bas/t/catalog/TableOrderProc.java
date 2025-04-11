@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.c.object.IdentityHashSet;
+import net.bodz.bas.t.set.IdentityHashSet;
 import net.bodz.bas.err.NoSuchKeyException;
 
 @ProcedureClass

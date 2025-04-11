@@ -111,7 +111,7 @@ net.bodz.bas.c.m2.MavenPomXml
 net.bodz.bas.c.m2.MavenTestClassLoader
 net.bodz.bas.c.object.AbstractTreeDumping
 net.bodz.bas.c.object.DefaultTreeDumping
-net.bodz.bas.c.object.IdentityHashSet
+net.bodz.bas.t.set.IdentityHashSet
 net.bodz.bas.c.object.IdentityObjectMap
 net.bodz.bas.c.object.IdentityObjectSet
 net.bodz.bas.c.object.IdPool

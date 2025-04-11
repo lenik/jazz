@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -13,9 +14,13 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import net.bodz.bas.t.set.IdentityHashSet;
+
 public enum SortOrder {
 
     NONE,
+
+    IDENTITY,
 
     SORTED,
 
@@ -27,7 +32,7 @@ public enum SortOrder {
 
     ;
 
-    static final SortOrder values[] = values();
+    static final SortOrder[] values = values();
 
     public static SortOrder valueOf(int ordinal) {
         return values[ordinal];
@@ -80,8 +85,14 @@ public enum SortOrder {
                 else
                     return new LinkedHashMap<>(initialCapacity);
 
-            default:
+            case IDENTITY:
+                if (initialCapacity == 0)
+                    return new IdentityHashMap<>();
+                else
+                    return new IdentityHashMap<>(initialCapacity);
+
             case NONE:
+            default:
                 if (initialCapacity == 0)
                     return new HashMap<>();
                 else
@@ -126,8 +137,14 @@ public enum SortOrder {
                 else
                     return new LinkedHashSet<>(initialCapacity);
 
-            default:
+            case IDENTITY:
+                if (initialCapacity == 0)
+                    return new IdentityHashSet<>();
+                else
+                    return new IdentityHashSet<>(initialCapacity);
+
             case NONE:
+            default:
                 if (initialCapacity == 0)
                     return new HashSet<>();
                 else
@@ -136,6 +153,8 @@ public enum SortOrder {
     }
 
     public static SortOrder detect(Map<?, ?> map) {
+        if (map instanceof IdentityHashMap)
+            return IDENTITY;
         if (map instanceof LinkedHashMap)
             return KEEP;
         if (map instanceof SortedMap)
@@ -144,6 +163,8 @@ public enum SortOrder {
     }
 
     public static SortOrder detect(Set<?> set) {
+        if (set instanceof IdentityHashSet)
+            return IDENTITY;
         if (set instanceof LinkedHashSet)
             return KEEP;
         if (set instanceof SortedSet)

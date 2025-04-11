@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.bodz.bas.c.object.IdentityHashSet;
+import net.bodz.bas.t.set.IdentityHashSet;
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.log.Logger;

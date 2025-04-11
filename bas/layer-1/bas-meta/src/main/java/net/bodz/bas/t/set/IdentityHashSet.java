@@ -1,4 +1,4 @@
-package net.bodz.bas.c.object;
+package net.bodz.bas.t.set;
 
 import java.io.Serializable;
 import java.util.AbstractSet;
@@ -6,15 +6,15 @@ import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 /**
  * Compare two objects by == operator, rather than using {@link Object#equals(Object)}.
- * 
- * @see net.bodz.bas.t.set.FramedMarks
- * @see net.bodz.bas.t.set.StackSet
  */
 public class IdentityHashSet<T>
         extends AbstractSet<T>
-        implements Set<T>, Serializable {
+        implements Set<T>,
+                   Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -71,6 +71,7 @@ public class IdentityHashSet<T>
         ihm.clear();
     }
 
+    @NotNull
     @Override
     public Iterator<T> iterator() {
         return ihm.keySet().iterator();

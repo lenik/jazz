@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Stack;
 
-import net.bodz.bas.c.object.IdentityHashSet;
-
 public class StackSet<T>
         implements Set<T> {
 

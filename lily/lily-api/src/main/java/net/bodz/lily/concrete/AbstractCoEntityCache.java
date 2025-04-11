@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.bodz.bas.c.object.IdentityHashSet;
+import net.bodz.bas.t.set.IdentityHashSet;
 import net.bodz.bas.db.cache.AbstractCache;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.IEntityMapper;
