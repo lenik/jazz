@@ -3,6 +3,7 @@ package net.bodz.bas.net.serv.cmd;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
+import java.util.function.Consumer;
 
 import net.bodz.bas.cli.Command;
 import net.bodz.bas.err.ParseException;
@@ -16,19 +17,15 @@ public class RedirectCmds
         extends AbstractNioCommandProvider {
 
     @NotNull
-    final ISessionManager sessionManager;
-
-    @NotNull
-    final ISocketSession session;
-
-    @NotNull
     final ISocketPoller poller;
 
-    public RedirectCmds(@NotNull SocketChannel channel, @NotNull ISessionManager sessionManager, @NotNull ISocketSession session, @NotNull ISocketPoller poller) {
+    @NotNull
+    final Consumer<ISocketSession> applier;
+
+    public RedirectCmds(@NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull Consumer<ISocketSession> applier) {
         super(channel);
-        this.sessionManager = sessionManager;
-        this.session = session;
         this.poller = poller;
+        this.applier = applier;
     }
 
     @Override
@@ -58,18 +55,22 @@ public class RedirectCmds
             return;
         }
 
-        String host = "localhost";
-        if (cmd.isArgumentPresent(2))
-            host = cmd.getArgument(2);
-
-        connect(host, port);
+        String host = cmd.getArgument(2, null);
+        connect(port, host);
     }
 
-    public void connect(String host, int port)
+    public void connect(int port)
             throws IOException {
+        connect(port, null);
+    }
+
+    public void connect(int port, String host)
+            throws IOException {
+        if (host == null)
+            host = "localhost";
         InetSocketAddress destAddr = new InetSocketAddress(host, port);
         RelaySession newSession = new RelaySession(channel, destAddr, poller);
-        sessionManager.replaceSession(this.session, newSession);
+        applier.accept(newSession);
     }
 
 }

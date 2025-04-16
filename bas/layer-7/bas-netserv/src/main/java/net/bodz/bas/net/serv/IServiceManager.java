@@ -11,25 +11,26 @@ public interface IServiceManager {
     Set<String> getProtocols();
 
     /**
-     *
      * @param protocol
      * @return alloc-id => descriptor
      */
     @NotNull
-    Map<String, ServiceDescriptor> getRegisteredServices(@NotNull String protocol);
+    Map<String, ServiceDescriptor> findByProtocol(@NotNull String protocol);
 
     /**
      * @return identifier
      */
-    String register(@NotNull String protocol, @NotNull ServiceDescriptor descriptor);
+    String registerService(@NotNull String protocol, @NotNull ServiceDescriptor descriptor);
+
+    ServiceDescriptor getService(@NotNull String id);
 
     /**
      * @return true if successfully removed.
      */
-    boolean remove(@NotNull String id);
+    boolean removeService(@NotNull String id);
 
-    void remove(@NotNull String protocol, @NotNull ServiceDescriptor descriptor);
+    void removeService(@NotNull String protocol, @NotNull ServiceDescriptor descriptor);
 
-    void removeAll(@NotNull ServiceDescriptor descriptor);
+    void removeServices(@NotNull ServiceDescriptor descriptor);
 
 }

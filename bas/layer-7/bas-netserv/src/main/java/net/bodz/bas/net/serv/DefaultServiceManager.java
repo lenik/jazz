@@ -21,7 +21,7 @@ import net.bodz.bas.t.map.ListMap;
 import net.bodz.bas.t.pool.IPool;
 import net.bodz.bas.t.pool.IntSetPool;
 
-public class ServiceManager
+public class DefaultServiceManager
         implements IServiceManager,
                    IJsonForm {
 
@@ -74,7 +74,7 @@ public class ServiceManager
 
     @NotNull
     @Override
-    public Map<String, ServiceDescriptor> getRegisteredServices(@NotNull String protocol) {
+    public Map<String, ServiceDescriptor> findByProtocol(@NotNull String protocol) {
         Map<String, ServiceDescriptor> map = SortOrder.KEEP.newMap();
         for (ServiceDescriptor descriptor : byProtocol.list(protocol)) {
             for (Allocation alloc : rindex.list(descriptor)) {
@@ -86,7 +86,9 @@ public class ServiceManager
     }
 
     @Override
-    public String register(@NotNull String protocol, @NotNull ServiceDescriptor descriptor) {
+    public String registerService(@NotNull String protocol, @NotNull ServiceDescriptor descriptor) {
+        if (byProtocol.list(protocol).contains(descriptor))
+            throw new IllegalArgumentException("already registered");
         String id = idPool.allocate().toString();
         byId.put(id, descriptor);
         byProtocol.addToList(protocol, descriptor);
@@ -95,7 +97,12 @@ public class ServiceManager
     }
 
     @Override
-    public boolean remove(@NotNull String id) {
+    public ServiceDescriptor getService(@NotNull String id) {
+        return byId.get(id);
+    }
+
+    @Override
+    public boolean removeService(@NotNull String id) {
         ServiceDescriptor descriptor = byId.remove(id);
         if (descriptor == null)
             return false;
@@ -109,7 +116,7 @@ public class ServiceManager
     }
 
     @Override
-    public void remove(@NotNull String protocol, @NotNull ServiceDescriptor descriptor) {
+    public void removeService(@NotNull String protocol, @NotNull ServiceDescriptor descriptor) {
         byProtocol.removeFromList(protocol, descriptor);
         for (Allocation alloc : find(descriptor)) {
             if (alloc.protocol.equals(protocol)) {
@@ -120,7 +127,7 @@ public class ServiceManager
     }
 
     @Override
-    public void removeAll(@NotNull ServiceDescriptor descriptor) {
+    public void removeServices(@NotNull ServiceDescriptor descriptor) {
         rindex.remove(descriptor);
         for (Allocation alloc : find(descriptor)) {
             byProtocol.removeFromList(alloc.protocol, descriptor);
@@ -134,8 +141,8 @@ public class ServiceManager
 
     /**
      * find the id of the service descriptor.
+     *
      * @param serviceDescriptor To find
-     * @return
      */
     List<Allocation> find(@NotNull ServiceDescriptor serviceDescriptor) {
         return rindex.get(serviceDescriptor);

@@ -20,15 +20,13 @@ public class ServiceRegistryCmds
     public static final String FORMAT_PLAIN = "plain";
     public static final String FORMAT_JSON = "json";
 
-    @NotNull
-    final IServiceManager serviceManager;
+    ServiceRegistry registry;
+    IServiceManager serviceManager;
 
-    final Map<String, String> byProtocol = new TreeMap<>();
-    final Map<String, String> byId = new TreeMap<>();
-
-    public ServiceRegistryCmds(@NotNull SocketChannel channel, @NotNull IServiceManager serviceManager) {
+    public ServiceRegistryCmds(@NotNull SocketChannel channel, @NotNull ServiceRegistry registry) {
         super(channel);
-        this.serviceManager = serviceManager;
+        this.registry = registry;
+        this.serviceManager = registry.serviceManager;
     }
 
     @Override
@@ -59,24 +57,10 @@ public class ServiceRegistryCmds
             error("expect protocol");
             return;
         }
-        register(protocol);
-    }
-
-    public void register(String protocol)
-            throws IOException {
-        String id = byProtocol.get(protocol);
-        if (id != null) {
-            error("Protocol " + protocol + " has already been registered, id=" + id);
-            return;
-        }
-
-        ServiceDescriptor descriptor = new ServiceDescriptor(channel);
         try {
-            id = serviceManager.register(protocol, descriptor);
-            byProtocol.put(protocol, id);
-            byId.put(id, protocol);
+            registry.register(protocol, channel);
         } catch (Exception e) {
-            error("can't register: " + e.getMessage());
+            error(e);
         }
     }
 
@@ -87,19 +71,11 @@ public class ServiceRegistryCmds
             return;
         }
         String id = cmd.getArgument(1);
-        deregister(id);
-    }
-
-    public void deregister(String id)
-            throws IOException {
-        String protocol = byId.remove(id);
-        if (protocol != null)
-            byProtocol.remove(protocol);
-        else {
-            error("illegal id");
-            return;
+        try {
+            registry.deregister(id);
+        } catch (Exception e) {
+            error(e);
         }
-        serviceManager.remove(id);
     }
 
     public void discover(Command cmd)
@@ -115,7 +91,7 @@ public class ServiceRegistryCmds
         switch (format) {
             case FORMAT_PLAIN:
                 for (String protocol : serviceManager.getProtocols()) {
-                    Map<String, ServiceDescriptor> descriptors = serviceManager.getRegisteredServices(protocol);
+                    Map<String, ServiceDescriptor> descriptors = serviceManager.findByProtocol(protocol);
                     for (String id : descriptors.keySet()) {
                         ServiceDescriptor descriptor = descriptors.get(id);
                         String address = descriptor.getAddress();

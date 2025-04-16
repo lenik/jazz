@@ -10,6 +10,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.serv.ISessionManager;
 import net.bodz.bas.text.parser.LineQueue;
 
 public class ChatSession
@@ -19,7 +20,7 @@ public class ChatSession
 
     LineQueue lineQueue = new LineQueue();
 
-    public ChatSession(SocketChannel channel)
+    public ChatSession(@NotNull SocketChannel channel)
             throws IOException {
         super(channel);
         greet();

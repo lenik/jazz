@@ -23,6 +23,11 @@ public abstract class AbstractNioCommandProvider
         channel.write(ByteBuffer.wrap((message + "\n").getBytes()));
     }
 
+    protected boolean error(Throwable e)
+            throws IOException {
+        return error(e.getMessage());
+    }
+
     protected boolean error(String message)
             throws IOException {
         println("Error: " + message);

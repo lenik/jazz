@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.serv.ISessionManager;
 
 public abstract class AbstractSocketSession
         implements ISocketSession {
