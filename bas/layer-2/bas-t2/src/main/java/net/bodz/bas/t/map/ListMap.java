@@ -106,6 +106,13 @@ public class ListMap<K, E>
         return list.remove(listIndex);
     }
 
+    public boolean removeFromList(Object keyToList, E listElement) {
+        List<E> list = get(keyToList);
+        if (list == null)
+            return false;
+        return list.remove(listElement);
+    }
+
     public void addAllToLists(Map<? extends K, ? extends List<E>> m) {
         for (K keyToList : m.keySet()) {
             List<E> list = list(keyToList);
