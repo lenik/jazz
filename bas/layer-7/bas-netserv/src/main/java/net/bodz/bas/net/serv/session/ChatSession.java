@@ -13,15 +13,15 @@ import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.text.parser.LineQueue;
 
 public class ChatSession
-        extends AbstractSession {
+        extends AbstractSocketSession {
 
     static final Logger logger = LoggerFactory.getLogger(ChatSession.class);
 
     LineQueue lineQueue = new LineQueue();
 
-    public ChatSession(String id, SocketChannel channel)
+    public ChatSession(SocketChannel channel)
             throws IOException {
-        super(id, channel);
+        super(channel);
         greet();
     }
 

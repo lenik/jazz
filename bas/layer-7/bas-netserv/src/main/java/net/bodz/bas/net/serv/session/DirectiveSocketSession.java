@@ -13,15 +13,15 @@ import net.bodz.bas.cli.CmdQueue;
 import net.bodz.bas.cli.Command;
 import net.bodz.bas.net.serv.cmd.ICommandProvider;
 
-public abstract class AbstractCmdSession
-        extends AbstractSession {
+public abstract class DirectiveSocketSession
+        extends AbstractSocketSession {
 
     CmdQueue cmds = new CmdQueue();
 
     List<ICommandProvider> providers = new ArrayList<>();
 
-    public AbstractCmdSession(String id, SocketChannel channel) {
-        super(id, channel);
+    public DirectiveSocketSession(SocketChannel channel) {
+        super(channel);
     }
 
     @Override

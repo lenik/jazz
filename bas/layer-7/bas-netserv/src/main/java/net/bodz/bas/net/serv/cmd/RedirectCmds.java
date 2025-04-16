@@ -9,7 +9,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.serv.ISessionManager;
-import net.bodz.bas.net.serv.session.ISession;
+import net.bodz.bas.net.serv.session.ISocketSession;
 import net.bodz.bas.net.serv.session.RelaySession;
 
 public class RedirectCmds
@@ -19,12 +19,12 @@ public class RedirectCmds
     final ISessionManager sessionManager;
 
     @NotNull
-    final ISession session;
+    final ISocketSession session;
 
     @NotNull
     final ISocketPoller poller;
 
-    public RedirectCmds(@NotNull SocketChannel channel, @NotNull ISessionManager sessionManager, @NotNull ISession session, @NotNull ISocketPoller poller) {
+    public RedirectCmds(@NotNull SocketChannel channel, @NotNull ISessionManager sessionManager, @NotNull ISocketSession session, @NotNull ISocketPoller poller) {
         super(channel);
         this.sessionManager = sessionManager;
         this.session = session;
@@ -68,8 +68,7 @@ public class RedirectCmds
     public void connect(String host, int port)
             throws IOException {
         InetSocketAddress destAddr = new InetSocketAddress(host, port);
-        String id = session.getSessionId();
-        RelaySession newSession = new RelaySession(id, channel, destAddr, poller);
+        RelaySession newSession = new RelaySession(channel, destAddr, poller);
         sessionManager.replaceSession(this.session, newSession);
     }
 

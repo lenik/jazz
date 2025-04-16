@@ -7,13 +7,13 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class RelayTargetSession
-        extends AbstractSession {
+        extends AbstractSocketSession {
 
     RelaySession source;
     // SocketChannel sourceChannel;
 
     public RelayTargetSession(@NotNull String id, @NotNull SocketChannel channel, @NotNull RelaySession source) {
-        super(id, channel);
+        super(channel);
         this.source = source;
     }
 

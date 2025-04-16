@@ -8,23 +8,15 @@ import java.nio.channels.SocketChannel;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public abstract class AbstractSession
-        implements ISession {
+public abstract class AbstractSocketSession
+        implements ISocketSession {
 
-    protected final String id;
     protected final SocketChannel channel;
 
     boolean closed;
 
-    public AbstractSession(@NotNull String id, @NotNull SocketChannel channel) {
-        this.id = id;
+    public AbstractSocketSession(@NotNull SocketChannel channel) {
         this.channel = channel;
-    }
-
-    @NotNull
-    @Override
-    public String getSessionId() {
-        return id;
     }
 
     @NotNull

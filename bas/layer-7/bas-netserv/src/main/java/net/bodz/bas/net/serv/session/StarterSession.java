@@ -10,14 +10,14 @@ import net.bodz.bas.cli.Command;
 import net.bodz.bas.net.serv.cmd.ICommandProvider;
 
 public class StarterSession
-        extends AbstractCmdSession
+        extends DirectiveSocketSession
         implements ICommandProvider {
 
     @NotNull
     ISessionManager sessionManager;
 
-    public StarterSession(String id, SocketChannel channel, @NotNull ISessionManager sessionManager) {
-        super(id, channel);
+    public StarterSession(SocketChannel channel, @NotNull ISessionManager sessionManager) {
+        super(channel);
         this.sessionManager = sessionManager;
         addProvider(this);
     }
@@ -44,7 +44,7 @@ public class StarterSession
 
     void chat(Command cmd)
             throws IOException {
-        ChatSession chatSession = new ChatSession(id, channel);
+        ChatSession chatSession = new ChatSession(channel);
         sessionManager.replaceSession(this, chatSession);
     }
 

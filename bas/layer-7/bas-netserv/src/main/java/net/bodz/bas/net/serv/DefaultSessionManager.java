@@ -6,53 +6,83 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.net.serv.session.ISession;
+import net.bodz.bas.net.serv.session.ISocketSession;
+import net.bodz.bas.t.pool.IPool;
+import net.bodz.bas.t.pool.IntSetPool;
 
 public class DefaultSessionManager
         implements ISessionManager {
 
-    Map<String, ISession> sessionMap = new LinkedHashMap<>();
-    Map<Channel, ISession> channelMap = new IdentityHashMap<>();
+    final IPool<Integer> idPool = new IntSetPool(10000);
+
+    final Map<String, ISocketSession> byId = new LinkedHashMap<>();
+    final Map<Channel, ISocketSession> byChannel = new IdentityHashMap<>();
+    final Map<ISocketSession, String> rindex = new IdentityHashMap<>();
 
     @Override
-    public ISession getSession(@NotNull String id) {
-        return sessionMap.get(id);
+    public ISocketSession getSession(@NotNull String id) {
+        return byId.get(id);
     }
 
     @Override
-    public ISession getSession(@NotNull Channel channel) {
-        return channelMap.get(channel);
+    public String getSessionId(@NotNull ISocketSession session) {
+        return rindex.get(session);
     }
 
     @Override
-    public boolean addSession(@NotNull ISession session) {
-        String id = session.getSessionId();
-        ISession oldSession = sessionMap.get(id);
-        if (oldSession != null) {
-            sessionMap.remove(oldSession.getSessionId());
-            channelMap.remove(oldSession.getChannel());
-        }
-        sessionMap.put(session.getSessionId(), session);
-        channelMap.put(session.getChannel(), session);
-        return oldSession == null;
+    public ISocketSession getSessionByChannel(@NotNull Channel channel) {
+        return byChannel.get(channel);
+    }
+
+    @Override
+    public String addSession(@NotNull ISocketSession session) {
+        String id = rindex.get(session);
+        if (id != null)
+            return id;
+
+        ISocketSession prev = byChannel.get(session.getChannel());
+        if (prev != null)
+            throw new IllegalStateException("channel duplicated");
+
+        id = idPool.allocate().toString();
+        byId.put(id, session);
+        byChannel.put(session.getChannel(), session);
+        return id;
     }
 
     @Override
     public boolean removeSession(@NotNull String id) {
-        ISession session = sessionMap.remove(id);
+        ISocketSession session = byId.remove(id);
         if (session == null)
             return false;
-        channelMap.remove(session.getChannel());
+        byChannel.remove(session.getChannel());
         return true;
     }
 
     @Override
-    public boolean removeSession(@NotNull Channel channel) {
-        ISession session = channelMap.remove(channel);
-        if (session == null)
-            return false;
-        sessionMap.remove(session.getSessionId());
-        return true;
+    public boolean removeSessionsForChannel(@NotNull Channel channel) {
+        return ISessionManager.super.removeSessionsForChannel(channel);
+    }
+
+    @Override
+    public void replaceSession(@NotNull String id, @NotNull ISocketSession newSession) {
+        ISocketSession oldSession = byId.get(id);
+        if (oldSession == newSession)
+            return;
+        if (oldSession == null)
+            throw new IllegalArgumentException("id wasn't used: " + id);
+
+        ISocketSession prev = byChannel.get(newSession);
+        if (prev != null)
+            throw new IllegalArgumentException("channel duplicated");
+
+        byId.put(id, newSession);
+
+        byChannel.remove(oldSession.getChannel());
+        rindex.remove(oldSession);
+
+        byChannel.put(newSession.getChannel(), newSession);
+        rindex.put(newSession, id);
     }
 
 }

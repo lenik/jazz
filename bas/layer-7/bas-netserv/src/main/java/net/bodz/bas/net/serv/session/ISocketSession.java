@@ -5,11 +5,8 @@ import java.nio.channels.SocketChannel;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.io.ISocketReader;
 
-public interface ISession
+public interface ISocketSession
         extends ISocketReader {
-
-    @NotNull
-    String getSessionId();
 
     @NotNull
     SocketChannel getChannel();

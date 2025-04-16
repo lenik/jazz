@@ -18,8 +18,8 @@ public class RouterSession
 
     ServiceManager serviceManager = new ServiceManager();
 
-    public RouterSession(String id, SocketChannel channel, @NotNull ISessionManager sessionManager, @NotNull ISocketPoller poller) {
-        super(id, channel, sessionManager);
+    public RouterSession(SocketChannel channel, @NotNull ISessionManager sessionManager, @NotNull ISocketPoller poller) {
+        super(channel, sessionManager);
         addProvider(new RedirectCmds(channel, sessionManager, this, poller));
     }
 
@@ -58,7 +58,7 @@ public class RouterSession
         }
 
         ServiceDescriptor descriptor = serviceManager.get(serviceId);
-        String relaySessionId = getSessionId() + ":relay";
+        String relaySessionId = sessionManager.getSessionId(this) + ":relay";
         // new RelayService(relaySessionId, );
     }
 

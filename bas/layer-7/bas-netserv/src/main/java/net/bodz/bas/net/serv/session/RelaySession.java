@@ -14,16 +14,16 @@ import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.io.ISocketReader;
 
 public class RelaySession
-        extends AbstractSession {
+        extends AbstractSocketSession {
 
     static final Logger logger = LoggerFactory.getLogger(RelaySession.class);
 
     InetSocketAddress targetAddr;
     SocketChannel targetChannel;
 
-    public RelaySession(String id, SocketChannel channel, @NotNull InetSocketAddress targetAddr, ISocketPoller poller)
+    public RelaySession(SocketChannel channel, @NotNull InetSocketAddress targetAddr, ISocketPoller poller)
             throws IOException {
-        super(id, channel);
+        super(channel);
         this.targetAddr = targetAddr;
 
         logger.info("Open target: " + targetAddr);
@@ -33,9 +33,9 @@ public class RelaySession
         setup(poller);
     }
 
-    public RelaySession(String id, SocketChannel channel, @NotNull SocketChannel targetChannel, ISocketPoller poller)
+    public RelaySession(SocketChannel channel, @NotNull SocketChannel targetChannel, ISocketPoller poller)
             throws IOException {
-        super(id, channel);
+        super(channel);
         this.targetChannel = targetChannel;
         setup(poller);
     }

@@ -3,7 +3,7 @@ package net.bodz.bas.net.serv;
 import java.nio.channels.Channel;
 
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.net.serv.session.ISession;
+import net.bodz.bas.net.serv.session.ISocketSession;
 
 public interface ISessionManager {
 
@@ -13,15 +13,21 @@ public interface ISessionManager {
      * @param id The ID of the session to be retrieved.
      * @return The session associated with the given ID, or null if no such session exists.
      */
-    ISession getSession(@NotNull String id);
+    ISocketSession getSession(@NotNull String id);
 
-    ISession getSession(@NotNull Channel channel);
+    String getSessionId(@NotNull ISocketSession session);
+
+    default boolean contains(@NotNull ISocketSession session) {
+        return getSessionId(session) != null;
+    }
+
+    ISocketSession getSessionByChannel(@NotNull Channel channel);
 
     /**
      * @param session The new value for the session.
-     * @return true if add new, false if updating
+     * @return session id, if the session is already added, the same id will be returned.
      */
-    boolean addSession(@NotNull ISession session);
+    String addSession(@NotNull ISocketSession session);
 
     /**
      * Removes a session from the manager using its ID.
@@ -32,9 +38,14 @@ public interface ISessionManager {
     boolean removeSession(@NotNull String id);
 
     /**
-     * @return true if exists
+     * @return true if any exists.
      */
-    boolean removeSession(@NotNull Channel channel);
+    default boolean removeSessionsForChannel(@NotNull Channel channel) {
+        ISocketSession session = getSessionByChannel(channel);
+        if (session != null)
+            return removeSession(session);
+        return false;
+    }
 
     /**
      * Default method that removes a session from the manager using its instance. It first retrieves the ID associated
@@ -42,18 +53,18 @@ public interface ISessionManager {
      *
      * @param session The session to be removed.
      */
-    default boolean removeSession(@NotNull ISession session) {
-        String id = session.getSessionId();
+    default boolean removeSession(@NotNull ISocketSession session) {
+        String id = getSessionId(session);
         return removeSession(id);
     }
 
-    default void replaceSession(ISession session, ISession newSession) {
-        String id = session.getSessionId();
-        String newId = newSession.getSessionId();
-        if (!id.equals(newId))
-            throw new IllegalArgumentException("replace with a session different id");
-        removeSession(id);
-        addSession(newSession);
+    void replaceSession(@NotNull String id, @NotNull ISocketSession newSession);
+
+    default void replaceSession(@NotNull ISocketSession session, @NotNull ISocketSession newSession) {
+        String id = getSessionId(session);
+        if (id == null)
+            throw new IllegalArgumentException("the old session has not been added: " + session);
+        replaceSession(id, newSession);
     }
 
 }
