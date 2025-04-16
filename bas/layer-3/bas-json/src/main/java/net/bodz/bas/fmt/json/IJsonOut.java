@@ -9,8 +9,7 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.fork.org.json.JSONException;
 
 public interface IJsonOut
-        extends
-            IJsonFormOptionsAwareStacked {
+        extends IJsonFormOptionsAwareStacked {
 
     // Iterable<Object> path();
 
@@ -136,7 +135,7 @@ public interface IJsonOut
     default IJsonOut entryTrue(String key, boolean value)
             throws JSONException {
         if (value)
-            entry(key, value);
+            entry(key, true);
         return this;
     }
 
@@ -275,18 +274,20 @@ public interface IJsonOut
 
     default IJsonOut variant(JsonVariant jv) {
         switch (jv.type) {
-        case NULL:
-            value(null);
-            break;
-        case ARRAY:
-            array(jv.getArray());
-            break;
-        case OBJECT:
-            object(jv.getObject());
-            break;
-        case SCALAR:
-            value(jv.getScalar());
-            break;
+            case NULL:
+                value(null);
+                break;
+            case ARRAY:
+                assert jv.getArray() != null;
+                array(jv.getArray());
+                break;
+            case OBJECT:
+                assert jv.getObject() != null;
+                object(jv.getObject());
+                break;
+            case SCALAR:
+                value(jv.getScalar());
+                break;
         }
         return this;
     }

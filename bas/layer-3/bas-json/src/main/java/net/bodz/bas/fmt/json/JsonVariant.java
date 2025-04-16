@@ -1,11 +1,36 @@
 package net.bodz.bas.fmt.json;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZonedDateTime;
+
 import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.SortOrder;
+import net.bodz.bas.t.variant.conv.BigDecimalVarConverter;
+import net.bodz.bas.t.variant.conv.BigIntegerVarConverter;
+import net.bodz.bas.t.variant.conv.BooleanVarConverter;
+import net.bodz.bas.t.variant.conv.ByteVarConverter;
+import net.bodz.bas.t.variant.conv.DoubleVarConverter;
+import net.bodz.bas.t.variant.conv.FloatVarConverter;
+import net.bodz.bas.t.variant.conv.IntegerVarConverter;
+import net.bodz.bas.t.variant.conv.LocalDateTimeVarConverter;
+import net.bodz.bas.t.variant.conv.LocalDateVarConverter;
+import net.bodz.bas.t.variant.conv.LocalTimeVarConverter;
+import net.bodz.bas.t.variant.conv.LongVarConverter;
+import net.bodz.bas.t.variant.conv.OffsetDateTimeVarConverter;
+import net.bodz.bas.t.variant.conv.OffsetTimeVarConverter;
+import net.bodz.bas.t.variant.conv.ShortVarConverter;
+import net.bodz.bas.t.variant.conv.StringVarConverter;
+import net.bodz.bas.t.variant.conv.ZonedDateTimeVarConverter;
 
 public final class JsonVariant {
 
@@ -233,5 +258,85 @@ public final class JsonVariant {
     }
 
     public static final JsonVariant NULL = new JsonVariant(JsonVariantType.NULL, null);
+
+    public static Byte castToByte(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return ByteVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static Short castToShort(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return ShortVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static Integer castToInt(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return IntegerVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static Long castToLong(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return LongVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static Float castToFloat(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return FloatVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static Double castToDouble(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return DoubleVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static BigDecimal castToBigDecimal(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return BigDecimalVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static BigInteger castToBigInteger(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return BigIntegerVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static Boolean castToBoolean(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return BooleanVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static String castToString(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return StringVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static LocalDate castToLocalDate(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return LocalDateVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static LocalTime castToLocalTime(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return LocalTimeVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static LocalDateTime castToLocalDateTime(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return LocalDateTimeVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static OffsetDateTime castToOffsetDateTime(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return OffsetDateTimeVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static ZonedDateTime castToZonedDateTime(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return ZonedDateTimeVarConverter.INSTANCE.from(scalar);
+    }
+
+    public static OffsetTime castToOffsetTime(JsonVariant jv) {
+        Object scalar = jv.getScalar();
+        return OffsetTimeVarConverter.INSTANCE.from(scalar);
+    }
 
 }
