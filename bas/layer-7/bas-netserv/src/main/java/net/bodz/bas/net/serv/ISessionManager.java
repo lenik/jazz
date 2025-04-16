@@ -3,6 +3,7 @@ package net.bodz.bas.net.serv;
 import java.nio.channels.Channel;
 
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.serv.session.ISession;
 
 public interface ISessionManager {
 
@@ -42,13 +43,13 @@ public interface ISessionManager {
      * @param session The session to be removed.
      */
     default boolean removeSession(@NotNull ISession session) {
-        String id = session.getId();
+        String id = session.getSessionId();
         return removeSession(id);
     }
 
     default void replaceSession(ISession session, ISession newSession) {
-        String id = session.getId();
-        String newId = newSession.getId();
+        String id = session.getSessionId();
+        String newId = newSession.getSessionId();
         if (!id.equals(newId))
             throw new IllegalArgumentException("replace with a session different id");
         removeSession(id);

@@ -1,6 +1,7 @@
 package net.bodz.bas.net.io;
 
 import java.io.IOException;
+import java.nio.channels.SelectableChannel;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
@@ -20,13 +21,13 @@ public interface ISocketPoller {
     void register(@NotNull SocketChannel channel, @NotNull ISocketWriter writer)
             throws IOException;
 
-    void cancel(@NotNull ISocketAccepter accepter);
+    void cancel(@NotNull SelectableChannel channel, @NotNull ISocketAccepter accepter);
 
-    void cancel(@NotNull ISocketConnector connector);
+    void cancel(@NotNull SelectableChannel channel, @NotNull ISocketConnector connector);
 
-    void cancel(@NotNull ISocketReader reader);
+    void cancel(@NotNull SelectableChannel channel, @NotNull ISocketReader reader);
 
-    void cancel(@NotNull ISocketWriter writer);
+    void cancel(@NotNull SelectableChannel channel, @NotNull ISocketWriter writer);
 
     void mainLoop()
             throws IOException;

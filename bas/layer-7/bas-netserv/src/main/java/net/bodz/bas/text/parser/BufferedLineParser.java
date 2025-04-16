@@ -1,15 +1,20 @@
-package net.bodz.bas.parser;
+package net.bodz.bas.text.parser;
 
 import java.nio.charset.StandardCharsets;
 
+import net.bodz.bas.err.IErrorRecoverer;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.ILookAhead;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.buffer.ByteArrayBuffer;
 
 public abstract class BufferedLineParser
         implements IBufferedParser,
                    ILineParser {
+
+    static final Logger logger = LoggerFactory.getLogger(BufferedLineParser.class);
 
     @NotNull
     ByteArrayBuffer lineBuffer = new ByteArrayBuffer(4096);
@@ -50,11 +55,11 @@ public abstract class BufferedLineParser
     }
 
     @Override
-    public void parse(ILookAhead la)
+    public void parse(@NotNull ILookAhead la)
             throws ParseException {
-        byte[] buf = lineBuffer.getBackedArray();
-        int off = lineBuffer.getBackedArrayOffset();
-        int len = lineBuffer.length();
+        final byte[] buf = lineBuffer.getBackedArray();
+        final int off = lineBuffer.getBackedArrayOffset();
+        final int len = lineBuffer.length();
         int look = off;
         int pos = off;
         int stop = off;
@@ -78,14 +83,16 @@ public abstract class BufferedLineParser
                 pos = look;
             }
         } finally {
-            lineBuffer.delete(0, stop - off);
+            if (stop != off) {
+                lineBuffer.delete(0, stop - off);
+            }
         }
     }
 
     @Override
-    public void parseLine(byte[] line, int off, int len)
+    public void parseLine(@NotNull byte[] line, int off, int len)
             throws ParseException {
-        String s = new String(line, StandardCharsets.UTF_8);
+        String s = new String(line, off, len, StandardCharsets.UTF_8);
         parseLine(s);
     }
 

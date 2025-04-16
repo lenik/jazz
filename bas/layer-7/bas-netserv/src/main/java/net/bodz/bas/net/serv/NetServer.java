@@ -13,8 +13,9 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.net.io.DefaultPoller;
 import net.bodz.bas.net.io.ISocketAccepter;
 import net.bodz.bas.net.io.ISocketReader;
+import net.bodz.bas.net.serv.session.ISession;
 import net.bodz.bas.net.serv.session.StarterSession;
-import net.bodz.bas.parser.IErrorRecoverer;
+import net.bodz.bas.err.IErrorRecoverer;
 
 public class NetServer {
 
@@ -55,7 +56,7 @@ public class NetServer {
         poller.register(clientChannel, (ISocketReader) this::onReceive);
 
         String id = String.valueOf(nextId++);
-        StarterSession session = new StarterSession(id, clientChannel, sessionManager, poller);
+        StarterSession session = new StarterSession(id, clientChannel, sessionManager);
         sessionManager.addSession(session);
 
         return true;
@@ -83,8 +84,16 @@ public class NetServer {
             break;
         }
 
-        if (session.isClosed())
+        if (session.isClosed()) {
+            logger.info("Session closed: " + session.getSessionId());
+            poller.cancel(channel, (ISocketReader) this::onReceive);
+            try {
+                channel.socket().close();
+            } catch (IOException e) {
+                logger.error("error close the channel: " + e.getMessage(), e);
+            }
             sessionManager.removeSession(session);
+        }
 
         return true;
     }

@@ -1,30 +1,25 @@
-package net.bodz.bas.parser;
+package net.bodz.bas.cli;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.text.parser.BufferedLineParser;
+import net.bodz.bas.t.queue.IQueue;
 
 public class CmdQueue
         extends BufferedLineParser
-        implements Iterable<Command> {
+        implements IQueue<Command> {
 
     LinkedList<Command> list = new LinkedList<>();
 
-    public boolean isEmpty() {
-        return list.isEmpty();
-    }
-
-    public boolean isNotEmpty() {
-        return !list.isEmpty();
-    }
-
+    @Override
     public int size() {
         return list.size();
     }
 
+    @Override
     public void clear() {
         list.clear();
     }
@@ -35,7 +30,12 @@ public class CmdQueue
         return list.iterator();
     }
 
-    public void parseLine(String line)
+    @Override
+    public Command take() {
+        return list.removeFirst();
+    }
+
+    public void parseLine(@NotNull String line)
             throws ParseException {
         // QuoteFormat.QQ.split("")
         String[] args = line.split("\\s+");

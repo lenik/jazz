@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.serv.session.ISession;
 
 public class DefaultSessionManager
         implements ISessionManager {
@@ -25,13 +26,13 @@ public class DefaultSessionManager
 
     @Override
     public boolean addSession(@NotNull ISession session) {
-        String id = session.getId();
+        String id = session.getSessionId();
         ISession oldSession = sessionMap.get(id);
         if (oldSession != null) {
-            sessionMap.remove(oldSession.getId());
+            sessionMap.remove(oldSession.getSessionId());
             channelMap.remove(oldSession.getChannel());
         }
-        sessionMap.put(session.getId(), session);
+        sessionMap.put(session.getSessionId(), session);
         channelMap.put(session.getChannel(), session);
         return oldSession == null;
     }
@@ -46,11 +47,11 @@ public class DefaultSessionManager
     }
 
     @Override
-    public boolean removeSession(Channel channel) {
+    public boolean removeSession(@NotNull Channel channel) {
         ISession session = channelMap.remove(channel);
         if (session == null)
             return false;
-        sessionMap.remove(session.getId());
+        sessionMap.remove(session.getSessionId());
         return true;
     }
 

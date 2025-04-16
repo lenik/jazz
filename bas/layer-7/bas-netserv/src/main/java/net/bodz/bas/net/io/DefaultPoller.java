@@ -24,29 +24,29 @@ public class DefaultPoller
     final Selector selector;
     boolean exit;
 
-    ListMap<ServerSocketChannel, ISocketAccepter> accepters = new ListMap<>();
-    ListMap<SocketChannel, ISocketConnector> connectors = new ListMap<>();
-    ListMap<SocketChannel, ISocketReader> readers = new ListMap<>();
-    ListMap<SocketChannel, ISocketWriter> writers = new ListMap<>();
+    ListMap<SelectableChannel, ISocketAccepter> accepters = new ListMap<>();
+    ListMap<SelectableChannel, ISocketConnector> connectors = new ListMap<>();
+    ListMap<SelectableChannel, ISocketReader> readers = new ListMap<>();
+    ListMap<SelectableChannel, ISocketWriter> writers = new ListMap<>();
 
     public DefaultPoller()
             throws IOException {
         selector = Selector.open();
     }
 
-    List<ISocketAccepter> getAccepters(ServerSocketChannel channel) {
+    List<ISocketAccepter> getAccepters(SelectableChannel channel) {
         return accepters.list(channel);
     }
 
-    List<ISocketConnector> getConnectors(SocketChannel channel) {
+    List<ISocketConnector> getConnectors(SelectableChannel channel) {
         return connectors.list(channel);
     }
 
-    List<ISocketReader> getReaders(SocketChannel channel) {
+    List<ISocketReader> getReaders(SelectableChannel channel) {
         return readers.list(channel);
     }
 
-    List<ISocketWriter> getWriters(SocketChannel channel) {
+    List<ISocketWriter> getWriters(SelectableChannel channel) {
         return writers.list(channel);
     }
 
@@ -78,24 +78,40 @@ public class DefaultPoller
         channel.register(selector, SelectionKey.OP_WRITE);
     }
 
-    @Override
-    public void cancel(@NotNull ISocketAccepter accepter) {
-        accepters.removeFromAllLists(accepter);
+    private void cancel(SelectableChannel channel, int interestOp) {
+        SelectionKey key = channel.keyFor(selector);
+        if (key != null) {
+            int ops = key.interestOps();
+            ops = ops & ~interestOp;
+            if (ops != 0)
+                key.interestOps(ops);
+            else
+                key.cancel();
+        }
     }
 
     @Override
-    public void cancel(@NotNull ISocketConnector connector) {
-        connectors.removeFromAllLists(connector);
+    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketAccepter accepter) {
+        getAccepters(channel).remove(accepter);
+        cancel(channel, SelectionKey.OP_ACCEPT);
     }
 
     @Override
-    public void cancel(@NotNull ISocketReader reader) {
-        readers.removeFromAllLists(reader);
+    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketConnector connector) {
+        getConnectors(channel).remove(connector);
+        cancel(channel, SelectionKey.OP_CONNECT);
     }
 
     @Override
-    public void cancel(@NotNull ISocketWriter writer) {
-        writers.removeFromAllLists(writer);
+    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketReader reader) {
+        getReaders(channel).remove(reader);
+        cancel(channel, SelectionKey.OP_READ);
+    }
+
+    @Override
+    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketWriter writer) {
+        getWriters(channel).remove(writer);
+        cancel(channel, SelectionKey.OP_WRITE);
     }
 
     @Override
@@ -104,6 +120,7 @@ public class DefaultPoller
         exit = false;
         while (!exit) {
             int numSelectedKeys = selector.select();
+            logger.info("selected keys: " + numSelectedKeys);
             if (numSelectedKeys == 0)
                 continue;
 
@@ -114,7 +131,8 @@ public class DefaultPoller
                 SelectionKey key = keyIterator.next();
                 SelectableChannel _channel = key.channel();
 
-                if (key.isAcceptable()) {
+                if (key.isValid() && key.isAcceptable()) {
+                    logger.info("selected-key is acceptable");
                     ServerSocketChannel serverChannel = (ServerSocketChannel) _channel;
                     for (ISocketAccepter accepter : getAccepters(serverChannel)) {
                         try {
@@ -126,7 +144,8 @@ public class DefaultPoller
                     }
                 }
 
-                if (key.isConnectable()) {
+                if (key.isValid() && key.isConnectable()) {
+                    logger.info("selected-key is connectable");
                     SocketChannel channel = (SocketChannel) _channel;
                     for (ISocketConnector connector : getConnectors(channel)) {
                         try {
@@ -138,7 +157,8 @@ public class DefaultPoller
                     }
                 }
 
-                if (key.isReadable()) {
+                if (key.isValid() && key.isReadable()) {
+                    logger.info("selected-key is readable");
                     SocketChannel channel = (SocketChannel) _channel;
                     for (ISocketReader reader : getReaders(channel)) {
                         try {
@@ -152,7 +172,8 @@ public class DefaultPoller
                     }
                 }
 
-                if (key.isWritable()) {
+                if (key.isValid() && key.isWritable()) {
+                    logger.info("selected-key is writable");
                     SocketChannel channel = (SocketChannel) _channel;
                     for (ISocketWriter writer : getWriters(channel)) {
                         try {

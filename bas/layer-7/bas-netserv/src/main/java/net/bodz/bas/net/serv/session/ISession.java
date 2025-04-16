@@ -1,6 +1,6 @@
-package net.bodz.bas.net.serv;
+package net.bodz.bas.net.serv.session;
 
-import java.nio.channels.Channel;
+import java.nio.channels.SocketChannel;
 
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.io.ISocketReader;
@@ -9,10 +9,10 @@ public interface ISession
         extends ISocketReader {
 
     @NotNull
-    String getId();
+    String getSessionId();
 
     @NotNull
-    Channel getChannel();
+    SocketChannel getChannel();
 
     void close();
 

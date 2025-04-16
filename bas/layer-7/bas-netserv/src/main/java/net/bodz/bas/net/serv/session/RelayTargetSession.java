@@ -5,7 +5,6 @@ import java.nio.channels.SocketChannel;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.net.serv.AbstractSession;
 
 public class RelayTargetSession
         extends AbstractSession {
@@ -19,7 +18,7 @@ public class RelayTargetSession
     }
 
     @Override
-    public boolean read(SocketChannel channel)
+    public boolean read(@NotNull SocketChannel channel)
             throws IOException, ParseException {
         return true;
     }

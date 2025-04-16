@@ -1,4 +1,4 @@
-package net.bodz.bas.parser;
+package net.bodz.bas.err;
 
 public interface IErrorRecoverer {
 

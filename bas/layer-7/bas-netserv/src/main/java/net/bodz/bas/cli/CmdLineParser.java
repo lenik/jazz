@@ -1,4 +1,4 @@
-package net.bodz.bas.parser;
+package net.bodz.bas.cli;
 
 import java.util.ArrayList;
 import java.util.List;

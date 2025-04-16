@@ -1,4 +1,4 @@
-package net.bodz.bas.parser;
+package net.bodz.bas.text.parser;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;

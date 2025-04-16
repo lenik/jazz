@@ -12,6 +12,7 @@ public class BasNetservModuleInit
     @Override
     public void setupBuilder(ConfigurationBuilder<? extends Configuration> builder) {
         builder.add(builder.newLogger("net.bodz.bas.net", Level.DEBUG));
+        builder.add(builder.newLogger("net.bodz.bas.parser", Level.DEBUG));
     }
 
 }

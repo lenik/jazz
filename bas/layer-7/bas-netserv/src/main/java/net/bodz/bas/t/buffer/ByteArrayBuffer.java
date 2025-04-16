@@ -1,25 +1,26 @@
 package net.bodz.bas.t.buffer;
 
-import java.lang.reflect.Array;
-
 import net.bodz.bas.meta.decl.NotNull;
 
 public class ByteArrayBuffer
         implements IBuffer<Byte> {
 
     private byte[] buf;
-    private int off;
+    private int start;
+    private int end;
     private int length;
 
     public ByteArrayBuffer(int initialCapacity) {
         buf = new byte[initialCapacity];
-        off = 0;
+        start = 0;
+        end = buf.length;
         length = 0;
     }
 
     public ByteArrayBuffer(@NotNull byte[] buf) {
         this.buf = buf;
-        this.off = 0;
+        this.start = 0;
+        this.end = buf.length;
         this.length = buf.length;
     }
 
@@ -29,7 +30,8 @@ public class ByteArrayBuffer
         if (len < 0 || len > buf.length)
             throw new IllegalArgumentException("bad len: " + len);
         this.buf = buf;
-        this.off = off;
+        this.start = off;
+        this.end = off + len;
         this.length = len;
     }
 
@@ -39,7 +41,11 @@ public class ByteArrayBuffer
     }
 
     public int getBackedArrayOffset() {
-        return off;
+        return start;
+    }
+
+    public int getBackedArrayLength() {
+        return end - start;
     }
 
     @NotNull
@@ -55,12 +61,14 @@ public class ByteArrayBuffer
 
     public void append(byte element) {
         ensureCapacity(length + 1);
-        buf[off + length++] = element;
+        buf[start + length] = element;
+        length++;
     }
 
     public void append(int element) {
         ensureCapacity(length + 1);
-        buf[off + length++] = (byte) element;
+        buf[start + length] = (byte) element;
+        length++;
     }
 
     @Override
@@ -68,27 +76,36 @@ public class ByteArrayBuffer
         length = 0;
     }
 
+    private void ensureIndexValid(int index) {
+        if (index < 0 || index >= length)
+            throw new IndexOutOfBoundsException("" + index);
+    }
+
     @Override
     public Byte get(int i) {
-        return buf[off + i];
+        ensureIndexValid(i);
+        return buf[start + i];
     }
 
     public byte getByte(int i) {
-        return buf[off + i];
+        ensureIndexValid(i);
+        return buf[start + i];
     }
 
     @Override
     public void set(int i, Byte value) {
-        buf[off + i] = value;
+        ensureIndexValid(i);
+        buf[start + i] = value;
     }
 
     public void setByte(int i, byte value) {
-        buf[off + i] = value;
+        ensureIndexValid(i);
+        buf[start + i] = value;
     }
 
     @Override
     public int capacity() {
-        return buf.length;
+        return end - start;
     }
 
     @Override
@@ -96,49 +113,56 @@ public class ByteArrayBuffer
         return length;
     }
 
-    @Override
-    public void ensureCapacity(int required) {
-        if (buf.length >= required)
-            return;
-
-        // compute the capacity aligned to 2^n.
-        int newCap = 1;
-        while (newCap < required) {
-            newCap <<= 1;
-            if (newCap == 0x8000_0000)
+    /**
+     * compute the capacity aligned to 2^n.
+     */
+    int minPowerOf2GreaterThanOrEquals(int required) {
+        int min = 1;
+        while (min < required) {
+            min <<= 1;
+            if (min == 0x8000_0000)
                 throw new IllegalArgumentException("Required too big capacity: " + required);
         }
-        assert newCap >= required;
+        assert min >= required;
+        return min;
+    }
+
+    @Override
+    public void ensureCapacity(int required) {
+        int capacity = end - start;
+        if (capacity >= required)
+            return;
+
+        int newCap = minPowerOf2GreaterThanOrEquals(required);
 
         byte[] newBuf = new byte[newCap];
-        System.arraycopy(buf, off, newBuf, 0, length);
+        System.arraycopy(buf, start, newBuf, 0, length);
         buf = newBuf;
-        off = 0;
+        start = 0;
+        end = newCap;
     }
 
     @Override
     public void delete(int index) {
-        if (index < 0)
-            throw new IndexOutOfBoundsException("" + index);
-        if (index >= length)
-            return;
+        ensureIndexValid(index);
         int i_after = index + 1;
         int n_move = length - i_after;
-        System.arraycopy(buf, off + i_after, buf, off + index, n_move);
+        System.arraycopy(buf, start + i_after, buf, start + index, n_move);
         length--;
     }
 
     @Override
     public void delete(int from, int len) {
-        if (from < 0)
-            throw new IndexOutOfBoundsException("" + from);
         if (len <= 0)
             return;
+        ensureIndexValid(from);
+
         int to = from + len;
         if (to > length)
             to = length;
+
         int n_move = length - to;
-        System.arraycopy(buf, off + to, buf, off + from, n_move);
+        System.arraycopy(buf, start + to, buf, start + from, n_move);
         length -= len;
     }
 
@@ -151,10 +175,14 @@ public class ByteArrayBuffer
     }
 
     public byte[] toByteArray() {
-        int n = length();
-        byte[] array = new byte[n];
-        System.arraycopy(buf, off, array, 0, n);
+        byte[] array = new byte[length];
+        System.arraycopy(buf, start, array, 0, length);
         return array;
+    }
+
+    @Override
+    public String toString() {
+        return new String(buf, start, length);
     }
 
 }

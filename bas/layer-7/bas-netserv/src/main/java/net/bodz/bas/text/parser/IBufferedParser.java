@@ -1,6 +1,7 @@
-package net.bodz.bas.parser;
+package net.bodz.bas.text.parser;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -28,6 +29,23 @@ public interface IBufferedParser {
      */
     void putOctet(byte octet);
 
+    default void putOctets(ByteBuffer buf) {
+        int len = buf.limit();
+        int pos = buf.position();
+        if (buf.hasArray()) {  // optim:  && len > 2
+            byte[] array = buf.array();
+            int off = buf.arrayOffset();
+            putOctets(array, off + pos, len - pos);
+            buf.position(len);
+        } else {
+            // while (buf.hasRemaining()) {
+            for (int i = pos; i < len; i++) {
+                byte b = buf.get();
+                putOctet(b);
+            }
+        }
+    }
+
     /**
      * Adds a sequence of octets to the buffer.
      *
@@ -35,7 +53,7 @@ public interface IBufferedParser {
      * @param off    The start offset in the data.
      * @param len    The number of bytes to process.
      */
-    default void putOctet(byte[] octets, int off, int len) {
+    default void putOctets(byte[] octets, int off, int len) {
         int pos = off;
         for (int i = 0; i < len; i++)
             putOctet(octets[pos++] & 0xFF);

@@ -1,29 +1,24 @@
-package net.bodz.bas.parser;
+package net.bodz.bas.text.parser;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.t.queue.IQueue;
 
 public class LineQueue
         extends BufferedLineParser
-        implements Iterable<String> {
+        implements IQueue<String> {
 
     LinkedList<String> list = new LinkedList<>();
 
-    public boolean isEmpty() {
-        return list.isEmpty();
-    }
-
-    public boolean isNotEmpty() {
-        return !list.isEmpty();
-    }
-
+    @Override
     public int size() {
         return list.size();
     }
 
+    @Override
     public void clear() {
         list.clear();
     }
@@ -34,7 +29,12 @@ public class LineQueue
         return list.iterator();
     }
 
-    public void parseLine(String line)
+    @Override
+    public String take() {
+        return list.removeFirst();
+    }
+
+    public void parseLine(@NotNull String line)
             throws ParseException {
         list.add(line);
     }

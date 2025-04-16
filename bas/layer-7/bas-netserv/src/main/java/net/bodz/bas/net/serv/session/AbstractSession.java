@@ -1,4 +1,4 @@
-package net.bodz.bas.net.serv;
+package net.bodz.bas.net.serv.session;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,8 +21,9 @@ public abstract class AbstractSession
         this.channel = channel;
     }
 
+    @NotNull
     @Override
-    public String getId() {
+    public String getSessionId() {
         return id;
     }
 
