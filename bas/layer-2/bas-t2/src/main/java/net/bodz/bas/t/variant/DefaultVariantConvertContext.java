@@ -5,14 +5,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 
 import net.bodz.bas.err.ParseException;
 
 public class DefaultVariantConvertContext
-        implements
-            IVariantConvertContext {
+        implements IVariantConvertContext {
 
     @Override
     public Instant parseInstant(String s)
@@ -39,6 +39,16 @@ public class DefaultVariantConvertContext
             throws ParseException {
         try {
             return OffsetDateTime.parse(s);
+        } catch (DateTimeParseException e) {
+            throw new ParseException(e);
+        }
+    }
+
+    @Override
+    public OffsetTime parseOffsetTime(String s)
+            throws ParseException {
+        try {
+            return OffsetTime.parse(s);
         } catch (DateTimeParseException e) {
             throw new ParseException(e);
         }
@@ -87,6 +97,11 @@ public class DefaultVariantConvertContext
     @Override
     public String formatOffsetDateTime(OffsetDateTime offsetDateTime) {
         return offsetDateTime.toString();
+    }
+
+    @Override
+    public String formatOffsetTime(OffsetTime offsetTime) {
+        return offsetTime.toString();
     }
 
     @Override

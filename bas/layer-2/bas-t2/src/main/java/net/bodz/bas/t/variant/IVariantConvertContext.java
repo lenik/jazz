@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 
 import net.bodz.bas.err.ParseException;
@@ -18,6 +19,9 @@ public interface IVariantConvertContext {
             throws ParseException;
 
     OffsetDateTime parseOffsetDateTime(String s)
+            throws ParseException;
+
+    OffsetTime parseOffsetTime(String s)
             throws ParseException;
 
     LocalDateTime parseLocalDateTime(String s)
@@ -34,6 +38,8 @@ public interface IVariantConvertContext {
     String formatZonedDateTime(ZonedDateTime zonedDateTime);
 
     String formatOffsetDateTime(OffsetDateTime offsetDateTime);
+
+    String formatOffsetTime(OffsetTime offsetTime);
 
     String formatLocalDateTime(LocalDateTime localDateTime);
 
