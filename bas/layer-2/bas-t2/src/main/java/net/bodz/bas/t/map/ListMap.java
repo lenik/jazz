@@ -215,7 +215,7 @@ public class ListMap<K, E>
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends List<E>> m) {
+    public void putAll(@NotNull Map<? extends K, ? extends List<E>> m) {
         map.putAll(m);
     }
 
