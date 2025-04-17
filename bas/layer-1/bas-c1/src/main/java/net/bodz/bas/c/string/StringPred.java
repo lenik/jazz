@@ -2,6 +2,21 @@ package net.bodz.bas.c.string;
 
 public class StringPred {
 
+    public static boolean isInteger(String str) {
+        if (str == null)
+            return false;
+        if (str.isEmpty())
+            return false;
+
+        int i = str.length();
+        while (--i >= 0) {
+            char c = str.charAt(i);
+            if (!(c >= '0' && c <= '9'))
+                return false;
+        }
+        return true;
+    }
+
     public static boolean isDecimal(String str) {
         if (str == null)
             return false;
