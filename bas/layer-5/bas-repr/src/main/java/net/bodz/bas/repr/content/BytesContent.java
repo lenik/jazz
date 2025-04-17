@@ -41,4 +41,12 @@ public class BytesContent
         return new ByteArrayInputStream(buf, off, len);
     }
 
+    public byte[] toByteArray() {
+        if (off == 0 && len == buf.length)
+            return buf;
+        byte[] copy = new byte[len];
+        System.arraycopy(this.buf, off, copy, 0, len);
+        return copy;
+    }
+
 }
