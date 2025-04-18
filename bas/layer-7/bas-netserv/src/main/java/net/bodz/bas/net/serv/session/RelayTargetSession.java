@@ -9,18 +9,18 @@ import net.bodz.bas.meta.decl.NotNull;
 public class RelayTargetSession
         extends AbstractSocketSession {
 
-    RelaySession source;
+    RelayToSession source;
     // SocketChannel sourceChannel;
 
-    public RelayTargetSession(@NotNull String id, @NotNull SocketChannel channel, @NotNull RelaySession source) {
+    public RelayTargetSession(@NotNull String id, @NotNull SocketChannel channel, @NotNull RelayToSession source) {
         super(channel);
         this.source = source;
     }
 
     @Override
-    public boolean read(@NotNull SocketChannel channel)
-            throws IOException, ParseException {
-        return true;
+    public long read(@NotNull SocketChannel channel)
+            throws IOException {
+        return -1;
     }
 
 }

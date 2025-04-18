@@ -5,6 +5,8 @@ import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.serv.session.ISocketSession;
 import net.bodz.bas.t.pool.IPool;
@@ -12,6 +14,8 @@ import net.bodz.bas.t.pool.IntSetPool;
 
 public class DefaultSessionManager
         implements ISessionManager {
+
+    static final Logger logger = LoggerFactory.getLogger(DefaultSessionManager.class);
 
     final IPool<Integer> idPool = new IntSetPool(10000);
 
@@ -67,22 +71,26 @@ public class DefaultSessionManager
     }
 
     @Override
-    public void replaceSession(@NotNull String id, @NotNull ISocketSession newSession) {
+    public void switchSession(@NotNull String id, @NotNull ISocketSession newSession) {
         ISocketSession oldSession = byId.get(id);
-        if (oldSession == newSession)
+        if (oldSession == newSession) {
+            logger.info("");
             return;
+        }
         if (oldSession == null)
-            throw new IllegalArgumentException("id wasn't used: " + id);
+            throw new IllegalArgumentException("no session to replace, id: " + id);
 
-        ISocketSession prev = byChannel.get(newSession.getChannel());
-        if (prev != null)
-            throw new IllegalArgumentException("channel duplicated");
+        rindex.remove(oldSession);
+        byChannel.remove(oldSession.getChannel());
+        byId.remove(id);
+
+        ISocketSession conflict = byChannel.get(newSession.getChannel());
+        if (conflict != null) {
+            // logger.error("same channel was also used in another session: " + conflict);
+            throw new IllegalArgumentException("channel duplicated, previous =" + conflict);
+        }
 
         byId.put(id, newSession);
-
-        byChannel.remove(oldSession.getChannel());
-        rindex.remove(oldSession);
-
         byChannel.put(newSession.getChannel(), newSession);
         rindex.put(newSession, id);
     }

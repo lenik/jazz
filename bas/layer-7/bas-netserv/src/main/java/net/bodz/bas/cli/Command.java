@@ -18,7 +18,8 @@ import net.bodz.bas.repr.path.TokenList;
  */
 public class Command
         extends TokenList
-        implements IJsonForm {
+        implements IArgQueue,
+                   IJsonForm {
 
     /**
      * The name of the command.
@@ -52,109 +53,58 @@ public class Command
     }
 
     @NotNull
-    public String[] getArguments() {
+    @Override
+    public String[] toArray() {
         String[] args = peek(available());
         return args;
     }
 
-    public void setArguments(String[] args) {
-        setArguments(args, 0, args.length);
+    @NotNull
+    public String toString(String delim) {
+        return peek(delim);
     }
 
-    public void setArguments(String[] args, int off, int len) {
+    @Override
+    public void setArray(String[] args) {
+        setArray(args, 0, args.length);
+    }
+
+    @Override
+    public void setArray(String[] args, int off, int len) {
         setBackedList(args, off, len);
     }
 
-    /**
-     * Returns an argument at a specified index (1-based).
-     *
-     * @param index the 1-based index of the argument to retrieve
-     * @return the argument at the specified index, not null
-     */
     @NotNull
+    @Override
     public String getArgument(int index) {
         return peekAt(index - 1);
     }
 
-    /**
-     * Returns an argument at a specified index (1-based), with a fallback value if the index is out of bounds.
-     *
-     * @param index the 1-based index of the argument to retrieve
-     * @param fallback the fallback value to return if the index is out of bounds
-     * @return the argument at the specified index or the fallback value
-     */
+    @Override
     public String getArgument(int index, String fallback) {
         return peekAt(index - 1, fallback);
     }
 
-    /**
-     * Adds an argument to the command.
-     *
-     * @param arg the argument to add, not null
-     */
+    @Override
     public void addArgument(@NotNull String arg) {
         add(arg);
     }
 
-    /**
-     * Returns the number of arguments associated with the command.
-     *
-     * @return the number of arguments
-     */
+    @Override
     public int getArgumentCount() {
         return available();
     }
 
-    /**
-     * Checks if there are no arguments associated with the command.
-     *
-     * @return true if there are no arguments, false otherwise
-     */
-    public boolean isNoArgument() {
-        return available() == 0;
-    }
-
-    /**
-     * Checks if there is no argument at a specified index (1-based).
-     *
-     * @param index the 1-based index of the argument to check
-     * @return true if there is no argument at the specified index, false otherwise
-     */
-    public boolean isNoArgument(int index) {
-        return !isArgumentPresent(index);
-    }
-
-    /**
-     * Checks if there are arguments associated with the command.
-     *
-     * @return true if there are arguments, false otherwise
-     */
-    public boolean isArgumentPresent() {
-        return available() != 0;
-    }
-
-    /**
-     * Checks if an argument is present at a specified index (1-based).
-     *
-     * @param index the 1-based index of the argument to check
-     * @return true if the argument is present at the specified index, false otherwise
-     */
-    public boolean isArgumentPresent(int index) {
-        index--;
-        if (index < 0 || index >= available())
-            return false;
-        String arg = peekAt(index);
-        return arg != null;
-    }
-
-    /**
-     * Returns a string representation of all arguments, separated by spaces.
-     *
-     * @return a string of arguments
-     */
-    @NotNull
-    public String getRemainingArguments() {
-        return peek(" ");
+    @Override
+    public Command makeCommand() {
+        int n = available();
+        if (n == 0)
+            return null;
+        String name = peek();
+        String[] args = new String[n - 1];
+        for (int i = 0; i < args.length; i++)
+            args[i] = peekAt(i + 1);
+        return new Command(name, args);
     }
 
     /**
@@ -176,7 +126,7 @@ public class Command
     }
 
     @NotNull
-    public String[] getCommandArray() {
+    public String[] getCommandLineArray() {
         String[] array = new String[size() + 1];
         array[0] = name;
         int argc = size();

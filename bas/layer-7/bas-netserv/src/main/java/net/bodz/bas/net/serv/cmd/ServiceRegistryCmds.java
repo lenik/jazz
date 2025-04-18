@@ -5,6 +5,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Map;
 
 import net.bodz.bas.cli.Command;
+import net.bodz.bas.cli.IArgQueue;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
@@ -48,11 +49,11 @@ public class ServiceRegistryCmds
         return false;
     }
 
-    public void register(Command cmd)
+    public void register(IArgQueue args)
             throws IOException {
         String protocol = strictMode ? null : "starter";
-        if (cmd.isArgumentPresent(1))
-            protocol = cmd.getArgument(1);
+        if (args.isArgumentPresent(1))
+            protocol = args.getArgument(1);
         if (protocol == null) {
             error("expect protocol");
             return;
@@ -64,13 +65,13 @@ public class ServiceRegistryCmds
         }
     }
 
-    public void deregister(Command cmd)
+    public void deregister(IArgQueue args)
             throws IOException {
-        if (!cmd.isArgumentPresent(1)) {
+        if (!args.isArgumentPresent(1)) {
             error("expect id");
             return;
         }
-        String id = cmd.getArgument(1);
+        String id = args.getArgument(1);
         try {
             registry.removeChannel(id);
         } catch (Exception e) {
@@ -78,11 +79,11 @@ public class ServiceRegistryCmds
         }
     }
 
-    public void discover(Command cmd)
+    public void discover(IArgQueue args)
             throws IOException {
         String format = FORMAT_PLAIN;
-        if (cmd.isArgumentPresent(1))
-            format = cmd.getArgument(1);
+        if (args.isArgumentPresent(1))
+            format = args.getArgument(1);
         discover(format);
     }
 

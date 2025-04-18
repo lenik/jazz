@@ -7,6 +7,7 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.c.java.nio.channels.SocketChannels;
 import net.bodz.bas.err.IErrorRecoverer;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
@@ -15,7 +16,7 @@ import net.bodz.bas.net.io.DefaultPoller;
 import net.bodz.bas.net.io.ISocketAccepter;
 import net.bodz.bas.net.io.ISocketReader;
 import net.bodz.bas.net.serv.session.ISocketSession;
-import net.bodz.bas.net.serv.session.RouterSession;
+import net.bodz.bas.net.serv.session.HubSession;
 
 public class NetServer {
 
@@ -54,37 +55,26 @@ public class NetServer {
     boolean onAccept(ServerSocketChannel serverChannel)
             throws IOException {
         SocketChannel clientChannel = serverChannel.accept();
-        clientChannel.configureBlocking(false);
+        logger.info("onAccept: " + SocketChannels.addressInfo(clientChannel));
 
+        clientChannel.configureBlocking(false);
         poller.register(clientChannel, (ISocketReader) this::onReceive);
 
-        ISocketSession session = new RouterSession(clientChannel, sessionManager, poller, serviceManager);
+        ISocketSession session = new HubSession(clientChannel, sessionManager, poller, serviceManager);
         sessionManager.addSession(session);
 
         return true;
     }
 
-    boolean onReceive(SocketChannel channel)
+    long onReceive(SocketChannel channel)
             throws IOException {
         ISocketSession session = sessionManager.getSessionByChannel(channel);
-        if (session == null)
-            // already closed, or unmanaged channels.
-            return true;
-
-        while (true) {
-            try {
-                session.read(channel);
-            } catch (ParseException e) {
-                if (session instanceof IErrorRecoverer) {
-                    IErrorRecoverer recoverer = (IErrorRecoverer) session;
-                    if (recoverer.recoverError(e))
-                        continue;
-                }
-                logger.error(e);
-                session.close();
-            }
-            break;
+        if (session == null) {
+            logger.error("invalid unmanaged channel: " + SocketChannels.addressInfo(channel));
+            return 0;
         }
+
+        long numBytesRead = session.read(channel);
 
         if (session.isClosed()) {
             logger.info("Session closed: " + sessionManager.getSessionId(session));
@@ -97,7 +87,7 @@ public class NetServer {
             sessionManager.removeSession(session);
         }
 
-        return true;
+        return numBytesRead;
     }
 
 }

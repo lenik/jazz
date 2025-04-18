@@ -7,22 +7,18 @@ import java.util.function.Consumer;
 
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.cli.Command;
+import net.bodz.bas.cli.IArgQueue;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.serv.session.ISocketSession;
-import net.bodz.bas.net.serv.session.OpenSession;
-import net.bodz.bas.net.serv.session.RelaySession;
 import net.bodz.bas.std.StdService;
 import net.bodz.bas.std.TransportType;
 
 public class ActiveLinkCmds
         extends AbstractNioCommandProvider {
 
-    @NotNull
     final ISocketPoller poller;
-
-    @NotNull
     final Consumer<ISocketSession> applier;
 
     public ActiveLinkCmds(SocketChannel channel, ISocketPoller poller, Consumer<ISocketSession> applier) {
@@ -48,16 +44,16 @@ public class ActiveLinkCmds
         return false;
     }
 
-    void open(Command cmd)
+    void open(IArgQueue args)
             throws IOException {
         int count = 1;
 
-        String head = cmd.shift();
+        String head = args.shift();
         if (head != null && head.endsWith("x")) {
             String s = head.substring(0, head.length() - 1);
             if (StringPred.isInteger(s)) {
                 count = Integer.parseInt(s);
-                head = cmd.shift();
+                head = args.shift();
             }
         }
 
@@ -65,7 +61,7 @@ public class ActiveLinkCmds
         if (head != null) {
             transport = TransportType.parse(head, null);
             if (transport != null)
-                head = cmd.shift();
+                head = args.shift();
         }
 
         int port = 0;
@@ -73,7 +69,7 @@ public class ActiveLinkCmds
         if (head != null) {
             if (StringPred.isInteger(head)) {
                 port = Integer.parseInt(head);
-                head = cmd.shift();
+                head = args.shift();
             } else {
                 StdService std = StdService.getService(head);
                 if (std != null) {
@@ -81,20 +77,20 @@ public class ActiveLinkCmds
                     port = std.getPort();
                     if (transport == null)
                         transport = std.getTransports().iterator().next();
-                    head = cmd.shift();
+                    head = args.shift();
                 }
             }
         }
 
         if (head == null || !head.equals("over"))
             error("expect keyword over in open statement -> " + head);
-        head = cmd.shift();
+        head = args.shift();
 
         String remoteHost = "localhost";
         int remotePort;
         if (head != null) {
             remoteHost = head;
-            head = cmd.shift();
+            head = args.shift();
         }
 
         if (!StringPred.isInteger(head))
@@ -105,9 +101,9 @@ public class ActiveLinkCmds
         open(count, transport, service, port, remoteHost, remotePort);
     }
 
-    void close(Command cmd)
+    void close(IArgQueue args)
             throws IOException {
-        String head = cmd.shift();
+        String head = args.shift();
         if (StringPred.isInteger(head)) {
             int id = Integer.parseInt(head);
             close(id);
@@ -126,7 +122,7 @@ public class ActiveLinkCmds
         error("expect id or protocol");
     }
 
-    void status(Command cmd) {
+    void status(IArgQueue args) {
         status();
     }
 

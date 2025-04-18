@@ -13,7 +13,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.t.record.BeanColumnType;
+import net.bodz.bas.t.record.BasicColumnType;
 import net.bodz.bas.t.record.IColumnType;
 import net.bodz.bas.t.tuple.Split;
 
@@ -151,13 +151,12 @@ public class ServiceDescriptor
         out.entryNotNull(K_LAST_UPDATED, lastUpdated);
     }
 
-
-    public static final IColumnType<ServiceDescriptor, String> PROTOCOL = BeanColumnType.ofProperty(ServiceDescriptor::getProtocol);
-    public static final IColumnType<ServiceDescriptor, SocketChannel> CHANNEL = BeanColumnType.ofProperty(ServiceDescriptor::getChannel);
-    public static final IColumnType<ServiceDescriptor, String> ADDRESS = BeanColumnType.ofProperty(ServiceDescriptor::getAddress);
-    public static final IColumnType<ServiceDescriptor, String> ID = BeanColumnType.ofProperty(ServiceDescriptor::getId, ServiceDescriptor::setId);
-    public static final IColumnType<ServiceDescriptor, String> DESCRIPTION = BeanColumnType.ofProperty(ServiceDescriptor::getDescription, ServiceDescriptor::setDescription);
-    public static final IColumnType<ServiceDescriptor, LocalDateTime> CREATION = BeanColumnType.ofProperty(ServiceDescriptor::getCreation);
-    public static final IColumnType<ServiceDescriptor, LocalDateTime> LAST_UPDATED = BeanColumnType.ofProperty(ServiceDescriptor::getLastUpdated, ServiceDescriptor::setLastUpdated);
+    public static final IColumnType<ServiceDescriptor, String> PROTOCOL = BasicColumnType.ofProperty(ServiceDescriptor.class, "protocol");
+    public static final IColumnType<ServiceDescriptor, SocketChannel> CHANNEL = BasicColumnType.ofProperty(ServiceDescriptor.class, "channel");
+    public static final IColumnType<ServiceDescriptor, String> ADDRESS = BasicColumnType.ofProperty(ServiceDescriptor.class, "address");
+    public static final IColumnType<ServiceDescriptor, String> ID = BasicColumnType.ofProperty(ServiceDescriptor.class, "id");
+    public static final IColumnType<ServiceDescriptor, String> DESCRIPTION = BasicColumnType.ofProperty(ServiceDescriptor.class, "description");
+    public static final IColumnType<ServiceDescriptor, LocalDateTime> CREATION = BasicColumnType.ofProperty(ServiceDescriptor.class, "creation");
+    public static final IColumnType<ServiceDescriptor, LocalDateTime> LAST_UPDATED = BasicColumnType.ofProperty(ServiceDescriptor.class, "lastUpdated");
 
 }

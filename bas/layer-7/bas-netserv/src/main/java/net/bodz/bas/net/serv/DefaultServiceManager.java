@@ -15,9 +15,9 @@ import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.pool.IPool;
 import net.bodz.bas.t.pool.IntSetPool;
-import net.bodz.bas.t.record.BeanRecordType;
+import net.bodz.bas.t.record.BasicRecordType;
 import net.bodz.bas.t.record.IRecordType;
-import net.bodz.bas.t.record.RecordMap;
+import net.bodz.bas.t.record.BasicRecordMap;
 
 public class DefaultServiceManager
         implements IServiceManager,
@@ -26,9 +26,9 @@ public class DefaultServiceManager
 
     IPool<Integer> idPool = IntSetPool.ofSize(10000);
 
-    RecordMap<String, ServiceDescriptor> map = new RecordMap<>(TYPE);
+    BasicRecordMap<String, ServiceDescriptor> map = new BasicRecordMap<>(TYPE);
 
-    static final IRecordType<ServiceDescriptor> TYPE = BeanRecordType.ofList(//
+    static final IRecordType<ServiceDescriptor> TYPE = BasicRecordType.ofList(//
             ServiceDescriptor.PROTOCOL, //
             ServiceDescriptor.CHANNEL);
 
@@ -38,7 +38,7 @@ public class DefaultServiceManager
     @NotNull
     @Override
     public Set<String> getProtocols() {
-        return map.index(ServiceDescriptor.PROTOCOL).keySet();
+        return map.makeIndex(ServiceDescriptor.PROTOCOL).keySet();
     }
 
     @NotNull
@@ -68,7 +68,7 @@ public class DefaultServiceManager
 
     @Override
     public boolean removeService(@NotNull String id) {
-        return map.remove(id);
+        return map.remove(id) != null;
     }
 
     @Override

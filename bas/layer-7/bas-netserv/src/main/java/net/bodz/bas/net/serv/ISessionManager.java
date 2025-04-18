@@ -58,13 +58,13 @@ public interface ISessionManager {
         return removeSession(id);
     }
 
-    void replaceSession(@NotNull String id, @NotNull ISocketSession newSession);
+    void switchSession(@NotNull String id, @NotNull ISocketSession newSession);
 
-    default void replaceSession(@NotNull ISocketSession session, @NotNull ISocketSession newSession) {
-        String id = getSessionId(session);
+    default void switchSession(@NotNull ISocketSession oldsSession, @NotNull ISocketSession newSession) {
+        String id = getSessionId(oldsSession);
         if (id == null)
-            throw new IllegalArgumentException("the old session has not been added: " + session);
-        replaceSession(id, newSession);
+            throw new IllegalArgumentException("the old session has not been added: " + oldsSession);
+        switchSession(id, newSession);
     }
 
 }

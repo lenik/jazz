@@ -26,9 +26,10 @@ public class ChatSession
     }
 
     @Override
-    public boolean read(@NotNull SocketChannel channel)
-            throws IOException, ParseException {
+    public long read(@NotNull SocketChannel channel)
+            throws IOException {
         ByteBuffer buf = ByteBuffer.allocate(1024);
+        long totalBytesRead = 0;
 
         while (true) {
             int numBytesRead = channel.read(buf);
@@ -37,14 +38,22 @@ public class ChatSession
                 case -1:
                     close();
                 case 0:
-                    return true;
+                    return totalBytesRead;
+                default:
+                    totalBytesRead += numBytesRead;
             }
 
             buf.flip();
             lineQueue.putOctets(buf);
             buf.clear();
 
-            lineQueue.parse();
+            try {
+                lineQueue.parse();
+            } catch (ParseException e) {
+                logger.error(e, "error parse: " + e.getMessage());
+                lineQueue.dropLine();
+            }
+
             while (lineQueue.isNotEmpty()) {
                 String line = lineQueue.take();
                 parseAndReply(line);
@@ -80,12 +89,6 @@ public class ChatSession
     void greet()
             throws IOException {
         println("hey, chatbot here!");
-    }
-
-    void println(String s)
-            throws IOException {
-        byte[] bin = (s + "\n").getBytes();
-        channel.write(ByteBuffer.wrap(bin));
     }
 
 }

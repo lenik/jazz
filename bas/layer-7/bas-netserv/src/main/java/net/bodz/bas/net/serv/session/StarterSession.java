@@ -3,10 +3,10 @@ package net.bodz.bas.net.serv.session;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 
+import net.bodz.bas.cli.Command;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.serv.ISessionManager;
-import net.bodz.bas.cli.Command;
 import net.bodz.bas.net.serv.cmd.ICommandProvider;
 
 public class StarterSession
@@ -26,26 +26,18 @@ public class StarterSession
     public boolean execute(Command cmd)
             throws IOException, ParseException {
         switch (cmd.getName()) {
-            case "echo":
-                echo(cmd);
-                return true;
-
             case "chat":
                 chat(cmd);
                 return true;
+
         }
         return false;
-    }
-
-    void echo(Command cmd)
-            throws IOException {
-        println(cmd.getRemainingArguments());
     }
 
     void chat(Command cmd)
             throws IOException {
         ChatSession chatSession = new ChatSession(channel);
-        sessionManager.replaceSession(this, chatSession);
+        sessionManager.switchSession(this, chatSession);
     }
 
 }

@@ -2,14 +2,16 @@ package net.bodz.bas.net.io;
 
 import java.io.IOException;
 import java.nio.channels.ServerSocketChannel;
+import java.util.EventListener;
 
 import net.bodz.bas.meta.decl.NotNull;
 
 @FunctionalInterface
-public interface ISocketAccepter {
+public interface ISocketAccepter
+        extends EventListener {
 
     /**
-     * @return true means finished, no more accepter to be used.
+     * @return true if accepted.
      */
     boolean accept(@NotNull ServerSocketChannel serverChannel)
             throws IOException;

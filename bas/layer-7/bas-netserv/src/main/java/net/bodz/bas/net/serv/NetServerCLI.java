@@ -4,6 +4,8 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 
@@ -15,6 +17,8 @@ import net.bodz.bas.program.skel.BasicCLI;
 @ProgramName("netserv")
 public class NetServerCLI
         extends BasicCLI {
+
+    static final Logger logger = LoggerFactory.getLogger(NetServerCLI.class);
 
     /**
      * @option -s --sourceaddr =ADDR
@@ -46,13 +50,14 @@ public class NetServerCLI
     @Override
     protected void mainImpl(String... args)
             throws Exception {
+        logger.info("mainImpl");
         makeUp();
-
         server.start();
     }
 
     public static void main(String[] args)
             throws Exception {
+        System.out.println("start");
         new NetServerCLI().execute(args);
     }
 

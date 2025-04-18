@@ -2,15 +2,17 @@ package net.bodz.bas.net.io;
 
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
+import java.util.EventListener;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public interface ISocketWriter {
+public interface ISocketWriter
+        extends EventListener {
 
     /**
-     * @return true means finished, false to continue with other writers.
+     * @return number of bytes have been writtern.
      */
-    boolean write(@NotNull SocketChannel channel)
+    long write(@NotNull SocketChannel channel)
             throws IOException;
 
 }

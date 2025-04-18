@@ -138,7 +138,7 @@ public interface IBufferedParser {
      * @param la The lookahead object to be used for parsing.
      * @throws ParseException If an error occurs during parsing.
      */
-    void parse(@NotNull ILookAhead la)
+    void parse(@NotNull ILookAhead la, boolean dropErrorLlines)
             throws ParseException;
 
     /**
@@ -149,7 +149,9 @@ public interface IBufferedParser {
      */
     default void parse()
             throws ParseException {
-        parse(NoLookAhead.INSTANCE);
+        parse(NoLookAhead.INSTANCE, true);
     }
+
+    int dropLine();
 
 }

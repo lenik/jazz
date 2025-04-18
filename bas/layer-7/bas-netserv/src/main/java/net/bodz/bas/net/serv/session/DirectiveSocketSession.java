@@ -8,25 +8,34 @@ import java.util.List;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.cli.CmdQueue;
 import net.bodz.bas.cli.Command;
+import net.bodz.bas.net.serv.cmd.CommonCmds;
 import net.bodz.bas.net.serv.cmd.ICommandProvider;
 
 public abstract class DirectiveSocketSession
         extends AbstractSocketSession {
 
-    CmdQueue cmds = new CmdQueue();
+    static final Logger logger = LoggerFactory.getLogger(DirectiveSocketSession.class);
 
+    CmdQueue cmds = new CmdQueue();
     List<ICommandProvider> providers = new ArrayList<>();
 
     public DirectiveSocketSession(SocketChannel channel) {
         super(channel);
+
+        CommonCmds commons = new CommonCmds(channel);
+        commons.addSettingSource(this);
+        addProvider(commons);
     }
 
     @Override
-    public boolean read(@NotNull SocketChannel channel)
-            throws IOException, ParseException {
+    public long read(@NotNull SocketChannel channel)
+            throws IOException {
+        long totalBytesRead = 0;
         ByteBuffer aByte = ByteBuffer.allocate(1);
 
         while (true) {
@@ -35,9 +44,11 @@ public abstract class DirectiveSocketSession
                 case -1:            // The client has closed the connection
                     close();
                 case 0:
-                    return true;
+                    return totalBytesRead;
 
                 case 1:
+                    totalBytesRead += numBytesRead;
+
                     aByte.flip();
                     byte b = aByte.get();
                     aByte.clear();
@@ -48,7 +59,12 @@ public abstract class DirectiveSocketSession
                     throw new UnexpectedException();
             }
 
-            cmds.parse();
+            try {
+                cmds.parse();
+            } catch (ParseException e) {
+                logger.error(e, "error parse: " + e.getMessage());
+            }
+
             while (cmds.isNotEmpty()) {
                 Command cmd = cmds.take();
                 handleCommand(cmd);
@@ -69,15 +85,11 @@ public abstract class DirectiveSocketSession
             } catch (ParseException e) {
                 String message = String.format("Error parse command %s from provider %s: %s", //
                         cmd.toString(), provider.toString(), e.getMessage());
-                println(message);
+                error(message);
+                return;
             }
         }
-        println("unknown command: " + cmd.getName());
-    }
-
-    void println(String message)
-            throws IOException {
-        channel.write(ByteBuffer.wrap((message + "\n").getBytes()));
+        error("unknown command: " + cmd.getName());
     }
 
 }

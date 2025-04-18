@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.cli.Command;
+import net.bodz.bas.cli.IArgQueue;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.serv.IServiceChannelRegistry;
@@ -34,22 +35,22 @@ public class GatewayCmds
         return false;
     }
 
-    void relay(Command cmd)
+    void relay(IArgQueue args)
             throws IOException {
         int localPort = 0;
 
-        String alloc = cmd.peek();
+        String alloc = args.peek();
         if (StringPred.isDecimal(alloc)) {
             localPort = Integer.parseInt(alloc);
-            cmd.shift();
+            args.shift();
         }
 
-        if (!"to".equals(cmd.shift())) {
+        if (!"to".equals(args.shift())) {
             println("expect keyword 'to''");
             return;
         }
 
-        String serviceId = cmd.shift();
+        String serviceId = args.shift();
         if (serviceId == null) {
             println("expect target service id");
             return;

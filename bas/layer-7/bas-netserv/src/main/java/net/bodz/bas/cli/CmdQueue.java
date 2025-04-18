@@ -3,10 +3,11 @@ package net.bodz.bas.cli;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import net.bodz.bas.c.java.util.regex.QuoteFormat;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.text.parser.BufferedLineParser;
 import net.bodz.bas.t.queue.IQueue;
+import net.bodz.bas.text.parser.BufferedLineParser;
 
 public class CmdQueue
         extends BufferedLineParser
@@ -37,8 +38,13 @@ public class CmdQueue
 
     public void parseLine(@NotNull String line)
             throws ParseException {
-        // QuoteFormat.QQ.split("")
-        String[] args = line.split("\\s+");
+        line = line.trim();
+        if (line.isEmpty())
+            return;
+        if (line.startsWith("#"))
+            return;
+
+        String[] args = QuoteFormat.QQ.split("\\s+", line);
         Command cmd = new Command(args[0]);
         for (int i = 1; i < args.length; i++)
             cmd.addArgument(args[i]);

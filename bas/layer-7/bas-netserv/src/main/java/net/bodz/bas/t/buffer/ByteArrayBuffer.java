@@ -1,5 +1,7 @@
 package net.bodz.bas.t.buffer;
 
+import java.nio.ByteBuffer;
+
 import net.bodz.bas.meta.decl.NotNull;
 
 public class ByteArrayBuffer
@@ -44,10 +46,6 @@ public class ByteArrayBuffer
         return start;
     }
 
-    public int getBackedArrayLength() {
-        return end - start;
-    }
-
     @NotNull
     @Override
     public Class<Byte> getComponentType() {
@@ -71,6 +69,21 @@ public class ByteArrayBuffer
         length++;
     }
 
+    public void append(byte[] buf) {
+        append(buf, 0, buf.length);
+    }
+
+    public void append(byte[] buf, int off, int len) {
+        ensureCapacity(length + len);
+        System.arraycopy(buf, off, this.buf, start + length, len);
+    }
+
+    public void append(ByteBuffer buf) {
+        int len = buf.remaining();
+        ensureCapacity(length + len);
+        buf.get(this.buf, start + length, len);
+    }
+
     @Override
     public void clear() {
         length = 0;
@@ -87,15 +100,37 @@ public class ByteArrayBuffer
         return buf[start + i];
     }
 
-    public byte getByte(int i) {
-        ensureIndexValid(i);
-        return buf[start + i];
-    }
-
     @Override
     public void set(int i, Byte value) {
         ensureIndexValid(i);
         buf[start + i] = value;
+    }
+
+    public int get(int offset, byte[] buf) {
+        return get(offset, buf, 0, buf.length);
+    }
+
+    public int get(int offset, byte[] buf, int off, int len) {
+        int remain = length - offset;
+        int min = Math.min(len, remain);
+        System.arraycopy(this.buf, start + offset, buf, off, min);
+        return min;
+    }
+
+    public int set(int offset, byte[] buf) {
+        return set(offset, buf, 0, buf.length);
+    }
+
+    public int set(int offset, byte[] buf, int off, int len) {
+        int remain = length - offset;
+        int min = Math.min(len, remain);
+        System.arraycopy(buf, off, this.buf, start + offset, min);
+        return min;
+    }
+
+    public byte getByte(int i) {
+        ensureIndexValid(i);
+        return buf[start + i];
     }
 
     public void setByte(int i, byte value) {

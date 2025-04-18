@@ -5,17 +5,19 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.io.ISocketConnector;
 import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.io.ISocketReader;
+import net.bodz.bas.net.io.ISocketWriter;
 import net.bodz.bas.std.TransportType;
+import net.bodz.bas.t.buffer.ByteArrayBuffer;
 
 public class OpenSession
-        extends AbstractSocketSession {
+        extends AbstractSocketSession
+        implements ISocketWriter {
 
     static final Logger logger = LoggerFactory.getLogger(OpenSession.class);
 
@@ -25,6 +27,9 @@ public class OpenSession
 
     InetSocketAddress targetAddr;
     SocketChannel remoteChannel;
+
+    ByteArrayBuffer sourceBuffer = new ByteArrayBuffer(4096);
+    ByteArrayBuffer targetBuffer = new ByteArrayBuffer(4096);
 
     public OpenSession(SocketChannel channel, TransportType transportType, @NotNull String protocol, int localPort, @NotNull InetSocketAddress remoteAddr, ISocketPoller poller)
             throws IOException {
@@ -52,7 +57,7 @@ public class OpenSession
             throws IOException {
         poller.register(remoteChannel, (ISocketConnector) this::connectTarget);
         poller.register(remoteChannel, (ISocketReader) this::readTarget);
-        // poller.register(targetChannel, (ISocketWriter) this::writeTarget);
+        poller.register(remoteChannel, (ISocketWriter) this::writeTarget);
     }
 
     boolean connectTarget(SocketChannel targetChannel)
@@ -63,10 +68,11 @@ public class OpenSession
         return true;
     }
 
-    boolean readTarget(SocketChannel targetChannel)
+    long readTarget(SocketChannel targetChannel)
             throws IOException {
         logger.info("readTarget");
         ByteBuffer buf = ByteBuffer.allocate(4096);
+        long totalBytesRead = 0;
 
         while (true) {
             int numBytesRead = targetChannel.read(buf);
@@ -74,19 +80,32 @@ public class OpenSession
                 case -1:
                     close();
                 case 0:
-                    return true;
+                    return totalBytesRead;
+                default:
+                    totalBytesRead += numBytesRead;
             }
 
             buf.flip();
-            channel.write(buf);
+            targetBuffer.append(buf);
             buf.clear();
         }
     }
 
+    long writeTarget(SocketChannel targetChannel)
+            throws IOException {
+        byte[] backedArray = sourceBuffer.getBackedArray();
+        int backedArrayOffset = sourceBuffer.getBackedArrayOffset();
+        int length = sourceBuffer.length();
+        int numBytesWritten = targetChannel.write(ByteBuffer.wrap(backedArray, backedArrayOffset, length));
+        sourceBuffer.delete(0, numBytesWritten);
+        return numBytesWritten;
+    }
+
     @Override
-    public boolean read(@NotNull SocketChannel channel)
-            throws IOException, ParseException {
+    public long read(@NotNull SocketChannel channel)
+            throws IOException {
         ByteBuffer byteBuf = ByteBuffer.allocate(4096);
+        long totalBytesRead = 0;
 
         while (true) {
             int numBytesRead = channel.read(byteBuf);
@@ -94,13 +113,26 @@ public class OpenSession
                 case -1:
                     close();
                 case 0:
-                    return true;
+                    return totalBytesRead;
+                default:
+                    totalBytesRead += numBytesRead;
             }
 
             byteBuf.flip();
-            remoteChannel.write(byteBuf);
+            sourceBuffer.append(byteBuf);
             byteBuf.clear();
         }
+    }
+
+    @Override
+    public long write(@NotNull SocketChannel channel)
+            throws IOException {
+        byte[] backedArray = targetBuffer.getBackedArray();
+        int backedArrayOffset = targetBuffer.getBackedArrayOffset();
+        int length = targetBuffer.length();
+        int numBytesWritten = channel.write(ByteBuffer.wrap(backedArray, backedArrayOffset, length));
+        targetBuffer.delete(0, numBytesWritten);
+        return numBytesWritten;
     }
 
 }
