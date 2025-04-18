@@ -112,7 +112,7 @@ public class ResolveMethods<T> {
         int offset = 0;
         int available = tokens.available();
         while (offset < available) {
-            String token = tokens.peekAhead(offset);
+            String token = tokens.peekAt(offset);
             if (! token.contains("="))
                 break;
             offset++;

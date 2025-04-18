@@ -41,6 +41,14 @@ onMounted(() => {
         <FieldRow :property="meta.properties" v-model="model.properties">
             <JsonEditor v-model="model.properties" />
         </FieldRow>
+        <FieldRow :property="meta.images" v-model="model.images">
+            <AttachmentsEditor :className="model.getClass().name" 
+                :id="model.id" v-model="model.images" />
+        </FieldRow>
+        <FieldRow :property="meta.videos" v-model="model.videos">
+            <AttachmentsEditor :className="model.getClass().name" 
+                :id="model.id" v-model="model.videos" />
+        </FieldRow>
     </FieldGroup>
 </template>
 

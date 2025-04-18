@@ -43,6 +43,8 @@ public class LocalVolume
 
     @Override
     public Path getLocalFile(String path) {
+        if (path.startsWith("/"))
+            path = path.substring(1);
         return baseDir.resolve(path);
     }
 
