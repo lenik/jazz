@@ -2,6 +2,8 @@ package net.bodz.bas.bean.api;
 
 import java.awt.Image;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 /*
  *  Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
@@ -28,19 +30,29 @@ public interface IBeanInfo {
 
     int ICON_MONO_32x32 = 4;
 
-    public IBeanDescriptor getBeanDescriptor();
+    IBeanDescriptor getBeanDescriptor();
 
-    public IPropertyDescriptor[] getPropertyDescriptors();
+    @NotNull
+    IPropertyDescriptor[] getPropertyDescriptors();
 
-    public IMethodDescriptor[] getMethodDescriptors();
+    @NotNull
+    IMethodDescriptor[] getMethodDescriptors();
 
-    public IEventSetDescriptor[] getEventSetDescriptors();
+    @NotNull
+    IEventSetDescriptor[] getEventSetDescriptors();
 
-    public IBeanInfo[] getAdditionalBeanInfo();
+    IBeanInfo[] getAdditionalBeanInfo();
 
-    public Image getIcon(int iconKind);
+    Image getIcon(int iconKind);
 
-    public int getDefaultPropertyIndex();
+    int getDefaultPropertyIndex();
 
-    public int getDefaultEventIndex();
+    int getDefaultEventIndex();
+
+    IPropertyDescriptor getPropertyDescriptor(String propertyName);
+
+    IMethodDescriptor getMethodDescriptors(String methodName, Class<?>... parameterTypes);
+
+    IEventSetDescriptor[] getEventSetDescriptors(Class<?> listenerType);
+
 }

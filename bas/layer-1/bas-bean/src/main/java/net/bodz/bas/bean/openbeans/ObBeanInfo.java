@@ -1,15 +1,14 @@
 package net.bodz.bas.bean.openbeans;
 
-import java.awt.Image;
+import java.awt.*;
 
-import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.AbstractBeanInfo;
 import net.bodz.bas.bean.api.IMethodDescriptor;
 
 import com.googlecode.openbeans.BeanInfo;
 
 public class ObBeanInfo
-        implements
-            IBeanInfo {
+        extends AbstractBeanInfo {
 
     BeanInfo bi;
 

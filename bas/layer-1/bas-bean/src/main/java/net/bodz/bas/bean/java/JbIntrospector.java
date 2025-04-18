@@ -9,8 +9,7 @@ import net.bodz.bas.bean.api.IPropertyChangeSupport;
 import net.bodz.bas.bean.api.IntrospectionException;
 
 public class JbIntrospector
-        implements
-            IIntrospector {
+        implements IIntrospector {
 
     @Override
     public IBeanInfo getBeanInfo(Class<?> beanClass)

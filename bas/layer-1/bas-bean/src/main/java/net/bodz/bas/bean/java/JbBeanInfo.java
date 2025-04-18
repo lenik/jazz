@@ -7,13 +7,13 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.bodz.bas.bean.api.AbstractBeanInfo;
 import net.bodz.bas.bean.api.IBeanInfo;
 import net.bodz.bas.bean.api.IMethodDescriptor;
 import net.bodz.bas.bean.api.IPropertyDescriptor;
 
 public class JbBeanInfo
-        implements
-            IBeanInfo {
+        extends AbstractBeanInfo {
 
     BeanInfo bi;
 
@@ -56,7 +56,7 @@ public class JbBeanInfo
 
         Class<?> beanClass = bi.getBeanDescriptor().getBeanClass();
         for (Method method : beanClass.getMethods()) {
-            if (! beanMethods.contains(method)) {
+            if (!beanMethods.contains(method)) {
 //                System.out.println("missing: " + method);
             }
         }
