@@ -4,18 +4,17 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedBasicTokenQueue
-        extends AbstractDecorator<IForwardOnlyTokenQueue>
-        implements
-            IForwardOnlyTokenQueue {
+        extends AbstractDecorator<IBasicTokenQueue>
+        implements IBasicTokenQueue {
 
     private static final long serialVersionUID = 1L;
 
-    public DecoratedBasicTokenQueue(IForwardOnlyTokenQueue _orig) {
+    public DecoratedBasicTokenQueue(IBasicTokenQueue _orig) {
         super(_orig);
     }
 
     @Override
-    public IForwardOnlyTokenQueue clone() {
+    public IBasicTokenQueue clone() {
         return getWrapped().clone();
     }
 
@@ -77,8 +76,8 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public String peekAhead(int offset) {
-        return getWrapped().peekAhead(offset);
+    public String peekAt(int offset) {
+        return getWrapped().peekAt(offset);
     }
 
     @Override
@@ -88,9 +87,9 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public Integer peekIntAhead(int offset)
+    public Integer peekIntAt(int offset)
             throws ParseException {
-        return getWrapped().peekIntAhead(offset);
+        return getWrapped().peekIntAt(offset);
     }
 
     @Override
@@ -100,9 +99,9 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public Long peekLongAhead(int offset)
+    public Long peekLongAt(int offset)
             throws ParseException {
-        return getWrapped().peekLongAhead(offset);
+        return getWrapped().peekLongAt(offset);
     }
 
     @Override

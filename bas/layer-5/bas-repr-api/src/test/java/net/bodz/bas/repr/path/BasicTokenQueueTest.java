@@ -8,7 +8,7 @@ public class BasicTokenQueueTest
 
     @Test
     public void testGetRemainingPath() {
-        BasicTokenQueue queue = BasicTokenQueue.ofPath("a/b/c/d");
+        TokenArray queue = TokenArray.ofPath("a/b/c/d");
         assertEquals("a/b/c/d", queue.getRemainingPath());
 
         queue.shift();
@@ -28,7 +28,7 @@ public class BasicTokenQueueTest
 
     @Test
     public void testParsePath() {
-        BasicTokenQueue queue = BasicTokenQueue.ofPath("a/b/c");
+        TokenArray queue = TokenArray.ofPath("a/b/c");
         assertEquals("a", queue.shift());
         assertEquals("b", queue.shift());
         assertEquals("c", queue.shift());
@@ -38,13 +38,13 @@ public class BasicTokenQueueTest
 
     @Test
     public void testParsePathEmptyMidlets() {
-        BasicTokenQueue queue = BasicTokenQueue.ofPath("///////a");
+        TokenArray queue = TokenArray.ofPath("///////a");
         assertEquals("a", queue.shift());
     }
 
     @Test
     public void testParsePathTrailingSlash() {
-        BasicTokenQueue queue = BasicTokenQueue.ofPath("a/");
+        TokenArray queue = TokenArray.ofPath("a/");
         assertEquals("a", queue.shift());
         assertNull(queue.shift());
         assertTrue(queue.isEntered());
@@ -52,7 +52,7 @@ public class BasicTokenQueueTest
 
     @Test
     public void testParsePathTrailingSlashes() {
-        BasicTokenQueue queue = BasicTokenQueue.ofPath("a//////");
+        TokenArray queue = TokenArray.ofPath("a//////");
         assertEquals("a", queue.shift());
         assertNull(queue.shift());
         assertTrue(queue.isEntered());
@@ -60,10 +60,10 @@ public class BasicTokenQueueTest
 
     @Test
     public void testParsePathEmpty() {
-        BasicTokenQueue queue = BasicTokenQueue.ofPath("");
+        TokenArray queue = TokenArray.ofPath("");
         assertNull(queue.shift());
 
-        queue = BasicTokenQueue.ofPath("////");
+        queue = TokenArray.ofPath("////");
         assertTrue(queue.isEntered());
         assertTrue(queue.isDone());
     }

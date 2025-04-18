@@ -9,9 +9,8 @@ import net.bodz.bas.meta.decl.ThreadUnsafe;
 
 @ThreadUnsafe
 public class TokenQueue
-        extends BasicTokenQueue
-        implements
-            ITokenQueue {
+        extends TokenArray
+        implements ITokenQueue {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,20 +22,8 @@ public class TokenQueue
     final String query;
     final String fragment;
 
-    public TokenQueue(String[] tokens, boolean entered) {
-        super(tokens, entered);
-        this.method = null;
-        this.scheme = null;
-        this.host = null;
-        this.port = 0;
-        this.userInfo = null;
-        this.query = null;
-        this.fragment = null;
-    }
-
-    public TokenQueue(String method, String scheme, String host, int port, String userInfo, String query,
-            String fragment, String[] tokens, boolean entered) {
-        super(tokens, entered);
+    TokenQueue(String[] tokens, int off, int len, boolean entered, String method, String scheme, String host, int port, String userInfo, String query, String fragment) {
+        super(tokens, off, len, entered);
         this.method = method;
         this.scheme = scheme;
         this.host = host;
@@ -56,8 +43,9 @@ public class TokenQueue
 
     @Override
     public TokenQueue clone() {
-        TokenQueue o = new TokenQueue(method, scheme, host, port, userInfo, query, fragment, tokens, entered);
-        o.initState(this);
+        TokenQueue o = new TokenQueue(tokens, start, end - start, entered, method, scheme, host, port, userInfo, query, fragment);
+        o.pos = pos;
+        o.stopped = stopped;
         return o;
     }
 
@@ -97,7 +85,7 @@ public class TokenQueue
     }
 
     public static class Builder
-            extends BasicTokenQueue.Builder {
+            extends TokenArray.Builder {
 
         String method;
         String scheme;
@@ -183,13 +171,9 @@ public class TokenQueue
             return this;
         }
 
-        TokenQueue buildSimple() {
-            return new TokenQueue(tokens, entered);
-        }
-
         @Override
         public TokenQueue build() {
-            TokenQueue o = new TokenQueue(method, scheme, host, port, userInfo, query, fragment, tokens, entered);
+            TokenQueue o = new TokenQueue(tokens, off, len, entered, method, scheme, host, port, userInfo, query, fragment);
             return o;
         }
 

@@ -220,7 +220,7 @@ public abstract class BasicSite
                 break;
 
             case K_SET_LOCALE:
-                String lang = tokens.peekAhead(1);
+                String lang = tokens.peekAt(1);
                 if (lang != null) {
                     Locale locale = Locale.forLanguageTag(lang); // non-null.
                     request.setAttribute(LocaleVars.LOCALE.getName(), locale);
