@@ -1,12 +1,11 @@
 package net.bodz.bas.t.record;
 
+import java.util.AbstractMap;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 import net.bodz.bas.meta.decl.NotNull;
@@ -15,6 +14,7 @@ import net.bodz.bas.t.map.ListMap;
 import net.bodz.bas.t.map.SetMap;
 
 public class BasicRecordMap<K, T>
+        extends AbstractMap<K, T>
         implements IRecordMap<K, T> {
 
     final IRecordType<T> recordType;
@@ -23,14 +23,67 @@ public class BasicRecordMap<K, T>
     final Map<IColumnType<?, ?>, ListMap<?, K>> columnIndices = SortOrder.NONE.newMap();
     final SetMap<T, K> rindex = new SetMap<>();
 
+    Set<String> hiddenKeys = new HashSet<>();
+    boolean nullKeyIndexed = true;
+    boolean nullValueIndexed = false;
+
     public BasicRecordMap(IRecordType<T> recordType) {
         this.recordType = recordType;
         // this.rindex = columnIndex(recordType.getKeyColumn());
     }
 
+    @Override
+    public boolean isKeyIndexed(K key) {
+        if (key == null && !nullKeyIndexed)
+            return false;
+        if (hiddenKeys.contains(key))
+            return false;
+        return true;
+    }
+
+    @Override
+    public boolean isNullValueIndexed() {
+        return nullValueIndexed;
+    }
+
+    public void setNullValueIndexed(boolean nullValueIndexed) {
+        this.nullValueIndexed = nullValueIndexed;
+    }
+
+    protected <E> boolean shouldIndex(IColumnType<?, E> column, Object value) {
+        return value != null || nullValueIndexed;
+    }
+
+    protected <E> boolean shouldRemoveIndex(IColumnType<?, E> column, Object value) {
+        return true;
+    }
+
+    @Override
+    public void reIndex() {
+        columnIndices.clear();
+        rindex.clear();
+        for (Entry<K, T> entry : map.entrySet()) {
+            K key = entry.getKey();
+            T record = entry.getValue();
+            if (!isKeyIndexed(key))
+                continue;
+
+            for (IColumnType<T, ?> column : recordType.getColumns()) {
+                @SuppressWarnings("unchecked")
+                ListMap<Object, K> index = (ListMap<Object, K>) makeIndex(column);
+                Object columnValue = column.get(record);
+                if (shouldIndex(column, columnValue))
+                    index.addToList(columnValue, key);
+            }
+
+            rindex.addToSet(record, key);
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     @Override
-    public <E> ListMap<E, K> index(IColumnType<?, E> column) {
+    public <E> ListMap<E, K> makeIndex(IColumnType<?, E> column) {
         ListMap<E, K> index = (ListMap<E, K>) columnIndices.get(column);
         if (index == null) {
             index = new ListMap<>();
@@ -40,60 +93,78 @@ public class BasicRecordMap<K, T>
     }
 
     @Override
-    public void add(K key, T record) {
+    public boolean add(@NotNull K key, @NotNull T record) {
         if (map.containsKey(key))
-            update(key, record);
-        else
+            return update(key, record);
+        else {
             insert(key, record);
+            return true;
+        }
     }
 
     @Override
-    public void insert(K key, T record) {
+    public void insert(@NotNull K key, @NotNull T record) {
         if (map.containsKey(key))
             throw new IllegalStateException("key duplicated: " + key);
         map.put(key, record);
         for (IColumnType<T, ?> column : recordType.getColumns()) {
             @SuppressWarnings("unchecked")
-            ListMap<Object, K> index = (ListMap<Object, K>) index(column);
+            ListMap<Object, K> index = (ListMap<Object, K>) makeIndex(column);
             Object columnValue = column.get(record);
-            index.addToList(columnValue, key);
+            if (shouldIndex(column, columnValue))
+                index.addToList(columnValue, key);
         }
         rindex.addToSet(record, key);
-        bind(key, record);
+        setPropertyChangeTracking(key, record);
     }
 
     @Override
-    public void update(K key, T record) {
+    public boolean update(@NotNull K key, @NotNull T record) {
         if (!map.containsKey(key))
-            throw new IllegalStateException("key missing: " + key);
+            throw new IllegalStateException("invalid key: " + key);
 
         T old = map.get(key);
-        if (old == record)
-            throw new IllegalArgumentException("can't update with the same reference. mutable record isn't supported.");
+        if (old == record) {
+            if (isTrackingPropertyChange())
+                return false;
+            else {
+                remove(key);
+                insert(key, record);
+                return true;
+            }
+        }
 
         for (IColumnType<T, ?> column : recordType.getColumns()) {
-            @SuppressWarnings("unchecked")
-            ListMap<Object, K> index = (ListMap<Object, K>) index(column);
             Object columnValue = column.get(old);
-            index.removeFromList(columnValue, key);
+            if (shouldRemoveIndex(column, columnValue)) {
+                @SuppressWarnings("unchecked")
+                ListMap<Object, K> index = (ListMap<Object, K>) makeIndex(column);
+                index.removeFromList(columnValue, key);
+            }
         }
         rindex.removeFromSet(old, key);
-        unbind(key, old);
 
         map.put(key, record);
 
         for (IColumnType<T, ?> column : recordType.getColumns()) {
-            @SuppressWarnings("unchecked")
-            ListMap<Object, K> index = (ListMap<Object, K>) index(column);
             Object columnValue = column.get(record);
-            index.addToList(columnValue, key);
+            if (shouldIndex(column, columnValue)) {
+                @SuppressWarnings("unchecked")
+                ListMap<Object, K> index = (ListMap<Object, K>) makeIndex(column);
+                index.addToList(columnValue, key);
+            }
         }
         rindex.addToSet(record, key);
-        bind(key, record);
+
+        if (isTrackingPropertyChange()) {
+            unsetPropertyChangeTracking(key, old);
+            setPropertyChangeTracking(key, record);
+        }
+        return true;
     }
 
     @Override
-    public T remove(Object _key) {
+    public T remove(@NotNull Object _key) {
         T record = map.remove(_key);
         if (record == null)
             return null;
@@ -102,24 +173,33 @@ public class BasicRecordMap<K, T>
         K key = (K) _key;
 
         for (IColumnType<T, ?> column : recordType.getColumns()) {
-            @SuppressWarnings("unchecked")
-            ListMap<Object, K> index = (ListMap<Object, K>) index(column);
             Object columnValue = column.get(record);
-            index.removeFromList(columnValue, key);
+            if (shouldRemoveIndex(column, columnValue)) {
+                @SuppressWarnings("unchecked")
+                ListMap<Object, K> index = (ListMap<Object, K>) makeIndex(column);
+                index.removeFromList(columnValue, key);
+            }
         }
         rindex.removeFromSet(record, key);
-        unbind(key, record);
+
+        if (isTrackingPropertyChange())
+            unsetPropertyChangeTracking(key, record);
         return record;
     }
 
-    protected void bind(K key, T record) {
+    @Override
+    public boolean isTrackingPropertyChange() {
+        return false;
     }
 
-    protected void unbind(K key, T record) {
+    protected void setPropertyChangeTracking(@NotNull K key, @NotNull T record) {
+    }
+
+    protected void unsetPropertyChangeTracking(@NotNull K key, @NotNull T record) {
     }
 
     @Override
-    public Set<K> find(T record) {
+    public Set<K> find(@NotNull T record) {
         return rindex.makeSet(record);
     }
 
@@ -127,14 +207,16 @@ public class BasicRecordMap<K, T>
     public <E> Set<K> find(IColumnType<T, E> column, Predicate<E> columnValuePredicate) {
         Set<K> keys = new LinkedHashSet<>();
         for (Map.Entry<K, T> entry : map.entrySet()) {
+            K key = entry.getKey();
+            if (!isKeyIndexed(key))
+                continue;
             T record = entry.getValue();
             E columnValue = column.get(record);
             if (columnValuePredicate.test(columnValue))
-                keys.add(entry.getKey());
+                keys.add(key);
         }
         return keys;
     }
-
 
     @Override
     public <E1, E2> Set<K> find(//
@@ -142,12 +224,15 @@ public class BasicRecordMap<K, T>
             IColumnType<T, E2> column2, Predicate<E2> column2ValuePredicate) {
         Set<K> keys = new LinkedHashSet<>();
         for (Map.Entry<K, T> entry : map.entrySet()) {
+            K key = entry.getKey();
+            if (!isKeyIndexed(key))
+                continue;
             T record = entry.getValue();
             E1 column1Value = column1.get(record);
             E2 column2Value = column2.get(record);
             if (column1ValuePredicate.test(column1Value) //
                     && column2ValuePredicate.test(column2Value))
-                keys.add(entry.getKey());
+                keys.add(key);
         }
         return keys;
     }
@@ -170,7 +255,6 @@ public class BasicRecordMap<K, T>
     }
 
     //
-
 
     @Override
     public int size() {
@@ -198,17 +282,22 @@ public class BasicRecordMap<K, T>
     }
 
     @Override
-    public T put(K key, T value) {
-        return map.put(key, value);
+    public T put(K key, T record) {
+        if (record == null) {
+            return remove(key);
+        } else {
+            add(key, record);
+            return null;
+        }
     }
 
     @Override
-    public void putAll(@NotNull Map<? extends K, ? extends T> m) {
-        map.putAll(m);
-    }
-
-    @Override
-    public void clear() {
+    public synchronized void clear() {
+        if (isTrackingPropertyChange())
+            for (Entry<K, T> entry : map.entrySet())
+                unsetPropertyChangeTracking(entry.getKey(), entry.getValue());
+        rindex.clear();
+        columnIndices.clear();
         map.clear();
     }
 

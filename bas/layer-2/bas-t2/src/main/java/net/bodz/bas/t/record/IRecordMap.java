@@ -2,7 +2,6 @@ package net.bodz.bas.t.record;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 import net.bodz.bas.meta.decl.NotNull;
@@ -11,13 +10,36 @@ import net.bodz.bas.t.map.ListMap;
 public interface IRecordMap<K, T>
         extends Map<K, T> {
 
-    <E> ListMap<E, K> index(IColumnType<?, E> column);
+    boolean isTrackingPropertyChange();
 
-    void add(K key, T record);
+    boolean isKeyIndexed(K key);
 
-    void insert(K key, T record);
+    boolean isNullValueIndexed();
 
-    void update(K key, T record);
+    void reIndex();
+
+    <E> ListMap<E, K> makeIndex(IColumnType<?, E> column);
+
+    /**
+     * @return true if added or updated, false if nothing done.
+     */
+    boolean add(@NotNull K key, @NotNull T record);
+
+    void insert(@NotNull K key, @NotNull T record);
+
+    /**
+     * @return true if any change updated, false if nothing done.
+     */
+    boolean update(@NotNull K key, @NotNull T record);
+
+    @Override
+    T put(K key, T record);
+
+    @Override
+    T remove(@NotNull Object key);
+
+    @Override
+    void clear();
 
     Set<K> find(T record);
 

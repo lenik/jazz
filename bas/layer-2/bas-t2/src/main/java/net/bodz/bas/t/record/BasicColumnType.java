@@ -56,30 +56,16 @@ public class BasicColumnType<T, E>
         Class<E> type = (Class<E>) property.getPropertyType();
 
         IColumnGetter<T, E> getter = null;
-        Method readMethod = property.getReadMethod();
-        if (readMethod != null)
-            getter = context -> {
-                try {
-                    @SuppressWarnings("unchecked")
-                    E val = (E) readMethod.invoke(context);
-                    return val;
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            };
+        if (property.getReadMethod() != null)
+            getter = new PropertyGetter<>(property);
 
         IColumnSetter<T, E> setter = null;
-        Method writeMethod = property.getWriteMethod();
-        if (writeMethod != null)
-            setter = (context, val) -> {
-                try {
-                    writeMethod.invoke(context, val);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            };
+        if (property.getWriteMethod() != null)
+            setter = new PropertySetter<>(property);
 
-        return new BasicColumnType<>(propertyName, type, getter, setter);
+        BasicColumnType<T, E> column = new BasicColumnType<>(propertyName, type, getter, setter);
+        column.description = description;
+        return column;
     }
 
     @NotNull
@@ -115,6 +101,30 @@ public class BasicColumnType<T, E>
     public void set(T context, E value) {
         if (setter != null)
             setter.set(context, value);
+    }
+
+    @Override
+    public Method getMethod() {
+        Method m = null;
+        if (getter != null)
+            m = getter.getMethod();
+        if (m == null && setter != null)
+            m = setter.getMethod();
+        return m;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder buf = new StringBuilder();
+        Method m = getMethod();
+        if (m != null)
+            buf.append(m.getDeclaringClass().getSimpleName()).append("::");
+        buf.append(name);
+
+        if (description != null)
+            buf.append(": ").append(description);
+
+        return buf.toString();
     }
 
 }

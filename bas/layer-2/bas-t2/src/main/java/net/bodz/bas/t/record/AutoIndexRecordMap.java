@@ -1,30 +1,30 @@
 package net.bodz.bas.t.record;
 
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
-import net.bodz.bas.repr.form.SortOrder;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.map.ListMap;
-import net.bodz.bas.t.map.SetMap;
 
-public class BoundRecordMap<K, T extends IColumnChangeSource>
+public class AutoIndexRecordMap<K, T extends IColumnChangeSource>
         extends BasicRecordMap<K, T> {
 
     Map<K, IColumnChangeListener> listeners = new HashMap<>();
 
-    public BoundRecordMap(IRecordType<T> recordType) {
+    public AutoIndexRecordMap(IRecordType<T> recordType) {
         super(recordType);
     }
 
     @Override
-    protected synchronized void bind(K key, T record) {
+    public boolean isTrackingPropertyChange() {
+        return true;
+    }
+
+    @Override
+    protected synchronized void setPropertyChangeTracking(@NotNull K key, @NotNull T record) {
         IColumnChangeListener l = event -> {
             @SuppressWarnings("unchecked")
-            ListMap<Object, K> index = (ListMap<Object, K>) index(event.getColumn());
+            ListMap<Object, K> index = (ListMap<Object, K>) makeIndex(event.getColumn());
             Object oldValue = event.getOldValue();
             Object newValue = event.getNewValue();
             index.removeFromList(oldValue, key);
@@ -36,7 +36,7 @@ public class BoundRecordMap<K, T extends IColumnChangeSource>
     }
 
     @Override
-    protected synchronized void unbind(K key, T record) {
+    protected synchronized void unsetPropertyChangeTracking(@NotNull K key, @NotNull T record) {
         IColumnChangeListener l = listeners.remove(key);
         if (l != null)
             for (IColumnType<T, ?> column : recordType.getColumns())

@@ -1,5 +1,7 @@
 package net.bodz.bas.t.record;
 
+import java.lang.reflect.Method;
+
 public interface IColumnGetter<T, E> {
 
     E get(T context);
@@ -14,6 +16,10 @@ public interface IColumnGetter<T, E> {
 
     default boolean isNotEmpty(T context) {
         return hasValue(context);
+    }
+
+    default Method getMethod() {
+        return null;
     }
 
 }

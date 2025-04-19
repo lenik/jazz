@@ -91,7 +91,7 @@ public class Dog
         Dog dog2 = new Dog("b", "red", 3);
         Dog dog3 = new Dog("c", "white", 4);
 
-        IKeyedRecordMap<String, Dog> dogs = new KeyedBoundRecordMap<String, Dog>(TYPE);
+        IKeyedRecordMap<String, Dog> dogs = new KeyedAutoIndexRecordMap<String, Dog>(TYPE);
         dogs.insert(dog1);
         dogs.insert(dog2);
         dogs.insert(dog3);
