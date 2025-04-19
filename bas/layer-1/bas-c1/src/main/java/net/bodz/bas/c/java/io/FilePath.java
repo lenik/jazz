@@ -368,6 +368,12 @@ public class FilePath {
     }
 
     @NotNull
+    public static String name1(@NotNull Path pathNotEmpty) {
+        Path fileName = pathNotEmpty.getFileName();
+        return nameOfPath(fileName.toString());
+    }
+
+    @NotNull
     public static String name(@NotNull File file) {
         return name(file.getName());
     }
