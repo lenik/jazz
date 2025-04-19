@@ -1,8 +1,17 @@
 package net.bodz.bas.t.record;
 
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
-public interface IRecordMap<K, T> {
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.t.map.ListMap;
+
+public interface IRecordMap<K, T>
+        extends Map<K, T> {
+
+    <E> ListMap<E, K> index(IColumnType<?, E> column);
 
     void add(K key, T record);
 
@@ -10,30 +19,25 @@ public interface IRecordMap<K, T> {
 
     void update(K key, T record);
 
-    T get(K key);
-
     Set<K> find(T record);
 
-    <E> Set<K> findEquals(IColumnType<T, E> column, E columnValueToMatch);
+    <E> Set<K> find(IColumnType<T, E> column, Predicate<E> columnValuePredicate);
 
-    boolean remove(K key);
+    <E1, E2> Set<K> find(IColumnType<T, E1> column1, Predicate<E1> column1ValuePredicate, //
+            IColumnType<T, E2> column2, Predicate<E2> column2ValuePredicate);
 
     default int removeAll(Set<K> keys) {
         int count = 0;
         for (K key : keys)
-            if (remove(key))
+            if (containsKey(key)) {
+                remove(key);
                 count++;
+            }
         return count;
     }
 
     default int removeAll(T record) {
-        int count = 0;
-        for (K key : find(record)) {
-            if (remove(key))
-                count++;
-        }
-        return count;
+        return removeAll(find(record));
     }
-
 
 }
