@@ -1,24 +1,26 @@
 package net.bodz.bas.t.map;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.SortOrder;
-import net.bodz.bas.t.set.ArraySet;
 
-public class SetMap<K, E>
-        implements ISetMap<K, E> {
+public class MapMap<K, EK, EV>
+        implements IMapMap<K, EK, EV> {
 
     SortOrder order;
-    Map<K, Set<E>> map;
+    Map<K, Map<EK, EV>> map;
 
-    public SetMap() {
+    public MapMap() {
         this(SortOrder.NONE);
     }
 
-    public SetMap(SortOrder order) {
+    public MapMap(SortOrder order) {
         this.order = order;
         this.map = createMap();
     }
@@ -31,19 +33,19 @@ public class SetMap<K, E>
         return order.newMap();
     }
 
-    protected <value_t> Set<value_t> createSet() {
-        return new ArraySet<>();
+    protected <key_t, value_t> Map<key_t, value_t> createSubMap() {
+        return new LinkedHashMap<>();
     }
 
     @NotNull
     @Override
-    public synchronized Set<E> makeSet(K keyToSet) {
-        Set<E> set = map.get(keyToSet);
-        if (set == null) {
-            set = createSet();
-            map.put(keyToSet, set);
+    public synchronized Map<EK, EV> makeMap(K keyToMap) {
+        Map<EK, EV> map = this.map.get(keyToMap);
+        if (map == null) {
+            map = createSubMap();
+            this.map.put(keyToMap, map);
         }
-        return set;
+        return map;
     }
 
     /** ⇱ Implementation Of {@link Map}. */
@@ -70,22 +72,22 @@ public class SetMap<K, E>
     }
 
     @Override
-    public Set<E> get(Object key) {
+    public Map<EK, EV> get(Object key) {
         return map.get(key);
     }
 
     @Override
-    public Set<E> put(K key, Set<E> value) {
+    public Map<EK, EV> put(K key, Map<EK, EV> value) {
         return map.put(key, value);
     }
 
     @Override
-    public Set<E> remove(Object key) {
+    public Map<EK, EV> remove(Object key) {
         return map.remove(key);
     }
 
     @Override
-    public void putAll(@NotNull Map<? extends K, ? extends Set<E>> m) {
+    public void putAll(@NotNull Map<? extends K, ? extends Map<EK, EV>> m) {
         map.putAll(m);
     }
 
@@ -102,13 +104,13 @@ public class SetMap<K, E>
 
     @NotNull
     @Override
-    public Collection<Set<E>> values() {
+    public Collection<Map<EK, EV>> values() {
         return map.values();
     }
 
     @NotNull
     @Override
-    public Set<Entry<K, Set<E>>> entrySet() {
+    public Set<Entry<K, Map<EK, EV>>> entrySet() {
         return map.entrySet();
     }
 

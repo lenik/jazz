@@ -49,7 +49,7 @@ public class ListMap_JX<K, V extends IJsonForm>
             throws ParseException {
         for (String key : o.keySet()) {
             K k1 = parseKey(key);
-            List<V> list = list(k1);
+            List<V> list = makeList(k1);
             JsonArray array = o.getJsonArray(key);
             int n = array.length();
             for (int i = 0; i < n; i++) {
