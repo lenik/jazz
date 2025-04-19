@@ -2,16 +2,28 @@ package net.bodz.bas.net.serv.cmd;
 
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
+import java.util.function.Consumer;
 
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.cli.Command;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.ISocketPoller;
+import net.bodz.bas.net.serv.session.ISocketSession;
 
 public class ServerCmds
         extends AbstractNioCommandProvider {
 
-    public ServerCmds(SocketChannel channel) {
+    @NotNull
+    final ISocketPoller poller;
+
+    @NotNull
+    final Consumer<ISocketSession> applier;
+
+    public ServerCmds(@NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull Consumer<ISocketSession> applier) {
         super(channel);
+        this.poller = poller;
+        this.applier = applier;
     }
 
     @Override
@@ -24,10 +36,8 @@ public class ServerCmds
                     error("expect sub command name: listen, list, stop");
                     return true;
                 }
-                Command subCmd = new Command();
-                subCmd.setName(name);
-                subCmd.setArguments(cmd.getArguments());
-                server(cmd);
+                Command subCmd = new Command(name, cmd.getArguments());
+                server(subCmd);
                 return true;
         }
         return false;
@@ -74,7 +84,7 @@ public class ServerCmds
                                 return;
                         }
             }
-        error("invalid service statement -> " + head + " " + cmd.getArgumentsLine());
+        error("invalid service statement -> " + head + " " + cmd.getRemainingArguments());
     }
 
     void onConnect(int port, Command cmd)

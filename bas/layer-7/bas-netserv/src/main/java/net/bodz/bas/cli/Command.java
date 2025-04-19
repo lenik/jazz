@@ -1,7 +1,6 @@
 package net.bodz.bas.cli;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.err.FormatException;
@@ -12,11 +11,13 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.repr.path.TokenList;
 
 /**
  * Represents a command with a name and arguments.
  */
 public class Command
+        extends TokenList
         implements IJsonForm {
 
     /**
@@ -24,10 +25,13 @@ public class Command
      */
     String name;
 
-    /**
-     * A list of arguments associated with the command.
-     */
-    List<String> args = new ArrayList<>();
+    public Command() {
+    }
+
+    public Command(String name, String... args) {
+        super(args);
+        this.name = name;
+    }
 
     /**
      * Returns the name of the command.
@@ -47,23 +51,18 @@ public class Command
         this.name = name;
     }
 
-    /**
-     * Returns a list of arguments for the command.
-     *
-     * @return a list of arguments, not null
-     */
     @NotNull
-    public List<String> getArguments() {
+    public String[] getArguments() {
+        String[] args = peek(available());
         return args;
     }
 
-    /**
-     * Sets the list of arguments for the command.
-     *
-     * @param args the new list of arguments, not null
-     */
-    public void setArguments(@NotNull List<String> args) {
-        this.args = args;
+    public void setArguments(String[] args) {
+        setArguments(args, 0, args.length);
+    }
+
+    public void setArguments(String[] args, int off, int len) {
+        setBackedList(args, off, len);
     }
 
     /**
@@ -74,8 +73,7 @@ public class Command
      */
     @NotNull
     public String getArgument(int index) {
-        index--;
-        return args.get(index);
+        return peekAt(index - 1);
     }
 
     /**
@@ -86,11 +84,7 @@ public class Command
      * @return the argument at the specified index or the fallback value
      */
     public String getArgument(int index, String fallback) {
-        index--;
-        if (index >= 0 && index < args.size())
-            return args.get(index);
-        else
-            return fallback;
+        return peekAt(index - 1, fallback);
     }
 
     /**
@@ -99,7 +93,7 @@ public class Command
      * @param arg the argument to add, not null
      */
     public void addArgument(@NotNull String arg) {
-        args.add(arg);
+        add(arg);
     }
 
     /**
@@ -108,7 +102,7 @@ public class Command
      * @return the number of arguments
      */
     public int getArgumentCount() {
-        return args.size();
+        return available();
     }
 
     /**
@@ -117,7 +111,7 @@ public class Command
      * @return true if there are no arguments, false otherwise
      */
     public boolean isNoArgument() {
-        return args.isEmpty();
+        return available() == 0;
     }
 
     /**
@@ -136,7 +130,7 @@ public class Command
      * @return true if there are arguments, false otherwise
      */
     public boolean isArgumentPresent() {
-        return !args.isEmpty();
+        return available() != 0;
     }
 
     /**
@@ -147,9 +141,9 @@ public class Command
      */
     public boolean isArgumentPresent(int index) {
         index--;
-        if (index < 0 || index >= args.size())
+        if (index < 0 || index >= available())
             return false;
-        String arg = args.get(index);
+        String arg = peekAt(index);
         return arg != null;
     }
 
@@ -159,55 +153,8 @@ public class Command
      * @return a string of arguments
      */
     @NotNull
-    public String getArgumentsLine() {
-        StringBuilder buf = new StringBuilder();
-        int n = 0;
-        for (String arg : args) {
-            if (n != 0)
-                buf.append(" ");
-            buf.append(arg);
-            n++;
-        }
-        return buf.toString();
-    }
-
-    /**
-     * Returns the first argument in the list, or null if there are no arguments.
-     *
-     * @return the first argument or null
-     */
-    public String peek() {
-        if (args.isEmpty())
-            return null;
-        else
-            return args.get(0);
-    }
-
-    /**
-     * Removes and returns the first argument from the list, or null if there are no arguments.
-     *
-     * @return the first argument or null
-     */
-    public String shift() {
-        if (args.isEmpty())
-            return null;
-        else
-            return args.remove(0);
-    }
-
-    /**
-     * Removes the specified number of arguments from the start of the list.
-     *
-     * @param count the number of arguments to remove
-     */
-    public void shift(int count) {
-        if (count <= 0)
-            return;
-        int size = args.size();
-        if (count > size)
-            count = size;
-        for (int i = count - 1; i >= 0; i--)
-            args.remove(i);
+    public String getRemainingArguments() {
+        return peek(" ");
     }
 
     /**
@@ -219,9 +166,23 @@ public class Command
     public String getCommandLine() {
         StringBuilder buf = new StringBuilder();
         buf.append(name);
-        for (String arg : args)
-            buf.append(" ").append(arg);
+        int argc = size();
+        for (int i = 0; i < argc; i++) {
+            buf.append(" ");
+            String arg = get(i);
+            buf.append(arg);
+        }
         return buf.toString();
+    }
+
+    @NotNull
+    public String[] getCommandArray() {
+        String[] array = new String[size() + 1];
+        array[0] = name;
+        int argc = size();
+        for (int i = 0; i < argc; i++)
+            array[i + 1] = get(i);
+        return array;
     }
 
     private static final String K_NAME = "name";
@@ -231,14 +192,15 @@ public class Command
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         name = o.getString(K_NAME);
-        args = o.getArrayList(K_ARGS, JsonVariant::castToString);
+        List<String> list = o.getArrayList(K_ARGS, JsonVariant::castToString);
+        setBackedList(list);
     }
 
     @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         out.entryNotNull(K_NAME, name);
-        out.entryNotNull(K_ARGS, args);
+        out.entryNotNull(K_ARGS, toArray());
     }
 
 }

@@ -39,7 +39,7 @@ public class StarterSession
 
     void echo(Command cmd)
             throws IOException {
-        println(cmd.getArgumentsLine());
+        println(cmd.getRemainingArguments());
     }
 
     void chat(Command cmd)

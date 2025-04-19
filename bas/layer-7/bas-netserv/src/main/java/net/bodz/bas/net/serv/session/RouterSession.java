@@ -1,33 +1,33 @@
 package net.bodz.bas.net.serv.session;
 
-import java.io.IOException;
 import java.nio.channels.SocketChannel;
 
-import net.bodz.bas.cli.Command;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.io.ISocketPoller;
+import net.bodz.bas.net.serv.IServiceManager;
 import net.bodz.bas.net.serv.ISessionManager;
-import net.bodz.bas.net.serv.DefaultServiceManager;
 import net.bodz.bas.net.serv.cmd.GatewayCmds;
 import net.bodz.bas.net.serv.cmd.RedirectCmds;
-import net.bodz.bas.net.serv.cmd.ServiceRegistry;
+import net.bodz.bas.net.serv.cmd.ServerCmds;
+import net.bodz.bas.net.serv.cmd.ServiceRegistryCmds;
 
 public class RouterSession
         extends StarterSession {
 
-    DefaultServiceManager serviceManager = new DefaultServiceManager();
-    ServiceRegistry registry;
-
-    public RouterSession(SocketChannel channel, @NotNull ISessionManager sessionManager, @NotNull ISocketPoller poller) {
+    public RouterSession(SocketChannel channel, @NotNull ISessionManager sessionManager, @NotNull ISocketPoller poller, IServiceManager serviceManager) {
         super(channel, sessionManager);
 
-        registry = new ServiceRegistry(serviceManager);
+        addProvider(new ServiceRegistryCmds(channel, serviceManager));
 
         addProvider(new RedirectCmds(channel, poller, //
                 s -> sessionManager.replaceSession(this, s)));
-        addProvider(new GatewayCmds(channel, registry,//
+
+        addProvider(new ServerCmds(channel, poller,//
                 s -> sessionManager.replaceSession(this, s)));
+
+        addProvider(new GatewayCmds(channel, serviceManager,//
+                s -> sessionManager.replaceSession(this, s)));
+
     }
 
 }

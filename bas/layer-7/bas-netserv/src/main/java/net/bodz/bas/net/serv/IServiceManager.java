@@ -5,14 +5,14 @@ import java.util.Set;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public interface IServiceManager {
+public interface IServiceManager
+        extends IServiceChannelRegistry {
 
     @NotNull
     Set<String> getProtocols();
 
     /**
-     * @param protocol
-     * @return alloc-id => descriptor
+     * @return id => descriptor
      */
     @NotNull
     Map<String, ServiceDescriptor> findByProtocol(@NotNull String protocol);
@@ -20,7 +20,7 @@ public interface IServiceManager {
     /**
      * @return identifier
      */
-    String registerService(@NotNull String protocol, @NotNull ServiceDescriptor descriptor);
+    String registerService(@NotNull ServiceDescriptor descriptor);
 
     ServiceDescriptor getService(@NotNull String id);
 
@@ -29,8 +29,6 @@ public interface IServiceManager {
      */
     boolean removeService(@NotNull String id);
 
-    void removeService(@NotNull String protocol, @NotNull ServiceDescriptor descriptor);
-
-    void removeServices(@NotNull ServiceDescriptor descriptor);
+    void removeService(@NotNull ServiceDescriptor descriptor);
 
 }

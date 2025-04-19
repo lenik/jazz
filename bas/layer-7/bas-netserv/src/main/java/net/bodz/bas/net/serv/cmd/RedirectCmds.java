@@ -9,7 +9,6 @@ import net.bodz.bas.cli.Command;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.io.ISocketPoller;
-import net.bodz.bas.net.serv.ISessionManager;
 import net.bodz.bas.net.serv.session.ISocketSession;
 import net.bodz.bas.net.serv.session.RelaySession;
 
@@ -39,14 +38,17 @@ public class RedirectCmds
         return false;
     }
 
-    public void connect(Command cmd)
+    /**
+     * connect PORT HOST=localhost
+     */
+    void connect(Command cmd)
             throws IOException {
-        if (cmd.isNoArgument()) {
+        String portStr = cmd.shift();
+        if (portStr == null) {
             error("Expect relay port.");
             return;
         }
 
-        String portStr = cmd.getArgument(1);
         int port;
         try {
             port = Integer.parseInt(portStr);
@@ -55,7 +57,7 @@ public class RedirectCmds
             return;
         }
 
-        String host = cmd.getArgument(2, null);
+        String host = cmd.shift();
         connect(port, host);
     }
 

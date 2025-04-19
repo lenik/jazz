@@ -3,7 +3,6 @@ package net.bodz.bas.net.serv.cmd;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import java.util.Map;
-import java.util.TreeMap;
 
 import net.bodz.bas.cli.Command;
 import net.bodz.bas.err.FormatException;
@@ -11,6 +10,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.serv.IServiceChannelRegistry;
 import net.bodz.bas.net.serv.IServiceManager;
 import net.bodz.bas.net.serv.ServiceDescriptor;
 
@@ -20,13 +20,13 @@ public class ServiceRegistryCmds
     public static final String FORMAT_PLAIN = "plain";
     public static final String FORMAT_JSON = "json";
 
-    ServiceRegistry registry;
     IServiceManager serviceManager;
+    IServiceChannelRegistry registry;
 
-    public ServiceRegistryCmds(@NotNull SocketChannel channel, @NotNull ServiceRegistry registry) {
+    public ServiceRegistryCmds(@NotNull SocketChannel channel, @NotNull IServiceManager serviceManager) {
         super(channel);
-        this.registry = registry;
-        this.serviceManager = registry.serviceManager;
+        this.serviceManager = serviceManager;
+        this.registry = serviceManager;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ServiceRegistryCmds
             return;
         }
         try {
-            registry.register(protocol, channel);
+            registry.registerChannel(channel, protocol);
         } catch (Exception e) {
             error(e);
         }
@@ -72,7 +72,7 @@ public class ServiceRegistryCmds
         }
         String id = cmd.getArgument(1);
         try {
-            registry.deregister(id);
+            registry.removeChannel(id);
         } catch (Exception e) {
             error(e);
         }

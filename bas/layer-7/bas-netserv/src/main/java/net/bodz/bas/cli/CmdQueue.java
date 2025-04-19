@@ -39,8 +39,7 @@ public class CmdQueue
             throws ParseException {
         // QuoteFormat.QQ.split("")
         String[] args = line.split("\\s+");
-        Command cmd = new Command();
-        cmd.name = args[0];
+        Command cmd = new Command(args[0]);
         for (int i = 1; i < args.length; i++)
             cmd.addArgument(args[i]);
         list.add(cmd);

@@ -8,15 +8,16 @@ import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.cli.Command;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.serv.IServiceChannelRegistry;
 import net.bodz.bas.net.serv.session.ISocketSession;
 
 public class GatewayCmds
         extends AbstractNioCommandProvider {
 
-    final ServiceRegistry registry;
+    final IServiceChannelRegistry registry;
     final Consumer<ISocketSession> applier;
 
-    public GatewayCmds(@NotNull SocketChannel channel, @NotNull ServiceRegistry registry, @NotNull Consumer<ISocketSession> applier) {
+    public GatewayCmds(@NotNull SocketChannel channel, @NotNull IServiceChannelRegistry registry, @NotNull Consumer<ISocketSession> applier) {
         super(channel);
         this.registry = registry;
         this.applier = applier;

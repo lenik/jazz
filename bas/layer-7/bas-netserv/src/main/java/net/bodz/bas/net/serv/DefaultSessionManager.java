@@ -47,6 +47,7 @@ public class DefaultSessionManager
         id = idPool.allocate().toString();
         byId.put(id, session);
         byChannel.put(session.getChannel(), session);
+        rindex.put(session, id);
         return id;
     }
 
@@ -56,6 +57,7 @@ public class DefaultSessionManager
         if (session == null)
             return false;
         byChannel.remove(session.getChannel());
+        rindex.remove(session);
         return true;
     }
 
@@ -72,7 +74,7 @@ public class DefaultSessionManager
         if (oldSession == null)
             throw new IllegalArgumentException("id wasn't used: " + id);
 
-        ISocketSession prev = byChannel.get(newSession);
+        ISocketSession prev = byChannel.get(newSession.getChannel());
         if (prev != null)
             throw new IllegalArgumentException("channel duplicated");
 

@@ -76,6 +76,8 @@ public class StdService {
             case UDP:
                 byUdpPort.put(port, service);
                 break;
+            default:
+                //
         }
         return service;
     }

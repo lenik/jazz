@@ -7,6 +7,7 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.err.IErrorRecoverer;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -14,8 +15,7 @@ import net.bodz.bas.net.io.DefaultPoller;
 import net.bodz.bas.net.io.ISocketAccepter;
 import net.bodz.bas.net.io.ISocketReader;
 import net.bodz.bas.net.serv.session.ISocketSession;
-import net.bodz.bas.net.serv.session.StarterSession;
-import net.bodz.bas.err.IErrorRecoverer;
+import net.bodz.bas.net.serv.session.RouterSession;
 
 public class NetServer {
 
@@ -27,6 +27,9 @@ public class NetServer {
 
     ISessionManager sessionManager = new DefaultSessionManager();
     int nextId = 1;
+
+
+    DefaultServiceManager serviceManager = new DefaultServiceManager();
 
     void setupLocal() {
     }
@@ -55,7 +58,7 @@ public class NetServer {
 
         poller.register(clientChannel, (ISocketReader) this::onReceive);
 
-        StarterSession session = new StarterSession(clientChannel, sessionManager);
+        ISocketSession session = new RouterSession(clientChannel, sessionManager, poller, serviceManager);
         sessionManager.addSession(session);
 
         return true;

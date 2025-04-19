@@ -134,8 +134,8 @@ public class ActiveLinkCmds
         if (remoteHost == null)
             remoteHost = "localhost";
         InetSocketAddress destAddr = new InetSocketAddress(remoteHost, remotePort);
-        OpenSession newSession = new OpenSession(channel, destAddr, poller);
-        applier.accept(newSession);
+//        OpenSession newSession = new OpenSession(channel, destAddr, poller);
+//        applier.accept(newSession);
     }
 
     public void close(int id) {
