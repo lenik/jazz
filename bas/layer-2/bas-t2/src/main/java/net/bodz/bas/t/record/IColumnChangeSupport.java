@@ -1,5 +1,7 @@
 package net.bodz.bas.t.record;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 /**
  * @see net.bodz.bas.bean.api.IPropertyChangeSupport
  */
@@ -51,7 +53,7 @@ public interface IColumnChangeSupport {
      * </pre>
      *
      * @return all of the <code>ColumnChangeListeners</code> added or an empty array if no listeners have been added
-     * @see IColumnChangeListenerProxy
+     * @see ColumnChangeListenerProxy
      * @since 1.4
      */
     IColumnChangeListener[] getColumnChangeListeners();
@@ -101,7 +103,7 @@ public interface IColumnChangeSupport {
      * @param oldValue the old value of the column
      * @param newValue the new value of the column
      */
-    void fireColumnChange(IColumnType<?, ?> column, Object oldValue, Object newValue);
+    void fireColumnChange(@NotNull IColumnType<?, ?> column, Object oldValue, Object newValue);
 
     /**
      * Reports an integer bound column update to listeners that have been registered to track updates of all columns or
@@ -116,7 +118,7 @@ public interface IColumnChangeSupport {
      * @param oldValue the old value of the column
      * @param newValue the new value of the column
      */
-    void fireColumnChange(IColumnType<?, ?> column, int oldValue, int newValue);
+    void fireColumnChange(@NotNull IColumnType<?, ?> column, int oldValue, int newValue);
 
     /**
      * Reports a boolean bound column update to listeners that have been registered to track updates of all columns or a
@@ -131,7 +133,7 @@ public interface IColumnChangeSupport {
      * @param oldValue the old value of the column
      * @param newValue the new value of the column
      */
-    void fireColumnChange(IColumnType<?, ?> column, boolean oldValue, boolean newValue);
+    void fireColumnChange(@NotNull IColumnType<?, ?> column, boolean oldValue, boolean newValue);
 
     /**
      * Fires a column change event to listeners that have been registered to track updates of all columns or a column
@@ -141,7 +143,7 @@ public interface IColumnChangeSupport {
      *
      * @param event the {@code ColumnChangeEvent} to be fired
      */
-    void fireColumnChange(ColumnChangeEvent event);
+    void fireColumnChange(@NotNull ColumnChangeEvent event);
 
     /**
      * Reports a bound indexed column update to listeners that have been registered to track updates of all columns or a
@@ -158,7 +160,7 @@ public interface IColumnChangeSupport {
      * @param newValue the new value of the column
      * @since 1.5
      */
-    void fireIndexedColumnChange(IColumnType<?, ?> column, int index, Object oldValue, Object newValue);
+    void fireIndexedColumnChange(@NotNull IColumnType<?, ?> column, int index, Object oldValue, Object newValue);
 
     /**
      * Reports an integer bound indexed column update to listeners that have been registered to track updates of all
@@ -175,7 +177,7 @@ public interface IColumnChangeSupport {
      * @param newValue the new value of the column
      * @since 1.5
      */
-    void fireIndexedColumnChange(IColumnType<?, ?> column, int index, int oldValue, int newValue);
+    void fireIndexedColumnChange(@NotNull IColumnType<?, ?> column, int index, int oldValue, int newValue);
 
     /**
      * Reports a boolean bound indexed column update to listeners that have been registered to track updates of all
@@ -192,7 +194,7 @@ public interface IColumnChangeSupport {
      * @param newValue the new value of the column
      * @since 1.5
      */
-    void fireIndexedColumnChange(IColumnType<?, ?> column, int index, boolean oldValue, boolean newValue);
+    void fireIndexedColumnChange(@NotNull IColumnType<?, ?> column, int index, boolean oldValue, boolean newValue);
 
     /**
      * Check if there are any listeners for a specific column, including those registered on all columns. If

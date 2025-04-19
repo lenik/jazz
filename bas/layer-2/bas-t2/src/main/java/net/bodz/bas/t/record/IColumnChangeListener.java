@@ -16,4 +16,19 @@ public interface IColumnChangeListener
 
     void columnChange(IColumnChangeEvent event);
 
+    default boolean isProxy() {
+        return false;
+    }
+
+    default IColumnChangeListener getListener() {
+        return null;
+    }
+
+    default IColumnChangeListener deproxy() {
+        if (!isProxy())
+            return this;
+        else
+            return getListener().deproxy();
+    }
+
 }
