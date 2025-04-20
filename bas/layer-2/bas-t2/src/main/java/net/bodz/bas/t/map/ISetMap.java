@@ -13,6 +13,33 @@ public interface ISetMap<K, E>
     @NotNull
     Set<E> makeSet(K keyToSet);
 
+    default boolean isEmptyPurged() {
+        return true;
+    }
+
+    default boolean purge(Object keyToSet) {
+        if (isEmptyPurged())
+            return purge(keyToSet, get(keyToSet));
+        else
+            return false;
+    }
+
+    default boolean purge(Object keyToSet, Set<E> set) {
+        if (isEmptyPurged())
+            if (set != null) {
+                if (set.isEmpty()) {
+                    remove(keyToSet);
+                    return true;
+                }
+            } else {
+                if (containsKey(keyToSet)) {
+                    remove(keyToSet);
+                    return true;
+                }
+            }
+        return false;
+    }
+
     default long sizeOfAllSets() {
         long sum = 0;
         for (Set<E> set : values())
@@ -67,7 +94,9 @@ public interface ISetMap<K, E>
         Set<E> set = get(keyToSet);
         if (set == null)
             return false;
-        return set.remove(element);
+        boolean any = set.remove(element);
+        purge(keyToSet, set);
+        return any;
     }
 
     default void addAllToSets(Map<? extends K, ? extends Set<E>> m) {
@@ -80,14 +109,19 @@ public interface ISetMap<K, E>
     default void removeAllFromSets(Map<? extends K, ? extends Set<E>> m) {
         for (K keyToSet : m.keySet()) {
             Set<E> set = get(keyToSet);
-            if (set != null)
+            if (set != null) {
                 set.removeAll(m.get(keyToSet));
+                purge(keyToSet, set);
+            }
         }
     }
 
     default void clearSets() {
-        for (Set<E> set : values())
-            set.clear();
+        if (isEmptyPurged())
+            clear();
+        else
+            for (Set<E> set : values())
+                set.clear();
     }
 
     default Set<E> concatenateAllSets() {
@@ -99,16 +133,24 @@ public interface ISetMap<K, E>
 
     default int removeFromAllSets(E element) {
         int count = 0;
-        for (Set<E> set : values())
-            if (set.remove(element))
+        for (Entry<K, Set<E>> entry : entrySet()) {
+            Set<E> set = entry.getValue();
+            if (set.remove(element)) {
+                purge(entry.getKey(), set);
                 count++;
+            }
+        }
         return count;
     }
 
     default boolean removeFromAnySets(E element) {
-        for (Set<E> set : values())
-            if (set.remove(element))
+        for (Entry<K, Set<E>> entry : entrySet()) {
+            Set<E> set = entry.getValue();
+            if (set.remove(element)) {
+                purge(entry.getKey(), set);
                 return true;
+            }
+        }
         return false;
     }
 

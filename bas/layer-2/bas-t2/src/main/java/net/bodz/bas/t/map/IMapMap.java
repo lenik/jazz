@@ -1,10 +1,8 @@
 package net.bodz.bas.t.map;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -16,6 +14,33 @@ public interface IMapMap<K, EK, EV>
 
     @NotNull
     Map<EK, EV> makeMap(K keyToMap);
+
+    default boolean isEmptyPurged() {
+        return true;
+    }
+
+    default boolean purge(Object keyToMap) {
+        if (isEmptyPurged())
+            return purge(keyToMap, get(keyToMap));
+        else
+            return false;
+    }
+
+    default boolean purge(Object keyToMap, Map<EK, EV> map) {
+        if (isEmptyPurged())
+            if (map != null) {
+                if (map.isEmpty()) {
+                    remove(keyToMap);
+                    return true;
+                }
+            } else {
+                if (containsKey(keyToMap)) {
+                    remove(keyToMap);
+                    return true;
+                }
+            }
+        return false;
+    }
 
     default long sizeOfAllMaps() {
         long sum = 0;
@@ -121,32 +146,40 @@ public interface IMapMap<K, EK, EV>
         Map<EK, EV> map = get(keyToMap);
         if (map == null)
             return null;
-        return map.remove(key);
+        EV val = map.remove(key);
+        purge(keyToMap, map);
+        return val;
     }
 
     default boolean removeFromMap(Object keyToMap, EK key, EV value) {
         Map<EK, EV> map = get(keyToMap);
         if (map == null)
             return false;
-        return map.remove(key, value);
+        boolean any = map.remove(key, value);
+        purge(keyToMap, map);
+        return any;
     }
 
-    default boolean removeValueFromMap(Object keyToMap, EV value, boolean all) {
+    default boolean removeValueFromMap(Object keyToMap, EV value, boolean removeAll) {
         Map<EK, EV> map = get(keyToMap);
         if (map == null)
             return false;
         Iterator<Entry<EK, EV>> iterator = map.entrySet().iterator();
         int count = 0;
+        boolean removeAny = !removeAll;
         while (iterator.hasNext()) {
             Entry<EK, EV> entry = iterator.next();
             if (Objects.equals(value, entry.getValue())) {
                 iterator.remove();
                 count++;
-                if (!all)
+                if (removeAny)
                     break;
             }
         }
-        return count != 0;
+        boolean any = count != 0;
+        if (any)
+            purge(keyToMap, map);
+        return any;
     }
 
     default void addAllToMaps(Map<? extends K, ? extends Map<EK, EV>> m) {
@@ -164,17 +197,24 @@ public interface IMapMap<K, EK, EV>
                 continue;
             Map<EK, EV> mSub = m.get(keyToMap);
             // sub.removeAll(mSub);
+            int batch = 0;
             for (Entry<EK, EV> mSubEntry : mSub.entrySet()) {
                 if (sub.remove(mSubEntry.getKey(), mSubEntry.getValue()))
-                    count++;
+                    batch++;
             }
+            if (batch != 0)
+                purge(keyToMap, sub);
+            count += batch;
         }
         return count != 0;
     }
 
     default void clearMaps() {
-        for (Map<EK, EV> map : values())
-            map.clear();
+        if (isEmptyPurged())
+            clear();
+        else
+            for (Map<EK, EV> map : values())
+                map.clear();
     }
 
     default Map<EK, EV> union() {
@@ -189,16 +229,24 @@ public interface IMapMap<K, EK, EV>
 
     default int removeFromAllMaps(EK key, EV value) {
         int count = 0;
-        for (Map<EK, EV> map : values())
-            if (map.remove(key, value))
+        for (Entry<K, Map<EK, EV>> entry : entrySet()) {
+            Map<EK, EV> map = entry.getValue();
+            if (map.remove(key, value)) {
+                purge(entry.getKey(), map);
                 count++;
+            }
+        }
         return count;
     }
 
     default boolean removeFromAnyMaps(EK key, EV value) {
-        for (Map<EK, EV> map : values())
-            if (map.remove(key, value))
+        for (Entry<K, Map<EK, EV>> entry : entrySet()) {
+            Map<EK, EV> map = entry.getValue();
+            if (map.remove(key, value)) {
+                purge(entry.getKey(), map);
                 return true;
+            }
+        }
         return false;
     }
 

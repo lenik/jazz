@@ -14,6 +14,33 @@ public interface IListMap<K, E>
     @NotNull
     List<E> makeList(K keyToList);
 
+    default boolean isEmptyPurged() {
+        return true;
+    }
+
+    default boolean purge(Object keyToList) {
+        if (isEmptyPurged())
+            return purge(keyToList, get(keyToList));
+        else
+            return false;
+    }
+
+    default boolean purge(Object keyToList, List<E> list) {
+        if (isEmptyPurged())
+            if (list != null) {
+                if (list.isEmpty()) {
+                    remove(keyToList);
+                    return true;
+                }
+            } else {
+                if (containsKey(keyToList)) {
+                    remove(keyToList);
+                    return true;
+                }
+            }
+        return false;
+    }
+
     default long sizeOfAllLists() {
         long sum = 0;
         for (List<E> list : values())
@@ -83,14 +110,18 @@ public interface IListMap<K, E>
         List<E> list = get(keyToList);
         if (list == null)
             return null;
-        return list.remove(listIndex);
+        E el = list.remove(listIndex);
+        purge(keyToList, list);
+        return el;
     }
 
     default boolean removeFromList(Object keyToList, Object element) {
         List<E> list = get(keyToList);
         if (list == null)
             return false;
-        return list.remove(element);
+        boolean any = list.remove(element);
+        purge(keyToList, list);
+        return any;
     }
 
     default void addAllToLists(Map<? extends K, ? extends List<E>> m) {
@@ -103,14 +134,19 @@ public interface IListMap<K, E>
     default void removeAllFromLists(Map<? extends K, ? extends List<E>> m) {
         for (K keyToList : m.keySet()) {
             List<E> list = get(keyToList);
-            if (list != null)
+            if (list != null) {
                 list.removeAll(m.get(keyToList));
+                purge(keyToList, list);
+            }
         }
     }
 
     default void clearLists() {
-        for (List<E> list : values())
-            list.clear();
+        if (isEmptyPurged())
+            clear();
+        else
+            for (List<E> list : values())
+                list.clear();
     }
 
     default List<E> concatenateAllLists() {
@@ -122,16 +158,24 @@ public interface IListMap<K, E>
 
     default int removeFromAllLists(E element) {
         int count = 0;
-        for (List<E> list : values())
-            if (list.remove(element))
+        for (Entry<K, List<E>> entry : entrySet()) {
+            List<E> list = entry.getValue();
+            if (list.remove(element)) {
+                purge(entry.getKey(), list);
                 count++;
+            }
+        }
         return count;
     }
 
     default boolean removeFromAnyLists(Object element) {
-        for (List<E> list : values())
-            if (list.remove(element))
+        for (Entry<K, List<E>> entry : entrySet()) {
+            List<E> list = entry.getValue();
+            if (list.remove(element)) {
+                purge(entry.getKey(), list);
                 return true;
+            }
+        }
         return false;
     }
 
