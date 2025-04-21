@@ -17,7 +17,7 @@ public class DefaultSessionManager
 
     static final Logger logger = LoggerFactory.getLogger(DefaultSessionManager.class);
 
-    final IPool<Integer> idPool = new IntSetPool(10000);
+    final IPool<Integer> idPool = new IntSetPool(1);
 
     final Map<String, ISocketSession> byId = new LinkedHashMap<>();
     final Map<Channel, ISocketSession> byChannel = new IdentityHashMap<>();

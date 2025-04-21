@@ -1,0 +1,18 @@
+#!/bin/sh
+
+nc localhost 2000 <<EOT
+
+echo hello, this is a test client from NetCat.
+
+echo - I'll register myself as a starter service
+    register starter
+
+echo - Checkout registered services on the remote
+    discover
+
+echo - Let try to send something to local echo server
+    set prefix "echo> "
+    send 7 Hello, local echo.
+
+EOT
+

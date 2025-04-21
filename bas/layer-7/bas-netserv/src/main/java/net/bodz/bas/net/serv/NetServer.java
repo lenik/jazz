@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.c.java.nio.channels.SocketChannels;
-import net.bodz.bas.err.IErrorRecoverer;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.net.io.DefaultPoller;
@@ -36,7 +34,7 @@ public class NetServer {
     }
 
     void start()
-            throws IOException {
+            throws IOException, InterruptedException {
         poller = new DefaultPoller();
 
         for (InetSocketAddress localAddr : localAddrs) {
@@ -46,7 +44,7 @@ public class NetServer {
             serverChannel.socket().bind(localAddr);
 
             logger.info("Listen on " + localAddr.toString());
-            poller.register(serverChannel, (ISocketAccepter) this::onAccept);
+            poller.registerAccept(serverChannel, (ISocketAccepter) this::onAccept);
         }
 
         poller.mainLoop();
@@ -55,10 +53,10 @@ public class NetServer {
     boolean onAccept(ServerSocketChannel serverChannel)
             throws IOException {
         SocketChannel clientChannel = serverChannel.accept();
-        logger.info("onAccept: " + SocketChannels.addressInfo(clientChannel));
+        logger.debug("onAccept: " + SocketChannels.addressInfo(clientChannel));
 
         clientChannel.configureBlocking(false);
-        poller.register(clientChannel, (ISocketReader) this::onReceive);
+        poller.registerRead(clientChannel, (ISocketReader) this::readClient);
 
         ISocketSession session = new HubSession(clientChannel, sessionManager, poller, serviceManager);
         sessionManager.addSession(session);
@@ -66,7 +64,7 @@ public class NetServer {
         return true;
     }
 
-    long onReceive(SocketChannel channel)
+    long readClient(SocketChannel channel)
             throws IOException {
         ISocketSession session = sessionManager.getSessionByChannel(channel);
         if (session == null) {
@@ -75,10 +73,11 @@ public class NetServer {
         }
 
         long numBytesRead = session.read(channel);
+        logger.debug("readClient: read " + numBytesRead + " bytes from " + SocketChannels.addressInfo(channel));
 
         if (session.isClosed()) {
-            logger.info("Session closed: " + sessionManager.getSessionId(session));
-            poller.cancel(channel, (ISocketReader) this::onReceive);
+            logger.debug("Session closed: #" + sessionManager.getSessionId(session));
+            poller.cancelRead(channel);
             try {
                 channel.socket().close();
             } catch (IOException e) {

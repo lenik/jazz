@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.NetworkChannel;
+import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
 public class SocketChannels {
@@ -38,7 +40,7 @@ public class SocketChannels {
         return buf.toString();
     }
 
-    public static String getLocalAddress(SocketChannel channel) {
+    public static String getLocalAddress(NetworkChannel channel) {
         if (channel == null)
             return "null";
         try {

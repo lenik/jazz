@@ -3,8 +3,7 @@ package net.bodz.bas.net.serv.cmd;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 import java.util.function.Consumer;
 
 import net.bodz.bas.cli.Command;
@@ -14,19 +13,23 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.io.ISocketPoller;
+import net.bodz.bas.net.serv.ISettings;
 import net.bodz.bas.net.serv.session.ISocketSession;
 import net.bodz.bas.net.serv.session.RelayToSession;
+import net.bodz.bas.net.serv.session.SendSession;
 
 public class ForwardCmds
         extends AbstractNioCommandProvider {
 
     static final Logger logger = LoggerFactory.getLogger(ForwardCmds.class);
 
-    final ISocketPoller poller;
-    final Consumer<ISocketSession> applier;
+    ISettings settings;
+    ISocketPoller poller;
+    Consumer<ISocketSession> applier;
 
-    public ForwardCmds(@NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull Consumer<ISocketSession> applier) {
+    public ForwardCmds(@NotNull SocketChannel channel, ISettings settings, @NotNull ISocketPoller poller, @NotNull Consumer<ISocketSession> applier) {
         super(channel);
+        this.settings = settings;
         this.poller = poller;
         this.applier = applier;
     }
@@ -87,7 +90,9 @@ public class ForwardCmds
 
         RelayToSession newSession = null;
         try {
-            newSession = new RelayToSession(channel, targetChannel, poller);
+            newSession = new RelayToSession(channel, targetChannel, poller, s -> {
+                // closer
+            });
         } catch (IOException e) {
             logger.error(e, "error setup Relay-To session");
             return;
@@ -129,16 +134,22 @@ public class ForwardCmds
         send(host, port, message + "\n");
     }
 
+    LinkedList<SendSession> sendSessions = new LinkedList<>();
+
     void send(String host, int port, String message)
             throws IOException {
-        InetSocketAddress addr = new InetSocketAddress(host, port);
-        SocketChannel targetChannel = SocketChannel.open(addr);
-        RelayToSession newSession = new RelayToSession(channel, targetChannel, poller);
+        InetSocketAddress targetAddr = new InetSocketAddress(host, port);
+        SocketChannel targetChannel = SocketChannel.open();
+        SendSession sendSession = new SendSession(channel, targetChannel, poller, s -> {
+            sendSessions.remove(s);
+        });
 
-        applier.accept(newSession);
+        if (settings != null)
+            sendSession.copySettings(settings);
+        sendSessions.add(sendSession);
 
-        Charset charset = StandardCharsets.UTF_8;
-        newSession.sendBuffer.append(message.getBytes(charset));
+        sendSession.connect(targetAddr);
+        sendSession.sendToTarget(message);
     }
 
 }

@@ -50,14 +50,12 @@ public class NetServerCLI
     @Override
     protected void mainImpl(String... args)
             throws Exception {
-        logger.info("mainImpl");
         makeUp();
         server.start();
     }
 
     public static void main(String[] args)
             throws Exception {
-        System.out.println("start");
         new NetServerCLI().execute(args);
     }
 

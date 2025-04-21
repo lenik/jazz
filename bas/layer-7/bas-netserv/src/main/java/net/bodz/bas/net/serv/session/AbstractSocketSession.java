@@ -3,6 +3,8 @@ package net.bodz.bas.net.serv.session;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
@@ -33,6 +35,37 @@ public abstract class AbstractSocketSession
 
     public AbstractSocketSession(@NotNull SocketChannel channel) {
         this.channel = channel;
+    }
+
+    protected String getPrefix() {
+        return getTitle() + ": ";
+    }
+
+    //    @Override
+    protected String getTitle() {
+        StringBuilder buf = new StringBuilder(100);
+
+        String type = getClass().getSimpleName();
+        if (type.endsWith("Session"))
+            type = type.substring(0, type.length() - 7);
+        buf.append(type);
+
+
+        if (channel.socket().isClosed())
+            buf.append(":closed");
+        else {
+            String port;
+            try {
+                InetSocketAddress localAddress = (InetSocketAddress) channel.getLocalAddress();
+                int portNum = localAddress.getPort();
+                port = String.valueOf(portNum);
+            } catch (IOException e) {
+                port = "error get local port";
+            }
+
+            buf.append(":").append(port);
+        }
+        return buf.toString();
     }
 
     @NotNull

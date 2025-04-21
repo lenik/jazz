@@ -20,4 +20,11 @@ public interface ISettings {
 
     boolean setSettingVar(@NotNull String name, @NotNull IVariant var);
 
+    default void copySettings(ISettings settings) {
+        for (String name : settings.getSettingNames()) {
+            Object value = settings.getSetting(name);
+            setSetting(name, value);
+        }
+    }
+
 }

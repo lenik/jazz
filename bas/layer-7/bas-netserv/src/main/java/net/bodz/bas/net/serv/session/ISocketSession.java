@@ -10,6 +10,8 @@ import net.bodz.bas.t.record.IColumnType;
 public interface ISocketSession
         extends ISocketReader {
 
+//    String getTitle();
+
     @NotNull
     SocketChannel getChannel();
 

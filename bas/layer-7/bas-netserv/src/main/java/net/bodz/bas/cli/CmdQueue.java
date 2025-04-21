@@ -44,7 +44,7 @@ public class CmdQueue
         if (line.startsWith("#"))
             return;
 
-        String[] args = QuoteFormat.QQ.split("\\s+", line);
+        String[] args = QuoteFormat.QQ.splitDequoted("\\s+", line);
         Command cmd = new Command(args[0]);
         for (int i = 1; i < args.length; i++)
             cmd.addArgument(args[i]);

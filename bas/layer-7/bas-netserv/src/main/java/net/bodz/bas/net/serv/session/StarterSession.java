@@ -13,7 +13,6 @@ public class StarterSession
         extends DirectiveSocketSession
         implements ICommandProvider {
 
-    @NotNull
     ISessionManager sessionManager;
 
     public StarterSession(SocketChannel channel, @NotNull ISessionManager sessionManager) {

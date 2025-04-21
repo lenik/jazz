@@ -76,12 +76,14 @@ public class ByteArrayBuffer
     public void append(byte[] buf, int off, int len) {
         ensureCapacity(length + len);
         System.arraycopy(buf, off, this.buf, start + length, len);
+        length += len;
     }
 
     public void append(ByteBuffer buf) {
         int len = buf.remaining();
         ensureCapacity(length + len);
         buf.get(this.buf, start + length, len);
+        length += len;
     }
 
     @Override

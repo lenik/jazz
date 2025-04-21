@@ -1,18 +1,20 @@
 package net.bodz.bas.net.io;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.channels.spi.AbstractInterruptibleChannel;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.c.java.nio.channels.SelectableChannels;
 import net.bodz.bas.c.java.nio.channels.SocketChannels;
 import net.bodz.bas.err.ErrorRecoverer;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
@@ -20,7 +22,8 @@ import net.bodz.bas.t.record.AutoIndexRecordMap;
 import net.bodz.bas.t.record.IRecordMap;
 
 public class DefaultPoller
-        implements ISocketPoller {
+        implements ISocketPoller,
+                   Closeable {
 
     static final Logger logger = LoggerFactory.getLogger(DefaultPoller.class);
     static final ErrorRecoverer LR = ErrorRecoverer.byLogging(logger);
@@ -52,35 +55,35 @@ public class DefaultPoller
     }
 
     @Override
-    public void register(@NotNull ServerSocketChannel channel, @NotNull ISocketAccepter accepter)
+    public SelectionKey registerAccept(@NotNull ServerSocketChannel channel, @NotNull ISocketAccepter accepter)
             throws IOException {
         ChannelLink link = map.computeIfAbsent(channel, ChannelLink::new);
-        link.addAccepter(accepter);
-        channel.register(selector, SelectionKey.OP_ACCEPT);
+        link.setAccepter(accepter);
+        return SelectableChannels.registerOr(channel, selector, SelectionKey.OP_ACCEPT);
     }
 
     @Override
-    public void register(@NotNull SocketChannel channel, @NotNull ISocketConnector connector)
+    public SelectionKey registerConnect(@NotNull SocketChannel channel, @NotNull ISocketConnector connector)
             throws IOException {
         ChannelLink link = map.computeIfAbsent(channel, ChannelLink::new);
-        link.addConnector(connector);
-        channel.register(selector, SelectionKey.OP_CONNECT);
+        link.setConnector(connector);
+        return SelectableChannels.registerOr(channel, selector, SelectionKey.OP_CONNECT);
     }
 
     @Override
-    public void register(@NotNull SocketChannel channel, @NotNull ISocketReader reader)
+    public SelectionKey registerRead(@NotNull SocketChannel channel, @NotNull ISocketReader reader)
             throws IOException {
         ChannelLink link = map.computeIfAbsent(channel, ChannelLink::new);
-        link.addReader(reader);
-        channel.register(selector, SelectionKey.OP_READ);
+        link.setReader(reader);
+        return SelectableChannels.registerOr(channel, selector, SelectionKey.OP_READ);
     }
 
     @Override
-    public void register(@NotNull SocketChannel channel, @NotNull ISocketWriter writer)
+    public SelectionKey registerWrite(@NotNull SocketChannel channel, @NotNull ISocketWriter writer)
             throws IOException {
         ChannelLink link = map.computeIfAbsent(channel, ChannelLink::new);
-        link.addWriter(writer);
-        channel.register(selector, SelectionKey.OP_WRITE);
+        link.setWriter(writer);
+        return SelectableChannels.registerOr(channel, selector, SelectionKey.OP_WRITE);
     }
 
     private void cancel(SelectableChannel channel, int interestOp) {
@@ -88,54 +91,86 @@ public class DefaultPoller
         if (key != null) {
             int ops = key.interestOps();
             ops = ops & ~interestOp;
-            if (ops != 0)
-                key.interestOps(ops);
-            else
-                key.cancel();
+            key.interestOps(ops);
         }
     }
 
+//    @Override
+//    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketAccepter accepter) {
+//        ChannelLink link = map.get(channel);
+//        if (link != null)
+//            link.removeAccepter(accepter);
+//        cancel(channel, SelectionKey.OP_ACCEPT);
+//    }
+//
+//    @Override
+//    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketConnector connector) {
+//        ChannelLink link = map.get(channel);
+//        if (link != null)
+//            link.removeConnector(connector);
+//        cancel(channel, SelectionKey.OP_CONNECT);
+//    }
+//
+//    @Override
+//    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketReader reader) {
+//        ChannelLink link = map.get(channel);
+//        if (link != null)
+//            link.removeReader(reader);
+//        cancel(channel, SelectionKey.OP_READ);
+//    }
+//
+//    @Override
+//    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketWriter writer) {
+//        ChannelLink link = map.get(channel);
+//        if (link != null)
+//            link.removeWriter(writer);
+//        cancel(channel, SelectionKey.OP_WRITE);
+//    }
+
     @Override
-    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketAccepter accepter) {
+    public void cancelAccept(@NotNull SelectableChannel channel) {
         ChannelLink link = map.get(channel);
         if (link != null)
-            link.removeAccepter(accepter);
+            link.setAccepter(null);
         cancel(channel, SelectionKey.OP_ACCEPT);
     }
 
     @Override
-    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketConnector connector) {
+    public void cancelConnect(@NotNull SelectableChannel channel) {
         ChannelLink link = map.get(channel);
         if (link != null)
-            link.removeConnector(connector);
+            link.setConnector(null);
         cancel(channel, SelectionKey.OP_CONNECT);
     }
 
     @Override
-    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketReader reader) {
+    public void cancelRead(@NotNull SelectableChannel channel) {
         ChannelLink link = map.get(channel);
         if (link != null)
-            link.removeReader(reader);
+            link.setReader(null);
         cancel(channel, SelectionKey.OP_READ);
     }
 
     @Override
-    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketWriter writer) {
+    public void cancelWrite(@NotNull SelectableChannel channel) {
         ChannelLink link = map.get(channel);
         if (link != null)
-            link.removeWriter(writer);
+            link.setWriter(null);
         cancel(channel, SelectionKey.OP_WRITE);
     }
 
     @Override
     public void mainLoop()
-            throws IOException {
+            throws IOException, InterruptedException {
         exit = false;
         while (!exit) {
             int numSelectedKeys = selector.select();
-            logger.info("selected keys: " + numSelectedKeys);
-            if (numSelectedKeys == 0)
+            logger.debug("poller: selected keys: " + numSelectedKeys);
+            if (numSelectedKeys == 0) {
+                logger.debug("poller: sleep 1000");
+                Thread.sleep(1000);
                 continue;
+            }
 
             Set<SelectionKey> selectedKeys = selector.selectedKeys();
             Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
@@ -145,43 +180,40 @@ public class DefaultPoller
                 SelectableChannel _channel = key.channel();
 
                 if (key.isValid() && key.isAcceptable()) {
-                    logger.info("selected-key is acceptable");
                     ServerSocketChannel serverChannel = (ServerSocketChannel) _channel;
                     handleAccept(serverChannel);
                 }
 
                 if (key.isValid() && key.isConnectable()) {
-                    logger.info("selected-key is connectable");
                     assert _channel instanceof SocketChannel;
                     SocketChannel channel = (SocketChannel) _channel;
                     handleConnect(channel);
                 }
 
                 if (key.isValid() && key.isReadable()) {
-                    logger.info("selected-key is readable");
                     assert _channel instanceof SocketChannel;
                     SocketChannel channel = (SocketChannel) _channel;
                     handleRead(channel);
                 }
 
                 if (key.isValid() && key.isWritable()) {
-                    logger.info("selected-key is writable");
                     assert _channel instanceof SocketChannel;
                     SocketChannel channel = (SocketChannel) _channel;
                     handleWrite(channel);
                 }
-            }
-        }
-
+            } // for key
+        } // whilte not-exit
     }
 
     void handleAccept(ServerSocketChannel serverChannel) {
+        logger.debug("poller: selected-key is acceptable: " + SocketChannels.getLocalAddress(serverChannel));
         boolean accepted = false;
         for (ISocketAccepter accepter : getAccepters(serverChannel)) {
             if (accepter == null)
                 continue;
             try {
                 if (accepter.accept(serverChannel)) {
+                    logger.debug("poller: accept handled by " + accepter);
                     accepted = true;
                     break;
                 }
@@ -189,8 +221,9 @@ public class DefaultPoller
                 logger.error(e, "error accepting: " + e.getMessage());
             }
         }
-        if (accepted)
+        if (accepted) {
             return;
+        }
 
         SocketChannel discard;
         logger.error("not accepted, close with force.");
@@ -200,19 +233,19 @@ public class DefaultPoller
             logger.error(e, "error accept");
             return;
         }
-
         LR.run(() -> discard.configureBlocking(true), "error configure to blocking");
-
         LR.run(discard::close, "error close");
     }
 
     void handleConnect(SocketChannel channel) {
+        logger.debug("poller: selected-key is connectable: " + SocketChannels.addressInfo(channel));
         boolean handled = false;
         for (ISocketConnector connector : getConnectors(channel)) {
             if (connector == null)
                 continue;
             try {
                 if (connector.connect(channel)) {
+                    logger.debug("poller: connect handled by " + connector);
                     handled = true;
                     break;
                 }
@@ -228,19 +261,34 @@ public class DefaultPoller
     }
 
     void handleRead(SocketChannel channel) {
+        logger.debug("poller: selected-key is readable: " + SocketChannels.addressInfo(channel));
         long totalBytesRead = 0;
-        for (ISocketReader reader : getReaders(channel)) {
+        if (channel.socket().isClosed()) {
+            handleClose(channel);
+            return;
+        }
+
+        List<ISocketReader> readers = new ArrayList<>(getReaders(channel));
+        for (ISocketReader reader : readers) {
             if (reader == null)
                 continue;
             try {
                 long numBytesRead = reader.read(channel);
+                if (numBytesRead != 0)
+                    logger.debug("read " + numBytesRead + " by " + reader);
                 totalBytesRead += numBytesRead;
             } catch (IOException e) {
                 logger.error(e, "error reading: " + e.getMessage());
             }
         }
 
-        if (totalBytesRead == 0) {
+        if (totalBytesRead != 0)
+            logger.debug("poller: read " + totalBytesRead + " bytes totally");
+        else {
+            if (channel.socket().isClosed()) {
+                handleClose(channel);
+                return;
+            }
             logger.error("invalid usage: no byte have been read. discard the receive buffer forcely.");
             try {
                 totalBytesRead = SocketChannels.discardReceivedBytes(channel);
@@ -253,6 +301,7 @@ public class DefaultPoller
     }
 
     void handleWrite(SocketChannel channel) {
+        logger.debug("poller: selected-key is writable: " + SocketChannels.addressInfo(channel));
         long totalBytesWritten = 0;
         for (ISocketWriter writer : getWriters(channel)) {
             if (writer == null)
@@ -265,14 +314,45 @@ public class DefaultPoller
                 return;
             }
         }
-        if (totalBytesWritten == 0) {
-            logger.debug("no byte have been written. ");
-        }
+        if (totalBytesWritten != 0)
+            logger.debug("poller: wrote " + totalBytesWritten + " bytes totally");
+        else
+            logger.debug("poller: no byte have been written. ");
+    }
+
+    void handleClose(SocketChannel channel) {
+        logger.debug("poller: channel closed, cancel from selector");
+        SelectionKey key = channel.keyFor(selector);
+        if (key != null)
+            key.cancel();
+        map.remove(channel);
     }
 
     @Override
     public void cancel() {
+        logger.debug("poller: cancel");
+        try {
+            close();
+        } catch (IOException e) {
+            logger.error("error close", e);
+        }
         this.exit = true;
+    }
+
+    @Override
+    public void close()
+            throws IOException {
+        for (SelectableChannel _channel : map.keySet()) {
+            if (_channel instanceof SocketChannel) {
+                SocketChannel channel = (SocketChannel) _channel;
+                logger.debug("poller: cancel channel from selector: " + SocketChannels.addressInfo(channel));
+            }
+            SelectionKey key = _channel.keyFor(selector);
+            if (key != null)
+                key.cancel();
+        }
+        map.clear();
+        selector.close();
     }
 
 }

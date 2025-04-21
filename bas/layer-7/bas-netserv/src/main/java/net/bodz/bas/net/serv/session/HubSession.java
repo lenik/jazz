@@ -19,7 +19,7 @@ public class HubSession
 
         addProvider(new ServiceRegistryCmds(channel, serviceManager));
 
-        addProvider(new ForwardCmds(channel, poller, //
+        addProvider(new ForwardCmds(channel, this, poller, //
                 s -> sessionManager.switchSession(this, s)));
 
         addProvider(new ServerCmds(channel, poller,//

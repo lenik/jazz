@@ -39,7 +39,7 @@ public class OpenSession
         this.localPort = localPort;
         this.targetAddr = remoteAddr;
 
-        logger.info("Remote: " + remoteAddr);
+        logger.debug(getPrefix() + "open to " + remoteAddr);
         remoteChannel = SocketChannel.open(remoteAddr);
         remoteChannel.configureBlocking(false);
 
@@ -55,22 +55,22 @@ public class OpenSession
 
     void setup(ISocketPoller poller)
             throws IOException {
-        poller.register(remoteChannel, (ISocketConnector) this::connectTarget);
-        poller.register(remoteChannel, (ISocketReader) this::readTarget);
-        poller.register(remoteChannel, (ISocketWriter) this::writeTarget);
+        poller.registerConnect(remoteChannel, (ISocketConnector) this::connectTarget);
+        poller.registerRead(remoteChannel, (ISocketReader) this::readTarget);
+        poller.registerWrite(remoteChannel, (ISocketWriter) this::writeTarget);
     }
 
     boolean connectTarget(SocketChannel targetChannel)
             throws IOException {
-        logger.info("connectTarget");
-        logger.info("connectionPending: " + targetChannel.isConnectionPending());
-        logger.info("connected: " + targetChannel.isConnected());
+        logger.debug(getPrefix() + "connectTarget");
+        logger.debug(getPrefix() + "connectionPending: " + targetChannel.isConnectionPending());
+        logger.debug(getPrefix() + "connected: " + targetChannel.isConnected());
         return true;
     }
 
     long readTarget(SocketChannel targetChannel)
             throws IOException {
-        logger.info("readTarget");
+        logger.info(getPrefix() + "readTarget");
         ByteBuffer buf = ByteBuffer.allocate(4096);
         long totalBytesRead = 0;
 
@@ -93,6 +93,7 @@ public class OpenSession
 
     long writeTarget(SocketChannel targetChannel)
             throws IOException {
+        logger.debug(getPrefix() + "writeTarget");
         byte[] backedArray = sourceBuffer.getBackedArray();
         int backedArrayOffset = sourceBuffer.getBackedArrayOffset();
         int length = sourceBuffer.length();
@@ -104,6 +105,7 @@ public class OpenSession
     @Override
     public long read(@NotNull SocketChannel channel)
             throws IOException {
+        logger.debug(getPrefix() + "read");
         ByteBuffer byteBuf = ByteBuffer.allocate(4096);
         long totalBytesRead = 0;
 
@@ -127,6 +129,7 @@ public class OpenSession
     @Override
     public long write(@NotNull SocketChannel channel)
             throws IOException {
+        logger.debug(getPrefix() + "write");
         byte[] backedArray = targetBuffer.getBackedArray();
         int backedArrayOffset = targetBuffer.getBackedArrayOffset();
         int length = targetBuffer.length();
