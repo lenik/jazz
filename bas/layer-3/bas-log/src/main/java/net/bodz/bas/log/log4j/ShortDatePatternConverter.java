@@ -47,7 +47,7 @@ public class ShortDatePatternConverter
             output.append(timeStr);
             int nano = instant.getNanoOfMillisecond();
             if (nano != 0)
-                output.append("." + nano);
+                output.append(".").append(nano);
         }
     }
 

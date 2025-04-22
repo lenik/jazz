@@ -91,13 +91,13 @@ class AnsiPattern {
         StringBuilder buf = new StringBuilder(80);
         if (showHeader) {
             if (verbose >= 0) {
-                buf.append(esc(dateTimeColor)).append("%sd").append(esc(0));
+                buf.append(esc(dateTimeColor)).append("%d").append(esc(0));
                 buf.append(" ");
                 buf.append(esc(channelColor)).append("[%t/%level]").append(esc(0));
             }
             if (verbose >= 1) {
 //                buf.append(esc(locationColor)).append(" %F ").append(esc(0));
-                buf.append(" %l %c{1.}(%M:%L)");
+                buf.append(" %sl{1.}");
             }
             if (verbose >= 3)
                 buf.append("\n       ");

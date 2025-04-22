@@ -2,9 +2,9 @@ package net.bodz.bas.log.impl;
 
 import org.slf4j.spi.LocationAwareLogger;
 
-import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.impl.Slf4jLogSink.DebugSink;
 import net.bodz.bas.log.impl.Slf4jLogSink.ErrorSink;
@@ -15,7 +15,7 @@ import net.bodz.bas.log.impl.Slf4jLogSink.WarnSink;
 public class Slf4jLogger
         extends SinkBasedLogger {
 
-    private static final String FQCN = AbstractLogger.class.getName();
+    private static final String FQCN = Logger.class.getName();
 
     private final LocationAwareLogger slf4j;
 

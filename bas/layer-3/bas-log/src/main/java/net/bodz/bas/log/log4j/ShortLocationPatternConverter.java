@@ -34,10 +34,6 @@ public class ShortLocationPatternConverter
             return;
         }
         String className = element.getClassName();
-        if (className == null) { // assert false.
-            output.append(NA);
-            return;
-        }
         String fileName = element.getFileName();
         if (fileName == null) {
             abbreviate(className, output);

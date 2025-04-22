@@ -1,7 +1,6 @@
 package net.bodz.bas.log.log4j;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Logger;
@@ -24,7 +23,7 @@ public class PragmaticLog4jLoader
         for (ILog4jConfigurer c : ServiceLoader.load(ILog4jConfigurer.class)) {
             configurers.add(c);
         }
-        Collections.sort(configurers, PriorityComparator.INSTANCE);
+        configurers.sort(PriorityComparator.INSTANCE);
     }
 
     public PragmaticLog4jLoader() {
