@@ -58,7 +58,7 @@ public class NetServer {
         clientChannel.configureBlocking(false);
         poller.registerRead(clientChannel, (ISocketReader) this::readClient);
 
-        ISocketSession session = new HubSession(clientChannel, sessionManager, poller, serviceManager);
+        ISocketSession session = new HubSession(clientChannel, poller, sessionManager, serviceManager);
         sessionManager.addSession(session);
 
         return true;

@@ -6,6 +6,7 @@ import java.nio.channels.SocketChannel;
 import net.bodz.bas.cli.Command;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.serv.ISessionManager;
 import net.bodz.bas.net.serv.cmd.ICommandProvider;
 
@@ -15,8 +16,8 @@ public class StarterSession
 
     ISessionManager sessionManager;
 
-    public StarterSession(SocketChannel channel, @NotNull ISessionManager sessionManager) {
-        super(channel);
+    public StarterSession(SocketChannel channel, @NotNull ISocketPoller poller, @NotNull ISessionManager sessionManager) {
+        super(channel, poller);
         this.sessionManager = sessionManager;
         addProvider(this);
     }
@@ -35,7 +36,7 @@ public class StarterSession
 
     void chat(Command cmd)
             throws IOException {
-        ChatSession chatSession = new ChatSession(channel);
+        ChatSession chatSession = new ChatSession(channel, poller);
         sessionManager.switchSession(this, chatSession);
     }
 

@@ -13,6 +13,7 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.cli.CmdQueue;
 import net.bodz.bas.cli.Command;
+import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.serv.cmd.CommonCmds;
 import net.bodz.bas.net.serv.cmd.ICommandProvider;
 
@@ -24,8 +25,8 @@ public abstract class DirectiveSocketSession
     CmdQueue cmds = new CmdQueue();
     List<ICommandProvider> providers = new ArrayList<>();
 
-    public DirectiveSocketSession(SocketChannel channel) {
-        super(channel);
+    public DirectiveSocketSession(SocketChannel channel, @NotNull ISocketPoller poller) {
+        super(channel, poller);
 
         CommonCmds commons = new CommonCmds(channel);
         commons.addSettingSource(this);

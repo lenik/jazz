@@ -16,6 +16,7 @@ import java.util.Set;
 import net.bodz.bas.c.java.nio.channels.SocketChannels;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.serv.ISettingParsable;
 import net.bodz.bas.repr.path.IBasicTokenQueue;
 import net.bodz.bas.t.variant.IVariant;
@@ -25,6 +26,7 @@ public abstract class AbstractSocketSession
                    ISettingParsable {
 
     protected final SocketChannel channel;
+    protected final ISocketPoller poller;
 
     boolean closed;
 
@@ -33,12 +35,9 @@ public abstract class AbstractSocketSession
     String eol = "\n";
     Charset charset = StandardCharsets.UTF_8;
 
-    public AbstractSocketSession(@NotNull SocketChannel channel) {
+    public AbstractSocketSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller) {
         this.channel = channel;
-    }
-
-    protected String getPrefix() {
-        return getTitle() + ": ";
+        this.poller = poller;
     }
 
     //    @Override
@@ -49,7 +48,6 @@ public abstract class AbstractSocketSession
         if (type.endsWith("Session"))
             type = type.substring(0, type.length() - 7);
         buf.append(type);
-
 
         if (channel.socket().isClosed())
             buf.append(":closed");

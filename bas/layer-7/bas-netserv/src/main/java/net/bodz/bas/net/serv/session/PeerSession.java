@@ -9,7 +9,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
-import java.util.function.Consumer;
 
 import net.bodz.bas.c.java.nio.channels.SocketChannels;
 import net.bodz.bas.log.Logger;
@@ -26,9 +25,9 @@ public abstract class PeerSession
 
     static final Logger logger = LoggerFactory.getLogger(PeerSession.class);
 
-    SocketChannel targetChannel;
     ISocketPoller poller;
-    Consumer<? super ISocketSession> closer;
+    SocketChannel targetChannel;
+    IDisconnectListener disconnectListener;
 
     Charset charset = StandardCharsets.UTF_8;
     ByteArrayBuffer sendBuffer = new ByteArrayBuffer(4096);
@@ -39,21 +38,16 @@ public abstract class PeerSession
     ByteBuffer targetByteBuf = ByteBuffer.allocate(4096);
     CharBuffer targetDecodedBuffer = CharBuffer.allocate(4096);
 
-    final String typeName;
+    public PeerSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller)
+            throws IOException {
+        this(channel, poller, SocketChannel.open());
+    }
 
-    public PeerSession(@NotNull SocketChannel channel, @NotNull SocketChannel targetChannel, @NotNull ISocketPoller poller, Consumer<? super ISocketSession> closer) {
-        super(channel);
-
-        this.targetChannel = targetChannel;
+    public PeerSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull SocketChannel targetChannel) {
+        super(channel, poller);
         this.poller = poller;
-        this.closer = closer;
-
+        this.targetChannel = targetChannel;
         setTargetCharset(StandardCharsets.UTF_8);
-
-        String typeName = getClass().getSimpleName();
-        if (typeName.endsWith("Session"))
-            typeName = typeName.substring(0, typeName.length() - 7);
-        this.typeName = typeName;
     }
 
     void setTargetCharset(Charset charset) {
@@ -62,19 +56,45 @@ public abstract class PeerSession
         this.targetCharsetDecoder.onMalformedInput(CodingErrorAction.REPLACE);
     }
 
-    @Override
-    protected String getTitle() {
+    protected String getPrefix() {
         if (targetChannel.socket().isClosed())
-            return typeName;
+            return "-";
         String addr = SocketChannels.addressInfo(targetChannel);
-        return typeName + "<" + addr + ">";
+        return "<" + addr + ">";
     }
 
-    public void connect(InetSocketAddress addr)
+    @NotNull
+    public SocketChannel getTargetChannel() {
+        return targetChannel;
+    }
+
+    public void connect(InetSocketAddress addr, IDisconnectListener disconnectListener)
             throws IOException {
+        if (targetChannel == null)
+            targetChannel = SocketChannel.open();
         targetChannel.configureBlocking(false);
         poller.registerConnect(targetChannel, (ISocketConnector) this::connectTarget);
         targetChannel.connect(addr);
+        this.disconnectListener = disconnectListener;
+    }
+
+    void disconnect() {
+        poller.cancelAll(targetChannel);
+        try {
+            if (disconnectListener != null) {
+                try {
+                    disconnectListener.onDisconnect(targetChannel);
+                } catch (IOException e) {
+                    logger.error("error fire disconnect listener", e);
+                }
+            }
+        } finally {
+            try {
+                targetChannel.socket().close();
+            } catch (IOException e) {
+                logger.error("error close socket of target channel: " + e.getMessage(), e);
+            }
+        }
     }
 
     boolean connectTarget(SocketChannel targetChannel)
@@ -97,7 +117,7 @@ public abstract class PeerSession
         logger.debug(getPrefix() + "/readTarget");
         if (targetChannel.socket().isClosed()) {
             logger.debug(getPrefix() + "target is closed");
-            closer.accept(this);
+            disconnectListener.onDisconnect(targetChannel);
             return 0;
         }
 
@@ -127,16 +147,15 @@ public abstract class PeerSession
                 String part = targetDecodedBuffer.toString();
                 targetDecodedBuffer.clear();
             } else {
-//                onReceivedFromTarget(byteBuf);
                 targetBuffer.append(byteBuf);
+                readTargetBuffer(targetBuffer);
             }
             byteBuf.clear();
         }
     }
 
-    protected void onReceivedFromTarget()
-            throws IOException {
-    }
+    protected abstract void readTargetBuffer(ByteArrayBuffer targetBuffer)
+            throws IOException;
 
     void enableTargetWriter()
             throws IOException {

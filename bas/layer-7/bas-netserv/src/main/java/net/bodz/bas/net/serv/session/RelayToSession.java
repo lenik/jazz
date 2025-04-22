@@ -25,9 +25,15 @@ public class RelayToSession
 
 //    public final ByteArrayBuffer sendBuffer = new ByteArrayBuffer(4096);
 
-    public RelayToSession(@NotNull SocketChannel channel, @NotNull SocketChannel targetChannel, @NotNull ISocketPoller poller, Consumer<? super ISocketSession> closer)
+
+    public RelayToSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller)
             throws IOException {
-        super(channel, targetChannel, poller, closer);
+        super(channel, poller);
+    }
+
+    public RelayToSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull SocketChannel targetChannel)
+            throws IOException {
+        super(channel, poller, targetChannel);
     }
 
     @Override
@@ -52,7 +58,7 @@ public class RelayToSession
     }
 
     @Override
-    protected void onReceivedFromTarget()
+    protected void readTargetBuffer(ByteArrayBuffer targetBuffer)
             throws IOException {
         byte[] backedArray = targetBuffer.getBackedArray();
         int backedArrayOffset = targetBuffer.getBackedArrayOffset();

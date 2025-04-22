@@ -50,6 +50,8 @@ public interface ISocketPoller {
 
     void cancelWrite(@NotNull SelectableChannel channel);
 
+    void cancelAll(@NotNull SelectableChannel channel);
+
     void mainLoop()
             throws IOException, InterruptedException;
 

@@ -14,8 +14,8 @@ import net.bodz.bas.net.serv.cmd.ServiceRegistryCmds;
 public class HubSession
         extends StarterSession {
 
-    public HubSession(SocketChannel channel, @NotNull ISessionManager sessionManager, @NotNull ISocketPoller poller, IServiceManager serviceManager) {
-        super(channel, sessionManager);
+    public HubSession(SocketChannel channel, @NotNull ISocketPoller poller, @NotNull ISessionManager sessionManager, IServiceManager serviceManager) {
+        super(channel, poller, sessionManager);
 
         addProvider(new ServiceRegistryCmds(channel, serviceManager));
 

@@ -5,6 +5,7 @@ import java.nio.channels.SocketChannel;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.ISocketPoller;
 
 public class RelayTargetSession
         extends AbstractSocketSession {
@@ -12,8 +13,8 @@ public class RelayTargetSession
     RelayToSession source;
     // SocketChannel sourceChannel;
 
-    public RelayTargetSession(@NotNull String id, @NotNull SocketChannel channel, @NotNull RelayToSession source) {
-        super(channel);
+    public RelayTargetSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull RelayToSession source) {
+        super(channel, poller);
         this.source = source;
     }
 
