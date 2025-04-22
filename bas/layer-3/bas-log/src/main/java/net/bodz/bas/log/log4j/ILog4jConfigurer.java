@@ -11,8 +11,10 @@ import net.bodz.bas.t.order.IPriority;
 
 @IndexedType
 public interface ILog4jConfigurer
-        extends
-            IPriority {
+        extends IPriority {
+
+    String ansiAppender = "stdout-ansi";
+    String ansiErrorAppender = "stderr-ansi";
 
     @Override
     default int getPriority() {
@@ -24,24 +26,20 @@ public interface ILog4jConfigurer
     default void initLog4j(Configuration config) {
     }
 
-    default LoggerComponentBuilder logger(ConfigurationBuilder<? extends Configuration> builder, String name,
-            Level level) {
+    default LoggerComponentBuilder logger(ConfigurationBuilder<? extends Configuration> builder, String name, Level level) {
         return builder.newLogger(name, level);
     }
 
-    default LoggerComponentBuilder logger(ConfigurationBuilder<? extends Configuration> builder, String name,
-            Level level, String appenderName) {
+    default LoggerComponentBuilder logger(ConfigurationBuilder<? extends Configuration> builder, String name, Level level, String appenderName) {
         return builder.newLogger(name, level)//
                 .add(builder.newAppenderRef(appenderName));
     }
 
-    default RootLoggerComponentBuilder rootLogger(ConfigurationBuilder<? extends Configuration> builder, String name,
-            Level level) {
+    default RootLoggerComponentBuilder rootLogger(ConfigurationBuilder<? extends Configuration> builder, String name, Level level) {
         return builder.newRootLogger(level);
     }
 
-    default RootLoggerComponentBuilder rootLogger(ConfigurationBuilder<? extends Configuration> builder, Level level,
-            String appenderName) {
+    default RootLoggerComponentBuilder rootLogger(ConfigurationBuilder<? extends Configuration> builder, Level level, String appenderName) {
         return builder.newRootLogger(level)//
                 .add(builder.newAppenderRef(appenderName));
     }
