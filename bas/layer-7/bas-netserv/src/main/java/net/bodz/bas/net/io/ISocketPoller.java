@@ -10,26 +10,6 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public interface ISocketPoller {
 
-//    SelectionKey register(@NotNull ServerSocketChannel channel, @NotNull ISocketAccepter listener)
-//            throws IOException;
-//
-//    SelectionKey register(@NotNull SocketChannel channel, @NotNull ISocketConnector listener)
-//            throws IOException;
-//
-//    SelectionKey register(@NotNull SocketChannel channel, @NotNull ISocketReader listener)
-//            throws IOException;
-//
-//    SelectionKey register(@NotNull SocketChannel channel, @NotNull ISocketWriter writer)
-//            throws IOException;
-//
-//    void cancel(@NotNull SelectableChannel channel, @NotNull ISocketAccepter accepter);
-//
-//    void cancel(@NotNull SelectableChannel channel, @NotNull ISocketConnector connector);
-//
-//    void cancel(@NotNull SelectableChannel channel, @NotNull ISocketReader reader);
-//
-//    void cancel(@NotNull SelectableChannel channel, @NotNull ISocketWriter writer);
-
     SelectionKey registerAccept(@NotNull ServerSocketChannel channel, @NotNull ISocketAccepter listener)
             throws IOException;
 
@@ -41,6 +21,14 @@ public interface ISocketPoller {
 
     SelectionKey registerWrite(@NotNull SocketChannel channel, @NotNull ISocketWriter writer)
             throws IOException;
+
+    void cancelAccept(@NotNull SelectableChannel channel, @NotNull ISocketAccepter accepter);
+
+    void cancelConnect(@NotNull SelectableChannel channel, @NotNull ISocketConnector connector);
+
+    void cancelRead(@NotNull SelectableChannel channel, @NotNull ISocketReader reader);
+
+    void cancelWrite(@NotNull SelectableChannel channel, @NotNull ISocketWriter writer);
 
     void cancelAccept(@NotNull SelectableChannel channel);
 

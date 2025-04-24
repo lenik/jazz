@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -15,7 +14,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.io.ISocketPoller;
-import net.bodz.bas.net.serv.ISettings;
+import net.bodz.bas.net.util.ISettings;
 import net.bodz.bas.net.serv.session.ISocketSession;
 import net.bodz.bas.net.serv.session.RelayToSession;
 import net.bodz.bas.net.serv.session.SendSession;
@@ -92,7 +91,7 @@ public class ForwardCmds
 
         RelayToSession newSession = null;
         try {
-            newSession = new RelayToSession(channel, poller, targetChannel);
+            newSession = new RelayToSession("_relayTo", channel, poller, targetChannel);
         } catch (IOException e) {
             logger.error(e, "error setup Relay-To session");
             return;
@@ -139,7 +138,7 @@ public class ForwardCmds
     void send(String host, int port, String message)
             throws IOException {
         InetSocketAddress targetAddr = new InetSocketAddress(host, port);
-        SendSession sendSession = new SendSession(channel, poller);
+        SendSession sendSession = new SendSession("_send", channel, poller);
 
         if (settings != null)
             sendSession.copySettings(settings);

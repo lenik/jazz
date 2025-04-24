@@ -2,13 +2,7 @@ package net.bodz.bas.net.serv.session;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CodingErrorAction;
-import java.nio.charset.StandardCharsets;
 
 import net.bodz.bas.c.java.nio.channels.SocketChannels;
 import net.bodz.bas.log.Logger;
@@ -17,8 +11,10 @@ import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.io.ISocketConnector;
 import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.io.ISocketReader;
-import net.bodz.bas.net.io.ISocketWriter;
-import net.bodz.bas.t.buffer.ByteArrayBuffer;
+import net.bodz.bas.net.util.CloseEvent;
+import net.bodz.bas.net.util.IClosedListener;
+import net.bodz.bas.net.util.SmartBuffer;
+import net.bodz.bas.net.util.SocketBuffer;
 
 public abstract class PeerSession
         extends AbstractSocketSession {
@@ -27,40 +23,31 @@ public abstract class PeerSession
 
     ISocketPoller poller;
     SocketChannel targetChannel;
-    IDisconnectListener disconnectListener;
+    IClosedListener targetCloseListener;
 
-    Charset charset = StandardCharsets.UTF_8;
-    ByteArrayBuffer sendBuffer = new ByteArrayBuffer(4096);
+    SocketBuffer target;
 
-    ByteArrayBuffer targetBuffer = new ByteArrayBuffer(4096);
-    Charset targetCharset;
-    CharsetDecoder targetCharsetDecoder;
-    ByteBuffer targetByteBuf = ByteBuffer.allocate(4096);
-    CharBuffer targetDecodedBuffer = CharBuffer.allocate(4096);
-
-    public PeerSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller)
+    public PeerSession(String name, @NotNull SocketChannel channel, @NotNull ISocketPoller poller)
             throws IOException {
-        this(channel, poller, SocketChannel.open());
+        this(name, channel, poller, SocketChannel.open());
     }
 
-    public PeerSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull SocketChannel targetChannel) {
-        super(channel, poller);
+    public PeerSession(String name, @NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull SocketChannel targetChannel) {
+        super(name, channel, poller);
         this.poller = poller;
         this.targetChannel = targetChannel;
-        setTargetCharset(StandardCharsets.UTF_8);
+        this.target = new SocketBuffer(targetChannel, poller);
     }
 
-    void setTargetCharset(Charset charset) {
-        this.targetCharset = charset;
-        this.targetCharsetDecoder = targetCharset.newDecoder();
-        this.targetCharsetDecoder.onMalformedInput(CodingErrorAction.REPLACE);
+    public SmartBuffer getTarget() {
+        return target;
     }
 
     protected String getPrefix() {
         if (targetChannel.socket().isClosed())
             return "-";
-        String addr = SocketChannels.addressInfo(targetChannel);
-        return "<" + addr + ">";
+        String conn = SocketChannels.getConnectionShortInfo(targetChannel);
+        return "<" + conn + ">";
     }
 
     @NotNull
@@ -68,33 +55,14 @@ public abstract class PeerSession
         return targetChannel;
     }
 
-    public void connect(InetSocketAddress addr, IDisconnectListener disconnectListener)
+    public void connect(InetSocketAddress addr, IClosedListener targetCloseListener)
             throws IOException {
         if (targetChannel == null)
             targetChannel = SocketChannel.open();
         targetChannel.configureBlocking(false);
         poller.registerConnect(targetChannel, (ISocketConnector) this::connectTarget);
         targetChannel.connect(addr);
-        this.disconnectListener = disconnectListener;
-    }
-
-    void disconnect() {
-        poller.cancelAll(targetChannel);
-        try {
-            if (disconnectListener != null) {
-                try {
-                    disconnectListener.onDisconnect(targetChannel);
-                } catch (IOException e) {
-                    logger.error("error fire disconnect listener", e);
-                }
-            }
-        } finally {
-            try {
-                targetChannel.socket().close();
-            } catch (IOException e) {
-                logger.error("error close socket of target channel: " + e.getMessage(), e);
-            }
-        }
+        this.targetCloseListener = targetCloseListener;
     }
 
     boolean connectTarget(SocketChannel targetChannel)
@@ -105,93 +73,46 @@ public abstract class PeerSession
         poller.cancelConnect(targetChannel);
 
         poller.registerRead(targetChannel, (ISocketReader) this::readTarget);
-        enableTargetWriter();
+        target.enableWriter();
 
         return true;
     }
 
-    boolean decode = false;
+    void closeTarget() {
+        poller.cancelAll(targetChannel);
+        try {
+            if (targetCloseListener != null) {
+                CloseEvent event = new CloseEvent(targetChannel);
+                targetCloseListener.onClosed(event);
+            }
+        } finally {
+            try {
+                targetChannel.socket().close();
+            } catch (IOException e) {
+                logger.error("error close socket of target channel: " + e.getMessage(), e);
+            }
+        }
+    }
 
     long readTarget(SocketChannel targetChannel)
             throws IOException {
-        logger.debug(getPrefix() + "/readTarget");
-        if (targetChannel.socket().isClosed()) {
-            logger.debug(getPrefix() + "target is closed");
-            disconnectListener.onDisconnect(targetChannel);
-            return 0;
-        }
-
-        ByteBuffer byteBuf = ByteBuffer.allocate(4096);
-        long totalBytesRead = 0;
-        while (true) {
-            int numBytesRead = targetChannel.read(byteBuf);
-            logger.debug("    read " + numBytesRead + " bytes");
-
-            switch (numBytesRead) {
-                case -1:
-                    close();
-                case 0:
-                    return totalBytesRead;
-                default:
-                    totalBytesRead += numBytesRead;
-            }
-
-            byteBuf.flip();
-            if (decode) {
-                targetByteBuf.put(byteBuf);
-                targetByteBuf.flip();
-                targetCharsetDecoder.decode(targetByteBuf, targetDecodedBuffer, false);
-                targetByteBuf.compact();
-                // targetBuffer.flip();
-                targetDecodedBuffer.flip();
-                String part = targetDecodedBuffer.toString();
-                targetDecodedBuffer.clear();
-            } else {
-                targetBuffer.append(byteBuf);
-                readTargetBuffer(targetBuffer);
-            }
-            byteBuf.clear();
-        }
+        return target.read(channel);
     }
 
-    protected abstract void readTargetBuffer(ByteArrayBuffer targetBuffer)
-            throws IOException;
-
-    void enableTargetWriter()
-            throws IOException {
-        logger.debug(getPrefix() + "enableTargetWriter");
-        poller.registerWrite(targetChannel, (ISocketWriter) this::writeTarget);
-    }
-
-    void disableTargetWriter() {
-        logger.debug(getPrefix() + "disableTargetWriter");
-        poller.cancelWrite(targetChannel);
-    }
+    /**
+     * Read targetBuffer or targetCharBuffer depends on decode mode.
+     */
+    protected abstract void readTargetBuffer();
 
     long writeTarget(SocketChannel targetChannel)
             throws IOException {
-        int length = sendBuffer.length();
-        if (length == 0) {
-            disableTargetWriter();
-            return 0;
-        }
-
-        byte[] backedArray = sendBuffer.getBackedArray();
-        int backedArrayOffset = sendBuffer.getBackedArrayOffset();
-        logger.debug(getPrefix() + "/writeTarget, available " + length);
-
-        ByteBuffer buf = ByteBuffer.wrap(backedArray, backedArrayOffset, length);
-        int numBytesWritten = targetChannel.write(buf);
-        logger.debug("    " + numBytesWritten + " written");
-        sendBuffer.delete(0, numBytesWritten);
-
-        return numBytesWritten;
+        return target.write(targetChannel);
     }
 
     public void sendToTarget(String message)
             throws IOException {
         logger.debug(getPrefix() + "send(" + message + ")");
-        byte[] bytes = message.getBytes(charset);
+        byte[] bytes = message.getBytes(target.getCharset());
         sendToTarget(bytes);
     }
 
@@ -202,8 +123,8 @@ public abstract class PeerSession
 
     public void sendToTarget(byte[] buf, int off, int len)
             throws IOException {
-        sendBuffer.append(buf, off, len);
-        enableTargetWriter();
+        target.writeBuffer.append(buf, off, len);
+        target.enableWriter();
     }
 
 }

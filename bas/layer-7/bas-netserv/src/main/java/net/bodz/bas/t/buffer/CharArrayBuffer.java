@@ -1,34 +1,32 @@
 package net.bodz.bas.t.buffer;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.nio.CharBuffer;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public class ByteArrayBuffer
-        implements IBuffer<Byte> {
+public class CharArrayBuffer
+        implements IBuffer<Character> {
 
-    private byte[] buf;
+    private char[] buf;
     private int start;
     private int end;
     private int length;
 
-    public ByteArrayBuffer(int initialCapacity) {
-        buf = new byte[initialCapacity];
+    public CharArrayBuffer(int initialCapacity) {
+        buf = new char[initialCapacity];
         start = 0;
         end = buf.length;
         length = 0;
     }
 
-    public ByteArrayBuffer(@NotNull byte[] buf) {
+    public CharArrayBuffer(@NotNull char[] buf) {
         this.buf = buf;
         this.start = 0;
         this.end = buf.length;
         this.length = buf.length;
     }
 
-    public ByteArrayBuffer(@NotNull byte[] buf, int off, int len) {
+    public CharArrayBuffer(@NotNull char[] buf, int off, int len) {
         if (off < 0 || off > buf.length)
             throw new IllegalArgumentException("bad offset: " + off);
         if (len < 0 || len > buf.length)
@@ -40,7 +38,7 @@ public class ByteArrayBuffer
     }
 
     @NotNull
-    public byte[] getBackedArray() {
+    public char[] getBackedArray() {
         return buf;
     }
 
@@ -50,16 +48,16 @@ public class ByteArrayBuffer
 
     @NotNull
     @Override
-    public Class<Byte> getComponentType() {
-        return Byte.class;
+    public Class<Character> getComponentType() {
+        return Character.class;
     }
 
     @Override
-    public void append(Byte element) {
-        append(element.byteValue());
+    public void append(Character element) {
+        append(element.charValue());
     }
 
-    public void append(byte element) {
+    public void append(char element) {
         ensureCapacity(length + 1);
         buf[start + length] = element;
         length++;
@@ -67,32 +65,32 @@ public class ByteArrayBuffer
 
     public void append(int element) {
         ensureCapacity(length + 1);
-        buf[start + length] = (byte) element;
+        buf[start + length] = (char) element;
         length++;
     }
 
-    public void append(byte[] buf) {
+    public void append(char[] buf) {
         append(buf, 0, buf.length);
     }
 
-    public void append(byte[] buf, int off, int len) {
+    public void append(char[] buf, int off, int len) {
         ensureCapacity(length + len);
         System.arraycopy(buf, off, this.buf, start + length, len);
         length += len;
     }
 
-    public void append(ByteBuffer buf) {
+    public void append(CharBuffer buf) {
         int len = buf.remaining();
         ensureCapacity(length + len);
         buf.get(this.buf, start + length, len);
         length += len;
     }
 
-    public void append(ByteArrayBuffer buf) {
+    public void append(CharArrayBuffer buf) {
         append(buf, 0, buf.length);
     }
 
-    public void append(ByteArrayBuffer buf, int off, int len) {
+    public void append(CharArrayBuffer buf, int off, int len) {
         if (len == 0)
             return;
         ensureIndexValid(off);
@@ -111,76 +109,45 @@ public class ByteArrayBuffer
     }
 
     @Override
-    public Byte get(int i) {
+    public Character get(int i) {
         ensureIndexValid(i);
         return buf[start + i];
     }
 
     @Override
-    public void set(int i, Byte value) {
+    public void set(int i, Character value) {
         ensureIndexValid(i);
         buf[start + i] = value;
     }
 
-    public int get(int offset, byte[] buf) {
+    public int get(int offset, char[] buf) {
         return get(offset, buf, 0, buf.length);
     }
 
-    public int get(int offset, byte[] buf, int off, int len) {
-        if (len <= 0)
-            return 0;
-        ensureIndexValid(offset);
+    public int get(int offset, char[] buf, int off, int len) {
         int remain = length - offset;
-        int min = Math.min(remain, len);
+        int min = Math.min(len, remain);
         System.arraycopy(this.buf, start + offset, buf, off, min);
         return min;
     }
 
-    public int get(int offset, ByteBuffer buf) {
-        return get(offset, buf, buf.remaining());
-    }
-
-    public int get(int offset, ByteBuffer buf, int len) {
-        if (len <= 0)
-            return 0;
-        ensureIndexValid(offset);
-        int remain = length - offset;
-        int min = Math.min(remain, len);
-        buf.put(this.buf, start + offset, min);
-        return min;
-    }
-
-    public int set(int offset, byte[] buf) {
+    public int set(int offset, char[] buf) {
         return set(offset, buf, 0, buf.length);
     }
 
-    public int set(int offset, byte[] buf, int off, int len) {
+    public int set(int offset, char[] buf, int off, int len) {
         int remain = length - offset;
-        int min = Math.min(remain, len);
+        int min = Math.min(len, remain);
         System.arraycopy(buf, off, this.buf, start + offset, min);
         return min;
     }
 
-    public int set(int offset, ByteBuffer buf) {
-        return set(offset, buf, buf.remaining());
-    }
-
-    public int set(int offset, ByteBuffer buf, int len) {
-        if (len <= 0)
-            return 0;
-        ensureIndexValid(offset);
-        int remain = length - offset;
-        int min = Math.min(remain, len);
-        buf.get(this.buf, start + offset, min);
-        return min;
-    }
-
-    public byte getByte(int i) {
+    public char getChar(int i) {
         ensureIndexValid(i);
         return buf[start + i];
     }
 
-    public void setByte(int i, byte value) {
+    public void setChar(int i, char value) {
         ensureIndexValid(i);
         buf[start + i] = value;
     }
@@ -217,7 +184,7 @@ public class ByteArrayBuffer
 
         int newCap = minPowerOf2GreaterThanOrEquals(required);
 
-        byte[] newBuf = new byte[newCap];
+        char[] newBuf = new char[newCap];
         System.arraycopy(buf, start, newBuf, 0, length);
         buf = newBuf;
         start = 0;
@@ -256,20 +223,15 @@ public class ByteArrayBuffer
             length = maxLength;
     }
 
-    public byte[] toByteArray() {
-        byte[] array = new byte[length];
+    public char[] toCharArray() {
+        char[] array = new char[length];
         System.arraycopy(buf, start, array, 0, length);
         return array;
     }
 
-    @Deprecated
     @Override
     public String toString() {
-        return toString(StandardCharsets.UTF_8);
-    }
-
-    public String toString(Charset charset) {
-        return new String(buf, start, length, charset);
+        return new String(buf, start, length);
     }
 
 }

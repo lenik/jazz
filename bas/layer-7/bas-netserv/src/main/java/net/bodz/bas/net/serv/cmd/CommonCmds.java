@@ -9,7 +9,7 @@ import net.bodz.bas.cli.Command;
 import net.bodz.bas.cli.IArgQueue;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.net.serv.ISettingParsable;
+import net.bodz.bas.net.util.ISettingParsable;
 
 public class CommonCmds
         extends AbstractNioCommandProvider {

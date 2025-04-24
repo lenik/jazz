@@ -5,46 +5,24 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.NetworkChannel;
-import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+
+import net.bodz.bas.c.java.net.SocketAddresses;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class SocketChannels {
 
-    public static String simpleAddress(SocketAddress addr) {
-        if (addr == null)
-            return "null";
-        if (addr instanceof InetSocketAddress)
-            return simpleAddress((InetSocketAddress) addr);
-        return addr.toString();
-    }
+    static final Logger logger = LoggerFactory.getLogger(SocketChannels.class);
 
-    public static String simpleAddress(InetSocketAddress addr) {
-        String host = addr.getHostName();
-        if (host != null) {
-            if ("localhost".equals(host))
-                host = null;
-        } else {
-            host = addr.getHostString();
-            if (host != null) {
-                switch (host) {
-                    case "127.0.0.1":
-                    case "::1":
-                        host = null;
-                }
-            }
-        }
-        StringBuilder buf = new StringBuilder(40);
-        if (host != null)
-            buf.append(host);
-        buf.append(":").append(addr.getPort());
-        return buf.toString();
-    }
+    public static final String ARROW = " ⇀ ";
 
     public static String getLocalAddress(NetworkChannel channel) {
         if (channel == null)
             return "null";
         try {
-            return simpleAddress(channel.getLocalAddress());
+            return SocketAddresses.human(channel.getLocalAddress());
         } catch (IOException e) {
             return "(error get local address: " + e.getMessage() + ")";
         }
@@ -54,14 +32,52 @@ public class SocketChannels {
         if (channel == null)
             return "null";
         try {
-            return simpleAddress(channel.getRemoteAddress());
+            return SocketAddresses.human(channel.getRemoteAddress());
         } catch (IOException e) {
             return "(error get remote address: " + e.getMessage() + ")";
         }
     }
 
-    public static String addressInfo(SocketChannel channel) {
-        return getLocalAddress(channel) + " => " + getRemoteAddress(channel);
+    @NotNull
+    public static String getConnectionInfo(SocketChannel channel) {
+        return getLocalAddress(channel) + " ⇀ " + getRemoteAddress(channel);
+    }
+
+    @NotNull
+    public static String getConnectionShortInfo(SocketChannel channel) {
+        if (channel.socket().isClosed())
+            return "closed";
+        StringBuilder buf = new StringBuilder();
+
+        SocketAddress localAddress = null;
+        try {
+            localAddress = channel.getLocalAddress();
+        } catch (IOException e) {
+            logger.error("error get local port", e);
+        }
+        if (localAddress instanceof InetSocketAddress) {
+            int port = ((InetSocketAddress) localAddress).getPort();
+            buf.append(":").append(port);
+        } else {
+            buf.append("?");
+        }
+
+        if (channel.isConnected()) {
+            SocketAddress remoteAddress = null;
+            try {
+                remoteAddress = channel.getRemoteAddress();
+            } catch (IOException e) {
+                logger.error("error get remove address", e);
+            }
+            buf.append(ARROW);
+            if (remoteAddress instanceof InetSocketAddress) {
+                int port = ((InetSocketAddress) remoteAddress).getPort();
+                buf.append(":").append(port);
+            } else {
+                buf.append("?");
+            }
+        }
+        return buf.toString();
     }
 
     public static long discardReceivedBytes(SocketChannel channel)

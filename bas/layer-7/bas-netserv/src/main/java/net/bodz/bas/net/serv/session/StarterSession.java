@@ -16,8 +16,8 @@ public class StarterSession
 
     ISessionManager sessionManager;
 
-    public StarterSession(SocketChannel channel, @NotNull ISocketPoller poller, @NotNull ISessionManager sessionManager) {
-        super(channel, poller);
+    public StarterSession(String name, @NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull ISessionManager sessionManager) {
+        super(name, channel, poller);
         this.sessionManager = sessionManager;
         addProvider(this);
     }
@@ -29,14 +29,13 @@ public class StarterSession
             case "chat":
                 chat(cmd);
                 return true;
-
         }
         return false;
     }
 
     void chat(Command cmd)
             throws IOException {
-        ChatSession chatSession = new ChatSession(channel, poller);
+        ChatSession chatSession = new ChatSession(name + "_chat", channel, poller);
         sessionManager.switchSession(this, chatSession);
     }
 

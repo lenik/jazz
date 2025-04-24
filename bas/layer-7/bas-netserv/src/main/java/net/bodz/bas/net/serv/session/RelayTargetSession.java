@@ -3,7 +3,6 @@ package net.bodz.bas.net.serv.session;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.net.io.ISocketPoller;
 
@@ -13,15 +12,15 @@ public class RelayTargetSession
     RelayToSession source;
     // SocketChannel sourceChannel;
 
-    public RelayTargetSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull RelayToSession source) {
-        super(channel, poller);
+    public RelayTargetSession(String name, @NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull RelayToSession source) {
+        super(name, channel, poller);
         this.source = source;
     }
 
     @Override
     public long read(@NotNull SocketChannel channel)
             throws IOException {
-        return -1;
+        return buffer.read(channel);
     }
 
 }

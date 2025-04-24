@@ -9,8 +9,8 @@ import net.bodz.bas.net.serv.session.DirectiveSocketSession;
 public class TestSession
         extends DirectiveSocketSession {
 
-    public TestSession(SocketChannel channel, @NotNull ISocketPoller poller) {
-        super(channel, poller);
+    public TestSession(String name, @NotNull SocketChannel channel, @NotNull ISocketPoller poller) {
+        super(name, channel, poller);
     }
 
 }

@@ -12,8 +12,6 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.net.io.DefaultPoller;
 import net.bodz.bas.net.io.ISocketAccepter;
-import net.bodz.bas.net.io.ISocketReader;
-import net.bodz.bas.net.serv.session.ISocketSession;
 import net.bodz.bas.net.serv.session.HubSession;
 
 public class NetServer {
@@ -53,40 +51,16 @@ public class NetServer {
     boolean onAccept(ServerSocketChannel serverChannel)
             throws IOException {
         SocketChannel clientChannel = serverChannel.accept();
-        logger.debug("onAccept: " + SocketChannels.addressInfo(clientChannel));
+        logger.debug("onAccept: " + SocketChannels.getConnectionShortInfo(clientChannel));
 
         clientChannel.configureBlocking(false);
-        poller.registerRead(clientChannel, (ISocketReader) this::readClient);
 
-        ISocketSession session = new HubSession(clientChannel, poller, sessionManager, serviceManager);
-        sessionManager.addSession(session);
+        HubSession session = new HubSession("hub", clientChannel, poller, sessionManager, serviceManager);
+        String id = sessionManager.addSession(session);
+        session.setName("hub" + id);
 
+        session.open();
         return true;
-    }
-
-    long readClient(SocketChannel channel)
-            throws IOException {
-        ISocketSession session = sessionManager.getSessionByChannel(channel);
-        if (session == null) {
-            logger.error("invalid unmanaged channel: " + SocketChannels.addressInfo(channel));
-            return 0;
-        }
-
-        long numBytesRead = session.read(channel);
-        logger.debug("readClient: read " + numBytesRead + " bytes from " + SocketChannels.addressInfo(channel));
-
-        if (session.isClosed()) {
-            logger.debug("Session closed: #" + sessionManager.getSessionId(session));
-            poller.cancelRead(channel);
-            try {
-                channel.socket().close();
-            } catch (IOException e) {
-                logger.error("error close the channel: " + e.getMessage(), e);
-            }
-            sessionManager.removeSession(session);
-        }
-
-        return numBytesRead;
     }
 
 }

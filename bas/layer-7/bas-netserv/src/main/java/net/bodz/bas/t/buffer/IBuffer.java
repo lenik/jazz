@@ -57,8 +57,16 @@ public interface IBuffer<T> {
         return length() == 0;
     }
 
+    default boolean isNotEmpty() {
+        return length() != 0;
+    }
+
     default boolean isFull() {
         return length() == capacity();
+    }
+
+    default boolean isNotFull() {
+        return length() != capacity();
     }
 
     default int indexOf(T element) {

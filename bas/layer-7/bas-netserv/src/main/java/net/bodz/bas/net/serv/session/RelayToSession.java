@@ -1,18 +1,13 @@
 package net.bodz.bas.net.serv.session;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.util.function.Consumer;
 
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.net.io.ISocketConnector;
 import net.bodz.bas.net.io.ISocketPoller;
-import net.bodz.bas.net.io.ISocketReader;
-import net.bodz.bas.net.io.ISocketWriter;
 import net.bodz.bas.t.buffer.ByteArrayBuffer;
 
 public class RelayToSession
@@ -26,46 +21,39 @@ public class RelayToSession
 //    public final ByteArrayBuffer sendBuffer = new ByteArrayBuffer(4096);
 
 
-    public RelayToSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller)
+    public RelayToSession(String name, @NotNull SocketChannel channel, @NotNull ISocketPoller poller)
             throws IOException {
-        super(channel, poller);
+        super(name, channel, poller);
     }
 
-    public RelayToSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull SocketChannel targetChannel)
+    public RelayToSession(String name, @NotNull SocketChannel channel, @NotNull ISocketPoller poller, @NotNull SocketChannel targetChannel)
             throws IOException {
-        super(channel, poller, targetChannel);
+        super(name, channel, poller, targetChannel);
     }
 
     @Override
     public long read(@NotNull SocketChannel channel)
             throws IOException {
-        ByteBuffer byteBuf = ByteBuffer.allocate(4096);
-        long totalBytesRead = 0;
-        while (true) {
-            int numBytesRead = channel.read(byteBuf);
-            switch (numBytesRead) {
-                case -1:
-                    close();
-                case 0:
-                    return totalBytesRead;
-                default:
-                    totalBytesRead += numBytesRead;
-            }
-            byteBuf.flip();
-            sendBuffer.append(byteBuf);
-            byteBuf.clear();
-        }
+        long numBytesRead = buffer.read(channel);
+        buffer.moveTo(target);
+        return numBytesRead;
     }
 
     @Override
-    protected void readTargetBuffer(ByteArrayBuffer targetBuffer)
-            throws IOException {
+    protected void readTargetBuffer() {
+        ByteArrayBuffer targetBuffer = target.readBuffer;
+
         byte[] backedArray = targetBuffer.getBackedArray();
         int backedArrayOffset = targetBuffer.getBackedArrayOffset();
         int length = targetBuffer.length();
 
         ByteBuffer buf = ByteBuffer.wrap(backedArray, backedArrayOffset, length);
-        int numBytesWritten = channel.write(buf);
+        int numBytesWritten = 0;
+        try {
+            numBytesWritten = channel.write(buf);
+        } catch (IOException e) {
+            logger.error("error writing to source channel", e);
+        }
 
         targetBuffer.delete(0, numBytesWritten);
     }

@@ -95,37 +95,37 @@ public class DefaultPoller
         }
     }
 
-//    @Override
-//    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketAccepter accepter) {
-//        ChannelLink link = map.get(channel);
-//        if (link != null)
-//            link.removeAccepter(accepter);
-//        cancel(channel, SelectionKey.OP_ACCEPT);
-//    }
-//
-//    @Override
-//    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketConnector connector) {
-//        ChannelLink link = map.get(channel);
-//        if (link != null)
-//            link.removeConnector(connector);
-//        cancel(channel, SelectionKey.OP_CONNECT);
-//    }
-//
-//    @Override
-//    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketReader reader) {
-//        ChannelLink link = map.get(channel);
-//        if (link != null)
-//            link.removeReader(reader);
-//        cancel(channel, SelectionKey.OP_READ);
-//    }
-//
-//    @Override
-//    public void cancel(@NotNull SelectableChannel channel, @NotNull ISocketWriter writer) {
-//        ChannelLink link = map.get(channel);
-//        if (link != null)
-//            link.removeWriter(writer);
-//        cancel(channel, SelectionKey.OP_WRITE);
-//    }
+    @Override
+    public void cancelAccept(@NotNull SelectableChannel channel, @NotNull ISocketAccepter accepter) {
+        ChannelLink link = map.get(channel);
+        if (link != null)
+            link.removeAccepter(accepter);
+        cancel(channel, SelectionKey.OP_ACCEPT);
+    }
+
+    @Override
+    public void cancelConnect(@NotNull SelectableChannel channel, @NotNull ISocketConnector connector) {
+        ChannelLink link = map.get(channel);
+        if (link != null)
+            link.removeConnector(connector);
+        cancel(channel, SelectionKey.OP_CONNECT);
+    }
+
+    @Override
+    public void cancelRead(@NotNull SelectableChannel channel, @NotNull ISocketReader reader) {
+        ChannelLink link = map.get(channel);
+        if (link != null)
+            link.removeReader(reader);
+        cancel(channel, SelectionKey.OP_READ);
+    }
+
+    @Override
+    public void cancelWrite(@NotNull SelectableChannel channel, @NotNull ISocketWriter writer) {
+        ChannelLink link = map.get(channel);
+        if (link != null)
+            link.removeWriter(writer);
+        cancel(channel, SelectionKey.OP_WRITE);
+    }
 
     @Override
     public void cancelAccept(@NotNull SelectableChannel channel) {
@@ -246,7 +246,7 @@ public class DefaultPoller
     }
 
     void handleConnect(SocketChannel channel) {
-        logger.debug("selected-key is connectable: " + SocketChannels.addressInfo(channel));
+        logger.debug("selected-key is connectable: " + SocketChannels.getConnectionShortInfo(channel));
         boolean handled = false;
         for (ISocketConnector connector : getConnectors(channel)) {
             if (connector == null)
@@ -269,7 +269,7 @@ public class DefaultPoller
     }
 
     void handleRead(SocketChannel channel) {
-        logger.debug("selected-key is readable: " + SocketChannels.addressInfo(channel));
+        logger.debug("selected-key is readable: " + SocketChannels.getConnectionShortInfo(channel));
         long totalBytesRead = 0;
         if (channel.socket().isClosed()) {
             handleClose(channel);
@@ -309,7 +309,7 @@ public class DefaultPoller
     }
 
     void handleWrite(SocketChannel channel) {
-        logger.debug("selected-key is writable: " + SocketChannels.addressInfo(channel));
+        logger.debug("selected-key is writable: " + SocketChannels.getConnectionShortInfo(channel));
         long totalBytesWritten = 0;
         for (ISocketWriter writer : getWriters(channel)) {
             if (writer == null)
@@ -353,7 +353,7 @@ public class DefaultPoller
         for (SelectableChannel _channel : map.keySet()) {
             if (_channel instanceof SocketChannel) {
                 SocketChannel channel = (SocketChannel) _channel;
-                logger.debug("cancel channel from selector: " + SocketChannels.addressInfo(channel));
+                logger.debug("cancel channel from selector: " + SocketChannels.getConnectionShortInfo(channel));
             }
             SelectionKey key = _channel.keyFor(selector);
             if (key != null)

@@ -20,9 +20,9 @@ public class ChatSession
 
     LineQueue lineQueue = new LineQueue();
 
-    public ChatSession(@NotNull SocketChannel channel, @NotNull ISocketPoller poller)
+    public ChatSession(String name, @NotNull SocketChannel channel, @NotNull ISocketPoller poller)
             throws IOException {
-        super(channel, poller);
+        super(name, channel, poller);
         greet();
     }
 
@@ -73,23 +73,23 @@ public class ChatSession
             switch (verb) {
                 case "hello":
                     logger.info("message: " + message);
-                    println("hi, " + message + "!");
+                    buffer.printLine("hi, " + message + "!");
                     break;
 
                 case "bye":
-                    println("good bye!");
+                    buffer.printLine("good bye!");
                     close();
                     break;
 
                 default:
-                    println("umm.. I couldn't understand yet.");
+                    buffer.printLine("umm.. I couldn't understand yet.");
             }
         }
     }
 
     void greet()
             throws IOException {
-        println("hey, chatbot here!");
+        buffer.printLine("hey, chatbot here!");
     }
 
 }

@@ -6,13 +6,13 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.cli.CmdQueue;
+import net.bodz.bas.cli.Command;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.cli.CmdQueue;
-import net.bodz.bas.cli.Command;
 import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.serv.cmd.CommonCmds;
 import net.bodz.bas.net.serv.cmd.ICommandProvider;
@@ -25,8 +25,8 @@ public abstract class DirectiveSocketSession
     CmdQueue cmds = new CmdQueue();
     List<ICommandProvider> providers = new ArrayList<>();
 
-    public DirectiveSocketSession(SocketChannel channel, @NotNull ISocketPoller poller) {
-        super(channel, poller);
+    public DirectiveSocketSession(String name, @NotNull SocketChannel channel, @NotNull ISocketPoller poller) {
+        super(name, channel, poller);
 
         CommonCmds commons = new CommonCmds(channel);
         commons.addSettingSource(this);
@@ -86,11 +86,11 @@ public abstract class DirectiveSocketSession
             } catch (ParseException e) {
                 String message = String.format("Error parse command %s from provider %s: %s", //
                         cmd.toString(), provider.toString(), e.getMessage());
-                error(message);
+                buffer.printError(message);
                 return;
             }
         }
-        error("unknown command: " + cmd.getName());
+        buffer.printError("unknown command: " + cmd.getName());
     }
 
 }
