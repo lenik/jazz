@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -64,6 +65,11 @@ public class Sets {
             set.add(element);
         }
         return set;
+    }
+
+    @SafeVarargs
+    public static <T> Set<T> of(T... keys) {
+        return Collections.unmodifiableSet(new LinkedHashSet<>(Arrays.asList(keys)));
     }
 
 }
