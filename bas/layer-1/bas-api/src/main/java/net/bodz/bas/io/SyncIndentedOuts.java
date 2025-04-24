@@ -1,6 +1,7 @@
 package net.bodz.bas.io;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SyncIndentedOuts
@@ -13,8 +14,7 @@ public class SyncIndentedOuts
     public SyncIndentedOuts(ITreeOut defaultOut, ITreeOut... otherOuts) {
         super(defaultOut);
         outs.add(defaultOut);
-        for (ITreeOut out : otherOuts)
-            outs.add(out);
+        outs.addAll(Arrays.asList(otherOuts));
     }
 
     public ITreeOut getDefaultOut() {

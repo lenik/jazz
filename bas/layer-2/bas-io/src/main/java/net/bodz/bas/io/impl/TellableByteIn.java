@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.ITellable;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class TellableByteIn
         implements IByteIn, ITellable {
@@ -25,11 +26,6 @@ public class TellableByteIn
     }
 
     @Override
-    public boolean isClosed() {
-        return in.isClosed();
-    }
-
-    @Override
     public int read()
             throws IOException {
         int b = in.read();
@@ -47,7 +43,7 @@ public class TellableByteIn
     }
 
     @Override
-    public int read(byte[] buf)
+    public int read(@NotNull byte[] buf)
             throws IOException {
         int cb = in.read(buf);
         if (cb != -1)
@@ -56,7 +52,7 @@ public class TellableByteIn
     }
 
     @Override
-    public int read(byte[] buf, int off, int len)
+    public int read(@NotNull byte[] buf, int off, int len)
             throws IOException {
         int cb = in.read(buf, off, len);
         if (cb != -1)
@@ -65,7 +61,7 @@ public class TellableByteIn
     }
 
     @Override
-    public int read(ByteBuffer buf)
+    public int read(@NotNull ByteBuffer buf)
             throws IOException {
         int cb = in.read(buf);
         if (cb != -1)

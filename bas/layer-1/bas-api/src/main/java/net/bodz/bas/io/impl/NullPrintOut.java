@@ -1,15 +1,12 @@
 package net.bodz.bas.io.impl;
 
-import java.io.PrintWriter;
 import java.util.Locale;
 
 import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.io.adapter.PrintOutPrintWriter;
 
 public class NullPrintOut
         extends NullCharOut
-        implements
-            IPrintOut {
+        implements IPrintOut {
 
     @Override
     public void print(CharSequence s) {
@@ -117,11 +114,6 @@ public class NullPrintOut
 
     @Override
     public void close() {
-    }
-
-    @Override
-    public PrintWriter toPrintWriter() {
-        return new PrintOutPrintWriter(this);
     }
 
 }

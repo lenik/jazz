@@ -1,75 +1,70 @@
 package net.bodz.bas.io;
 
+import java.io.Closeable;
+import java.io.Flushable;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.CharBuffer;
 
 import net.bodz.bas.io.adapter.CharOutWriter;
+import net.bodz.bas.meta.decl.NotNull;
 
 public interface ICharOut_raw
-        extends
-            ISimpleCharOut,
-            IFlushable,
-            ICloseable {
+        extends ISimpleCharOut,
+                Flushable,
+                Closeable {
 
     /**
-     * @throws NullPointerException
-     *             If <code>chars</code> is <code>null</code>.
+     * @throws NullPointerException If <code>chars</code> is <code>null</code>.
      */
-    default void write(char[] chars)
+    default void write(@NotNull char[] chars)
             throws IOException {
         write(chars, 0, chars.length);
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>chars</code> is <code>null</code>.
+     * @throws NullPointerException If <code>chars</code> is <code>null</code>.
      */
-    void write(char[] chars, int off, int len)
+    void write(@NotNull char[] chars, int off, int len)
             throws IOException;
 
     /**
-     * @throws NullPointerException
-     *             If <code>s</code> is <code>null</code>.
+     * @throws NullPointerException If <code>s</code> is <code>null</code>.
      */
-    default void write(String s)
+    default void write(@NotNull String s)
             throws IOException {
         write(s, 0, s.length());
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>s</code> is <code>null</code>.
+     * @throws NullPointerException If <code>s</code> is <code>null</code>.
      */
-    void write(String s, int off, int len)
+    void write(@NotNull String s, int off, int len)
             throws IOException;
 
     /**
-     * @throws NullPointerException
-     *             If <code>chars</code> is <code>null</code>.
+     * @throws NullPointerException If <code>chars</code> is <code>null</code>.
      */
-    default void write(CharSequence chars)
+    default void write(@NotNull CharSequence chars)
             throws IOException {
         write(chars, 0, chars.length());
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>chars</code> is <code>null</code>.
+     * @throws NullPointerException If <code>chars</code> is <code>null</code>.
      */
-    void write(CharSequence chars, int start, int end)
+    void write(@NotNull CharSequence chars, int start, int end)
             throws IOException;
 
     /**
-     * @throws NullPointerException
-     *             If <code>charBuffer</code> is <code>null</code>.
+     * @throws NullPointerException If <code>charBuffer</code> is <code>null</code>.
      */
-    default void write(CharBuffer charBuffer)
+    default void write(@NotNull CharBuffer charBuffer)
             throws IOException {
         fn.write(this, charBuffer);
     }
 
-    default void dump(ICharIn charIn)
+    default void dump(@NotNull ICharIn charIn)
             throws IOException {
         fn.dump(this, charIn);
     }

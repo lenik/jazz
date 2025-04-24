@@ -1,12 +1,15 @@
 package net.bodz.bas.io.adapter;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.io.AbstractCharIn;
+import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class CharBufferCharIn
-        extends AbstractCharIn {
+        extends Reader
+        implements ICharIn {
 
     private final CharBuffer buf;
 
@@ -27,7 +30,7 @@ public class CharBufferCharIn
     }
 
     @Override
-    public int read(char[] dst, int off, int len)
+    public int read(@NotNull char[] dst, int off, int len)
             throws IOException {
         int remaining = buf.remaining();
         if (remaining == 0)
@@ -38,11 +41,15 @@ public class CharBufferCharIn
     }
 
     @Override
-    public int read(CharBuffer dst)
+    public int read(@NotNull CharBuffer dst)
             throws IOException {
         if (dst == null)
             throw new NullPointerException("dst");
         return buf.read(dst);
+    }
+
+    @Override
+    public void close() {
     }
 
     @Override

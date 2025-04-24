@@ -30,7 +30,9 @@ import net.bodz.bas.t.map.IndexMap;
 public class StrictDeviceResources
         implements II18nCapable {
 
-    /** XXX - don't know how to dispose... */
+    /**
+     * XXX - don't know how to dispose...
+     */
     static final boolean weakCache = false;
     public static boolean diag = true;
 
@@ -132,9 +134,8 @@ public class StrictDeviceResources
      * getImageDataRes(App.class, &quot;/foo/bar/App.jpg&quot;)
      * </pre>
      *
-     * @param classResPath
-     *            class-relative resource path, if the referred resource isn't within the package
-     *            this <code>clazz</code> belongs to, then the path should precede with '/'.
+     * @param classResPath class-relative resource path, if the referred resource isn't within the package
+     *                     this <code>clazz</code> belongs to, then the path should precede with '/'.
      */
     public ImageData getImageDataRes(Class<?> clazz, String classResPath)
             throws IOException {
@@ -153,8 +154,7 @@ public class StrictDeviceResources
      * getImageDataRes(classLoader, &quot;foo/bar/App.jpg&quot;)
      * </pre>
      *
-     * @param loaderResPath
-     *            absolute resource path, don't start with '/'.
+     * @param loaderResPath absolute resource path, don't start with '/'.
      */
     public ImageData getImageDataRes(ClassLoader loader, String loaderResPath)
             throws IOException {

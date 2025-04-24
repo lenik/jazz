@@ -3,6 +3,7 @@ package net.bodz.bas.io;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public class DecoratedByteOut
@@ -22,24 +23,19 @@ public class DecoratedByteOut
     }
 
     @Override
-    public boolean isClosed() {
-        return getWrapped().isClosed();
-    }
-
-    @Override
     public void write(int b)
             throws IOException {
         getWrapped().write(b);
     }
 
     @Override
-    public void write(byte[] buf)
+    public void write(@NotNull byte[] buf)
             throws IOException {
         getWrapped().write(buf);
     }
 
     @Override
-    public void write(byte[] buf, int off, int len)
+    public void write(@NotNull byte[] buf, int off, int len)
             throws IOException {
         getWrapped().write(buf, off, len);
     }

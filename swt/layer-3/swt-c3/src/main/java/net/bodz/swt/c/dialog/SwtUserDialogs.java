@@ -1,5 +1,6 @@
 package net.bodz.swt.c.dialog;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -116,6 +117,7 @@ public class SwtUserDialogs
 
     // key -> icon image res path.
     static final Map<String, String> aliases;
+
     static {
         aliases = new HashMap<String, String>();
         aliases.put(ERROR, "");
@@ -137,8 +139,7 @@ public class SwtUserDialogs
             extends SimpleDialog {
 
         class RC
-                implements
-                    IActionGroup {
+                implements IActionGroup {
             @Override
             public void addAction(final IAction action) {
                 if (action == null)
@@ -561,11 +562,9 @@ public class SwtUserDialogs
     }
 
     @Override
-    public <K> Set<K> choices(String title, final Object detail, final Map<K, ?> candidates,
-            @SuppressWarnings("unchecked") K... initial) {
+    public <K> Set<K> choices(String title, final Object detail, final Map<K, ?> candidates, @SuppressWarnings("unchecked") K... initial) {
         final Set<K> initials = new HashSet<K>(initial.length);
-        for (K k : initial)
-            initials.add(k);
+        initials.addAll(Arrays.asList(initial));
 
         class ChoicesDialog
                 extends _Dialog {

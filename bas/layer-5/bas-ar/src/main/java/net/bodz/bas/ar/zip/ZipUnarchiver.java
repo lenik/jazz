@@ -18,12 +18,14 @@ import net.bodz.bas.io.res.IStreamResource;
 
 public class ZipUnarchiver
         extends ZipEngine
-        implements IUnarchiver, ITellable, ICroppable {
+        implements IUnarchiver,
+                   ITellable,
+                   ICroppable {
 
-    private IDataIn in;
-    private ISeekable seeker;
-    private ICroppable cropper;
-    private long zipLength;
+    private final IDataIn in;
+    private final ISeekable seeker;
+    private final ICroppable cropper;
+    private final long zipLength;
 
     private ZipEntry lastEntry;
 
@@ -40,7 +42,9 @@ public class ZipUnarchiver
         this.zipLength = seeker.length();
     }
 
-    /** ⇱ Implementation Of {@link IUnarchiver}. */
+    /**
+     * ⇱ Implementation Of {@link IUnarchiver}.
+     */
     /* _____________________________ */static section.iface __UNARCHIVER__;
 
     @Override
@@ -88,7 +92,6 @@ public class ZipUnarchiver
     public void close()
             throws IOException {
         in.close();
-        super.close();
     }
 
     @Override
@@ -96,7 +99,9 @@ public class ZipUnarchiver
         return this;
     }
 
-    /** ⇱ Implementation Of {@link ISeekable}. */
+    /**
+     * ⇱ Implementation Of {@link ISeekable}.
+     */
     /* _____________________________ */static section.iface __SEEK__;
 
     @Override
@@ -108,7 +113,9 @@ public class ZipUnarchiver
         return zipLength;
     }
 
-    /** ⇱ Implementation Of {@link ICroppable}. */
+    /**
+     * ⇱ Implementation Of {@link ICroppable}.
+     */
     /* _____________________________ */static section.iface __CROP__;
 
     @Override
@@ -117,7 +124,9 @@ public class ZipUnarchiver
         return cropper.crop(start, end);
     }
 
-    /** ⇱ Internal Implementations */
+    /**
+     * ⇱ Internal Implementations
+     */
     /* _____________________________ */static section.friend __CEN_LOC__;
 
     EndOfCen getEndOfCen()
@@ -125,7 +134,7 @@ public class ZipUnarchiver
         if (eoc == null) {
             eoc = findEndOfCen();
             if (eoc == null)
-                /**
+                /*
                  * End-of-central-directory signature not found. Either this file is not a zipfile,
                  * or it constitutes one disk of a multi-part archive. In the latter case the
                  * central directory and zipfile comment will be found on the last disk(s) of this

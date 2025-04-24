@@ -1,22 +1,24 @@
 package net.bodz.bas.io.impl;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.io.AbstractPrintOut;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.PrintException;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class PrintOutImpl
-        extends AbstractPrintOut {
+        extends Writer
+        implements IPrintOut {
 
     protected final ICharOut baseImpl;
 
     /**
      * IPrintOut completion from ICharOut implementation.
      *
-     * @param baseImpl
-     *            The {@link ICharOut} implementation, not-<code>null</code>.
+     * @param baseImpl The {@link ICharOut} implementation, not-<code>null</code>.
      */
     protected PrintOutImpl(ICharOut baseImpl) {
         if (baseImpl == null)
@@ -46,31 +48,40 @@ public class PrintOutImpl
     }
 
     @Override
-    public void write(char[] chars, int off, int len)
+    public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         baseImpl.write(chars, off, len);
     }
 
     @Override
-    public void write(CharSequence chars, int start, int end)
+    public void write(@NotNull CharSequence chars, int start, int end)
             throws IOException {
         baseImpl.write(chars, start, end);
     }
 
     @Override
-    public void write(String string, int off, int len)
+    public void write(@NotNull String string, int off, int len)
             throws IOException {
         baseImpl.write(string, off, len);
     }
 
     @Override
-    public void write(CharBuffer charBuffer)
+    public void write(@NotNull CharBuffer charBuffer)
             throws IOException {
         baseImpl.write(charBuffer);
     }
 
     @Override
-    public void _closeX()
+    public void flush() {
+        try {
+            baseImpl.flush();
+        } catch (IOException e) {
+            throw new PrintException(e);
+        }
+    }
+
+    @Override
+    public void close()
             throws IOException {
         baseImpl.close();
     }

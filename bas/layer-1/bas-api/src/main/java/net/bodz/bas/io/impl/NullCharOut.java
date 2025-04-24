@@ -1,68 +1,53 @@
 package net.bodz.bas.io.impl;
 
-import java.io.IOException;
 import java.io.Writer;
 import java.nio.CharBuffer;
 
 import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class NullCharOut
         extends Writer
         implements ICharOut {
 
     @Override
-    public void write(int ch)
-            throws IOException {
+    public void write(int ch) {
     }
 
     @Override
-    public void write(char[] chars)
-            throws IOException {
+    public void write(@NotNull char[] chars) {
     }
 
     @Override
-    public void write(char[] chars, int off, int len)
-            throws IOException {
+    public void write(@NotNull char[] chars, int off, int len) {
     }
 
     @Override
-    public void write(CharBuffer charBuffer)
-            throws IOException {
+    public void write(@NotNull CharBuffer charBuffer) {
     }
 
     @Override
-    public void write(String s)
-            throws IOException {
+    public void write(@NotNull String s) {
     }
 
     @Override
-    public void write(String string, int off, int len)
-            throws IOException {
+    public void write(@NotNull String string, int off, int len) {
     }
 
     @Override
-    public void write(CharSequence chars)
-            throws IOException {
+    public void write(@NotNull CharSequence chars) {
     }
 
     @Override
-    public void write(CharSequence chars, int start, int end)
-            throws IOException {
+    public void write(@NotNull CharSequence chars, int start, int end) {
     }
 
     @Override
-    public void flush()
-            throws IOException {
+    public void flush() {
     }
 
     @Override
-    public void close()
-            throws IOException {
-    }
-
-    @Override
-    public boolean isClosed() {
-        return false;
+    public void close() {
     }
 
     @Override
@@ -70,24 +55,23 @@ public class NullCharOut
         return this;
     }
 
-    /** ⇱ Implementation Of {@link Writer}. */
+    /**
+     * ⇱ Implementation Of {@link Writer}.
+     */
     /* _____________________________ */static section.iface __WRITER__;
 
     @Override
-    public Writer append(CharSequence csq)
-            throws IOException {
+    public Writer append(CharSequence csq) {
         return this;
     }
 
     @Override
-    public Writer append(CharSequence csq, int start, int end)
-            throws IOException {
+    public Writer append(CharSequence csq, int start, int end) {
         return this;
     }
 
     @Override
-    public Writer append(char c)
-            throws IOException {
+    public Writer append(char c) {
         return this;
     }
 

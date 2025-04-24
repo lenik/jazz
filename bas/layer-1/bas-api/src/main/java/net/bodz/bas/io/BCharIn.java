@@ -1,22 +1,25 @@
 package net.bodz.bas.io;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Arrays;
 
 import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class BCharIn
-        extends AbstractCharIn {
+        extends Reader
+        implements ICharIn {
 
     private final char[] src;
     private final int start;
     private final int end;
 
     private int position;
+    boolean closed;
 
     /**
-     * @throws NullPointerException
-     *             If <code>byteArray</code> is <code>null</code>.
+     * @throws NullPointerException If <code>byteArray</code> is <code>null</code>.
      */
     public BCharIn(char[] buf) {
         if (buf == null)
@@ -27,10 +30,8 @@ public class BCharIn
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>byteArray</code> is <code>null</code>.
-     * @throws IndexOutOfBoundsException
-     *             If <code>start</code> or <code>end</code> is out of bound.
+     * @throws NullPointerException      If <code>byteArray</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException If <code>start</code> or <code>end</code> is out of bound.
      */
     public BCharIn(char[] buf, int off, int len) {
         if (buf == null)
@@ -54,7 +55,7 @@ public class BCharIn
     }
 
     @Override
-    public int read(char[] dst, int dstOffset, int len)
+    public int read(@NotNull char[] dst, int dstOffset, int len)
             throws IOException {
         int cbRead = Math.min(len, end - position);
         if (cbRead <= 0)
@@ -65,9 +66,13 @@ public class BCharIn
     }
 
     @Override
+    public void close() {
+    }
+
+    @Override
     public int hashCode() {
         int hash = 0x7b8108a5;
-        hash += src.hashCode();
+        hash += Arrays.hashCode(src);
         hash += start * 3;
         hash += end * 53;
         hash += position * 113;

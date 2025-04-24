@@ -1,6 +1,10 @@
 package net.bodz.bas.html.io;
 
+import java.io.IOException;
+
 import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.PrintException;
 
 public class BHtmlOut
         extends RecHtmlOut {
@@ -17,7 +21,7 @@ public class BHtmlOut
     }
 
     BHtmlOut(BCharOut buf, HtmlOutputFormat format) {
-        super(new HtmlDoc(buf, format));
+        super(new HtmlDoc((ITreeOut) buf, format));
         this.buffer = buf;
         this.format = format;
     }

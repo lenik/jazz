@@ -1,20 +1,20 @@
 package net.bodz.bas.ar.zip;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.io.ICloseable;
 
 public abstract class ZipEngine
-        implements IZipContext, IZipConsts, IZip64Consts, ICloseable {
+        implements IZipContext,
+                   IZipConsts,
+                   IZip64Consts {
 
     private Charset charset = Charset.defaultCharset();
     private String password = "";
 
-    private boolean closed;
-
-    /** ⇱ Implementation Of {@link IZipContext}. */
+    /**
+     * ⇱ Implementation Of {@link IZipContext}.
+     */
     /* _____________________________ */static section.iface __CONTEXT__;
 
     @Override
@@ -53,20 +53,6 @@ public abstract class ZipEngine
     @Override
     public ZipUnarchiver getUnarchiver() {
         throw new IllegalUsageException();
-    }
-
-    /** ⇱ Implementation Of {@link ICloseable}. */
-    /* _____________________________ */static section.iface __CLOSE__;
-
-    @Override
-    public void close()
-            throws IOException {
-        closed = true;
-    }
-
-    @Override
-    public boolean isClosed() {
-        return closed;
     }
 
 }

@@ -6,24 +6,27 @@ import java.io.IOException;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.ByteArrayResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 /**
  * @see BByteIn
  * @see BByteOut
  */
 public class BByteIOS
-        extends AbstractByteIOS {
+        implements IByteIOS {
 
     private final byte[] buf;
     private final int start;
     private final int end;
 
-    /** absolute position */
+    /**
+     * absolute position
+     */
     private int ap;
+    private boolean closed;
 
     /**
-     * @throws NullPointerException
-     *             If <code>byteArray</code> is <code>null</code>.
+     * @throws NullPointerException If <code>byteArray</code> is <code>null</code>.
      */
     public BByteIOS(byte[] buf) {
         if (buf == null)
@@ -34,10 +37,8 @@ public class BByteIOS
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>byteArray</code> is <code>null</code>.
-     * @throws IndexOutOfBoundsException
-     *             If <code>start</code> or <code>end</code> is out of bound.
+     * @throws NullPointerException      If <code>byteArray</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException If <code>start</code> or <code>end</code> is out of bound.
      */
     public BByteIOS(byte[] buf, int off, int len) {
         if (buf == null)
@@ -53,13 +54,31 @@ public class BByteIOS
     }
 
     @Override
+    public void flush()
+            throws IOException {
+    }
+
+    @Override
+    public void close()
+            throws IOException {
+        closed = true;
+    }
+
+    protected void ensureOpen() {
+        if (closed)
+            throw new IllegalStateException("closed");
+    }
+
+    @Override
     public String toString() {
         String graph = new String(buf, start, ap - start) //
                 + "|" + new String(buf, ap, end - ap);
         return graph;
     }
 
-    /** ⇱ Implementation Of {@link IByteIn}. */
+    /**
+     * ⇱ Implementation Of {@link IByteIn}.
+     */
     /* _____________________________ */static section.iface __IN__;
 
     @Override
@@ -82,7 +101,7 @@ public class BByteIOS
     }
 
     @Override
-    public int read(byte[] dst, int dstOffset, int len)
+    public int read(@NotNull byte[] dst, int dstOffset, int len)
             throws IOException {
         ensureOpen();
         int cbRead = Math.min(len, end - ap);
@@ -93,7 +112,9 @@ public class BByteIOS
         return cbRead;
     }
 
-    /** ⇱ Implementation Of {@link IByteOut}. */
+    /**
+     * ⇱ Implementation Of {@link IByteOut}.
+     */
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
@@ -106,7 +127,7 @@ public class BByteIOS
     }
 
     @Override
-    public void write(byte[] src, int off, int len)
+    public void write(@NotNull byte[] src, int off, int len)
             throws IOException {
         ensureOpen();
         int willEndAt = ap + len;
@@ -118,7 +139,9 @@ public class BByteIOS
         ap += len;
     }
 
-    /** ⇱ Implementation Of {@link ISeekable}. */
+    /**
+     * ⇱ Implementation Of {@link ISeekable}.
+     */
     /* _____________________________ */static section.iface __SEEK__;
 
     @Override
@@ -140,7 +163,9 @@ public class BByteIOS
         return end - start;
     }
 
-    /** ⇱ Implementation Of {@link ICroppable}. */
+    /**
+     * ⇱ Implementation Of {@link ICroppable}.
+     */
     /* _____________________________ */static section.iface __CROP__;
 
     @Override

@@ -5,6 +5,7 @@ import java.nio.CharBuffer;
 
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.ITellable;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class TellableCharIn
         implements ICharIn, ITellable {
@@ -25,11 +26,6 @@ public class TellableCharIn
     }
 
     @Override
-    public boolean isClosed() {
-        return in.isClosed();
-    }
-
-    @Override
     public int read()
             throws IOException {
         int b = in.read();
@@ -39,7 +35,7 @@ public class TellableCharIn
     }
 
     @Override
-    public int read(char[] buf)
+    public int read(@NotNull char[] buf)
             throws IOException {
         int cb = in.read(buf);
         if (cb != -1)
@@ -48,7 +44,7 @@ public class TellableCharIn
     }
 
     @Override
-    public int read(char[] buf, int off, int len)
+    public int read(@NotNull char[] buf, int off, int len)
             throws IOException {
         int cb = in.read(buf, off, len);
         if (cb != -1)
@@ -57,7 +53,7 @@ public class TellableCharIn
     }
 
     @Override
-    public int read(CharBuffer buf)
+    public int read(@NotNull CharBuffer buf)
             throws IOException {
         int cb = in.read(buf);
         if (cb != -1)

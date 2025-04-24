@@ -3,10 +3,12 @@ package net.bodz.bas.io;
 import java.io.IOException;
 
 import net.bodz.bas.io.impl.PrintOutImpl;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class BPrintOut
         extends PrintOutImpl
-        implements CharSequence, Appendable {
+        implements CharSequence,
+                   Appendable {
 
     BCharOut baseImpl;
 
@@ -20,11 +22,6 @@ public class BPrintOut
     }
 
     @Override
-    public String toString() {
-        return getBaseImpl().toString();
-    }
-
-    @Override
     public int length() {
         return baseImpl.length();
     }
@@ -34,6 +31,7 @@ public class BPrintOut
         return baseImpl.charAt(index);
     }
 
+    @NotNull
     @Override
     public CharSequence subSequence(int start, int end) {
         return baseImpl.subSequence(start, end);
@@ -58,6 +56,17 @@ public class BPrintOut
             throws IOException {
         baseImpl.append(c);
         return this;
+    }
+
+    @Override
+    public void flush() {
+        baseImpl.flush();
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return baseImpl.toString();
     }
 
 }

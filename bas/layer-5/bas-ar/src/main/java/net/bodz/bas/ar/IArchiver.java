@@ -1,12 +1,11 @@
 package net.bodz.bas.ar;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.bodz.bas.io.ICloseable;
-
 public interface IArchiver
-        extends ICloseable {
+        extends Closeable {
 
     OutputStream putNextEntry(IArchiveEntry entry)
             throws IOException;

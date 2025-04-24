@@ -12,14 +12,14 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.list.IAutoList;
 import net.bodz.bas.t.stack.ContextStack;
 import net.bodz.bas.t.stack.NodePredicates;
 
 public class DomWriter
-        implements
-            IStructDocWriter<DomWriter>,
-            IDomCreatorImpl {
+        implements IStructDocWriter<DomWriter>,
+                   IDomCreatorImpl {
 
     static class np
             extends NodePredicates {
@@ -118,53 +118,53 @@ public class DomWriter
     @Override
     public DomWriter end(ElementType elementType) {
         switch (elementType) {
-        case BLOCK:
-            stack.popFor(np.IS_PAR);
-            break;
-        case GENERIC_SECTION:
-            stack.popFor(np.PART);
-            break;
-        case CHAPTER:
-            stack.popFor(np.CHAPTER);
-            break;
-        case SECTION:
-            stack.popFor(np.SECTION);
-            break;
-        case SUBSECTION:
-            stack.popFor(np.SUBSECTION);
-            break;
-        case SUBSUBSECTION:
-            stack.popFor(np.SUBSUBSECTION);
-            break;
-        case PARAGRAPH:
-            stack.popFor(np.PARAGRAPH);
-            break;
-        case SUBPARAGRAPH:
-            stack.popFor(np.SUBPARAGRAPH);
-            break;
-        case UNORDERED_LIST:
-            stack.popFor(np.UL);
-            break;
-        case ORDERED_LIST:
-            stack.popFor(np.OL);
-            break;
-        case ITEM:
-            stack.popFor(np.LIST_ITEM);
-            return this;
-        case TABLE:
-            stack.popFor(np.TABLE);
-            break;
-        case TR:
-            stack.popFor(np.TABLE_ROW);
-            break;
-        case TH:
-            stack.popFor(np.TABLE_CELL);
-            break;
-        case TD:
-            stack.popFor(np.TABLE_CELL);
-            break;
-        default:
-            throw new UnexpectedException();
+            case BLOCK:
+                stack.popFor(np.IS_PAR);
+                break;
+            case GENERIC_SECTION:
+                stack.popFor(np.PART);
+                break;
+            case CHAPTER:
+                stack.popFor(np.CHAPTER);
+                break;
+            case SECTION:
+                stack.popFor(np.SECTION);
+                break;
+            case SUBSECTION:
+                stack.popFor(np.SUBSECTION);
+                break;
+            case SUBSUBSECTION:
+                stack.popFor(np.SUBSUBSECTION);
+                break;
+            case PARAGRAPH:
+                stack.popFor(np.PARAGRAPH);
+                break;
+            case SUBPARAGRAPH:
+                stack.popFor(np.SUBPARAGRAPH);
+                break;
+            case UNORDERED_LIST:
+                stack.popFor(np.UL);
+                break;
+            case ORDERED_LIST:
+                stack.popFor(np.OL);
+                break;
+            case ITEM:
+                stack.popFor(np.LIST_ITEM);
+                return this;
+            case TABLE:
+                stack.popFor(np.TABLE);
+                break;
+            case TR:
+                stack.popFor(np.TABLE_ROW);
+                break;
+            case TH:
+                stack.popFor(np.TABLE_CELL);
+                break;
+            case TD:
+                stack.popFor(np.TABLE_CELL);
+                break;
+            default:
+                throw new UnexpectedException();
         }
         stack.pop();
         return this;
@@ -466,13 +466,12 @@ public class DomWriter
     }
 
     @Override
-    public void write(char[] chars, int off, int len)
+    public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         String s = new String(chars, off, len);
         text(s);
     }
 
-    @Override
     public boolean isClosed() {
         return stack.isEmpty();
     }

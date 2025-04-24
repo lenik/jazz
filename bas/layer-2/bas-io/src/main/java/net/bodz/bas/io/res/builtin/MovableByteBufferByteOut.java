@@ -3,11 +3,13 @@ package net.bodz.bas.io.res.builtin;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.bodz.bas.io.AbstractByteOut;
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 
 public class MovableByteBufferByteOut
-        extends AbstractByteOut {
+        extends OutputStream
+        implements IByteOut {
 
     private final MovableByteBuffer buffer;
     private int position;
@@ -31,7 +33,7 @@ public class MovableByteBufferByteOut
     }
 
     @Override
-    public synchronized void write(byte[] b, int off, int len)
+    public synchronized void write(@NotNull byte[] b, int off, int len)
             throws IOException {
         checkIfClosed();
         buffer.ensureSize(position + len);

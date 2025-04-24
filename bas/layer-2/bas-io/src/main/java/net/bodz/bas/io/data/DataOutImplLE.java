@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.IDataOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class DataOutImplLE
         extends AbstractDataOutLE
@@ -32,7 +33,7 @@ public class DataOutImplLE
     }
 
     @Override
-    public void write(byte[] buf, int off, int len)
+    public void write(@NotNull byte[] buf, int off, int len)
             throws IOException {
         baseImpl.write(buf, off, len);
     }

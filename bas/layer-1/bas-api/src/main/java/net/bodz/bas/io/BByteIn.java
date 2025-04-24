@@ -1,12 +1,15 @@
 package net.bodz.bas.io;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class BByteIn
-        extends AbstractByteIn {
+        extends InputStream
+        implements IByteIn {
 
     private final byte[] src;
     private final int start;
@@ -15,8 +18,7 @@ public class BByteIn
     private int position;
 
     /**
-     * @throws NullPointerException
-     *             If <code>byteArray</code> is <code>null</code>.
+     * @throws NullPointerException If <code>byteArray</code> is <code>null</code>.
      */
     public BByteIn(byte[] buf) {
         if (buf == null)
@@ -27,10 +29,8 @@ public class BByteIn
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>byteArray</code> is <code>null</code>.
-     * @throws IndexOutOfBoundsException
-     *             If <code>start</code> or <code>end</code> is out of bound.
+     * @throws NullPointerException      If <code>byteArray</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException If <code>start</code> or <code>end</code> is out of bound.
      */
     public BByteIn(byte[] buf, int off, int len) {
         if (buf == null)
@@ -62,7 +62,7 @@ public class BByteIn
     }
 
     @Override
-    public int read(byte[] dst, int dstOffset, int len)
+    public int read(@NotNull byte[] dst, int dstOffset, int len)
             throws IOException {
         int cbRead = Math.min(len, end - position);
         if (cbRead <= 0)
@@ -73,9 +73,13 @@ public class BByteIn
     }
 
     @Override
+    public void close() {
+    }
+
+    @Override
     public int hashCode() {
         int hash = 0x93cfab31;
-        hash += src.hashCode();
+        hash += Arrays.hashCode(src);
         hash += start * 3;
         hash += end * 53;
         hash += position * 113;

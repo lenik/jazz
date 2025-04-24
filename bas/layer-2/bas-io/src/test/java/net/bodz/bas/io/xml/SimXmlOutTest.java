@@ -1,5 +1,7 @@
 package net.bodz.bas.io.xml;
 
+import java.io.IOException;
+
 import org.junit.Assert;
 
 import net.bodz.bas.io.ITreeOut;
@@ -9,7 +11,8 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 public class SimXmlOutTest
         extends Assert {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+            throws IOException {
         ITreeOut treeOut = TreeOutImpl.from(Stdio.cout);
 
         XmlOutputFormat format = new XmlOutputFormat();

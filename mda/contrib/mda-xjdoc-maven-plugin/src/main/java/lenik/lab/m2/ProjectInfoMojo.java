@@ -9,6 +9,7 @@ import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 
@@ -23,7 +24,7 @@ import net.bodz.bas.io.res.ResFn;
  *
  * <p>
  * The usage of <b>&#64;requiresDependencyResolution</b>:
- *
+ * <p>
  * Flags this Mojo as requiring the dependencies in the specified class path to be resolved before
  * it can execute. The matrix below illustrates which values for <i>&lt;requiredClassPath&gt;</i>
  * (first column) are supported and which dependency scopes (first row) they will request to
@@ -107,7 +108,7 @@ public class ProjectInfoMojo
      * The directory to save generated files.
      *
      * @parameter property="outputDirectory"
-     *            default-value="${project.build.directory}/generated-resources/project"
+     * default-value="${project.build.directory}/generated-resources/project"
      */
     File outputDirectory;
 
@@ -121,6 +122,8 @@ public class ProjectInfoMojo
     @Override
     public void execute()
             throws MojoExecutionException, MojoFailureException {
+
+        Log logger = this.getLog();
 
         File file = new File(outputDirectory, "project-info.txt");
         file.getParentFile().mkdirs();
@@ -137,7 +140,7 @@ public class ProjectInfoMojo
 
         if (project != null) {
 
-            /**
+            /*
              * The dependency artifacts is only resolved since the compile phase.
              *
              * That is, "@phase" must be compile or above, or the "@requiresDependencyResolution
@@ -149,8 +152,7 @@ public class ProjectInfoMojo
             if (dependencyArtifacts == null)
                 out.println("No dependency artifact.");
             else
-                for (Object _artifact : dependencyArtifacts) {
-                    Artifact artifact = (Artifact) _artifact;
+                for (Artifact artifact : dependencyArtifacts) {
                     File artifactFile = artifact.getFile();
                     out.println("project.dependencyArtifact: " + artifactFile);
                 }
@@ -208,6 +210,11 @@ public class ProjectInfoMojo
                 throw new MojoExecutionException(e.getMessage(), e);
             }
 
-        out.close();
+        try {
+            out.close();
+        } catch (IOException e) {
+            logger.error("error close " + file, e);
+        }
     }
+
 }

@@ -1,29 +1,38 @@
 package net.bodz.bas.io.xml;
 
-import java.io.IOException;
-
-import net.bodz.bas.io.AbstractPrintOut;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class TextPrintOut
-        extends AbstractPrintOut {
+        implements IPrintOut {
 
-    private IXmlOut out;
+    private final IXmlOut out;
 
     public TextPrintOut(IXmlOut out) {
         this.out = out;
     }
 
     @Override
-    public void write(char[] cbuf, int off, int len)
-            throws IOException {
-        String str = new String(cbuf, off, len);
-        write(str);
+    public void write(int ch) {
+        out.text(String.valueOf((char) ch));
     }
 
     @Override
-    public void write(String s)
-            throws IOException {
+    public void write(@NotNull char[] buf, int off, int len) {
+        out.text(new String(buf, off, len));
+    }
+
+    @Override
+    public void write(@NotNull String s) {
         out.text(s);
+    }
+
+    @Override
+    public void flush() {
+    }
+
+    @Override
+    public void close() {
     }
 
 }

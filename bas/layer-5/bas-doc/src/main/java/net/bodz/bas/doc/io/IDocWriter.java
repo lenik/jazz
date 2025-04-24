@@ -10,9 +10,8 @@ import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.res.IStreamInputSource;
 
 public interface IDocWriter<self_t extends IDocWriter<self_t>>
-        extends
-            IPrintOut,
-            AutoCloseable {
+        extends IPrintOut,
+                AutoCloseable {
 
     /**
      * pseudio group. can be div or span for block or inline context.

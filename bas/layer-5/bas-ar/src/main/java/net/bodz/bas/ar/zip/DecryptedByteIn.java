@@ -1,10 +1,10 @@
 package net.bodz.bas.ar.zip;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 import net.bodz.bas.io.DecoratedByteIn;
 import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class DecryptedByteIn
         extends DecoratedByteIn {
@@ -29,19 +29,13 @@ public class DecryptedByteIn
     }
 
     @Override
-    public int read(byte[] buf, int off, int len)
+    public int read(@NotNull byte[] buf, int off, int len)
             throws IOException {
         int cb = super.read(buf, off, len);
         for (int i = 0; i < cb; i++) {
             buf[off] = key.decrypt(buf[off]);
         }
         return cb;
-    }
-
-    @Override
-    public int read(ByteBuffer buf)
-            throws IOException {
-        return IByteIn.fn.read(this, buf);
     }
 
     @Override

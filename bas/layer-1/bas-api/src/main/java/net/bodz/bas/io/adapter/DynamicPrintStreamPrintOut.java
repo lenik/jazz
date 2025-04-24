@@ -1,13 +1,16 @@
 package net.bodz.bas.io.adapter;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 
-import net.bodz.bas.io.AbstractPrintOut;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class DynamicPrintStreamPrintOut
-        extends AbstractPrintOut {
+        extends OutputStream
+        implements IPrintOut {
 
     /**
      * @return non-<code>null</code> {@link PrintStream} instance.
@@ -21,13 +24,13 @@ public abstract class DynamicPrintStreamPrintOut
     }
 
     @Override
-    public void write(char[] chars, int off, int len)
+    public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         getPrintStream().print(Arrays.copyOfRange(chars, off, off + len));
     }
 
     @Override
-    public void write(String string, int off, int len)
+    public void write(@NotNull String string, int off, int len)
             throws IOException {
         getPrintStream().print(string.substring(off, off + len));
     }
@@ -43,14 +46,12 @@ public abstract class DynamicPrintStreamPrintOut
     }
 
     @Override
-    public void _flushX()
-            throws IOException {
+    public void flush() {
         getPrintStream().flush();
     }
 
     @Override
-    public void _closeX()
-            throws IOException {
+    public void close() {
         getPrintStream().close();
     }
 

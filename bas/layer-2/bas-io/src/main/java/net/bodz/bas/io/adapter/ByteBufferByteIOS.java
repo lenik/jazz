@@ -4,20 +4,21 @@ import java.io.IOException;
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 
-import net.bodz.bas.io.AbstractByteIOS;
+import net.bodz.bas.io.IByteIOS;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.ByteArrayResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 /**
  * @see ByteBufferByteIn
  * @see ByteBufferByteOut
  */
 public class ByteBufferByteIOS
-        extends AbstractByteIOS {
+        implements IByteIOS {
 
     private final ByteBuffer buf;
 
@@ -27,7 +28,9 @@ public class ByteBufferByteIOS
         this.buf = buf;
     }
 
-    /** ⇱ Implementation Of {@link IByteIn}. */
+    /**
+     * ⇱ Implementation Of {@link IByteIn}.
+     */
     /* _____________________________ */static section.iface __IN__;
 
     @Override
@@ -41,7 +44,7 @@ public class ByteBufferByteIOS
     }
 
     @Override
-    public int read(byte[] dst, int off, int len)
+    public int read(@NotNull byte[] dst, int off, int len)
             throws IOException {
         int remaining = buf.remaining();
         if (remaining == 0)
@@ -60,7 +63,9 @@ public class ByteBufferByteIOS
         return min;
     }
 
-    /** ⇱ Implementation Of {@link IByteOut}. */
+    /**
+     * ⇱ Implementation Of {@link IByteOut}.
+     */
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
@@ -70,7 +75,7 @@ public class ByteBufferByteIOS
     }
 
     @Override
-    public void write(byte[] src, int off, int len)
+    public void write(@NotNull byte[] src, int off, int len)
             throws IOException {
         try {
             buf.put(src, off, len);
@@ -91,7 +96,9 @@ public class ByteBufferByteIOS
         }
     }
 
-    /** ⇱ Implementation Of {@link ISeekable}. */
+    /**
+     * ⇱ Implementation Of {@link ISeekable}.
+     */
     /* _____________________________ */static section.iface __SEEK__;
 
     @Override
@@ -111,7 +118,9 @@ public class ByteBufferByteIOS
         return buf.capacity();
     }
 
-    /** ⇱ Implementation Of {@link ICroppable}. */
+    /**
+     * ⇱ Implementation Of {@link ICroppable}.
+     */
     /* _____________________________ */static section.iface __CROP__;
 
     @Override

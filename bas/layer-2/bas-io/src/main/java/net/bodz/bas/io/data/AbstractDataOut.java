@@ -1,18 +1,20 @@
 package net.bodz.bas.io.data;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 
 import net.bodz.bas.c.java.nio.Charsets;
-import net.bodz.bas.io.AbstractByteOut;
+import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.IDataOut;
 import net.bodz.bas.io.StringLengthType;
 
 public abstract class AbstractDataOut
-        extends AbstractByteOut
+        extends OutputStream
         implements
-            IDataOut {
+            IDataOut,
+            IByteOut {
 
     static final int FIX_PADDING = 0xFF;
 

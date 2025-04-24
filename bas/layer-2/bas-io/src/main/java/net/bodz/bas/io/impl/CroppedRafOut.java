@@ -1,20 +1,23 @@
 package net.bodz.bas.io.impl;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
 
 import net.bodz.bas.io.IByteOut;
-import net.bodz.bas.io.ICloseable;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class CroppedRafOut
         extends OutputStream
-        implements IByteOut, ISeekable, ICroppable, ICloseable {
+        implements IByteOut,
+                   ISeekable,
+                   ICroppable,
+                   Closeable {
 
     private final File file;
     private final String mode;
@@ -35,7 +38,9 @@ public class CroppedRafOut
         raf.seek(ap = start);
     }
 
-    /** ⇱ Implementation Of {@link OutputStream}. */
+    /**
+     * ⇱ Implementation Of {@link OutputStream}.
+     */
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
@@ -51,7 +56,7 @@ public class CroppedRafOut
     }
 
     @Override
-    public void write(byte[] buf, int off, int len)
+    public void write(@NotNull byte[] buf, int off, int len)
             throws IOException {
         ensureOpen();
 
@@ -63,18 +68,9 @@ public class CroppedRafOut
         ap += len;
     }
 
-    @Override
-    public void write(ByteBuffer buf)
-            throws IOException {
-        IByteOut.fn.write(this, buf);
-    }
-
-    @Override
-    public void flush()
-            throws IOException {
-    }
-
-    /** ⇱ Implementation Of {@link ISeekable}. */
+    /**
+     * ⇱ Implementation Of {@link ISeekable}.
+     */
     /* _____________________________ */static section.iface __SEEK__;
 
     @Override
@@ -101,7 +97,9 @@ public class CroppedRafOut
         return raf.length();
     }
 
-    /** ⇱ Implementation Of {@link ICroppable}. */
+    /**
+     * ⇱ Implementation Of {@link ICroppable}.
+     */
     /* _____________________________ */static section.iface __CROP__;
 
     @Override
@@ -118,7 +116,9 @@ public class CroppedRafOut
         return new CroppedRafResource(file, mode, fStart, fEnd);
     }
 
-    /** ⇱ Implementation Of {@link ICloseable}. */
+    /**
+     * ⇱ Implementation Of {@link ICloseable}.
+     */
     /* _____________________________ */static section.iface __CLOSE__;
 
     private void ensureOpen() {
@@ -130,12 +130,6 @@ public class CroppedRafOut
     public void close()
             throws IOException {
         raf.close();
-        closed = true;
-    }
-
-    @Override
-    public boolean isClosed() {
-        return closed;
     }
 
 }

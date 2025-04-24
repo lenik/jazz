@@ -2,11 +2,12 @@ package net.bodz.bas.io.res.builtin;
 
 import java.io.IOException;
 
-import net.bodz.bas.io.AbstractByteIn;
+import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 
 public class MovableByteBufferByteIn
-        extends AbstractByteIn {
+        implements IByteIn {
 
     private final MovableByteBuffer buffer;
     private int position;
@@ -42,13 +43,13 @@ public class MovableByteBufferByteIn
     }
 
     @Override
-    public synchronized int read(byte[] b, int off, int len)
+    public synchronized int read(@NotNull byte[] buf, int off, int len)
             throws IOException {
         checkIfClosed();
         int count = Math.min(len, buffer.size() - position);
         if (count == 0)
             return -1;
-        buffer.copyTo(position, b, off, count);
+        buffer.copyTo(position, buf, off, count);
         return count;
     }
 

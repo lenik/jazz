@@ -75,7 +75,7 @@ public class DecoratedLogSink
     }
 
     @Override
-    public void sig(Object... messagePieces) {
+    public void sig(@NotNull Object... messagePieces) {
         getWrapped().sig(messagePieces);
     }
 

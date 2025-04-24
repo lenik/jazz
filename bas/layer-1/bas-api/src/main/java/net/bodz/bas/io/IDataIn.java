@@ -8,84 +8,67 @@ import net.bodz.bas.err.BadFormatException;
 import net.bodz.bas.err.ParseException;
 
 public interface IDataIn
-        extends
-            IByteIn,
-            ICharsetAware {
+        extends IByteIn,
+                ICharsetAware {
 
     boolean isBigEndian();
 
     /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws EOFException if this stream reaches the end before reading all the bytes.
+     * @throws IOException  if an I/O error occurs.
      */
     byte readByte()
             throws IOException;
 
     /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws EOFException if this stream reaches the end before reading all the bytes.
+     * @throws IOException  if an I/O error occurs.
      */
     short readWord()
             throws IOException;
 
     /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws EOFException if this stream reaches the end before reading all the bytes.
+     * @throws IOException  if an I/O error occurs.
      */
     int readDword()
             throws IOException;
 
     /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws EOFException if this stream reaches the end before reading all the bytes.
+     * @throws IOException  if an I/O error occurs.
      */
     long readQword()
             throws IOException;
 
     /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws EOFException if this stream reaches the end before reading all the bytes.
+     * @throws IOException  if an I/O error occurs.
      */
     float readFloat()
             throws IOException;
 
     /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws EOFException if this stream reaches the end before reading all the bytes.
+     * @throws IOException  if an I/O error occurs.
      */
     double readDouble()
             throws IOException;
 
     /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws EOFException if this stream reaches the end before reading all the bytes.
+     * @throws IOException  if an I/O error occurs.
      */
     boolean readBool()
             throws IOException;
 
     /**
      * Read UCS-16 character.
-     *
+     * <p>
      * The byte order is the same as {@link #readWord()}.
      *
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws EOFException if this stream reaches the end before reading all the bytes.
+     * @throws IOException  if an I/O error occurs.
      */
     default char readWChar()
             throws IOException {
@@ -100,10 +83,8 @@ public interface IDataIn
             throws IOException;
 
     /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws EOFException if this stream reaches the end before reading all the bytes.
+     * @throws IOException  if an I/O error occurs.
      */
     char readUtf8Char()
             throws IOException, ParseException;
@@ -121,12 +102,9 @@ public interface IDataIn
     }
 
     /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
-     * @exception ParseException
-     *                If malformed character occurrs.
+     * @throws EOFException   if this stream reaches the end before reading all the bytes.
+     * @throws IOException    if an I/O error occurs.
+     * @throws ParseException If malformed character occurrs.
      */
     EncodedChar readChar(Charset charset)
             throws IOException, ParseException;
@@ -135,10 +113,8 @@ public interface IDataIn
             throws IOException;
 
     /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws EOFException if this stream reaches the end before reading all the bytes.
+     * @throws IOException  if an I/O error occurs.
      */
     default void readBytes(byte[] buf)
             throws IOException {
@@ -146,10 +122,8 @@ public interface IDataIn
     }
 
     /**
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws EOFException if this stream reaches the end before reading all the bytes.
+     * @throws IOException  if an I/O error occurs.
      */
     void readBytes(byte[] buf, int off, int len)
             throws IOException;
@@ -348,16 +322,13 @@ public interface IDataIn
     /**
      * Read wide ucs-16 string.
      *
-     * @throws BadFormatException
-     *             If the string format is illegal.
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     *                <ul>
-     *                <li>For fixed-length/size string, there are insufficient chars.
-     *                <li>For xxx-term-ed string, the term char seq is missing.
-     *                </ul>
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws BadFormatException If the string format is illegal.
+     * @throws EOFException       if this stream reaches the end before reading all the bytes.
+     *                            <ul>
+     *                            <li>For fixed-length/size string, there are insufficient chars.
+     *                            <li>For xxx-term-ed string, the term char seq is missing.
+     *                            </ul>
+     * @throws IOException        if an I/O error occurs.
      */
     String readString(StringLengthType lengthType, int providedCount)
             throws IOException, ParseException;
@@ -371,16 +342,13 @@ public interface IDataIn
     /**
      * Read string in specific encoding.
      *
-     * @throws BadFormatException
-     *             If the string format is illegal.
-     * @exception EOFException
-     *                if this stream reaches the end before reading all the bytes.
-     *                <ul>
-     *                <li>For fixed-length/size string, there are insufficient chars.
-     *                <li>For xxx-term-ed string, the term char seq is missing.
-     *                </ul>
-     * @exception IOException
-     *                if an I/O error occurs.
+     * @throws BadFormatException If the string format is illegal.
+     * @throws EOFException       if this stream reaches the end before reading all the bytes.
+     *                            <ul>
+     *                            <li>For fixed-length/size string, there are insufficient chars.
+     *                            <li>For xxx-term-ed string, the term char seq is missing.
+     *                            </ul>
+     * @throws IOException        if an I/O error occurs.
      */
     default EncodedString readString(StringLengthType lengthType, int providedCount, String encoding)
             throws IOException, ParseException {

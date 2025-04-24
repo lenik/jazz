@@ -1,9 +1,13 @@
 package net.bodz.bas.io;
 
 import java.io.IOException;
+import java.io.Reader;
+
+import net.bodz.bas.meta.decl.NotNull;
 
 public class StringCharIn
-        extends AbstractCharIn {
+        extends Reader
+        implements ICharIn {
 
     private final String string;
     private final int start;
@@ -12,8 +16,7 @@ public class StringCharIn
     private int position;
 
     /**
-     * @throws NullPointerException
-     *             If <code>string</code> is <code>null</code>.
+     * @throws NullPointerException If <code>string</code> is <code>null</code>.
      */
     public StringCharIn(String string) {
         if (string == null)
@@ -24,10 +27,8 @@ public class StringCharIn
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>string</code> is <code>null</code>.
-     * @throws IndexOutOfBoundsException
-     *             If <code>start</code> or <code>end</code> is out of bound.
+     * @throws NullPointerException      If <code>string</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException If <code>start</code> or <code>end</code> is out of bound.
      */
     public StringCharIn(String string, int start, int end) {
         if (string == null)
@@ -51,7 +52,7 @@ public class StringCharIn
     }
 
     @Override
-    public int read(char[] chars, int off, int len)
+    public int read(@NotNull char[] chars, int off, int len)
             throws IOException {
         int cbRead = Math.min(len, end - position);
         if (cbRead <= 0)
@@ -59,6 +60,10 @@ public class StringCharIn
         string.getChars(position, position + cbRead, chars, off);
         position += cbRead;
         return cbRead;
+    }
+
+    @Override
+    public void close() {
     }
 
     @Override

@@ -3,13 +3,15 @@ package net.bodz.bas.io.adapter;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.bodz.bas.io.AbstractByteOut;
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 /**
  * @see OutputStreamByteOut
  */
 public abstract class DynamicOutputStreamByteOut
-        extends AbstractByteOut {
+        extends OutputStream
+        implements IByteOut {
 
     /**
      * @return non-<code>null</code> {@link OutputStream} instance.
@@ -23,15 +25,21 @@ public abstract class DynamicOutputStreamByteOut
     }
 
     @Override
-    public void write(byte[] buf)
+    public void write(@NotNull byte[] buf)
             throws IOException {
         getOutputStream().write(buf);
     }
 
     @Override
-    public void write(byte[] buf, int off, int len)
+    public void write(@NotNull byte[] buf, int off, int len)
             throws IOException {
         getOutputStream().write(buf, off, len);
+    }
+
+    @Override
+    public void flush()
+            throws IOException {
+        getOutputStream().flush();
     }
 
     @Override
@@ -40,7 +48,6 @@ public abstract class DynamicOutputStreamByteOut
         getOutputStream().close();
     }
 
-    @Override
     public OutputStream toOutputStream() {
         return getOutputStream();
     }

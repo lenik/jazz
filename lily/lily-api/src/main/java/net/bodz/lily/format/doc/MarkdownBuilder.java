@@ -13,6 +13,8 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.content.FileContent;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -20,8 +22,9 @@ import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.entity.format.WordUtils;
 
 public abstract class MarkdownBuilder
-        implements
-            IVarMapForm {
+        implements IVarMapForm {
+
+    static final Logger logger = LoggerFactory.getLogger(MarkdownBuilder.class);
 
     BCharOut buf = new BCharOut();
     protected ITreeOut out;
@@ -114,7 +117,7 @@ public abstract class MarkdownBuilder
         out = buf.indented();
         out.getTextIndention().setIndentSize(0);
         body();
-        out.close();
+        out.closeOrIgnore();
         String md = buf.toString();
         return md;
     }

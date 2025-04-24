@@ -3,6 +3,7 @@ package net.bodz.bas.log.impl;
 import net.bodz.bas.io.impl.NullTreeOut;
 import net.bodz.bas.log.ILogEntry;
 import net.bodz.bas.log.ILogSink;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class NullLogSink
         extends NullTreeOut
@@ -53,7 +54,7 @@ public class NullLogSink
     }
 
     @Override
-    public void sig(Object... messagePieces) {
+    public void sig(@NotNull Object... messagePieces) {
     }
 
     @Override

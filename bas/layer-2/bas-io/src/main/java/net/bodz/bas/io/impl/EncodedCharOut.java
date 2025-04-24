@@ -7,23 +7,28 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 
-import net.bodz.bas.io.AbstractCharOut;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 /**
  * The chars written to this {@link ICharOut}, is encoded into a {@link IByteOut}.
  */
 public class EncodedCharOut
-        extends AbstractCharOut {
+        implements ICharOut {
 
     private final IByteOut byteOut;
     private final CharsetEncoder encoder;
 
-    /** The encode input buffer */
-    private CharBuffer charBuffer;
-    /** The encode output buffer */
-    private ByteBuffer byteBuffer;
+    /**
+     * The encode input buffer
+     */
+    private final CharBuffer charBuffer;
+
+    /**
+     * The encode output buffer
+     */
+    private final ByteBuffer byteBuffer;
 
     int __chunks;
 
@@ -56,7 +61,7 @@ public class EncodedCharOut
     }
 
     @Override
-    public void write(char[] chars, int off, int len)
+    public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         while (len > 0) {
             int chunk = Math.min(len, charBuffer.remaining());
@@ -72,6 +77,12 @@ public class EncodedCharOut
     public void flush()
             throws IOException {
         conv(true);
+    }
+
+    @Override
+    public void close()
+            throws IOException {
+        flush();
     }
 
     private void conv(boolean force)

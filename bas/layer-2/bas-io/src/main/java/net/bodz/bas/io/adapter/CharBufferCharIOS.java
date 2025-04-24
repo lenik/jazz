@@ -4,20 +4,21 @@ import java.io.IOException;
 import java.nio.BufferOverflowException;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.io.AbstractCharIOS;
+import net.bodz.bas.io.ICharIOS;
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.CharArrayResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 /**
  * @see CharBufferCharIn
  * @see CharBufferCharOut
  */
 public class CharBufferCharIOS
-        extends AbstractCharIOS {
+        implements ICharIOS {
 
     private final CharBuffer buf;
 
@@ -27,7 +28,17 @@ public class CharBufferCharIOS
         this.buf = buf;
     }
 
-    /** ⇱ Implementation Of {@link ICharIn}. */
+    @Override
+    public void flush() {
+    }
+
+    @Override
+    public void close() {
+    }
+
+    /**
+     * ⇱ Implementation Of {@link ICharIn}.
+     */
     /* _____________________________ */static section.iface __IN__;
 
     @Override
@@ -41,7 +52,7 @@ public class CharBufferCharIOS
     }
 
     @Override
-    public int read(char[] dst, int off, int len)
+    public int read(@NotNull char[] dst, int off, int len)
             throws IOException {
         int remaining = buf.remaining();
         if (remaining == 0)
@@ -51,7 +62,9 @@ public class CharBufferCharIOS
         return ccRead;
     }
 
-    /** ⇱ Implementation Of {@link ICharOut}. */
+    /**
+     * ⇱ Implementation Of {@link ICharOut}.
+     */
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
@@ -61,7 +74,7 @@ public class CharBufferCharIOS
     }
 
     @Override
-    public void write(char[] src, int off, int len)
+    public void write(@NotNull char[] src, int off, int len)
             throws IOException {
         try {
             buf.put(src, off, len);
@@ -71,10 +84,8 @@ public class CharBufferCharIOS
     }
 
     @Override
-    public void write(CharBuffer src)
+    public void write(@NotNull CharBuffer src)
             throws IOException {
-        if (src == null)
-            throw new NullPointerException("src");
         try {
             buf.put(src);
         } catch (BufferOverflowException e) {
@@ -82,7 +93,9 @@ public class CharBufferCharIOS
         }
     }
 
-    /** ⇱ Implementation Of {@link ISeekable}. */
+    /**
+     * ⇱ Implementation Of {@link ISeekable}.
+     */
     /* _____________________________ */static section.iface __SEEK__;
 
     @Override
@@ -102,7 +115,9 @@ public class CharBufferCharIOS
         return buf.capacity();
     }
 
-    /** ⇱ Implementation Of {@link ICroppable}. */
+    /**
+     * ⇱ Implementation Of {@link ICroppable}.
+     */
     /* _____________________________ */static section.iface __CROP__;
 
     @Override

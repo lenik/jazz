@@ -58,7 +58,8 @@ public class RstOutputImpl
         out.println(name + ": " + rawData);
     }
 
-    public void flush() {
+    public void flush()
+            throws IOException {
         out.flush();
     }
 

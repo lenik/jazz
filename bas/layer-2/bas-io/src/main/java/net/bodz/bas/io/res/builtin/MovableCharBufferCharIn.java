@@ -2,11 +2,12 @@ package net.bodz.bas.io.res.builtin;
 
 import java.io.IOException;
 
-import net.bodz.bas.io.AbstractCharIn;
+import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
 
 public class MovableCharBufferCharIn
-        extends AbstractCharIn {
+        implements ICharIn {
 
     private final MovableCharBuffer buffer;
     private int position;
@@ -38,13 +39,13 @@ public class MovableCharBufferCharIn
     }
 
     @Override
-    public synchronized int read(char[] b, int off, int len)
+    public synchronized int read(@NotNull char[] buf, int off, int len)
             throws IOException {
         checkIfClosed();
         int count = Math.min(len, buffer.size() - position);
         if (count == 0)
             return -1;
-        buffer.copyTo(position, b, off, count);
+        buffer.copyTo(position, buf, off, count);
         return count;
     }
 

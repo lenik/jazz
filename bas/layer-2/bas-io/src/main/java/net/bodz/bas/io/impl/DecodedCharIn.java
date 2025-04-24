@@ -7,7 +7,6 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 
-import net.bodz.bas.io.AbstractCharIn;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.meta.decl.NotNull;
@@ -16,14 +15,18 @@ import net.bodz.bas.meta.decl.NotNull;
  * The chars read from this {@link ICharIn}, is decoded from a {@link IByteIn}.
  */
 public class DecodedCharIn
-        extends AbstractCharIn {
+        implements ICharIn {
 
     private final IByteIn byteIn;
     private final CharsetDecoder decoder;
 
-    /** The encode input buffer */
+    /**
+     * The encode input buffer
+     */
     private final ByteBuffer byteBuffer;
-    /** The encode output buffer */
+    /**
+     * The encode output buffer
+     */
     private final CharBuffer charBuffer;
 
     int __chunks;
@@ -100,6 +103,10 @@ public class DecodedCharIn
             __chunks++;
         }
         return true;
+    }
+
+    @Override
+    public void close() {
     }
 
 }

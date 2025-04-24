@@ -1,5 +1,7 @@
 package net.bodz.bas.html.io.tag;
 
+import java.io.IOException;
+
 import net.bodz.bas.html.io.HtmlDoc;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
@@ -9,7 +11,8 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 
 public class HtmlOutTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+            throws IOException {
         ITreeOut treeOut = TreeOutImpl.from(Stdio.cout);
         HtmlOutputFormat outputFormat = new HtmlOutputFormat();
         outputFormat.newLineAfterStartTag = true;

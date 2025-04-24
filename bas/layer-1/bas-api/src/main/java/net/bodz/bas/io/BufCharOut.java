@@ -1,10 +1,15 @@
 package net.bodz.bas.io;
 
 import java.io.IOException;
+import java.io.Writer;
+
+import net.bodz.bas.meta.decl.NotNull;
 
 public class BufCharOut
-        extends AbstractPrintOut
-        implements CharSequence, Appendable {
+        extends Writer
+        implements IPrintOut,
+                   CharSequence,
+                   Appendable {
 
     /**
      * @TODO set final in future.
@@ -44,23 +49,34 @@ public class BufCharOut
     }
 
     @Override
-    public void write(char[] chars, int off, int len)
+    public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         buffer.append(chars, off, len);
     }
 
     @Override
-    public void write(CharSequence chars, int start, int end)
+    public void write(@NotNull CharSequence chars, int start, int end)
             throws IOException {
         buffer.append(chars, start, end);
     }
 
     @Override
+    public void flush() {
+    }
+
+    @Override
+    public void close() {
+    }
+
+    @NotNull
+    @Override
     public String toString() {
         return buffer.toString();
     }
 
-    /** ⇱ Implementaton Of {@link CharSequence}. */
+    /**
+     * ⇱ Implementaton Of {@link CharSequence}.
+     */
     /* _____________________________ */static section.iface __CHARSEQ__;
 
     @Override
@@ -73,12 +89,15 @@ public class BufCharOut
         return buffer.charAt(index);
     }
 
+    @NotNull
     @Override
     public CharSequence subSequence(int start, int end) {
         return buffer.subSequence(start, end);
     }
 
-    /** ⇱ Implementaton Of {@link Appendable}. */
+    /**
+     * ⇱ Implementaton Of {@link Appendable}.
+     */
     /* _____________________________ */static section.iface __APPEND__;
 
     @Override

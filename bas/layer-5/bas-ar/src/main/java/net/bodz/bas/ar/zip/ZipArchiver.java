@@ -25,4 +25,9 @@ public class ZipArchiver
             throws IOException {
     }
 
+    @Override
+    public void close()
+            throws IOException {
+    }
+
 }

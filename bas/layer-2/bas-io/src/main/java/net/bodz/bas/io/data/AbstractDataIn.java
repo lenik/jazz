@@ -9,16 +9,15 @@ import net.bodz.bas.c.java.nio.MalformedInputException;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.io.AbstractByteIn;
 import net.bodz.bas.io.EncodedChar;
 import net.bodz.bas.io.EncodedString;
+import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.StringLengthType;
 
 public abstract class AbstractDataIn
-        extends AbstractByteIn
-        implements
-            IDataIn {
+        implements IByteIn,
+                   IDataIn {
 
     Charset charset;
 
@@ -85,7 +84,7 @@ public abstract class AbstractDataIn
             // 11bit: 110xxxxx . 10xxxxxx
             x = (x & 0x1F) << 6;
             y &= 0x3F;
-            return (char) (0 + (x | y));
+            return (char) ((x | y));
         }
 
         int z = readByte() & 0xFF;
@@ -94,7 +93,7 @@ public abstract class AbstractDataIn
             x = (x & 0x0F) << 12;
             y = (y & 0x3F) << 6;
             z &= 0x3F;
-            return (char) (0 + (x | y | z));
+            return (char) ((x | y | z));
         }
 
         throw new DecodeException("Bad UTF-8 char sequence.");
@@ -116,7 +115,7 @@ public abstract class AbstractDataIn
                 throw new MalformedInputException("malformed utf-8 char (2/2)");
             x = (x & 0x1F) << 6;
             y &= 0x3F;
-            return (char) (0 + (x | y));
+            return (char) ((x | y));
         }
 
         int z = readByte() & 0xFF;
@@ -129,7 +128,7 @@ public abstract class AbstractDataIn
             x = (x & 0x0F) << 12;
             y = (y & 0x3F) << 6;
             z &= 0x3F;
-            return (char) (0 + (x | y | z));
+            return (char) ((x | y | z));
         }
 
         throw new MalformedInputException("Bad UTF-8 char sequence.");

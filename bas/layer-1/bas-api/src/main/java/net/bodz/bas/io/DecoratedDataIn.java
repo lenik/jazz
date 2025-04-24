@@ -5,14 +5,14 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.AbstractDecorator;
 import net.bodz.bas.t.model.IWrapper;
 
 public class DecoratedDataIn
         extends AbstractDecorator<IDataIn>
-        implements
-            IWrapper<IDataIn>,
-            IDataIn {
+        implements IWrapper<IDataIn>,
+                   IDataIn {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,11 +39,6 @@ public class DecoratedDataIn
     }
 
     @Override
-    public boolean isClosed() {
-        return getWrapped().isClosed();
-    }
-
-    @Override
     public boolean isBigEndian() {
         return getWrapped().isBigEndian();
     }
@@ -59,7 +54,7 @@ public class DecoratedDataIn
     }
 
     @Override
-    public int read(byte[] buf)
+    public int read(@NotNull byte[] buf)
             throws IOException {
         return getWrapped().read(buf);
     }
@@ -71,7 +66,7 @@ public class DecoratedDataIn
     }
 
     @Override
-    public int read(byte[] buf, int off, int len)
+    public int read(@NotNull byte[] buf, int off, int len)
             throws IOException {
         return getWrapped().read(buf, off, len);
     }
@@ -83,7 +78,7 @@ public class DecoratedDataIn
     }
 
     @Override
-    public int read(ByteBuffer buf)
+    public int read(@NotNull ByteBuffer buf)
             throws IOException {
         return getWrapped().read(buf);
     }

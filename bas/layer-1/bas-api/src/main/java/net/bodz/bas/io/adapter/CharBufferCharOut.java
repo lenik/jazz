@@ -1,13 +1,16 @@
 package net.bodz.bas.io.adapter;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.BufferOverflowException;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.io.AbstractCharOut;
+import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class CharBufferCharOut
-        extends AbstractCharOut {
+        extends Writer
+        implements ICharOut {
 
     private final CharBuffer buf;
 
@@ -24,13 +27,13 @@ public class CharBufferCharOut
     }
 
     @Override
-    public void write(char[] src, int off, int len)
+    public void write(@NotNull char[] src, int off, int len)
             throws IOException {
         buf.put(src, off, len);
     }
 
     @Override
-    public void write(String string, int off, int len)
+    public void write(@NotNull String string, int off, int len)
             throws IOException {
         try {
             buf.put(string, off, len);
@@ -40,7 +43,7 @@ public class CharBufferCharOut
     }
 
     @Override
-    public void write(CharBuffer src)
+    public void write(@NotNull CharBuffer src)
             throws IOException {
         try {
             buf.put(src);
@@ -50,8 +53,11 @@ public class CharBufferCharOut
     }
 
     @Override
-    public void flush()
-            throws IOException {
+    public void flush() {
+    }
+
+    @Override
+    public void close() {
     }
 
     @Override

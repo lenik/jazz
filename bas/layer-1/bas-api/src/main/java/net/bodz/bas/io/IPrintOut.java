@@ -10,8 +10,7 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.meta.decl.Final;
 
 public interface IPrintOut
-        extends
-            ICharOut {
+        extends ICharOut {
 
     char[] NULL_CHAR = "(null)".toCharArray();
     char NEWLINE = '\n';
@@ -53,8 +52,7 @@ public interface IPrintOut
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>s</code> is <code>null</code>.
+     * @throws NullPointerException If <code>s</code> is <code>null</code>.
      */
 
     default void print(char[] s) {
@@ -88,10 +86,9 @@ public interface IPrintOut
     }
 
     /**
+     * @throws NullPointerException If <code>args</code> is <code>null</code>.
      * @note.impl buffer-optim: Since {@link Object#toString()} is expensive, to reduce method calls
-     *            by buffering isn't necessary.
-     * @throws NullPointerException
-     *             If <code>args</code> is <code>null</code>.
+     * by buffering isn't necessary.
      */
 
     default void print(Object... args) {
@@ -127,8 +124,7 @@ public interface IPrintOut
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>x</code> is <code>null</code>.
+     * @throws NullPointerException If <code>x</code> is <code>null</code>.
      */
 
     default void println(char[] x) {
@@ -157,10 +153,9 @@ public interface IPrintOut
     }
 
     /**
+     * @throws NullPointerException If <code>args</code> is <code>null</code>.
      * @note.impl buffer-optim: Since {@link Object#toString()} is expensive, to reduce method calls
-     *            by buffering isn't necessary.
-     * @throws NullPointerException
-     *             If <code>args</code> is <code>null</code>.
+     * by buffering isn't necessary.
      */
 
     default void println(Object... args) {
@@ -175,8 +170,7 @@ public interface IPrintOut
     }
 
     /**
-     * @throws NullPointerException
-     *             If any argument is <code>null</code>.
+     * @throws NullPointerException If any argument is <code>null</code>.
      */
 
     default @Final void printf(Locale l, String format, Object... args) {
@@ -184,8 +178,7 @@ public interface IPrintOut
     }
 
     /**
-     * @throws NullPointerException
-     *             If any argument is <code>null</code>.
+     * @throws NullPointerException If any argument is <code>null</code>.
      */
 
     default @Final void printf(String format, Object... args) {
@@ -193,29 +186,14 @@ public interface IPrintOut
     }
 
     @Override
-    default @Final void flush() {
+    void flush();
+
+    default void closeOrIgnore() {
         try {
-            _flushX();
+            close();
         } catch (IOException e) {
-            throw new PrintException(e);
+            // ignore
         }
-    }
-
-    @Override
-    default @Final void close() {
-        try {
-            _closeX();
-        } catch (IOException e) {
-            throw new PrintException(e);
-        }
-    }
-
-    default void _flushX()
-            throws IOException {
-    }
-
-    default void _closeX()
-            throws IOException {
     }
 
     default ITreeOut indented() {

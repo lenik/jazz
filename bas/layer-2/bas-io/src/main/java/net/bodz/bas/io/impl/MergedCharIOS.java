@@ -9,16 +9,17 @@ import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
-import net.bodz.bas.io.adapter.CharOutWriter;
 import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class MergedCharIOS
+        extends Writer
         implements ICharIOS {
 
-    private ICharIn in;
-    private ICharOut out;
-    private ISeekable seeker;
-    private ICroppable cropper;
+    private final ICharIn in;
+    private final ICharOut out;
+    private final ISeekable seeker;
+    private final ICroppable cropper;
 
     public MergedCharIOS(ICharIn in, ICharOut out, ISeekable seeker, ICroppable cropper) {
         if (in == null)
@@ -38,16 +39,16 @@ public class MergedCharIOS
     @Override
     public void close()
             throws IOException {
-        in.close();
-        out.close();
+        try {
+            in.close();
+        } finally {
+            out.close();
+        }
     }
 
-    @Override
-    public boolean isClosed() {
-        return in.isClosed() && out.isClosed();
-    }
-
-    /** ⇱ Implementation Of {@link ICharIn}. */
+    /**
+     * ⇱ Implementation Of {@link ICharIn}.
+     */
     /* _____________________________ */static section.iface __IN__;
 
     @Override
@@ -57,19 +58,19 @@ public class MergedCharIOS
     }
 
     @Override
-    public int read(char[] buf)
+    public int read(@NotNull char[] buf)
             throws IOException {
         return in.read(buf);
     }
 
     @Override
-    public int read(char[] buf, int off, int len)
+    public int read(@NotNull char[] buf, int off, int len)
             throws IOException {
         return in.read(buf, off, len);
     }
 
     @Override
-    public int read(CharBuffer buf)
+    public int read(@NotNull CharBuffer buf)
             throws IOException {
         return in.read(buf);
     }
@@ -80,7 +81,9 @@ public class MergedCharIOS
         return in.readString(maxCharacters);
     }
 
-    /** ⇱ Implementation Of {@link ICharOut}. */
+    /**
+     * ⇱ Implementation Of {@link ICharOut}.
+     */
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
@@ -90,43 +93,43 @@ public class MergedCharIOS
     }
 
     @Override
-    public void write(char[] buf)
+    public void write(@NotNull char[] buf)
             throws IOException {
         out.write(buf);
     }
 
     @Override
-    public void write(char[] buf, int off, int len)
+    public void write(@NotNull char[] buf, int off, int len)
             throws IOException {
         out.write(buf, off, len);
     }
 
     @Override
-    public void write(CharBuffer buf)
+    public void write(@NotNull CharBuffer buf)
             throws IOException {
         out.write(buf);
     }
 
     @Override
-    public void write(String s)
+    public void write(@NotNull String s)
             throws IOException {
         out.write(s);
     }
 
     @Override
-    public void write(String s, int off, int len)
+    public void write(@NotNull String s, int off, int len)
             throws IOException {
         out.write(s, off, len);
     }
 
     @Override
-    public void write(CharSequence chars)
+    public void write(@NotNull CharSequence chars)
             throws IOException {
         out.write(chars);
     }
 
     @Override
-    public void write(CharSequence chars, int start, int end)
+    public void write(@NotNull CharSequence chars, int start, int end)
             throws IOException {
         out.write(chars, start, end);
     }
@@ -139,10 +142,12 @@ public class MergedCharIOS
 
     @Override
     public Writer toWriter() {
-        return new CharOutWriter(this);
+        return this;
     }
 
-    /** ⇱ Implementation Of {@link ISeekable}. */
+    /**
+     * ⇱ Implementation Of {@link ISeekable}.
+     */
     /* _____________________________ */static section.iface __SEEK__;
 
     @Override
@@ -162,7 +167,9 @@ public class MergedCharIOS
         return seeker.length();
     }
 
-    /** ⇱ Implementation Of {@link ICroppable}. */
+    /**
+     * ⇱ Implementation Of {@link ICroppable}.
+     */
     /* _____________________________ */static section.iface __CROP__;
 
     @Override

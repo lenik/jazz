@@ -6,13 +6,14 @@ import java.io.IOException;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.io.res.IStreamResource;
 import net.bodz.bas.io.res.builtin.CharArrayResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 /**
  * @see BCharIn
  * @see BCharOut
  */
 public class BCharIOS
-        extends AbstractCharIOS {
+        implements ICharIOS {
 
     private final char[] buf;
     private final int start;
@@ -20,9 +21,10 @@ public class BCharIOS
 
     private int ap;
 
+    private boolean closed;
+
     /**
-     * @throws NullPointerException
-     *             If <code>charArray</code> is <code>null</code>.
+     * @throws NullPointerException If <code>charArray</code> is <code>null</code>.
      */
     public BCharIOS(char[] buf) {
         if (buf == null)
@@ -33,10 +35,8 @@ public class BCharIOS
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>charArray</code> is <code>null</code>.
-     * @throws IndexOutOfBoundsException
-     *             If <code>start</code> or <code>end</code> is out of bound.
+     * @throws NullPointerException      If <code>charArray</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException If <code>start</code> or <code>end</code> is out of bound.
      */
     public BCharIOS(char[] buf, int off, int len) {
         if (buf == null)
@@ -52,13 +52,29 @@ public class BCharIOS
     }
 
     @Override
+    public void flush() {
+    }
+
+    @Override
+    public void close() {
+        closed = true;
+    }
+
+    protected void ensureOpen() {
+        if (closed)
+            throw new IllegalStateException("closed");
+    }
+
+    @Override
     public String toString() {
         String graph = new String(buf, start, ap - start) //
                 + "|" + new String(buf, ap, end - ap);
         return graph;
     }
 
-    /** ⇱ Implementation Of {@link ICharIn}. */
+    /**
+     * ⇱ Implementation Of {@link ICharIn}.
+     */
     /* _____________________________ */static section.iface __IN__;
 
     @Override
@@ -72,7 +88,7 @@ public class BCharIOS
     }
 
     @Override
-    public int read(char[] dst, int dstOffset, int len)
+    public int read(@NotNull char[] dst, int dstOffset, int len)
             throws IOException {
         ensureOpen();
         int cbRead = Math.min(len, end - ap);
@@ -83,7 +99,9 @@ public class BCharIOS
         return cbRead;
     }
 
-    /** ⇱ Implementation Of {@link ICharOut}. */
+    /**
+     * ⇱ Implementation Of {@link ICharOut}.
+     */
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
@@ -96,7 +114,7 @@ public class BCharIOS
     }
 
     @Override
-    public void write(char[] buf, int off, int len)
+    public void write(@NotNull char[] buf, int off, int len)
             throws IOException {
         ensureOpen();
         int willEndAt = ap + len;
@@ -108,7 +126,9 @@ public class BCharIOS
         ap += len;
     }
 
-    /** ⇱ Implementation Of {@link ISeekable}. */
+    /**
+     * ⇱ Implementation Of {@link ISeekable}.
+     */
     /* _____________________________ */static section.iface __SEEK__;
 
     @Override
@@ -130,7 +150,9 @@ public class BCharIOS
         return end - start;
     }
 
-    /** ⇱ Implementation Of {@link ICroppable}. */
+    /**
+     * ⇱ Implementation Of {@link ICroppable}.
+     */
     /* _____________________________ */static section.iface __CROP__;
 
     @Override

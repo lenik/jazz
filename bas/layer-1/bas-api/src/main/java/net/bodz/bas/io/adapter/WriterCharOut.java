@@ -3,16 +3,17 @@ package net.bodz.bas.io.adapter;
 import java.io.IOException;
 import java.io.Writer;
 
-import net.bodz.bas.io.AbstractCharOut;
+import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class WriterCharOut
-        extends AbstractCharOut {
+        extends Writer
+        implements ICharOut {
 
     private final Writer writer;
 
     /**
-     * @throws NullPointerException
-     *             If <code>writer</code> is <code>null</code>.
+     * @throws NullPointerException If <code>writer</code> is <code>null</code>.
      */
     public WriterCharOut(Writer writer) {
         if (writer == null)
@@ -27,25 +28,25 @@ public class WriterCharOut
     }
 
     @Override
-    public void write(char[] chars)
+    public void write(@NotNull char[] chars)
             throws IOException {
         writer.write(chars);
     }
 
     @Override
-    public void write(char[] chars, int off, int len)
+    public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         writer.write(chars, off, len);
     }
 
     @Override
-    public void write(String s)
+    public void write(@NotNull String s)
             throws IOException {
         writer.write(s);
     }
 
     @Override
-    public void write(String string, int off, int len)
+    public void write(@NotNull String string, int off, int len)
             throws IOException {
         writer.write(string, off, len);
     }

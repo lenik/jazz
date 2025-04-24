@@ -9,13 +9,13 @@ import java.util.zip.ZipFile;
 import net.bodz.bas.ar.IArchiveEntry;
 import net.bodz.bas.ar.IUnarchiver;
 import net.bodz.bas.err.TransformException;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.iterator.Iterators;
 
 public class JuzZipFileUnarchiver
-        implements
-            IUnarchiver {
+        implements IUnarchiver {
 
-    private ZipFile zipFile;
+    private final ZipFile zipFile;
     private boolean closed;
 
     public JuzZipFileUnarchiver(ZipFile zipFile) {
@@ -33,7 +33,6 @@ public class JuzZipFileUnarchiver
         }
     }
 
-    @Override
     public boolean isClosed() {
         return closed;
     }
@@ -41,6 +40,7 @@ public class JuzZipFileUnarchiver
     @Override
     public Iterable<JuzZipEntry> entries() {
         return new Iterable<JuzZipEntry>() {
+            @NotNull
             @Override
             public Iterator<JuzZipEntry> iterator() {
                 if (closed)
@@ -63,8 +63,7 @@ public class JuzZipFileUnarchiver
     }
 
     class EntryTransformer
-            implements
-                Function<ZipEntry, JuzZipEntry> {
+            implements Function<ZipEntry, JuzZipEntry> {
 
         @Override
         public JuzZipEntry apply(ZipEntry input)

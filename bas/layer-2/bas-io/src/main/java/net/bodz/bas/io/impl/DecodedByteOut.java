@@ -1,6 +1,7 @@
 package net.bodz.bas.io.impl;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -8,15 +9,16 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
-import net.bodz.bas.io.AbstractByteOut;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 /**
  * The bytes written to this {@link IByteOut}, is decoded into a {@link ICharOut}.
  */
 public class DecodedByteOut
-        extends AbstractByteOut {
+        extends OutputStream
+        implements IByteOut {
 
     private final ICharOut charOut;
     private final CharsetDecoder decoder;
@@ -56,7 +58,7 @@ public class DecodedByteOut
     }
 
     @Override
-    public void write(byte[] bytes, int off, int len)
+    public void write(@NotNull byte[] bytes, int off, int len)
             throws IOException {
         while (len > 0) {
             if (!byteBuffer.hasRemaining()) {

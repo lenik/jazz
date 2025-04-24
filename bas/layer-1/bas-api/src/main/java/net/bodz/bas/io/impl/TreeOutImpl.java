@@ -1,19 +1,19 @@
 package net.bodz.bas.io.impl;
 
 import java.io.IOException;
+import java.io.Writer;
 
-import net.bodz.bas.io.AbstractPrintOut;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.ITextIndention;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.PrintException;
 import net.bodz.bas.io.TextIndention;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class TreeOutImpl
-        extends AbstractPrintOut
-        implements
-            ITreeOut {
+        extends Writer
+        implements ITreeOut {
 
     private IPrintOut printOut;
     private ITextIndention textIndention;
@@ -26,8 +26,7 @@ public class TreeOutImpl
     /**
      * Print out.
      *
-     * @throws NullPointerException
-     *             If any argument is <code>null</code>.
+     * @throws NullPointerException If any argument is <code>null</code>.
      */
     public TreeOutImpl(IPrintOut printOut, ITextIndention textIndention) {
         if (printOut == null)
@@ -67,7 +66,9 @@ public class TreeOutImpl
         }
     }
 
-    /** ⇱ Implementaton Of {@link ITreeOut}. */
+    /**
+     * ⇱ Implementaton Of {@link ITreeOut}.
+     */
     /* _____________________________ */static section.iface __TREE__;
 
     @Override
@@ -89,7 +90,9 @@ public class TreeOutImpl
         return textIndention.decreaseIndentLevel();
     }
 
-    /** ⇱ Implementaton Of {@link IPrintOut}. */
+    /**
+     * ⇱ Implementaton Of {@link IPrintOut}.
+     */
     /* _____________________________ */static section.iface __PRINT__;
 
     @Override
@@ -159,11 +162,13 @@ public class TreeOutImpl
         linePrefixPrinted = false;
     }
 
-    /** ⇱ Implementaton Of {@link ICharOut}. */
+    /**
+     * ⇱ Implementaton Of {@link ICharOut}.
+     */
     /* _____________________________ */static section.iface __CHAR__;
 
     @Override
-    public void write(char[] chars, int off, int len)
+    public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         printOut.write(chars, off, len);
     }
@@ -175,15 +180,14 @@ public class TreeOutImpl
     }
 
     @Override
-    public void _flushX()
-            throws IOException {
-        printOut._flushX();
+    public void flush() {
+        printOut.flush();
     }
 
     @Override
-    public void _closeX()
+    public void close()
             throws IOException {
-        printOut._closeX();
+        printOut.close();
     }
 
     @Override

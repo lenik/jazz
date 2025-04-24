@@ -3,10 +3,12 @@ package net.bodz.bas.io.adapter;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.bodz.bas.io.AbstractByteOut;
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class OutputStreamByteOut
-        extends AbstractByteOut {
+        extends OutputStream
+        implements IByteOut {
 
     protected final OutputStream out;
 
@@ -21,15 +23,21 @@ public class OutputStreamByteOut
     }
 
     @Override
-    public void write(byte[] buf)
+    public void write(@NotNull byte[] buf)
             throws IOException {
         out.write(buf);
     }
 
     @Override
-    public void write(byte[] buf, int off, int len)
+    public void write(@NotNull byte[] buf, int off, int len)
             throws IOException {
         out.write(buf, off, len);
+    }
+
+    @Override
+    public void flush()
+            throws IOException {
+        out.flush();
     }
 
     @Override
@@ -38,7 +46,6 @@ public class OutputStreamByteOut
         out.close();
     }
 
-    @Override
     public OutputStream toOutputStream() {
         return out;
     }

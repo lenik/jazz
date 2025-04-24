@@ -3,6 +3,7 @@ package net.bodz.bas.io;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public class DecoratedByteIn
@@ -22,11 +23,6 @@ public class DecoratedByteIn
     }
 
     @Override
-    public boolean isClosed() {
-        return getWrapped().isClosed();
-    }
-
-    @Override
     public int read()
             throws IOException {
         return getWrapped().read();
@@ -39,19 +35,19 @@ public class DecoratedByteIn
     }
 
     @Override
-    public int read(byte[] buf)
+    public int read(@NotNull byte[] buf)
             throws IOException {
         return getWrapped().read(buf);
     }
 
     @Override
-    public int read(byte[] buf, int off, int len)
+    public int read(@NotNull byte[] buf, int off, int len)
             throws IOException {
         return getWrapped().read(buf, off, len);
     }
 
     @Override
-    public int read(ByteBuffer buf)
+    public int read(@NotNull ByteBuffer buf)
             throws IOException {
         return getWrapped().read(buf);
     }

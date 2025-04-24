@@ -1,29 +1,30 @@
 package net.bodz.bas.io;
 
+import java.io.Closeable;
+import java.io.Flushable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 @FunctionalInterface
 public interface IByteOut
-        extends
-            ISimpleByteOut,
-            IFlushable,
-            ICloseable {
+        extends ISimpleByteOut,
+                Flushable,
+                Closeable {
 
     /**
-     * @throws NullPointerException
-     *             If <code>buf</code> is <code>null</code>.
+     * @throws NullPointerException If <code>buf</code> is <code>null</code>.
      */
-    default void write(byte[] buf)
+    default void write(@NotNull byte[] buf)
             throws IOException {
         write(buf, 0, buf.length);
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>buf</code> is <code>null</code>.
+     * @throws NullPointerException If <code>buf</code> is <code>null</code>.
      */
-    default void write(byte[] buf, int off, int len)
+    default void write(@NotNull byte[] buf, int off, int len)
             throws IOException {
         int end = off + len;
         for (int i = off; i < end; i++)
@@ -31,14 +32,20 @@ public interface IByteOut
     }
 
     /**
-     * @param buf
-     *            Selection to limit instead of buffer.capacity();
-     * @throws NullPointerException
-     *             If <code>buffer</code> is <code>null</code>.
+     * @param buf Selection to limit instead of buffer.capacity();
+     * @throws NullPointerException If <code>buffer</code> is <code>null</code>.
      */
     default void write(ByteBuffer buf)
             throws IOException {
-        fn.write(this, buf);
+        int offset = buf.arrayOffset();
+        int pos = buf.position();
+        write(buf.array(), offset + pos, buf.remaining());
+        buf.position(buf.limit());
+    }
+
+    @Override
+    default void flush()
+            throws IOException {
     }
 
     @Override
@@ -46,29 +53,12 @@ public interface IByteOut
             throws IOException {
     }
 
-    @Override
-    default boolean isClosed() {
-        return false;
-    }
-
     IByteOut NULL = IDataOut.NULL_LE;
 
     class fn {
 
-        public static void write(IByteOut out, ByteBuffer buf)
+        public static void dump(@NotNull IByteOut out, @NotNull IByteIn byteIn)
                 throws IOException {
-            if (buf == null)
-                throw new NullPointerException("buf");
-            int offset = buf.arrayOffset();
-            int pos = buf.position();
-            out.write(buf.array(), offset + pos, buf.remaining());
-            buf.position(buf.limit());
-        }
-
-        public static void dump(IByteOut out, IByteIn byteIn)
-                throws IOException {
-            if (byteIn == null)
-                throw new NullPointerException("byteIn");
             byte[] buf = new byte[4096];
             while (true) {
                 int cb = byteIn.read(buf);

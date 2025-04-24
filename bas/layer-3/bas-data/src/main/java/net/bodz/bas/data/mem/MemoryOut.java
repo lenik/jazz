@@ -2,9 +2,9 @@ package net.bodz.bas.data.mem;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 
 import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
 
 public class MemoryOut
@@ -13,7 +13,9 @@ public class MemoryOut
 
     private final IMemory memory;
 
-    /** addr_t */
+    /**
+     * addr_t
+     */
     private int start;
 
     private int size;
@@ -28,7 +30,7 @@ public class MemoryOut
         this(memory, 0, -1);
     }
 
-    private byte[] buf1 = { 0 };
+    private final byte[] buf1 = { 0 };
 
     @ThreadUnsafe
     @Override
@@ -48,7 +50,7 @@ public class MemoryOut
 
     @ThreadUnsafe
     @Override
-    public void write(byte[] b, int off, int len)
+    public void write(@NotNull byte[] b, int off, int len)
             throws IOException {
         if (size == 0)
             throw new IOException("overflow");
@@ -65,17 +67,6 @@ public class MemoryOut
         } catch (MemoryAccessException e) {
             throw new IOException(e);
         }
-    }
-
-    @Override
-    public void write(ByteBuffer buf)
-            throws IOException {
-        fn.write(this, buf);
-    }
-
-    @Override
-    public boolean isClosed() {
-        return false;
     }
 
 }

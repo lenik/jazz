@@ -111,9 +111,4 @@ public class NullXmlOut
     public void close() {
     }
 
-    @Override
-    public boolean isClosed() {
-        return false;
-    }
-
 }

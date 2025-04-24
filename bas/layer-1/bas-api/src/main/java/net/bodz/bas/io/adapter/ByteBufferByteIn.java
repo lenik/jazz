@@ -1,12 +1,15 @@
 package net.bodz.bas.io.adapter;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 
-import net.bodz.bas.io.AbstractByteIn;
+import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class ByteBufferByteIn
-        extends AbstractByteIn {
+        extends InputStream
+        implements IByteIn {
 
     private final ByteBuffer buf;
 
@@ -36,7 +39,7 @@ public class ByteBufferByteIn
     }
 
     @Override
-    public int read(byte[] dst, int off, int len)
+    public int read(@NotNull byte[] dst, int off, int len)
             throws IOException {
         int remaining = buf.remaining();
         if (remaining == 0)
@@ -44,6 +47,11 @@ public class ByteBufferByteIn
         int cbRead = Math.min(len, buf.remaining());
         buf.get(dst, off, cbRead);
         return cbRead;
+    }
+
+    @Override
+    public void close()
+            throws IOException {
     }
 
     @Override

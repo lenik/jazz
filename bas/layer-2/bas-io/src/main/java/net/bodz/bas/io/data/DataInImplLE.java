@@ -3,10 +3,10 @@ package net.bodz.bas.io.data;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.bodz.bas.io.AbstractByteIn;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.adapter.InputStreamByteIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class DataInImplLE
         extends AbstractDataInLE
@@ -32,11 +32,6 @@ public class DataInImplLE
         return from(byteIn);
     }
 
-    // Resolve the ambiguous.
-    public static DataInImplLE from(AbstractByteIn byteIn) {
-        return from((IByteIn) byteIn);
-    }
-
     @Override
     public long skip(long n)
             throws IOException {
@@ -44,7 +39,7 @@ public class DataInImplLE
     }
 
     @Override
-    public int read(byte[] buf, int off, int len)
+    public int read(@NotNull byte[] buf, int off, int len)
             throws IOException {
         return baseImpl.read(buf, off, len);
     }

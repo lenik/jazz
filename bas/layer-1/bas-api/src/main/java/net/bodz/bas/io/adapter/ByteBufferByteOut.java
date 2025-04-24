@@ -1,13 +1,16 @@
 package net.bodz.bas.io.adapter;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 
-import net.bodz.bas.io.AbstractByteOut;
+import net.bodz.bas.io.IByteOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class ByteBufferByteOut
-        extends AbstractByteOut {
+        extends OutputStream
+        implements IByteOut {
 
     private final ByteBuffer buf;
 
@@ -23,7 +26,7 @@ public class ByteBufferByteOut
     }
 
     @Override
-    public void write(byte[] src, int off, int len)
+    public void write(@NotNull byte[] src, int off, int len)
             throws IOException {
         try {
             buf.put(src, off, len);

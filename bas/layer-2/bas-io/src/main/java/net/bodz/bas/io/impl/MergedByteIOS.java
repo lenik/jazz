@@ -9,14 +9,15 @@ import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ICroppable;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class MergedByteIOS
         implements IByteIOS {
 
-    private IByteIn in;
-    private IByteOut out;
-    private ISeekable seeker;
-    private ICroppable cropper;
+    private final IByteIn in;
+    private final IByteOut out;
+    private final ISeekable seeker;
+    private final ICroppable cropper;
 
     public MergedByteIOS(IByteIn in, IByteOut out, ISeekable seeker, ICroppable cropper) {
         if (in == null)
@@ -40,12 +41,9 @@ public class MergedByteIOS
         out.close();
     }
 
-    @Override
-    public boolean isClosed() {
-        return in.isClosed() && out.isClosed();
-    }
-
-    /** ⇱ Implementation Of {@link IByteIn}. */
+    /**
+     * ⇱ Implementation Of {@link IByteIn}.
+     */
     /* _____________________________ */static section.iface __IN__;
 
     @Override
@@ -61,24 +59,14 @@ public class MergedByteIOS
     }
 
     @Override
-    public int read(byte[] buf)
-            throws IOException {
-        return in.read(buf);
-    }
-
-    @Override
-    public int read(byte[] buf, int off, int len)
+    public int read(@NotNull byte[] buf, int off, int len)
             throws IOException {
         return in.read(buf, off, len);
     }
 
-    @Override
-    public int read(ByteBuffer buf)
-            throws IOException {
-        return IByteIn.fn.read(this, buf);
-    }
-
-    /** ⇱ Implementation Of {@link IByteOut}. */
+    /**
+     * ⇱ Implementation Of {@link IByteOut}.
+     */
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
@@ -88,13 +76,13 @@ public class MergedByteIOS
     }
 
     @Override
-    public void write(byte[] buf)
+    public void write(@NotNull byte[] buf)
             throws IOException {
         out.write(buf);
     }
 
     @Override
-    public void write(byte[] buf, int off, int len)
+    public void write(@NotNull byte[] buf, int off, int len)
             throws IOException {
         out.write(buf, off, len);
     }
@@ -102,7 +90,7 @@ public class MergedByteIOS
     @Override
     public void write(ByteBuffer buf)
             throws IOException {
-        IByteOut.fn.write(this, buf);
+        out.write(buf);
     }
 
     @Override
@@ -111,7 +99,9 @@ public class MergedByteIOS
         out.flush();
     }
 
-    /** ⇱ Implementation Of {@link ISeekable}. */
+    /**
+     * ⇱ Implementation Of {@link ISeekable}.
+     */
     /* _____________________________ */static section.iface __SEEK__;
 
     @Override
@@ -131,7 +121,9 @@ public class MergedByteIOS
         return seeker.length();
     }
 
-    /** ⇱ Implementation Of {@link ICroppable}. */
+    /**
+     * ⇱ Implementation Of {@link ICroppable}.
+     */
     /* _____________________________ */static section.iface __CROP__;
 
     @Override

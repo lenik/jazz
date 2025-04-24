@@ -5,6 +5,7 @@ import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.log.impl.NullLogSink;
 import net.bodz.bas.log.message.ArrayJoinMessage;
 import net.bodz.bas.log.message.StringFormatMessage;
+import net.bodz.bas.meta.decl.NotNull;
 
 /**
  * Features:
@@ -20,8 +21,7 @@ public interface ILogSink
     /**
      * Device log function, discard any verbose level.
      *
-     * @throws NullPointerException
-     *             If <code>event</code> is <code>null</code>.
+     * @throws NullPointerException If <code>event</code> is <code>null</code>.
      */
     void log(ILogEntry entry);
 
@@ -48,14 +48,12 @@ public interface ILogSink
     void p(Object... messagePieces);
 
     /**
-     * @param exception
-     *            Can be <code>null</code> if no exception.
+     * @param exception Can be <code>null</code> if no exception.
      */
     void p(Throwable exception, Object message);
 
     /**
-     * @param exception
-     *            Can be <code>null</code> if no exception.
+     * @param exception Can be <code>null</code> if no exception.
      * @see ArrayJoinMessage
      */
     void p(Throwable exception, Object... messagePieces);
@@ -66,8 +64,7 @@ public interface ILogSink
     void f(String format, Object... args);
 
     /**
-     * @param exception
-     *            Can be <code>null</code> if no exception.
+     * @param exception Can be <code>null</code> if no exception.
      * @see StringFormatMessage
      */
     void f(Throwable exception, String format, Object... args);
@@ -80,7 +77,7 @@ public interface ILogSink
     /**
      * @see ArrayJoinMessage
      */
-    void sig(Object... messagePieces);
+    void sig(@NotNull Object... messagePieces);
 
     /**
      * All buffered messages composed to a log entry. If there is none, do nothing.
@@ -90,8 +87,7 @@ public interface ILogSink
     /**
      * All buffered messages composed to a log entry. If there is none, do nothing.
      *
-     * @param exception
-     *            Can be <code>null</code> if no exception.
+     * @param exception Can be <code>null</code> if no exception.
      */
     void _done(Throwable exception);
 

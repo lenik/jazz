@@ -1,14 +1,14 @@
 package net.bodz.bas.text.qlex;
 
 import java.io.IOException;
+import java.io.Reader;
 
-import net.bodz.bas.io.AbstractCharIn;
 import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class La1CharInImpl
-        extends AbstractCharIn
-        implements
-            ILa1CharIn {
+        extends Reader
+        implements ILa1CharIn {
 
     ICharIn in;
 
@@ -33,7 +33,7 @@ public class La1CharInImpl
     }
 
     @Override
-    public synchronized int read(char[] cbuf, int off, int len)
+    public synchronized int read(@NotNull char[] cbuf, int off, int len)
             throws IOException {
         if (len == 0)
             return 0;
@@ -59,6 +59,12 @@ public class La1CharInImpl
             looked = true;
         }
         return look;
+    }
+
+    @Override
+    public void close()
+            throws IOException {
+        in.close();
     }
 
 }

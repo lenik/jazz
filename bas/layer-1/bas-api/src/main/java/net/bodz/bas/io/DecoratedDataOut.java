@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.AbstractDecorator;
 import net.bodz.bas.t.model.IWrapper;
 
@@ -26,7 +27,7 @@ public class DecoratedDataOut
     }
 
     @Override
-    public void write(byte[] buf)
+    public void write(@NotNull byte[] buf)
             throws IOException {
         getWrapped().write(buf);
     }
@@ -47,11 +48,6 @@ public class DecoratedDataOut
     public void close()
             throws IOException {
         getWrapped().close();
-    }
-
-    @Override
-    public boolean isClosed() {
-        return getWrapped().isClosed();
     }
 
     @Override
@@ -88,7 +84,7 @@ public class DecoratedDataOut
     }
 
     @Override
-    public void write(byte[] buf, int off, int len)
+    public void write(@NotNull byte[] buf, int off, int len)
             throws IOException {
         getWrapped().write(buf, off, len);
     }

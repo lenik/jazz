@@ -23,7 +23,7 @@ public class BeanDump {
             throws IntrospectionException {
         if (bean == null)
             throw new NullPointerException("bean");
-        Class<? extends Object> beanClass = bean.getClass();
+        Class<?> beanClass = bean.getClass();
         IBeanInfo beanInfo = Introspectors.getBeanInfo(beanClass);
         IPropertyDescriptor[] properties = beanInfo.getPropertyDescriptors();
         Arrays.sort(properties, new Comparator<IPropertyDescriptor>() {

@@ -3,11 +3,13 @@ package net.bodz.bas.io.res.builtin;
 import java.io.IOException;
 import java.io.Writer;
 
-import net.bodz.bas.io.AbstractPrintOut;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
 
 public class MovableCharBufferPrintOut
-        extends AbstractPrintOut {
+        extends Writer
+        implements IPrintOut {
 
     private final MovableCharBuffer buffer;
     private int position;
@@ -27,23 +29,23 @@ public class MovableCharBufferPrintOut
     @Override
     public synchronized void write(int ch)
             throws IOException {
-        checkIfClosed();
+        ensureOpen();
         buffer.ensureSize(position + 1);
         buffer.charAt(position++, (char) ch);
     }
 
     @Override
-    public synchronized void write(char[] b, int off, int len)
+    public synchronized void write(@NotNull char[] buf, int off, int len)
             throws IOException {
-        checkIfClosed();
+        ensureOpen();
         buffer.ensureSize(position + len);
-        buffer.copyFrom(b, off, position, len);
+        buffer.copyFrom(buf, off, position, len);
         position += len;
     }
 
     public synchronized void writeTo(Writer out)
             throws IOException {
-        checkIfClosed();
+        ensureOpen();
         out.write(buffer.getArray(), buffer.getStart(), buffer.size());
     }
 
@@ -61,12 +63,15 @@ public class MovableCharBufferPrintOut
     }
 
     @Override
-    public void _closeX()
-            throws IOException {
+    public void flush() {
+    }
+
+    @Override
+    public void close() {
         closed = true;
     }
 
-    private void checkIfClosed() {
+    private void ensureOpen() {
         if (closed)
             throw new IllegalStateException("closed");
     }

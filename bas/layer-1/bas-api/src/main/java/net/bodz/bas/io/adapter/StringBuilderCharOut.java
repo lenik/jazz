@@ -1,11 +1,14 @@
 package net.bodz.bas.io.adapter;
 
 import java.io.IOException;
+import java.io.Writer;
 
-import net.bodz.bas.io.AbstractCharOut;
+import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class StringBuilderCharOut
-        extends AbstractCharOut {
+        extends Writer
+        implements ICharOut {
 
     private final StringBuilder sb;
 
@@ -20,20 +23,23 @@ public class StringBuilderCharOut
     }
 
     @Override
-    public void write(char[] chars, int off, int len)
+    public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         sb.append(chars, off, len);
     }
 
     @Override
-    public void write(CharSequence chars, int start, int end)
+    public void write(@NotNull CharSequence chars, int start, int end)
             throws IOException {
         sb.append(chars, start, end - start);
     }
 
     @Override
-    public void flush()
-            throws IOException {
+    public void flush() {
+    }
+
+    @Override
+    public void close() {
     }
 
 }

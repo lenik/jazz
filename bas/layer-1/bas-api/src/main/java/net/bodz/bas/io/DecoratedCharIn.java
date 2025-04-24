@@ -3,6 +3,7 @@ package net.bodz.bas.io;
 import java.io.IOException;
 import java.nio.CharBuffer;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public class DecoratedCharIn
@@ -22,30 +23,25 @@ public class DecoratedCharIn
     }
 
     @Override
-    public boolean isClosed() {
-        return getWrapped().isClosed();
-    }
-
-    @Override
     public int read()
             throws IOException {
         return getWrapped().read();
     }
 
     @Override
-    public int read(char[] chars)
+    public int read(@NotNull char[] chars)
             throws IOException {
         return getWrapped().read(chars);
     }
 
     @Override
-    public int read(char[] chars, int off, int len)
+    public int read(@NotNull char[] chars, int off, int len)
             throws IOException {
         return getWrapped().read(chars, off, len);
     }
 
     @Override
-    public int read(CharBuffer buf)
+    public int read(@NotNull CharBuffer buf)
             throws IOException {
         return getWrapped().read(buf);
     }

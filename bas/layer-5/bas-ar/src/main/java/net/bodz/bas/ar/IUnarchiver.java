@@ -1,21 +1,20 @@
 package net.bodz.bas.ar;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.zip.ZipFile;
 
 import net.bodz.bas.c.java.util.zip.JuzZipFileUnarchiver;
-import net.bodz.bas.io.ICloseable;
 
 public interface IUnarchiver
-        extends ICloseable {
+        extends Closeable {
 
     Iterable<? extends IArchiveEntry> entries()
             throws IOException;
 
     /**
      * @return <code>null</code> if not found
-     * @throws IllegalStateException
-     *             if closed.
+     * @throws IllegalStateException if closed.
      */
     IArchiveEntry getEntry(String name)
             throws IOException;

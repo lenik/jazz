@@ -4,14 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import net.bodz.bas.io.AbstractByteIOS;
+import net.bodz.bas.io.IByteIOS;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.ISeekable;
 import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class CroppedRafIOS
-        extends AbstractByteIOS {
+        implements IByteIOS {
 
     private final File file;
     private final String mode;
@@ -20,6 +21,8 @@ public class CroppedRafIOS
 
     private RandomAccessFile raf;
     private long ap;
+
+    private boolean closed;
 
     public CroppedRafIOS(File file, String mode, long start, long end)
             throws IOException {
@@ -31,7 +34,26 @@ public class CroppedRafIOS
         raf.seek(ap = start);
     }
 
-    /** ⇱ Implementation Of {@link IByteIn}. */
+    @Override
+    public void flush()
+            throws IOException {
+    }
+
+    @Override
+    public void close()
+            throws IOException {
+        raf.close();
+        closed = true;
+    }
+
+    protected void ensureOpen() {
+        if (closed)
+            throw new IllegalStateException("closed");
+    }
+
+    /**
+     * ⇱ Implementation Of {@link IByteIn}.
+     */
     /* _____________________________ */static section.iface __IN__;
 
     @Override
@@ -48,7 +70,7 @@ public class CroppedRafIOS
     }
 
     @Override
-    public int read(byte[] buf, int off, int len)
+    public int read(@NotNull byte[] buf, int off, int len)
             throws IOException {
         ensureOpen();
 
@@ -80,7 +102,9 @@ public class CroppedRafIOS
         }
     }
 
-    /** ⇱ Implementation Of {@link IByteOut}. */
+    /**
+     * ⇱ Implementation Of {@link IByteOut}.
+     */
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
@@ -96,7 +120,7 @@ public class CroppedRafIOS
     }
 
     @Override
-    public void write(byte[] buf, int off, int len)
+    public void write(@NotNull byte[] buf, int off, int len)
             throws IOException {
         ensureOpen();
 
@@ -108,7 +132,9 @@ public class CroppedRafIOS
         ap += len;
     }
 
-    /** ⇱ Implementation Of {@link ISeekable}. */
+    /**
+     * ⇱ Implementation Of {@link ISeekable}.
+     */
     /* _____________________________ */static section.iface __SEEK__;
 
     @Override
@@ -135,7 +161,9 @@ public class CroppedRafIOS
         return raf.length();
     }
 
-    /** ⇱ Implementation Of {@link ICropapble}. */
+    /**
+     * ⇱ Implementation Of {@link ICropapble}.
+     */
     /* _____________________________ */static section.iface __CROP__;
 
     @Override

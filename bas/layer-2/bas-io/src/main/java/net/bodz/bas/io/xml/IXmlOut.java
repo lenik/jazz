@@ -1,12 +1,12 @@
 package net.bodz.bas.io.xml;
 
+import java.io.Closeable;
+import java.io.Flushable;
 import java.util.Map;
 
-import net.bodz.bas.io.ICloseable;
-import net.bodz.bas.io.IFlushable;
-
 public interface IXmlOut
-        extends IFlushable, ICloseable {
+        extends Flushable,
+                Closeable {
 
     XmlDoc getDoc();
 
@@ -23,8 +23,7 @@ public interface IXmlOut
      * <p>
      * A tag name stack is used to remember names from previous calls.
      *
-     * @param name
-     *            The tag name, non-<code>null</code>.
+     * @param name The tag name, non-<code>null</code>.
      * @return Child out node.
      */
     IXmlOut begin(String name);
@@ -61,12 +60,6 @@ public interface IXmlOut
     void verbatim(String str);
 
     void indent(int level);
-
-    @Override
-    void flush();
-
-    @Override
-    void close();
 
     IXmlOut NULL = new NullXmlOut();
 

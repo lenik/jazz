@@ -3,10 +3,12 @@ package net.bodz.bas.io.adapter;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.bodz.bas.io.AbstractByteIn;
+import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class DynamicInputStreamByteIn
-        extends AbstractByteIn {
+        extends InputStream
+        implements IByteIn {
 
     public abstract InputStream getInputStream();
 
@@ -23,7 +25,7 @@ public abstract class DynamicInputStreamByteIn
     }
 
     @Override
-    public int read(byte[] buf, int off, int len)
+    public int read(@NotNull byte[] buf, int off, int len)
             throws IOException {
         return getInputStream().read(buf, off, len);
     }

@@ -2,9 +2,9 @@ package net.bodz.bas.data.mem;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
 
 import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
 
 public class MemoryIn
@@ -13,7 +13,9 @@ public class MemoryIn
 
     private final IMemory memory;
 
-    /** addr_t */
+    /**
+     * addr_t
+     */
     private int start;
 
     private int size;
@@ -55,7 +57,7 @@ public class MemoryIn
 
     @ThreadUnsafe
     @Override
-    public int read(byte[] b, int off, int len)
+    public int read(@NotNull byte[] b, int off, int len)
             throws IOException {
         if (size == 0)
             return -1;
@@ -90,17 +92,6 @@ public class MemoryIn
             cb = (int) n;
         start += cb;
         return cb;
-    }
-
-    @Override
-    public int read(ByteBuffer buf)
-            throws IOException {
-        return fn.read(this, buf);
-    }
-
-    @Override
-    public boolean isClosed() {
-        return false;
     }
 
 }

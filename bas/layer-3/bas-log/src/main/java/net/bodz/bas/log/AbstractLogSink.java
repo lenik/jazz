@@ -2,23 +2,24 @@ package net.bodz.bas.log;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.io.AbstractTreeOut;
 import net.bodz.bas.log.message.ArrayJoinMessage;
 import net.bodz.bas.log.message.IMessage;
 import net.bodz.bas.log.message.StringFormatMessage;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
 
 @ThreadUnsafe
 public abstract class AbstractLogSink
         extends AbstractTreeOut
-        implements
-            ILogSink {
+        implements ILogSink {
 
     // private Object source;
 
-    private List<Object> prependMessageBuffer;
+    private final List<Object> prependMessageBuffer;
 
     public AbstractLogSink() {
         prependMessageBuffer = new ArrayList<Object>();
@@ -36,16 +37,16 @@ public abstract class AbstractLogSink
 
     private Object endup() {
         switch (prependMessageBuffer.size()) {
-        case 0:
-            return null;
-        case 1:
-            Object simpleMessage = prependMessageBuffer.get(0);
-            prependMessageBuffer.clear();
-            return simpleMessage;
-        default:
-            Object[] all = prependMessageBuffer.toArray();
-            prependMessageBuffer.clear();
-            return new ArrayJoinMessage(all);
+            case 0:
+                return null;
+            case 1:
+                Object simpleMessage = prependMessageBuffer.get(0);
+                prependMessageBuffer.clear();
+                return simpleMessage;
+            default:
+                Object[] all = prependMessageBuffer.toArray();
+                prependMessageBuffer.clear();
+                return new ArrayJoinMessage(all);
         }
     }
 
@@ -115,11 +116,8 @@ public abstract class AbstractLogSink
     }
 
     @Override
-    public void sig(Object... messagePieces) {
-        if (messagePieces == null)
-            throw new NullPointerException("messagePieces");
-        for (int i = 0; i < messagePieces.length; i++)
-            prependMessageBuffer.add(messagePieces[i]);
+    public void sig(@NotNull Object... messagePieces) {
+        prependMessageBuffer.addAll(Arrays.asList(messagePieces));
     }
 
     @Override
@@ -138,15 +136,14 @@ public abstract class AbstractLogSink
     }
 
     @Override
-    public void _flushX()
-            throws IOException {
+    public void flush() {
         _done();
     }
 
     // CharOut will filterred by the LogSink.
 
     @Override
-    public void write(String s)
+    public void write(@NotNull String s)
             throws IOException {
         int start = 0;
         int newl;
@@ -160,7 +157,7 @@ public abstract class AbstractLogSink
     }
 
     @Override
-    public void write(char[] chars, int off, int len)
+    public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         sig(new String(chars, off, len));
     }

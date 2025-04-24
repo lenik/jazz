@@ -5,16 +5,17 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 
-import net.bodz.bas.io.AbstractByteIn;
+import net.bodz.bas.io.IByteIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class InputStreamByteIn
-        extends AbstractByteIn {
+        extends InputStream
+        implements IByteIn {
 
     protected final InputStream in;
 
     /**
-     * @throws NullPointerException
-     *             If <code>in</code> is <code>null</code>.
+     * @throws NullPointerException If <code>in</code> is <code>null</code>.
      */
     public InputStreamByteIn(InputStream in) {
         if (in == null)
@@ -35,7 +36,7 @@ public class InputStreamByteIn
     }
 
     @Override
-    public int read(byte[] buf, int off, int len)
+    public int read(@NotNull byte[] buf, int off, int len)
             throws IOException {
         int cb = in.read(buf, off, len);
         return cb;
@@ -45,6 +46,7 @@ public class InputStreamByteIn
      * XXX - Since Java 7?
      */
     static final Method InputStream_read_ByteBuffer;
+
     static {
         Method read_ByteBuffer;
         try {
@@ -87,7 +89,6 @@ public class InputStreamByteIn
         return in.toString();
     }
 
-    @Override
     public InputStream toInputStream() {
         return in;
     }

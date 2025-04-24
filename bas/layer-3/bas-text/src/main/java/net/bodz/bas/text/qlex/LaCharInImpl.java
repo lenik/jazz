@@ -1,16 +1,16 @@
 package net.bodz.bas.text.qlex;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import net.bodz.bas.io.AbstractCharIn;
 import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class LaCharInImpl
-        extends AbstractCharIn
-        implements
-            ILaCharIn {
+        extends Reader
+        implements ILaCharIn {
 
     ICharIn in;
     Queue<Character> lookbuf = new LinkedList<>();
@@ -20,7 +20,7 @@ public class LaCharInImpl
     }
 
     @Override
-    public synchronized int read(char[] cbuf, int off, int len)
+    public synchronized int read(@NotNull char[] cbuf, int off, int len)
             throws IOException {
         if (len == 0)
             return 0;
@@ -69,6 +69,12 @@ public class LaCharInImpl
             cbuf[off + n++] = ch;
         }
         return n;
+    }
+
+    @Override
+    public void close()
+            throws IOException {
+        in.close();
     }
 
 }

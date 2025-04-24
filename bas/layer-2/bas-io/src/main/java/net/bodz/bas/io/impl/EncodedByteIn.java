@@ -6,23 +6,27 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 
-import net.bodz.bas.io.AbstractByteIn;
 import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 /**
  * The bytes read from this {@link IByteIn}, is encoded from a {@link ICharIn}.
  */
 public class EncodedByteIn
-        extends AbstractByteIn {
+        implements IByteIn {
 
     private final ICharIn charIn;
     private final CharsetEncoder encoder;
 
-    /** The encode input buffer */
-    private CharBuffer charBuffer;
-    /** The encode output buffer */
-    private ByteBuffer byteBuffer;
+    /**
+     * The encode input buffer
+     */
+    private final CharBuffer charBuffer;
+    /**
+     * The encode output buffer
+     */
+    private final ByteBuffer byteBuffer;
 
     int __chunks;
 
@@ -66,7 +70,7 @@ public class EncodedByteIn
     }
 
     @Override
-    public int read(byte[] buf, int off, int len)
+    public int read(@NotNull byte[] buf, int off, int len)
             throws IOException {
         int pos = off;
         while (len > 0) {
@@ -102,6 +106,10 @@ public class EncodedByteIn
             __chunks++;
         }
         return true;
+    }
+
+    @Override
+    public void close() {
     }
 
 }

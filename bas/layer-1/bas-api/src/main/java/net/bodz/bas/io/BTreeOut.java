@@ -3,10 +3,12 @@ package net.bodz.bas.io;
 import java.io.IOException;
 
 import net.bodz.bas.io.impl.TreeOutImpl;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class BTreeOut
         extends TreeOutImpl
-        implements CharSequence, Appendable {
+        implements CharSequence,
+                   Appendable {
 
     BCharOut baseImpl;
 
@@ -29,6 +31,7 @@ public class BTreeOut
         return baseImpl.charAt(index);
     }
 
+    @NotNull
     @Override
     public CharSequence subSequence(int start, int end) {
         return baseImpl.subSequence(start, end);
@@ -55,6 +58,7 @@ public class BTreeOut
         return this;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return baseImpl.toString();

@@ -3,16 +3,18 @@ package net.bodz.bas.io.adapter;
 import java.io.IOException;
 import java.io.Writer;
 
-import net.bodz.bas.io.AbstractPrintOut;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.PrintException;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class WriterPrintOut
-        extends AbstractPrintOut {
+        extends Writer
+        implements IPrintOut {
 
     private final Writer writer;
 
     /**
-     * @throws NullPointerException
-     *             If <code>writer</code> is <code>null</code>.
+     * @throws NullPointerException If <code>writer</code> is <code>null</code>.
      */
     public WriterPrintOut(Writer writer) {
         if (writer == null)
@@ -27,25 +29,25 @@ public class WriterPrintOut
     }
 
     @Override
-    public void write(char[] chars)
+    public void write(@NotNull char[] chars)
             throws IOException {
         writer.write(chars);
     }
 
     @Override
-    public void write(char[] chars, int off, int len)
+    public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         writer.write(chars, off, len);
     }
 
     @Override
-    public void write(String s)
+    public void write(@NotNull String s)
             throws IOException {
         writer.write(s);
     }
 
     @Override
-    public void write(String string, int off, int len)
+    public void write(@NotNull String string, int off, int len)
             throws IOException {
         writer.write(string, off, len);
     }
@@ -56,14 +58,16 @@ public class WriterPrintOut
     }
 
     @Override
-    public void _flushX()
-            throws IOException {
-        // if (strict)
-        writer.flush();
+    public void flush() {
+        try {
+            writer.flush();
+        } catch (IOException e) {
+            throw new PrintException(e);
+        }
     }
 
     @Override
-    public void _closeX()
+    public void close()
             throws IOException {
         writer.close();
     }

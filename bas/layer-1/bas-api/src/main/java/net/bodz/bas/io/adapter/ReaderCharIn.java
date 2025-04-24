@@ -4,16 +4,17 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.io.AbstractCharIn;
+import net.bodz.bas.io.ICharIn;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class ReaderCharIn
-        extends AbstractCharIn {
+        extends Reader
+        implements ICharIn {
 
     private final Reader reader;
 
     /**
-     * @throws NullPointerException
-     *             If <code>reader</code> is <code>null</code>.
+     * @throws NullPointerException If <code>reader</code> is <code>null</code>.
      */
     public ReaderCharIn(Reader reader) {
         if (reader == null)
@@ -28,13 +29,13 @@ public class ReaderCharIn
     }
 
     @Override
-    public int read(char[] chars, int off, int len)
+    public int read(@NotNull char[] chars, int off, int len)
             throws IOException {
         return reader.read(chars, off, len);
     }
 
     @Override
-    public int read(CharBuffer buffer)
+    public int read(@NotNull CharBuffer buffer)
             throws IOException {
         return reader.read(buffer);
     }
@@ -45,7 +46,6 @@ public class ReaderCharIn
         reader.close();
     }
 
-    @Override
     public Reader toReader() {
         return reader;
     }

@@ -1,5 +1,6 @@
 package net.bodz.bas.io.xml;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -293,11 +294,6 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
     }
 
     @Override
-    public boolean isClosed() {
-        return treeOut.isClosed();
-    }
-
-    @Override
     public void flush() {
         text();
         treeOut.flush();
@@ -323,12 +319,12 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
                     throw new IllegalArgumentException("Name must end with a letter or digit.");
             } else if (!letter)
                 switch (ch) {
-                case '-':
-                case '.':
-                case ':':
-                    break;
-                default:
-                    throw new IllegalArgumentException("Illegal char in the name: " + ch);
+                    case '-':
+                    case '.':
+                    case ':':
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Illegal char in the name: " + ch);
                 }
         }
     }

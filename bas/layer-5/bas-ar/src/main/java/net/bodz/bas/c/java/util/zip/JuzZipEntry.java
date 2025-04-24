@@ -7,7 +7,7 @@ import net.bodz.bas.ar.AbstractArchiveEntry;
 import net.bodz.bas.ar.IArchiveEntry;
 import net.bodz.bas.io.res.IStreamInputSource;
 
-class JuzZipEntry
+public class JuzZipEntry
         extends AbstractArchiveEntry
         implements IArchiveEntry {
 

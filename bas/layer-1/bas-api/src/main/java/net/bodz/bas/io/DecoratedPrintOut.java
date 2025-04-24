@@ -8,8 +8,7 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class DecoratedPrintOut
         extends DecoratedCharOut
-        implements
-            IPrintOut {
+        implements IPrintOut {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,10 +20,6 @@ public abstract class DecoratedPrintOut
     @Override
     public IPrintOut getWrapped() {
         return (IPrintOut) _orig;
-    }
-
-    public boolean isClosed() {
-        return getWrapped().isClosed();
     }
 
     public void print(CharSequence s) {
@@ -55,7 +50,7 @@ public abstract class DecoratedPrintOut
         getWrapped().print(f);
     }
 
-    public void dump(ICharIn charIn)
+    public void dump(@NotNull ICharIn charIn)
             throws IOException {
         getWrapped().dump(charIn);
     }
@@ -137,19 +132,10 @@ public abstract class DecoratedPrintOut
         getWrapped().flush();
     }
 
-    public void _flushX()
-            throws IOException {
-        getWrapped()._flushX();
-    }
-
     @Override
-    public void close() {
-        getWrapped().close();
-    }
-
-    public void _closeX()
+    public void close()
             throws IOException {
-        getWrapped()._closeX();
+        getWrapped().close();
     }
 
     public ITreeOut indented() {
