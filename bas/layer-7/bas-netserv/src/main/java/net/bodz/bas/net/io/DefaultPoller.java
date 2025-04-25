@@ -271,6 +271,7 @@ public class DefaultPoller
     void handleRead(SocketChannel channel) {
         logger.debug("selected-key is readable: " + SocketChannels.getConnectionShortInfo(channel));
         long totalBytesRead = 0;
+        boolean anyReadEnd = false;
         if (channel.socket().isClosed()) {
             handleClose(channel);
             return;
@@ -281,10 +282,16 @@ public class DefaultPoller
             if (reader == null)
                 continue;
             try {
-                long numBytesRead = reader.read(channel);
+                IReadResult rr = reader.read(channel);
+                long numBytesRead = rr.getNumBytesRead();
                 if (numBytesRead != 0)
-                    logger.debug("read " + numBytesRead + " by " + reader);
+                    logger.debug("read " + numBytesRead + " by " + reader.getClass());
+
+                boolean readEnd = rr.isReadEnd();
+                if (readEnd)
+                    logger.debug("read end by " + reader.getClass());
                 totalBytesRead += numBytesRead;
+                anyReadEnd |= readEnd;
             } catch (IOException e) {
                 logger.error(e, "error reading: " + e.getMessage());
             }
@@ -292,12 +299,16 @@ public class DefaultPoller
 
         if (totalBytesRead != 0)
             logger.debug("read " + totalBytesRead + " bytes totally");
-        else {
+        if (anyReadEnd)
+            logger.debug("read end");
+
+        if (totalBytesRead == 0 && !anyReadEnd) {
+            // nothing read. check if closed?
             if (channel.socket().isClosed()) {
                 handleClose(channel);
                 return;
             }
-            logger.error("invalid usage: no byte have been read. discard the receive buffer forcely.");
+            logger.error("invalid usage: no reader. discard the receive buffer.");
             try {
                 totalBytesRead = SocketChannels.discardReceivedBytes(channel);
             } catch (IOException e) {

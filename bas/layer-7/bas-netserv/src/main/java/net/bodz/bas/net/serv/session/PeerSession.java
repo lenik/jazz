@@ -8,12 +8,13 @@ import net.bodz.bas.c.java.nio.channels.SocketChannels;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.IReadResult;
 import net.bodz.bas.net.io.ISocketConnector;
 import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.io.ISocketReader;
 import net.bodz.bas.net.util.CloseEvent;
 import net.bodz.bas.net.util.IClosedListener;
-import net.bodz.bas.net.util.SmartBuffer;
+import net.bodz.bas.net.util.ReadBuffer;
 import net.bodz.bas.net.util.SocketBuffer;
 
 public abstract class PeerSession
@@ -39,7 +40,7 @@ public abstract class PeerSession
         this.target = new SocketBuffer(targetChannel, poller);
     }
 
-    public SmartBuffer getTarget() {
+    public ReadBuffer getTarget() {
         return target;
     }
 
@@ -94,7 +95,7 @@ public abstract class PeerSession
         }
     }
 
-    long readTarget(SocketChannel targetChannel)
+    IReadResult readTarget(SocketChannel targetChannel)
             throws IOException {
         return target.read(channel);
     }
@@ -123,7 +124,7 @@ public abstract class PeerSession
 
     public void sendToTarget(byte[] buf, int off, int len)
             throws IOException {
-        target.writeBuffer.append(buf, off, len);
+        target.out.append(buf, off, len);
         target.enableWriter();
     }
 

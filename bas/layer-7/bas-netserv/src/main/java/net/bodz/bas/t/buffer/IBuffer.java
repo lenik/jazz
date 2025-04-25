@@ -18,6 +18,19 @@ public interface IBuffer<T> {
             append(array[pos++]);
     }
 
+    default void append(@NotNull IBuffer<T> src) {
+        int len = src.length();
+        for (int i = 0; i < len; i++) {
+            T el = src.get(i);
+            append(el);
+        }
+    }
+
+    default void moveTo(@NotNull IBuffer<T> dst) {
+        dst.append(this);
+        this.clear();
+    }
+
     void clear();
 
     T get(int i);

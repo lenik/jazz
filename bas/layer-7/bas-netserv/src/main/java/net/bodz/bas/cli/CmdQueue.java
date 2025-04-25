@@ -1,5 +1,6 @@
 package net.bodz.bas.cli;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -8,10 +9,13 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.queue.IQueue;
 import net.bodz.bas.text.parser.BufferedLineParser;
+import net.bodz.bas.text.parser.IParsedValueCallback;
+import net.bodz.bas.text.parser.IParseContext;
 
 public class CmdQueue
-        extends BufferedLineParser
-        implements IQueue<Command> {
+        extends BufferedLineParser<Command>
+        implements IQueue<Command>,
+                   IParsedValueCallback<Command> {
 
     LinkedList<Command> list = new LinkedList<>();
 
@@ -36,19 +40,30 @@ public class CmdQueue
         return list.removeFirst();
     }
 
-    public void parseLine(@NotNull String line)
+    public void parse()
+            throws IOException, ParseException {
+        parse(this);
+    }
+
+    @Override
+    public void parsedValue(IParseContext context, Command value) {
+        if (value != null)
+            list.add(value);
+    }
+
+    public Command parseLine(@NotNull String line)
             throws ParseException {
         line = line.trim();
         if (line.isEmpty())
-            return;
+            return null;
         if (line.startsWith("#"))
-            return;
+            return null;
 
         String[] args = QuoteFormat.QQ.splitDequoted("\\s+", line);
         Command cmd = new Command(args[0]);
         for (int i = 1; i < args.length; i++)
             cmd.addArgument(args[i]);
-        list.add(cmd);
+        return cmd;
     }
 
 }

@@ -1,14 +1,9 @@
 package net.bodz.bas.net.util;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
-import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -18,25 +13,24 @@ import java.util.function.Predicate;
 
 import net.bodz.bas.c.java.util.Sets;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.io.IByteOut;
-import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.buffer.ByteArrayBuffer;
 import net.bodz.bas.t.buffer.CharArrayBuffer;
+import net.bodz.bas.t.buffer.ICharBuffer;
 import net.bodz.bas.t.variant.IVariant;
 
-public class SmartBuffer
+public class ReadBuffer
+        extends ByteArrayBuffer
         implements ISettingParsable {
 
-    static final Logger logger = LoggerFactory.getLogger(SmartBuffer.class);
+    static final Logger logger = LoggerFactory.getLogger(ReadBuffer.class);
 
     boolean debug = true;
 
     int readTimeout;
     long lastReadTime;
-    long lastWriteTime;
     List<ITimeoutListener> readTimeoutListeners = new ArrayList<>(1);
 
     int maxReadCount;
@@ -45,18 +39,21 @@ public class SmartBuffer
 
     Charset charset = StandardCharsets.UTF_8;
     boolean decodeMode;
-    public final ByteArrayBuffer readBuffer = new ByteArrayBuffer(4096);
-    public final CharArrayBuffer readCharBuffer = new CharArrayBuffer(4096);
+    //    private final ByteArrayBuffer readBuffer = this; // new ByteArrayBuffer(4096);
+    public final CharArrayBuffer decoded = new CharArrayBuffer(4096);
     boolean readStopped;
     ReadStopSupport readStopSupport = new ReadStopSupport(this);
 
-    public final ByteArrayBuffer writeBuffer = new ByteArrayBuffer(4096);
-    public final Printer out = new Printer();
-    String linePrefix;
-    String lineSuffix;
-    String lineFormat;
-    String eolChar = "\n";
-    boolean writeClosed;
+    List<IDataReadyListener> bufferReadyListeners = new ArrayList<>(1);
+    List<IDataReadyListener> charBufferReadyListeners = new ArrayList<>(1);
+
+    public ReadBuffer() {
+        this(4096);
+    }
+
+    public ReadBuffer(int initialCapacity) {
+        super(initialCapacity);
+    }
 
     public int getReadTimeout() {
         return readTimeout;
@@ -113,38 +110,48 @@ public class SmartBuffer
         this.readCharUntil = readCharUntil;
     }
 
-    public void read(ByteBuffer byteBuf) {
-        if (readStopped)
-            return;
+    public int read(ByteBuffer byteBuf) {
+        int numBytesRead = 0;
+        if (!readStopped) {
+            lastReadTime = System.currentTimeMillis();
 
-        lastReadTime = System.currentTimeMillis();
+            if (readByteUntil != null) {
+                byteBuf.mark();
+                int n = byteBuf.remaining();
+                for (int i = 0; i < n; i++) {
+                    byte b = byteBuf.get();
+                    if (readByteUntil.test(b)) {
+                        byteBuf.flip();
+                        readStopped = true;
+                        break;
+                    }
+                }
+                if (!readStopped)
+                    byteBuf.reset();
+            }
 
-        if (readByteUntil != null) {
-            byteBuf.mark();
-            int n = byteBuf.remaining();
-            for (int i = 0; i < n; i++) {
-                byte b = byteBuf.get();
-                if (readByteUntil.test(b)) {
-                    byteBuf.flip();
-                    readStopped = true;
-                    break;
+            numBytesRead += byteBuf.remaining();
+            append(byteBuf);
+
+            if (isNotEmpty())
+                fireBufferReady();
+
+            if (decodeMode) {
+                decode();
+
+                if (decoded.isNotEmpty())
+                    fireCharBufferReady();
+            }
+
+            if (maxReadCount > 0) {
+                maxReadCount--;
+                if (maxReadCount == 0) {
+                    logger.debug("Reached to the max read count, stop reading.");
+                    stopRead();
                 }
             }
-            if (!readStopped)
-                byteBuf.reset();
         }
-        readBuffer.append(byteBuf);
-
-        if (decodeMode)
-            decode();
-
-        if (maxReadCount > 0) {
-            maxReadCount--;
-            if (maxReadCount == 0) {
-                logger.debug("Reached to the max read count, stop reading.");
-                stopRead();
-            }
-        }
+        return numBytesRead;
     }
 
     @NotNull
@@ -164,7 +171,7 @@ public class SmartBuffer
         this.decodeMode = decodeMode;
     }
 
-    void decode() {
+    public ICharBuffer decode() {
         CharsetDecoder decoder = charset.newDecoder();
         decoder.onMalformedInput(CodingErrorAction.REPLACE);
 
@@ -178,53 +185,53 @@ public class SmartBuffer
             charBuf = CharBuffer.allocate(4096);
         }
 
-        while (readBuffer.isNotEmpty()) {
-            int block = Math.min(readBuffer.length(), byteBuf.remaining());
+        while (isNotEmpty()) {
+            int block = Math.min(length(), byteBuf.remaining());
             if (block == 0)
                 throw new UnexpectedException();
-            readBuffer.get(0, byteBuf, block);
-            boolean endOfInput = block == readBuffer.length();
+            get(0, byteBuf, block);
+            boolean endOfInput = block == length();
 
             byteBuf.flip();
             decoder.decode(byteBuf, charBuf, endOfInput);
             byteBuf.compact();
-            int pending = byteBuf.remaining();
-            readBuffer.delete(0, block - pending);
+            int pending = byteBuf.position();
+            delete(0, block - pending);
 
             charBuf.flip();
-            readCharBuffer.append(charBuf);
+            decoded.append(charBuf);
             charBuf.clear();
         } // while targetBuffer is not empty
-        assert readBuffer.isEmpty();
+        assert isEmpty();
 
         if (readCharUntil != null) {
-            char[] backedArray = readCharBuffer.getBackedArray();
-            int backedArrayOffset = readCharBuffer.getBackedArrayOffset();
-            int len = readCharBuffer.length();
+            char[] backedArray = decoded.getBackedArray();
+            int backedArrayOffset = decoded.getBackedArrayOffset();
+            int len = decoded.length();
             int end = backedArrayOffset + len;
             for (int pos = backedArrayOffset; pos < end; pos++) {
                 if (readCharUntil.test(backedArray[pos])) {
-                    readCharBuffer.delete(pos - backedArrayOffset, end - pos);
+                    decoded.delete(pos - backedArrayOffset, end - pos);
                     readStopped = true;
                     break;
                 }
             }
         } // if defined readCharUntil
+        return decoded;
     }
 
     public String getReadString() {
         if (decodeMode) {
-            return readCharBuffer.toString();
+            return decoded.toString();
         } else {
-            return readBuffer.toString(charset);
+            return toString(charset);
         }
     }
 
-    public void clearReadBuffer() {
-        if (decodeMode)
-            readCharBuffer.clear();
-        else
-            readBuffer.clear();
+    @Override
+    public void clear() {
+        super.clear();
+        decoded.clear();
     }
 
     public boolean isReadStopped() {
@@ -264,113 +271,38 @@ public class SmartBuffer
         readStopSupport.removeReadStoppedListener(l);
     }
 
-    public void printError(String message)
-            throws IOException {
-        printError(message, null);
+    public void addBufferReadyListener(@NotNull IDataReadyListener l) {
+        bufferReadyListeners.add(l);
     }
 
-    public void printError(String message, Throwable e) {
-        out.println(message);
-        if (e != null) {
-            StringWriter buf = new StringWriter();
-            buf.write("Stacktrace:\n");
-            e.printStackTrace(new PrintWriter((buf)));
-            out.print(buf.toString());
+    public void removeBufferReadyListener(@NotNull IDataReadyListener l) {
+        bufferReadyListeners.remove(l);
+    }
+
+    void fireBufferReady() {
+        for (IDataReadyListener l : bufferReadyListeners) {
+            l.onDataReady();
         }
     }
 
-    public void printLine(String s) {
-        StringBuilder buf = new StringBuilder(s.length() + 32);
-        if (lineFormat != null)
-            s = String.format(lineFormat, s);
-        if (linePrefix != null)
-            buf.append(linePrefix);
-        buf.append(s);
-        if (lineSuffix != null)
-            buf.append(lineSuffix);
-        if (eolChar != null)
-            buf.append(eolChar);
-        out.print(buf.toString());
+    public void addCharBufferReadyListener(@NotNull IDataReadyListener l) {
+        charBufferReadyListeners.add(l);
     }
 
-    public class Printer
-            implements IPrintOut,
-                       IByteOut {
-
-        @Override
-        public void print(String s) {
-            if (s == null)
-                s = "null";
-            byte[] bytes = s.getBytes(charset);
-            writeBuffer.append(bytes);
-        }
-
-        @Override
-        public void write(int b)
-                throws IOException {
-            writeBuffer.append(b);
-        }
-
-        @Override
-        public void write(@NotNull byte[] buf, int off, int len)
-                throws IOException {
-            writeBuffer.append(buf, off, len);
-        }
-
-        @Override
-        public void write(@NotNull char[] chars, int off, int len)
-                throws IOException {
-            CharBuffer charBuf = CharBuffer.wrap(chars, off, len);
-            ByteBuffer encoded = charset.encode(charBuf);
-            writeBuffer.append(encoded);
-        }
-
-        @Override
-        public void flush() {
-        }
-
-        /**
-         * Close the output.
-         */
-        @Override
-        public synchronized void close() {
-            if (writeClosed)
-                return;
-            writeClosed = true;
-        }
-
-    } // class Printer
-
-    public void moveTo(SmartBuffer dst) {
-        dst.writeBuffer.append(readBuffer);
-        readBuffer.clear();
+    public void removeCharBufferReadyListener(@NotNull IDataReadyListener l) {
+        charBufferReadyListeners.remove(l);
     }
 
-    public void moveCharsTo(SmartBuffer dst) {
-        char[] backedArray = readCharBuffer.getBackedArray();
-        int backedArrayOffset = readCharBuffer.getBackedArrayOffset();
-        int length = readCharBuffer.length();
-
-        CharsetEncoder encoder = dst.charset.newEncoder();
-        encoder.onMalformedInput(CodingErrorAction.REPLACE);
-
-        ByteBuffer encoded;
-        try {
-            encoded = encoder.encode(CharBuffer.wrap(backedArray, backedArrayOffset, length));
-        } catch (CharacterCodingException e) {
-            logger.error("error encode", e);
-            return;
+    void fireCharBufferReady() {
+        for (IDataReadyListener l : charBufferReadyListeners) {
+            l.onDataReady();
         }
-
-        dst.writeBuffer.append(encoded);
-        readCharBuffer.clear();
     }
 
     @Override
     public String toString() {
-        return "read " + readBuffer.length() + " bytes (+" + //
-                readCharBuffer.length() + " chars)" + //
-                ", write " + writeBuffer.length() + " bytes pending";
+        return length() + " bytes (+" + //
+                decoded.length() + " chars)";
     }
 
     static final String K_DEBUG = "debug";
@@ -411,21 +343,11 @@ public class SmartBuffer
             case K_MAX_READ:
                 return maxReadCount;
             case K_READ_UNTIL:
-                return readByteUntil.toString();
+                return readByteUntil == null ? null : readByteUntil.toString();
             case K_READ_CHAR_UNTIL:
-                return readCharUntil.toString();
-            case K_WRITE_TIME:
-                return lastWriteTime;
+                return readCharUntil == null ? null : readCharUntil.toString();
             case K_CHARSET:
                 return charset.name();
-            case K_PREFIX:
-                return linePrefix;
-            case K_SUFFIX:
-                return lineSuffix;
-            case K_FORMAT:
-                return lineFormat;
-            case K_EOL:
-                return eolChar;
         }
         return null;
     }
@@ -451,23 +373,8 @@ public class SmartBuffer
             case K_READ_CHAR_UNTIL:
                 readCharUntil = null;
                 break;
-            case K_WRITE_TIME:
-                lastWriteTime = var.getLong();
-                break;
             case K_CHARSET:
                 charset = Charset.forName(var.getString());
-                break;
-            case K_PREFIX:
-                linePrefix = var.getString();
-                break;
-            case K_SUFFIX:
-                lineSuffix = var.getString();
-                break;
-            case K_FORMAT:
-                lineFormat = var.getString();
-                break;
-            case K_EOL:
-                eolChar = var.getString();
                 break;
             default:
                 return false;

@@ -13,7 +13,9 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.IReadResult;
 import net.bodz.bas.net.io.ISocketPoller;
+import net.bodz.bas.net.io.ReadResult;
 import net.bodz.bas.net.serv.cmd.CommonCmds;
 import net.bodz.bas.net.serv.cmd.ICommandProvider;
 
@@ -34,7 +36,7 @@ public abstract class DirectiveSocketSession
     }
 
     @Override
-    public long read(@NotNull SocketChannel channel)
+    public IReadResult read(@NotNull SocketChannel channel)
             throws IOException {
         long totalBytesRead = 0;
         ByteBuffer aByte = ByteBuffer.allocate(1);
@@ -45,15 +47,14 @@ public abstract class DirectiveSocketSession
                 case -1:            // The client has closed the connection
                     close();
                 case 0:
-                    return totalBytesRead;
-
+                    return ReadResult.numOfBytes(totalBytesRead, numBytesRead == -1);
                 case 1:
                     totalBytesRead += numBytesRead;
 
                     aByte.flip();
                     byte b = aByte.get();
                     aByte.clear();
-                    cmds.putOctet(b);
+                    cmds.buffer.append(b);
                     break;
 
                 default:

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.channels.SocketChannel;
 
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.IReadResult;
 import net.bodz.bas.net.io.ISocketPoller;
 
 public class RelayTargetSession
@@ -18,7 +19,7 @@ public class RelayTargetSession
     }
 
     @Override
-    public long read(@NotNull SocketChannel channel)
+    public IReadResult read(@NotNull SocketChannel channel)
             throws IOException {
         return buffer.read(channel);
     }

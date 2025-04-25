@@ -8,6 +8,7 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.IReadResult;
 import net.bodz.bas.net.io.ISocketPoller;
 
 public class SendSession
@@ -28,7 +29,7 @@ public class SendSession
     }
 
     @Override
-    public long read(@NotNull SocketChannel channel)
+    public IReadResult read(@NotNull SocketChannel channel)
             throws IOException {
         throw new NotImplementedException();
     }
@@ -36,7 +37,7 @@ public class SendSession
     @Override
     protected void readTargetBuffer() {
         String message = target.getReadString();
-        target.clearReadBuffer();
+        target.clear();
         buffer.printLine(message);
     }
 

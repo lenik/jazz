@@ -1,7 +1,6 @@
 package net.bodz.bas.net.serv.session;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +9,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.IReadResult;
 import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.text.parser.LineQueue;
 
@@ -23,43 +23,32 @@ public class ChatSession
     public ChatSession(String name, @NotNull SocketChannel channel, @NotNull ISocketPoller poller)
             throws IOException {
         super(name, channel, poller);
+
+        buffer.setDecodeMode(true);
+
         greet();
     }
 
     @Override
-    public long read(@NotNull SocketChannel channel)
+    public IReadResult read(@NotNull SocketChannel channel)
             throws IOException {
-        ByteBuffer buf = ByteBuffer.allocate(1024);
-        long totalBytesRead = 0;
+        IReadResult rr = buffer.read(channel);
 
-        while (true) {
-            int numBytesRead = channel.read(buf);
-            logger.info("numBytesRead: " + numBytesRead);
-            switch (numBytesRead) {
-                case -1:
-                    close();
-                case 0:
-                    return totalBytesRead;
-                default:
-                    totalBytesRead += numBytesRead;
-            }
+        lineQueue.buffer.append(buffer);
+        buffer.clear();
 
-            buf.flip();
-            lineQueue.putOctets(buf);
-            buf.clear();
-
-            try {
-                lineQueue.parse();
-            } catch (ParseException e) {
-                logger.error(e, "error parse: " + e.getMessage());
-                lineQueue.dropLine();
-            }
-
-            while (lineQueue.isNotEmpty()) {
-                String line = lineQueue.take();
-                parseAndReply(line);
-            }
+        try {
+            lineQueue.parse();
+        } catch (ParseException e) {
+            logger.error(e, "error parse: " + e.getMessage());
         }
+
+        while (lineQueue.isNotEmpty()) {
+            String line = lineQueue.take();
+            parseAndReply(line);
+        }
+
+        return rr;
     }
 
     static final Pattern messagePattern = Pattern.compile("^\\s*(\\w+)(\\s+(.*?)\\s*)?$");

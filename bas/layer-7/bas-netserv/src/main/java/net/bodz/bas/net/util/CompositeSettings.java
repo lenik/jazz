@@ -34,9 +34,9 @@ public class CompositeSettings
     public CompositeSettings add(String name, @NotNull ISettings settings) {
         if (name == null) {
             if (_default == null)
-                throw new DuplicatedKeyException("(default)");
-            else
                 _default = settings;
+            else
+                throw new DuplicatedKeyException("(default)");
 
             for (String n : settings.getSettingNames())
                 if (!names.add(n))

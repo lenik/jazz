@@ -1,82 +1,64 @@
 package net.bodz.bas.text.parser;
 
-import java.nio.charset.StandardCharsets;
-
-import net.bodz.bas.err.IErrorRecoverer;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.io.ILookAhead;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.t.buffer.ByteArrayBuffer;
+import net.bodz.bas.net.util.ReadBuffer;
+import net.bodz.bas.t.buffer.CharArrayBuffer;
 
-public abstract class BufferedLineParser
-        implements IBufferedParser,
-                   ILineParser {
+public abstract class BufferedLineParser<T>
+        implements IBufferedParser<T>,
+                   ILineParser<T>,
+                   IParseContext {
 
     static final Logger logger = LoggerFactory.getLogger(BufferedLineParser.class);
 
-    @NotNull
-    ByteArrayBuffer lineBuffer = new ByteArrayBuffer(4096);
+    public final ReadBuffer buffer = new ReadBuffer(4096);
+    CharArrayBuffer decoded = buffer.decoded;
 
-    IErrorRecoverer errorRecoverer;
+    int selectionStart;
+    int selectionEnd;
 
-    public IErrorRecoverer getErrorRecoverer() {
-        return errorRecoverer;
-    }
-
-    public void setErrorRecoverer(IErrorRecoverer errorRecoverer) {
-        this.errorRecoverer = errorRecoverer;
+    public BufferedLineParser() {
+        buffer.setDecodeMode(true);
     }
 
     @Override
-    public void putOctet(byte octet) {
-        lineBuffer.append(octet);
+    public String getSelection() {
+        char[] backedArray = decoded.getBackedArray();
+        return new String(backedArray, selectionStart, selectionEnd - selectionStart);
     }
 
     @Override
-    public void putOctet(int octet) {
-        lineBuffer.append(octet);
-    }
+    public void parse(IParsedValueCallback<T> callback, IParseErrorCallback errorCallback) {
+        buffer.decode();
 
-    @Override
-    public int getBufferLength() {
-        return lineBuffer.length();
-    }
-
-    @Override
-    public void resetBuffer() {
-        lineBuffer.clear();
-    }
-
-    @Override
-    public byte[] bufferCopy() {
-        return lineBuffer.toByteArray();
-    }
-
-    @Override
-    public void parse(@NotNull ILookAhead la, boolean dropErrorLines)
-            throws ParseException {
-        final byte[] buf = lineBuffer.getBackedArray();
-        final int off = lineBuffer.getBackedArrayOffset();
-        final int len = lineBuffer.length();
+        final char[] buf = decoded.getBackedArray();
+        final int off = decoded.getBackedArrayOffset();
+        final int len = decoded.length();
         int look = off;
         int pos = off;
         int stop = off;
 
         try {
             for (int n = 0; n < len; n++) {
-                byte octet = buf[look++];
-                switch (octet) {
+                char ch = buf[look++];
+                switch (ch) {
                     case '\r':
                         continue;
                     case '\n':
+                        selectionStart = off;
+                        selectionEnd = pos;
                         try {
-                            parseLine(buf, off, pos - off);
+                            T value = parseLine(buf, off, pos - off);
+                            callback.parsedValue(this, value);
                         } catch (ParseException e) {
-                            if (!dropErrorLines)
-                                if (errorRecoverer == null || !errorRecoverer.recoverError(e))
-                                    throw e;
+                            if (errorCallback != null && errorCallback.parseError(this, e)) {
+                                // drop away the error text
+                            } else {
+                                // stop parse
+                                return;
+                            }
                         }
                         stop = look;
                         break;
@@ -85,35 +67,9 @@ public abstract class BufferedLineParser
             }
         } finally {
             if (stop != off) {
-                lineBuffer.delete(0, stop - off);
+                decoded.delete(0, stop - off);
             }
         }
-    }
-
-    @Override
-    public void parseLine(@NotNull byte[] line, int off, int len)
-            throws ParseException {
-        String s = new String(line, off, len, StandardCharsets.UTF_8);
-        parseLine(s);
-    }
-
-    @Override
-    public int dropLine() {
-        int len = lineBuffer.length();
-        if (len == 0)
-            return 0;
-
-        byte[] buf = lineBuffer.getBackedArray();
-        int off = lineBuffer.getBackedArrayOffset();
-        int end = off + len;
-
-        for (int pos = off; pos < end; pos++)
-            if (buf[pos] == '\n') {
-                int nDel = pos - off + 1;
-                lineBuffer.delete(0, nDel);
-                return nDel;
-            }
-        return 0;
     }
 
 }

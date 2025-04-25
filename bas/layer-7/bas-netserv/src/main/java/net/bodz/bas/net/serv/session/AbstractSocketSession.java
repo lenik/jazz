@@ -11,6 +11,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.IReadResult;
 import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.util.CloseSupport;
 import net.bodz.bas.net.util.CompositeSettings;
@@ -166,19 +167,31 @@ public abstract class AbstractSocketSession
             throws IOException {
         if (closed)
             throw new IllegalStateException("can't reopen");
-        buffer.startRead();
+
+        logger.debug(getLogPrefix() + "open()");
+        buffer.startRead(this);
         buffer.enableWriter();
     }
 
     @Override
+    public abstract IReadResult read(@NotNull SocketChannel channel)
+            throws IOException;
+
+    @Override
     public void close() {
-        buffer.disableWriter();
-        buffer.stopRead();
+        if (closed)
+            return;
 
         try {
-            channel.socket().close();
-        } catch (IOException e) {
-            logger.error("error close the socket: " + e.getMessage(), e);
+            buffer.disableWriter();
+            buffer.stopRead();
+
+            try {
+                channel.socket().close();
+            } catch (IOException e) {
+                logger.error("error close the socket: " + e.getMessage(), e);
+            }
+
         } finally {
             closed = true;
         }

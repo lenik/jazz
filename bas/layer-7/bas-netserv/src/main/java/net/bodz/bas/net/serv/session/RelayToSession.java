@@ -7,8 +7,9 @@ import java.nio.channels.SocketChannel;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.IReadResult;
 import net.bodz.bas.net.io.ISocketPoller;
-import net.bodz.bas.t.buffer.ByteArrayBuffer;
+import net.bodz.bas.t.buffer.IByteBuffer;
 
 public class RelayToSession
         extends PeerSession {
@@ -32,16 +33,16 @@ public class RelayToSession
     }
 
     @Override
-    public long read(@NotNull SocketChannel channel)
+    public IReadResult read(@NotNull SocketChannel channel)
             throws IOException {
-        long numBytesRead = buffer.read(channel);
+        IReadResult rr = buffer.read(channel);
         buffer.moveTo(target);
-        return numBytesRead;
+        return rr;
     }
 
     @Override
     protected void readTargetBuffer() {
-        ByteArrayBuffer targetBuffer = target.readBuffer;
+        IByteBuffer targetBuffer = target;
 
         byte[] backedArray = targetBuffer.getBackedArray();
         int backedArrayOffset = targetBuffer.getBackedArrayOffset();

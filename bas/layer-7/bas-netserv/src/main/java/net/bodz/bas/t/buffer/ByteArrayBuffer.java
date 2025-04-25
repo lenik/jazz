@@ -1,18 +1,26 @@
 package net.bodz.bas.t.buffer;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
+import net.bodz.bas.io.ILookBytesAhead;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class ByteArrayBuffer
-        implements IBuffer<Byte> {
+        implements IBuffer<Byte>,
+                   IByteBuffer,
+                   IBufferSelection<Byte>,
+                   ILookBytesAhead {
 
     private byte[] buf;
     private int start;
     private int end;
     private int length;
+
+    private int position;
+    // private int limit; == length
+    private int positionMarked = -1;
 
     public ByteArrayBuffer(int initialCapacity) {
         buf = new byte[initialCapacity];
@@ -40,10 +48,12 @@ public class ByteArrayBuffer
     }
 
     @NotNull
+    @Override
     public byte[] getBackedArray() {
         return buf;
     }
 
+    @Override
     public int getBackedArrayOffset() {
         return start;
     }
@@ -59,50 +69,11 @@ public class ByteArrayBuffer
         append(element.byteValue());
     }
 
-    public void append(byte element) {
-        ensureCapacity(length + 1);
-        buf[start + length] = element;
-        length++;
-    }
-
-    public void append(int element) {
-        ensureCapacity(length + 1);
-        buf[start + length] = (byte) element;
-        length++;
-    }
-
-    public void append(byte[] buf) {
-        append(buf, 0, buf.length);
-    }
-
-    public void append(byte[] buf, int off, int len) {
-        ensureCapacity(length + len);
-        System.arraycopy(buf, off, this.buf, start + length, len);
-        length += len;
-    }
-
-    public void append(ByteBuffer buf) {
-        int len = buf.remaining();
-        ensureCapacity(length + len);
-        buf.get(this.buf, start + length, len);
-        length += len;
-    }
-
-    public void append(ByteArrayBuffer buf) {
-        append(buf, 0, buf.length);
-    }
-
-    public void append(ByteArrayBuffer buf, int off, int len) {
-        if (len == 0)
-            return;
-        ensureIndexValid(off);
-        ensureIndexValid(off + len - 1);
-        append(buf.buf, buf.start + off, len);
-    }
-
     @Override
     public void clear() {
         length = 0;
+        position = 0;
+        positionMarked = -1;
     }
 
     private void ensureIndexValid(int index) {
@@ -122,69 +93,6 @@ public class ByteArrayBuffer
         buf[start + i] = value;
     }
 
-    public int get(int offset, byte[] buf) {
-        return get(offset, buf, 0, buf.length);
-    }
-
-    public int get(int offset, byte[] buf, int off, int len) {
-        if (len <= 0)
-            return 0;
-        ensureIndexValid(offset);
-        int remain = length - offset;
-        int min = Math.min(remain, len);
-        System.arraycopy(this.buf, start + offset, buf, off, min);
-        return min;
-    }
-
-    public int get(int offset, ByteBuffer buf) {
-        return get(offset, buf, buf.remaining());
-    }
-
-    public int get(int offset, ByteBuffer buf, int len) {
-        if (len <= 0)
-            return 0;
-        ensureIndexValid(offset);
-        int remain = length - offset;
-        int min = Math.min(remain, len);
-        buf.put(this.buf, start + offset, min);
-        return min;
-    }
-
-    public int set(int offset, byte[] buf) {
-        return set(offset, buf, 0, buf.length);
-    }
-
-    public int set(int offset, byte[] buf, int off, int len) {
-        int remain = length - offset;
-        int min = Math.min(remain, len);
-        System.arraycopy(buf, off, this.buf, start + offset, min);
-        return min;
-    }
-
-    public int set(int offset, ByteBuffer buf) {
-        return set(offset, buf, buf.remaining());
-    }
-
-    public int set(int offset, ByteBuffer buf, int len) {
-        if (len <= 0)
-            return 0;
-        ensureIndexValid(offset);
-        int remain = length - offset;
-        int min = Math.min(remain, len);
-        buf.get(this.buf, start + offset, min);
-        return min;
-    }
-
-    public byte getByte(int i) {
-        ensureIndexValid(i);
-        return buf[start + i];
-    }
-
-    public void setByte(int i, byte value) {
-        ensureIndexValid(i);
-        buf[start + i] = value;
-    }
-
     @Override
     public int capacity() {
         return end - start;
@@ -195,27 +103,13 @@ public class ByteArrayBuffer
         return length;
     }
 
-    /**
-     * compute the capacity aligned to 2^n.
-     */
-    int minPowerOf2GreaterThanOrEquals(int required) {
-        int min = 1;
-        while (min < required) {
-            min <<= 1;
-            if (min == 0x8000_0000)
-                throw new IllegalArgumentException("Required too big capacity: " + required);
-        }
-        assert min >= required;
-        return min;
-    }
-
     @Override
     public void ensureCapacity(int required) {
         int capacity = end - start;
         if (capacity >= required)
             return;
 
-        int newCap = minPowerOf2GreaterThanOrEquals(required);
+        int newCap = BinMath.minPowerOf2GreaterThanOrEquals(required);
 
         byte[] newBuf = new byte[newCap];
         System.arraycopy(buf, start, newBuf, 0, length);
@@ -256,16 +150,199 @@ public class ByteArrayBuffer
             length = maxLength;
     }
 
+    // IByteBuffer
+
+    public void append(byte element) {
+        ensureCapacity(length + 1);
+        buf[start + length] = element;
+        length++;
+    }
+
+    public void append(byte[] buf, int off, int len) {
+        ensureCapacity(length + len);
+        System.arraycopy(buf, off, this.buf, start + length, len);
+        length += len;
+    }
+
+    public void append(ByteBuffer buf) {
+        int len = buf.remaining();
+        ensureCapacity(length + len);
+        buf.get(this.buf, start + length, len);
+        length += len;
+    }
+
+    @Override
+    public void append(IByteBuffer buf, int off, int len) {
+        if (len == 0)
+            return;
+        ensureIndexValid(off);
+        ensureIndexValid(off + len - 1);
+
+        byte[] backedArray = buf.getBackedArray();
+        int backedArrayOffset = buf.getBackedArrayOffset();
+        append(backedArray, backedArrayOffset + off, len);
+    }
+
+    public void append(ByteArrayBuffer buf, int off, int len) {
+        if (len == 0)
+            return;
+        ensureIndexValid(off);
+        ensureIndexValid(off + len - 1);
+        append(buf.buf, buf.start + off, len);
+    }
+
+    @Override
+    public int get(int pos, byte[] buf, int off, int len) {
+        if (len <= 0)
+            return 0;
+        ensureIndexValid(pos);
+        int remain = length - pos;
+        int min = Math.min(remain, len);
+        System.arraycopy(this.buf, start + pos, buf, off, min);
+        return min;
+    }
+
+    @Override
+    public int get(int pos, ByteBuffer buf, int len) {
+        if (len <= 0)
+            return 0;
+        ensureIndexValid(pos);
+        int remain = length - pos;
+        int min = Math.min(remain, len);
+        buf.put(this.buf, start + pos, min);
+        return min;
+    }
+
+    @Override
+    public int set(int pos, byte[] buf, int off, int len) {
+        int remain = length - pos;
+        int min = Math.min(remain, len);
+        System.arraycopy(buf, off, this.buf, start + pos, min);
+        return min;
+    }
+
+    @Override
+    public int set(int pos, ByteBuffer buf, int len) {
+        if (len <= 0)
+            return 0;
+        ensureIndexValid(pos);
+        int remain = length - pos;
+        int min = Math.min(remain, len);
+        buf.get(this.buf, start + pos, min);
+        return min;
+    }
+
+    @Override
+    public byte getByte(int i) {
+        ensureIndexValid(i);
+        return buf[start + i];
+    }
+
+    @Override
+    public void setByte(int i, byte value) {
+        ensureIndexValid(i);
+        buf[start + i] = value;
+    }
+
+    @Override
     public byte[] toByteArray() {
         byte[] array = new byte[length];
         System.arraycopy(buf, start, array, 0, length);
         return array;
     }
 
-    @Deprecated
+    // IBufferSelection
+
     @Override
-    public String toString() {
-        return toString(StandardCharsets.UTF_8);
+    public int limit() {
+        return length;
+    }
+
+    @Override
+    public void limit(int limit) {
+        int capacity = end - start;
+        if (limit < 0 || limit > capacity)
+            throw new IllegalStateException("invalid limit: " + limit);
+        this.length = limit;
+    }
+
+    @Override
+    public int position() {
+        return positionMarked;
+    }
+
+    @Override
+    public void position(int position) {
+        if (position < 0 || position > length)
+            throw new IllegalArgumentException("invalid position: " + position);
+        this.position = position;
+    }
+
+    @Override
+    public int advance(int n) {
+        int newPosition = position + n;
+        if (newPosition < 0 || newPosition > length)
+            throw new IllegalArgumentException("invalid after advance: " + n);
+        int old = position;
+        position = newPosition;
+        return old;
+    }
+
+    @Override
+    public int remaining() {
+        return length - position;
+    }
+
+    @Override
+    public void compact() {
+        int remaining = remaining();
+        System.arraycopy(buf, start + position, buf, start, remaining);
+        position = 0;
+        length = remaining;
+    }
+
+    @Override
+    public void mark() {
+        positionMarked = position;
+    }
+
+    @Override
+    public void reset() {
+        if (positionMarked > length)
+            throw new IllegalStateException("marked position is invalid: " + positionMarked);
+        position = positionMarked;
+    }
+
+    // ILookAhead
+
+    @Override
+    public int getLookCapacity() {
+        return capacity();
+    }
+
+    @Override
+    public int getLookLimit() {
+        return length();
+    }
+
+    @Override
+    public int lookByte()
+            throws IOException {
+        if (position < 0)
+            throw new IllegalStateException();
+        if (position >= length)
+            return -1;
+        return buf[start + position] & 0xFF;
+    }
+
+    @Override
+    public int look(byte[] buf, int off, int len)
+            throws IOException {
+        if (position < 0)
+            throw new IllegalStateException();
+        int n = Math.min(length - position, len);
+        System.arraycopy(this.buf, start + position, buf, off, n);
+        return n;
     }
 
     public String toString(Charset charset) {

@@ -7,10 +7,13 @@ import java.nio.channels.SocketChannel;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.net.io.IReadResult;
 import net.bodz.bas.net.io.ISocketPoller;
 import net.bodz.bas.net.io.ISocketWriter;
+import net.bodz.bas.net.io.ReadResult;
 import net.bodz.bas.std.TransportType;
 import net.bodz.bas.t.buffer.ByteArrayBuffer;
+import net.bodz.bas.t.buffer.IByteBuffer;
 
 public class OpenSession
         extends PeerSession
@@ -22,8 +25,8 @@ public class OpenSession
     String protocol;
     int localPort;
 
-    ByteArrayBuffer sourceBuffer = new ByteArrayBuffer(4096);
-    ByteArrayBuffer sourceWriteBuffer = new ByteArrayBuffer(4096);
+    IByteBuffer sourceBuffer = new ByteArrayBuffer(4096);
+    IByteBuffer sourceWriteBuffer = new ByteArrayBuffer(4096);
 
     public OpenSession(String name, @NotNull SocketChannel channel, @NotNull ISocketPoller poller, //
             TransportType transportType, @NotNull String protocol, int localPort)
@@ -43,7 +46,7 @@ public class OpenSession
     }
 
     @Override
-    public long read(@NotNull SocketChannel channel)
+    public IReadResult read(@NotNull SocketChannel channel)
             throws IOException {
         logger.debug(getPrefix() + "read");
         ByteBuffer byteBuf = ByteBuffer.allocate(4096);
@@ -55,7 +58,7 @@ public class OpenSession
                 case -1:
                     close();
                 case 0:
-                    return totalBytesRead;
+                    return ReadResult.numOfBytes(totalBytesRead, numBytesRead == -1);
                 default:
                     totalBytesRead += numBytesRead;
             }
@@ -80,7 +83,7 @@ public class OpenSession
 
     @Override
     protected void readTargetBuffer() {
-        ByteArrayBuffer targetBuffer = target.readBuffer;
+        IByteBuffer targetBuffer = target;
         byte[] backedArray = targetBuffer.getBackedArray();
         int backedArrayOffset = targetBuffer.getBackedArrayOffset();
         int length = targetBuffer.length();

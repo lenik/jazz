@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import java.util.EventListener;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 
 @FunctionalInterface
@@ -14,7 +13,7 @@ public interface ISocketReader
     /**
      * @return number of bytes have been read.
      */
-    long read(@NotNull SocketChannel channel)
+    IReadResult read(@NotNull SocketChannel channel)
             throws IOException;
 
 }
