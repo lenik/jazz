@@ -4,76 +4,67 @@ import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.nio.CharBuffer;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.io.ILookAhead;
-import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.io.ILookCharsAhead;
 
 public class LAReader
         extends FilterReader
-        implements ILookAhead {
+        implements ILookCharsAhead {
 
     // LA(cap)
-    protected final int cap;
+    final int capacity;
 
-    /** Look-Ahead Buffer */
-    protected char[] lab;
+    /**
+     * look-ahead ring buffer
+     */
+    char[] ringbuf;
 
-    protected int begin;
-    protected int current;
-    protected boolean full;
+    int start;
+    int end;
+    //    protected boolean full;
+    int length;
 
-    public LAReader(Reader reader, int cap) {
+    public LAReader(Reader reader, int capacity) {
         super(reader);
         // assert cap > 0;
-        this.cap = cap;
-        this.lab = new char[cap];
-        this.begin = 0;
-        this.current = 0;
+        this.capacity = capacity;
+        this.ringbuf = new char[capacity];
+        this.start = 0;
+        this.end = 0;
     }
 
     public LAReader(Reader reader) {
         this(reader, 1);
     }
 
-    public LAReader(String string, int cap) {
-        this(new StringReader(string), cap);
+    public LAReader(String string, int capacity) {
+        this(new StringReader(string), capacity);
     }
 
     public LAReader(String string) {
         this(new StringReader(string));
     }
 
-    protected final boolean isLabFull() {
-        return full;
+    protected final boolean hasNoRemaining() {
+        return length == capacity;
     }
 
-    protected final boolean isLabFilled() {
-        return begin != current || full;
+    protected final boolean isNotEmpty() {
+        return length != 0;
     }
 
-    protected final boolean isLabEmpty() {
-        return begin == current && !full;
-    }
-
-    /** size of look-ahead buffer */
-    protected final int las() {
-        if (full)
-            return cap;
-        int s = current - begin;
-        if (s < 0)
-            s += cap;
-        return s;
+    protected final boolean isEmpty() {
+        return length == 0;
     }
 
     @Override
     public int read()
             throws IOException {
-        if (isLabFilled()) {
-            int c = lab[begin++];
-            begin %= cap;
-            full = false;
+        if (isNotEmpty()) {
+            int c = ringbuf[start++];
+            start %= capacity;
+            length--;
             return c;
         }
         return super.read();
@@ -82,59 +73,38 @@ public class LAReader
     @Override
     public int read(char[] cbuf, int off, int len)
             throws IOException {
-        if (isLabFilled()) {
+        if (isNotEmpty()) {
             // TODO - final int ARRAYCOPY_VALVE = 32;
-            int las = las();
-            int cc = Math.min(las, len);
-            // TODO - if (cc > ARRAYCOPY_VALVE)
-            while (cc-- > 0) {
-                char c = lab[begin++];
-                begin %= cap;
+            int n = Math.min(length, len);
+            for (int i = 0; i < n; i++) {
+                char c = ringbuf[start++];
+                start %= capacity;
                 cbuf[off++] = c;
             }
-            full = false;
-            len -= cc;
+            length -= n;
+            len -= n;
         }
         return super.read(cbuf, off, len);
     }
 
     @Override
-    public int read(@NotNull char[] cbuf)
-            throws IOException {
-        return read(cbuf, 0, cbuf.length);
-    }
-
-    @Override
-    public int read(CharBuffer target)
-            throws IOException {
-        int len = target.remaining();
-        char[] cbuf = new char[len];
-        int n = read(cbuf, 0, len);
-        if (n > 0)
-            target.put(cbuf, 0, n);
-        return n;
-    }
-
-    @Override
     public boolean ready()
             throws IOException {
-        if (isLabFilled())
+        if (isNotEmpty())
             return true;
         return super.ready();
     }
 
     @Override
-    public long skip(long n)
+    public long skip(long numChars)
             throws IOException {
-        if (isLabFilled()) {
-            int cc = las();
-            if (cc > n)
-                cc = (int) n;
-            n -= cc;
-            begin = (begin + cc) % cap;
-            full = false;
+        if (isNotEmpty()) {
+            int n = (int) Math.min(numChars, length);
+            numChars -= n;
+            start = (start + n) % capacity;
+            length -= n;
         }
-        return super.skip(n);
+        return super.skip(numChars);
     }
 
     @Override
@@ -155,104 +125,75 @@ public class LAReader
     }
 
     @Override
-    public int getLookMax() {
-        return lab.length;
+    public int getLookCapacity() {
+        return ringbuf.length;
     }
 
     @Override
-    public int getLookedLength() {
-        if (begin < current)
-            return current - begin;
-        if (begin == current && !full)
-            return 0;
-        return cap - begin + current;
+    public int getLookLimit() {
+        return length;
     }
 
     @Override
-    public int look()
+    public int lookChar()
             throws IOException {
-        if (isLabFilled()) {
-            return lab[current];
+        if (isNotEmpty()) {
+            return ringbuf[start];
         }
-        int c = super.read();
-        if (c == -1)
+        int ch = super.read();
+        if (ch == -1)
             return -1;
-        lab[begin = 0] = (char) c;
-        if (cap == 1) {
-            current = 0;
-            full = true;
-        } else {
-            current = 1;
-        }
-        return c;
+        ringbuf[start = 0] = (char) ch;
+        end = 1 % capacity;
+        length = 1;
+        return ch;
     }
 
     @Override
     public int look(char[] cbuf, int off, int len)
             throws IOException {
-        if (len > cap)
-            throw new OutOfDomainException("look-len", len, cap);
-        // len = Math.min(cap, len);
-        int las = las();
-        if (las < len && !isLabFull()) {
-            int cc = len - las;
+        if (len > capacity)
+            throw new OutOfDomainException("look-len", len, capacity);
+        if (len > length) { // fill more
+            int n = len - length;
             int i = 0;
-            while (i++ < cc) {
+            while (i++ < n) {
                 int c = super.read();
                 if (c == -1)
                     break;
-                lab[current++] = (char) c;
-                current = current % cap;
-                if (current == begin) {
-                    full = true;
+                ringbuf[end++] = (char) c;
+                end = end % capacity;
+                if (++length >= capacity)
                     break;
-                }
             }
-            las += i;
         }
-        // TODO - final int ARRAYCOPY_VALVE = 32;
-        int cc = Math.min(las, len);
-        // TODO - if (cc > ARRAYCOPY_VALVE)
-        int i = 0;
-        int pos = begin;
-        while (i++ < cc) {
-            char c = lab[pos++];
-            pos %= cap;
+        int n = Math.min(length, len);
+        int pos = this.start;
+        for (int i = 0; i < n; i++) {
+            char c = ringbuf[pos++];
+            pos %= capacity;
             cbuf[off++] = c;
         }
-        return cc;
-    }
-
-    @Override
-    public int look(char[] cbuf)
-            throws IOException {
-        return look(cbuf, 0, cbuf.length);
-    }
-
-    @Override
-    public String look(int length)
-            throws IOException {
-        char[] cbuf = new char[length];
-        int cc = look(cbuf, 0, length);
-        return new String(cbuf, 0, cc);
+        return n;
     }
 
     /**
      * Get compacted look-ahead buffer
      *
-     * @return available content in lab
+     * @return filled part of the buffer
      */
-    public String lookFilled() {
-        if (begin < current)
-            return new String(lab, begin, current - begin);
-        if (begin == current && !full)
+    public String lookBuffer() {
+        if (length == 0)
             return "";
-        return new String(lab, begin, cap - begin) + new String(lab, 0, current);
+        if (start < end)
+            return new String(ringbuf, start, end - start);
+        else
+            return new String(ringbuf, start, capacity - start) + new String(ringbuf, 0, end);
     }
 
     @Override
     public String toString() {
-        return "look-ahead(" + las() + "/" + cap + "): \"" + lookFilled() + "\"";
+        return "look-ahead(" + length + "/" + capacity + "): \"" + lookBuffer() + "\"";
     }
 
 }
