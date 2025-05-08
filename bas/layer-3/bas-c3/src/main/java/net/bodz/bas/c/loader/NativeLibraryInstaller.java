@@ -1,5 +1,6 @@
 package net.bodz.bas.c.loader;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -37,8 +38,8 @@ public class NativeLibraryInstaller {
     }
 
     final Path installDir;
-    final List<ClassLoader> loaders = new ArrayList<ClassLoader>();
-    final Map<String, Path> installedLibraries = new HashMap<>();
+    final List<ClassLoader> loaders = new ArrayList<>();
+    final Map<String, File> installedLibraries = new HashMap<>();
 
     public NativeLibraryInstaller() {
         this(DEFAULT_INSTALL_DIR);
@@ -52,12 +53,16 @@ public class NativeLibraryInstaller {
                 String name = child.getFileName().toString();
                 if (IGNORE_CASE)
                     name = name.toLowerCase();
-                if (LIB_EXTENSION != null)
-                    if (!name.endsWith(LIB_EXTENSION))
-                        continue;
 
-                String existedLibname = name.substring(0, name.length() - LIB_EXTENSION.length());
-                installedLibraries.put(existedLibname, child);
+                String existedLibname = name;
+
+                if (LIB_EXTENSION != null) {
+                    if (name.endsWith(LIB_EXTENSION))
+                        existedLibname = name.substring(0, name.length() - LIB_EXTENSION.length());
+                    else
+                        continue;
+                }
+                installedLibraries.put(existedLibname, child.toFile());
             }
         } catch (IOException e) {
             // ignore.
@@ -96,7 +101,7 @@ public class NativeLibraryInstaller {
      * @return <code>null</code> if not found.
      * @throws IOException
      */
-    public synchronized Path install(String libname)
+    public synchronized File install(String libname)
             throws IOException {
         String filename = System.mapLibraryName(libname);
 
@@ -109,13 +114,13 @@ public class NativeLibraryInstaller {
         if (resource == null)
             return null;
 
-        Path installedFile = installedLibraries.get(libname);
+        File installedFile = installedLibraries.get(libname);
 
         if (installedFile == null) {
-            installedFile = installDir.resolve(filename);
+            installedFile = installDir.resolve(filename).toFile();
 
             try (InputStream in = resource.openStream()) {
-                try (OutputStream out = Files.newOutputStream(installedFile)) {
+                try (OutputStream out = Files.newOutputStream(installedFile.toPath())) {
                     byte[] block = new byte[8192];
                     int cb;
                     while ((cb = in.read(block)) != -1) {

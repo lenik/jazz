@@ -1,12 +1,10 @@
 package net.bodz.bas.c.loader;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
-import java.nio.file.Path;
-
-import net.bodz.bas.c.java.nio.file.FileFn;
 
 public class EmbeddedClassLoader
         extends URLClassLoader {
@@ -31,8 +29,8 @@ public class EmbeddedClassLoader
     protected String findLibrary(String libname) {
         NativeLibraryInstaller installer = NativeLibraryInstaller.getInstance();
         try {
-            Path localFile = installer.install(libname);
-            return localFile == null ? null : FileFn.getAbsolutePath(localFile);
+            File localFile = installer.install(libname);
+            return localFile == null ? null : localFile.getCanonicalPath();
         } catch (IOException e) {
             throw new Error(e.getMessage(), e);
         }
@@ -53,7 +51,7 @@ public class EmbeddedClassLoader
         }
 
         throw new UnsupportedOperationException(String.format(//
-                "Can\'t replace the given loader %s to BundledLoader", loader));
+                "Can't replace the given loader %s to BundledLoader", loader));
     }
 
 }
