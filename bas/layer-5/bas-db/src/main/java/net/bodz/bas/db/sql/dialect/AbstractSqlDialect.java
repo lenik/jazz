@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -14,8 +15,7 @@ import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.db.sql.SQLLangs;
 
 public abstract class AbstractSqlDialect
-        implements
-            ISqlDialect {
+        implements ISqlDialect {
 
     protected String nullLiteral = "null";
 
@@ -107,6 +107,7 @@ public abstract class AbstractSqlDialect
     DateTimeSpec dateTimeSpec = dateTimeSpec("yyyy-MM-dd HH:mm:ss.SSS");
     DateTimeSpec dateTimeWithZoneIdSpec = dateTimeSpec("yyyy-MM-dd HH:mm:ss.SSS zzz");
     DateTimeSpec dateTimeWithZoneOffsetSpec = dateTimeSpec("yyyy-MM-dd HH:mm:ss.SSS zzz");
+    DateTimeSpec timeWithZoneOffsetSpec = dateTimeSpec("HH:mm:ss.SSS zzz");
 
     @Override
     public final String qDate(Date date) {
@@ -148,6 +149,13 @@ public abstract class AbstractSqlDialect
     public String qOffsetDateTime(OffsetDateTime offsetDateTime) {
         DateTimeSpec spec = dateTimeWithZoneOffsetSpec;
         String str = spec.format(offsetDateTime);
+        return toDate(str, spec.sqlSpec);
+    }
+
+    @Override
+    public String qOffsetTime(OffsetTime offsetTime) {
+        DateTimeSpec spec = timeWithZoneOffsetSpec;
+        String str = spec.format(offsetTime);
         return toDate(str, spec.sqlSpec);
     }
 
