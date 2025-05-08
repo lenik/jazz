@@ -1,13 +1,22 @@
 package net.bodz.bas.repr.path;
 
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZonedDateTime;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 
 /**
  * Records the state of token preprocessing.
- *
+ * <p>
  * When the dispatch started, the token queue contains tokens to be dispatched, and after dispatch
  * is completed, all processed tokens are consumed, rest only the unprocessed tokens.
  */
@@ -46,8 +55,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Skip a number of tokens.
      *
-     * @param n
-     *            Number of tokens to skip.
+     * @param n Number of tokens to skip.
      */
     void skip(int n);
 
@@ -55,8 +63,7 @@ public interface IForwardOnlyTokenQueue
      * Shift out a number of head tokens.
      *
      * @return A token array consists of n tokens.
-     * @throws IndexOutOfBoundsException
-     *             If <code>n</code> is out of range.
+     * @throws IndexOutOfBoundsException If <code>n</code> is out of range.
      */
     String[] shift(int n);
 
@@ -118,8 +125,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
     String peekAt(int offset);
@@ -127,6 +133,85 @@ public interface IForwardOnlyTokenQueue
     default String peekAt(int offset, String defaultValue) {
         String token = peekAt(offset);
         return token != null ? token : defaultValue;
+    }
+
+    // ----------------------------------------- GROUP: CHAR -----------------------------------------
+
+    /**
+     * Shift out the head token as a char.
+     * <p>
+     * If the head token isn't char, shift doesn't happen and <code>null</code> is returned.
+     *
+     * @return <code>null</code> If no more token, or the head token isn't a char number.
+     */
+    default Character shiftChar()
+            throws ParseException {
+        Character n = peekChar();
+        if (n != null)
+            shift();
+        return n;
+    }
+
+    default char shiftChar(char fallback) {
+        if (available() == 0)
+            return fallback;
+        char n = peekChar(fallback);
+        shift();
+        return n;
+    }
+
+    /**
+     * Peek at the head token as char.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default Character peekChar()
+            throws ParseException {
+        return peekCharAt(0);
+    }
+
+    default char peekChar(char fallback) {
+        return peekCharAt(0, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as char.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    Character peekCharAt(int offset)
+            throws ParseException;
+
+    /**
+     * Peek at the n-th token from the head as char.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    char peekCharAt(int offset, char fallback);
+
+    @NotNull
+    default char[] peekChars(int n)
+            throws ParseException {
+        if (n > available())
+            n = available();
+        char[] array = new char[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = peekCharAt(i);
+        }
+        return array;
+    }
+
+    @NotNull
+    default char[] peekChars(int n, char fallback)
+            throws ParseException {
+        char[] array = new char[n];
+        if (n > available())
+            n = available();
+        for (int i = 0; i < n; i++) {
+            array[i] = peekCharAt(i, fallback);
+        }
+        return array;
     }
 
     // ----------------------------------------- GROUP: BYTE -----------------------------------------
@@ -171,8 +256,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as byte.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
     Byte peekByteAt(int offset)
@@ -181,8 +265,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as byte.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      */
     byte peekByteAt(int offset, byte fallback);
 
@@ -252,8 +335,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as short.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
     Short peekShortAt(int offset)
@@ -262,8 +344,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as short.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      */
     short peekShortAt(int offset, short fallback);
 
@@ -333,8 +414,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as int.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist, or it's not a int integer.
      */
     Integer peekIntAt(int offset)
@@ -343,8 +423,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as int.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist, or it's not a int integer.
      */
     int peekIntAt(int offset, int fallback);
@@ -414,8 +493,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as long.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
     Long peekLongAt(int offset)
@@ -424,8 +502,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as long.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      */
     long peekLongAt(int offset, long fallback);
 
@@ -495,8 +572,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as float.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
     Float peekFloatAt(int offset)
@@ -505,8 +581,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as float.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      */
     float peekFloatAt(int offset, float fallback);
 
@@ -576,8 +651,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as double.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
     Double peekDoubleAt(int offset)
@@ -586,8 +660,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as double.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      */
     double peekDoubleAt(int offset, double fallback);
 
@@ -657,8 +730,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as boolean.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
     Boolean peekBooleanAt(int offset)
@@ -667,8 +739,7 @@ public interface IForwardOnlyTokenQueue
     /**
      * Peek at the n-th token from the head as boolean.
      *
-     * @param offset
-     *            The index offset, <code>0</code> if not specified.
+     * @param offset The index offset, <code>0</code> if not specified.
      */
     boolean peekBooleanAt(int offset, boolean fallback);
 
@@ -763,5 +834,726 @@ public interface IForwardOnlyTokenQueue
         }
         return array;
     }
+
+
+    // ----------------------------------------- GROUP: BigInteger -----------------------------------------
+
+    /**
+     * Shift out the head token as a BigInteger.
+     * <p>
+     * If the head token isn't BigInteger, shift doesn't happen and <code>null</code> is returned.
+     *
+     * @return <code>null</code> If no more token, or the head token isn't a BigInteger number.
+     */
+    default BigInteger shiftBigInteger()
+            throws ParseException {
+        BigInteger n = peekBigInteger();
+        if (n != null)
+            shift();
+        return n;
+    }
+
+    default BigInteger shiftBigInteger(BigInteger fallback) {
+        if (available() == 0)
+            return fallback;
+        BigInteger n = peekBigInteger(fallback);
+        shift();
+        return n;
+    }
+
+    /**
+     * Peek at the head token as BigInteger.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default BigInteger peekBigInteger()
+            throws ParseException {
+        return peekBigIntegerAt(0);
+    }
+
+    default BigInteger peekBigInteger(BigInteger fallback) {
+        return peekBigIntegerAt(0, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as BigInteger.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    BigInteger peekBigIntegerAt(int offset)
+            throws ParseException;
+
+    /**
+     * Peek at the n-th token from the head as BigInteger.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    BigInteger peekBigIntegerAt(int offset, BigInteger fallback);
+
+    @NotNull
+    default BigInteger[] peekBigIntegers(int n)
+            throws ParseException {
+        if (n > available())
+            n = available();
+        BigInteger[] array = new BigInteger[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = peekBigIntegerAt(i);
+        }
+        return array;
+    }
+
+    @NotNull
+    default BigInteger[] peekBigIntegers(int n, BigInteger fallback)
+            throws ParseException {
+        BigInteger[] array = new BigInteger[n];
+        if (n > available())
+            n = available();
+        for (int i = 0; i < n; i++) {
+            array[i] = peekBigIntegerAt(i, fallback);
+        }
+        return array;
+    }
+
+
+    // ----------------------------------------- GROUP: BIGDECIMAL -----------------------------------------
+
+    /**
+     * Shift out the head token as a BigDecimal.
+     * <p>
+     * If the head token isn't BigInteger, shift doesn't happen and <code>null</code> is returned.
+     *
+     * @return <code>null</code> If no more token, or the head token isn't a BigDecimal number.
+     */
+    default BigDecimal shiftBigDecimal()
+            throws ParseException {
+        BigDecimal n = peekBigDecimal();
+        if (n != null)
+            shift();
+        return n;
+    }
+
+    default BigDecimal shiftBigDecimal(BigDecimal fallback) {
+        if (available() == 0)
+            return fallback;
+        BigDecimal n = peekBigDecimal(fallback);
+        shift();
+        return n;
+    }
+
+    /**
+     * Peek at the head token as BigDecimal.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default BigDecimal peekBigDecimal()
+            throws ParseException {
+        return peekBigDecimalAt(0);
+    }
+
+    default BigDecimal peekBigDecimal(BigDecimal fallback) {
+        return peekBigDecimalAt(0, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as BigDecimal.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    BigDecimal peekBigDecimalAt(int offset)
+            throws ParseException;
+
+    /**
+     * Peek at the n-th token from the head as BigDecimal.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    BigDecimal peekBigDecimalAt(int offset, BigDecimal fallback);
+
+    @NotNull
+    default BigDecimal[] peekBigDecimals(int n)
+            throws ParseException {
+        if (n > available())
+            n = available();
+        BigDecimal[] array = new BigDecimal[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = peekBigDecimalAt(i);
+        }
+        return array;
+    }
+
+    @NotNull
+    default BigDecimal[] peekBigDecimals(int n, BigDecimal fallback)
+            throws ParseException {
+        BigDecimal[] array = new BigDecimal[n];
+        if (n > available())
+            n = available();
+        for (int i = 0; i < n; i++) {
+            array[i] = peekBigDecimalAt(i, fallback);
+        }
+        return array;
+    }
+
+
+    // ----------------------------------------- GROUP: ZonedDateTime -----------------------------------------
+
+    /**
+     * Shift out the head token as a ZonedDateTime.
+     * <p>
+     * If the head token isn't ZonedDateTime, shift doesn't happen and <code>null</code> is returned.
+     *
+     * @return <code>null</code> If no more token, or the head token isn't a ZonedDateTime number.
+     */
+    default ZonedDateTime shiftZonedDateTime()
+            throws ParseException {
+        ZonedDateTime n = peekZonedDateTime();
+        if (n != null)
+            shift();
+        return n;
+    }
+
+    default ZonedDateTime shiftZonedDateTime(ZonedDateTime fallback) {
+        if (available() == 0)
+            return fallback;
+        ZonedDateTime n = peekZonedDateTime(fallback);
+        shift();
+        return n;
+    }
+
+    /**
+     * Peek at the head token as ZonedDateTime.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default ZonedDateTime peekZonedDateTime()
+            throws ParseException {
+        return peekZonedDateTimeAt(0);
+    }
+
+    default ZonedDateTime peekZonedDateTime(ZonedDateTime fallback) {
+        return peekZonedDateTimeAt(0, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as ZonedDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    ZonedDateTime peekZonedDateTimeAt(int offset)
+            throws ParseException;
+
+    /**
+     * Peek at the n-th token from the head as ZonedDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    ZonedDateTime peekZonedDateTimeAt(int offset, ZonedDateTime fallback);
+
+    @NotNull
+    default ZonedDateTime[] peekZonedDateTimes(int n)
+            throws ParseException {
+        if (n > available())
+            n = available();
+        ZonedDateTime[] array = new ZonedDateTime[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = peekZonedDateTimeAt(i);
+        }
+        return array;
+    }
+
+    @NotNull
+    default ZonedDateTime[] peekZonedDateTimes(int n, ZonedDateTime fallback)
+            throws ParseException {
+        ZonedDateTime[] array = new ZonedDateTime[n];
+        if (n > available())
+            n = available();
+        for (int i = 0; i < n; i++) {
+            array[i] = peekZonedDateTimeAt(i, fallback);
+        }
+        return array;
+    }
+
+
+    // ----------------------------------------- GROUP: OffsetDateTime -----------------------------------------
+
+    /**
+     * Shift out the head token as a OffsetDateTime.
+     * <p>
+     * If the head token isn't OffsetDateTime, shift doesn't happen and <code>null</code> is returned.
+     *
+     * @return <code>null</code> If no more token, or the head token isn't a OffsetDateTime number.
+     */
+    default OffsetDateTime shiftOffsetDateTime()
+            throws ParseException {
+        OffsetDateTime n = peekOffsetDateTime();
+        if (n != null)
+            shift();
+        return n;
+    }
+
+    default OffsetDateTime shiftOffsetDateTime(OffsetDateTime fallback) {
+        if (available() == 0)
+            return fallback;
+        OffsetDateTime n = peekOffsetDateTime(fallback);
+        shift();
+        return n;
+    }
+
+    /**
+     * Peek at the head token as OffsetDateTime.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default OffsetDateTime peekOffsetDateTime()
+            throws ParseException {
+        return peekOffsetDateTimeAt(0);
+    }
+
+    default OffsetDateTime peekOffsetDateTime(OffsetDateTime fallback) {
+        return peekOffsetDateTimeAt(0, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as OffsetDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    OffsetDateTime peekOffsetDateTimeAt(int offset)
+            throws ParseException;
+
+    /**
+     * Peek at the n-th token from the head as OffsetDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    OffsetDateTime peekOffsetDateTimeAt(int offset, OffsetDateTime fallback);
+
+    @NotNull
+    default OffsetDateTime[] peekOffsetDateTimes(int n)
+            throws ParseException {
+        if (n > available())
+            n = available();
+        OffsetDateTime[] array = new OffsetDateTime[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = peekOffsetDateTimeAt(i);
+        }
+        return array;
+    }
+
+    @NotNull
+    default OffsetDateTime[] peekOffsetDateTimes(int n, OffsetDateTime fallback)
+            throws ParseException {
+        OffsetDateTime[] array = new OffsetDateTime[n];
+        if (n > available())
+            n = available();
+        for (int i = 0; i < n; i++) {
+            array[i] = peekOffsetDateTimeAt(i, fallback);
+        }
+        return array;
+    }
+
+
+    // ----------------------------------------- GROUP: OffsetTime -----------------------------------------
+
+    /**
+     * Shift out the head token as a OffsetTime.
+     * <p>
+     * If the head token isn't OffsetTime, shift doesn't happen and <code>null</code> is returned.
+     *
+     * @return <code>null</code> If no more token, or the head token isn't a OffsetTime number.
+     */
+    default OffsetTime shiftOffsetTime()
+            throws ParseException {
+        OffsetTime n = peekOffsetTime();
+        if (n != null)
+            shift();
+        return n;
+    }
+
+    default OffsetTime shiftOffsetTime(OffsetTime fallback) {
+        if (available() == 0)
+            return fallback;
+        OffsetTime n = peekOffsetTime(fallback);
+        shift();
+        return n;
+    }
+
+    /**
+     * Peek at the head token as OffsetTime.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default OffsetTime peekOffsetTime()
+            throws ParseException {
+        return peekOffsetTimeAt(0);
+    }
+
+    default OffsetTime peekOffsetTime(OffsetTime fallback) {
+        return peekOffsetTimeAt(0, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as OffsetTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    OffsetTime peekOffsetTimeAt(int offset)
+            throws ParseException;
+
+    /**
+     * Peek at the n-th token from the head as OffsetTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    OffsetTime peekOffsetTimeAt(int offset, OffsetTime fallback);
+
+    @NotNull
+    default OffsetTime[] peekOffsetTimes(int n)
+            throws ParseException {
+        if (n > available())
+            n = available();
+        OffsetTime[] array = new OffsetTime[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = peekOffsetTimeAt(i);
+        }
+        return array;
+    }
+
+    @NotNull
+    default OffsetTime[] peekOffsetTimes(int n, OffsetTime fallback)
+            throws ParseException {
+        OffsetTime[] array = new OffsetTime[n];
+        if (n > available())
+            n = available();
+        for (int i = 0; i < n; i++) {
+            array[i] = peekOffsetTimeAt(i, fallback);
+        }
+        return array;
+    }
+
+
+    // ----------------------------------------- GROUP: LocalDateTime -----------------------------------------
+
+    /**
+     * Shift out the head token as a LocalDateTime.
+     * <p>
+     * If the head token isn't LocalDateTime, shift doesn't happen and <code>null</code> is returned.
+     *
+     * @return <code>null</code> If no more token, or the head token isn't a LocalDateTime number.
+     */
+    default LocalDateTime shiftLocalDateTime()
+            throws ParseException {
+        LocalDateTime n = peekLocalDateTime();
+        if (n != null)
+            shift();
+        return n;
+    }
+
+    default LocalDateTime shiftLocalDateTime(LocalDateTime fallback) {
+        if (available() == 0)
+            return fallback;
+        LocalDateTime n = peekLocalDateTime(fallback);
+        shift();
+        return n;
+    }
+
+    /**
+     * Peek at the head token as LocalDateTime.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default LocalDateTime peekLocalDateTime()
+            throws ParseException {
+        return peekLocalDateTimeAt(0);
+    }
+
+    default LocalDateTime peekLocalDateTime(LocalDateTime fallback) {
+        return peekLocalDateTimeAt(0, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as LocalDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    LocalDateTime peekLocalDateTimeAt(int offset)
+            throws ParseException;
+
+    /**
+     * Peek at the n-th token from the head as LocalDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    LocalDateTime peekLocalDateTimeAt(int offset, LocalDateTime fallback);
+
+    @NotNull
+    default LocalDateTime[] peekLocalDateTimes(int n)
+            throws ParseException {
+        if (n > available())
+            n = available();
+        LocalDateTime[] array = new LocalDateTime[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = peekLocalDateTimeAt(i);
+        }
+        return array;
+    }
+
+    @NotNull
+    default LocalDateTime[] peekLocalDateTimes(int n, LocalDateTime fallback)
+            throws ParseException {
+        LocalDateTime[] array = new LocalDateTime[n];
+        if (n > available())
+            n = available();
+        for (int i = 0; i < n; i++) {
+            array[i] = peekLocalDateTimeAt(i, fallback);
+        }
+        return array;
+    }
+
+
+    // ----------------------------------------- GROUP: LocalDate -----------------------------------------
+
+    /**
+     * Shift out the head token as a LocalDate.
+     * <p>
+     * If the head token isn't LocalDate, shift doesn't happen and <code>null</code> is returned.
+     *
+     * @return <code>null</code> If no more token, or the head token isn't a LocalDate number.
+     */
+    default LocalDate shiftLocalDate()
+            throws ParseException {
+        LocalDate n = peekLocalDate();
+        if (n != null)
+            shift();
+        return n;
+    }
+
+    default LocalDate shiftLocalDate(LocalDate fallback) {
+        if (available() == 0)
+            return fallback;
+        LocalDate n = peekLocalDate(fallback);
+        shift();
+        return n;
+    }
+
+    /**
+     * Peek at the head token as LocalDate.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default LocalDate peekLocalDate()
+            throws ParseException {
+        return peekLocalDateAt(0);
+    }
+
+    default LocalDate peekLocalDate(LocalDate fallback) {
+        return peekLocalDateAt(0, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as LocalDate.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    LocalDate peekLocalDateAt(int offset)
+            throws ParseException;
+
+    /**
+     * Peek at the n-th token from the head as LocalDate.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    LocalDate peekLocalDateAt(int offset, LocalDate fallback);
+
+    @NotNull
+    default LocalDate[] peekLocalDates(int n)
+            throws ParseException {
+        if (n > available())
+            n = available();
+        LocalDate[] array = new LocalDate[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = peekLocalDateAt(i);
+        }
+        return array;
+    }
+
+    @NotNull
+    default LocalDate[] peekLocalDates(int n, LocalDate fallback)
+            throws ParseException {
+        LocalDate[] array = new LocalDate[n];
+        if (n > available())
+            n = available();
+        for (int i = 0; i < n; i++) {
+            array[i] = peekLocalDateAt(i, fallback);
+        }
+        return array;
+    }
+
+
+    // ----------------------------------------- GROUP: LocalTime -----------------------------------------
+
+    /**
+     * Shift out the head token as a LocalTime.
+     * <p>
+     * If the head token isn't LocalTime, shift doesn't happen and <code>null</code> is returned.
+     *
+     * @return <code>null</code> If no more token, or the head token isn't a LocalTime number.
+     */
+    default LocalTime shiftLocalTime()
+            throws ParseException {
+        LocalTime n = peekLocalTime();
+        if (n != null)
+            shift();
+        return n;
+    }
+
+    default LocalTime shiftLocalTime(LocalTime fallback) {
+        if (available() == 0)
+            return fallback;
+        LocalTime n = peekLocalTime(fallback);
+        shift();
+        return n;
+    }
+
+    /**
+     * Peek at the head token as LocalTime.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default LocalTime peekLocalTime()
+            throws ParseException {
+        return peekLocalTimeAt(0);
+    }
+
+    default LocalTime peekLocalTime(LocalTime fallback) {
+        return peekLocalTimeAt(0, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as LocalTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    LocalTime peekLocalTimeAt(int offset)
+            throws ParseException;
+
+    /**
+     * Peek at the n-th token from the head as LocalTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    LocalTime peekLocalTimeAt(int offset, LocalTime fallback);
+
+    @NotNull
+    default LocalTime[] peekLocalTimes(int n)
+            throws ParseException {
+        if (n > available())
+            n = available();
+        LocalTime[] array = new LocalTime[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = peekLocalTimeAt(i);
+        }
+        return array;
+    }
+
+    @NotNull
+    default LocalTime[] peekLocalTimes(int n, LocalTime fallback)
+            throws ParseException {
+        LocalTime[] array = new LocalTime[n];
+        if (n > available())
+            n = available();
+        for (int i = 0; i < n; i++) {
+            array[i] = peekLocalTimeAt(i, fallback);
+        }
+        return array;
+    }
+
+
+    // ----------------------------------------- GROUP: Instant -----------------------------------------
+
+    /**
+     * Shift out the head token as a Instant.
+     * <p>
+     * If the head token isn't Instant, shift doesn't happen and <code>null</code> is returned.
+     *
+     * @return <code>null</code> If no more token, or the head token isn't a Instant number.
+     */
+    default Instant shiftInstant()
+            throws ParseException {
+        Instant n = peekInstant();
+        if (n != null)
+            shift();
+        return n;
+    }
+
+    default Instant shiftInstant(Instant fallback) {
+        if (available() == 0)
+            return fallback;
+        Instant n = peekInstant(fallback);
+        shift();
+        return n;
+    }
+
+    /**
+     * Peek at the head token as Instant.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default Instant peekInstant()
+            throws ParseException {
+        return peekInstantAt(0);
+    }
+
+    default Instant peekInstant(Instant fallback) {
+        return peekInstantAt(0, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as Instant.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    Instant peekInstantAt(int offset)
+            throws ParseException;
+
+    /**
+     * Peek at the n-th token from the head as Instant.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    Instant peekInstantAt(int offset, Instant fallback);
+
+    @NotNull
+    default Instant[] peekInstants(int n)
+            throws ParseException {
+        if (n > available())
+            n = available();
+        Instant[] array = new Instant[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = peekInstantAt(i);
+        }
+        return array;
+    }
+
+    @NotNull
+    default Instant[] peekInstants(int n, Instant fallback)
+            throws ParseException {
+        Instant[] array = new Instant[n];
+        if (n > available())
+            n = available();
+        for (int i = 0; i < n; i++) {
+            array[i] = peekInstantAt(i, fallback);
+        }
+        return array;
+    }
+
 
 }

@@ -1,6 +1,16 @@
 package net.bodz.bas.repr.path;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 
 import net.bodz.bas.err.ParseException;
 
@@ -44,6 +54,8 @@ public abstract class AbstractBasicTokenQueue
         this.stopped = true;
     }
 
+    public abstract int position();
+
     @Override
     public String getRemainingPath() {
         int remaining = available();
@@ -57,6 +69,80 @@ public abstract class AbstractBasicTokenQueue
             buf.append(peekAt(i));
         }
         return buf.toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder buf = new StringBuilder();
+        int index = position();
+        for (int i = 0; i < index; i++) {
+            if (i != 0)
+                buf.append('/');
+            buf.append(get(i));
+        }
+
+        // "a/b <---> /c"
+        buf.append(" → ");
+
+        int len = available();
+        for (int i = index; i < len; i++) {
+            buf.append('/');
+            buf.append(get(i));
+        }
+        return buf.toString();
+    }
+
+    // ----------------------------------------- GROUP: CHAR -----------------------------------------
+
+    @Override
+    public char getChar(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseChar(token);
+    }
+
+    @Override
+    public char getChar(int index, char fallback) {
+        String token = get(index);
+        if (!isCharLike(token))
+            return fallback;
+        try {
+            return parseChar(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public Character peekCharAt(int offset)
+            throws ParseException {
+        String token = peekAt(offset);
+        return parseChar(token);
+    }
+
+    @Override
+    public char peekCharAt(int offset, char fallback) {
+        String token = peekAt(offset);
+        if (token == null)
+            return fallback;
+        if (!isCharLike(token))
+            return fallback;
+        try {
+            return parseChar(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    static boolean isCharLike(String str) {
+        return !str.isEmpty();
+    }
+
+    static char parseChar(String str)
+            throws ParseException {
+        if (!isCharLike(str))
+            throw new ParseException("Not a char: " + str);
+        return str.charAt(0);
     }
 
     // ----------------------------------------- GROUP: BYTE -----------------------------------------
@@ -529,8 +615,8 @@ public abstract class AbstractBasicTokenQueue
         if (!isBooleanLike(token))
             return fallback;
         try {
-            return Boolean.parseBoolean(token);
-        } catch (NumberFormatException e) {
+            return parseBoolean(token);
+        } catch (ParseException e) {
             return fallback;
         }
     }
@@ -557,7 +643,7 @@ public abstract class AbstractBasicTokenQueue
 
     static boolean parseBoolean(String str)
             throws ParseException {
-        switch (str) {
+        switch (str.toLowerCase()) {
             case "true":
             case "yes":
             case "on":
@@ -627,29 +713,571 @@ public abstract class AbstractBasicTokenQueue
         }
     }
 
-    // ----------------------------------------- GROUP end -----------------------------------------
-
-    public abstract int position();
+    // ----------------------------------------- GROUP: BigInteger -----------------------------------------
 
     @Override
-    public String toString() {
-        StringBuilder buf = new StringBuilder();
-        int index = position();
-        for (int i = 0; i < index; i++) {
-            if (i != 0)
-                buf.append('/');
-            buf.append(get(i));
-        }
+    public BigInteger getBigInteger(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseBigInteger(token);
+    }
 
-        // "a/b <---> /c"
-        buf.append(" → ");
-
-        int len = available();
-        for (int i = index; i < len; i++) {
-            buf.append('/');
-            buf.append(get(i));
+    @Override
+    public BigInteger getBigInteger(int index, BigInteger fallback) {
+        String token = get(index);
+        if (!isBigIntegerLike(token))
+            return fallback;
+        try {
+            return parseBigInteger(token);
+        } catch (ParseException e) {
+            return fallback;
         }
-        return buf.toString();
+    }
+
+    @Override
+    public BigInteger peekBigIntegerAt(int offset)
+            throws ParseException {
+        String token = peekAt(offset);
+        return parseBigInteger(token);
+    }
+
+    @Override
+    public BigInteger peekBigIntegerAt(int offset, BigInteger fallback) {
+        String token = peekAt(offset);
+        if (token == null)
+            return fallback;
+        if (!isBigIntegerLike(token))
+            return fallback;
+        try {
+            return parseBigInteger(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    static boolean isBigIntegerLike(String str) {
+        int len = str.length();
+        if (len == 0)
+            return false;
+        int i = 0;
+        if (str.charAt(i) == '-')
+            i++;
+        // integer part
+        for (; i < len; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9')
+                return false;
+        }
+        return true;
+    }
+
+    static BigInteger parseBigInteger(String str)
+            throws ParseException {
+        if (str.isEmpty())
+            return null;
+        if (!isBigIntegerLike(str))
+            throw new ParseException("Not a BigInteger number: " + str);
+        try {
+            return new BigInteger(str);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Not a BigInteger number: " + str, e);
+        }
+    }
+
+    // ----------------------------------------- GROUP: BigDecimal -----------------------------------------
+
+    @Override
+    public BigDecimal getBigDecimal(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseBigDecimal(token);
+    }
+
+    @Override
+    public BigDecimal getBigDecimal(int index, BigDecimal fallback) {
+        String token = get(index);
+        if (!isBigDecimalLike(token))
+            return fallback;
+        try {
+            return parseBigDecimal(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public BigDecimal peekBigDecimalAt(int offset)
+            throws ParseException {
+        String token = peekAt(offset);
+        return parseBigDecimal(token);
+    }
+
+    @Override
+    public BigDecimal peekBigDecimalAt(int offset, BigDecimal fallback) {
+        String token = peekAt(offset);
+        if (token == null)
+            return fallback;
+        if (!isBigDecimalLike(token))
+            return fallback;
+        try {
+            return parseBigDecimal(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    static boolean isBigDecimalLike(String str) {
+        int len = str.length();
+        if (len == 0)
+            return false;
+        int i = 0;
+        if (str.charAt(i) == '-')
+            i++;
+        // integer part
+        for (; i < len; i++) {
+            char c = str.charAt(i);
+            if (c == '.') {
+                i++;
+                break;
+            }
+            if (c < '0' || c > '9')
+                return false;
+        }
+        // decimal part
+        for (; i < len; i++) {
+            char c = str.charAt(i);
+            if (c == '.')
+                break;
+            if (c < '0' || c > '9')
+                return false;
+        }
+        return true;
+    }
+
+    static BigDecimal parseBigDecimal(String str)
+            throws ParseException {
+        if (str.isEmpty())
+            return null;
+        if (!isBigDecimalLike(str))
+            throw new ParseException("Not a BigDecimal number: " + str);
+        try {
+            return new BigDecimal(str);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Not a BigDecimal number: " + str, e);
+        }
+    }
+
+    // ----------------------------------------- GROUP: ZonedDateTime -----------------------------------------
+
+    @Override
+    public ZonedDateTime getZonedDateTime(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseZonedDateTime(token);
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(int index, ZonedDateTime fallback) {
+        String token = get(index);
+        if (!isZonedDateTimeLike(token))
+            return fallback;
+        try {
+            return parseZonedDateTime(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public ZonedDateTime peekZonedDateTimeAt(int offset)
+            throws ParseException {
+        String token = peekAt(offset);
+        return parseZonedDateTime(token);
+    }
+
+    @Override
+    public ZonedDateTime peekZonedDateTimeAt(int offset, ZonedDateTime fallback) {
+        String token = peekAt(offset);
+        if (token == null)
+            return fallback;
+        if (!isZonedDateTimeLike(token))
+            return fallback;
+        try {
+            return parseZonedDateTime(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    static boolean isZonedDateTimeLike(String str) {
+        return true;
+    }
+
+    static ZonedDateTime parseZonedDateTime(String str)
+            throws ParseException {
+        if (str.isEmpty())
+            return null;
+        if (!isZonedDateTimeLike(str))
+            throw new ParseException("Not a ZonedDateTime temporal: " + str);
+        try {
+            return ZonedDateTime.parse(str);
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Not a ZonedDateTime temporal: " + str, e);
+        }
+    }
+
+    // ----------------------------------------- GROUP: OffsetDateTime -----------------------------------------
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseOffsetDateTime(token);
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(int index, OffsetDateTime fallback) {
+        String token = get(index);
+        if (!isOffsetDateTimeLike(token))
+            return fallback;
+        try {
+            return parseOffsetDateTime(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public OffsetDateTime peekOffsetDateTimeAt(int offset)
+            throws ParseException {
+        String token = peekAt(offset);
+        return parseOffsetDateTime(token);
+    }
+
+    @Override
+    public OffsetDateTime peekOffsetDateTimeAt(int offset, OffsetDateTime fallback) {
+        String token = peekAt(offset);
+        if (token == null)
+            return fallback;
+        if (!isOffsetDateTimeLike(token))
+            return fallback;
+        try {
+            return parseOffsetDateTime(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    static boolean isOffsetDateTimeLike(String str) {
+        return true;
+    }
+
+    static OffsetDateTime parseOffsetDateTime(String str)
+            throws ParseException {
+        if (str.isEmpty())
+            return null;
+        if (!isOffsetDateTimeLike(str))
+            throw new ParseException("Not a OffsetDateTime temporal: " + str);
+        try {
+            return OffsetDateTime.parse(str);
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Not a OffsetDateTime temporal: " + str, e);
+        }
+    }
+
+    // ----------------------------------------- GROUP: OffsetTime -----------------------------------------
+
+    @Override
+    public OffsetTime getOffsetTime(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseOffsetTime(token);
+    }
+
+    @Override
+    public OffsetTime getOffsetTime(int index, OffsetTime fallback) {
+        String token = get(index);
+        if (!isOffsetTimeLike(token))
+            return fallback;
+        try {
+            return parseOffsetTime(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public OffsetTime peekOffsetTimeAt(int offset)
+            throws ParseException {
+        String token = peekAt(offset);
+        return parseOffsetTime(token);
+    }
+
+    @Override
+    public OffsetTime peekOffsetTimeAt(int offset, OffsetTime fallback) {
+        String token = peekAt(offset);
+        if (token == null)
+            return fallback;
+        if (!isOffsetTimeLike(token))
+            return fallback;
+        try {
+            return parseOffsetTime(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    static boolean isOffsetTimeLike(String str) {
+        return true;
+    }
+
+    static OffsetTime parseOffsetTime(String str)
+            throws ParseException {
+        if (str.isEmpty())
+            return null;
+        if (!isOffsetTimeLike(str))
+            throw new ParseException("Not a OffsetTime temporal: " + str);
+        try {
+            return OffsetTime.parse(str);
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Not a OffsetTime temporal: " + str, e);
+        }
+    }
+
+    // ----------------------------------------- GROUP: LocalDateTime -----------------------------------------
+
+    @Override
+    public LocalDateTime getLocalDateTime(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseLocalDateTime(token);
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(int index, LocalDateTime fallback) {
+        String token = get(index);
+        if (!isLocalDateTimeLike(token))
+            return fallback;
+        try {
+            return parseLocalDateTime(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public LocalDateTime peekLocalDateTimeAt(int offset)
+            throws ParseException {
+        String token = peekAt(offset);
+        return parseLocalDateTime(token);
+    }
+
+    @Override
+    public LocalDateTime peekLocalDateTimeAt(int offset, LocalDateTime fallback) {
+        String token = peekAt(offset);
+        if (token == null)
+            return fallback;
+        if (!isLocalDateTimeLike(token))
+            return fallback;
+        try {
+            return LocalDateTime.parse(token);
+        } catch (DateTimeParseException e) {
+            return fallback;
+        }
+    }
+
+    static boolean isLocalDateTimeLike(String str) {
+        return true;
+    }
+
+    static LocalDateTime parseLocalDateTime(String str)
+            throws ParseException {
+        if (str.isEmpty())
+            return null;
+        if (!isLocalDateTimeLike(str))
+            throw new ParseException("Not a LocalDateTime temporal: " + str);
+        try {
+            return LocalDateTime.parse(str);
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Not a LocalDateTime temporal: " + str, e);
+        }
+    }
+
+    // ----------------------------------------- GROUP: LocalDate -----------------------------------------
+
+    @Override
+    public LocalDate getLocalDate(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseLocalDate(token);
+    }
+
+    @Override
+    public LocalDate getLocalDate(int index, LocalDate fallback) {
+        String token = get(index);
+        if (!isLocalDateLike(token))
+            return fallback;
+        try {
+            return parseLocalDate(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public LocalDate peekLocalDateAt(int offset)
+            throws ParseException {
+        String token = peekAt(offset);
+        return parseLocalDate(token);
+    }
+
+    @Override
+    public LocalDate peekLocalDateAt(int offset, LocalDate fallback) {
+        String token = peekAt(offset);
+        if (token == null)
+            return fallback;
+        if (!isLocalDateLike(token))
+            return fallback;
+        try {
+            return parseLocalDate(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    static boolean isLocalDateLike(String str) {
+        return true;
+    }
+
+    static LocalDate parseLocalDate(String str)
+            throws ParseException {
+        if (str.isEmpty())
+            return null;
+        if (!isLocalDateLike(str))
+            throw new ParseException("Not a LocalDate temporal: " + str);
+        try {
+            return LocalDate.parse(str);
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Not a LocalDate temporal: " + str, e);
+        }
+    }
+
+    // ----------------------------------------- GROUP: LocalTime -----------------------------------------
+
+    @Override
+    public LocalTime getLocalTime(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseLocalTime(token);
+    }
+
+    @Override
+    public LocalTime getLocalTime(int index, LocalTime fallback) {
+        String token = get(index);
+        if (!isLocalTimeLike(token))
+            return fallback;
+        try {
+            return parseLocalTime(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public LocalTime peekLocalTimeAt(int offset)
+            throws ParseException {
+        String token = peekAt(offset);
+        return parseLocalTime(token);
+    }
+
+    @Override
+    public LocalTime peekLocalTimeAt(int offset, LocalTime fallback) {
+        String token = peekAt(offset);
+        if (token == null)
+            return fallback;
+        if (!isLocalTimeLike(token))
+            return fallback;
+        try {
+            return parseLocalTime(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    static boolean isLocalTimeLike(String str) {
+        return true;
+    }
+
+    static LocalTime parseLocalTime(String str)
+            throws ParseException {
+        if (str.isEmpty())
+            return null;
+        if (!isLocalTimeLike(str))
+            throw new ParseException("Not a LocalTime temporal: " + str);
+        try {
+            return LocalTime.parse(str);
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Not a LocalTime temporal: " + str, e);
+        }
+    }
+
+    // ----------------------------------------- GROUP: Instant -----------------------------------------
+
+    @Override
+    public Instant getInstant(int index)
+            throws ParseException {
+        String token = get(index);
+        return parseInstant(token);
+    }
+
+    @Override
+    public Instant getInstant(int index, Instant fallback) {
+        String token = get(index);
+        if (!isInstantLike(token))
+            return fallback;
+        try {
+            return parseInstant(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    @Override
+    public Instant peekInstantAt(int offset)
+            throws ParseException {
+        String token = peekAt(offset);
+        return parseInstant(token);
+    }
+
+    @Override
+    public Instant peekInstantAt(int offset, Instant fallback) {
+        String token = peekAt(offset);
+        if (token == null)
+            return fallback;
+        if (!isInstantLike(token))
+            return fallback;
+        try {
+            return parseInstant(token);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    static boolean isInstantLike(String str) {
+        return true;
+    }
+
+    static Instant parseInstant(String str)
+            throws ParseException {
+        if (str.isEmpty())
+            return null;
+        if (!isInstantLike(str))
+            throw new ParseException("Not a Instant temporal: " + str);
+        try {
+            return Instant.parse(str);
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Not a Instant temporal: " + str, e);
+        }
     }
 
 }

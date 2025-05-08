@@ -1,5 +1,15 @@
 package net.bodz.bas.repr.path;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZonedDateTime;
+
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
 
@@ -32,6 +42,20 @@ public interface ITokenArray {
     default String getLast() {
         return get(size() - 1);
     }
+
+    @NotNull
+    default String[] toArray() {
+        int n = size();
+        String[] array = new String[n];
+        for (int i = 0; i < n; i++)
+            array[i] = get(i);
+        return array;
+    }
+
+    char getChar(int index)
+            throws ParseException;
+
+    char getChar(int index, char fallback);
 
     byte getByte(int index)
             throws ParseException;
@@ -73,13 +97,49 @@ public interface ITokenArray {
 
     <E extends Enum<E>> E get(Class<E> enumType, int index, E fallback);
 
-    @NotNull
-    default String[] toArray() {
-        int n = size();
-        String[] array = new String[n];
-        for (int i = 0; i < n; i++)
-            array[i] = get(i);
-        return array;
-    }
+    BigInteger getBigInteger(int index)
+            throws ParseException;
+
+    BigInteger getBigInteger(int index, BigInteger fallback);
+
+    BigDecimal getBigDecimal(int index)
+            throws ParseException;
+
+    BigDecimal getBigDecimal(int index, BigDecimal fallback);
+
+    ZonedDateTime getZonedDateTime(int index)
+            throws ParseException;
+
+    ZonedDateTime getZonedDateTime(int index, ZonedDateTime fallback);
+
+    OffsetDateTime getOffsetDateTime(int index)
+            throws ParseException;
+
+    OffsetDateTime getOffsetDateTime(int index, OffsetDateTime fallback);
+
+    OffsetTime getOffsetTime(int index)
+            throws ParseException;
+
+    OffsetTime getOffsetTime(int index, OffsetTime fallback);
+
+    LocalDateTime getLocalDateTime(int index)
+            throws ParseException;
+
+    LocalDateTime getLocalDateTime(int index, LocalDateTime fallback);
+
+    LocalDate getLocalDate(int index)
+            throws ParseException;
+
+    LocalDate getLocalDate(int index, LocalDate fallback);
+
+    LocalTime getLocalTime(int index)
+            throws ParseException;
+
+    LocalTime getLocalTime(int index, LocalTime fallback);
+
+    Instant getInstant(int index)
+            throws ParseException;
+
+    Instant getInstant(int index, Instant fallback);
 
 }
