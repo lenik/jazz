@@ -49,7 +49,9 @@ public class ClassFinder
         ResourceScanner scanner = new ResourceScanner(options);
         ContainerItemList resources = scanner.scanResources(classLoader, packageDir);
         for (String relativePath : resources.paths()) {
-            if (! relativePath.endsWith(".class"))
+            if (relativePath.startsWith("META-INF"))
+                continue;
+            if (!relativePath.endsWith(".class"))
                 continue;
 
             String qName = relativePath.substring(0, relativePath.length() - 6).replace('/', '.');

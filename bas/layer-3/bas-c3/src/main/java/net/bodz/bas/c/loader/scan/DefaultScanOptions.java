@@ -38,8 +38,8 @@ public class DefaultScanOptions
     @Override
     public boolean acceptJarPath(File jar) {
         if (excludeJarPaths)
-            return true;
-        return false;
+            return false;
+        return true;
     }
 
     @Override
