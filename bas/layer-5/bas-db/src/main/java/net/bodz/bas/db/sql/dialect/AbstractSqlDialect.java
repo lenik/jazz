@@ -175,9 +175,7 @@ public abstract class AbstractSqlDialect
 
     @Override
     public String qLocalTime(LocalTime localTime) {
-        DateTimeSpec spec = timeSpec;
-        String str = spec.format(localTime);
-        return toDate(str, spec.sqlSpec);
+        return qString(localTime.toString());
     }
 
 }
