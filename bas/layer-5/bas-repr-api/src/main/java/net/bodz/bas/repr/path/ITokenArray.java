@@ -52,6 +52,12 @@ public interface ITokenArray {
         return array;
     }
 
+    @NotNull
+    String getString(int index)
+            throws ParseException;
+
+    String getString(int index, String fallback);
+
     char getChar(int index)
             throws ParseException;
 

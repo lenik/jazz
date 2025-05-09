@@ -28,4 +28,34 @@ public class Parsers {
         return tokens;
     }
 
+    public static String datePart(String str) {
+        int sp = str.indexOf(' ');
+        if (sp != -1)
+            if (str.indexOf(':', sp + 1) != -1)
+                str = str.substring(0, sp);
+
+        int pos = str.indexOf('T');
+        if (pos != -1)
+            str = str.substring(0, pos);
+
+        return str;
+    }
+
+    public static String timePart(String str) {
+        int sp = str.indexOf(' ');
+        if (sp != -1) {
+            if (str.indexOf(':', sp) != -1)
+                str = str.substring(sp + 1);
+        }
+
+        int pos = str.indexOf('T');
+        if (pos != -1) {
+            String suffix = str.substring(pos);
+            boolean weekday = suffix.startsWith("Tue") || suffix.startsWith("Thu") || suffix.startsWith("TUE") || suffix.startsWith("THU");
+            if (!weekday)
+                str = str.substring(0, pos + 1);
+        }
+        return str;
+    }
+
 }

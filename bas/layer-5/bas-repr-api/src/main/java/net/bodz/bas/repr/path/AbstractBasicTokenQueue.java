@@ -13,6 +13,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class AbstractBasicTokenQueue
         implements IBasicTokenQueue,
@@ -90,6 +91,35 @@ public abstract class AbstractBasicTokenQueue
             buf.append(get(i));
         }
         return buf.toString();
+    }
+
+    // ----------------------------------------- GROUP: STRING -----------------------------------------
+
+    @NotNull
+    @Override
+    public String getString(int index)
+            throws ParseException {
+        String token = get(index);
+        return token;
+    }
+
+    @Override
+    public String getString(int index, String fallback) {
+        String token = get(index);
+        return token != null ? token : fallback;
+    }
+
+    @Override
+    public String peekStringAt(int offset)
+            throws ParseException {
+        String token = peekAt(offset);
+        return token;
+    }
+
+    @Override
+    public String peekStringAt(int offset, String fallback) {
+        String token = peekAt(offset);
+        return token != null ? token : fallback;
     }
 
     // ----------------------------------------- GROUP: CHAR -----------------------------------------
@@ -1037,6 +1067,8 @@ public abstract class AbstractBasicTokenQueue
             return null;
         if (!isOffsetTimeLike(str))
             throw new ParseException("Not a OffsetTime temporal: " + str);
+
+        str = Parsers.timePart(str);
         try {
             return OffsetTime.parse(str);
         } catch (DateTimeParseException e) {
@@ -1155,6 +1187,8 @@ public abstract class AbstractBasicTokenQueue
             return null;
         if (!isLocalDateLike(str))
             throw new ParseException("Not a LocalDate temporal: " + str);
+
+        str = Parsers.datePart(str);
         try {
             return LocalDate.parse(str);
         } catch (DateTimeParseException e) {
@@ -1214,6 +1248,8 @@ public abstract class AbstractBasicTokenQueue
             return null;
         if (!isLocalTimeLike(str))
             throw new ParseException("Not a LocalTime temporal: " + str);
+
+        str = Parsers.timePart(str);
         try {
             return LocalTime.parse(str);
         } catch (DateTimeParseException e) {

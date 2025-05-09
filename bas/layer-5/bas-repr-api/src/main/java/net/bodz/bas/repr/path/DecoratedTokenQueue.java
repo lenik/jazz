@@ -137,6 +137,67 @@ public abstract class DecoratedTokenQueue
         return getWrapped().peekAt(offset);
     }
 
+    // ----------------------------------------- GROUP: STRING -----------------------------------------
+
+    @NotNull
+    @Override
+    public String getString(int index)
+            throws ParseException {
+        return getWrapped().getString(index);
+    }
+
+    @Override
+    public String getString(int index, String fallback) {
+        return getWrapped().getString(index, fallback);
+    }
+
+    @Override
+    public String shiftString()
+            throws ParseException {
+        return getWrapped().shiftString();
+    }
+
+    @Override
+    public String shiftString(String fallback) {
+        return getWrapped().shiftString(fallback);
+    }
+
+    @Override
+    public String peekString()
+            throws ParseException {
+        return getWrapped().peekString();
+    }
+
+    @Override
+    public String peekString(String fallback) {
+        return getWrapped().peekString(fallback);
+    }
+
+    @Override
+    public String peekStringAt(int offset)
+            throws ParseException {
+        return getWrapped().peekStringAt(offset);
+    }
+
+    @Override
+    public String peekStringAt(int offset, String fallback) {
+        return getWrapped().peekStringAt(offset, fallback);
+    }
+
+    @NotNull
+    @Override
+    public String[] peekStrings(int n)
+            throws ParseException {
+        return getWrapped().peekStrings(n);
+    }
+
+    @NotNull
+    @Override
+    public String[] peekStrings(int n, String fallback)
+            throws ParseException {
+        return getWrapped().peekStrings(n, fallback);
+    }
+
     // ----------------------------------------- GROUP: CHAR -----------------------------------------
 
     @Override

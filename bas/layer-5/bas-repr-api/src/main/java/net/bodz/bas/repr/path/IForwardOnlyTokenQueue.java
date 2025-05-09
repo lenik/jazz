@@ -135,6 +135,85 @@ public interface IForwardOnlyTokenQueue
         return token != null ? token : defaultValue;
     }
 
+    // ----------------------------------------- GROUP: STRING -----------------------------------------
+
+    /**
+     * Shift out the head token as a string.
+     * <p>
+     * If the head token isn't string, shift doesn't happen and <code>null</code> is returned.
+     *
+     * @return <code>null</code> If no more token, or the head token isn't a string number.
+     */
+    default String shiftString()
+            throws ParseException {
+        String n = peekString();
+        if (n != null)
+            shift();
+        return n;
+    }
+
+    default String shiftString(String fallback) {
+        if (available() == 0)
+            return fallback;
+        String n = peekString(fallback);
+        shift();
+        return n;
+    }
+
+    /**
+     * Peek at the head token as string.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default String peekString()
+            throws ParseException {
+        return peekStringAt(0);
+    }
+
+    default String peekString(String fallback) {
+        return peekStringAt(0, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as string.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    String peekStringAt(int offset)
+            throws ParseException;
+
+    /**
+     * Peek at the n-th token from the head as string.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    String peekStringAt(int offset, String fallback);
+
+    @NotNull
+    default String[] peekStrings(int n)
+            throws ParseException {
+        if (n > available())
+            n = available();
+        String[] array = new String[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = peekStringAt(i);
+        }
+        return array;
+    }
+
+    @NotNull
+    default String[] peekStrings(int n, @NotNull String fallback)
+            throws ParseException {
+        String[] array = new String[n];
+        if (n > available())
+            n = available();
+        for (int i = 0; i < n; i++) {
+            array[i] = peekStringAt(i, fallback);
+        }
+        return array;
+    }
+
     // ----------------------------------------- GROUP: CHAR -----------------------------------------
 
     /**
