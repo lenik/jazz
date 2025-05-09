@@ -28,6 +28,7 @@ net.bodz.bas.t.variant.conv.LocalDateVarConverter
 net.bodz.bas.t.variant.conv.LocalTimeVarConverter
 net.bodz.bas.t.variant.conv.LongVarConverter
 net.bodz.bas.t.variant.conv.OffsetDateTimeVarConverter
+net.bodz.bas.t.variant.conv.OffsetTimeVarConverter
 net.bodz.bas.t.variant.conv.ShortVarConverter
 net.bodz.bas.t.variant.conv.SqlDateVarConverter
 net.bodz.bas.t.variant.conv.StringVarConverter

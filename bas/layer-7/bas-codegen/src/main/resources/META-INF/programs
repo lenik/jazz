@@ -1,0 +1,6 @@
+main codegen = net.bodz.bas.codegen.java.ToCodegen
+main fixbatbb = net.bodz.bas.codegen.win32.Fix_BatBB
+main ioforms = net.bodz.bas.codegen.java.ioforms.IOFormsGenerator
+main lib-updater = net.bodz.bas.codegen.maven.LibUpdater
+main tcoll = net.bodz.bas.codegen.java.TypeCollectorApp
+main tsapi = net.bodz.bas.codegen.ts.TsApiGen

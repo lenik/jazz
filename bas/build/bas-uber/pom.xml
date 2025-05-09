@@ -53,6 +53,18 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-codegen</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-codegen</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-dotnet</artifactId>
             <version>${project.version}</version>
         </dependency>

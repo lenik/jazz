@@ -1,0 +1,6 @@
+net.bodz.bas.codegen.java.ToCodegen
+net.bodz.bas.codegen.java.TypeCollectorApp
+net.bodz.bas.codegen.java.ioforms.IOFormsGenerator
+net.bodz.bas.codegen.maven.LibUpdater
+net.bodz.bas.codegen.ts.TsApiGen
+net.bodz.bas.codegen.win32.Fix_BatBB
