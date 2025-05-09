@@ -848,421 +848,176 @@ public abstract class DecoratedTokenQueue
     // ----------------------------------------- GROUP: ZonedDateTime -----------------------------------------
 
     @Override
-    public ZonedDateTime getZonedDateTime(int index)
+    public ZonedDateTime getZonedDateTime(int index, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().getZonedDateTime(index);
     }
 
     @Override
-    public ZonedDateTime getZonedDateTime(int index, ZonedDateTime fallback) {
+    public ZonedDateTime getZonedDateTime(int index, IDateTimeParseOptions options, ZonedDateTime fallback) {
         return getWrapped().getZonedDateTime(index, fallback);
     }
 
-    @Override
-    public ZonedDateTime shiftZonedDateTime()
-            throws ParseException {
-        return getWrapped().shiftZonedDateTime();
-    }
 
     @Override
-    public ZonedDateTime shiftZonedDateTime(ZonedDateTime fallback) {
-        return getWrapped().shiftZonedDateTime(fallback);
-    }
-
-    @Override
-    public ZonedDateTime peekZonedDateTime()
-            throws ParseException {
-        return getWrapped().peekZonedDateTime();
-    }
-
-    @Override
-    public ZonedDateTime peekZonedDateTime(ZonedDateTime fallback) {
-        return getWrapped().peekZonedDateTime(fallback);
-    }
-
-    @Override
-    public ZonedDateTime peekZonedDateTimeAt(int offset)
+    public ZonedDateTime peekZonedDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().peekZonedDateTimeAt(offset);
     }
 
     @Override
-    public ZonedDateTime peekZonedDateTimeAt(int offset, ZonedDateTime fallback) {
+    public ZonedDateTime peekZonedDateTimeAt(int offset, IDateTimeParseOptions options, ZonedDateTime fallback) {
         return getWrapped().peekZonedDateTimeAt(offset, fallback);
-    }
-
-    @NotNull
-    @Override
-    public ZonedDateTime[] peekZonedDateTimes(int n)
-            throws ParseException {
-        return getWrapped().peekZonedDateTimes(n);
-    }
-
-    @NotNull
-    @Override
-    public ZonedDateTime[] peekZonedDateTimes(int n, ZonedDateTime fallback)
-            throws ParseException {
-        return getWrapped().peekZonedDateTimes(n, fallback);
     }
 
     // ----------------------------------------- GROUP: OffsetDateTime -----------------------------------------
 
     @Override
-    public OffsetDateTime getOffsetDateTime(int index)
+    public OffsetDateTime getOffsetDateTime(int index, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().getOffsetDateTime(index);
     }
 
     @Override
-    public OffsetDateTime getOffsetDateTime(int index, OffsetDateTime fallback) {
+    public OffsetDateTime getOffsetDateTime(int index, IDateTimeParseOptions options, OffsetDateTime fallback) {
         return getWrapped().getOffsetDateTime(index, fallback);
     }
 
-    @Override
-    public OffsetDateTime shiftOffsetDateTime()
-            throws ParseException {
-        return getWrapped().shiftOffsetDateTime();
-    }
 
     @Override
-    public OffsetDateTime shiftOffsetDateTime(OffsetDateTime fallback) {
-        return getWrapped().shiftOffsetDateTime(fallback);
-    }
-
-    @Override
-    public OffsetDateTime peekOffsetDateTime()
-            throws ParseException {
-        return getWrapped().peekOffsetDateTime();
-    }
-
-    @Override
-    public OffsetDateTime peekOffsetDateTime(OffsetDateTime fallback) {
-        return getWrapped().peekOffsetDateTime(fallback);
-    }
-
-    @Override
-    public OffsetDateTime peekOffsetDateTimeAt(int offset)
+    public OffsetDateTime peekOffsetDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().peekOffsetDateTimeAt(offset);
     }
 
     @Override
-    public OffsetDateTime peekOffsetDateTimeAt(int offset, OffsetDateTime fallback) {
+    public OffsetDateTime peekOffsetDateTimeAt(int offset, IDateTimeParseOptions options, OffsetDateTime fallback) {
         return getWrapped().peekOffsetDateTimeAt(offset, fallback);
-    }
-
-    @NotNull
-    @Override
-    public OffsetDateTime[] peekOffsetDateTimes(int n)
-            throws ParseException {
-        return getWrapped().peekOffsetDateTimes(n);
-    }
-
-    @NotNull
-    @Override
-    public OffsetDateTime[] peekOffsetDateTimes(int n, OffsetDateTime fallback)
-            throws ParseException {
-        return getWrapped().peekOffsetDateTimes(n, fallback);
     }
 
     // ----------------------------------------- GROUP: OffsetTime -----------------------------------------
 
     @Override
-    public OffsetTime getOffsetTime(int index)
+    public OffsetTime getOffsetTime(int index, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().getOffsetTime(index);
     }
 
     @Override
-    public OffsetTime getOffsetTime(int index, OffsetTime fallback) {
+    public OffsetTime getOffsetTime(int index, IDateTimeParseOptions options, OffsetTime fallback) {
         return getWrapped().getOffsetTime(index, fallback);
     }
 
-    @Override
-    public OffsetTime shiftOffsetTime()
-            throws ParseException {
-        return getWrapped().shiftOffsetTime();
-    }
 
     @Override
-    public OffsetTime shiftOffsetTime(OffsetTime fallback) {
-        return getWrapped().shiftOffsetTime(fallback);
-    }
-
-    @Override
-    public OffsetTime peekOffsetTime()
-            throws ParseException {
-        return getWrapped().peekOffsetTime();
-    }
-
-    @Override
-    public OffsetTime peekOffsetTime(OffsetTime fallback) {
-        return getWrapped().peekOffsetTime(fallback);
-    }
-
-    @Override
-    public OffsetTime peekOffsetTimeAt(int offset)
+    public OffsetTime peekOffsetTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().peekOffsetTimeAt(offset);
     }
 
     @Override
-    public OffsetTime peekOffsetTimeAt(int offset, OffsetTime fallback) {
+    public OffsetTime peekOffsetTimeAt(int offset, IDateTimeParseOptions options, OffsetTime fallback) {
         return getWrapped().peekOffsetTimeAt(offset, fallback);
-    }
-
-    @NotNull
-    @Override
-    public OffsetTime[] peekOffsetTimes(int n)
-            throws ParseException {
-        return getWrapped().peekOffsetTimes(n);
-    }
-
-    @NotNull
-    @Override
-    public OffsetTime[] peekOffsetTimes(int n, OffsetTime fallback)
-            throws ParseException {
-        return getWrapped().peekOffsetTimes(n, fallback);
     }
 
     // ----------------------------------------- GROUP: LocalDateTime -----------------------------------------
 
     @Override
-    public LocalDateTime getLocalDateTime(int index)
+    public LocalDateTime getLocalDateTime(int index, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().getLocalDateTime(index);
     }
 
     @Override
-    public LocalDateTime getLocalDateTime(int index, LocalDateTime fallback) {
+    public LocalDateTime getLocalDateTime(int index, IDateTimeParseOptions options, LocalDateTime fallback) {
         return getWrapped().getLocalDateTime(index, fallback);
     }
 
-    @Override
-    public LocalDateTime shiftLocalDateTime()
-            throws ParseException {
-        return getWrapped().shiftLocalDateTime();
-    }
 
     @Override
-    public LocalDateTime shiftLocalDateTime(LocalDateTime fallback) {
-        return getWrapped().shiftLocalDateTime(fallback);
-    }
-
-    @Override
-    public LocalDateTime peekLocalDateTime()
-            throws ParseException {
-        return getWrapped().peekLocalDateTime();
-    }
-
-    @Override
-    public LocalDateTime peekLocalDateTime(LocalDateTime fallback) {
-        return getWrapped().peekLocalDateTime(fallback);
-    }
-
-    @Override
-    public LocalDateTime peekLocalDateTimeAt(int offset)
+    public LocalDateTime peekLocalDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().peekLocalDateTimeAt(offset);
     }
 
     @Override
-    public LocalDateTime peekLocalDateTimeAt(int offset, LocalDateTime fallback) {
+    public LocalDateTime peekLocalDateTimeAt(int offset, IDateTimeParseOptions options, LocalDateTime fallback) {
         return getWrapped().peekLocalDateTimeAt(offset, fallback);
-    }
-
-    @NotNull
-    @Override
-    public LocalDateTime[] peekLocalDateTimes(int n)
-            throws ParseException {
-        return getWrapped().peekLocalDateTimes(n);
-    }
-
-    @NotNull
-    @Override
-    public LocalDateTime[] peekLocalDateTimes(int n, LocalDateTime fallback)
-            throws ParseException {
-        return getWrapped().peekLocalDateTimes(n, fallback);
     }
 
     // ----------------------------------------- GROUP: LocalDate -----------------------------------------
 
     @Override
-    public LocalDate getLocalDate(int index)
+    public LocalDate getLocalDate(int index, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().getLocalDate(index);
     }
 
     @Override
-    public LocalDate getLocalDate(int index, LocalDate fallback) {
+    public LocalDate getLocalDate(int index, IDateTimeParseOptions options, LocalDate fallback) {
         return getWrapped().getLocalDate(index, fallback);
     }
 
-    @Override
-    public LocalDate shiftLocalDate()
-            throws ParseException {
-        return getWrapped().shiftLocalDate();
-    }
 
     @Override
-    public LocalDate shiftLocalDate(LocalDate fallback) {
-        return getWrapped().shiftLocalDate(fallback);
-    }
-
-    @Override
-    public LocalDate peekLocalDate()
-            throws ParseException {
-        return getWrapped().peekLocalDate();
-    }
-
-    @Override
-    public LocalDate peekLocalDate(LocalDate fallback) {
-        return getWrapped().peekLocalDate(fallback);
-    }
-
-    @Override
-    public LocalDate peekLocalDateAt(int offset)
+    public LocalDate peekLocalDateAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().peekLocalDateAt(offset);
     }
 
     @Override
-    public LocalDate peekLocalDateAt(int offset, LocalDate fallback) {
+    public LocalDate peekLocalDateAt(int offset, IDateTimeParseOptions options, LocalDate fallback) {
         return getWrapped().peekLocalDateAt(offset, fallback);
-    }
-
-    @NotNull
-    @Override
-    public LocalDate[] peekLocalDates(int n)
-            throws ParseException {
-        return getWrapped().peekLocalDates(n);
-    }
-
-    @NotNull
-    @Override
-    public LocalDate[] peekLocalDates(int n, LocalDate fallback)
-            throws ParseException {
-        return getWrapped().peekLocalDates(n, fallback);
     }
 
     // ----------------------------------------- GROUP: LocalTime -----------------------------------------
 
     @Override
-    public LocalTime getLocalTime(int index)
+    public LocalTime getLocalTime(int index, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().getLocalTime(index);
     }
 
     @Override
-    public LocalTime getLocalTime(int index, LocalTime fallback) {
+    public LocalTime getLocalTime(int index, IDateTimeParseOptions options, LocalTime fallback) {
         return getWrapped().getLocalTime(index, fallback);
     }
 
-    @Override
-    public LocalTime shiftLocalTime()
-            throws ParseException {
-        return getWrapped().shiftLocalTime();
-    }
 
     @Override
-    public LocalTime shiftLocalTime(LocalTime fallback) {
-        return getWrapped().shiftLocalTime(fallback);
-    }
-
-    @Override
-    public LocalTime peekLocalTime()
-            throws ParseException {
-        return getWrapped().peekLocalTime();
-    }
-
-    @Override
-    public LocalTime peekLocalTime(LocalTime fallback) {
-        return getWrapped().peekLocalTime(fallback);
-    }
-
-    @Override
-    public LocalTime peekLocalTimeAt(int offset)
+    public LocalTime peekLocalTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().peekLocalTimeAt(offset);
     }
 
     @Override
-    public LocalTime peekLocalTimeAt(int offset, LocalTime fallback) {
+    public LocalTime peekLocalTimeAt(int offset, IDateTimeParseOptions options, LocalTime fallback) {
         return getWrapped().peekLocalTimeAt(offset, fallback);
-    }
-
-    @NotNull
-    @Override
-    public LocalTime[] peekLocalTimes(int n)
-            throws ParseException {
-        return getWrapped().peekLocalTimes(n);
-    }
-
-    @NotNull
-    @Override
-    public LocalTime[] peekLocalTimes(int n, LocalTime fallback)
-            throws ParseException {
-        return getWrapped().peekLocalTimes(n, fallback);
     }
 
     // ----------------------------------------- GROUP: Instant -----------------------------------------
 
     @Override
-    public Instant getInstant(int index)
+    public Instant getInstant(int index, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().getInstant(index);
     }
 
     @Override
-    public Instant getInstant(int index, Instant fallback) {
+    public Instant getInstant(int index, IDateTimeParseOptions options, Instant fallback) {
         return getWrapped().getInstant(index, fallback);
     }
 
-    @Override
-    public Instant shiftInstant()
-            throws ParseException {
-        return getWrapped().shiftInstant();
-    }
 
     @Override
-    public Instant shiftInstant(Instant fallback) {
-        return getWrapped().shiftInstant(fallback);
-    }
-
-    @Override
-    public Instant peekInstant()
-            throws ParseException {
-        return getWrapped().peekInstant();
-    }
-
-    @Override
-    public Instant peekInstant(Instant fallback) {
-        return getWrapped().peekInstant(fallback);
-    }
-
-    @Override
-    public Instant peekInstantAt(int offset)
+    public Instant peekInstantAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         return getWrapped().peekInstantAt(offset);
     }
 
     @Override
-    public Instant peekInstantAt(int offset, Instant fallback) {
+    public Instant peekInstantAt(int offset, IDateTimeParseOptions options, Instant fallback) {
         return getWrapped().peekInstantAt(offset, fallback);
-    }
-
-    @NotNull
-    @Override
-    public Instant[] peekInstants(int n)
-            throws ParseException {
-        return getWrapped().peekInstants(n);
-    }
-
-    @NotNull
-    @Override
-    public Instant[] peekInstants(int n, Instant fallback)
-            throws ParseException {
-        return getWrapped().peekInstants(n, fallback);
     }
 
 }

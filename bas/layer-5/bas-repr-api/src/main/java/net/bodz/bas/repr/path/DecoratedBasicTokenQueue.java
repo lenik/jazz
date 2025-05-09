@@ -11,6 +11,7 @@ import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedBasicTokenQueue
@@ -96,6 +97,31 @@ public abstract class DecoratedBasicTokenQueue
     @Override
     public String peekAt(int offset) {
         return getWrapped().peekAt(offset);
+    }
+
+    // ----------------------------------------- GROUP: String -----------------------------------------
+
+    @NotNull
+    @Override
+    public String getString(int index)
+            throws ParseException {
+        return getWrapped().getString(index);
+    }
+
+    @Override
+    public String getString(int index, String fallback) {
+        return getWrapped().getString(index, fallback);
+    }
+
+    @Override
+    public String peekStringAt(int offset)
+            throws ParseException {
+        return getWrapped().peekStringAt(offset);
+    }
+
+    @Override
+    public String peekStringAt(int offset, String fallback) {
+        return getWrapped().peekStringAt(offset, fallback);
     }
 
     // ----------------------------------------- GROUP: CHAR -----------------------------------------
@@ -362,7 +388,7 @@ public abstract class DecoratedBasicTokenQueue
         return getWrapped().peekBigDecimalAt(offset, fallback);
     }
 
-    // ----------------------------------------- GROUP: ZONED DATE TIME -----------------------------------------
+    // ----------------------------------------- GROUP: ZonedDateTime -----------------------------------------
 
     @Override
     public ZonedDateTime getZonedDateTime(int index, ZonedDateTime fallback) {
@@ -376,17 +402,18 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public ZonedDateTime peekZonedDateTimeAt(int offset)
+    public ZonedDateTime peekZonedDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
-        return getWrapped().peekZonedDateTimeAt(offset);
+        return getWrapped().peekZonedDateTimeAt(offset, options);
     }
 
     @Override
-    public ZonedDateTime peekZonedDateTimeAt(int offset, ZonedDateTime fallback) {
-        return getWrapped().peekZonedDateTimeAt(offset, fallback);
+    public ZonedDateTime peekZonedDateTimeAt(int offset, IDateTimeParseOptions options, ZonedDateTime fallback) {
+        return getWrapped().peekZonedDateTimeAt(offset, options, fallback);
     }
 
-    // ----------------------------------------- GROUP: OFFSET DATE TIME -----------------------------------------
+
+    // ----------------------------------------- GROUP: OffsetDateTime -----------------------------------------
 
     @Override
     public OffsetDateTime getOffsetDateTime(int index, OffsetDateTime fallback) {
@@ -400,17 +427,18 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public OffsetDateTime peekOffsetDateTimeAt(int offset)
+    public OffsetDateTime peekOffsetDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
-        return getWrapped().peekOffsetDateTimeAt(offset);
+        return getWrapped().peekOffsetDateTimeAt(offset, options);
     }
 
     @Override
-    public OffsetDateTime peekOffsetDateTimeAt(int offset, OffsetDateTime fallback) {
-        return getWrapped().peekOffsetDateTimeAt(offset, fallback);
+    public OffsetDateTime peekOffsetDateTimeAt(int offset, IDateTimeParseOptions options, OffsetDateTime fallback) {
+        return getWrapped().peekOffsetDateTimeAt(offset, options, fallback);
     }
 
-    // ----------------------------------------- GROUP: OFFSET TIME -----------------------------------------
+
+    // ----------------------------------------- GROUP: OffsetTime -----------------------------------------
 
     @Override
     public OffsetTime getOffsetTime(int index, OffsetTime fallback) {
@@ -424,17 +452,18 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public OffsetTime peekOffsetTimeAt(int offset)
+    public OffsetTime peekOffsetTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
-        return getWrapped().peekOffsetTimeAt(offset);
+        return getWrapped().peekOffsetTimeAt(offset, options);
     }
 
     @Override
-    public OffsetTime peekOffsetTimeAt(int offset, OffsetTime fallback) {
-        return getWrapped().peekOffsetTimeAt(offset, fallback);
+    public OffsetTime peekOffsetTimeAt(int offset, IDateTimeParseOptions options, OffsetTime fallback) {
+        return getWrapped().peekOffsetTimeAt(offset, options, fallback);
     }
 
-    // ----------------------------------------- GROUP: LOCAL DATE TIME -----------------------------------------
+
+    // ----------------------------------------- GROUP: LocalDateTime -----------------------------------------
 
     @Override
     public LocalDateTime getLocalDateTime(int index, LocalDateTime fallback) {
@@ -448,17 +477,18 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public LocalDateTime peekLocalDateTimeAt(int offset)
+    public LocalDateTime peekLocalDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
-        return getWrapped().peekLocalDateTimeAt(offset);
+        return getWrapped().peekLocalDateTimeAt(offset, options);
     }
 
     @Override
-    public LocalDateTime peekLocalDateTimeAt(int offset, LocalDateTime fallback) {
-        return getWrapped().peekLocalDateTimeAt(offset, fallback);
+    public LocalDateTime peekLocalDateTimeAt(int offset, IDateTimeParseOptions options, LocalDateTime fallback) {
+        return getWrapped().peekLocalDateTimeAt(offset, options, fallback);
     }
 
-    // ----------------------------------------- GROUP: LOCAL DATE -----------------------------------------
+
+    // ----------------------------------------- GROUP: LocalDate -----------------------------------------
 
     @Override
     public LocalDate getLocalDate(int index, LocalDate fallback) {
@@ -472,17 +502,18 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public LocalDate peekLocalDateAt(int offset)
+    public LocalDate peekLocalDateAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
-        return getWrapped().peekLocalDateAt(offset);
+        return getWrapped().peekLocalDateAt(offset, options);
     }
 
     @Override
-    public LocalDate peekLocalDateAt(int offset, LocalDate fallback) {
-        return getWrapped().peekLocalDateAt(offset, fallback);
+    public LocalDate peekLocalDateAt(int offset, IDateTimeParseOptions options, LocalDate fallback) {
+        return getWrapped().peekLocalDateAt(offset, options, fallback);
     }
 
-    // ----------------------------------------- GROUP: LOCAL TIME -----------------------------------------
+
+    // ----------------------------------------- GROUP: LocalTime -----------------------------------------
 
     @Override
     public LocalTime getLocalTime(int index, LocalTime fallback) {
@@ -496,17 +527,18 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public LocalTime peekLocalTimeAt(int offset)
+    public LocalTime peekLocalTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
-        return getWrapped().peekLocalTimeAt(offset);
+        return getWrapped().peekLocalTimeAt(offset, options);
     }
 
     @Override
-    public LocalTime peekLocalTimeAt(int offset, LocalTime fallback) {
-        return getWrapped().peekLocalTimeAt(offset, fallback);
+    public LocalTime peekLocalTimeAt(int offset, IDateTimeParseOptions options, LocalTime fallback) {
+        return getWrapped().peekLocalTimeAt(offset, options, fallback);
     }
 
-    // ----------------------------------------- GROUP: INSTANT -----------------------------------------
+
+    // ----------------------------------------- GROUP: Instant -----------------------------------------
 
     @Override
     public Instant getInstant(int index, Instant fallback) {
@@ -520,14 +552,15 @@ public abstract class DecoratedBasicTokenQueue
     }
 
     @Override
-    public Instant peekInstantAt(int offset)
+    public Instant peekInstantAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
-        return getWrapped().peekInstantAt(offset);
+        return getWrapped().peekInstantAt(offset, options);
     }
 
     @Override
-    public Instant peekInstantAt(int offset, Instant fallback) {
-        return getWrapped().peekInstantAt(offset, fallback);
+    public Instant peekInstantAt(int offset, IDateTimeParseOptions options, Instant fallback) {
+        return getWrapped().peekInstantAt(offset, options, fallback);
     }
+
 
 }

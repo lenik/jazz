@@ -113,39 +113,116 @@ public interface ITokenArray {
 
     BigDecimal getBigDecimal(int index, BigDecimal fallback);
 
-    ZonedDateTime getZonedDateTime(int index)
+    // ZonedDateTime
+    default ZonedDateTime getZonedDateTime(int index)
+            throws ParseException {
+        return getZonedDateTime(index, (IDateTimeParseOptions) null);
+    }
+
+    ZonedDateTime getZonedDateTime(int index, IDateTimeParseOptions options)
             throws ParseException;
 
-    ZonedDateTime getZonedDateTime(int index, ZonedDateTime fallback);
+    default ZonedDateTime getZonedDateTime(int index, ZonedDateTime fallback) {
+        return getZonedDateTime(index, null, fallback);
+    }
 
-    OffsetDateTime getOffsetDateTime(int index)
+    ZonedDateTime getZonedDateTime(int index, IDateTimeParseOptions options, ZonedDateTime fallback);
+
+
+    // OffsetDateTime
+    default OffsetDateTime getOffsetDateTime(int index)
+            throws ParseException {
+        return getOffsetDateTime(index, (IDateTimeParseOptions) null);
+    }
+
+    OffsetDateTime getOffsetDateTime(int index, IDateTimeParseOptions options)
             throws ParseException;
 
-    OffsetDateTime getOffsetDateTime(int index, OffsetDateTime fallback);
+    default OffsetDateTime getOffsetDateTime(int index, OffsetDateTime fallback) {
+        return getOffsetDateTime(index, null, fallback);
+    }
 
-    OffsetTime getOffsetTime(int index)
+    OffsetDateTime getOffsetDateTime(int index, IDateTimeParseOptions options, OffsetDateTime fallback);
+
+
+    // OffsetTime
+    default OffsetTime getOffsetTime(int index)
+            throws ParseException {
+        return getOffsetTime(index, (IDateTimeParseOptions) null);
+    }
+
+    OffsetTime getOffsetTime(int index, IDateTimeParseOptions options)
             throws ParseException;
 
-    OffsetTime getOffsetTime(int index, OffsetTime fallback);
+    default OffsetTime getOffsetTime(int index, OffsetTime fallback) {
+        return getOffsetTime(index, null, fallback);
+    }
 
-    LocalDateTime getLocalDateTime(int index)
+    OffsetTime getOffsetTime(int index, IDateTimeParseOptions options, OffsetTime fallback);
+
+
+    // LocalDateTime
+    default LocalDateTime getLocalDateTime(int index)
+            throws ParseException {
+        return getLocalDateTime(index, (IDateTimeParseOptions) null);
+    }
+
+    LocalDateTime getLocalDateTime(int index, IDateTimeParseOptions options)
             throws ParseException;
 
-    LocalDateTime getLocalDateTime(int index, LocalDateTime fallback);
+    default LocalDateTime getLocalDateTime(int index, LocalDateTime fallback) {
+        return getLocalDateTime(index, null, fallback);
+    }
 
-    LocalDate getLocalDate(int index)
+    LocalDateTime getLocalDateTime(int index, IDateTimeParseOptions options, LocalDateTime fallback);
+
+
+    // LocalDate
+    default LocalDate getLocalDate(int index)
+            throws ParseException {
+        return getLocalDate(index, (IDateTimeParseOptions) null);
+    }
+
+    LocalDate getLocalDate(int index, IDateTimeParseOptions options)
             throws ParseException;
 
-    LocalDate getLocalDate(int index, LocalDate fallback);
+    default LocalDate getLocalDate(int index, LocalDate fallback) {
+        return getLocalDate(index, null, fallback);
+    }
 
-    LocalTime getLocalTime(int index)
+    LocalDate getLocalDate(int index, IDateTimeParseOptions options, LocalDate fallback);
+
+
+    // LocalTime
+    default LocalTime getLocalTime(int index)
+            throws ParseException {
+        return getLocalTime(index, (IDateTimeParseOptions) null);
+    }
+
+    LocalTime getLocalTime(int index, IDateTimeParseOptions options)
             throws ParseException;
 
-    LocalTime getLocalTime(int index, LocalTime fallback);
+    default LocalTime getLocalTime(int index, LocalTime fallback) {
+        return getLocalTime(index, null, fallback);
+    }
 
-    Instant getInstant(int index)
+    LocalTime getLocalTime(int index, IDateTimeParseOptions options, LocalTime fallback);
+
+
+    // Instant
+    default Instant getInstant(int index)
+            throws ParseException {
+        return getInstant(index, (IDateTimeParseOptions) null);
+    }
+
+    Instant getInstant(int index, IDateTimeParseOptions options)
             throws ParseException;
 
-    Instant getInstant(int index, Instant fallback);
+    default Instant getInstant(int index, Instant fallback) {
+        return getInstant(index, null, fallback);
+    }
+
+    Instant getInstant(int index, IDateTimeParseOptions options, Instant fallback);
+
 
 }

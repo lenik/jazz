@@ -203,7 +203,7 @@ public interface IForwardOnlyTokenQueue
     }
 
     @NotNull
-    default String[] peekStrings(int n, @NotNull String fallback)
+    default String[] peekStrings(int n, String fallback)
             throws ParseException {
         String[] array = new String[n];
         if (n > available())
@@ -1086,16 +1086,25 @@ public interface IForwardOnlyTokenQueue
      */
     default ZonedDateTime shiftZonedDateTime()
             throws ParseException {
-        ZonedDateTime n = peekZonedDateTime();
+        return shiftZonedDateTime((IDateTimeParseOptions) null);
+    }
+
+    default ZonedDateTime shiftZonedDateTime(IDateTimeParseOptions options)
+            throws ParseException {
+        ZonedDateTime n = peekZonedDateTime(options);
         if (n != null)
             shift();
         return n;
     }
 
     default ZonedDateTime shiftZonedDateTime(ZonedDateTime fallback) {
+        return shiftZonedDateTime(null, fallback);
+    }
+
+    default ZonedDateTime shiftZonedDateTime(IDateTimeParseOptions options, ZonedDateTime fallback) {
         if (available() == 0)
             return fallback;
-        ZonedDateTime n = peekZonedDateTime(fallback);
+        ZonedDateTime n = peekZonedDateTime(options, fallback);
         shift();
         return n;
     }
@@ -1107,11 +1116,25 @@ public interface IForwardOnlyTokenQueue
      */
     default ZonedDateTime peekZonedDateTime()
             throws ParseException {
-        return peekZonedDateTimeAt(0);
+        return peekZonedDateTime((IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the head token as ZonedDateTime.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default ZonedDateTime peekZonedDateTime(IDateTimeParseOptions options)
+            throws ParseException {
+        return peekZonedDateTimeAt(0, options);
     }
 
     default ZonedDateTime peekZonedDateTime(ZonedDateTime fallback) {
-        return peekZonedDateTimeAt(0, fallback);
+        return peekZonedDateTime(null, fallback);
+    }
+
+    default ZonedDateTime peekZonedDateTime(IDateTimeParseOptions options, ZonedDateTime fallback) {
+        return peekZonedDateTimeAt(0, options, fallback);
     }
 
     /**
@@ -1120,7 +1143,18 @@ public interface IForwardOnlyTokenQueue
      * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
-    ZonedDateTime peekZonedDateTimeAt(int offset)
+    default ZonedDateTime peekZonedDateTimeAt(int offset)
+            throws ParseException {
+        return peekZonedDateTimeAt(offset, (IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the n-th token from the head as ZonedDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    ZonedDateTime peekZonedDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException;
 
     /**
@@ -1128,10 +1162,25 @@ public interface IForwardOnlyTokenQueue
      *
      * @param offset The index offset, <code>0</code> if not specified.
      */
-    ZonedDateTime peekZonedDateTimeAt(int offset, ZonedDateTime fallback);
+    default ZonedDateTime peekZonedDateTimeAt(int offset, ZonedDateTime fallback) {
+        return peekZonedDateTimeAt(offset, null, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as ZonedDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    ZonedDateTime peekZonedDateTimeAt(int offset, IDateTimeParseOptions options, ZonedDateTime fallback);
 
     @NotNull
     default ZonedDateTime[] peekZonedDateTimes(int n)
+            throws ParseException {
+        return peekZonedDateTimes(n, (IDateTimeParseOptions) null);
+    }
+
+    @NotNull
+    default ZonedDateTime[] peekZonedDateTimes(int n, IDateTimeParseOptions options)
             throws ParseException {
         if (n > available())
             n = available();
@@ -1144,6 +1193,12 @@ public interface IForwardOnlyTokenQueue
 
     @NotNull
     default ZonedDateTime[] peekZonedDateTimes(int n, ZonedDateTime fallback)
+            throws ParseException {
+        return peekZonedDateTimes(n, null, fallback);
+    }
+
+    @NotNull
+    default ZonedDateTime[] peekZonedDateTimes(int n, IDateTimeParseOptions options, ZonedDateTime fallback)
             throws ParseException {
         ZonedDateTime[] array = new ZonedDateTime[n];
         if (n > available())
@@ -1166,16 +1221,25 @@ public interface IForwardOnlyTokenQueue
      */
     default OffsetDateTime shiftOffsetDateTime()
             throws ParseException {
-        OffsetDateTime n = peekOffsetDateTime();
+        return shiftOffsetDateTime((IDateTimeParseOptions) null);
+    }
+
+    default OffsetDateTime shiftOffsetDateTime(IDateTimeParseOptions options)
+            throws ParseException {
+        OffsetDateTime n = peekOffsetDateTime(options);
         if (n != null)
             shift();
         return n;
     }
 
     default OffsetDateTime shiftOffsetDateTime(OffsetDateTime fallback) {
+        return shiftOffsetDateTime(null, fallback);
+    }
+
+    default OffsetDateTime shiftOffsetDateTime(IDateTimeParseOptions options, OffsetDateTime fallback) {
         if (available() == 0)
             return fallback;
-        OffsetDateTime n = peekOffsetDateTime(fallback);
+        OffsetDateTime n = peekOffsetDateTime(options, fallback);
         shift();
         return n;
     }
@@ -1187,11 +1251,25 @@ public interface IForwardOnlyTokenQueue
      */
     default OffsetDateTime peekOffsetDateTime()
             throws ParseException {
-        return peekOffsetDateTimeAt(0);
+        return peekOffsetDateTime((IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the head token as OffsetDateTime.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default OffsetDateTime peekOffsetDateTime(IDateTimeParseOptions options)
+            throws ParseException {
+        return peekOffsetDateTimeAt(0, options);
     }
 
     default OffsetDateTime peekOffsetDateTime(OffsetDateTime fallback) {
-        return peekOffsetDateTimeAt(0, fallback);
+        return peekOffsetDateTime(null, fallback);
+    }
+
+    default OffsetDateTime peekOffsetDateTime(IDateTimeParseOptions options, OffsetDateTime fallback) {
+        return peekOffsetDateTimeAt(0, options, fallback);
     }
 
     /**
@@ -1200,7 +1278,18 @@ public interface IForwardOnlyTokenQueue
      * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
-    OffsetDateTime peekOffsetDateTimeAt(int offset)
+    default OffsetDateTime peekOffsetDateTimeAt(int offset)
+            throws ParseException {
+        return peekOffsetDateTimeAt(offset, (IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the n-th token from the head as OffsetDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    OffsetDateTime peekOffsetDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException;
 
     /**
@@ -1208,10 +1297,25 @@ public interface IForwardOnlyTokenQueue
      *
      * @param offset The index offset, <code>0</code> if not specified.
      */
-    OffsetDateTime peekOffsetDateTimeAt(int offset, OffsetDateTime fallback);
+    default OffsetDateTime peekOffsetDateTimeAt(int offset, OffsetDateTime fallback) {
+        return peekOffsetDateTimeAt(offset, null, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as OffsetDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    OffsetDateTime peekOffsetDateTimeAt(int offset, IDateTimeParseOptions options, OffsetDateTime fallback);
 
     @NotNull
     default OffsetDateTime[] peekOffsetDateTimes(int n)
+            throws ParseException {
+        return peekOffsetDateTimes(n, (IDateTimeParseOptions) null);
+    }
+
+    @NotNull
+    default OffsetDateTime[] peekOffsetDateTimes(int n, IDateTimeParseOptions options)
             throws ParseException {
         if (n > available())
             n = available();
@@ -1224,6 +1328,12 @@ public interface IForwardOnlyTokenQueue
 
     @NotNull
     default OffsetDateTime[] peekOffsetDateTimes(int n, OffsetDateTime fallback)
+            throws ParseException {
+        return peekOffsetDateTimes(n, null, fallback);
+    }
+
+    @NotNull
+    default OffsetDateTime[] peekOffsetDateTimes(int n, IDateTimeParseOptions options, OffsetDateTime fallback)
             throws ParseException {
         OffsetDateTime[] array = new OffsetDateTime[n];
         if (n > available())
@@ -1246,16 +1356,25 @@ public interface IForwardOnlyTokenQueue
      */
     default OffsetTime shiftOffsetTime()
             throws ParseException {
-        OffsetTime n = peekOffsetTime();
+        return shiftOffsetTime((IDateTimeParseOptions) null);
+    }
+
+    default OffsetTime shiftOffsetTime(IDateTimeParseOptions options)
+            throws ParseException {
+        OffsetTime n = peekOffsetTime(options);
         if (n != null)
             shift();
         return n;
     }
 
     default OffsetTime shiftOffsetTime(OffsetTime fallback) {
+        return shiftOffsetTime(null, fallback);
+    }
+
+    default OffsetTime shiftOffsetTime(IDateTimeParseOptions options, OffsetTime fallback) {
         if (available() == 0)
             return fallback;
-        OffsetTime n = peekOffsetTime(fallback);
+        OffsetTime n = peekOffsetTime(options, fallback);
         shift();
         return n;
     }
@@ -1267,11 +1386,25 @@ public interface IForwardOnlyTokenQueue
      */
     default OffsetTime peekOffsetTime()
             throws ParseException {
-        return peekOffsetTimeAt(0);
+        return peekOffsetTime((IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the head token as OffsetTime.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default OffsetTime peekOffsetTime(IDateTimeParseOptions options)
+            throws ParseException {
+        return peekOffsetTimeAt(0, options);
     }
 
     default OffsetTime peekOffsetTime(OffsetTime fallback) {
-        return peekOffsetTimeAt(0, fallback);
+        return peekOffsetTime(null, fallback);
+    }
+
+    default OffsetTime peekOffsetTime(IDateTimeParseOptions options, OffsetTime fallback) {
+        return peekOffsetTimeAt(0, options, fallback);
     }
 
     /**
@@ -1280,7 +1413,18 @@ public interface IForwardOnlyTokenQueue
      * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
-    OffsetTime peekOffsetTimeAt(int offset)
+    default OffsetTime peekOffsetTimeAt(int offset)
+            throws ParseException {
+        return peekOffsetTimeAt(offset, (IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the n-th token from the head as OffsetTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    OffsetTime peekOffsetTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException;
 
     /**
@@ -1288,10 +1432,25 @@ public interface IForwardOnlyTokenQueue
      *
      * @param offset The index offset, <code>0</code> if not specified.
      */
-    OffsetTime peekOffsetTimeAt(int offset, OffsetTime fallback);
+    default OffsetTime peekOffsetTimeAt(int offset, OffsetTime fallback) {
+        return peekOffsetTimeAt(offset, null, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as OffsetTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    OffsetTime peekOffsetTimeAt(int offset, IDateTimeParseOptions options, OffsetTime fallback);
 
     @NotNull
     default OffsetTime[] peekOffsetTimes(int n)
+            throws ParseException {
+        return peekOffsetTimes(n, (IDateTimeParseOptions) null);
+    }
+
+    @NotNull
+    default OffsetTime[] peekOffsetTimes(int n, IDateTimeParseOptions options)
             throws ParseException {
         if (n > available())
             n = available();
@@ -1304,6 +1463,12 @@ public interface IForwardOnlyTokenQueue
 
     @NotNull
     default OffsetTime[] peekOffsetTimes(int n, OffsetTime fallback)
+            throws ParseException {
+        return peekOffsetTimes(n, null, fallback);
+    }
+
+    @NotNull
+    default OffsetTime[] peekOffsetTimes(int n, IDateTimeParseOptions options, OffsetTime fallback)
             throws ParseException {
         OffsetTime[] array = new OffsetTime[n];
         if (n > available())
@@ -1326,16 +1491,25 @@ public interface IForwardOnlyTokenQueue
      */
     default LocalDateTime shiftLocalDateTime()
             throws ParseException {
-        LocalDateTime n = peekLocalDateTime();
+        return shiftLocalDateTime((IDateTimeParseOptions) null);
+    }
+
+    default LocalDateTime shiftLocalDateTime(IDateTimeParseOptions options)
+            throws ParseException {
+        LocalDateTime n = peekLocalDateTime(options);
         if (n != null)
             shift();
         return n;
     }
 
     default LocalDateTime shiftLocalDateTime(LocalDateTime fallback) {
+        return shiftLocalDateTime(null, fallback);
+    }
+
+    default LocalDateTime shiftLocalDateTime(IDateTimeParseOptions options, LocalDateTime fallback) {
         if (available() == 0)
             return fallback;
-        LocalDateTime n = peekLocalDateTime(fallback);
+        LocalDateTime n = peekLocalDateTime(options, fallback);
         shift();
         return n;
     }
@@ -1347,11 +1521,25 @@ public interface IForwardOnlyTokenQueue
      */
     default LocalDateTime peekLocalDateTime()
             throws ParseException {
-        return peekLocalDateTimeAt(0);
+        return peekLocalDateTime((IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the head token as LocalDateTime.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default LocalDateTime peekLocalDateTime(IDateTimeParseOptions options)
+            throws ParseException {
+        return peekLocalDateTimeAt(0, options);
     }
 
     default LocalDateTime peekLocalDateTime(LocalDateTime fallback) {
-        return peekLocalDateTimeAt(0, fallback);
+        return peekLocalDateTime(null, fallback);
+    }
+
+    default LocalDateTime peekLocalDateTime(IDateTimeParseOptions options, LocalDateTime fallback) {
+        return peekLocalDateTimeAt(0, options, fallback);
     }
 
     /**
@@ -1360,7 +1548,18 @@ public interface IForwardOnlyTokenQueue
      * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
-    LocalDateTime peekLocalDateTimeAt(int offset)
+    default LocalDateTime peekLocalDateTimeAt(int offset)
+            throws ParseException {
+        return peekLocalDateTimeAt(offset, (IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the n-th token from the head as LocalDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    LocalDateTime peekLocalDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException;
 
     /**
@@ -1368,10 +1567,25 @@ public interface IForwardOnlyTokenQueue
      *
      * @param offset The index offset, <code>0</code> if not specified.
      */
-    LocalDateTime peekLocalDateTimeAt(int offset, LocalDateTime fallback);
+    default LocalDateTime peekLocalDateTimeAt(int offset, LocalDateTime fallback) {
+        return peekLocalDateTimeAt(offset, null, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as LocalDateTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    LocalDateTime peekLocalDateTimeAt(int offset, IDateTimeParseOptions options, LocalDateTime fallback);
 
     @NotNull
     default LocalDateTime[] peekLocalDateTimes(int n)
+            throws ParseException {
+        return peekLocalDateTimes(n, (IDateTimeParseOptions) null);
+    }
+
+    @NotNull
+    default LocalDateTime[] peekLocalDateTimes(int n, IDateTimeParseOptions options)
             throws ParseException {
         if (n > available())
             n = available();
@@ -1384,6 +1598,12 @@ public interface IForwardOnlyTokenQueue
 
     @NotNull
     default LocalDateTime[] peekLocalDateTimes(int n, LocalDateTime fallback)
+            throws ParseException {
+        return peekLocalDateTimes(n, null, fallback);
+    }
+
+    @NotNull
+    default LocalDateTime[] peekLocalDateTimes(int n, IDateTimeParseOptions options, LocalDateTime fallback)
             throws ParseException {
         LocalDateTime[] array = new LocalDateTime[n];
         if (n > available())
@@ -1406,16 +1626,25 @@ public interface IForwardOnlyTokenQueue
      */
     default LocalDate shiftLocalDate()
             throws ParseException {
-        LocalDate n = peekLocalDate();
+        return shiftLocalDate((IDateTimeParseOptions) null);
+    }
+
+    default LocalDate shiftLocalDate(IDateTimeParseOptions options)
+            throws ParseException {
+        LocalDate n = peekLocalDate(options);
         if (n != null)
             shift();
         return n;
     }
 
     default LocalDate shiftLocalDate(LocalDate fallback) {
+        return shiftLocalDate(null, fallback);
+    }
+
+    default LocalDate shiftLocalDate(IDateTimeParseOptions options, LocalDate fallback) {
         if (available() == 0)
             return fallback;
-        LocalDate n = peekLocalDate(fallback);
+        LocalDate n = peekLocalDate(options, fallback);
         shift();
         return n;
     }
@@ -1427,11 +1656,25 @@ public interface IForwardOnlyTokenQueue
      */
     default LocalDate peekLocalDate()
             throws ParseException {
-        return peekLocalDateAt(0);
+        return peekLocalDate((IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the head token as LocalDate.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default LocalDate peekLocalDate(IDateTimeParseOptions options)
+            throws ParseException {
+        return peekLocalDateAt(0, options);
     }
 
     default LocalDate peekLocalDate(LocalDate fallback) {
-        return peekLocalDateAt(0, fallback);
+        return peekLocalDate(null, fallback);
+    }
+
+    default LocalDate peekLocalDate(IDateTimeParseOptions options, LocalDate fallback) {
+        return peekLocalDateAt(0, options, fallback);
     }
 
     /**
@@ -1440,7 +1683,18 @@ public interface IForwardOnlyTokenQueue
      * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
-    LocalDate peekLocalDateAt(int offset)
+    default LocalDate peekLocalDateAt(int offset)
+            throws ParseException {
+        return peekLocalDateAt(offset, (IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the n-th token from the head as LocalDate.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    LocalDate peekLocalDateAt(int offset, IDateTimeParseOptions options)
             throws ParseException;
 
     /**
@@ -1448,10 +1702,25 @@ public interface IForwardOnlyTokenQueue
      *
      * @param offset The index offset, <code>0</code> if not specified.
      */
-    LocalDate peekLocalDateAt(int offset, LocalDate fallback);
+    default LocalDate peekLocalDateAt(int offset, LocalDate fallback) {
+        return peekLocalDateAt(offset, null, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as LocalDate.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    LocalDate peekLocalDateAt(int offset, IDateTimeParseOptions options, LocalDate fallback);
 
     @NotNull
     default LocalDate[] peekLocalDates(int n)
+            throws ParseException {
+        return peekLocalDates(n, (IDateTimeParseOptions) null);
+    }
+
+    @NotNull
+    default LocalDate[] peekLocalDates(int n, IDateTimeParseOptions options)
             throws ParseException {
         if (n > available())
             n = available();
@@ -1464,6 +1733,12 @@ public interface IForwardOnlyTokenQueue
 
     @NotNull
     default LocalDate[] peekLocalDates(int n, LocalDate fallback)
+            throws ParseException {
+        return peekLocalDates(n, null, fallback);
+    }
+
+    @NotNull
+    default LocalDate[] peekLocalDates(int n, IDateTimeParseOptions options, LocalDate fallback)
             throws ParseException {
         LocalDate[] array = new LocalDate[n];
         if (n > available())
@@ -1486,16 +1761,25 @@ public interface IForwardOnlyTokenQueue
      */
     default LocalTime shiftLocalTime()
             throws ParseException {
-        LocalTime n = peekLocalTime();
+        return shiftLocalTime((IDateTimeParseOptions) null);
+    }
+
+    default LocalTime shiftLocalTime(IDateTimeParseOptions options)
+            throws ParseException {
+        LocalTime n = peekLocalTime(options);
         if (n != null)
             shift();
         return n;
     }
 
     default LocalTime shiftLocalTime(LocalTime fallback) {
+        return shiftLocalTime(null, fallback);
+    }
+
+    default LocalTime shiftLocalTime(IDateTimeParseOptions options, LocalTime fallback) {
         if (available() == 0)
             return fallback;
-        LocalTime n = peekLocalTime(fallback);
+        LocalTime n = peekLocalTime(options, fallback);
         shift();
         return n;
     }
@@ -1507,11 +1791,25 @@ public interface IForwardOnlyTokenQueue
      */
     default LocalTime peekLocalTime()
             throws ParseException {
-        return peekLocalTimeAt(0);
+        return peekLocalTime((IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the head token as LocalTime.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default LocalTime peekLocalTime(IDateTimeParseOptions options)
+            throws ParseException {
+        return peekLocalTimeAt(0, options);
     }
 
     default LocalTime peekLocalTime(LocalTime fallback) {
-        return peekLocalTimeAt(0, fallback);
+        return peekLocalTime(null, fallback);
+    }
+
+    default LocalTime peekLocalTime(IDateTimeParseOptions options, LocalTime fallback) {
+        return peekLocalTimeAt(0, options, fallback);
     }
 
     /**
@@ -1520,7 +1818,18 @@ public interface IForwardOnlyTokenQueue
      * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
-    LocalTime peekLocalTimeAt(int offset)
+    default LocalTime peekLocalTimeAt(int offset)
+            throws ParseException {
+        return peekLocalTimeAt(offset, (IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the n-th token from the head as LocalTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    LocalTime peekLocalTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException;
 
     /**
@@ -1528,10 +1837,25 @@ public interface IForwardOnlyTokenQueue
      *
      * @param offset The index offset, <code>0</code> if not specified.
      */
-    LocalTime peekLocalTimeAt(int offset, LocalTime fallback);
+    default LocalTime peekLocalTimeAt(int offset, LocalTime fallback) {
+        return peekLocalTimeAt(offset, null, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as LocalTime.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    LocalTime peekLocalTimeAt(int offset, IDateTimeParseOptions options, LocalTime fallback);
 
     @NotNull
     default LocalTime[] peekLocalTimes(int n)
+            throws ParseException {
+        return peekLocalTimes(n, (IDateTimeParseOptions) null);
+    }
+
+    @NotNull
+    default LocalTime[] peekLocalTimes(int n, IDateTimeParseOptions options)
             throws ParseException {
         if (n > available())
             n = available();
@@ -1544,6 +1868,12 @@ public interface IForwardOnlyTokenQueue
 
     @NotNull
     default LocalTime[] peekLocalTimes(int n, LocalTime fallback)
+            throws ParseException {
+        return peekLocalTimes(n, null, fallback);
+    }
+
+    @NotNull
+    default LocalTime[] peekLocalTimes(int n, IDateTimeParseOptions options, LocalTime fallback)
             throws ParseException {
         LocalTime[] array = new LocalTime[n];
         if (n > available())
@@ -1566,16 +1896,25 @@ public interface IForwardOnlyTokenQueue
      */
     default Instant shiftInstant()
             throws ParseException {
-        Instant n = peekInstant();
+        return shiftInstant((IDateTimeParseOptions) null);
+    }
+
+    default Instant shiftInstant(IDateTimeParseOptions options)
+            throws ParseException {
+        Instant n = peekInstant(options);
         if (n != null)
             shift();
         return n;
     }
 
     default Instant shiftInstant(Instant fallback) {
+        return shiftInstant(null, fallback);
+    }
+
+    default Instant shiftInstant(IDateTimeParseOptions options, Instant fallback) {
         if (available() == 0)
             return fallback;
-        Instant n = peekInstant(fallback);
+        Instant n = peekInstant(options, fallback);
         shift();
         return n;
     }
@@ -1587,11 +1926,25 @@ public interface IForwardOnlyTokenQueue
      */
     default Instant peekInstant()
             throws ParseException {
-        return peekInstantAt(0);
+        return peekInstant((IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the head token as Instant.
+     *
+     * @return <code>null</code> If no more token.
+     */
+    default Instant peekInstant(IDateTimeParseOptions options)
+            throws ParseException {
+        return peekInstantAt(0, options);
     }
 
     default Instant peekInstant(Instant fallback) {
-        return peekInstantAt(0, fallback);
+        return peekInstant(null, fallback);
+    }
+
+    default Instant peekInstant(IDateTimeParseOptions options, Instant fallback) {
+        return peekInstantAt(0, options, fallback);
     }
 
     /**
@@ -1600,7 +1953,18 @@ public interface IForwardOnlyTokenQueue
      * @param offset The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
-    Instant peekInstantAt(int offset)
+    default Instant peekInstantAt(int offset)
+            throws ParseException {
+        return peekInstantAt(offset, (IDateTimeParseOptions) null);
+    }
+
+    /**
+     * Peek at the n-th token from the head as Instant.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     * @return <code>null</code> If the token doesn't exist.
+     */
+    Instant peekInstantAt(int offset, IDateTimeParseOptions options)
             throws ParseException;
 
     /**
@@ -1608,10 +1972,25 @@ public interface IForwardOnlyTokenQueue
      *
      * @param offset The index offset, <code>0</code> if not specified.
      */
-    Instant peekInstantAt(int offset, Instant fallback);
+    default Instant peekInstantAt(int offset, Instant fallback) {
+        return peekInstantAt(offset, null, fallback);
+    }
+
+    /**
+     * Peek at the n-th token from the head as Instant.
+     *
+     * @param offset The index offset, <code>0</code> if not specified.
+     */
+    Instant peekInstantAt(int offset, IDateTimeParseOptions options, Instant fallback);
 
     @NotNull
     default Instant[] peekInstants(int n)
+            throws ParseException {
+        return peekInstants(n, (IDateTimeParseOptions) null);
+    }
+
+    @NotNull
+    default Instant[] peekInstants(int n, IDateTimeParseOptions options)
             throws ParseException {
         if (n > available())
             n = available();
@@ -1624,6 +2003,12 @@ public interface IForwardOnlyTokenQueue
 
     @NotNull
     default Instant[] peekInstants(int n, Instant fallback)
+            throws ParseException {
+        return peekInstants(n, null, fallback);
+    }
+
+    @NotNull
+    default Instant[] peekInstants(int n, IDateTimeParseOptions options, Instant fallback)
             throws ParseException {
         Instant[] array = new Instant[n];
         if (n > available())

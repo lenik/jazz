@@ -58,4 +58,16 @@ public class Parsers {
         return str;
     }
 
+    public static boolean haveDateTime(String str) {
+        return haveDatePart(str) && haveTimePart(str);
+    }
+
+    public static boolean haveDatePart(String str) {
+        return str.indexOf('/') != -1 || str.indexOf('-') != -1;
+    }
+
+    public static boolean haveTimePart(String str) {
+        return str.indexOf(':') != -1;
+    }
+
 }

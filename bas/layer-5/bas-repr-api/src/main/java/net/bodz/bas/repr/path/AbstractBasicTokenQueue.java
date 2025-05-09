@@ -9,11 +9,20 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.time.format.SignStyle;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.NotNull;
+
+import static java.time.temporal.ChronoField.HOUR_OF_DAY;
+import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
+import static java.time.temporal.ChronoField.NANO_OF_SECOND;
+import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 
 public abstract class AbstractBasicTokenQueue
         implements IBasicTokenQueue,
@@ -680,6 +689,7 @@ public abstract class AbstractBasicTokenQueue
             case "1":
             case "t":
             case "y":
+            case "是":
                 return true;
             case "false":
             case "no":
@@ -687,6 +697,7 @@ public abstract class AbstractBasicTokenQueue
             case "0":
             case "f":
             case "n":
+            case "否":
                 return false;
             default:
                 throw new ParseException("Not a boolean: " + str);
@@ -888,184 +899,255 @@ public abstract class AbstractBasicTokenQueue
             throws ParseException {
         if (str.isEmpty())
             return null;
+        BigDecimal scale = null;
+        if (str.endsWith("%")) {
+            scale = new BigDecimal("0.01");
+            str = str.substring(0, str.length() - 1);
+        }
+
         if (!isBigDecimalLike(str))
             throw new ParseException("Not a BigDecimal number: " + str);
+
+        BigDecimal decimal;
         try {
-            return new BigDecimal(str);
+            decimal = new BigDecimal(str);
         } catch (NumberFormatException e) {
             throw new ParseException("Not a BigDecimal number: " + str, e);
         }
+
+        if (scale != null)
+            decimal = decimal.multiply(scale);
+        return decimal;
     }
 
     // ----------------------------------------- GROUP: ZonedDateTime -----------------------------------------
 
     @Override
-    public ZonedDateTime getZonedDateTime(int index)
+    public ZonedDateTime getZonedDateTime(int index, IDateTimeParseOptions options)
             throws ParseException {
         String token = get(index);
-        return parseZonedDateTime(token);
+        return parseZonedDateTime(token, options);
     }
 
     @Override
-    public ZonedDateTime getZonedDateTime(int index, ZonedDateTime fallback) {
+    public ZonedDateTime getZonedDateTime(int index, IDateTimeParseOptions options, ZonedDateTime fallback) {
         String token = get(index);
-        if (!isZonedDateTimeLike(token))
+        if (!isZonedDateTimeLike(token, options))
             return fallback;
         try {
-            return parseZonedDateTime(token);
+            return parseZonedDateTime(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
     @Override
-    public ZonedDateTime peekZonedDateTimeAt(int offset)
+    public ZonedDateTime peekZonedDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         String token = peekAt(offset);
-        return parseZonedDateTime(token);
+        return parseZonedDateTime(token, options);
     }
 
     @Override
-    public ZonedDateTime peekZonedDateTimeAt(int offset, ZonedDateTime fallback) {
+    public ZonedDateTime peekZonedDateTimeAt(int offset, IDateTimeParseOptions options, ZonedDateTime fallback) {
         String token = peekAt(offset);
         if (token == null)
             return fallback;
-        if (!isZonedDateTimeLike(token))
+        if (!isZonedDateTimeLike(token, options))
             return fallback;
         try {
-            return parseZonedDateTime(token);
+            return parseZonedDateTime(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
-    static boolean isZonedDateTimeLike(String str) {
+    static boolean isZonedDateTimeLike(String str, IDateTimeParseOptions options) {
         return true;
     }
 
-    static ZonedDateTime parseZonedDateTime(String str)
+    static ZonedDateTime parseZonedDateTime(String str, IDateTimeParseOptions options)
             throws ParseException {
         if (str.isEmpty())
             return null;
-        if (!isZonedDateTimeLike(str))
+        if (!isZonedDateTimeLike(str, options))
             throw new ParseException("Not a ZonedDateTime temporal: " + str);
-        try {
-            return ZonedDateTime.parse(str);
-        } catch (DateTimeParseException e) {
-            throw new ParseException("Not a ZonedDateTime temporal: " + str, e);
+
+        boolean strict = true;
+        if (options != null)
+            if (!Parsers.haveDateTime(str))
+                strict = false;
+
+        if (strict)
+            try {
+                return ZonedDateTime.parse(str);
+            } catch (DateTimeParseException e) {
+                throw new ParseException("Not a ZonedDateTime temporal: " + str, e);
+            }
+
+        // partial
+        if (str.indexOf(':') != -1) {
+            // local time only
+            try {
+                LocalTime localTime = LocalTime.parse(str);
+                LocalDate defaultDate = options.getDefaultDate();
+                return localTime.atDate(defaultDate).atZone(ZoneId.systemDefault());
+            } catch (DateTimeParseException e) {
+                throw new ParseException("Not a LocalTime temporal: " + str, e);
+            }
+        } else {
+            // local date only
+            try {
+                LocalDate localDate = LocalDate.parse(str);
+                LocalTime defaultTime = options.getDefaultTime();
+                return localDate.atTime(defaultTime).atZone(ZoneId.systemDefault());
+            } catch (DateTimeParseException e) {
+                throw new ParseException("Not a LocalDate temporal: " + str, e);
+            }
         }
     }
 
     // ----------------------------------------- GROUP: OffsetDateTime -----------------------------------------
 
     @Override
-    public OffsetDateTime getOffsetDateTime(int index)
+    public OffsetDateTime getOffsetDateTime(int index, IDateTimeParseOptions options)
             throws ParseException {
         String token = get(index);
-        return parseOffsetDateTime(token);
+        return parseOffsetDateTime(token, options);
     }
 
     @Override
-    public OffsetDateTime getOffsetDateTime(int index, OffsetDateTime fallback) {
+    public OffsetDateTime getOffsetDateTime(int index, IDateTimeParseOptions options, OffsetDateTime fallback) {
         String token = get(index);
-        if (!isOffsetDateTimeLike(token))
+        if (!isOffsetDateTimeLike(token, options))
             return fallback;
         try {
-            return parseOffsetDateTime(token);
+            return parseOffsetDateTime(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
     @Override
-    public OffsetDateTime peekOffsetDateTimeAt(int offset)
+    public OffsetDateTime peekOffsetDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         String token = peekAt(offset);
-        return parseOffsetDateTime(token);
+        return parseOffsetDateTime(token, options);
     }
 
     @Override
-    public OffsetDateTime peekOffsetDateTimeAt(int offset, OffsetDateTime fallback) {
+    public OffsetDateTime peekOffsetDateTimeAt(int offset, IDateTimeParseOptions options, OffsetDateTime fallback) {
         String token = peekAt(offset);
         if (token == null)
             return fallback;
-        if (!isOffsetDateTimeLike(token))
+        if (!isOffsetDateTimeLike(token, options))
             return fallback;
         try {
-            return parseOffsetDateTime(token);
+            return parseOffsetDateTime(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
-    static boolean isOffsetDateTimeLike(String str) {
+    static boolean isOffsetDateTimeLike(String str, IDateTimeParseOptions options) {
         return true;
     }
 
-    static OffsetDateTime parseOffsetDateTime(String str)
+    static OffsetDateTime parseOffsetDateTime(String str, IDateTimeParseOptions options)
             throws ParseException {
         if (str.isEmpty())
             return null;
-        if (!isOffsetDateTimeLike(str))
+        if (!isOffsetDateTimeLike(str, options))
             throw new ParseException("Not a OffsetDateTime temporal: " + str);
-        try {
-            return OffsetDateTime.parse(str);
-        } catch (DateTimeParseException e) {
-            throw new ParseException("Not a OffsetDateTime temporal: " + str, e);
+
+        boolean strict = true;
+        if (options != null) {
+            if (!Parsers.haveDateTime(str))
+                strict = false;
         }
+
+        if (strict)
+            try {
+                return OffsetDateTime.parse(str);
+            } catch (DateTimeParseException e) {
+                throw new ParseException("Not a OffsetDateTime temporal: " + str, e);
+            }
+
+        // partial
+        if (str.indexOf(':') != -1) {
+            // local time only
+            try {
+                OffsetTime offsetTime = OffsetTime.parse(str);
+                LocalDate defaultDate = options.getDefaultDate();
+                return offsetTime.atDate(defaultDate);
+            } catch (DateTimeParseException e) {
+                throw new ParseException("Not a OffsetTime temporal: " + str, e);
+            }
+        } else {
+            // local date only
+            try {
+                LocalDate localDate = LocalDate.parse(str);
+                LocalTime defaultTime = options.getDefaultTime();
+                LocalDateTime localDateTime = localDate.atTime(defaultTime);
+                return localDateTime.atZone(ZoneId.systemDefault()).toOffsetDateTime();
+            } catch (DateTimeParseException e) {
+                throw new ParseException("Not a LocalDate temporal: " + str, e);
+            }
+        }
+
     }
 
     // ----------------------------------------- GROUP: OffsetTime -----------------------------------------
 
     @Override
-    public OffsetTime getOffsetTime(int index)
+    public OffsetTime getOffsetTime(int index, IDateTimeParseOptions options)
             throws ParseException {
         String token = get(index);
-        return parseOffsetTime(token);
+        return parseOffsetTime(token, options);
     }
 
     @Override
-    public OffsetTime getOffsetTime(int index, OffsetTime fallback) {
+    public OffsetTime getOffsetTime(int index, IDateTimeParseOptions options, OffsetTime fallback) {
         String token = get(index);
-        if (!isOffsetTimeLike(token))
+        if (!isOffsetTimeLike(token, options))
             return fallback;
         try {
-            return parseOffsetTime(token);
+            return parseOffsetTime(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
     @Override
-    public OffsetTime peekOffsetTimeAt(int offset)
+    public OffsetTime peekOffsetTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         String token = peekAt(offset);
-        return parseOffsetTime(token);
+        return parseOffsetTime(token, options);
     }
 
     @Override
-    public OffsetTime peekOffsetTimeAt(int offset, OffsetTime fallback) {
+    public OffsetTime peekOffsetTimeAt(int offset, IDateTimeParseOptions options, OffsetTime fallback) {
         String token = peekAt(offset);
         if (token == null)
             return fallback;
-        if (!isOffsetTimeLike(token))
+        if (!isOffsetTimeLike(token, options))
             return fallback;
         try {
-            return parseOffsetTime(token);
+            return parseOffsetTime(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
-    static boolean isOffsetTimeLike(String str) {
+    static boolean isOffsetTimeLike(String str, IDateTimeParseOptions options) {
         return true;
     }
 
-    static OffsetTime parseOffsetTime(String str)
+    static OffsetTime parseOffsetTime(String str, IDateTimeParseOptions options)
             throws ParseException {
         if (str.isEmpty())
             return null;
-        if (!isOffsetTimeLike(str))
+        if (!isOffsetTimeLike(str, options))
             throw new ParseException("Not a OffsetTime temporal: " + str);
 
         str = Parsers.timePart(str);
@@ -1079,37 +1161,37 @@ public abstract class AbstractBasicTokenQueue
     // ----------------------------------------- GROUP: LocalDateTime -----------------------------------------
 
     @Override
-    public LocalDateTime getLocalDateTime(int index)
+    public LocalDateTime getLocalDateTime(int index, IDateTimeParseOptions options)
             throws ParseException {
         String token = get(index);
-        return parseLocalDateTime(token);
+        return parseLocalDateTime(token, options);
     }
 
     @Override
-    public LocalDateTime getLocalDateTime(int index, LocalDateTime fallback) {
+    public LocalDateTime getLocalDateTime(int index, IDateTimeParseOptions options, LocalDateTime fallback) {
         String token = get(index);
-        if (!isLocalDateTimeLike(token))
+        if (!isLocalDateTimeLike(token, options))
             return fallback;
         try {
-            return parseLocalDateTime(token);
+            return parseLocalDateTime(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
     @Override
-    public LocalDateTime peekLocalDateTimeAt(int offset)
+    public LocalDateTime peekLocalDateTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         String token = peekAt(offset);
-        return parseLocalDateTime(token);
+        return parseLocalDateTime(token, options);
     }
 
     @Override
-    public LocalDateTime peekLocalDateTimeAt(int offset, LocalDateTime fallback) {
+    public LocalDateTime peekLocalDateTimeAt(int offset, IDateTimeParseOptions options, LocalDateTime fallback) {
         String token = peekAt(offset);
         if (token == null)
             return fallback;
-        if (!isLocalDateTimeLike(token))
+        if (!isLocalDateTimeLike(token, options))
             return fallback;
         try {
             return LocalDateTime.parse(token);
@@ -1118,74 +1200,104 @@ public abstract class AbstractBasicTokenQueue
         }
     }
 
-    static boolean isLocalDateTimeLike(String str) {
+    static boolean isLocalDateTimeLike(String str, IDateTimeParseOptions options) {
         return true;
     }
 
-    static LocalDateTime parseLocalDateTime(String str)
+    static LocalDateTime parseLocalDateTime(String str, IDateTimeParseOptions options)
             throws ParseException {
         if (str.isEmpty())
             return null;
-        if (!isLocalDateTimeLike(str))
+        if (!isLocalDateTimeLike(str, options))
             throw new ParseException("Not a LocalDateTime temporal: " + str);
-        try {
-            return LocalDateTime.parse(str);
-        } catch (DateTimeParseException e) {
-            throw new ParseException("Not a LocalDateTime temporal: " + str, e);
+
+        boolean strict = true;
+        if (options != null)
+            if (!Parsers.haveDateTime(str))
+                strict = false;
+
+        if (strict)
+            try {
+                return LocalDateTime.parse(str);
+            } catch (DateTimeParseException e) {
+                throw new ParseException("Not a LocalDateTime temporal: " + str, e);
+            }
+
+        // partial
+        if (str.indexOf(':') != -1) {
+            // local time only
+            try {
+                LocalTime localTime = parseLocalTime(str, options);
+                assert localTime != null;
+                LocalDate defaultDate = options.getDefaultDate();
+                return localTime.atDate(defaultDate);
+            } catch (DateTimeParseException e) {
+                throw new ParseException("Not a LocalTime temporal: " + str, e);
+            }
+        } else {
+            // local date only
+            try {
+                LocalDate localDate = parseLocalDate(str, options);
+                assert localDate != null;
+                LocalTime defaultTime = options.getDefaultTime();
+                return localDate.atTime(defaultTime);
+            } catch (DateTimeParseException e) {
+                throw new ParseException("Not a LocalDate temporal: " + str, e);
+            }
         }
     }
 
     // ----------------------------------------- GROUP: LocalDate -----------------------------------------
 
     @Override
-    public LocalDate getLocalDate(int index)
+    public LocalDate getLocalDate(int index, IDateTimeParseOptions options)
             throws ParseException {
         String token = get(index);
-        return parseLocalDate(token);
+        return parseLocalDate(token, options);
     }
 
     @Override
-    public LocalDate getLocalDate(int index, LocalDate fallback) {
+    public LocalDate getLocalDate(int index, IDateTimeParseOptions options, LocalDate fallback) {
         String token = get(index);
-        if (!isLocalDateLike(token))
+        if (!isLocalDateLike(token, options))
             return fallback;
         try {
-            return parseLocalDate(token);
+            return parseLocalDate(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
     @Override
-    public LocalDate peekLocalDateAt(int offset)
+    public LocalDate peekLocalDateAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         String token = peekAt(offset);
-        return parseLocalDate(token);
+        return parseLocalDate(token, options);
     }
 
     @Override
-    public LocalDate peekLocalDateAt(int offset, LocalDate fallback) {
+    public LocalDate peekLocalDateAt(int offset, IDateTimeParseOptions options, LocalDate fallback) {
         String token = peekAt(offset);
         if (token == null)
             return fallback;
-        if (!isLocalDateLike(token))
+        if (!isLocalDateLike(token, options))
             return fallback;
         try {
-            return parseLocalDate(token);
+            return parseLocalDate(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
-    static boolean isLocalDateLike(String str) {
+    static boolean isLocalDateLike(String str, IDateTimeParseOptions options) {
         return true;
     }
 
-    static LocalDate parseLocalDate(String str)
+    static LocalDate parseLocalDate(String str, IDateTimeParseOptions options)
             throws ParseException {
         if (str.isEmpty())
             return null;
-        if (!isLocalDateLike(str))
+        if (!isLocalDateLike(str, options))
             throw new ParseException("Not a LocalDate temporal: " + str);
 
         str = Parsers.datePart(str);
@@ -1199,59 +1311,97 @@ public abstract class AbstractBasicTokenQueue
     // ----------------------------------------- GROUP: LocalTime -----------------------------------------
 
     @Override
-    public LocalTime getLocalTime(int index)
+    public LocalTime getLocalTime(int index, IDateTimeParseOptions options)
             throws ParseException {
         String token = get(index);
-        return parseLocalTime(token);
+        return parseLocalTime(token, options);
     }
 
     @Override
-    public LocalTime getLocalTime(int index, LocalTime fallback) {
+    public LocalTime getLocalTime(int index, IDateTimeParseOptions options, LocalTime fallback) {
         String token = get(index);
-        if (!isLocalTimeLike(token))
+        if (!isLocalTimeLike(token, options))
             return fallback;
         try {
-            return parseLocalTime(token);
+            return parseLocalTime(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
     @Override
-    public LocalTime peekLocalTimeAt(int offset)
+    public LocalTime peekLocalTimeAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         String token = peekAt(offset);
-        return parseLocalTime(token);
+        return parseLocalTime(token, options);
     }
 
     @Override
-    public LocalTime peekLocalTimeAt(int offset, LocalTime fallback) {
+    public LocalTime peekLocalTimeAt(int offset, IDateTimeParseOptions options, LocalTime fallback) {
         String token = peekAt(offset);
         if (token == null)
             return fallback;
-        if (!isLocalTimeLike(token))
+        if (!isLocalTimeLike(token, options))
             return fallback;
         try {
-            return parseLocalTime(token);
+            return parseLocalTime(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
-    static boolean isLocalTimeLike(String str) {
+    static boolean isLocalTimeLike(String str, IDateTimeParseOptions options) {
         return true;
     }
 
-    static LocalTime parseLocalTime(String str)
+    static DateTimeFormatter LOCAL_TIME;
+
+    static {
+        LOCAL_TIME = new DateTimeFormatterBuilder() //
+                .appendValue(HOUR_OF_DAY, 1, 2, SignStyle.NORMAL)//
+                .appendLiteral(':')//
+                .appendValue(MINUTE_OF_HOUR, 1, 2, SignStyle.NORMAL)//
+
+                .optionalStart()//
+                .appendLiteral('.')//
+                .appendValue(SECOND_OF_MINUTE, 1, 2, SignStyle.NORMAL)//
+                .optionalEnd()//
+
+                .optionalStart()//
+                .appendLiteral(':')//
+                .appendValue(SECOND_OF_MINUTE, 1, 2, SignStyle.NORMAL)//
+                .optionalStart()//
+                .appendFraction(NANO_OF_SECOND, 0, 9, true)//
+                .optionalEnd()//
+                .optionalEnd()//
+
+                .toFormatter();
+    }
+
+    static LocalTime parseLocalTime(String str, IDateTimeParseOptions options)
             throws ParseException {
         if (str.isEmpty())
             return null;
-        if (!isLocalTimeLike(str))
-            throw new ParseException("Not a LocalTime temporal: " + str);
 
         str = Parsers.timePart(str);
+
+        // PATCH: Handle exception: HH:mm.ss
+        int lastDot = str.lastIndexOf('.');
+        if (lastDot != -1) {
+            int colon = str.indexOf(':');
+            if (colon != -1) {
+                int colon2 = str.indexOf(':', colon + 1);
+                if (colon2 == -1) {
+                    str = str.substring(0, lastDot) + ":" + str.substring(lastDot + 1);
+                }
+            }
+        }
+
+        if (!isLocalTimeLike(str, options))
+            throw new ParseException("Not a LocalTime temporal: " + str);
+
         try {
-            return LocalTime.parse(str);
+            return LOCAL_TIME.parse(str, LocalTime::from);
         } catch (DateTimeParseException e) {
             throw new ParseException("Not a LocalTime temporal: " + str, e);
         }
@@ -1260,54 +1410,54 @@ public abstract class AbstractBasicTokenQueue
     // ----------------------------------------- GROUP: Instant -----------------------------------------
 
     @Override
-    public Instant getInstant(int index)
+    public Instant getInstant(int index, IDateTimeParseOptions options)
             throws ParseException {
         String token = get(index);
-        return parseInstant(token);
+        return parseInstant(token, options);
     }
 
     @Override
-    public Instant getInstant(int index, Instant fallback) {
+    public Instant getInstant(int index, IDateTimeParseOptions options, Instant fallback) {
         String token = get(index);
-        if (!isInstantLike(token))
+        if (!isInstantLike(token, options))
             return fallback;
         try {
-            return parseInstant(token);
+            return parseInstant(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
     @Override
-    public Instant peekInstantAt(int offset)
+    public Instant peekInstantAt(int offset, IDateTimeParseOptions options)
             throws ParseException {
         String token = peekAt(offset);
-        return parseInstant(token);
+        return parseInstant(token, options);
     }
 
     @Override
-    public Instant peekInstantAt(int offset, Instant fallback) {
+    public Instant peekInstantAt(int offset, IDateTimeParseOptions options, Instant fallback) {
         String token = peekAt(offset);
         if (token == null)
             return fallback;
-        if (!isInstantLike(token))
+        if (!isInstantLike(token, options))
             return fallback;
         try {
-            return parseInstant(token);
+            return parseInstant(token, options);
         } catch (ParseException e) {
             return fallback;
         }
     }
 
-    static boolean isInstantLike(String str) {
+    static boolean isInstantLike(String str, IDateTimeParseOptions options) {
         return true;
     }
 
-    static Instant parseInstant(String str)
+    static Instant parseInstant(String str, IDateTimeParseOptions options)
             throws ParseException {
         if (str.isEmpty())
             return null;
-        if (!isInstantLike(str))
+        if (!isInstantLike(str, options))
             throw new ParseException("Not a Instant temporal: " + str);
         try {
             return Instant.parse(str);
