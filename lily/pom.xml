@@ -33,8 +33,9 @@
         <module>fab-types</module>
         <module>fab-dao</module>
         <module>fab-ws</module>
-        <module>lily-site</module>
+        <module>lily-xnet</module>
         <module>lily-tools</module>
+        <module>lily-site</module>
         <module>build</module>
     </modules>
     <properties>
