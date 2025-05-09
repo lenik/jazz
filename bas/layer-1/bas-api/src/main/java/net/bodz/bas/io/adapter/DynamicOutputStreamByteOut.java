@@ -25,6 +25,12 @@ public abstract class DynamicOutputStreamByteOut
     }
 
     @Override
+    public void writeByte(int b)
+            throws IOException {
+        getOutputStream().write(b);
+    }
+
+    @Override
     public void write(@NotNull byte[] buf)
             throws IOException {
         getOutputStream().write(buf);

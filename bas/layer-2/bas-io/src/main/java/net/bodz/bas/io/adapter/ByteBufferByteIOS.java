@@ -69,7 +69,7 @@ public class ByteBufferByteIOS
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
-    public void write(int b)
+    public void writeByte(int b)
             throws IOException {
         buf.put((byte) b);
     }

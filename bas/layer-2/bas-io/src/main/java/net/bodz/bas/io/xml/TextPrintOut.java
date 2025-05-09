@@ -13,7 +13,7 @@ public class TextPrintOut
     }
 
     @Override
-    public void write(int ch) {
+    public void writeChar(int ch) {
         out.text(String.valueOf((char) ch));
     }
 

@@ -39,10 +39,6 @@ public class NullDataOut
     }
 
     @Override
-    public void write(int b) {
-    }
-
-    @Override
     public void write(@NotNull byte[] buf) {
     }
 

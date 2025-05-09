@@ -18,9 +18,9 @@ public abstract class DecoratedCharOut
     }
 
     @Override
-    public void write(int ch)
+    public void writeChar(int ch)
             throws IOException {
-        getWrapped().write(ch);
+        getWrapped().writeChar(ch);
     }
 
     @Override

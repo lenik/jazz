@@ -163,7 +163,13 @@ public abstract class AbstractLogSink
     }
 
     @Override
-    public void write(int ch)
+    public final void write(int ch)
+            throws IOException {
+        writeChar(ch);
+    }
+
+    @Override
+    public void writeChar(int ch)
             throws IOException {
         if (ch == '\n')
             _done();

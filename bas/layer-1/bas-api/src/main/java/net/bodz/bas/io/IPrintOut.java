@@ -45,7 +45,7 @@ public interface IPrintOut
 
     default void print(char c) {
         try {
-            write(c);
+            writeChar(c);
         } catch (IOException e) {
             throw new PrintException(e);
         }
@@ -98,7 +98,7 @@ public interface IPrintOut
 
     default void println() {
         try {
-            write('\n');
+            writeChar('\n');
         } catch (IOException e) {
             throw new PrintException(e);
         }

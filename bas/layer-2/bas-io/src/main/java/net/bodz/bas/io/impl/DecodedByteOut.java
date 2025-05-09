@@ -23,9 +23,13 @@ public class DecodedByteOut
     private final ICharOut charOut;
     private final CharsetDecoder decoder;
 
-    /** The encode input buffer */
+    /**
+     * The encode input buffer
+     */
     private ByteBuffer byteBuffer;
-    /** The encode output buffer */
+    /**
+     * The encode output buffer
+     */
     private CharBuffer charBuffer;
 
     int __chunks;
@@ -50,7 +54,15 @@ public class DecodedByteOut
     }
 
     @Override
-    public void write(int byt)
+    public void write(int b)
+            throws IOException {
+        byteBuffer.put((byte) b);
+        conv(false);
+        __chunks++;
+    }
+
+    @Override
+    public void writeByte(int byt)
             throws IOException {
         byteBuffer.put((byte) byt);
         conv(false);
@@ -90,7 +102,7 @@ public class DecodedByteOut
         if (result.isError()) {
             byte errorByte = byteBuffer.get();
             char errorChar = (char) (errorByte & 0xff);
-            charOut.write(errorChar);
+            charOut.writeChar(errorChar);
         }
 
         charBuffer.flip();

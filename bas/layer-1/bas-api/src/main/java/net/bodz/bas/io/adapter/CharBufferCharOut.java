@@ -27,6 +27,12 @@ public class CharBufferCharOut
     }
 
     @Override
+    public void writeChar(int ch)
+            throws IOException {
+        buf.put((char) ch);
+    }
+
+    @Override
     public void write(@NotNull char[] src, int off, int len)
             throws IOException {
         buf.put(src, off, len);

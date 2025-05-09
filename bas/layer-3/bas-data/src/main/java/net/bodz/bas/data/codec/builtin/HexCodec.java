@@ -97,7 +97,7 @@ public class HexCodec
                         if (column.length() == 0)
                             column.append('0');
                         for (int pad = column.length(); pad < width; pad++)
-                            out.write(paddingChar);
+                            out.writeChar(paddingChar);
                         out.write(column);
                         column.setLength(0);
 
@@ -128,7 +128,7 @@ public class HexCodec
             if (column.length() == 0)
                 column.append('0');
             for (int pad = column.length(); pad < width; pad++)
-                out.write(paddingChar);
+                out.writeChar(paddingChar);
             out.write(column);
         }
     }
@@ -143,7 +143,7 @@ public class HexCodec
             if (StringSearch.contains(columnSeparator, ch) || StringSearch.contains(rowSeparator, ch)
                     || Character.isWhitespace(c)) {
                 if (digits != 0) {
-                    out.write(byt);
+                    out.writeByte(byt);
                     byt = 0;
                     digits = 0;
                 }
@@ -155,13 +155,13 @@ public class HexCodec
                 digits = 1;
             } else {
                 byt = (byt << 4) | hexval;
-                out.write(byt);
+                out.writeByte(byt);
                 byt = 0;
                 digits = 0;
             }
         }
         if (digits != 0)
-            out.write(byt);
+            out.writeByte(byt);
     }
 
     public static HexCodec getInstance() {

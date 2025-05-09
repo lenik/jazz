@@ -82,15 +82,15 @@ public class CharWidthConverter {
                 }
 
             if (spaceBefore)
-                out.write(' ');
+                out.writeChar(' ');
 
             if (convstr != null)
                 out.write(convstr);
             else
-                out.write(ch);
+                out.writeChar(ch);
 
             if (spaceAfter)
-                out.write(' ');
+                out.writeChar(' ');
         }
     }
 
@@ -141,7 +141,7 @@ public class CharWidthConverter {
                 }
                 removeNextSpace = f2hSpaceAfterSet.contains(ch);
             }
-            _out.write(lastCh = ch);
+            _out.writeChar(lastCh = ch);
         }
         _out.flush();
     }

@@ -30,6 +30,12 @@ public class PrintStreamPrintOut
     }
 
     @Override
+    public void writeChar(int ch)
+            throws IOException {
+        ps.print((char) ch);
+    }
+
+    @Override
     public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         ps.print(Arrays.copyOfRange(chars, off, off + len));

@@ -21,7 +21,13 @@ public class ByteBufferByteOut
     }
 
     @Override
-    public void write(int b) {
+    public void write(int b)
+            throws IOException {
+        buf.put((byte) b);
+    }
+
+    @Override
+    public void writeByte(int b) {
         buf.put((byte) b);
     }
 

@@ -29,7 +29,13 @@ public class DataOutImplBE
     @Override
     public void write(int b)
             throws IOException {
-        baseImpl.write(b);
+        baseImpl.writeByte(b);
+    }
+
+    @Override
+    public void writeByte(int b)
+            throws IOException {
+        baseImpl.writeByte(b);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class ByteOutOutputStream
     @Override
     public void write(int b)
             throws IOException {
-        byteOut.write(b);
+        byteOut.writeByte(b);
     }
 
     @Override

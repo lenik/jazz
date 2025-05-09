@@ -49,6 +49,12 @@ public class BufCharOut
     }
 
     @Override
+    public void writeChar(int ch)
+            throws IOException {
+        buffer.append((char) ch);
+    }
+
+    @Override
     public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         buffer.append(chars, off, len);

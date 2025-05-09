@@ -100,7 +100,7 @@ public class DecimalCodec
                         // flush
                         String s = Long.toString(val, radix);
                         for (int pad = s.length(); pad < width; pad++)
-                            out.write(paddingChar);
+                            out.writeChar(paddingChar);
                         out.write(s);
                         val = 0;
 
@@ -121,7 +121,7 @@ public class DecimalCodec
         if (byteIndex != 0) { // flush
             String s = Long.toString(val, radix);
             for (int pad = s.length(); pad < width; pad++)
-                out.write(paddingChar);
+                out.writeChar(paddingChar);
             out.write(s);
             val = 0;
         }
@@ -146,7 +146,7 @@ public class DecimalCodec
                         val >>= 8;
                     }
                     for (int i = bytesPerColumn - 1; i >= 0; i--)
-                        out.write(column[i]);
+                        out.writeByte(column[i]);
                     val = 0;
                     digits = 0;
                 }

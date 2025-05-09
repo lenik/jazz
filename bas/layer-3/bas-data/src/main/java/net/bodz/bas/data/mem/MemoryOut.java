@@ -32,9 +32,15 @@ public class MemoryOut
 
     private final byte[] buf1 = { 0 };
 
+    @Override
+    public final void write(int b)
+            throws IOException {
+        writeByte(b);
+    }
+
     @ThreadUnsafe
     @Override
-    public void write(int b)
+    public void writeByte(int b)
             throws IOException {
         if (size == 0)
             throw new IOException("overflow");

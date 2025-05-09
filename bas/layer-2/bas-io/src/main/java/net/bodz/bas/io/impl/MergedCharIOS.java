@@ -87,9 +87,9 @@ public class MergedCharIOS
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
-    public void write(int ch)
+    public void writeChar(int ch)
             throws IOException {
-        out.write(ch);
+        out.writeChar(ch);
     }
 
     @Override

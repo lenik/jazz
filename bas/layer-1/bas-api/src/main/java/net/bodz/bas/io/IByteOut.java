@@ -28,7 +28,7 @@ public interface IByteOut
             throws IOException {
         int end = off + len;
         for (int i = off; i < end; i++)
-            write(buf[i]);
+            writeByte(buf[i]);
     }
 
     /**

@@ -459,7 +459,7 @@ public class DomWriter
     }
 
     @Override
-    public void write(int ch)
+    public void writeChar(int ch)
             throws IOException {
         String s = new String(new int[] { ch }, 0, 1);
         text(s);

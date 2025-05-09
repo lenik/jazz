@@ -70,9 +70,9 @@ public class MergedByteIOS
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
-    public void write(int b)
+    public void writeByte(int b)
             throws IOException {
-        out.write(b);
+        out.writeByte(b);
     }
 
     @Override

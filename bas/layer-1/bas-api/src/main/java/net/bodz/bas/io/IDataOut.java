@@ -9,12 +9,12 @@ import net.bodz.bas.io.impl.NullDataOut;
  * The byte-order of this interface is undefined.
  */
 public interface IDataOut
-        extends
-            IByteOut,
-            ICharsetAware {
+        extends IByteOut,
+                ICharsetAware {
 
     boolean isBigEndian();
 
+    @Override
     void writeByte(int b)
             throws IOException;
 

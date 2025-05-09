@@ -23,9 +23,9 @@ public class DecoratedByteOut
     }
 
     @Override
-    public void write(int b)
+    public void writeByte(int b)
             throws IOException {
-        getWrapped().write(b);
+        getWrapped().writeByte(b);
     }
 
     @Override

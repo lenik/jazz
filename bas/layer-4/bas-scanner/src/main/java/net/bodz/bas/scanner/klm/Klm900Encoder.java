@@ -28,7 +28,7 @@ public class Klm900Encoder {
     public Klm900Encoder(IByteOut out, int type)
             throws IOException {
         this.out = out;
-        out.write(0xBB); // SOT
+        out.writeByte(0xBB); // SOT
         write(type);
     }
 
@@ -36,8 +36,8 @@ public class Klm900Encoder {
             throws IOException {
         if (end)
             throw new IllegalStateException("Already end.");
-        out.write(checksum);
-        out.write(0x7E); // EOT
+        out.writeByte(checksum);
+        out.writeByte(0x7E); // EOT
         end = true;
     }
 
@@ -72,7 +72,7 @@ public class Klm900Encoder {
 
     public void write(int byt)
             throws IOException {
-        out.write(byt);
+        out.writeByte(byt);
         checksum += byt;
     }
 
@@ -80,8 +80,8 @@ public class Klm900Encoder {
             throws IOException {
         int hi = (word >> 8) & 0xFF;
         int lo = (word & 0xFF);
-        out.write(hi);
-        out.write(lo);
+        out.writeByte(hi);
+        out.writeByte(lo);
         checksum += hi + lo;
     }
 
@@ -90,7 +90,7 @@ public class Klm900Encoder {
         for (int i = 0; i < 4; i++) {
             int byt = (dword >> 24) & 0xFF;
             dword <<= 8;
-            out.write(byt);
+            out.writeByte(byt);
             checksum += byt;
         }
     }

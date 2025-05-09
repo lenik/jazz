@@ -1,5 +1,6 @@
 package net.bodz.bas.io;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.CharBuffer;
 
@@ -50,6 +51,12 @@ public class BCharOut
     @Override
     public void write(int c) {
         buffer.append((char) c);
+    }
+
+    @Override
+    public void writeChar(int ch)
+            throws IOException {
+        buffer.append((char) ch);
     }
 
     @Override

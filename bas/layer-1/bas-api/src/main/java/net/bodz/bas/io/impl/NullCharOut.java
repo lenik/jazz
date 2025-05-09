@@ -1,5 +1,6 @@
 package net.bodz.bas.io.impl;
 
+import java.io.IOException;
 import java.io.Writer;
 import java.nio.CharBuffer;
 
@@ -12,6 +13,11 @@ public class NullCharOut
 
     @Override
     public void write(int ch) {
+    }
+
+    @Override
+    public void writeChar(int ch)
+            throws IOException {
     }
 
     @Override

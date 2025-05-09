@@ -18,10 +18,10 @@ public class UndoableCharOut
     }
 
     @Override
-    public void write(int ch)
+    public void writeChar(int ch)
             throws IOException {
         if (preWrite != -1)
-            out.write(preWrite);
+            out.writeChar(preWrite);
         preWrite = ch;
     }
 
@@ -48,7 +48,7 @@ public class UndoableCharOut
     public void flush()
             throws IOException {
         if (preWrite != -1)
-            out.write(preWrite);
+            out.writeChar(preWrite);
     }
 
 }

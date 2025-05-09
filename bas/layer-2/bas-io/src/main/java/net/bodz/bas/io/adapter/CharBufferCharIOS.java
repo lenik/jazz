@@ -68,7 +68,7 @@ public class CharBufferCharIOS
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
-    public void write(int ch)
+    public void writeChar(int ch)
             throws IOException {
         buf.put((char) ch);
     }

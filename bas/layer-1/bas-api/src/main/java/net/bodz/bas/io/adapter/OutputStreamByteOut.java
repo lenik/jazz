@@ -23,6 +23,12 @@ public class OutputStreamByteOut
     }
 
     @Override
+    public void writeByte(int b)
+            throws IOException {
+        out.write(b);
+    }
+
+    @Override
     public void write(@NotNull byte[] buf)
             throws IOException {
         out.write(buf);

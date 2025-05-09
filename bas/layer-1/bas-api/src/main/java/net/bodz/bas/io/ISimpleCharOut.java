@@ -9,13 +9,13 @@ public interface ISimpleCharOut
      * @param ch The character to be written is contained in the 16 low-order bits of the given
      *           integer value; the 16 high-order bits are ignored.
      */
-    void write(int ch)
+    void writeChar(int ch)
             throws IOException;
 
     @Override
     default Appendable append(char c)
             throws IOException {
-        write(c);
+        writeChar(c);
         return this;
     }
 
@@ -34,7 +34,7 @@ public interface ISimpleCharOut
     default Appendable append(CharSequence csq, int start, int end)
             throws IOException {
         for (int i = start; i < end; i++)
-            write(csq.charAt(i));
+            writeChar(csq.charAt(i));
         return this;
     }
 

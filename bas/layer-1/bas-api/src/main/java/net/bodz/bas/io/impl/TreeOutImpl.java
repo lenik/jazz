@@ -168,15 +168,21 @@ public class TreeOutImpl
     /* _____________________________ */static section.iface __CHAR__;
 
     @Override
-    public void write(@NotNull char[] chars, int off, int len)
+    public void write(int c)
             throws IOException {
-        printOut.write(chars, off, len);
+        printOut.writeChar(c);
     }
 
     @Override
-    public void write(int ch)
+    public void writeChar(int ch)
             throws IOException {
-        printOut.write(ch);
+        printOut.writeChar(ch);
+    }
+
+    @Override
+    public void write(@NotNull char[] chars, int off, int len)
+            throws IOException {
+        printOut.write(chars, off, len);
     }
 
     @Override

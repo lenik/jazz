@@ -24,6 +24,12 @@ public abstract class DynamicPrintStreamPrintOut
     }
 
     @Override
+    public void writeChar(int ch)
+            throws IOException {
+        getPrintStream().print((char) ch);
+    }
+
+    @Override
     public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         getPrintStream().print(Arrays.copyOfRange(chars, off, off + len));

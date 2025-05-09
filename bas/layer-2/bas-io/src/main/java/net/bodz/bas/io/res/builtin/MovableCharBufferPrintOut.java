@@ -35,6 +35,14 @@ public class MovableCharBufferPrintOut
     }
 
     @Override
+    public void writeChar(int ch)
+            throws IOException {
+        ensureOpen();
+        buffer.ensureSize(position + 1);
+        buffer.charAt(position++, (char) ch);
+    }
+
+    @Override
     public synchronized void write(@NotNull char[] buf, int off, int len)
             throws IOException {
         ensureOpen();

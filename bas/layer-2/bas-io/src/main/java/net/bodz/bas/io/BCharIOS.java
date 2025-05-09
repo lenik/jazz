@@ -105,12 +105,12 @@ public class BCharIOS
     /* _____________________________ */static section.iface __OUT__;
 
     @Override
-    public void write(int b)
+    public void writeChar(int ch)
             throws IOException {
         ensureOpen();
         if (ap >= end)
             throw new EOFException();
-        buf[ap++] = (char) b;
+        buf[ap++] = (char) ch;
     }
 
     @Override

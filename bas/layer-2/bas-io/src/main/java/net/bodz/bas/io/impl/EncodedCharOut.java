@@ -52,7 +52,7 @@ public class EncodedCharOut
     }
 
     @Override
-    public void write(int ch)
+    public void writeChar(int ch)
             throws IOException {
         // charBuffer: ****|______________| byteBuffer: ****|________|
         charBuffer.put((char) ch);

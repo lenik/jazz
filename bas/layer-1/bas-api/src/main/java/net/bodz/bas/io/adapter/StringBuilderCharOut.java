@@ -23,6 +23,12 @@ public class StringBuilderCharOut
     }
 
     @Override
+    public void writeChar(int ch)
+            throws IOException {
+        sb.append((char) ch);
+    }
+
+    @Override
     public void write(@NotNull char[] chars, int off, int len)
             throws IOException {
         sb.append(chars, off, len);

@@ -10,9 +10,8 @@ import net.bodz.bas.t.model.IWrapper;
 
 public class DecoratedDataOut
         extends AbstractDecorator<IDataOut>
-        implements
-            IWrapper<IDataOut>,
-            IDataOut {
+        implements IWrapper<IDataOut>,
+                   IDataOut {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,9 +20,9 @@ public class DecoratedDataOut
     }
 
     @Override
-    public void write(int b)
+    public void writeByte(int b)
             throws IOException {
-        getWrapped().write(b);
+        getWrapped().writeByte(b);
     }
 
     @Override
@@ -63,12 +62,6 @@ public class DecoratedDataOut
     @Override
     public void setCharset(Charset charset) {
         getWrapped().setCharset(charset);
-    }
-
-    @Override
-    public void writeByte(int b)
-            throws IOException {
-        getWrapped().writeByte(b);
     }
 
     @Override

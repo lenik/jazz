@@ -20,7 +20,7 @@ public class SerialEp6000Test {
                 if (ch == -1)
                     break L;
 
-                buf.write(ch);
+                buf.writeByte(ch);
 
                 if (ch == '\n') {
                     byte[] pkt = buf.flip();

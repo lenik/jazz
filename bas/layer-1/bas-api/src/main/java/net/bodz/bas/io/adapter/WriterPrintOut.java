@@ -29,6 +29,12 @@ public class WriterPrintOut
     }
 
     @Override
+    public void writeChar(int ch)
+            throws IOException {
+        writer.write(ch);
+    }
+
+    @Override
     public void write(@NotNull char[] chars)
             throws IOException {
         writer.write(chars);

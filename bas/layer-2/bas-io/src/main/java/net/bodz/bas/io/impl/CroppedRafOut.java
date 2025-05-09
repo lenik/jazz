@@ -46,6 +46,12 @@ public class CroppedRafOut
     @Override
     public void write(int b)
             throws IOException {
+        writeByte(b);
+    }
+
+    @Override
+    public void writeByte(int b)
+            throws IOException {
         ensureOpen();
 
         if (ap >= end)

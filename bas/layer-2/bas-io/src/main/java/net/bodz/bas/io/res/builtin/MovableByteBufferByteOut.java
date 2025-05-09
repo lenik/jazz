@@ -25,7 +25,13 @@ public class MovableByteBufferByteOut
     }
 
     @Override
-    public synchronized void write(int b)
+    public final void write(int b)
+            throws IOException {
+        writeByte(b);
+    }
+
+    @Override
+    public synchronized void writeByte(int b)
             throws IOException {
         checkIfClosed();
         buffer.ensureSize(position + 1);

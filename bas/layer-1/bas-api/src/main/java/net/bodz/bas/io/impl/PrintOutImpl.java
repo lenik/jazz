@@ -42,9 +42,9 @@ public class PrintOutImpl
     }
 
     @Override
-    public void write(int c)
+    public void writeChar(int c)
             throws IOException {
-        baseImpl.write(c);
+        baseImpl.writeChar(c);
     }
 
     @Override

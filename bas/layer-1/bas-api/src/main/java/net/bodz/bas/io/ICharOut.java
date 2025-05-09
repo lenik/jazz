@@ -52,7 +52,7 @@ public interface ICharOut
             throws IOException {
         for (int i = start; i < end; i++) {
             char ch = chars.charAt(i);
-            write(ch);
+            writeChar(ch);
         }
     }
 //
