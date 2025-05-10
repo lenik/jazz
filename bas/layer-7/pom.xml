@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-ant</module>
+        <module>bas-apps</module>
         <module>bas-codegen</module>
         <module>bas-esm-skel01</module>
         <module>bas-httpd</module>
