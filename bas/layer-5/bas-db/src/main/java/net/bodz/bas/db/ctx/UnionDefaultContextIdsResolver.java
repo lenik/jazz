@@ -2,7 +2,6 @@ package net.bodz.bas.db.ctx;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ServiceLoader;
@@ -13,10 +12,9 @@ import net.bodz.bas.t.order.PriorityComparator;
 
 @ExcludedFromIndex
 public class UnionDefaultContextIdsResolver
-        implements
-            IDefaultContextIdsResolver {
+        implements IDefaultContextIdsResolver {
 
-    private List<IDefaultContextIdsResolver> resolvers;
+    private final List<IDefaultContextIdsResolver> resolvers = new ArrayList<>();
     private int maxLevel;
 
     public UnionDefaultContextIdsResolver() {
@@ -24,10 +22,10 @@ public class UnionDefaultContextIdsResolver
     }
 
     public void reload() {
-        resolvers = new ArrayList<>();
+        resolvers.clear();
         for (IDefaultContextIdsResolver resolver : ServiceLoader.load(IDefaultContextIdsResolver.class))
             resolvers.add(resolver);
-        Collections.sort(resolvers, PriorityComparator.INSTANCE);
+        resolvers.sort(PriorityComparator.INSTANCE);
 
         int maxOfAll = 0;
         for (IDefaultContextIdsResolver resolver : resolvers) {
@@ -58,16 +56,9 @@ public class UnionDefaultContextIdsResolver
         return union;
     }
 
-    private static UnionDefaultContextIdsResolver instance;
+    private static final UnionDefaultContextIdsResolver instance = new UnionDefaultContextIdsResolver();
 
     public static UnionDefaultContextIdsResolver getInstance() {
-        if (instance == null) {
-            synchronized (UnionDefaultContextIdsResolver.class) {
-                if (instance == null) {
-                    instance = new UnionDefaultContextIdsResolver();
-                }
-            }
-        }
         return instance;
     }
 

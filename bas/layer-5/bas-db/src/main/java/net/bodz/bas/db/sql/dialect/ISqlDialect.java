@@ -9,11 +9,11 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZonedDateTime;
-import java.util.StringTokenizer;
 
 import net.bodz.bas.c.java.time.DateTimes;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
+import net.bodz.bas.db.sql.DataType;
 
 public interface ISqlDialect {
 
@@ -149,5 +149,17 @@ public interface ISqlDialect {
                 return qString(value.toString());
         }
     }
+
+    default DataType getDefaultType(int sqlType) {
+        return getDefaultType(sqlType, null);
+    }
+
+    default DataType getDefaultType(String sqlTypeName) {
+        return getDefaultType(0, sqlTypeName);
+    }
+
+    DataType getDefaultType(int sqlType, String sqlTypeName);
+
+    DataType getDefaultType(Class<?> javaClass);
 
 }

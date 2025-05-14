@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ResultSets {
 
-    public static ResultRows iterate(ResultSet rs) {
+    public static ResultRows toIterable(ResultSet rs) {
         if (rs == null)
             throw new NullPointerException("rs");
         return new ResultRows(rs);

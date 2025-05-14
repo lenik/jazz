@@ -23,8 +23,7 @@ public class DatabaseType
     private final String urlFormat;
     private final ISqlDialect sqlDialect;
 
-    public DatabaseType(String name, String hibernateDialect, String driverClass, String urlFormat,
-            ISqlDialect sqlFormat) {
+    public DatabaseType(String name, String hibernateDialect, String driverClass, String urlFormat, ISqlDialect sqlFormat) {
         super(name, name, meta);
         this.hibernateDialect = hibernateDialect;
         this.driverClass = driverClass;
@@ -55,7 +54,7 @@ public class DatabaseType
         return getConnectionUrl(refMap);
     }
 
-    public ISqlDialect getSqlFormat() {
+    public ISqlDialect getDialect() {
         return sqlDialect;
     }
 

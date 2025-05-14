@@ -29,9 +29,8 @@ import net.bodz.bas.t.tuple.QualifiedName;
 
 public class DefaultTableMetadata
         extends DefaultRowSetMetadata
-        implements
-            ITableMetadata,
-            IMutableJavaType {
+        implements ITableMetadata,
+                   IMutableJavaType {
 
     static final Logger logger = LoggerFactory.getLogger(DefaultTableMetadata.class);
 
@@ -51,8 +50,8 @@ public class DefaultTableMetadata
     String label;
     String description;
     protected TableKey primaryKey;
-    private Map<String, CrossReference> foreignKeys = new LinkedHashMap<>();
-    private Map<String, CrossReference> columnForeignKeyMap = new HashMap<>();
+    final Map<String, CrossReference> foreignKeys = new LinkedHashMap<>();
+    final Map<String, CrossReference> columnForeignKeyMap = new HashMap<>();
 
     public DefaultTableMetadata() {
     }
@@ -275,14 +274,14 @@ public class DefaultTableMetadata
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(//
                 "select * from " + getCompactName() + " where 1=2");
-        loadFromRSMD(rs.getMetaData());
+        readObject(rs.getMetaData());
         rs.close();
     }
 
     @Override
-    public void loadFromRSMD(ResultSetMetaData rsmd)
+    public void readObject(ResultSetMetaData rsmd)
             throws SQLException {
-        super.loadFromRSMD(rsmd);
+        super.readObject(rsmd);
 
         int columnOfThisTable = 1;
         oid.catalogName = rsmd.getCatalogName(columnOfThisTable);
@@ -291,8 +290,7 @@ public class DefaultTableMetadata
     }
 
     class TableHandler
-            implements
-                IJDBCMetaDataHandler {
+            implements IJDBCMetaDataHandler {
 
         @Override
         public ITableMetadata table(ResultSet rs)
@@ -383,7 +381,7 @@ public class DefaultTableMetadata
                     oid.catalogName, oid.schemaName, oid.tableName);
             ListMap<TableOid, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
             assert foreignMap.size() <= 1;
-            if (! foreignMap.isEmpty()) {
+            if (!foreignMap.isEmpty()) {
                 List<CrossReference> parentList = foreignMap.values().iterator().next();
                 for (CrossReference crossRef : parentList)
                     metaDataHandler.crossReference(this, crossRef);
@@ -424,7 +422,9 @@ public class DefaultTableMetadata
         return tableType + " " + oid.getCompactName(ns) + "(" + getColumnNames() + ")";
     }
 
-    /** ⇱ Java runtime binding */
+    /**
+     * ⇱ Java runtime binding
+     */
     /* _____________________________ */static section.iface __JAVA_BIND__;
 
     boolean excluded;
@@ -439,7 +439,7 @@ public class DefaultTableMetadata
     }
 
     private synchronized void resolveType() {
-        if (! resolved) {
+        if (!resolved) {
             QualifiedName javaType = getJavaType();
             if (javaType != null) {
                 javaClass = javaType.getJavaClass();
@@ -448,6 +448,8 @@ public class DefaultTableMetadata
                         potatoType = PotatoTypes.getInstance().loadType(javaClass);
                     } catch (NoClassDefFoundError e) {
                         assert false;
+                    } catch (com.thoughtworks.qdox.parser.ParseException e) {
+                        // ignore
                     }
             }
             resolved = true;
@@ -473,8 +475,7 @@ public class DefaultTableMetadata
                 return null;
             int lt = baseTypeName.indexOf('<');
             String rawName = lt == -1 //
-                    ? baseTypeName
-                    : baseTypeName.substring(0, lt);
+                    ? baseTypeName : baseTypeName.substring(0, lt);
             try {
                 baseClass = Class.forName(rawName);
             } catch (ClassNotFoundException e) {

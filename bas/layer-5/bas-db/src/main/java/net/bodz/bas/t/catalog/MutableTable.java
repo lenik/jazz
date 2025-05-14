@@ -48,7 +48,7 @@ public class MutableTable
     public static MutableTable fromResultSet(ResultSet resultSet, Long limit)
             throws SQLException {
         DefaultTableMetadata metadata = new DefaultTableMetadata();
-        metadata.loadFromRSMD(resultSet.getMetaData());
+        metadata.readObject(resultSet.getMetaData());
         MutableTable table = new MutableTable(metadata);
         table.consume(resultSet, limit);
         return table;

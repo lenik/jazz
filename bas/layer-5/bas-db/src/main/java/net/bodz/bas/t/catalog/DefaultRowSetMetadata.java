@@ -18,8 +18,7 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.order.OrdinalComparator;
 
 public class DefaultRowSetMetadata
-        implements
-            IRowSetMetadata {
+        implements IRowSetMetadata {
 
     static final int MAX_SPARSE_COLUMNS = 1000;
 
@@ -78,7 +77,7 @@ public class DefaultRowSetMetadata
             if (ret == null)
                 pos = -1;
             else
-                pos = ret.intValue();
+                pos = ret;
         }
         if (pos == -1)
             return null;
@@ -154,7 +153,7 @@ public class DefaultRowSetMetadata
     }
 
     public void sortColumns() {
-        Collections.sort(this.columns, OrdinalComparator.INSTANCE);
+        columns.sort(OrdinalComparator.INSTANCE);
     }
 
     @Override
@@ -185,7 +184,14 @@ public class DefaultRowSetMetadata
         sortColumns();
     }
 
-    public void loadFromRSMD(ResultSetMetaData rsmd)
+    public static DefaultRowSetMetadata parse(ResultSetMetaData rsmd)
+            throws SQLException {
+        DefaultRowSetMetadata o = new DefaultRowSetMetadata();
+        o.readObject(rsmd);
+        return o;
+    }
+
+    public void readObject(ResultSetMetaData rsmd)
             throws SQLException {
         int cc = rsmd.getColumnCount();
         for (int i = 1; i <= cc; i++) {

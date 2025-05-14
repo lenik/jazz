@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.db.sql.DataType;
+import net.bodz.bas.db.sql.dialect.ISqlDialect;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -21,15 +23,15 @@ import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.tuple.QualifiedName;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
 
 public class DefaultColumnMetadata
-        implements
-            IColumnMetadata,
-            IMutableJavaQName {
+        implements IColumnMetadata,
+                   IMutableJavaQName {
 
     IRowSetMetadata parent;
     TableOid tableOid;
@@ -45,10 +47,14 @@ public class DefaultColumnMetadata
     String label;
     String description; // comment..
 
-    Class<?> javaClass = String.class;
-    JdbcType jdbcType = JdbcType.VARCHAR;
+    Class<?> javaClass;
+
+    DataType dataType;
+
     int sqlType;
     String sqlTypeName;
+    String sqlClassName;
+    Class<?> sqlClass;
 
     boolean jsonType;
     boolean xmlType;
@@ -60,8 +66,8 @@ public class DefaultColumnMetadata
     boolean caseSensitive;
     boolean searchable;
     boolean currency;
-    Boolean nullable;
-    Boolean signed;
+    NullableType nullableType;
+    boolean signed;
     boolean readOnly;
     boolean writable;
     boolean definitelyWritable;
@@ -209,19 +215,44 @@ public class DefaultColumnMetadata
         xmlType = IXmlForm.class.isAssignableFrom(javaClass);
     }
 
+    public String getJavaClassName() {
+        if (javaClass == null)
+            return null;
+        else
+            return javaClass.getName();
+    }
+
+    public void setJavaClassName(String className) {
+        Class<?> clazz;
+        try {
+            clazz = Class.forName(className);
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalArgumentException(e.getMessage(), e);
+        }
+        setJavaClass(clazz);
+    }
+
     @Override
-    public JdbcType getJdbcType() {
-        return jdbcType;
+    public DataType getDataType() {
+        return dataType;
     }
 
-    public void setJdbcType(int sqlTypeInt) {
-        this.sqlType = sqlTypeInt;
-        JdbcType jdbcType = JdbcType.forSQLType(sqlTypeInt, JdbcType.VARCHAR);
-        setJdbcType(jdbcType);
+    public void setDataType(DataType dataType) {
+        this.dataType = dataType;
+        this.sqlType = dataType.getSqlType();
+        this.sqlTypeName = dataType.getSqlTypeName();
     }
 
-    public void setJdbcType(JdbcType sqlType) {
-        this.jdbcType = sqlType;
+    public void updateDataType() {
+        ISqlDialect dialect = getDialect();
+        if (dialect == null)
+            throw new IllegalStateException("Can't determine the sql dialect.");
+
+        DataType type = dialect.getDefaultType(sqlType, sqlTypeName);
+        sqlClass = type == null ? null : type.getSqlClass();
+
+        if (javaClass == null)
+            javaClass = sqlClass;
     }
 
     @Override
@@ -242,15 +273,28 @@ public class DefaultColumnMetadata
         this.sqlTypeName = sqlTypeName;
     }
 
-    public void setJavaClassName(String className)
-            throws ParseException {
-        Class<?> clazz;
+    @Override
+    public String getSqlClassName() {
+        return sqlClassName;
+    }
+
+    public void setSqlClassName(String sqlClassName) {
+        this.sqlClassName = sqlClassName;
         try {
-            clazz = Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            throw new ParseException(e.getMessage(), e);
+            sqlClass = Class.forName(sqlClassName);
+        } catch (ReflectiveOperationException e) {
+            sqlClass = null;
         }
-        setJavaClass(clazz);
+    }
+
+    @Override
+    public Class<?> getSqlClass() {
+        return sqlClass;
+    }
+
+    public void setSqlClass(Class<?> sqlClass) {
+        this.sqlClass = sqlClass;
+        this.sqlClassName = sqlClass == null ? null : sqlClass.getName();
     }
 
     @Override
@@ -339,21 +383,22 @@ public class DefaultColumnMetadata
         this.unique = unique;
     }
 
+    @NotNull
     @Override
-    public Boolean getNullable() {
-        return nullable;
+    public NullableType getNullableType() {
+        return nullableType;
     }
 
-    public void setNullable(Boolean nullable) {
-        this.nullable = nullable;
+    public void setNullableType(NullableType nullableType) {
+        this.nullableType = nullableType;
     }
 
     @Override
-    public Boolean getSigned() {
+    public boolean isSigned() {
         return signed;
     }
 
-    public void setSigned(Boolean signed) {
+    public void setSigned(boolean signed) {
         this.signed = signed;
     }
 
@@ -464,7 +509,9 @@ public class DefaultColumnMetadata
         return name;
     }
 
-    /** ⇱ Implementation Of {@link interface}. */
+    /**
+     * ⇱ Implementation Of {@link interface}.
+     */
     /* _____________________________ */static section.iface __1__;
 
     @Override
@@ -507,7 +554,7 @@ public class DefaultColumnMetadata
             return;
         }
 
-        if (! javaClass.isInstance(value))
+        if (!javaClass.isInstance(value))
             throw new IllegalArgumentException("Not an instance of " + javaClass);
 
         if (jsonType) {
@@ -553,7 +600,7 @@ public class DefaultColumnMetadata
     public void writeColumnInXml(IXmlOutput out, Object value)
             throws XMLStreamException, FormatException {
         if (value != null) {
-            if (! javaClass.isInstance(value))
+            if (!javaClass.isInstance(value))
                 throw new IllegalArgumentException("Not an instance of " + javaClass);
 
             if (xmlType) {
@@ -570,7 +617,9 @@ public class DefaultColumnMetadata
         out.endElement();
     }
 
-    /** ⇱ Implementation Of {@link interface}. */
+    /**
+     * ⇱ Implementation Of {@link interface}.
+     */
     /* _____________________________ */static section.iface __RS__;
 
     public void readObject(ResultSetMetaData jdbcMetadata, int columnIndex)
@@ -578,29 +627,25 @@ public class DefaultColumnMetadata
         String name = jdbcMetadata.getColumnName(columnIndex);
         String label = jdbcMetadata.getColumnLabel(columnIndex);
 
-        String jdbcClassName = jdbcMetadata.getColumnClassName(columnIndex);
-        // int width = jdbcMetadata.getColumnDisplaySize(i);
-        int sqlType = jdbcMetadata.getColumnType(columnIndex);
-
         // this.setIndex(columnIndex - 1);
         this.setName(name);
-        if (! Nullables.equals(name, label))
+        if (!Nullables.equals(name, label))
             this.setLabel(label);
 
-        try {
-            this.setJavaClassName(jdbcClassName);
-        } catch (ParseException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-        this.setJdbcType(sqlType);
+        String sqlClassName = jdbcMetadata.getColumnClassName(columnIndex);
+        this.setJavaClassName(sqlClassName);
+
+        columnDisplaySize = jdbcMetadata.getColumnDisplaySize(columnIndex);
+        sqlType = jdbcMetadata.getColumnType(columnIndex);
+        sqlTypeName = jdbcMetadata.getColumnTypeName(columnIndex);
 
         autoIncrement = jdbcMetadata.isAutoIncrement(columnIndex);
         caseSensitive = jdbcMetadata.isCaseSensitive(columnIndex);
         searchable = jdbcMetadata.isSearchable(columnIndex);
         currency = jdbcMetadata.isCurrency(columnIndex);
-        int _nullable = jdbcMetadata.isNullable(columnIndex);
-        nullable = _nullable == ResultSetMetaData.columnNullableUnknown ? null
-                : _nullable == ResultSetMetaData.columnNullable;
+
+        nullableType = NullableType.ofIntValue(jdbcMetadata.isNullable(columnIndex));
+
         signed = jdbcMetadata.isSigned(columnIndex);
         readOnly = jdbcMetadata.isReadOnly(columnIndex);
         writable = jdbcMetadata.isWritable(columnIndex);
@@ -608,7 +653,8 @@ public class DefaultColumnMetadata
 
         precision = jdbcMetadata.getPrecision(columnIndex);
         scale = jdbcMetadata.getScale(columnIndex);
-        columnDisplaySize = jdbcMetadata.getColumnDisplaySize(columnIndex);
+
+        updateDataType();
     }
 
     public void readObject(ResultSet rs)
@@ -623,9 +669,9 @@ public class DefaultColumnMetadata
         // int bufferLength = rs.getInt("BUFFER_LENGTH");
         scale = rs.getInt("DECIMAL_DIGITS");
         // int numPrecRadix = rs.getInt("NUM_PREC_RADIX");
-        int _nullable = rs.getInt("NULLABLE");
-        nullable = _nullable == ResultSetMetaData.columnNullableUnknown ? null
-                : _nullable == ResultSetMetaData.columnNullable;
+
+        nullableType = NullableType.ofIntValue(rs.getInt("NULLABLE"));
+
         // String isNullable = rs.getString("IS_NULLABLE"); // YES NO
         description = rs.getString("REMARKS");
         if (description != null) {
@@ -656,11 +702,12 @@ public class DefaultColumnMetadata
         String isAutoIncrement = rs.getString("IS_AUTOINCREMENT");
         this.autoIncrement = "YES".equals(isAutoIncrement);
 
-        setJdbcType(sqlType);
-        javaClass = JdbcType.getPreferredType(this);
+        updateDataType();
     }
 
-    /** ⇱ Implementation Of {@link IJsonForm}. */
+    /**
+     * ⇱ Implementation Of {@link IJsonForm}.
+     */
     /* _____________________________ */static section.iface __JSON__;
 
     @Override
@@ -676,15 +723,15 @@ public class DefaultColumnMetadata
         String typeName = o.getString(K_TYPE);
         setJavaClassName(typeName);
 
-        jdbcType = JdbcType.forSQLTypeName(o.getString(K_SQL_TYPE), JdbcType.VARCHAR);
-        sqlType = jdbcType.sqlType;
+        sqlType = o.getInt(K_SQL_TYPE);
         sqlTypeName = o.getString(K_SQL_TYPE_NAME);
+        setSqlClassName(o.getString(K_SQL_CLASS_NAME));
 
         autoIncrement = o.getBoolean(K_AUTO_INCREMENT, false);
         caseSensitive = o.getBoolean(K_CASE_SENSITIVE, false);
         searchable = o.getBoolean(K_SEARCHABLE, false);
         currency = o.getBoolean(K_CURRENCY, false);
-        nullable = o.getBoolean(K_NULLABLE);
+        nullableType = NullableType.ofIntValue(o.getInt(K_NULLABLE));
         signed = o.getBoolean(K_SIGNED);
         readOnly = o.getBoolean(K_READ_ONLY, false);
         writable = o.getBoolean(K_WRITABLE, false);
@@ -701,7 +748,9 @@ public class DefaultColumnMetadata
         joinLevel = o.getInt(K_JOIN_LEVEL, 0);
     }
 
-    /** ⇱ Implementation Of {@link IXmlForm}. */
+    /**
+     * ⇱ Implementation Of {@link IXmlForm}.
+     */
     /* _____________________________ */static section.iface __XML__;
 
     @Override
@@ -715,15 +764,15 @@ public class DefaultColumnMetadata
 
         String typeName = o.a(K_TYPE).getString();
         setJavaClassName(typeName);
-        jdbcType = JdbcType.forSQLTypeName(o.a(K_SQL_TYPE).getString(), JdbcType.VARCHAR);
-        sqlType = jdbcType.sqlType;
+        sqlType = o.a(K_SQL_TYPE).getInt();
         sqlTypeName = o.a(K_SQL_TYPE_NAME).getString();
+        setSqlClassName(o.a(K_SQL_CLASS_NAME).getString());
 
         autoIncrement = o.a(K_AUTO_INCREMENT).getBoolean(false);
         caseSensitive = o.a(K_CASE_SENSITIVE).getBoolean(false);
         searchable = o.a(K_SEARCHABLE).getBoolean(false);
         currency = o.a(K_CURRENCY).getBoolean(false);
-        nullable = o.a(K_NULLABLE).getBoolean(null);
+        nullableType = NullableType.ofIntValue(o.a(K_NULLABLE).getInt(ResultSetMetaData.columnNullableUnknown));
         signed = o.a(K_SIGNED).getBoolean(null);
         readOnly = o.a(K_READ_ONLY).getBoolean(false);
         writable = o.a(K_WRITABLE).getBoolean(false);
@@ -740,7 +789,9 @@ public class DefaultColumnMetadata
         joinLevel = o.a(K_JOIN_LEVEL).getInt(0);
     }
 
-    /** ⇱ Java runtime binding */
+    /**
+     * ⇱ Java runtime binding
+     */
     /* _____________________________ */static section.iface __JAVA_BIND__;
 
     @Override

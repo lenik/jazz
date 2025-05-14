@@ -13,6 +13,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.sql.dialect.ISqlDialect;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -21,11 +23,12 @@ import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.meta.decl.Nullable;
 import net.bodz.bas.t.tuple.QualifiedName;
 
 public class DefaultCatalogMetadata
-        implements
-            IMutableCatalogMetadata {
+        implements IMutableCatalogMetadata {
 
     static final String ANY_SCHEMA_NAME = "?";
 
@@ -35,12 +38,25 @@ public class DefaultCatalogMetadata
     String label;
     String description;
 
+    ISqlDialect dialect;
+
     List<String> searchPath = new ArrayList<>();
     ISchemaMetadata anySchema;
     Map<String, ISchemaMetadata> schemas = new LinkedHashMap<>();
 
     Boolean convertToUpperCase;
     Map<String, String> canonicalNames = new HashMap<>();
+
+    public DefaultCatalogMetadata(String name, ISqlDialect dialect) {
+        this.name = name;
+        this.dialect = dialect;
+    }
+
+    public static DefaultCatalogMetadata fromContext(DataContext dataContext) {
+        String name = dataContext.getOptions().getDatabase();
+        ISqlDialect dialect = dataContext.getOptions().getType().getDialect();
+        return new DefaultCatalogMetadata(name, dialect);
+    }
 
     @Override
     public String getName() {
@@ -110,6 +126,17 @@ public class DefaultCatalogMetadata
     }
 
     @Override
+    public ISqlDialect getDialect() {
+        return dialect;
+    }
+
+    @Override
+    public void setDialect(ISqlDialect dialect) {
+        this.dialect = dialect;
+    }
+
+    @NotNull
+    @Override
     public Iterator<ISchemaMetadata> iterator() {
         return schemas.values().iterator();
     }
@@ -167,9 +194,7 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public void addSchema(ISchemaMetadata schema) {
-        if (schema == null)
-            throw new NullPointerException("schema");
+    public void addSchema(@NotNull ISchemaMetadata schema) {
         String schemaName = schema.getName();
 
         ISchemaMetadata existing;
@@ -189,13 +214,13 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public boolean removeSchema(ISchemaMetadata schema) {
+    public boolean removeSchema(@NotNull ISchemaMetadata schema) {
         String schemaName = schema.getName();
         return removeSchema(schemaName);
     }
 
     @Override
-    public boolean removeSchema(String schemaName) {
+    public boolean removeSchema(@Nullable String schemaName) {
         ISchemaMetadata removed;
         if (schemaName == null) {
             removed = anySchema;
@@ -213,9 +238,7 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public void addTable(ITableMetadata table) {
-        if (table == null)
-            throw new NullPointerException("table");
+    public void addTable(@NotNull ITableMetadata table) {
         getOrCreateSchema(table.getId().toSchemaId()).addTable(table);
     }
 
@@ -226,13 +249,13 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public boolean removeTable(ITableMetadata table) {
+    public boolean removeTable(@NotNull ITableMetadata table) {
         return removeTable(table.getId());
     }
 
     @Override
-    public boolean removeTable(TableOid oid) {
-        if (! isValidTableId(oid))
+    public boolean removeTable(@NotNull TableOid oid) {
+        if (!isValidTableId(oid))
             return false;
         IMutableSchemaMetadata schema = (IMutableSchemaMetadata) getSchema(oid.schemaName);
         if (schema == null)
@@ -241,8 +264,7 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public ITableMetadata autoLoadTableFromJDBC(TableOid oid, Connection autoLoadConnection,
-            LoadFromJDBCOptions options) {
+    public ITableMetadata autoLoadTableFromJDBC(TableOid oid, Connection autoLoadConnection, LoadFromJDBCOptions options) {
         if (oid == null)
             throw new NullPointerException("id");
         DefaultSchemaMetadata dsm = getOrCreateSchema(oid.toSchemaId());
@@ -276,13 +298,13 @@ public class DefaultCatalogMetadata
     @Override
     public SchemaList findSchemas(SchemaOid pattern, boolean ignoreCase) {
         if (pattern != null) {
-            if (! NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
+            if (!NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
                 return SchemaList.empty();
         }
         SchemaList schemaList = new SchemaList();
         for (ISchemaMetadata schema : this) {
             if (pattern != null)
-                if (! pattern.contains(schema.getId(), ignoreCase))
+                if (!pattern.contains(schema.getId(), ignoreCase))
                     continue;
             schemaList.add(schema);
         }
@@ -293,7 +315,7 @@ public class DefaultCatalogMetadata
     public List<ITableMetadata> findTables(TableOid pattern, boolean ignoreCase) {
         SchemaOid schemaPattern = null;
         if (pattern != null) {
-            if (! NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
+            if (!NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
                 return Collections.emptyList();
             schemaPattern = pattern.toSchemaId();
         }
@@ -301,7 +323,7 @@ public class DefaultCatalogMetadata
         List<ITableMetadata> tableList = new ArrayList<>();
         for (ISchemaMetadata schema : this) {
             if (pattern != null)
-                if (! schemaPattern.contains(schema.getId(), ignoreCase))
+                if (!schemaPattern.contains(schema.getId(), ignoreCase))
                     continue;
             List<ITableMetadata> part = schema.findTables(pattern, ignoreCase);
             tableList.addAll(part);
@@ -324,7 +346,7 @@ public class DefaultCatalogMetadata
                 sb.append(", ");
             ISchemaMetadata schema = schemas.get(key);
             String schemaName = schema.getName();
-            assert schemaName != null;
+            // assert schemaName != null;
             if (schemaName == null)
                 schemaName = ANY_SCHEMA_NAME;
             sb.append(schemaName);
@@ -374,8 +396,7 @@ public class DefaultCatalogMetadata
     }
 
     class CatalogHandler
-            implements
-                IJDBCMetaDataHandler {
+            implements IJDBCMetaDataHandler {
 
         @Override
         public ISchemaMetadata schema(ResultSet rs)
@@ -407,16 +428,25 @@ public class DefaultCatalogMetadata
         this.loadSelector = loadSelector;
     }
 
-    public void loadFromJDBC(Connection connection, String... types)
+    public void loadFromJDBC(Connection connection, CatalogSubset subset, String... types)
             throws SQLException {
         DatabaseMetaData dmd = connection.getMetaData();
         IJDBCMetaDataHandler metaDataHandler = getJDBCMetaDataHandler();
         ResultSet rs;
 
-        rs = dmd.getSchemas(name, null);
-        while (rs.next())
-            metaDataHandler.schema(rs);
-        rs.close();
+        if (subset.isAll()) {
+            rs = dmd.getSchemas(name, null);
+            while (rs.next())
+                metaDataHandler.schema(rs);
+            rs.close();
+        } else {
+            for (String schema : subset.schemas.keySet()) {
+                rs = dmd.getSchemas(name, schema);
+                while (rs.next())
+                    metaDataHandler.schema(rs);
+                rs.close();
+            }
+        }
 
         for (ISchemaMetadata schema : this) {
             DefaultSchemaMetadata dsm = (DefaultSchemaMetadata) schema;
@@ -430,12 +460,6 @@ public class DefaultCatalogMetadata
 
     public void dump(ITreeOut out) {
         accept(new CatalogDumper(out).indented());
-    }
-
-    static DefaultCatalogMetadata defaultInstance = new DefaultCatalogMetadata();
-
-    public static DefaultCatalogMetadata getDefaultInstance() {
-        return defaultInstance;
     }
 
 }

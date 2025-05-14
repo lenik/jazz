@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.db.sql.dialect.ISqlDialect;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -14,15 +15,14 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.t.tuple.QualifiedName;
 
 public interface ICatalogMetadata
-        extends
-            Iterable<ISchemaMetadata>,
-            IJavaType,
-            ISchemaDirectory,
-            ITableDirectory,
-            ICrossRefAnalyzer,
-            IJsonForm,
-            IXmlForm,
-            IJDBCMetaDataSupport {
+        extends Iterable<ISchemaMetadata>,
+                IJavaType,
+                ISchemaDirectory,
+                ITableDirectory,
+                ICrossRefAnalyzer,
+                IJsonForm,
+                IXmlForm,
+                IJDBCMetaDataSupport {
 
     String K_NAME = "name";
     String K_JAVA_TYPE = "javaType";
@@ -32,6 +32,8 @@ public interface ICatalogMetadata
     String getName();
 
     String getCanonicalName(String name);
+
+    ISqlDialect getDialect();
 
     /**
      * key: canonical name

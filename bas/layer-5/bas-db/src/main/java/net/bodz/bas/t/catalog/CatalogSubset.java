@@ -13,14 +13,14 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 
 public class CatalogSubset
-        implements
-            IJsonForm {
+        implements IJsonForm {
 
     public String catalogName;
 
     public SchemaSubset anySchema;
-    public Map<String, SchemaSubset> schemas = new HashMap<>();
-    static final Map<String, SchemaSubset> ALL_SCHEMAS = null;
+
+    public final Map<String, SchemaSubset> schemas = new HashMap<>();
+    boolean allSchemas = false;
 
     public CatalogSubset(String catalogName) {
         this.catalogName = catalogName;
@@ -28,20 +28,21 @@ public class CatalogSubset
     }
 
     public boolean isAll() {
-        return schemas == ALL_SCHEMAS;
+        return allSchemas;
     }
 
     public boolean isEmpty() {
-        if (! anySchema.isEmpty())
+        if (!anySchema.isEmpty())
             return false;
-        if (schemas != null)
-            if (! schemas.isEmpty())
-                return false;
+        if (!schemas.isEmpty())
+            return false;
+        if (allSchemas)
+            return false; // XXX unknown
         return true;
     }
 
     public boolean contains(TableOid oid) {
-        if (schemas == ALL_SCHEMAS)
+        if (allSchemas)
             return true;
 
         if (anySchema.contains(oid.getTableName()))
@@ -58,24 +59,24 @@ public class CatalogSubset
     public ContainingType contains(String schemaName) {
         if (schemaName == null)
             throw new NullPointerException("schemaName");
-        if (schemas == ALL_SCHEMAS)
+        if (allSchemas)
             return ContainingType.FULL;
 
         if (anySchema.isAll())
             return ContainingType.FULL;
 
         SchemaSubset subset = schemas.get(schemaName);
-        if (subset != null && ! subset.isEmpty())
+        if (subset != null && !subset.isEmpty())
             return ContainingType.FULL;
 
-        if (! anySchema.isEmpty())
+        if (!anySchema.isEmpty())
             return ContainingType.PARTIAL;
 
         return ContainingType.NONE;
     }
 
     public void addAllSchemas() {
-        schemas = ALL_SCHEMAS;
+        allSchemas = true;
     }
 
     public SchemaSubset getSchema(String schemaName) {
@@ -85,7 +86,7 @@ public class CatalogSubset
     public SchemaSubset addSchema(String schemaName) {
         if (schemaName == null)
             throw new NullPointerException("schemaName");
-        if (schemas == ALL_SCHEMAS)
+        if (allSchemas)
             return null;
         SchemaSubset subset = schemas.get(schemaName);
         if (subset == null) {
@@ -97,7 +98,7 @@ public class CatalogSubset
 
     public void addFullSchema(String schemaName) {
         SchemaSubset subset = addSchema(schemaName);
-        if (subset != ALL_SCHEMAS)
+        if (subset != null)
             subset.addAllTables();
     }
 
@@ -109,7 +110,7 @@ public class CatalogSubset
 
     @Override
     public String toString() {
-        if (schemas == ALL_SCHEMAS)
+        if (allSchemas)
             return "\\ALL";
         else
             return schemas.keySet().toString();
@@ -129,7 +130,7 @@ public class CatalogSubset
             out.key("anySchema");
             anySchema.jsonOutValue(out, opts);
         }
-        if (schemas == ALL_SCHEMAS)
+        if (allSchemas)
             out.entry("allSchemas", true);
         else {
             out.key("schemas");

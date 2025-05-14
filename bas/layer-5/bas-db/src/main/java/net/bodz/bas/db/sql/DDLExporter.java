@@ -4,13 +4,13 @@ import java.sql.Timestamp;
 
 import net.bodz.bas.c.java.time.DateTimes;
 import net.bodz.bas.c.string.StringQuote;
-import net.bodz.bas.t.catalog.JdbcType;
+import net.bodz.bas.t.catalog.SqlTypeEnum;
 
 public class DDLExporter {
 
     public static boolean trim = true;
 
-    protected static String encode(Object val, JdbcType type) {
+    protected static String encode(Object val, SqlTypeEnum type) {
         if (val == null)
             return "null";
 

@@ -9,15 +9,96 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import net.bodz.bas.c.string.StringQuote;
+import net.bodz.bas.db.sql.DataType;
+import net.bodz.bas.db.sql.DataTypes;
 import net.bodz.bas.db.sql.SQLLangs;
+import net.bodz.bas.db.sql.SqlTypes;
+import net.bodz.bas.t.map.ListMap;
 
 public abstract class AbstractSqlDialect
         implements ISqlDialect {
 
     protected String nullLiteral = "null";
+
+    DataTypes dataTypes = new DataTypes();
+
+    List<DataType> dataTypeList = new ArrayList<>();
+
+    public AbstractSqlDialect() {
+        declareTypes();
+
+        ListMap<Class<?>, DataType> classMap = new ListMap<>();
+        ListMap<Integer, DataType> sqlTypeMap = new ListMap<>();
+        ListMap<String, DataType> sqlTypeNameMap = new ListMap<>();
+
+        for (DataType type : dataTypeList) {
+            classMap.addToList(type.getJavaClass(), type);
+            sqlTypeMap.addToList(type.getSqlType(), type);
+            sqlTypeNameMap.addToList(type.getSqlTypeName(), type);
+        }
+        for (DataType type : dataTypeList) {
+            boolean uniqueClass = classMap.sizeOfList(type.getJavaClass()) == 1;
+            boolean uniqueSQLType = sqlTypeMap.sizeOfList(type.getSqlType()) == 1;
+            boolean uniqueSQLTypeName = sqlTypeNameMap.sizeOfList(type.getSqlTypeName()) == 1;
+            if (uniqueClass)
+                dataTypes.setDefault(type.getJavaClass(), type);
+            if (uniqueSQLType || type.isSqlTypeDefault())
+                dataTypes.setDefault(type.getSqlType(), type);
+            if (uniqueSQLTypeName)
+                dataTypes.setDefault(type.getSqlTypeName(), type);
+        }
+    }
+
+    protected void addType(DataType dataType) {
+        dataTypeList.add(dataType);
+    }
+
+    protected void declareTypes() {
+        addType(SqlTypes.BIT);
+        addType(SqlTypes.TINYINT);
+        addType(SqlTypes.SMALLINT);
+        addType(SqlTypes.INTEGER);
+        addType(SqlTypes.BIGINT);
+        addType(SqlTypes.FLOAT);
+        addType(SqlTypes.REAL);
+        addType(SqlTypes.DOUBLE);
+        addType(SqlTypes.NUMERIC);
+        addType(SqlTypes.DECIMAL);
+        addType(SqlTypes.CHAR);
+        addType(SqlTypes.VARCHAR);
+        addType(SqlTypes.LONGVARCHAR);
+        addType(SqlTypes.DATE);
+        addType(SqlTypes.TIME);
+        addType(SqlTypes.TIMESTAMP);
+        addType(SqlTypes.BINARY);
+        addType(SqlTypes.VARBINARY);
+        addType(SqlTypes.LONGVARBINARY);
+        addType(SqlTypes.NULL);
+        addType(SqlTypes.OTHER);
+        addType(SqlTypes.JAVA_OBJECT);
+        addType(SqlTypes.DISTINCT);
+        addType(SqlTypes.STRUCT);
+        addType(SqlTypes.ARRAY);
+        addType(SqlTypes.BLOB);
+        addType(SqlTypes.CLOB);
+        addType(SqlTypes.REF);
+        addType(SqlTypes.DATALINK);
+        addType(SqlTypes.BOOLEAN);
+        addType(SqlTypes.ROWID);
+        addType(SqlTypes.NCHAR);
+        addType(SqlTypes.NVARCHAR);
+        addType(SqlTypes.LONGNVARCHAR);
+        addType(SqlTypes.NCLOB);
+        addType(SqlTypes.SQLXML);
+        addType(SqlTypes.REF_CURSOR);
+        addType(SqlTypes.TIME_WITH_TIMEZONE);
+        addType(SqlTypes.TIMESTAMP_WITH_TIMEZONE);
+    }
 
     @Override
     public String getStatementTerminator() {
@@ -162,6 +243,31 @@ public abstract class AbstractSqlDialect
     @Override
     public String qLocalTime(LocalTime localTime) {
         return qString(localTime.toString());
+    }
+
+    @Override
+    public DataType getDefaultType(int sqlType) {
+        return dataTypes.getDefault(sqlType);
+    }
+
+    @Override
+    public DataType getDefaultType(String sqlTypeName) {
+        return dataTypes.getDefault(sqlTypeName);
+    }
+
+    @Override
+    public DataType getDefaultType(int sqlType, String sqlTypeName) {
+        if (sqlTypeName != null) {
+            DataType type = getDefaultType(sqlTypeName);
+            if (type != null)
+                return type;
+        }
+        return getDefaultType(sqlType);
+    }
+
+    @Override
+    public DataType getDefaultType(Class<?> javaClass) {
+        return dataTypes.getDefault(javaClass);
     }
 
 }

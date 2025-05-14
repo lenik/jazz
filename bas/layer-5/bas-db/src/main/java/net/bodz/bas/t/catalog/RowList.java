@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RowList
-        implements
-            IMutableRowSet,
-            IResultSetConsumer {
+        implements IMutableRowSet,
+                   IResultSetConsumer {
 
     protected IRowSetMetadata metadata;
     protected List<IMutableRow> rows;
@@ -141,6 +140,14 @@ public class RowList
                 break;
         }
         return n;
+    }
+
+    public void readObject(ResultSet rs)
+            throws SQLException {
+        while (rs.next()) {
+            IMutableRow row = addNewRow();
+            row.readObject(rs);
+        }
     }
 
 }

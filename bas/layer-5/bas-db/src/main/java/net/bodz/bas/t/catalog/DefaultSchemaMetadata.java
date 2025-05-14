@@ -585,10 +585,8 @@ public class DefaultSchemaMetadata
 
         // Parse from schema's metadata
         rs = dmd.getSchemas(schemaId.catalogName, schemaId.schemaName);
-        while (rs.next()) {
+        if (rs.next())
             metaDataHandler.schema(rs);
-            break;
-        }
         rs.close();
 
         rs = dmd.getTables(schemaId.catalogName, schemaId.schemaName, null, types);

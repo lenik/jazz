@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 public class ResultRow
         implements
             Iterable<ResultCell> {
@@ -16,6 +18,7 @@ public class ResultRow
         this.rs = rs;
     }
 
+    @NotNull
     @Override
     public Iterator<ResultCell> iterator() {
         try {

@@ -17,10 +17,9 @@ import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.t.tuple.QualifiedName;
 
 public interface ITableMetadata
-        extends
-            IRowSetMetadata,
-            IJavaType,
-            IJDBCMetaDataSupport {
+        extends IRowSetMetadata,
+                IJavaType,
+                IJDBCMetaDataSupport {
 
     String K_TABLE_TYPE = "tableType";
     String K_DESCRIPTION = "description";
@@ -73,6 +72,15 @@ public interface ITableMetadata
 
     TableKey getPrimaryKey();
 
+    default boolean isPrimaryKeyPresent() {
+        TableKey key = getPrimaryKey();
+        if (key == null)
+            return false;
+        if (key.getColumnCount() == 0)
+            return false;
+        return true;
+    }
+
     default IColumnMetadata[] getPrimaryKeyColumns() {
         TableKey key = getPrimaryKey();
         if (key == null)
@@ -122,7 +130,7 @@ public interface ITableMetadata
         }
 
         Map<String, CrossReference> foreignKeys = getForeignKeys();
-        if (! foreignKeys.isEmpty()) {
+        if (!foreignKeys.isEmpty()) {
             out.key(K_FOREIGN_KEYS);
             out.array();
             for (CrossReference ref : foreignKeys.values())
@@ -154,7 +162,7 @@ public interface ITableMetadata
         }
 
         Map<String, CrossReference> foreignKeys = getForeignKeys();
-        if (! foreignKeys.isEmpty()) {
+        if (!foreignKeys.isEmpty()) {
             out.beginElement(K_FOREIGN_KEYS);
             for (CrossReference ref : foreignKeys.values()) {
                 out.beginElement(K_CROSS_REF);

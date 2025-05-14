@@ -10,6 +10,7 @@ import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+import net.bodz.bas.db.sql.DataType;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedSqlDialect
@@ -108,6 +109,26 @@ public abstract class DecoratedSqlDialect
     @Override
     public String qLocalTime(LocalTime localTime) {
         return getWrapped().qLocalTime(localTime);
+    }
+
+    @Override
+    public DataType getDefaultType(int sqlType) {
+        return getWrapped().getDefaultType(sqlType);
+    }
+
+    @Override
+    public DataType getDefaultType(String sqlTypeName) {
+        return getWrapped().getDefaultType(sqlTypeName);
+    }
+
+    @Override
+    public DataType getDefaultType(int sqlType, String sqlTypeName) {
+        return getWrapped().getDefaultType(sqlType, sqlTypeName);
+    }
+
+    @Override
+    public DataType getDefaultType(Class<?> javaClass) {
+        return getWrapped().getDefaultType(javaClass);
     }
 
 }

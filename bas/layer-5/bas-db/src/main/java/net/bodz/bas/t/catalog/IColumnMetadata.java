@@ -5,6 +5,9 @@ import java.lang.annotation.Annotation;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.db.jdbc.util.IResultColumnMetaData;
+import net.bodz.bas.db.sql.DataType;
+import net.bodz.bas.db.sql.dialect.ISqlDialect;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -19,43 +22,64 @@ import net.bodz.bas.t.order.IOrdinal;
 import net.bodz.bas.t.tuple.QualifiedName;
 
 public interface IColumnMetadata
-        extends
-            IJavaQName,
-            IOrdinal,
-            IJsonForm,
-            IXmlForm {
+        extends IJavaQName,
+                IOrdinal,
+                IResultColumnMetaData,
+                IJsonForm,
+                IXmlForm {
 
-    public static final String K_ORDINAL_POSITION = "ordinal";
-    public static final String K_NAME = "name";
-    public static final String K_Q_NAME = "javaName";
-    public static final String K_LABEL = "label";
-    public static final String K_DESCRIPTION = "description";
-    public static final String K_TYPE = "type";
-    public static final String K_SQL_TYPE = "SQLType";
-    public static final String K_SQL_TYPE_NAME = "SQLTypeName";
-    public static final String K_PRIMARY_KEY = "primaryKey";
-    public static final String K_AUTO_INCREMENT = "autoIncrement";
-    public static final String K_CASE_SENSITIVE = "caseSensitive";
-    public static final String K_SEARCHABLE = "searchable";
-    public static final String K_CURRENCY = "currency";
-    public static final String K_UNIQUE = "unique";
-    public static final String K_NULLABLE = "nullable";
-    public static final String K_SIGNED = "signed";
-    public static final String K_READ_ONLY = "readOnly";
-    public static final String K_WRITABLE = "writable";
-    public static final String K_DEFINITELY_WRITABLE = "definitelyWritable";
-    public static final String K_COLUMN_DISPLAY_SIZE = "columnDisplaySize";
-    public static final String K_PRECISION = "precision";
-    public static final String K_SCALE = "scale";
-    public static final String K_DEFAULT_VALUE = "defaultValue";
+    String K_ORDINAL_POSITION = "ordinal";
+    String K_NAME = "name";
+    String K_Q_NAME = "javaName";
+    String K_LABEL = "label";
+    String K_DESCRIPTION = "description";
+    String K_TYPE = "type";
+    String K_SQL_TYPE = "SQLType";
+    String K_SQL_TYPE_NAME = "SQLTypeName";
+    String K_SQL_CLASS_NAME = "SQLClassName";
+    String K_PRIMARY_KEY = "primaryKey";
+    String K_AUTO_INCREMENT = "autoIncrement";
+    String K_CASE_SENSITIVE = "caseSensitive";
+    String K_SEARCHABLE = "searchable";
+    String K_CURRENCY = "currency";
+    String K_UNIQUE = "unique";
+    String K_NULLABLE = "nullable";
+    String K_SIGNED = "signed";
+    String K_READ_ONLY = "readOnly";
+    String K_WRITABLE = "writable";
+    String K_DEFINITELY_WRITABLE = "definitelyWritable";
+    String K_COLUMN_DISPLAY_SIZE = "columnDisplaySize";
+    String K_PRECISION = "precision";
+    String K_SCALE = "scale";
+    String K_DEFAULT_VALUE = "defaultValue";
 
-    public static final String K_EXCLUDED = "excluded";
-    public static final String K_VERBOSE_LEVEL = "verboseLevel";
-    public static final String K_JOIN_LEVEL = "joinLevel";
+    String K_EXCLUDED = "excluded";
+    String K_VERBOSE_LEVEL = "verboseLevel";
+    String K_JOIN_LEVEL = "joinLevel";
+
+    IRowSetMetadata getParent();
 
     ITableMetadata getTable();
 
-    IRowSetMetadata getParent();
+    default ISchemaMetadata getSchema() {
+        ITableMetadata table = getTable();
+        return table == null ? null : table.getParent();
+    }
+
+    default ICatalogMetadata getCatalog() {
+        ISchemaMetadata schema = getSchema();
+        return schema == null ? null : schema.getParent();
+    }
+
+    default ISqlDialect getDialect() {
+        ICatalogMetadata catalog = getCatalog();
+        return catalog == null ? null : catalog.getDialect();
+    }
+
+    default ISqlDialect getDialect(ISqlDialect fallback) {
+        ISqlDialect dialect = getDialect();
+        return dialect == null ? fallback : dialect;
+    }
 
 //    default int position() {
 //        int pos = getPositionOpt();
@@ -92,11 +116,19 @@ public interface IColumnMetadata
 
     Class<?> getJavaClass();
 
-    JdbcType getJdbcType();
+    DataType getDataType();
 
     int getSqlType();
 
+    default SqlTypeEnum getSqlTypeEnum() {
+        return SqlTypeEnum.forSQLType(getSqlType(), SqlTypeEnum.OTHER);
+    }
+
     String getSqlTypeName();
+
+    String getSqlClassName();
+
+    Class<?> getSqlClass();
 
     boolean isPrimaryKey();
 
@@ -104,40 +136,82 @@ public interface IColumnMetadata
 
     IColumnMetadata getParentColumn();
 
-    boolean isAutoIncrement();
-
-    boolean isCaseSensitive();
-
-    boolean isSearchable();
-
-    boolean isCurrency();
-
     boolean isUnique();
 
-    Boolean getNullable();
-
-    default boolean isNullable(boolean defaultValue) {
-        Boolean b = getNullable();
-        return b != null ? b : defaultValue;
+    @Override
+    default String getCatalogName() {
+        ICatalogMetadata catalog = getCatalog();
+        return catalog == null ? null : catalog.getName();
     }
 
-    Boolean getSigned();
-
-    default boolean isSigned(boolean defaultValue) {
-        Boolean b = getSigned();
-        return b != null ? b : defaultValue;
+    @Override
+    default String getColumnLabel() {
+        return getLabel();
     }
 
+    @Override
+    default String getColumnName() {
+        return getName();
+    }
+
+    @Override
+    default String getSchemaName() {
+        ISchemaMetadata schema = getSchema();
+        return schema == null ? null : schema.getName();
+    }
+
+    @Override
+    default String getTableName() {
+        ITableMetadata table = getTable();
+        return table == null ? null : table.getName();
+    }
+
+    @Override
+    default int getColumnType() {
+        return getSqlType();
+    }
+
+    @Override
+    default String getColumnTypeName() {
+        return getSqlTypeName();
+    }
+
+    @Override
+    default String getColumnClassName() {
+        return getSqlClassName();
+    }
+
+    @Override
+    boolean isSigned();
+
+    @Override
+    boolean isAutoIncrement();
+
+    @Override
+    boolean isCaseSensitive();
+
+    @Override
+    boolean isSearchable();
+
+    @Override
+    boolean isCurrency();
+
+    @Override
     boolean isReadOnly();
 
+    @Override
     boolean isWritable();
 
+    @Override
     boolean isDefinitelyWritable();
 
+    @Override
     int getColumnDisplaySize();
 
+    @Override
     int getPrecision();
 
+    @Override
     int getScale();
 
     String getPrecisionExpr();
@@ -180,16 +254,17 @@ public interface IColumnMetadata
         out.entryNotNull(K_DESCRIPTION, getDescription());
 
         out.entry(K_TYPE, getJavaClass().getName());
-        out.entry(K_SQL_TYPE, getJdbcType().name());
+        out.entry(K_SQL_TYPE, getSqlType());
         out.entryNotNull(K_SQL_TYPE_NAME, getSqlTypeName());
+        out.entryNotNull(K_SQL_CLASS_NAME, getSqlClassName());
         out.entryTrue(K_PRIMARY_KEY, isPrimaryKey());
         out.entryTrue(K_AUTO_INCREMENT, isAutoIncrement());
         out.entryTrue(K_CASE_SENSITIVE, isCaseSensitive());
         out.entryTrue(K_SEARCHABLE, isSearchable());
         out.entryTrue(K_CURRENCY, isCurrency());
         out.entryTrue(K_UNIQUE, isUnique());
-        out.entryNotNull(K_NULLABLE, getNullable());
-        out.entryNotNull(K_SIGNED, getSigned());
+        out.entryNotNull(K_NULLABLE, getNullableType());
+        out.entryNotNull(K_SIGNED, isSigned());
         out.entryTrue(K_READ_ONLY, isReadOnly());
         out.entryTrue(K_WRITABLE, isWritable());
         out.entryTrue(K_DEFINITELY_WRITABLE, isDefinitelyWritable());
@@ -215,8 +290,9 @@ public interface IColumnMetadata
         out.attributeNotNull(K_DESCRIPTION, getDescription());
 
         out.attribute(K_TYPE, getJavaClass().getName());
-        out.attribute(K_SQL_TYPE, getJdbcType().name());
+        out.attribute(K_SQL_TYPE, getSqlType());
         out.attribute(K_SQL_TYPE_NAME, getSqlTypeName());
+        out.attribute(K_SQL_CLASS_NAME, getSqlClassName());
 
         out.attributeIf(K_PRIMARY_KEY, isPrimaryKey());
         out.attributeNotNull(K_AUTO_INCREMENT, isAutoIncrement());
@@ -224,8 +300,8 @@ public interface IColumnMetadata
         out.attributeIf(K_SEARCHABLE, isSearchable());
         out.attributeIf(K_CURRENCY, isCurrency());
         out.attributeIf(K_UNIQUE, isUnique());
-        out.attributeNotNull(K_NULLABLE, getNullable());
-        out.attributeNotNull(K_SIGNED, getSigned());
+        out.attributeNotNull(K_NULLABLE, getNullableType());
+        out.attributeNotNull(K_SIGNED, isSigned());
         out.attributeIf(K_READ_ONLY, isReadOnly());
         out.attributeIf(K_WRITABLE, isWritable());
         out.attributeIf(K_DEFINITELY_WRITABLE, isDefinitelyWritable());

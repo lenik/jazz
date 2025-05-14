@@ -4,33 +4,38 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.bodz.bas.db.sql.dialect.ISqlDialect;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class MutableCatalog
-        implements
-            ICatalog {
+        implements ICatalog {
 
+    String name;
+    ISqlDialect dialect;
     IMutableCatalogMetadata metadata;
+
     Map<String, ISchema> schemas = createMap();
 
-    public MutableCatalog() {
-        this(null);
+    public MutableCatalog(String name, ISqlDialect dialect) {
+        this.name = name;
+        this.dialect = dialect;
     }
 
-    public MutableCatalog(DefaultCatalogMetadata metadata) {
-        if (metadata == null)
-            metadata = createMetadata();
+    public MutableCatalog(@NotNull IMutableCatalogMetadata metadata) {
         this.metadata = metadata;
+        this.name = metadata.getName();
+        this.dialect = metadata.getDialect();
     }
 
-    public static MutableCatalog fromSchemaElement(IElement x_schema)
+    public static MutableCatalog fromSchemaElement(IElement x_schema, String catalogName, ISqlDialect dialect)
             throws ParseException, LoaderException {
-        MutableCatalog o = new MutableCatalog();
+        MutableCatalog o = new MutableCatalog(catalogName, dialect);
         o.readObject(x_schema);
         return o;
     }
@@ -45,7 +50,7 @@ public class MutableCatalog
     }
 
     protected DefaultCatalogMetadata createMetadata() {
-        return new DefaultCatalogMetadata();
+        return new DefaultCatalogMetadata(name, dialect);
     }
 
     @Override
@@ -53,50 +58,48 @@ public class MutableCatalog
         return schemas;
     }
 
-    public synchronized void addSchema(MutableSchema o) {
-        if (o == null)
+    public synchronized void addSchema(MutableSchema schema) {
+        if (schema == null)
             throw new NullPointerException("schema");
 
-        if (o.getMetadata() == null)
+        if (schema.getMetadata() == null)
             throw new IllegalArgumentException("Schema without metadata");
 
-        if (o.getParent() != null)
+        if (schema.getParent() != null)
             throw new IllegalStateException("Already attached to another parent");
 
-        ICatalogMetadata oMetadataParent = o.getMetadata().getParent();
+        ICatalogMetadata oMetadataParent = schema.getMetadata().getParent();
         if (oMetadataParent != getMetadata())
             throw new IllegalArgumentException("Conflict metadata");
 
-        String oName = o.getMetadata().getName();
+        String schemaName = schema.getMetadata().getName();
 
         // metadata.addTable(o.getMetadata())
-        if (metadata instanceof IMutableCatalogMetadata) {
-            IMutableCatalogMetadata _metadata = metadata;
-            ISchemaMetadata om = o.getMetadata();
-            _metadata.addSchema(om);
+        if (metadata != null) {
+            ISchemaMetadata schemaMetadata = schema.getMetadata();
+            metadata.addSchema(schemaMetadata);
 
-            if (om instanceof IMutableSchemaMetadata) {
-                IMutableSchemaMetadata _om = (IMutableSchemaMetadata) om;
-                _om.setParent(_metadata);
+            if (schemaMetadata instanceof IMutableSchemaMetadata) {
+                IMutableSchemaMetadata schemaMutable = (IMutableSchemaMetadata) schemaMetadata;
+                schemaMutable.setParent(metadata);
             }
         }
-        schemas.put(oName, o);
+        schemas.put(schemaName, schema);
     }
 
     public boolean removeSchema(String schemaName) {
-        ISchema o = schemas.remove(schemaName);
-        if (o == null)
+        ISchema schema = schemas.remove(schemaName);
+        if (schema == null)
             return false;
 
         // metadata.removeTable(o.getMetadata());
-        if (metadata instanceof IMutableCatalogMetadata) {
-            IMutableCatalogMetadata _metadata = metadata;
-            ISchemaMetadata om = o.getMetadata();
-            _metadata.removeSchema(om);
+        if (metadata != null) {
+            ISchemaMetadata schemaMetadata = schema.getMetadata();
+            metadata.removeSchema(schemaMetadata);
 
-            if (om instanceof IMutableSchemaMetadata) {
-                IMutableSchemaMetadata _om = (IMutableSchemaMetadata) om;
-                _om.setParent(null);
+            if (schemaMetadata instanceof IMutableSchemaMetadata) {
+                IMutableSchemaMetadata schemaMutable = (IMutableSchemaMetadata) schemaMetadata;
+                schemaMutable.setParent(null);
             }
         }
 
@@ -108,6 +111,7 @@ public class MutableCatalog
         return removeSchema(name);
     }
 
+    @NotNull
     @Override
     public Iterator<ISchema> iterator() {
         return schemas.values().iterator();

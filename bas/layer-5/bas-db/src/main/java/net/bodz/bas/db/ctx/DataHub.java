@@ -114,7 +114,7 @@ public class DataHub
         return template;
     }
 
-    void dump(ITreeOut out) {
+    public void dump(ITreeOut out) {
         out.enterln("Providers:");
         for (IDataContextProvider provider : dataContextProviders) {
             out.enterln("Provider " + provider.getClass().getName() + ": ");
