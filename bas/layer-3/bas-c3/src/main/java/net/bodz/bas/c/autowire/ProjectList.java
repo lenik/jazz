@@ -3,7 +3,6 @@ package net.bodz.bas.c.autowire;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +12,8 @@ import java.util.Set;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalConfigException;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.autowire.ProjectDependencies;
@@ -39,8 +40,7 @@ public class ProjectList {
         autoLoad();
         Set<String> depUnion = new HashSet<>();
         for (String[] deps : dependenciesMap.values())
-            for (String dep : deps)
-                depUnion.add(dep);
+            depUnion.addAll(Arrays.asList(deps));
 
         Set<String> topLevels = new HashSet<>();
         for (String name : nameMap.keySet())
@@ -57,7 +57,7 @@ public class ProjectList {
             ProjectMetadata project = getProject(name);
             projects.add(project);
         }
-        Collections.sort(projects, ProjectMetadata.ORDER);
+        projects.sort(ProjectMetadata.ORDER);
         return projects;
     }
 
@@ -164,19 +164,23 @@ public class ProjectList {
     }
 
     public void dump() {
+        dump(Stdio.err);
+    }
+
+    public void dump(IPrintOut out) {
         for (String name : nameMap.keySet()) {
-            System.err.println("project " + name + " := " + nameMap.get(name));
+            out.println("project " + name + " := " + nameMap.get(name));
         }
 
         for (ProjectMetadata project : getTopLevelProjects()) {
             String mesg = String.format("project %s (priority %d): %s", //
                     project.getName(), project.getPriority(), project.getProjectClass());
-            System.err.println(mesg);
+            out.println(mesg);
         }
 
         for (Class<?> clazz : dependenciesMap.keySet()) {
             String[] deps = dependenciesMap.get(clazz);
-            System.err.println(clazz + " => " + Arrays.asList(deps));
+            out.println(clazz + " => " + Arrays.asList(deps));
         }
     }
 
