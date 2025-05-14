@@ -249,7 +249,7 @@ public class DefaultColumnMetadata
             throw new IllegalStateException("Can't determine the sql dialect.");
 
         DataType type = dialect.getDefaultType(sqlType, sqlTypeName);
-        sqlClass = type == null ? null : type.getSqlClass();
+        sqlClass = type == null ? null : type.getSqlClass(this);
 
         if (javaClass == null)
             javaClass = sqlClass;

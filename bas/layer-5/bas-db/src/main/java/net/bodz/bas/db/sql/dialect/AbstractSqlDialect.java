@@ -17,11 +17,12 @@ import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.db.sql.DataType;
 import net.bodz.bas.db.sql.DataTypes;
 import net.bodz.bas.db.sql.SQLLangs;
-import net.bodz.bas.db.sql.SqlTypes;
+import net.bodz.bas.db.sql.IStdDataTypes;
 import net.bodz.bas.t.map.ListMap;
 
 public abstract class AbstractSqlDialect
-        implements ISqlDialect {
+        implements ISqlDialect,
+                   IStdDataTypes {
 
     protected String nullLiteral = "null";
 
@@ -54,50 +55,34 @@ public abstract class AbstractSqlDialect
         }
     }
 
+    protected void addType(DataType... dataTypes) {
+        for (DataType dataType : dataTypes)
+            addType(dataType);
+    }
+
     protected void addType(DataType dataType) {
         dataTypeList.add(dataType);
     }
 
+    protected void replaceType(DataType oldDataType, DataType newDataType) {
+        dataTypeList.remove(oldDataType);
+        dataTypeList.add(newDataType);
+    }
+
     protected void declareTypes() {
-        addType(SqlTypes.BIT);
-        addType(SqlTypes.TINYINT);
-        addType(SqlTypes.SMALLINT);
-        addType(SqlTypes.INTEGER);
-        addType(SqlTypes.BIGINT);
-        addType(SqlTypes.FLOAT);
-        addType(SqlTypes.REAL);
-        addType(SqlTypes.DOUBLE);
-        addType(SqlTypes.NUMERIC);
-        addType(SqlTypes.DECIMAL);
-        addType(SqlTypes.CHAR);
-        addType(SqlTypes.VARCHAR);
-        addType(SqlTypes.LONGVARCHAR);
-        addType(SqlTypes.DATE);
-        addType(SqlTypes.TIME);
-        addType(SqlTypes.TIMESTAMP);
-        addType(SqlTypes.BINARY);
-        addType(SqlTypes.VARBINARY);
-        addType(SqlTypes.LONGVARBINARY);
-        addType(SqlTypes.NULL);
-        addType(SqlTypes.OTHER);
-        addType(SqlTypes.JAVA_OBJECT);
-        addType(SqlTypes.DISTINCT);
-        addType(SqlTypes.STRUCT);
-        addType(SqlTypes.ARRAY);
-        addType(SqlTypes.BLOB);
-        addType(SqlTypes.CLOB);
-        addType(SqlTypes.REF);
-        addType(SqlTypes.DATALINK);
-        addType(SqlTypes.BOOLEAN);
-        addType(SqlTypes.ROWID);
-        addType(SqlTypes.NCHAR);
-        addType(SqlTypes.NVARCHAR);
-        addType(SqlTypes.LONGNVARCHAR);
-        addType(SqlTypes.NCLOB);
-        addType(SqlTypes.SQLXML);
-        addType(SqlTypes.REF_CURSOR);
-        addType(SqlTypes.TIME_WITH_TIMEZONE);
-        addType(SqlTypes.TIMESTAMP_WITH_TIMEZONE);
+        addType(BIT, BOOLEAN);
+        addType(TINYINT, SMALLINT, INTEGER, BIGINT);
+        addType(FLOAT, REAL, DOUBLE);
+        addType(NUMERIC, DECIMAL);
+        addType(CHAR, VARCHAR, LONGVARCHAR);
+        addType(NCHAR, NVARCHAR, LONGNVARCHAR);
+        addType(BINARY, VARBINARY, LONGVARBINARY);
+        addType(BLOB, CLOB, NCLOB);
+        addType(DATE, TIME, TIMESTAMP);
+        addType(TIME_WITH_TIMEZONE, TIMESTAMP_WITH_TIMEZONE);
+        addType(NULL, ROWID, SQLXML, JAVA_OBJECT);
+        addType(REF, DATALINK, REF_CURSOR);
+        addType(OTHER, DISTINCT, STRUCT, ARRAY);
     }
 
     @Override

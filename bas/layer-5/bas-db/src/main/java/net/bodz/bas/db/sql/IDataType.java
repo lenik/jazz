@@ -2,6 +2,7 @@ package net.bodz.bas.db.sql;
 
 import net.bodz.bas.db.jdbc.util.IResultColumnMetaData;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.t.catalog.SqlTypeEnum;
 
 public interface IDataType {
 
@@ -9,6 +10,10 @@ public interface IDataType {
     Class<?> getJavaClass();
 
     int getSqlType();
+
+    default SqlTypeEnum getSqlTypeEnum() {
+        return SqlTypeEnum.forSQLType(getSqlType(), SqlTypeEnum.OTHER);
+    }
 
     @NotNull
     String getSqlTypeName();
@@ -18,7 +23,7 @@ public interface IDataType {
     @NotNull
     String getSqlClassName();
 
-//    Class<?> getSqlClass();
+    Class<?> getSqlClass();
 
     Class<?> getSqlClass(IResultColumnMetaData metaData);
 

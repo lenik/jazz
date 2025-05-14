@@ -1,11 +1,16 @@
 package net.bodz.bas.db.sql.dialect;
 
+import java.lang.reflect.Array;
+import java.net.InetAddress;
 import java.sql.Types;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 import net.bodz.bas.db.sql.DataType;
+import net.bodz.bas.db.sql.IStdDataTypes;
+import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.fmt.json.JsonVariant;
 
 public class PostgreSQL
         extends AbstractSqlDialect {
@@ -16,7 +21,32 @@ public class PostgreSQL
     public static final DataType INT8 = new DataType(Long.class, Types.BIGINT, "int8");
     public static final DataType FLOAT4 = new DataType(Float.class, Types.REAL, "float4");
     public static final DataType FLOAT8 = new DataType(Double.class, Types.DOUBLE, "float8");
+
+    public static final DataType BYTEA = new DataType(byte[].class, Types.OTHER, "bytea");
+    public static final DataType JSON = new DataType(JsonVariant.class, Types.OTHER, "json");
+    public static final DataType JSONB = new DataType(JsonVariant.class, Types.OTHER, "jsonb");
+    public static final DataType INET = new DataType(InetAddress.class, Types.OTHER, "inet");
     public static final DataType UUID = new DataType(UUID.class, Types.OTHER, "uuid");
+
+    public static final DataType SQL_IDENTIFIER = new DataType(String.class, Types.DISTINCT, "information_schema.sql_identifier");
+    public static final DataType YES_OR_NO = new DataType(Boolean.class, Types.DISTINCT, "information_schema.yes_or_no");
+    public static final DataType CHARACTER_DATA = new DataType(String.class, Types.DISTINCT, "information_schema.character_data");
+
+    DataType ARRAY = new DataType(java.sql.Array.class, Types.ARRAY, "array", metaData -> {
+        String sqlTypeName = metaData.getColumnTypeName();
+        if (!sqlTypeName.startsWith("_"))
+            throw new UnexpectedException();
+
+        String componentSqlTypeName = sqlTypeName.substring(1);
+
+        DataType componentType = getDefaultType(componentSqlTypeName);
+        if (componentType == null)
+            throw new UnexpectedException("unknown component type: " + componentSqlTypeName);
+
+        Class<?> componentClass = componentType.getJavaClass();
+        Class<?> arrayClass = Array.newInstance(componentClass, 0).getClass();
+        return arrayClass;
+    });
 
     public PostgreSQL() {
     }
@@ -25,12 +55,11 @@ public class PostgreSQL
     protected void declareTypes() {
         super.declareTypes();
         addType(BPCHAR);
-        addType(INT2);
-        addType(INT4);
-        addType(INT8);
-        addType(FLOAT4);
-        addType(FLOAT8);
-        addType(UUID);
+        addType(INT2, INT4, INT8);
+        addType(FLOAT4, FLOAT8);
+        addType(BYTEA, JSON, JSONB, INET, UUID);
+        addType(SQL_IDENTIFIER, YES_OR_NO, CHARACTER_DATA);
+        replaceType(IStdDataTypes.ARRAY, ARRAY);
     }
 
     @Override
