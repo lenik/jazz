@@ -30,12 +30,4 @@ public abstract class AbstractIdentity
         }
     }
 
-    protected static DefaultIdentityTypeInfoBuilder typeBuilder() {
-        return new DefaultIdentityTypeInfoBuilder();
-    }
-
-    protected static DefaultIdentityTypeInfoBuilder typeBuilder(Class<? extends IIdentity> idClass) {
-        return typeBuilder().idClass(idClass);
-    }
-
 }

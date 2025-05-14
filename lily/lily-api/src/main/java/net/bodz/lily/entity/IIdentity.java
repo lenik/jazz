@@ -8,7 +8,10 @@ public interface IIdentity {
     @Internal
     IIdentityTypeInfo getType();
 
-    void parse(String... columns)
-            throws ParseException;
+    default void parse(String... columns)
+            throws ParseException {
+        IIdentityTypeInfo type = getType();
+        type.getColumnNames();
+    }
 
 }
