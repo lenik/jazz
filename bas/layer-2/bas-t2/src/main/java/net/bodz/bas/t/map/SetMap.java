@@ -32,7 +32,7 @@ public class SetMap<K, E>
     }
 
     protected <value_t> Set<value_t> createSet() {
-        return new ArraySet<>();
+        return order.newSet();
     }
 
     @NotNull
@@ -110,6 +110,12 @@ public class SetMap<K, E>
     @Override
     public Set<Entry<K, Set<E>>> entrySet() {
         return map.entrySet();
+    }
+
+
+    @Override
+    public String toString() {
+        return map.toString();
     }
 
 }

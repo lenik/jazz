@@ -113,4 +113,9 @@ public class ListMap<K, E>
         return map.entrySet();
     }
 
+    @Override
+    public String toString() {
+        return map.toString();
+    }
+
 }
