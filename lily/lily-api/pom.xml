@@ -83,6 +83,10 @@
             <artifactId>excel-streaming-reader</artifactId>
             <version>4.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.datastax.cassandra</groupId>
+            <artifactId>cassandra-driver-mapping</artifactId>
+        </dependency>
     </dependencies>
     <name>Lily :: Api</name>
 </project>

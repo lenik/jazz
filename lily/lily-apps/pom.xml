@@ -6,7 +6,7 @@
         <artifactId>lily</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>lily-tools</artifactId>
+    <artifactId>lily-apps</artifactId>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -27,5 +27,5 @@
             <artifactId>p6spy</artifactId>
         </dependency>
     </dependencies>
-    <name>Lily :: Command-Line Tools</name>
+    <name>Lily :: Tool Apps</name>
 </project>
