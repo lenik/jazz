@@ -31,14 +31,18 @@ public class Patterns {
 
     public static Pattern match(String matchExpr) {
         String s = matchExpr;
-        if (s.startsWith("m/"))
-            s = s.substring(2);
-        else if (s.startsWith("/"))
+        char slashChar = '/';
+        if (s.startsWith("/"))
             s = s.substring(1);
-        else
+        else if (s.startsWith("m") && s.length() >= 3) {
+            slashChar = s.charAt(1);
+            if (Character.isLetterOrDigit(slashChar))
+                throw new IllegalArgumentException("boundary char can't be letter or digit: " + slashChar);
+            s = s.substring(2);
+        } else
             throw new IllegalArgumentException("match expr should start with m/ or /: " + s);
 
-        int lastSlash = s.lastIndexOf('/');
+        int lastSlash = s.lastIndexOf(slashChar);
         if (lastSlash == -1)
             throw new IllegalArgumentException("match expr should end with /: " + s);
         String regex = s.substring(0, lastSlash);
@@ -55,21 +59,24 @@ public class Patterns {
     public static PatternSubst subst(@NotNull String substExpr)
             throws Exception {
         String s = substExpr;
-        if (!s.startsWith("s/"))
+        if (!s.startsWith("s") || s.length() < 4)
             throw new IllegalArgumentException("subst expr should start with s/");
+        char slashChar = s.charAt(1);
+        if (Character.isLetterOrDigit(slashChar))
+            throw new IllegalArgumentException("boundary char can't be letter or digit: " + slashChar);
         s = s.substring(2);
 
-        int slash = indexOfCstr(s, '/');
+        int slash = indexOfCstr(s, slashChar);
         if (slash == -1)
             throw new IllegalArgumentException("pattern should end with /: " + s);
         String regex = s.substring(0, slash);
         s = s.substring(slash + 1);
 
-        int lastSlash = s.lastIndexOf('/');
+        int lastSlash = s.lastIndexOf(slashChar);
         if (lastSlash == -1)
             throw new IllegalArgumentException("replacement should end with /: " + s);
         String replacement = s.substring(0, lastSlash);
-        s = s.substring(slash + 1);
+        s = s.substring(lastSlash + 1);
 
         Pattern pattern = compile(regex, s);
         return new PatternSubst(pattern, replacement);

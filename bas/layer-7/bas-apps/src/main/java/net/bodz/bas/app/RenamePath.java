@@ -30,10 +30,8 @@ public class RenamePath
     @Override
     protected void mainImpl(String... args)
             throws Exception {
-        if (args.length == 0) {
-            System.err.println("Expect subst regexp.");
-            System.exit(1);
-        }
+        if (args.length == 0)
+            throw new IllegalArgumentException("Expect subst regexp.");
 
         String substExpr = args[0];
         PatternSubst subst = Patterns.subst(substExpr);
@@ -41,32 +39,40 @@ public class RenamePath
         replacement = subst.getReplacement();
 
         for (int i = 1; i < args.length; i++) {
-            String path = args[i];
+            String pathStr = args[i];
+            Path path = Paths.get(pathStr);
+            if (Files.notExists(path)) {
+                logger.warn("file isn't existed: " + path);
+                continue;
+            }
             rename(path);
         }
     }
 
-    public void rename(String pathStr)
+    public void rename(Path path)
             throws IOException {
-        String newPathStr = pattern.matcher(pathStr).replaceAll(replacement);
-        Path path = Paths.get(pathStr);
+        String newPathStr = pattern.matcher(path.toString()).replaceAll(replacement);
         Path newPath = Paths.get(newPathStr);
 
         Path newParent = newPath.getParent();
-        if (Files.notExists(newParent)) {
+        if (newParent != null && Files.notExists(newParent)) {
             logger.info("Create parent dir " + newParent);
             Files.createDirectories(newParent);
         }
 
         try {
             Files.move(path, newPath);
+            logger.info("Renamed " + path + " => " + newPath);
         } catch (IOException e) {
             logger.error("Failed to move " + path + " to " + newPath + ": " + e.getMessage(), e);
             return;
         }
 
-        if (pruneEmptyDirs)
-            pruneEmptyDirs(path.getParent());
+        if (pruneEmptyDirs) {
+            Path parent = path.getParent();
+            if (parent != null)
+                pruneEmptyDirs(parent);
+        }
     }
 
     static boolean pruneEmptyDirs(Path dir) {

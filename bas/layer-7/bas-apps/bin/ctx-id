@@ -3,5 +3,5 @@
 . shlib
 import main-ex
 
-exec-main renpath "$@"
+exec-main ctx-id "$@"
 

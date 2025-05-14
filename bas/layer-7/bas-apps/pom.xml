@@ -15,6 +15,11 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-db</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-program</artifactId>
             <version>${project.version}</version>
         </dependency>

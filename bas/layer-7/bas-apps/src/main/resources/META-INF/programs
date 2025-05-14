@@ -1,1 +1,2 @@
+main ctx-id = net.bodz.bas.app.ContextIds
 main renpath = net.bodz.bas.app.RenamePath
