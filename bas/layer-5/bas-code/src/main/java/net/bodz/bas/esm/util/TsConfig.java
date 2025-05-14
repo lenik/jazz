@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.UUID;
 
 import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.err.LoadException;
@@ -55,6 +56,7 @@ public class TsConfig {
 
     static {
         equivTypeMap.put(JsonMap.class, JsonVariant.class);
+        equivTypeMap.put(UUID.class, String.class);
         equivTypeMap.put(ZoneId.class, String.class);
         equivTypeMap.put(SizedList.class, List.class);
     }
