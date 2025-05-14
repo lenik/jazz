@@ -4,9 +4,9 @@ import org.junit.Assume;
 import org.junit.Test;
 
 import net.bodz.bas.db.ibatis.IEntityMapper;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.entity.IId;
 
-public abstract class AbstractTableTest<T extends CoEntity<?>, mapper_t extends IEntityMapper<T>>
+public abstract class AbstractTableTest<T extends IId<?>, mapper_t extends IEntityMapper<T>>
         extends AbstractTableViewTest<T, mapper_t> {
 
     public abstract T buildSample()

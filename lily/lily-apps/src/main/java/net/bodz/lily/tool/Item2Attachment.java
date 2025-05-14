@@ -68,28 +68,30 @@ public class Item2Attachment
 
     Connection connection;
 
+    DefaultCatalogMetadata catalog;
     CatalogSubset catalogSubset = new CatalogSubset(null);
 
     public Item2Attachment(DataContext dataContext) {
         this.dataContext = dataContext;
+        this.catalog = DefaultCatalogMetadata.fromContext(dataContext);
     }
 
     boolean processTableOrView(ITableMetadata tableView) {
         switch (tableView.getTableType()) {
-        case TABLE:
-        case SYSTEM_TABLE:
-            logger.info("process table " + tableView.getId());
-            try {
-                processTable(tableView);
-            } catch (Exception e) {
-                logger.error("Error make table: " + e.getMessage(), e);
-                return false;
-            } finally {
-            }
-            return true;
+            case TABLE:
+            case SYSTEM_TABLE:
+                logger.info("process table " + tableView.getId());
+                try {
+                    processTable(tableView);
+                } catch (Exception e) {
+                    logger.error("Error make table: " + e.getMessage(), e);
+                    return false;
+                } finally {
+                }
+                return true;
 
-        default:
-            return false;
+            default:
+                return false;
         }
     }
 
@@ -224,7 +226,6 @@ public class Item2Attachment
             }
         }
 
-        DefaultCatalogMetadata catalog = new DefaultCatalogMetadata();
         catalog.setJDBCLoadSelector(new IJDBCLoadSelector() {
             @Override
             public SelectMode selectSchema(SchemaOid id) {
@@ -237,7 +238,7 @@ public class Item2Attachment
 
             @Override
             public SelectMode selectTable(TableOid oid, TableType type) {
-                if (! type.isTable())
+                if (!type.isTable())
                     return SelectMode.SKIP;
                 if (catalogSubset.contains(oid))
                     return SelectMode.INCLUDE;
@@ -249,7 +250,7 @@ public class Item2Attachment
 
         try {
             connection = dataContext.getConnection();
-            catalog.loadFromJDBC(connection, "TABLE", "VIEW");
+            catalog.loadFromJDBC(connection, catalogSubset, "TABLE", "VIEW");
 
             catalog.accept(new ICatalogVisitor() {
                 @Override

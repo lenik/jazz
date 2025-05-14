@@ -3,6 +3,7 @@ package net.bodz.lily.entity;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.bean.Internal;
 
+@Immutable
 public interface IIdentity {
 
     @Internal

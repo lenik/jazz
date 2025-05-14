@@ -9,10 +9,10 @@ import org.junit.Test;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.IEntityMapper;
-import net.bodz.lily.concrete.CoEntity;
 import net.bodz.lily.dao.IEntityManager;
+import net.bodz.lily.entity.IId;
 
-public abstract class AbstractManagerTest<T extends CoEntity<?>, //
+public abstract class AbstractManagerTest<T extends IId<?>, //
         mapper_t extends IEntityMapper<T>, //
         man_t extends IEntityManager<T>>
         extends AbstractDaoTest {
