@@ -50,20 +50,6 @@ public abstract class AbstractSqlDialect
             return name;
     }
 
-    @Override
-    public String qNames(String composite) {
-        return qNames(composite, false);
-    }
-
-    @Override
-    public String qNamesSmart(String composite) {
-        return qNames(composite, true);
-    }
-
-    String qNames(String composite, boolean smart) {
-        return null;
-    }
-
     static final String doubleSingleQuote = //
             StringQuote.singleQuote + StringQuote.singleQuote;
 

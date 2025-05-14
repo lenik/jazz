@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZonedDateTime;
+import java.util.StringTokenizer;
 
 import net.bodz.bas.c.java.time.DateTimes;
 import net.bodz.bas.c.type.TypeId;
@@ -24,11 +25,41 @@ public interface ISqlDialect {
 
     String qName(String name);
 
+    default String qName(String... names) {
+        StringBuilder buf = new StringBuilder(names.length * 20);
+        for (String name : names) {
+            if (name == null)
+                continue;
+            if (buf.length() != 0)
+                buf.append('.');
+            buf.append(qName(name));
+        }
+        return buf.toString();
+    }
+
     String qNameSmart(String name);
 
-    String qNames(String composite);
+    default String qNameSmart(String... names) {
+        StringBuilder buf = new StringBuilder(names.length * 20);
+        for (String name : names) {
+            if (name == null)
+                continue;
+            if (buf.length() != 0)
+                buf.append('.');
+            buf.append(qNameSmart(name));
+        }
+        return buf.toString();
+    }
 
-    String qNamesSmart(String composite);
+    default String qNames(String composite) {
+        String[] names = composite.split("\\.");
+        return qName(names);
+    }
+
+    default String qNamesSmart(String composite) {
+        String[] names = composite.split("\\.");
+        return qNameSmart(names);
+    }
 
     String qString(String string);
 

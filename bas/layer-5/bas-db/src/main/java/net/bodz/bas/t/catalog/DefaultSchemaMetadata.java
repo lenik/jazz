@@ -635,7 +635,7 @@ public class DefaultSchemaMetadata
         String sql = "select * from information_schema.view_column_usage where 1=1";
         {
             if (schemaId.catalogName != null)
-                sql += "and view_catalog = ?";
+                sql += " and view_catalog = ?";
             if (schemaId.schemaName != null)
                 sql += " and view_schema = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
