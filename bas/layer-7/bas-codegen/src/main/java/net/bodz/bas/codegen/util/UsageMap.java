@@ -16,7 +16,7 @@ public class UsageMap<T>
     }
 
     public UsageMap(@NotNull SortOrder order) {
-        super(order.newMap());
+        super(order.newMapDefault());
     }
 
     public UsageMap(@NotNull Comparator<? super T> cmp) {

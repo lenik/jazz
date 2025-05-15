@@ -85,6 +85,23 @@ public interface ISetMap<K, E>
         return set == null ? 0 : set.size();
     }
 
+    default E getFirstOfSet(Object keyToSet) {
+        Set<E> set = get(keyToSet);
+        if (set != null)
+            for (E el : set)
+                return el;
+        return null;
+    }
+
+    default E getLastOfSet(Object keyToSet) {
+        Set<E> set = get(keyToSet);
+        E last = null;
+        if (set != null)
+            for (E el : set)
+                last = el;
+        return last;
+    }
+
     default boolean addToSet(K keyToSet, E element) {
         Set<E> set = makeSet(keyToSet);
         return set.add(element);

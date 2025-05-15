@@ -6,33 +6,51 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.pojo.Pair;
 
 public class JKMap<J, K, V>
-        implements
-            Map<J, Map<K, V>> {
+        implements Map<J, Map<K, V>> {
 
-    SortOrder order;
-    Map<J, Map<K, V>> map;
+    private final Map<J, Map<K, V>> map;
+    private final Supplier<Map<K, V>> factory;
 
     public JKMap() {
-        this(SortOrder.NONE);
+        this(SortOrder.NONE, SortOrder.NONE);
     }
 
-    public JKMap(SortOrder order) {
-        this.order = order;
-        this.map = createMap();
+    public JKMap(@NotNull SortOrder order) {
+        this(order, order);
     }
 
-    public SortOrder getOrder() {
-        return order;
+    public JKMap(@NotNull Supplier<Map<K, V>> factory) {
+        this(SortOrder.NONE, factory);
     }
 
-    protected <key_t, value_t> Map<key_t, value_t> createMap() {
-        return order.newMap();
+    public JKMap(@NotNull SortOrder order, @NotNull SortOrder setOrder) {
+        this(order.newMapDefault(), order::newMapDefault);
     }
+
+    public JKMap(@NotNull SortOrder order, @NotNull Supplier<Map<K, V>> factory) {
+        this(order.newMapDefault(), factory);
+    }
+
+    public JKMap(@NotNull Map<J, Map<K, V>> map) {
+        this(map, SortOrder.NONE);
+    }
+
+    public JKMap(@NotNull Map<J, Map<K, V>> map, @NotNull SortOrder setOrder) {
+        this(map, setOrder::newMapDefault);
+    }
+
+    public JKMap(@NotNull Map<J, Map<K, V>> map, @NotNull Supplier<Map<K, V>> factory) {
+        this.map = map;
+        this.factory = factory;
+    }
+
 
     public long size2() {
         long sum = 0;
@@ -65,7 +83,7 @@ public class JKMap<J, K, V>
     public synchronized Map<K, V> getOrCreate(J k1) {
         Map<K, V> map2 = map.get(k1);
         if (map2 == null) {
-            map2 = createMap();
+            map2 = factory.get();
             map.put(k1, map2);
         }
         return map2;
@@ -135,7 +153,9 @@ public class JKMap<J, K, V>
         return set2;
     }
 
-    /** ⇱ Implementation Of {@link Map}. */
+    /**
+     * ⇱ Implementation Of {@link Map}.
+     */
     /* _____________________________ */static section.iface __MAP__;
 
     @Override
@@ -174,7 +194,7 @@ public class JKMap<J, K, V>
     }
 
     @Override
-    public void putAll(Map<? extends J, ? extends Map<K, V>> m) {
+    public void putAll(@NotNull Map<? extends J, ? extends Map<K, V>> m) {
         map.putAll(m);
     }
 
@@ -183,16 +203,19 @@ public class JKMap<J, K, V>
         map.clear();
     }
 
+    @NotNull
     @Override
     public Set<J> keySet() {
         return map.keySet();
     }
 
+    @NotNull
     @Override
     public Collection<Map<K, V>> values() {
         return map.values();
     }
 
+    @NotNull
     @Override
     public Set<Entry<J, Map<K, V>>> entrySet() {
         return map.entrySet();

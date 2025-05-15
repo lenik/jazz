@@ -3,36 +3,48 @@ package net.bodz.bas.t.map;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.SortOrder;
-import net.bodz.bas.t.set.ArraySet;
 
 public class SetMap<K, E>
         implements ISetMap<K, E> {
 
-    SortOrder order;
     Map<K, Set<E>> map;
+    Supplier<Set<E>> factory;
 
     public SetMap() {
-        this(SortOrder.NONE);
+        this(SortOrder.NONE, SortOrder.NONE);
     }
 
-    public SetMap(SortOrder order) {
-        this.order = order;
-        this.map = createMap();
+    public SetMap(@NotNull SortOrder order) {
+        this(order, order);
     }
 
-    public SortOrder getOrder() {
-        return order;
+    public SetMap(@NotNull Supplier<Set<E>> factory) {
+        this(SortOrder.NONE, factory);
     }
 
-    protected <key_t, value_t> Map<key_t, value_t> createMap() {
-        return order.newMap();
+    public SetMap(@NotNull SortOrder order, @NotNull SortOrder setOrder) {
+        this(order.newMapDefault(), order::newSetDefault);
     }
 
-    protected <value_t> Set<value_t> createSet() {
-        return order.newSet();
+    public SetMap(@NotNull SortOrder order, @NotNull Supplier<Set<E>> factory) {
+        this(order.newMapDefault(), factory);
+    }
+
+    public SetMap(@NotNull Map<K, Set<E>> map) {
+        this(map, SortOrder.NONE);
+    }
+
+    public SetMap(@NotNull Map<K, Set<E>> map, @NotNull SortOrder setOrder) {
+        this(map, setOrder::newSetDefault);
+    }
+
+    public SetMap(@NotNull Map<K, Set<E>> map, @NotNull Supplier<Set<E>> factory) {
+        this.map = map;
+        this.factory = factory;
     }
 
     @NotNull
@@ -40,13 +52,15 @@ public class SetMap<K, E>
     public synchronized Set<E> makeSet(K keyToSet) {
         Set<E> set = map.get(keyToSet);
         if (set == null) {
-            set = createSet();
+            set = factory.get();
             map.put(keyToSet, set);
         }
         return set;
     }
 
-    /** ⇱ Implementation Of {@link Map}. */
+    /**
+     * ⇱ Implementation Of {@link Map}.
+     */
     /* _____________________________ */static section.iface __MAP__;
 
     @Override

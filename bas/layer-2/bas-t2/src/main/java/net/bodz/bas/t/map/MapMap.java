@@ -1,11 +1,9 @@
 package net.bodz.bas.t.map;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.SortOrder;
@@ -13,28 +11,40 @@ import net.bodz.bas.repr.form.SortOrder;
 public class MapMap<K, EK, EV>
         implements IMapMap<K, EK, EV> {
 
-    SortOrder order;
-    Map<K, Map<EK, EV>> map;
+    private final Map<K, Map<EK, EV>> map;
+    private final Supplier<Map<EK, EV>> factory;
 
     public MapMap() {
-        this(SortOrder.NONE);
+        this(SortOrder.NONE, SortOrder.NONE);
     }
 
-    public MapMap(SortOrder order) {
-        this.order = order;
-        this.map = createMap();
+    public MapMap(@NotNull SortOrder order) {
+        this(order, order);
     }
 
-    public SortOrder getOrder() {
-        return order;
+    public MapMap(@NotNull Supplier<Map<EK, EV>> factory) {
+        this(SortOrder.NONE, factory);
     }
 
-    protected <key_t, value_t> Map<key_t, value_t> createMap() {
-        return order.newMap();
+    public MapMap(@NotNull SortOrder order, @NotNull SortOrder setOrder) {
+        this(order.newMapDefault(), order::newMapDefault);
     }
 
-    protected <key_t, value_t> Map<key_t, value_t> createSubMap() {
-        return new LinkedHashMap<>();
+    public MapMap(@NotNull SortOrder order, @NotNull Supplier<Map<EK, EV>> factory) {
+        this(order.newMapDefault(), factory);
+    }
+
+    public MapMap(@NotNull Map<K, Map<EK, EV>> map) {
+        this(map, SortOrder.NONE);
+    }
+
+    public MapMap(@NotNull Map<K, Map<EK, EV>> map, @NotNull SortOrder setOrder) {
+        this(map, setOrder::newMapDefault);
+    }
+
+    public MapMap(@NotNull Map<K, Map<EK, EV>> map, @NotNull Supplier<Map<EK, EV>> factory) {
+        this.map = map;
+        this.factory = factory;
     }
 
     @NotNull
@@ -42,13 +52,15 @@ public class MapMap<K, EK, EV>
     public synchronized Map<EK, EV> makeMap(K keyToMap) {
         Map<EK, EV> map = this.map.get(keyToMap);
         if (map == null) {
-            map = createSubMap();
+            map = factory.get();
             this.map.put(keyToMap, map);
         }
         return map;
     }
 
-    /** ⇱ Implementation Of {@link Map}. */
+    /**
+     * ⇱ Implementation Of {@link Map}.
+     */
     /* _____________________________ */static section.iface __MAP__;
 
     @Override

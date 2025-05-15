@@ -12,7 +12,6 @@ import net.bodz.bas.repr.form.SortOrder;
 public class ListMap<K, E>
         implements IListMap<K, E> {
 
-    SortOrder order;
     Map<K, List<E>> map;
 
     public ListMap() {
@@ -20,16 +19,11 @@ public class ListMap<K, E>
     }
 
     public ListMap(SortOrder order) {
-        this.order = order;
-        this.map = createMap();
+        this.map = order.newMapDefault();
     }
 
-    public SortOrder getOrder() {
-        return order;
-    }
-
-    protected <key_t, value_t> Map<key_t, value_t> createMap() {
-        return order.newMap();
+    public ListMap(@NotNull Map<K, List<E>> map) {
+        this.map = map;
     }
 
     protected <value_t> List<value_t> createList() {
@@ -47,7 +41,9 @@ public class ListMap<K, E>
         return list;
     }
 
-    /** ⇱ Implementation Of {@link Map}. */
+    /**
+     * ⇱ Implementation Of {@link Map}.
+     */
     /* _____________________________ */static section.iface __MAP__;
 
     @Override

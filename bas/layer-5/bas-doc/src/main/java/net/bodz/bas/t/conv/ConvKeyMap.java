@@ -17,7 +17,7 @@ public abstract class ConvKeyMap<K, K_actual, V>
     }
 
     public ConvKeyMap(SortOrder sortOrder) {
-        this(sortOrder.newMap());
+        this(sortOrder.newMapDefault());
     }
 
     public ConvKeyMap(Map<K_actual, V> actualMap) {

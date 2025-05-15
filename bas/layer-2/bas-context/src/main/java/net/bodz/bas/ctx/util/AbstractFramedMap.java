@@ -30,7 +30,7 @@ public abstract class AbstractFramedMap<K, V>
     }
 
     public AbstractFramedMap(SortOrder order) {
-        initmap = order.newMap();
+        initmap = order.newMapDefault();
         stack = new Stack<VarFrame>();
         enter();
     }

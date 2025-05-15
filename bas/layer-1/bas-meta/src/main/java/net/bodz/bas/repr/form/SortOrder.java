@@ -14,6 +14,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.set.IdentityHashSet;
 
 public enum SortOrder {
@@ -48,36 +49,27 @@ public enum SortOrder {
         return NONE;
     }
 
+    @SuppressWarnings("unchecked")
     public <K, V> Map<K, V> newMapDefault() {
-        return newMap(0, null);
+        return (Map<K, V>) newMap(0);
     }
 
-    public <K, V> Map<K, V> newMap() {
-        return newMap(0, null);
+    public <K extends Comparable<K>, V> Map<K, V> newMap() {
+        return newMap(0);
     }
 
     public <K, V> Map<K, V> newMap(Comparator<? super K> cmp) {
         return newMap(0, cmp);
     }
 
-    public <K, V> Map<K, V> newMap(int initialCapacity) {
-        return newMap(initialCapacity, null);
-    }
-
-    public <K, V> Map<K, V> newMap(int initialCapacity, Comparator<? super K> cmp) {
+    public <K extends Comparable<K>, V> Map<K, V> newMap(int initialCapacity) {
         switch (this) {
             case SORTED:
             case ASCENDING:
-                if (cmp == null)
-                    return new TreeMap<>();
-                else
-                    return new TreeMap<>(cmp);
+                return new TreeMap<>();
 
             case DESCENDING:
-                if (cmp == null)
-                    return new TreeMap<>(Collections.reverseOrder());
-                else
-                    return new TreeMap<>(Collections.reverseOrder(cmp));
+                return new TreeMap<>(Collections.reverseOrder());
 
             case KEEP:
                 if (initialCapacity == 0)
@@ -100,36 +92,87 @@ public enum SortOrder {
         }
     }
 
-    public <V> Set<V> newSetDefault() {
-        return newSet(0, null);
-    }
-
-    public <V> Set<V> newSet() {
-        return newSet(0, null);
-    }
-
-    public <V> Set<V> newSet(int initialCapacity) {
-        return newSet(initialCapacity, null);
-    }
-
-    public <V> Set<V> newSet(Comparator<? super V> cmp) {
-        return newSet(0, cmp);
-    }
-
-    public <V> Set<V> newSet(int initialCapacity, Comparator<? super V> cmp) {
+    public <K, V> Map<K, V> newMap(int initialCapacity, @NotNull Comparator<? super K> cmp) {
         switch (this) {
             case SORTED:
             case ASCENDING:
-                if (cmp == null)
-                    return new TreeSet<>();
-                else
-                    return new TreeSet<>(cmp);
+                return new TreeMap<>(cmp);
 
             case DESCENDING:
-                if (cmp == null)
-                    return new TreeSet<>(Collections.reverseOrder());
+                return new TreeMap<>(Collections.reverseOrder(cmp));
+
+            case KEEP:
+                if (initialCapacity == 0)
+                    return new LinkedHashMap<>();
                 else
-                    return new TreeSet<>(Collections.reverseOrder(cmp));
+                    return new LinkedHashMap<>(initialCapacity);
+
+            case IDENTITY:
+                if (initialCapacity == 0)
+                    return new IdentityHashMap<>();
+                else
+                    return new IdentityHashMap<>(initialCapacity);
+
+            case NONE:
+            default:
+                if (initialCapacity == 0)
+                    return new HashMap<>();
+                else
+                    return new HashMap<>(initialCapacity);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public <E> Set<E> newSetDefault() {
+        return (Set<E>) newSet(0);
+    }
+
+    public <E extends Comparable<E>> Set<E> newSet() {
+        return newSet(0);
+    }
+
+    public <E> Set<E> newSet(Comparator<? super E> cmp) {
+        return newSet(0, cmp);
+    }
+
+    public <E extends Comparable<E>> Set<E> newSet(int initialCapacity) {
+        switch (this) {
+            case SORTED:
+            case ASCENDING:
+                return new TreeSet<>();
+
+            case DESCENDING:
+                return new TreeSet<>(Collections.reverseOrder());
+
+            case KEEP:
+                if (initialCapacity == 0)
+                    return new LinkedHashSet<>();
+                else
+                    return new LinkedHashSet<>(initialCapacity);
+
+            case IDENTITY:
+                if (initialCapacity == 0)
+                    return new IdentityHashSet<>();
+                else
+                    return new IdentityHashSet<>(initialCapacity);
+
+            case NONE:
+            default:
+                if (initialCapacity == 0)
+                    return new HashSet<>();
+                else
+                    return new HashSet<>(initialCapacity);
+        }
+    }
+
+    public <E> Set<E> newSet(int initialCapacity, Comparator<? super E> cmp) {
+        switch (this) {
+            case SORTED:
+            case ASCENDING:
+                return new TreeSet<>(cmp);
+
+            case DESCENDING:
+                return new TreeSet<>(Collections.reverseOrder(cmp));
 
             case KEEP:
                 if (initialCapacity == 0)

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.map.JKMap;
 
 class CrossReferenceRow {
@@ -58,7 +59,7 @@ class CrossReferenceRow {
 
     static JKMap<TableOid, String, List<CrossReferenceRow>> convert(ResultSet rs, boolean groupByParent)
             throws SQLException {
-        JKMap<TableOid, String, List<CrossReferenceRow>> map = new JKMap<>();
+        JKMap<TableOid, String, List<CrossReferenceRow>> map = new JKMap<>(SortOrder.KEEP);
         while (rs.next()) {
             CrossReferenceRow row = new CrossReferenceRow();
             row.readObject(rs);
@@ -84,8 +85,7 @@ class CrossReferenceRow {
     }
 
     static class ColumnEntry
-            implements
-                Comparable<ColumnEntry> {
+            implements Comparable<ColumnEntry> {
 
         String PKCOLUMN_NAME;
         String FKCOLUMN_NAME;

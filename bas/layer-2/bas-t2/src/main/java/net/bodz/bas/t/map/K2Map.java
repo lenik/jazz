@@ -6,32 +6,49 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.pojo.Pair;
 
 public class K2Map<K, V>
-        implements
-            Map<K, Map<K, V>> {
+        implements Map<K, Map<K, V>> {
 
-    SortOrder order;
-    Map<K, Map<K, V>> map;
+    private final Map<K, Map<K, V>> map;
+    private final Supplier<Map<K, V>> factory;
 
     public K2Map() {
-        this(SortOrder.NONE);
+        this(SortOrder.NONE, SortOrder.NONE);
     }
 
-    public K2Map(SortOrder order) {
-        this.order = order;
-        this.map = createMap();
+    public K2Map(@NotNull SortOrder order) {
+        this(order, order);
     }
 
-    public SortOrder getOrder() {
-        return order;
+    public K2Map(@NotNull Supplier<Map<K, V>> factory) {
+        this(SortOrder.NONE, factory);
     }
 
-    protected <value_t> Map<K, value_t> createMap() {
-        return order.newMap();
+    public K2Map(@NotNull SortOrder order, @NotNull SortOrder setOrder) {
+        this(order.newMapDefault(), order::newMapDefault);
+    }
+
+    public K2Map(@NotNull SortOrder order, @NotNull Supplier<Map<K, V>> factory) {
+        this(order.newMapDefault(), factory);
+    }
+
+    public K2Map(@NotNull Map<K, Map<K, V>> map) {
+        this(map, SortOrder.NONE);
+    }
+
+    public K2Map(@NotNull Map<K, Map<K, V>> map, @NotNull SortOrder setOrder) {
+        this(map, setOrder::newMapDefault);
+    }
+
+    public K2Map(@NotNull Map<K, Map<K, V>> map, @NotNull Supplier<Map<K, V>> factory) {
+        this.map = map;
+        this.factory = factory;
     }
 
     public long size2() {
@@ -65,7 +82,7 @@ public class K2Map<K, V>
     public synchronized Map<K, V> getOrCreate(K k1) {
         Map<K, V> map2 = map.get(k1);
         if (map2 == null) {
-            map2 = createMap();
+            map2 = factory.get();
             map.put(k1, map2);
         }
         return map2;
@@ -135,7 +152,9 @@ public class K2Map<K, V>
         return set2;
     }
 
-    /** ⇱ Implementation Of {@link Map}. */
+    /**
+     * ⇱ Implementation Of {@link Map}.
+     */
     /* _____________________________ */static section.iface __MAP__;
 
     @Override
@@ -174,7 +193,7 @@ public class K2Map<K, V>
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends Map<K, V>> m) {
+    public void putAll(@NotNull Map<? extends K, ? extends Map<K, V>> m) {
         map.putAll(m);
     }
 
@@ -183,16 +202,19 @@ public class K2Map<K, V>
         map.clear();
     }
 
+    @NotNull
     @Override
     public Set<K> keySet() {
         return map.keySet();
     }
 
+    @NotNull
     @Override
     public Collection<Map<K, V>> values() {
         return map.values();
     }
 
+    @NotNull
     @Override
     public Set<Entry<K, Map<K, V>>> entrySet() {
         return map.entrySet();

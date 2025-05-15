@@ -447,7 +447,7 @@ public class JsonObject
 
     public <T> Set<T> getArraySet(@NotNull String key, Set<T> set, SortOrder order, IJsonParser<T> conv)
             throws ParseException {
-        return readArrayInto(key, set, conv, order::newSet);
+        return readArrayInto(key, set, conv, order::newSetDefault);
     }
 
     public final <T> List<T> getArrayList(@NotNull String key, IJsonParser<T> conv)
@@ -497,7 +497,7 @@ public class JsonObject
             T val = valueFactory.get();
             val.jsonIn(jv, JsonFormOptions.XXX);
             return val;
-        }, order::newSet);
+        }, order::newSetDefault);
     }
 
     public <T extends IJsonForm> List<T> //

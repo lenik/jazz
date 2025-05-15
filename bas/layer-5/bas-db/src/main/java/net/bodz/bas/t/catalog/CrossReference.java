@@ -24,19 +24,19 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.catalog.CrossReferenceRow.ColumnEntry;
 import net.bodz.bas.t.map.JKMap;
 import net.bodz.bas.t.order.IOrdinal;
 import net.bodz.bas.t.tuple.QualifiedName;
 
 public class CrossReference
-        implements
-            IMutableJavaType,
+        implements IMutableJavaType,
 //            IMutableJavaQName,
-            IOrdinal,
-            IJsonForm,
-            IXmlForm,
-            Serializable {
+                   IOrdinal,
+                   IJsonForm,
+                   IXmlForm,
+                   Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -298,9 +298,10 @@ public class CrossReference
     }
 
     /**
+     *
      */
     public IColumnMetadata findParentColumn(String foreignColumnName) {
-        if (! resolveParentColumns())
+        if (!resolveParentColumns())
             throw new IllegalUsageException("Can't determine parent columns.");
 
         for (int keySeq = 0; keySeq < foreignColumns.length; keySeq++) {
@@ -431,7 +432,7 @@ public class CrossReference
         while (true) {
             ColumnEntry pair = new ColumnEntry(row);
             pairs.add(pair);
-            if (! iterator.hasNext())
+            if (!iterator.hasNext())
                 break;
             iterator.next();
         }
@@ -456,13 +457,13 @@ public class CrossReference
 
     public static CrossReferenceMap convertToForeignMap(ResultSet rs)
             throws SQLException {
-        return convertFromJDBC(rs, false);
+        return convertFromJDBC(rs, false, SortOrder.KEEP);
     }
 
-    public static CrossReferenceMap convertFromJDBC(ResultSet rs, boolean groupByParent)
+    public static CrossReferenceMap convertFromJDBC(ResultSet rs, boolean groupByParent, SortOrder order)
             throws SQLException {
         JKMap<TableOid, String, List<CrossReferenceRow>> rawMap = CrossReferenceRow.convert(rs, groupByParent);
-        CrossReferenceMap refMap = new CrossReferenceMap(rawMap.getOrder());
+        CrossReferenceMap refMap = new CrossReferenceMap(order);
         for (TableOid k1 : rawMap.keySet()) {
             for (String k2 : rawMap.get(k1).keySet()) {
                 List<CrossReferenceRow> rows = rawMap.get2(k1, k2);

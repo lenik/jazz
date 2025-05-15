@@ -7,14 +7,14 @@ import net.bodz.bas.repr.form.SortOrder;
 public class DefaultSpecMap<key_t, val_t>
         extends AbstractSpecMap<key_t, val_t> {
 
-    private Map<key_t, val_t> map;
+    private final Map<key_t, val_t> map;
 
     public DefaultSpecMap() {
         this(SortOrder.NONE);
     }
 
     public DefaultSpecMap(SortOrder order) {
-        this(order.newMap());
+        this(order.newMapDefault());
     }
 
     public DefaultSpecMap(Map<key_t, val_t> map) {

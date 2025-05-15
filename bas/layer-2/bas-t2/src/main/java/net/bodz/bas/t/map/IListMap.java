@@ -86,6 +86,22 @@ public interface IListMap<K, E>
         return list == null ? 0 : list.size();
     }
 
+    default E getFirstOfList(Object keyToList) {
+        List<E> list = get(keyToList);
+        if (list == null || list.isEmpty())
+            return null;
+        else
+            return list.get(list.size() - 1);
+    }
+
+    default E getLastOfList(Object keyToList) {
+        List<E> list = get(keyToList);
+        if (list == null || list.isEmpty())
+            return null;
+        else
+            return list.get(list.size() - 1);
+    }
+
     default E getFromList(Object keyToList, int listIndex) {
         List<E> list = get(keyToList);
         if (list == null)

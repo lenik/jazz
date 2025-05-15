@@ -19,8 +19,8 @@ public class BasicRecordMap<K, T>
 
     final IRecordType<T> recordType;
 
-    final Map<K, T> map = SortOrder.NONE.newMap();
-    final Map<IColumnType<?, ?>, ListMap<?, K>> columnIndices = SortOrder.NONE.newMap();
+    final Map<K, T> map = SortOrder.NONE.newMapDefault();
+    final Map<IColumnType<?, ?>, ListMap<?, K>> columnIndices = SortOrder.NONE.newMapDefault();
     final SetMap<T, K> rindex = new SetMap<>();
 
     Set<String> hiddenKeys = new HashSet<>();

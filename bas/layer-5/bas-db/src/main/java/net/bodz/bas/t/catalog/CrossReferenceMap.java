@@ -10,7 +10,7 @@ public class CrossReferenceMap
     }
 
     public CrossReferenceMap(SortOrder order) {
-        super(TableOid.class, () -> new CrossReference(), order);
+        super(TableOid.class, CrossReference::new, order);
     }
 
 }
