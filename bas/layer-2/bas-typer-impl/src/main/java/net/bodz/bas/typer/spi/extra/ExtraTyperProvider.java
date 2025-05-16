@@ -1,15 +1,10 @@
 package net.bodz.bas.typer.spi.extra;
 
 import net.bodz.bas.rtx.QueryException;
-import net.bodz.bas.typer.spi.AbstractTyperProvider;
+import net.bodz.bas.typer.spi.ITyperProvider;
 
 public class ExtraTyperProvider
-        extends AbstractTyperProvider {
-
-    @Override
-    public int getPriority() {
-        return PRIORITY_NORMAL;
-    }
+        implements ITyperProvider {
 
     /**
      * TODO Not implemented.
@@ -24,12 +19,6 @@ public class ExtraTyperProvider
             if (typer != null)
                 return typer;
         }
-        return null;
-    }
-
-    @Override
-    public <T> T getTyper(Class<?> objType, Object obj, Class<T> typerClass)
-            throws QueryException {
         return null;
     }
 

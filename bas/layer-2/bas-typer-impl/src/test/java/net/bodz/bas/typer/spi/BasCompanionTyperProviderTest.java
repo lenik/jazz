@@ -11,7 +11,7 @@ public class BasCompanionTyperProviderTest
     @Test
     public void getIntegerTypers() {
         BasCompanionTyperProvider provider = new BasCompanionTyperProvider();
-        IParser<Integer> parser = provider.getTyper(Integer.class, IParser.class);
+        IParser<Integer> parser = provider.getGenericTyper(Integer.class, IParser.class);
         assertNotNull(parser);
     }
 

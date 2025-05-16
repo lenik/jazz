@@ -2,10 +2,9 @@ package net.bodz.bas.typer.spi;
 
 import net.bodz.bas.meta.lang.typer;
 import net.bodz.bas.rtx.IQueryable;
-import net.bodz.bas.rtx.QueryException;
 
 public class AnnotationTyperProvider
-        extends AbstractTyperProvider {
+        implements ITyperProvider {
 
     @Override
     public int getPriority() {
@@ -34,12 +33,6 @@ public class AnnotationTyperProvider
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-    }
-
-    @Override
-    public <T> T getTyper(Class<?> objType, Object obj, Class<T> typerClass)
-            throws QueryException {
-        return getTyper(objType, typerClass);
     }
 
 }

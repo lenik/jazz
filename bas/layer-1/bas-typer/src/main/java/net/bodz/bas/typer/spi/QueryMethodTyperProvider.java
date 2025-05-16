@@ -19,7 +19,7 @@ import net.bodz.bas.rtx.QueryException;
  * Here, both <code>public</code> and <code>static</code> is optional.
  */
 public class QueryMethodTyperProvider
-        extends AbstractTyperProvider {
+        implements ITyperProvider {
 
     public static String queryMethodName = "query";
 

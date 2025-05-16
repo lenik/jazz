@@ -41,10 +41,13 @@ public class CharArrayTypers
     public char[] newSample(IOptions options)
             throws CreateException {
         ISampleGenerator<Character> charSample = options.get(sampleCharSample, defaultSampleCharSample);
+
+        int minLength = options.getInt(OPTION_MIN_LENGTH, DEFAULT_MIN_LENGTH);
+        int maxLength = options.getInt(OPTION_MAX_LENGTH, DEFAULT_MAX_LENGTH);
+
         Random prng = options.get(Random.class, random);
-        int minLen = options.getInt(sampleMinLength, defaultSampleMinLength);
-        int maxLen = options.getInt(sampleMaxLength, defaultSampleMaxLength);
-        int length = minLen + prng.nextInt(maxLen - minLen);
+
+        int length = minLength + prng.nextInt(maxLength + 1 - minLength);
 
         char[] sample = new char[length];
         for (int i = 0; i < length; i++)

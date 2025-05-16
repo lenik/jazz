@@ -13,7 +13,7 @@ import net.bodz.bas.rtx.QueryException;
  * @see net.bodz.bas.c.type.TypeNearby
  */
 public class FriendTyperProvider
-        extends AbstractTyperProvider {
+        implements ITyperProvider {
 
     static final Logger logger = Logger.getLogger(FriendTyperProvider.class.getName());
 
@@ -23,7 +23,7 @@ public class FriendTyperProvider
     private final String suffixFamilyName = "Typers";
     private final boolean flatten;
 
-    private Map<Class<?>, Object> friendTyperInstantiationCache = new HashMap<Class<?>, Object>();
+    private final Map<Class<?>, Object> friendTyperInstantiationCache = new HashMap<Class<?>, Object>();
 
     public FriendTyperProvider() {
         this.priority = BuiltinProviderOrder.friend.getPriority();
@@ -46,12 +46,6 @@ public class FriendTyperProvider
     @Override
     public int getPriority() {
         return priority;
-    }
-
-    @Override
-    public <T> T getTyper(Class<?> objType, Object obj, Class<T> typerClass)
-            throws QueryException {
-        return getTyper(objType, typerClass);
     }
 
     @Override

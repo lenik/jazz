@@ -7,7 +7,7 @@ import net.bodz.bas.rtx.QueryException;
  * This provider simply cast this object to specific typer class.
  */
 public class QuerySelfTyperProvider
-        extends AbstractTyperProvider {
+        implements ITyperProvider {
 
     @Override
     public int getPriority() {

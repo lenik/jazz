@@ -9,10 +9,10 @@ import net.bodz.bas.potato.element.IMethodMap;
 import net.bodz.bas.potato.element.IPropertyMap;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.rtx.QueryException;
-import net.bodz.bas.typer.spi.AbstractTyperProvider;
+import net.bodz.bas.typer.spi.ITyperProvider;
 
 public class PotatoTyperProvider
-        extends AbstractTyperProvider {
+        implements ITyperProvider {
 
     private static final int typeTyper = 0;
     private static final int propertyMapTyper = 1;
@@ -28,12 +28,6 @@ public class PotatoTyperProvider
         rindexMap.put(IMethodMap.class.getName(), methodMapTyper);
         rindexMap.put(IConstructorMap.class.getName(), constructorMapTyper);
         rindexMap.put(IEventMap.class.getName(), eventMapTyper);
-    }
-
-    @Override
-    public <T> T getTyper(Class<?> objType, Object obj, Class<T> typerClass)
-            throws QueryException {
-        return getTyper(objType, typerClass);
     }
 
     @Override

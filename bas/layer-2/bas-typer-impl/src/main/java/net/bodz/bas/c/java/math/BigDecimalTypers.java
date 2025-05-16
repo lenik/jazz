@@ -102,7 +102,7 @@ public class BigDecimalTypers
             intLen -= scale; // + 1 (dot);
 
         String str = RandomFn.digits(prng, intLen, true);
-        if (scale != 0 && random.nextBoolean()) {
+        if (scale != 0 && prng.nextBoolean()) {
             str += "." + RandomFn.digits(prng, scale, false);
         }
         return new BigDecimal(str);

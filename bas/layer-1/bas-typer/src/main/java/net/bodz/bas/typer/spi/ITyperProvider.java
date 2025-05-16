@@ -10,7 +10,8 @@ import net.bodz.bas.t.order.IPriority;
  */
 @IndexedType
 public interface ITyperProvider
-        extends IPriority, IQueryProxy {
+        extends IPriority,
+                IQueryProxy {
 
     /**
      * High priority.
@@ -33,16 +34,34 @@ public interface ITyperProvider
 
     /**
      * Determine the priority of this typer provider compared to the given one.
-     * 
+     * <p>
      * The priority is represented by an integer, a smaller value means higher priority.
-     * 
+     *
      * @return An integer value represent the priority.
      * @see #PRIORITY_HIGH
      * @see #PRIORITY_NORMAL
      * @see #PRIORITY_LOW
      */
     @Override
-    int getPriority();
+    default int getPriority() {
+        return PRIORITY_NORMAL;
+    }
+
+    @Override
+    default <T> T query(Object obj, Class<T> specificationType)
+            throws QueryException {
+        if (obj instanceof Class) {
+            Class<?> typeObj = (Class<?>) obj;
+            return getTyper(typeObj, specificationType);
+        }
+        if (obj != null) {
+            Class<?> objType = (Class<?>) obj.getClass();
+            T typer = getTyper(objType, obj, specificationType);
+            if (typer != null)
+                return typer;
+        }
+        return IQueryProxy.super.query(obj, specificationType);
+    }
 
     /**
      * An aggressive typers provider will include all inherited typers in the results.
@@ -53,50 +72,57 @@ public interface ITyperProvider
      * Correspondingly, for non-aggressive typers provider, if the concerned typers wasn't included
      * in the query results, then this provider will be later called again with the super class (or
      * interface) of the user type.
-     * 
+     *
      * @return <code>true</code> If inherited typers are included in the results provided by this
-     *         typers provider.
+     * typers provider.
      */
-    boolean isAggressive();
+    default boolean isAggressive() {
+        return false;
+    }
 
     /**
      * Query for specific typers about the user object type.
      * <p>
      * For specific typers on the instance object, {@link #getTyper(Class, Object, Class)} should be
      * called.
-     * 
-     * @param objType
-     *            The user object type to be queryed, non-<code>null</code>.
-     * @param typerClass
-     *            Typers facet of interesting, non-<code>null</code>.
+     *
+     * @param objType    The user object type to be queryed, non-<code>null</code>.
+     * @param typerClass Typers facet of interesting, non-<code>null</code>.
      * @return Typers implementation, <code>null</code> if the typers isn't defined.
-     * @throws QueryException
-     *             If exception occurred when query for specific type typers.
-     * @throws NullPointerException
-     *             If <code>objType</code> or <code>typerClass</code> is <code>null</code>.
+     * @throws QueryException       If exception occurred when query for specific type typers.
+     * @throws NullPointerException If <code>objType</code> or <code>typerClass</code> is <code>null</code>.
      */
     <T> T getTyper(Class<?> objType, Class<T> typerClass)
             throws QueryException;
 
     /**
      * Query for specific typers on the object instance.
-     * 
-     * @param objType
-     *            The user object type to be queryed, non-<code>null</code>.
-     * @param obj
-     *            The object instance, may be <code>null</code>.
-     *            <p>
-     *            If <code>obj</code> is <code>null</code>, this method is just the same as
-     *            {@link #getTyper(Class, Class)}.
-     * @param typerClass
-     *            Typers facet of interesting, non-<code>null</code>.
+     *
+     * @param objType    The user object type to be queryed, non-<code>null</code>.
+     * @param obj        The object instance, may be <code>null</code>.
+     *                   <p>
+     *                   If <code>obj</code> is <code>null</code>, this method is just the same as
+     *                   {@link #getTyper(Class, Class)}.
+     * @param typerClass Typers facet of interesting, non-<code>null</code>.
      * @return Typer implementation, <code>null</code> if the typers isn't defined.
-     * @throws QueryException
-     *             If exception occurred when query for specific type typers.
-     * @throws NullPointerException
-     *             If <code>objType</code> or <code>typerClass</code> is <code>null</code>.
+     * @throws QueryException       If exception occurred when query for specific type typers.
+     * @throws NullPointerException If <code>objType</code> or <code>typerClass</code> is <code>null</code>.
      */
-    <T> T getTyper(Class<?> objType, Object obj, Class<T> typerClass)
-            throws QueryException;
+    default <T> T getTyper(Class<?> objType, Object obj, Class<T> typerClass)
+            throws QueryException {
+        return getTyper(objType, typerClass);
+    }
+
+    @SuppressWarnings("unchecked")
+    default <T> T getGenericTyper(Class<?> objType, Class<?> typerClass)
+            throws QueryException {
+        return (T) getTyper(objType, typerClass);
+    }
+
+    @SuppressWarnings("unchecked")
+    default <T> T getGenericTyper(Class<?> objType, Object obj, Class<?> typerClass)
+            throws QueryException {
+        return (T) getTyper(objType, obj, typerClass);
+    }
 
 }
