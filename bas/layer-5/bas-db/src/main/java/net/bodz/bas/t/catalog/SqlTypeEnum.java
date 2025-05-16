@@ -23,6 +23,7 @@ import net.bodz.bas.c.object.Unknown;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 
 public enum SqlTypeEnum {
 
@@ -198,13 +199,13 @@ public enum SqlTypeEnum {
 
         String sqlTypeName = column.getSqlTypeName();
         if (sqlTypeName != null) {
-            SqlTypeEnum jdbcType = SqlTypeEnum.forSQLTypeName(sqlTypeName, null);
+            SqlTypeEnum jdbcType = SqlTypeEnum.forSQLTypeName(sqlTypeName);
             if (jdbcType != null)
                 return jdbcType.defaultType;
         }
 
         int sqlType = column.getSqlType();
-        SqlTypeEnum jdbcType = SqlTypeEnum.forSQLType(sqlType, null);
+        SqlTypeEnum jdbcType = SqlTypeEnum.forSQLType(sqlType);
         if (jdbcType != null)
             return jdbcType.defaultType;
 
@@ -238,7 +239,7 @@ public enum SqlTypeEnum {
 
         Class<?> componentType = null;
 
-        SqlTypeEnum sqlType = forSQLTypeName(sqlTypeName, VARCHAR);
+        SqlTypeEnum sqlType = forSQLTypeName(sqlTypeName);
         if (sqlType != null)
             componentType = sqlType.getPreferredType(sqlTypeName, nullable, signed, precision, scale);
 
@@ -281,32 +282,64 @@ public enum SqlTypeEnum {
     }
 
     private static final Map<Integer, SqlTypeEnum> sqlTypeMap = new HashMap<>();
-    private static final Map<String, SqlTypeEnum> sqlTypeNameMap = new HashMap<>();
+    private static final Map<String, SqlTypeEnum> _sqlTypeNameMap = new HashMap<>();
+
+    static SqlTypeEnum getNamed(@NotNull String name) {
+        name = name.toLowerCase();
+        return _sqlTypeNameMap.get(name);
+    }
+
+    static void putNamed(@NotNull String name, @NotNull SqlTypeEnum val) {
+        name = name.toLowerCase();
+        _sqlTypeNameMap.put(name, val);
+    }
 
     static {
         for (SqlTypeEnum type : values()) {
             sqlTypeMap.put(type.sqlType, type);
-            sqlTypeNameMap.put(type.name().toLowerCase(), type);
+            putNamed(type.name(), type);
         }
     }
 
-    public static SqlTypeEnum forSQLType(int sqlType, SqlTypeEnum fallback) {
+    public static SqlTypeEnum forSQLType(int sqlType) {
+        SqlTypeEnum type = sqlTypeMap.get(sqlType);
+        return type;
+    }
+
+    @NotNull
+    public static SqlTypeEnum forSQLType(int sqlType, @NotNull SqlTypeEnum fallback) {
         SqlTypeEnum type = sqlTypeMap.get(sqlType);
         return type != null ? type : fallback;
     }
 
-    public static SqlTypeEnum forSQLTypeName(String sqlTypeName, SqlTypeEnum fallback) {
+    public static SqlTypeEnum forSQLTypeName(@NotNull String sqlTypeName) {
+        SqlTypeEnum type = getNamed(sqlTypeName);
+        return type;
+    }
+
+    @NotNull
+    public static SqlTypeEnum forSQLTypeName(String sqlTypeName, @NotNull SqlTypeEnum fallback) {
         if (sqlTypeName == null)
             return fallback;
-        String lowerCased = sqlTypeName.toLowerCase();
-        SqlTypeEnum type = sqlTypeNameMap.get(lowerCased);
+        SqlTypeEnum type = getNamed(sqlTypeName);
         return type != null ? type : fallback;
     }
 
-    public static SqlTypeEnum forSQLTypeName(int sqlType, String sqlTypeName, SqlTypeEnum fallback) {
+    public static SqlTypeEnum forSQLTypeName(int sqlType, String sqlTypeName) {
         if (sqlTypeName != null) {
-            String lowerCased = sqlTypeName.toLowerCase();
-            SqlTypeEnum type = sqlTypeNameMap.get(lowerCased);
+            SqlTypeEnum type = getNamed(sqlTypeName);
+            if (type != null)
+                return type;
+        }
+
+        SqlTypeEnum type = sqlTypeMap.get(sqlType);
+        return type;
+    }
+
+    @NotNull
+    public static SqlTypeEnum forSQLTypeName(int sqlType, String sqlTypeName, @NotNull SqlTypeEnum fallback) {
+        if (sqlTypeName != null) {
+            SqlTypeEnum type = getNamed(sqlTypeName);
             if (type != null)
                 return type;
         }

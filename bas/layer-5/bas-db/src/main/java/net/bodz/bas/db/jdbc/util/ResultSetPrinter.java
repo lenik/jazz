@@ -99,7 +99,7 @@ public class ResultSetPrinter {
             sqlTypeNames[col] = sqlTypeName;
 
             String columnClassName = md.getColumnClassName();
-            SqlTypeEnum typeEnum = SqlTypeEnum.forSQLTypeName(sqlType, sqlTypeName, null);
+            SqlTypeEnum typeEnum = SqlTypeEnum.forSQLTypeName(sqlType, sqlTypeName);
             Class<?> type;
             try {
                 type = Class.forName(columnClassName);
