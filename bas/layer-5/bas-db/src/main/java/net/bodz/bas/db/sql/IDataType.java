@@ -3,6 +3,7 @@ package net.bodz.bas.db.sql;
 import net.bodz.bas.db.jdbc.util.IResultColumnMetaData;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.catalog.SqlTypeEnum;
+import net.bodz.bas.typer.std.ISampleGenerator;
 
 public interface IDataType {
 
@@ -26,5 +27,10 @@ public interface IDataType {
     Class<?> getSqlClass();
 
     Class<?> getSqlClass(IResultColumnMetaData metaData);
+
+    @NotNull
+    IRefiner getRefiner();
+
+    ISampleGenerator<?> getGenerator();
 
 }

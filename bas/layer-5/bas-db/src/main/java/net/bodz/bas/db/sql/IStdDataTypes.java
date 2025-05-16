@@ -8,93 +8,97 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
-import java.util.function.Function;
 
-import net.bodz.bas.db.jdbc.util.IResultColumnMetaData;
+import static net.bodz.bas.db.sql.DataType.newType;
 
 public interface IStdDataTypes {
 
-    DataType ARRAY = newType(java.sql.Array.class, Types.ARRAY, "array", Refiners.R_ARRAY);
-    DataType BIGINT = newType(Long.class, Types.BIGINT, "bigint", metaData -> {
-        if (metaData.isSigned())
-            return metaData.isNullable() ? Long.class : long.class;
-        else
-            return BigInteger.class;
-    });
-    DataType BINARY = newType(byte[].class, Types.BINARY, "binary");
-    DataType BIT = newType(Boolean.class, Types.BIT, "bit", metaData -> {
-        if (metaData.getPrecision() > 1)
-            return byte[].class;
-        if (metaData.isSigned()) // 0, 1, -1
-            return metaData.isNullable() ? Byte.class : byte.class;
-        else // 0, 1
-            return metaData.isNullable() ? Boolean.class : boolean.class;
-    });
-    DataType BLOB = newType(java.sql.Blob.class, Types.BLOB, "blob");
-    DataType BOOLEAN = newType(Boolean.class, Types.BOOLEAN, "boolean");
-    DataType CHAR = newType(String.class, Types.CHAR, "char", Refiners.R_CHAR);
-    DataType CLOB = newType(java.sql.Clob.class, Types.CLOB, "clob");
-    DataType DATALINK = newType(Object.class, Types.DATALINK, "datalink");
-    DataType DATE = newType(LocalDate.class, Types.DATE, "date");
-    DataType DECIMAL = newType(BigDecimal.class, Types.DECIMAL, "decimal", Refiners.R_NUMERIC);
-    DataType DISTINCT = newType(Object.class, Types.DISTINCT, "distinct");
-    DataType DOUBLE = newType(Double.class, Types.DOUBLE, "double", Refiners.R_DOUBLE);
-    DataType FLOAT = newType(Double.class, Types.FLOAT, "float", Refiners.R_DOUBLE);
-    DataType INTEGER = newType(Integer.class, Types.INTEGER, "integer", metaData -> {
-        if (metaData.isSigned())
-            return metaData.isNullable() ? Integer.class : int.class;
-        else
-            return metaData.isNullable() ? Long.class : long.class;
-    });
-    DataType JAVA_OBJECT = newType(Object.class, Types.JAVA_OBJECT, "java_object");
-    DataType LONGNVARCHAR = newType(String.class, Types.LONGNVARCHAR, "longnvarchar");
-    DataType LONGVARBINARY = newType(byte[].class, Types.LONGVARBINARY, "longvarbinary");
-    DataType LONGVARCHAR = newType(String.class, Types.LONGVARCHAR, "longvarchar");
-    DataType NCHAR = newType(String.class, Types.NCHAR, "nchar", Refiners.R_CHAR);
-    DataType NCLOB = newType(java.sql.NClob.class, Types.NCLOB, "nclob");
-    DataType NULL = newType(Object.class, Types.NULL, "null");
-    DataType NUMERIC = newType(BigDecimal.class, Types.NUMERIC, "numeric", Refiners.R_NUMERIC);
-    DataType NVARCHAR = newType(String.class, Types.NVARCHAR, "nvarchar");
-    DataType OTHER = newType(Object.class, Types.OTHER, "other");
-    DataType REAL = newType(Float.class, Types.REAL, "real", Refiners.R_FLOAT);
-    DataType REF_CURSOR = newType(java.sql.Ref.class, Types.REF_CURSOR, "ref_cursor");
-    DataType REF = newType(java.sql.Ref.class, Types.REF, "ref");
-    DataType ROWID = newType(java.sql.RowId.class, Types.ROWID, "rowid");
-    DataType SMALLINT = newType(Short.class, Types.SMALLINT, "smallint", metaData -> {
-        if (metaData.isSigned())
-            return metaData.isNullable() ? Short.class : short.class;
-        else
-            return metaData.isNullable() ? Integer.class : int.class;
-    });
-    DataType SQLXML = newType(java.sql.SQLXML.class, Types.SQLXML, "sqlxml");
-    DataType STRUCT = newType(java.sql.Struct.class, Types.STRUCT, "struct");
-    DataType TIME = newType(LocalTime.class, Types.TIME, "time");
-    DataType TIMESTAMP = newType(LocalDateTime.class, Types.TIMESTAMP, "timestamp");
-    DataType TIMESTAMP_WITH_TIMEZONE = newType(OffsetDateTime.class, Types.TIMESTAMP_WITH_TIMEZONE, "timestamp with timezone");
-    DataType TIME_WITH_TIMEZONE = newType(OffsetTime.class, Types.TIME_WITH_TIMEZONE, "time with timezone");
-    DataType TINYINT = newType(Short.class, Types.TINYINT, "tinyint", metaData -> {
-        if (metaData.isSigned())
-            return metaData.isNullable() ? Byte.class : byte.class;
-        else
-            return metaData.isNullable() ? Short.class : short.class;
-    });
-    DataType VARBINARY = newType(byte[].class, Types.VARBINARY, "varbinary");
-    DataType VARCHAR = newType(String.class, Types.VARCHAR, "varchar");
-
-    static DataType newType(Class<?> type, int sqlType, String sqlTypeName) {
-        return new DataType(type, sqlType, sqlTypeName, true);
-    }
-
-    static DataType newType(Class<?> type, int sqlType, String name, Function<IResultColumnMetaData, Class<?>> refiner) {
-        return new DataType(type, sqlType, name, true, refiner);
-
-    }
+    DataType ARRAY = newType(java.sql.Array.class, Types.ARRAY, "array")//
+            .refiner(Refiners.R_ARRAY).build();
+    DataType BIGINT = newType(Long.class, Types.BIGINT, "bigint")//
+            .refiner(column -> {
+                if (column.isSigned())
+                    return column.isNullable() ? Long.class : long.class;
+                else
+                    return BigInteger.class;
+            }).build();
+    DataType BINARY = newType(byte[].class, Types.BINARY, "binary").build();
+    DataType BIT = newType(Boolean.class, Types.BIT, "bit")//
+            .refiner(column -> {
+                if (column.getPrecision() > 1)
+                    return byte[].class;
+                if (column.isSigned()) // 0, 1, -1
+                    return column.isNullable() ? Byte.class : byte.class;
+                else // 0, 1
+                    return column.isNullable() ? Boolean.class : boolean.class;
+            }).build();
+    // java.sql.Blob
+    DataType BLOB = newType(byte[].class, Types.BLOB, "blob").build();
+    DataType BOOLEAN = newType(Boolean.class, Types.BOOLEAN, "boolean").build();
+    DataType CHAR = newType(String.class, Types.CHAR, "char")//
+            .refiner(Refiners.R_CHAR).build();
+    DataType CLOB = newType(String.class, Types.CLOB, "clob").build(); // java.sql.Clob
+    DataType DATALINK = newType(Object.class, Types.DATALINK, "datalink").build();
+    DataType DATE = newType(LocalDate.class, Types.DATE, "date").build();
+    DataType DECIMAL = newType(BigDecimal.class, Types.DECIMAL, "decimal")//
+            .refiner(Refiners.R_NUMERIC).build();
+    DataType DISTINCT = newType(Object.class, Types.DISTINCT, "distinct").build();
+    DataType DOUBLE = newType(Double.class, Types.DOUBLE, "double")//
+            .refiner(Refiners.R_DOUBLE).build();
+    DataType FLOAT = newType(Double.class, Types.FLOAT, "float")//
+            .refiner(Refiners.R_DOUBLE).build();
+    DataType INTEGER = newType(Integer.class, Types.INTEGER, "integer")//
+            .refiner(column -> {
+                if (column.isSigned())
+                    return column.isNullable() ? Integer.class : int.class;
+                else
+                    return column.isNullable() ? Long.class : long.class;
+            }).build();
+    DataType JAVA_OBJECT = newType(Object.class, Types.JAVA_OBJECT, "java_object").build();
+    DataType LONGNVARCHAR = newType(String.class, Types.LONGNVARCHAR, "longnvarchar").build();
+    DataType LONGVARBINARY = newType(byte[].class, Types.LONGVARBINARY, "longvarbinary").build();
+    DataType LONGVARCHAR = newType(String.class, Types.LONGVARCHAR, "longvarchar").build();
+    DataType NCHAR = newType(String.class, Types.NCHAR, "nchar")//
+            .refiner(Refiners.R_CHAR).build();
+    DataType NCLOB = newType(String.class, Types.NCLOB, "nclob").build(); // java.sql.NClob
+    DataType NULL = newType(Object.class, Types.NULL, "null").build();
+    DataType NUMERIC = newType(BigDecimal.class, Types.NUMERIC, "numeric")//
+            .refiner(Refiners.R_NUMERIC).build();
+    DataType NVARCHAR = newType(String.class, Types.NVARCHAR, "nvarchar").build();
+    DataType OTHER = newType(Object.class, Types.OTHER, "other").build();
+    DataType REAL = newType(Float.class, Types.REAL, "real")//
+            .refiner(Refiners.R_FLOAT).build();
+    DataType REF_CURSOR = newType(java.sql.Ref.class, Types.REF_CURSOR, "ref_cursor").build();
+    DataType REF = newType(java.sql.Ref.class, Types.REF, "ref").build();
+    DataType ROWID = newType(java.sql.RowId.class, Types.ROWID, "rowid").build();
+    DataType SMALLINT = newType(Short.class, Types.SMALLINT, "smallint")//
+            .refiner(column -> {
+                if (column.isSigned())
+                    return column.isNullable() ? Short.class : short.class;
+                else
+                    return column.isNullable() ? Integer.class : int.class;
+            }).build();
+    DataType SQLXML = newType(java.sql.SQLXML.class, Types.SQLXML, "sqlxml").build();
+    DataType STRUCT = newType(java.sql.Struct.class, Types.STRUCT, "struct").build();
+    DataType TIME = newType(LocalTime.class, Types.TIME, "time").build();
+    DataType TIMESTAMP = newType(LocalDateTime.class, Types.TIMESTAMP, "timestamp").build();
+    DataType TIMESTAMP_WITH_TIMEZONE = newType(OffsetDateTime.class, Types.TIMESTAMP_WITH_TIMEZONE, "timestamp with timezone").build();
+    DataType TIME_WITH_TIMEZONE = newType(OffsetTime.class, Types.TIME_WITH_TIMEZONE, "time with timezone").build();
+    DataType TINYINT = newType(Short.class, Types.TINYINT, "tinyint")//
+            .refiner(column -> {
+                if (column.isSigned())
+                    return column.isNullable() ? Byte.class : byte.class;
+                else
+                    return column.isNullable() ? Short.class : short.class;
+            }).build();
+    DataType VARBINARY = newType(byte[].class, Types.VARBINARY, "varbinary").build();
+    DataType VARCHAR = newType(String.class, Types.VARCHAR, "varchar").build();
 
 }
 
 class Refiners {
 
-    static final Function<IResultColumnMetaData, Class<?>> R_NUMERIC = metaData -> {
+    static final IRefiner R_NUMERIC = column -> {
         // 65 536
         final int MAXLEN_FOR_SHORT = 5;
 
@@ -104,9 +108,9 @@ class Refiners {
         // 18 446 744 073 709 551 616
         final int MAXLEN_FOR_LONG = 20;
 
-        boolean nullable = metaData.isNullable();
-        int precision = metaData.getPrecision();
-        if (metaData.getScale() == 0) {
+        boolean nullable = column.isNullable();
+        int precision = column.getPrecision();
+        if (column.getScale() == 0) {
             if (precision < MAXLEN_FOR_SHORT)
                 return nullable ? Short.class : short.class;
             if (precision <= MAXLEN_FOR_INT)
@@ -118,22 +122,22 @@ class Refiners {
         return BigDecimal.class;
     };
 
-    static final Function<IResultColumnMetaData, Class<?>> R_CHAR = metaData -> {
-        if (metaData.getPrecision() > 1)
+    static final IRefiner R_CHAR = column -> {
+        if (column.getPrecision() > 1)
             return String.class;
-        return metaData.isNullable() ? Character.class : char.class;
+        return column.isNullable() ? Character.class : char.class;
     };
 
-    static final Function<IResultColumnMetaData, Class<?>> R_FLOAT = metaData -> {
-        return metaData.isNullable() ? Float.class : float.class;
+    static final IRefiner R_FLOAT = column -> {
+        return column.isNullable() ? Float.class : float.class;
     };
 
-    static final Function<IResultColumnMetaData, Class<?>> R_DOUBLE = metaData -> {
-        return metaData.isNullable() ? Double.class : double.class;
+    static final IRefiner R_DOUBLE = column -> {
+        return column.isNullable() ? Double.class : double.class;
     };
 
-    static final Function<IResultColumnMetaData, Class<?>> R_ARRAY = metaData -> {
-//        String sqlTypeName = metaData.getColumnTypeName();
+    static final IRefiner R_ARRAY = column -> {
+//        String sqlTypeName = column.getColumnTypeName();
         return java.sql.Array.class;
     };
 

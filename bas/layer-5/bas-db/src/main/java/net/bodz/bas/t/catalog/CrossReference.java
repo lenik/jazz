@@ -180,7 +180,7 @@ public class CrossReference
 
     public boolean isCompositeProperty() {
         for (IColumnMetadata c : foreignColumns)
-            if (c.isCompositeProperty())
+            if (c.isPropertyOfComposite())
                 return true;
         return false;
     }

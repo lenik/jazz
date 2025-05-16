@@ -103,11 +103,11 @@ public interface IColumnMetadata
 
     boolean isJavaNameComplete();
 
-    default boolean isCompositeProperty() {
-        QualifiedName property = getJavaQName();
-        if (property == null)
+    default boolean isPropertyOfComposite() {
+        QualifiedName qProperty = getJavaQName();
+        if (qProperty == null)
             return false;
-        return property.packageName != null;
+        return qProperty.packageName != null;
     }
 
     String getLabel();

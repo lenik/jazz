@@ -9,16 +9,13 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.db.sql.DataType;
 import net.bodz.bas.db.sql.DataTypes;
-import net.bodz.bas.db.sql.SQLLangs;
 import net.bodz.bas.db.sql.IStdDataTypes;
-import net.bodz.bas.t.map.ListMap;
+import net.bodz.bas.db.sql.SQLLangs;
 
 public abstract class AbstractSqlDialect
         implements ISqlDialect,
@@ -26,63 +23,27 @@ public abstract class AbstractSqlDialect
 
     protected String nullLiteral = "null";
 
-    DataTypes dataTypes = new DataTypes();
-
-    List<DataType> dataTypeList = new ArrayList<>();
+    //    List<DataType> _dataTypeList = new ArrayList<>();
+    protected final DataTypes dataTypes = new DataTypes();
 
     public AbstractSqlDialect() {
         declareTypes();
-
-        ListMap<Class<?>, DataType> classMap = new ListMap<>();
-        ListMap<Integer, DataType> sqlTypeMap = new ListMap<>();
-        ListMap<String, DataType> sqlTypeNameMap = new ListMap<>();
-
-        for (DataType type : dataTypeList) {
-            classMap.addToList(type.getJavaClass(), type);
-            sqlTypeMap.addToList(type.getSqlType(), type);
-            sqlTypeNameMap.addToList(type.getSqlTypeName(), type);
-        }
-        for (DataType type : dataTypeList) {
-            boolean uniqueClass = classMap.sizeOfList(type.getJavaClass()) == 1;
-            boolean uniqueSQLType = sqlTypeMap.sizeOfList(type.getSqlType()) == 1;
-            boolean uniqueSQLTypeName = sqlTypeNameMap.sizeOfList(type.getSqlTypeName()) == 1;
-            if (uniqueClass)
-                dataTypes.setDefault(type.getJavaClass(), type);
-            if (uniqueSQLType || type.isSqlTypeDefault())
-                dataTypes.setDefault(type.getSqlType(), type);
-            if (uniqueSQLTypeName)
-                dataTypes.setDefault(type.getSqlTypeName(), type);
-        }
-    }
-
-    protected void addType(DataType... dataTypes) {
-        for (DataType dataType : dataTypes)
-            addType(dataType);
-    }
-
-    protected void addType(DataType dataType) {
-        dataTypeList.add(dataType);
-    }
-
-    protected void replaceType(DataType oldDataType, DataType newDataType) {
-        dataTypeList.remove(oldDataType);
-        dataTypeList.add(newDataType);
     }
 
     protected void declareTypes() {
-        addType(BIT, BOOLEAN);
-        addType(TINYINT, SMALLINT, INTEGER, BIGINT);
-        addType(FLOAT, REAL, DOUBLE);
-        addType(NUMERIC, DECIMAL);
-        addType(CHAR, VARCHAR, LONGVARCHAR);
-        addType(NCHAR, NVARCHAR, LONGNVARCHAR);
-        addType(BINARY, VARBINARY, LONGVARBINARY);
-        addType(BLOB, CLOB, NCLOB);
-        addType(DATE, TIME, TIMESTAMP);
-        addType(TIME_WITH_TIMEZONE, TIMESTAMP_WITH_TIMEZONE);
-        addType(NULL, ROWID, SQLXML, JAVA_OBJECT);
-        addType(REF, DATALINK, REF_CURSOR);
-        addType(OTHER, DISTINCT, STRUCT, ARRAY);
+        dataTypes.add(BIT, BOOLEAN);
+        dataTypes.add(TINYINT, SMALLINT, INTEGER, BIGINT);
+        dataTypes.add(FLOAT, REAL, DOUBLE);
+        dataTypes.add(NUMERIC, DECIMAL);
+        dataTypes.add(CHAR, VARCHAR, LONGVARCHAR);
+        dataTypes.add(NCHAR, NVARCHAR, LONGNVARCHAR);
+        dataTypes.add(BINARY, VARBINARY, LONGVARBINARY);
+        dataTypes.add(BLOB, CLOB, NCLOB);
+        dataTypes.add(DATE, TIME, TIMESTAMP);
+        dataTypes.add(TIME_WITH_TIMEZONE, TIMESTAMP_WITH_TIMEZONE);
+        dataTypes.add(NULL, ROWID, SQLXML, JAVA_OBJECT);
+        dataTypes.add(REF, DATALINK, REF_CURSOR);
+        dataTypes.add(OTHER, DISTINCT, STRUCT, ARRAY);
     }
 
     @Override

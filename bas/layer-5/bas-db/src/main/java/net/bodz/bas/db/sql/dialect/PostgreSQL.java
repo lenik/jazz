@@ -12,41 +12,27 @@ import net.bodz.bas.db.sql.IStdDataTypes;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.json.JsonVariant;
 
+import static net.bodz.bas.db.sql.DataType.newType;
+
 public class PostgreSQL
         extends AbstractSqlDialect {
 
-    public static final DataType BPCHAR = new DataType(String.class, Types.CHAR, "bpchar");
-    public static final DataType INT2 = new DataType(Short.class, Types.SMALLINT, "int2");
-    public static final DataType INT4 = new DataType(Integer.class, Types.INTEGER, "int4");
-    public static final DataType INT8 = new DataType(Long.class, Types.BIGINT, "int8");
-    public static final DataType FLOAT4 = new DataType(Float.class, Types.REAL, "float4");
-    public static final DataType FLOAT8 = new DataType(Double.class, Types.DOUBLE, "float8");
+    public static final DataType BPCHAR = newType(String.class, Types.CHAR, "bpchar").build();
+    public static final DataType INT2 = newType(Short.class, Types.SMALLINT, "int2").build();
+    public static final DataType INT4 = newType(Integer.class, Types.INTEGER, "int4").build();
+    public static final DataType INT8 = newType(Long.class, Types.BIGINT, "int8").build();
+    public static final DataType FLOAT4 = newType(Float.class, Types.REAL, "float4").build();
+    public static final DataType FLOAT8 = newType(Double.class, Types.DOUBLE, "float8").build();
 
-    public static final DataType BYTEA = new DataType(byte[].class, Types.OTHER, "bytea");
-    public static final DataType JSON = new DataType(JsonVariant.class, Types.OTHER, "json");
-    public static final DataType JSONB = new DataType(JsonVariant.class, Types.OTHER, "jsonb");
-    public static final DataType INET = new DataType(InetAddress.class, Types.OTHER, "inet");
-    public static final DataType UUID = new DataType(UUID.class, Types.OTHER, "uuid");
+    public static final DataType BYTEA = newType(byte[].class, Types.OTHER, "bytea").build();
+    public static final DataType JSON = newType(JsonVariant.class, Types.OTHER, "json").build();
+    public static final DataType JSONB = newType(JsonVariant.class, Types.OTHER, "jsonb").build();
+    public static final DataType INET = newType(InetAddress.class, Types.OTHER, "inet").build();
+    public static final DataType UUID = newType(UUID.class, Types.OTHER, "uuid").build();
 
-    public static final DataType SQL_IDENTIFIER = new DataType(String.class, Types.DISTINCT, "information_schema.sql_identifier");
-    public static final DataType YES_OR_NO = new DataType(Boolean.class, Types.DISTINCT, "information_schema.yes_or_no");
-    public static final DataType CHARACTER_DATA = new DataType(String.class, Types.DISTINCT, "information_schema.character_data");
-
-    DataType ARRAY = new DataType(java.sql.Array.class, Types.ARRAY, "array", metaData -> {
-        String sqlTypeName = metaData.getColumnTypeName();
-        if (!sqlTypeName.startsWith("_"))
-            throw new UnexpectedException();
-
-        String componentSqlTypeName = sqlTypeName.substring(1);
-
-        DataType componentType = getDefaultType(componentSqlTypeName);
-        if (componentType == null)
-            throw new UnexpectedException("unknown component type: " + componentSqlTypeName);
-
-        Class<?> componentClass = componentType.getJavaClass();
-        Class<?> arrayClass = Array.newInstance(componentClass, 0).getClass();
-        return arrayClass;
-    });
+    public static final DataType SQL_IDENTIFIER = newType(String.class, Types.DISTINCT, "information_schema.sql_identifier").build();
+    public static final DataType YES_OR_NO = newType(Boolean.class, Types.DISTINCT, "information_schema.yes_or_no").build();
+    public static final DataType CHARACTER_DATA = newType(String.class, Types.DISTINCT, "information_schema.character_data").build();
 
     public PostgreSQL() {
     }
@@ -54,12 +40,29 @@ public class PostgreSQL
     @Override
     protected void declareTypes() {
         super.declareTypes();
-        addType(BPCHAR);
-        addType(INT2, INT4, INT8);
-        addType(FLOAT4, FLOAT8);
-        addType(BYTEA, JSON, JSONB, INET, UUID);
-        addType(SQL_IDENTIFIER, YES_OR_NO, CHARACTER_DATA);
-        replaceType(IStdDataTypes.ARRAY, ARRAY);
+        dataTypes.add(BPCHAR);
+        dataTypes.add(INT2, INT4, INT8);
+        dataTypes.add(FLOAT4, FLOAT8);
+        dataTypes.add(BYTEA, JSON, JSONB, INET, UUID);
+        dataTypes.add(SQL_IDENTIFIER, YES_OR_NO, CHARACTER_DATA);
+
+        DataType ARRAY = newType(java.sql.Array.class, Types.ARRAY, "array") //
+                .refiner(column -> {
+                    String sqlTypeName = column.getColumnTypeName();
+                    if (!sqlTypeName.startsWith("_"))
+                        throw new UnexpectedException();
+
+                    String componentSqlTypeName = sqlTypeName.substring(1);
+
+                    DataType componentType = getDefaultType(componentSqlTypeName);
+                    if (componentType == null)
+                        throw new UnexpectedException("unknown component type: " + componentSqlTypeName);
+
+                    Class<?> componentClass = componentType.getJavaClass();
+                    Class<?> arrayClass = Array.newInstance(componentClass, 0).getClass();
+                    return arrayClass;
+                }).build();
+        dataTypes.replace(IStdDataTypes.ARRAY, ARRAY);
     }
 
     @Override

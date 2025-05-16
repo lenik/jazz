@@ -7,7 +7,7 @@ import net.bodz.bas.err.UnexpectedException;
 public class EnglishTextGenerator {
 
     static char[] textTab = "aaaaeeeeiiiioooouuuuubcdfghjklmnpqrstvwxyz".toCharArray();
-    static char[] breakTab = "               ,,,,,;;..-_\'@#&*?!".toCharArray();
+    static char[] breakTab = "               ,,,,,;;..-_'@#&*?!".toCharArray();
     static char[] symTab = "......;?!".toCharArray();
 
     final Random random;
