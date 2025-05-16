@@ -11,7 +11,7 @@ import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 import net.bodz.mda.xjdoc.IXjdocProvider;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -55,7 +55,7 @@ public class XjdocDumper
                 out.enter();
 
                 ImportMap classImports = classDoc.getOrCreateImports();
-                IOptions options = new Options() //
+                IOptions options = new ListOptions() //
                         .addOption(ITagLibrary.class, taglibs) //
                         .addOption(ImportMap.class, classImports);
 

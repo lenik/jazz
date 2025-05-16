@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
 
@@ -27,7 +27,7 @@ public class GlobFilenameFilter
     static IOptions globOptions;
     static {
         patternParser = Typers.getTyper(Pattern.class, IParser.class);
-        globOptions = new Options().addOption(textformMode, globTextformMode);
+        globOptions = new ListOptions().addOption(textformMode, globTextformMode);
     }
 
     static Pattern parseGlob(String pattern) {

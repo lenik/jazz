@@ -9,7 +9,7 @@ import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.fmt.flatf.FlatfOutput;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.conv.FlatfXjdocProvider;
@@ -60,7 +60,7 @@ public class QdoxTest
                 String fqcn = jclass.getFullyQualifiedName();
                 ImportMap builderMap = classDoc.getOrCreateImports();
 
-                IOptions n_ffout = new Options() //
+                IOptions n_ffout = new ListOptions() //
                         .addOption(ITagLibrary.class, tagLibrary) //
                         .addOption(ImportMap.class, builderMap);
 

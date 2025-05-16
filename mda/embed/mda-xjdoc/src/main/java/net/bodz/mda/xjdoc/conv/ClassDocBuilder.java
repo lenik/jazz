@@ -7,7 +7,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.ParaLangStrings;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.IDocTag;
@@ -56,7 +56,7 @@ public class ClassDocBuilder {
         ClassDoc classDoc = new ClassDoc(tagLibrary, fqcn);
 
         ImportMap classImports = classDoc.getOrCreateImports();
-        IOptions options = new Options() //
+        IOptions options = new ListOptions() //
                 .addOption(ImportMap.class, classImports);
 
         populate(classDoc, javaClass, javaClass.getName(), options);

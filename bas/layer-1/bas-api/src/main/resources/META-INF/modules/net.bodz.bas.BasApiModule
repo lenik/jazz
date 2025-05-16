@@ -222,7 +222,7 @@ net.bodz.bas.rtx.IQueryable
 net.bodz.bas.rtx.IQueryProxy
 net.bodz.bas.rtx.NullOptions
 net.bodz.bas.rtx.Option
-net.bodz.bas.rtx.Options
+net.bodz.bas.rtx.ListOptions
 net.bodz.bas.rtx.package-info
 net.bodz.bas.rtx.QueryableUnion
 net.bodz.bas.rtx.QueryException

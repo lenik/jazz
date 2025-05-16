@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IBasicTyperFamily;
 import net.bodz.bas.typer.std.IFormatter;
@@ -13,7 +13,7 @@ import net.bodz.bas.typer.std.IParser;
 public class AddressTypersTest
         extends Assert {
 
-    IBasicTyperFamily<Address> addressTypers = Typers.getTyper(Address.class, IBasicTyperFamily.class);
+    IBasicTyperFamily<Address> addressTypers = Typers.getGenericTyper(Address.class, IBasicTyperFamily.class);
 
     IParser<Address> addressParser = addressTypers.getParser();
     IFormatter<Address> addressFormatter = addressTypers.getFormatter();
@@ -32,7 +32,7 @@ public class AddressTypersTest
     @Test
     public void testDefaultCountryPost()
             throws Exception {
-        IOptions options = new Options() //
+        IOptions options = new ListOptions() //
                 .addOption(new CountryAliasUtil()) //
                 .addOption(new PostCodeUtil());
 

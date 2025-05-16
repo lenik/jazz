@@ -34,7 +34,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.repr.viz.IViewBuilderFactory;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.ui.css3.property.VisibilityMode;
@@ -189,7 +189,7 @@ public class SwtUserDialogs
         }
 
         public IOptions getOptions() {
-            return new Options() //
+            return new ListOptions() //
                     .addOption(IActionGroup.class, new RC());
         }
 

@@ -16,7 +16,7 @@ import net.bodz.bas.fmt.flatf.FlatfInput;
 import net.bodz.bas.fmt.flatf.FlatfLoader;
 import net.bodz.bas.fmt.flatf.IFlatfInput;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 import net.bodz.mda.xjdoc.AbstractXjdocProvider;
 import net.bodz.mda.xjdoc.XjdocLoaderException;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -113,7 +113,7 @@ public class FlatfXjdocProvider
         ClassDoc classDoc = createClassDoc(fqcn);
         ImportMap importMap = classDoc.getOrCreateImports();
 
-        IOptions options = new Options() //
+        IOptions options = new ListOptions() //
                 .addOption(ITagLibrary.class, getTagLibrary()) //
                 .addOption(ImportMap.class, importMap);
 

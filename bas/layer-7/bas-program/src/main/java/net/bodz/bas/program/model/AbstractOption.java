@@ -22,7 +22,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 import net.bodz.bas.t.order.IMutablePriority;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
@@ -271,7 +271,7 @@ public abstract class AbstractOption
         if (parser == null)
             throw new ParseException("Don't know how to parse " + valueType);
 
-        IOptions options = new Options()//
+        IOptions options = new ListOptions()//
                 .addOption(IParser.PARSE_CONTEXT, context);
 
         Object value = parser.parse(param1, options);

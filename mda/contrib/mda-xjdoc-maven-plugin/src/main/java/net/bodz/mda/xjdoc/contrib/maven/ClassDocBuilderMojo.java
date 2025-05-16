@@ -22,7 +22,7 @@ import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.OutputStreamTarget;
 import net.bodz.bas.m2.util.MavenProjects;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.javadoc.JavadocTagLibrary;
@@ -288,7 +288,7 @@ public class ClassDocBuilderMojo
 
         ImportMap classImports = classDoc.getOrCreateImports();
 
-        IOptions options = new Options() //
+        IOptions options = new ListOptions() //
                 .addOption(ITagLibrary.class, tagLibrary) //
                 .addOption(ImportMap.class, classImports) //
                 .addOption(Log.class, log) //

@@ -7,7 +7,7 @@ import net.bodz.bas.fmt.flatf.FlatfLoader;
 import net.bodz.bas.fmt.flatf.IFlatfInput;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MutableElementDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
@@ -21,7 +21,7 @@ public class FlatfDocLoader {
     public FlatfDocLoader() {
         flatfLoader = new FlatfLoader();
 
-        Options options = new Options();
+        ListOptions options = new ListOptions();
         tagLibrary = Xjdocs.getDefaultTagLibrary();
         options.addOption(ITagLibrary.class, tagLibrary);
         // ImportMap importMap=new ImportMap("");

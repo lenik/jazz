@@ -11,7 +11,7 @@ import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.model.IOption;
 import net.bodz.bas.program.model.IOptionGroup;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.mda.xjdoc.IXjdocProvider;
 import net.bodz.mda.xjdoc.Xjdocs;
@@ -44,7 +44,7 @@ public class BatchCLITest
         ClassDoc classDoc = xjdocs.getClassDoc(BatchCLI.class);
         BCharOut buf = new BCharOut();
         FlatfOutput out = new FlatfOutput(buf);
-        IOptions options = new Options() //
+        IOptions options = new ListOptions() //
                 .addOption(ITagLibrary.class, new ArtifactTagLibrary());
         classDoc.writeObject(out, options);
         System.out.println(buf);
