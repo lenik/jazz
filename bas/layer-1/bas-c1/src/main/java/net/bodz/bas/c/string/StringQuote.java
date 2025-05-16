@@ -24,6 +24,11 @@ public class StringQuote {
         return qq(s == null ? null : s.toString());
     }
 
+    public static String qJavaChar(char ch) {
+        String java = StringEscape.escapeJava(ch);
+        return q(java);
+    }
+
     public static String qJavaString(String s) {
         if (s == null)
             return null;
