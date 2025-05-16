@@ -236,12 +236,6 @@ public abstract class AbstractCommonTypers<T>
     /* _____________________________ */static section.iface __SAMPLE__;
 
     @Override
-    public final T newSample()
-            throws CreateException {
-        return newSample(IOptions.NULL);
-    }
-
-    @Override
     public T newSample(IOptions options)
             throws CreateException {
         throw new NotImplementedException();

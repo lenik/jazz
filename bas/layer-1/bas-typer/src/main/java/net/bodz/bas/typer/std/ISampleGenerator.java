@@ -13,14 +13,8 @@ public interface ISampleGenerator<T>
     int typerIndex = 0xa5d35f7a; // ISampleGenerator
 
     /**
-     * @return non-<code>null</code> sample instance.
-     */
-    T newSample()
-            throws CreateException;
-
-    /**
      * A short string phrase describe the usage.
-     * 
+     * <p>
      * Examples:
      * <ul>
      * <li><code>"use-case"</code> for demo presentation (default)</li>
@@ -42,11 +36,19 @@ public interface ISampleGenerator<T>
      * <li>Optional {@link Random}.class: Build random samples rather than meaningful ones, with the
      * specified {@link Random} generator when possible.
      * </ul>
-     * 
+     *
      * @return <code>null</code> if the sample space restricted by <code>classification</code> is
-     *         empty.
+     * empty.
      */
     T newSample(IOptions options)
             throws CreateException;
+
+    /**
+     * @return non-<code>null</code> sample instance.
+     */
+    default T newSample()
+            throws CreateException {
+        return newSample(IOptions.NULL);
+    }
 
 }

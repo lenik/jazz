@@ -17,22 +17,22 @@ public class StringTypers
      * The min length of the sample char array, in Integer.
      */
     @ParameterType(Integer.class)
-    public static final String sampleMinLength = "sample.minLength";
-    public static final int defaultSampleMinLength = 0;
+    public static final String OPTION_MIN_LENGTH = "sample.minLength";
+    public static final int DEFAULT_MIN_LENGTH = 0;
 
     /**
      * The max length of the sample char array, in Integer.
      */
     @ParameterType(Integer.class)
-    public static final String sampleMaxLength = "sample.maxLength";
-    public static final int defaultSampleMaxLength = 32;
+    public static final String OPTION_MAX_LENGTH = "sample.maxLength";
+    public static final int DEFAULT_MAX_LENGTH = 32;
 
     /**
      * The character sample generator.
      */
     @ParameterType(ISampleGenerator.class)
-    public static final String sampleCharSample = "sample.charSample";
-    public static final ISampleGenerator<Character> defaultSampleCharSample = new CharacterTypers();
+    public static final String OPTION_CHAR_SAMPLE = "sample.charSample";
+    public static final ISampleGenerator<Character> DEFAULT_CHAR_SAMPLE = new CharacterTypers();
 
     public StringTypers() {
         super(String.class);
@@ -41,9 +41,9 @@ public class StringTypers
     @Override
     protected Object queryInt(int typerIndex) {
         switch (typerIndex) {
-        case IParser.typerIndex:
-        case ISampleGenerator.typerIndex:
-            return this;
+            case IParser.typerIndex:
+            case ISampleGenerator.typerIndex:
+                return this;
         }
         return null;
     }
@@ -57,9 +57,9 @@ public class StringTypers
     @Override
     public String newSample(IOptions options)
             throws CreateException {
-        int minLength = options.getInt(sampleMinLength, defaultSampleMinLength);
-        int maxLength = options.getInt(sampleMaxLength, defaultSampleMaxLength);
-        ISampleGenerator<Character> charSample = options.get(sampleCharSample, defaultSampleCharSample);
+        int minLength = options.getInt(OPTION_MIN_LENGTH, DEFAULT_MIN_LENGTH);
+        int maxLength = options.getInt(OPTION_MAX_LENGTH, DEFAULT_MAX_LENGTH);
+        ISampleGenerator<Character> charSample = options.get(OPTION_CHAR_SAMPLE, DEFAULT_CHAR_SAMPLE);
 
         Random prng = options.get(Random.class, random);
 

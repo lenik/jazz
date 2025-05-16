@@ -10,18 +10,18 @@ public class ClassifierUtil {
 
     public static Map<String, Object> classify(Object object)
             throws ClassifyException {
-        IClassifier<Object> classifier = Typers.getTyper(object, IClassifier.class);
+        IClassifier<Object> classifier = Typers.getGenericObjectTyper(object, IClassifier.class);
         return classifier.classify(object);
     }
 
     public static Map<String, Object> classify(Object object, IOptions options)
             throws ClassifyException {
-        IClassifier<Object> classifier = Typers.getTyper(object, IClassifier.class);
+        IClassifier<Object> classifier = Typers.getGenericObjectTyper(object, IClassifier.class);
         return classifier.classify(object, options);
     }
 
     public static IAttributes getClassAnnotations(Class<?> objType, String classId) {
-        IClassifier<Object> classifier = Typers.getTyper(objType, IClassifier.class);
+        IClassifier<Object> classifier = Typers.getGenericTyper(objType, IClassifier.class);
         return classifier.getClassAnnotations(classId);
     }
 

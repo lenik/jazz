@@ -1,10 +1,8 @@
 package net.bodz.bas.typer.spi;
 
-import net.bodz.bas.rtx.AbstractQueryProxy;
 import net.bodz.bas.rtx.QueryException;
 
 public abstract class AbstractTyperProvider
-        extends AbstractQueryProxy
         implements ITyperProvider {
 
     @Override
@@ -17,7 +15,7 @@ public abstract class AbstractTyperProvider
             Class<?> objType = (Class<?>) obj;
             return getTyper(objType, obj, specificationType);
         }
-        return super.query(obj, specificationType);
+        return ITyperProvider.super.query(obj, specificationType);
     }
 
     @Override

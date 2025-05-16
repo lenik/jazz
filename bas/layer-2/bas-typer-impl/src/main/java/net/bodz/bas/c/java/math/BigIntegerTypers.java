@@ -3,17 +3,31 @@ package net.bodz.bas.c.java.math;
 import java.math.BigInteger;
 import java.util.Random;
 
+import net.bodz.bas.c.java.util.RandomFn;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.IllegalParameterUsageException;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.bas.typer.std.ISampleGenerator;
 
 public class BigIntegerTypers
         extends AbstractCommonTypers<BigInteger> {
+
+    /**
+     * The min precision
+     */
+    @ParameterType(Integer.class)
+    public static final String OPTION_MIN_PRECISION = "sample.minPrecision";
+    public static final int DEFAULT_MIN_PRECISION = 1;
+
+    /**
+     * The max precision
+     */
+    @ParameterType(Integer.class)
+    public static final String OPTION_MAX_PRECISION = "sample.maxPrecision";
+    public static final int DEFAULT_MAX_PRECISION = 12;
 
     /**
      * The distribution algorithm used to generate samples.
@@ -33,9 +47,9 @@ public class BigIntegerTypers
     @Override
     protected Object queryInt(int typerIndex) {
         switch (typerIndex) {
-        case IParser.typerIndex:
-        case ISampleGenerator.typerIndex:
-            return this;
+            case IParser.typerIndex:
+            case ISampleGenerator.typerIndex:
+                return this;
         }
         return null;
     }
@@ -54,12 +68,15 @@ public class BigIntegerTypers
     public BigInteger newSample(IOptions options)
             throws CreateException {
         Random prng = options.get(Random.class, random);
-        String distribution = options.get(sampleDistribution, defaultSampleDistribution);
 
-        if (normalSampleDistribution.equals(distribution))
-            return BigInteger.valueOf(prng.nextLong());
+        int minPrecision = options.getInt(OPTION_MIN_PRECISION, DEFAULT_MIN_PRECISION);
+        int maxPrecision = options.getInt(OPTION_MAX_PRECISION, DEFAULT_MAX_PRECISION);
 
-        throw new IllegalParameterUsageException(options.getOption(sampleDistribution));
+        int precision = minPrecision + prng.nextInt(maxPrecision - minPrecision);
+        int intLen = precision;
+
+        String str = RandomFn.digits(prng, intLen, true);
+        return new BigInteger(str);
     }
 
 }

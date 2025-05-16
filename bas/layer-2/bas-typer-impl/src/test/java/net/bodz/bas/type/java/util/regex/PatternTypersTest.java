@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import net.bodz.bas.c.java.util.regex.PatternTypers;
 import net.bodz.bas.rtx.IOptions;
-import net.bodz.bas.rtx.Options;
+import net.bodz.bas.rtx.ListOptions;
 
 public class PatternTypersTest
         extends PatternTypers {
@@ -19,7 +19,7 @@ public class PatternTypersTest
     @Test
     public void testParseGlob()
             throws Exception {
-        IOptions options = new Options().addOption(textformMode, globTextformMode);
+        IOptions options = new ListOptions().addOption(textformMode, globTextformMode);
 
         Pattern expected = Pattern.compile("\\Q\\E.*\\Q.xml\\E");
         Pattern actual = parse("*.xml", options);
