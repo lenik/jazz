@@ -12,7 +12,8 @@ import net.bodz.bas.t.order.AbstractNonNullComparator;
 import net.bodz.bas.t.tuple.QualifiedName;
 
 public class JavaImports
-        extends TreeSet<String> {
+        extends TreeSet<String>
+        implements IJavaImporter {
 
     private static final long serialVersionUID = 1L;
 
@@ -116,12 +117,17 @@ public class JavaImports
             return className.substring(pos + 1);
     }
 
-    public String name(Class<?> type) {
-        return ref(type).getSimpleName();
+    public String name(Class<?> qType) {
+        return ref(qType).getSimpleName();
     }
 
-    public String name(QualifiedName type) {
-        return ref(type).name;
+    public String name(QualifiedName qName) {
+        return ref(qName).name;
+    }
+
+    @Override
+    public String importName(QualifiedName qName) {
+        return name(qName);
     }
 
     public String simpleId(Enum<?> val) {
