@@ -1,5 +1,6 @@
 package net.bodz.bas.c.java.util;
 
+import java.util.Random;
 import java.util.UUID;
 
 import net.bodz.bas.err.CreateException;
@@ -19,9 +20,9 @@ public class UUIDTypers
     @Override
     protected Object queryInt(int typerIndex) {
         switch (typerIndex) {
-        case IParser.typerIndex:
-        case ISampleGenerator.typerIndex:
-            return this;
+            case IParser.typerIndex:
+            case ISampleGenerator.typerIndex:
+                return this;
         }
         return null;
     }
@@ -44,7 +45,8 @@ public class UUIDTypers
     @Override
     public UUID newSample(IOptions options)
             throws CreateException {
-        return UUID.randomUUID();
+        Random prng = options.get(Random.class, random);
+        return UUIDs.random(prng);
     }
 
     public static final UUIDTypers INSTANCE = new UUIDTypers();
