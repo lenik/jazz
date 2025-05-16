@@ -116,6 +116,21 @@ public interface IColumnMetadata
 
     Class<?> getJavaClass();
 
+    default Class<?> getActualClass() {
+        IProperty property = getProperty();
+        if (property != null) {
+            Class<?> propertyClass = property.getPropertyClass();
+            if (propertyClass != null)
+                return propertyClass;
+        }
+
+        Class<?> javaClass = getJavaClass();
+        if (javaClass != null)
+            return javaClass;
+
+        return getSqlClass();
+    }
+
     DataType getDataType();
 
     int getSqlType();
