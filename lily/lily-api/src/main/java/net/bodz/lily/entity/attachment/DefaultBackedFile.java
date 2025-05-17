@@ -13,6 +13,7 @@ import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.file.BottomUpPathFields;
 import net.bodz.lily.storage.IVolume;
 import net.bodz.lily.storage.IVolumeItem;
@@ -84,7 +85,7 @@ public class DefaultBackedFile
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts) {
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts) {
         super.jsonIn(o, opts);
         size = o.getLong(K_FILE_SIZE, size);
         sha1 = o.getString(K_FILE_SHA1);

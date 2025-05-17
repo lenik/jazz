@@ -2,6 +2,7 @@ package net.bodz.lily.entity;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.PropertyWriteException;
 import net.bodz.bas.t.variant.VarConv;
 
 public abstract class AbstractIdentity
@@ -21,10 +22,10 @@ public abstract class AbstractIdentity
             Class<?> propertyClass = property.getPropertyClass();
             try {
                 Object val = VarConv.fromString(propertyClass, columns[i]);
-                property.setValue(this, val);
+                property.write(this, val);
             } catch (ParseException e) {
                 throw new ParseException("error parse property " + name + ": " + e.getMessage(), e);
-            } catch (ReflectiveOperationException e) {
+            } catch (PropertyWriteException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }
         }

@@ -13,6 +13,7 @@ import net.bodz.bas.html.viz.IPathArrivalFrameAware;
 import net.bodz.bas.html.viz.PathArrivalFrame;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.ObjectType;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IType;
@@ -75,6 +76,7 @@ public abstract class CoObjectIndex<T extends CoObject>
         return viewOptions;
     }
 
+    @NotNull
     @Override
     public DataContext getDataContext() {
         if (dataContext == null)
@@ -83,7 +85,7 @@ public abstract class CoObjectIndex<T extends CoObject>
     }
 
     @Override
-    public void setDataContext(DataContext dataContext) {
+    public void setDataContext(@NotNull DataContext dataContext) {
         this.dataContext = dataContext;
         if (dataContext != null)
             afterDataContextSet();

@@ -15,8 +15,7 @@ public interface IJsonForm {
     /**
      * (Don't override this method.)
      *
-     * @param json
-     *            <code>null</code> for the null object.
+     * @param json <code>null</code> for the null object.
      */
     default void jsonIn(JsonVariant in)
             throws ParseException {
@@ -26,21 +25,17 @@ public interface IJsonForm {
     /**
      * (Don't override this method.)
      *
-     * @param json
-     *            Non-<code>null</code> value.
-     * @throws NullPointerException
-     *             if <code>o</code> is null.
+     * @param o Non-<code>null</code> value.
+     * @throws NullPointerException if <code>o</code> is null.
      */
-    default void jsonIn(JsonObject o)
+    default void jsonIn(@NotNull JsonObject o)
             throws ParseException {
         jsonIn(o, JsonFormOptions.DEFAULT);
     }
 
     /**
-     * @param json
-     *            Non-<code>null</code> value.
-     * @throws NullPointerException
-     *             if <code>o</code> is null.
+     * @param json Non-<code>null</code> value.
+     * @throws NullPointerException if <code>o</code> is null.
      */
     default void jsonIn(@NotNull JsonVariant in, JsonFormOptions opts)
             throws ParseException {
@@ -48,21 +43,20 @@ public interface IJsonForm {
             // jsonInNull ?
             return;
         }
-        jsonIn(in.getObject(), opts);
+        JsonObject jo = in.getObject();
+        assert jo != null;
+        jsonIn(jo, opts);
     }
 
     /**
-     * @param json
-     *            Non-<code>null</code> value.
-     * @throws NullPointerException
-     *             if <code>o</code> is null.
+     * @param json Non-<code>null</code> value.
+     * @throws NullPointerException if <code>o</code> is null.
      */
-    void jsonIn(JsonObject o, JsonFormOptions opts)
+    void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException;
 
     /**
-     * @param out
-     *            expects a key
+     * @param out expects a key
      */
     default void jsonOut(IJsonOut out)
             throws IOException, FormatException {
@@ -70,8 +64,7 @@ public interface IJsonForm {
     }
 
     /**
-     * @param out
-     *            expects a key
+     * @param out expects a key
      */
     void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException;

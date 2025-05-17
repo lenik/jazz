@@ -99,7 +99,7 @@ public class MutableAttachment
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts) {
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts) {
         super.jsonIn(o, opts);
         label = o.getString(K_LABEL);
         description = o.getString(K_DESCRIPTION);

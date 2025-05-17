@@ -12,6 +12,7 @@ import net.bodz.bas.i18n.geo.GeoZone;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -463,7 +464,7 @@ public class Contact
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         super.jsonIn(o, opts);
 

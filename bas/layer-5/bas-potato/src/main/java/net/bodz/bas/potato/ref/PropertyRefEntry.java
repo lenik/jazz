@@ -5,6 +5,8 @@ import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.PropertyReadException;
+import net.bodz.bas.potato.element.PropertyWriteException;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.t.tree.IPathInfo;
@@ -54,10 +56,10 @@ public class PropertyRefEntry<T>
         try {
             Object instance = instanceRef.get();
             @SuppressWarnings("unchecked")
-            T value = (T) property.getValue(instance);
+            T value = (T) property.read(instance);
             return value;
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
+        } catch (PropertyReadException e) {
+            throw new RuntimeException("Error reading property " + property + ": " + e.getMessage(), e);
         } finally {
             callDepth--;
         }
@@ -70,13 +72,15 @@ public class PropertyRefEntry<T>
 
         Object instance = instanceRef.get();
         try {
-            property.setValue(instance, value);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            property.write(instance, value);
+        } catch (PropertyWriteException e) {
+            throw new RuntimeException("Error writing property " + property + ": " + e.getMessage(), e);
         }
     }
 
-    /** ⇱ Implementation Of {@link IPathInfo}. */
+    /**
+     * ⇱ Implementation Of {@link IPathInfo}.
+     */
     /* _____________________________ */static section.iface __PATH_INFO__;
 
     @Override
@@ -89,7 +93,9 @@ public class PropertyRefEntry<T>
         return getName();
     }
 
-    /** ⇱ Implementation Of {@link IQueryable}. */
+    /**
+     * ⇱ Implementation Of {@link IQueryable}.
+     */
     /* _____________________________ */static section.iface __QUERYABLE__;
 
     @Override

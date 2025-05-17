@@ -8,6 +8,7 @@ import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.bas.meta.decl.TypeParamType;
 import net.bodz.bas.meta.decl.TypeParameters;
@@ -88,7 +89,7 @@ public abstract class CoEvent<Id>
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         super.jsonIn(o, opts);
 

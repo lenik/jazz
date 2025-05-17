@@ -23,6 +23,7 @@ import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.catalog.CrossReferenceRow.ColumnEntry;
@@ -325,7 +326,7 @@ public class CrossReference
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         foreignKey = new TableKey();
         foreignKey.jsonIn(o.getJsonObject(K_FOREIGN_KEY), opts);

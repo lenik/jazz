@@ -22,6 +22,7 @@ import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class JsonPersistorTest
         extends Assert {
@@ -279,7 +280,7 @@ class JsonFoo
             IJsonForm {
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         name = o.getString("name");
         age = o.getInt("age");
@@ -342,7 +343,7 @@ class BarMixed
     JsonFoo foo;
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         color = o.getString("color");
         foo = o.readInto("foo", new JsonFoo());

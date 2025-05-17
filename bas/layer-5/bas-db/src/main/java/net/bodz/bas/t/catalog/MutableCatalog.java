@@ -124,7 +124,7 @@ public class MutableCatalog
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         JsonObject j_md = o.getJsonObject(K_METADATA);
         if (j_md != null) {

@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import net.bodz.bas.c.java.time.DateTimes;
 import net.bodz.bas.err.FormatException;
+import net.bodz.bas.potato.element.PropertyReadException;
 import net.bodz.bas.site.json.TableOfPathProps;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 
@@ -53,7 +54,7 @@ public class DefaultListingExcel
             List<?> line;
             try {
                 line = tableData.convert(o, columns);
-            } catch (ReflectiveOperationException e) {
+            } catch (PropertyReadException e) {
                 throw new FormatException("Error convert object to cell array: " + e.getMessage(), e);
             }
 

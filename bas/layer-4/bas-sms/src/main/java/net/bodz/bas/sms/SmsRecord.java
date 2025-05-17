@@ -8,6 +8,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonStruct;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class SmsRecord
         extends JsonStruct {
@@ -34,7 +35,7 @@ public class SmsRecord
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         recipient = o.getString("recipient", recipient);
         templateName = o.getString("templateName", templateName);

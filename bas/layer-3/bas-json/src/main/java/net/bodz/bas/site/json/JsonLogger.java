@@ -12,6 +12,7 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.BufferedLogger;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.LogRecord;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class JsonLogger
         extends BufferedLogger
@@ -34,7 +35,7 @@ public class JsonLogger
     private static final String K_RECORDS = "records";
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         // setPrefix(o.getString(K_PREFIX));
 

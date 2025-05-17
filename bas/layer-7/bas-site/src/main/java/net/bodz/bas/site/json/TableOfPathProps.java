@@ -19,9 +19,11 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.json.JsonObjectBuilder;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IPropertyAccessor;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.element.PropertyReadException;
 import net.bodz.bas.repr.form.FormDeclBuilder;
 import net.bodz.bas.repr.form.MutableFormDecl;
 import net.bodz.bas.repr.form.PropertyChain;
@@ -31,10 +33,9 @@ import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public class TableOfPathProps
-        implements
-            IVarMapForm,
-            IJsonForm,
-            IXmlForm {
+        implements IVarMapForm,
+                   IJsonForm,
+                   IXmlForm {
 
     public static final String Q_FOR_DATATABLE = "dt";
 
@@ -164,7 +165,7 @@ public class TableOfPathProps
     }
 
     public List<?> convert(Object obj, List<String> columns)
-            throws ReflectiveOperationException {
+            throws PropertyReadException {
         if (obj == null)
             return null;
 
@@ -174,7 +175,7 @@ public class TableOfPathProps
             if (property == null)
                 throw new IllegalArgumentException("Invalid column name: " + col);
 
-            Object value = property.getValue(obj);
+            Object value = property.read(obj);
 
             String format = formats.get(col);
             if (format != null && value != null)
@@ -216,7 +217,7 @@ public class TableOfPathProps
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
     }
 
@@ -265,7 +266,7 @@ public class TableOfPathProps
                     } else {
                         writeRowAsObject(out, columns, row, opts);
                     }
-                } catch (ReflectiveOperationException e) {
+                } catch (PropertyReadException e) {
                     throw new RuntimeException("Error convert to json: " + item, e);
                 }
             }
@@ -311,7 +312,7 @@ public class TableOfPathProps
         }
         out.object();
         try {
-            struct.getRoot().<Exception> accept(new IVisitor<Object, Exception>() {
+            struct.getRoot().<Exception>accept(new IVisitor<Object, Exception>() {
 
                 @Override
                 public void combineKeys(List<Collection<String>> keySets) {

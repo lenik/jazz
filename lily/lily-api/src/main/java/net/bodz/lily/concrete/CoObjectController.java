@@ -4,10 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IMethod;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.element.PropertyReadException;
 import net.bodz.bas.repr.path.INoPathRef;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
@@ -36,13 +38,14 @@ public abstract class CoObjectController<T extends CoObject>
         this.obj = obj;
     }
 
+    @NotNull
     @Override
     public DataContext getDataContext() {
         return dataContext;
     }
 
     @Override
-    public void setDataContext(DataContext dataContext) {
+    public void setDataContext(@NotNull DataContext dataContext) {
         this.dataContext = dataContext;
     }
 
@@ -61,9 +64,9 @@ public abstract class CoObjectController<T extends CoObject>
         IProperty property = controllerType.getProperty(token);
         if (property != null) {
             try {
-                Object value = property.getValue(this);
+                Object value = property.read(this);
                 return PathArrival.shift(previous, this, value, tokens);
-            } catch (ReflectiveOperationException e) {
+            } catch (PropertyReadException e) {
                 throw new PathDispatchException(String.format(//
                         "Failed to get controller property %s: %s", property, e.getMessage()), e);
             }

@@ -19,6 +19,7 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.content.IContent;
 import net.bodz.bas.repr.form.NullConvertion;
@@ -417,7 +418,7 @@ public abstract class CoObject
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         super.jsonIn(o, opts);
         if (o == null)

@@ -1,6 +1,7 @@
 package net.bodz.bas.db.ctx;
 
 import net.bodz.bas.db.ibatis.IMapperProvider;
+import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class AbstractDataService
         implements
@@ -12,13 +13,14 @@ public abstract class AbstractDataService
         this.dataContext = dataContext;
     }
 
+    @NotNull
     @Override
     public DataContext getDataContext() {
         return dataContext;
     }
 
     @Override
-    public void setDataContext(DataContext dataContext) {
+    public void setDataContext(@NotNull DataContext dataContext) {
         this.dataContext = dataContext;
     }
 

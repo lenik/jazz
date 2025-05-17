@@ -18,6 +18,7 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.specmap.InetPort32;
 import net.bodz.bas.t.specmap.NetSpecMap;
 
@@ -149,7 +150,7 @@ public class MutableVirtualHostResolver
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
     }
 

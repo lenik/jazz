@@ -9,8 +9,7 @@ import net.bodz.bas.potato.ITypeProvider;
  * This is also usable as member/inner type.
  */
 public interface IType
-        extends
-            IPotatoElement {
+        extends IPotatoElement {
 
     ITypeProvider getProvider();
 
@@ -121,13 +120,13 @@ public interface IType
      * @see IProperty#get(Object)
      */
     <T> T get(Object instance, String propertyName)
-            throws ReflectiveOperationException;
+            throws PropertyReadException;
 
     /**
      * @see IProperty#set(Object, Object)
      */
     void set(Object instance, String propertyName, Object value)
-            throws ReflectiveOperationException;
+            throws PropertyWriteException;
 
     /**
      * @see IMethod#invoke(Object, Object...)

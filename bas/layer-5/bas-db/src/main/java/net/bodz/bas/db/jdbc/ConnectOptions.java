@@ -22,6 +22,7 @@ import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.fmt.xml.xq.QElementMap;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class ConnectOptions
         implements
@@ -292,7 +293,7 @@ public class ConnectOptions
     public static final String K_POOL_SIZE = "poolSize";
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         type = o.getVar(DatabaseType.class, K_TYPE);
         _connectionUrl = o.getString(K_URL, _connectionUrl);

@@ -12,6 +12,7 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.lily.security.IUser;
 import net.bodz.lily.security.IUserSecret;
 import net.bodz.lily.security.MutableUser;
@@ -184,7 +185,7 @@ public class AuthData
     private static final String K_COMPLETED = "completed";
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         authTime = o.getZonedDateTime(K_AUTH_TIME);
         expireTime = o.getZonedDateTime(K_EXPIRE_TIME);

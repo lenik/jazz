@@ -20,6 +20,7 @@ import net.bodz.bas.html.servlet.NoRender;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.path.DefaultTokenProcessor;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -75,13 +76,14 @@ public abstract class AbstractEntityCommandProcess
         return type;
     }
 
+    @NotNull
     @Override
     public DataContext getDataContext() {
         return dataContext;
     }
 
     @Override
-    public void setDataContext(DataContext dataContext) {
+    public void setDataContext(@NotNull DataContext dataContext) {
         this.dataContext = dataContext;
     }
 

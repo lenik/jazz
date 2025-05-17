@@ -6,6 +6,7 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.err.IllegalConfigException;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.program.skel.BasicCLI;
 
 /**
@@ -25,13 +26,14 @@ public abstract class DataDumper
         dataContext = dataContexts.getMain();
     }
 
+    @NotNull
     @Override
     public DataContext getDataContext() {
         return dataContext;
     }
 
     @Override
-    public void setDataContext(DataContext dataContext) {
+    public void setDataContext(@NotNull DataContext dataContext) {
         this.dataContext = dataContext;
     }
 

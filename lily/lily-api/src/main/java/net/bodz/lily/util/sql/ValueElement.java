@@ -8,6 +8,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class ValueElement
         extends MutableElement
@@ -34,7 +35,7 @@ public class ValueElement
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         switch (jsonFormat) {
         case FLOT:

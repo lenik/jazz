@@ -15,6 +15,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.order.OrdinalComparator;
 
 public class DefaultRowSetMetadata
@@ -47,6 +48,7 @@ public class DefaultRowSetMetadata
         return false;
     }
 
+    @NotNull
     @Override
     public List<? extends IColumnMetadata> getColumns() {
         return Collections.unmodifiableList(columns);
@@ -157,7 +159,7 @@ public class DefaultRowSetMetadata
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         JsonArray jv = o.getJsonArray(K_COLUMNS);
         int n = jv.length();

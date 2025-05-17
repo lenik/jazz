@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.provider.bean;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
@@ -9,10 +10,13 @@ import java.util.Map;
 import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.element.PropertyReadException;
+import net.bodz.bas.potato.element.PropertyWriteException;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -28,11 +32,10 @@ public class BeanProperty
     private final int modifiers;
     private final int priority;
 
-    private Boolean propertyChangeSource;
+    private volatile Boolean propertyChangeSource;
 
     /**
-     * @throws NullPointerException
-     *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is <code>null</code>.
+     * @throws NullPointerException If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is <code>null</code>.
      */
     public BeanProperty(BeanType beanType, IPropertyDescriptor propertyDescriptor, IElementDoc doc) {
         this(beanType, propertyDescriptor, doc, getterOrSetter(propertyDescriptor));
@@ -127,25 +130,33 @@ public class BeanProperty
     }
 
     @Override
-    public Object getValue(Object instance)
-            throws ReflectiveOperationException {
+    public Object read(Object instance)
+            throws PropertyReadException {
         if (instance == null)
             throw new NullPointerException("instance");
         Method getter = propertyDescriptor.getReadMethod();
         if (getter == null)
-            throw new NoSuchMethodException("No getter method: " + propertyDescriptor.getName());
-        return getter.invoke(instance);
+            throw new PropertyReadException("No getter method: " + propertyDescriptor.getName());
+        try {
+            return getter.invoke(instance);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new PropertyReadException(e);
+        }
     }
 
     @Override
-    public void setValue(Object instance, Object value)
-            throws ReflectiveOperationException {
+    public void write(Object instance, Object value)
+            throws PropertyWriteException {
         if (instance == null)
             throw new NullPointerException("instance");
         Method setter = propertyDescriptor.getWriteMethod();
         if (setter == null)
-            throw new NoSuchMethodException("No setter method: " + propertyDescriptor.getName());
-        setter.invoke(instance, value);
+            throw new PropertyWriteException("No setter method: " + propertyDescriptor.getName());
+        try {
+            setter.invoke(instance, value);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new PropertyWriteException(e);
+        }
     }
 
     @Override
@@ -193,7 +204,9 @@ public class BeanProperty
         }
     }
 
-    /** ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}. */
+    /**
+     * ⇱ Implementaton Of {@link net.bodz.bas.i18n.dom1.IElement}.
+     */
     /* _____________________________ */static section.iface __ELEMENT__;
 
     @Override
@@ -211,17 +224,19 @@ public class BeanProperty
         return priority;
     }
 
-    /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
+    /**
+     * ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}.
+     */
     /* _____________________________ */static section.iface __ANNOTATION__;
 
     Map<Class<?>, Annotation> annotationMap = new LinkedHashMap<>();
     Annotation[] annotations;
-    boolean annotationsLoaded;
+    volatile boolean annotationsLoaded;
 
     void lazyLoadAnnotations() {
-        if (! annotationsLoaded) {
+        if (!annotationsLoaded) {
             synchronized (this) {
-                if (! annotationsLoaded) {
+                if (!annotationsLoaded) {
                     loadAnnotations();
                     annotationsLoaded = true;
                 }
@@ -236,7 +251,7 @@ public class BeanProperty
             Method xetter = getterOrSetter(descriptor);
             for (Annotation annotation : xetter.getAnnotations()) {
                 Class<? extends Annotation> aClass = annotation.annotationType();
-                if (! annotationMap.containsKey(aClass)) {
+                if (!annotationMap.containsKey(aClass)) {
                     annotationMap.put(aClass, annotation);
                 }
             }
@@ -244,12 +259,14 @@ public class BeanProperty
         annotations = annotationMap.values().toArray(new Annotation[0]);
     }
 
+    @NotNull
     @Override
     public Annotation[] getAnnotations() {
         lazyLoadAnnotations();
         return annotations;
     }
 
+    @NotNull
     @Override
     public Annotation[] getDeclaredAnnotations() {
         Method xetter = getterOrSetter(propertyDescriptor);

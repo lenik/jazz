@@ -11,6 +11,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class AttPreview
         extends DefaultBackedFile
@@ -116,7 +117,7 @@ public class AttPreview
     private static final String K_AUDIO_BIT_RATE = "audioBitRate";
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts) {
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts) {
         super.jsonIn(o, opts);
         width = o.getInt(K_WIDTH, 0);
         height = o.getInt(K_HEIGHT, 0);

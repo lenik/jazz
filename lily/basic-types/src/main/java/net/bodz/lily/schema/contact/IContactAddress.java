@@ -8,6 +8,7 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.repr.EntGroup;
@@ -152,7 +153,7 @@ public interface IContactAddress
     }
 
     @Override
-    default void jsonIn(JsonObject o, JsonFormOptions opts)
+    default void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         setCountry(o.getString("country", getCountry()));
         setR1(o.getString("r1", getR1()));

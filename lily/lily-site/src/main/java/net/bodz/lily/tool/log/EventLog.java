@@ -10,6 +10,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.lily.concrete.CoEntity;
 import net.bodz.lily.security.IMutableUser;
@@ -119,7 +120,7 @@ public class EventLog
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         JsonVarMap map = new JsonVarMap(o);
         time = map.getLong("time", 0);

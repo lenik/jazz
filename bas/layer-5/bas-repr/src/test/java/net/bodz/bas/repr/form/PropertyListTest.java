@@ -38,7 +38,7 @@ public class PropertyListTest
         List<PropertyChain> list = formDecl.resolvePattern("author.name");
 
         for (PropertyChain chain : list) {
-            Object value = chain.getValue(tutorial);
+            Object value = chain.read(tutorial);
             System.out.printf("tutorial[%s] => %s.\n", chain.getPath(), value);
         }
     }

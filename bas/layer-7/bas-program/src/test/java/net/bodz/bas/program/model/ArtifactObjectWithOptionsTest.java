@@ -107,7 +107,7 @@ public class ArtifactObjectWithOptionsTest
             throws Exception {
         IType type = PotatoTypes.getInstance().loadType(getClass());
 
-        type.getProperty("myName").getValue(this);
+        type.getProperty("myName").read(this);
 
         Assert.assertEquals("Lucy", type.get(this, "myName"));
         Assert.assertEquals(13, (int) type.get(this, "yourAge"));

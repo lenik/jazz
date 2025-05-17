@@ -1,6 +1,7 @@
 package net.bodz.lily.app;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.lily.storage.IVolume;
 import net.bodz.lily.storage.IVolumeProvider;
 
@@ -20,13 +21,14 @@ public class DataApplication
         this.volumeProvider = volumeProvider;
     }
 
+    @NotNull
     @Override
     public DataContext getDataContext() {
         return dataContext;
     }
 
     @Override
-    public void setDataContext(DataContext dataContext) {
+    public void setDataContext(@NotNull DataContext dataContext) {
         this.dataContext = dataContext;
     }
 

@@ -18,15 +18,14 @@ import net.bodz.mda.xjdoc.util.MethodId;
 
 public abstract class AbstractType
         extends AbstractPotatoElement
-        implements
-            IType {
+        implements IType {
 
     ITypeProvider provider;
 
     IType superType;
-    boolean superTypeLoaded;
+    volatile boolean superTypeLoaded;
 
-    private Map<String, IMethod> overloadedMethodMap;
+    volatile Map<String, IMethod> overloadedMethodMap;
 
     public AbstractType(ITypeProvider provider, IType declaringType, String name, IElementDoc doc) {
         super(declaringType, name, doc);
@@ -45,9 +44,9 @@ public abstract class AbstractType
 
     @Override
     public IType getSuperType() {
-        if (! superTypeLoaded) {
+        if (!superTypeLoaded) {
             synchronized (this) {
-                if (! superTypeLoaded) {
+                if (!superTypeLoaded) {
                     superType = loadSuperType();
                     superTypeLoaded = true;
                 }
@@ -91,7 +90,7 @@ public abstract class AbstractType
         if (pathProperty == null)
             throw new NullPointerException("pathProperty");
         IType type = this;
-        List<IProperty> properties = new ArrayList<IProperty>(2);
+        List<IProperty> properties = new ArrayList<>(2);
         IProperty lastProperty = null;
 
         StringTokenizer tokens = new StringTokenizer(pathProperty, ".");
@@ -132,14 +131,11 @@ public abstract class AbstractType
     }
 
     private Map<String, IMethod> loadOverloadedMethods() {
-        Map<String, List<IMethod>> nameListMap = new HashMap<String, List<IMethod>>();
+        Map<String, List<IMethod>> nameListMap = new HashMap<>();
         for (IMethod method : getMethods()) {
             String name = method.getName();
-            List<IMethod> list = nameListMap.get(name);
-            if (list == null) {
-                list = new ArrayList<IMethod>();
-                nameListMap.put(name, list);
-            }
+            List<IMethod> list = nameListMap.computeIfAbsent(name, //
+                    k -> new ArrayList<IMethod>());
             list.add(method);
         }
 
@@ -149,19 +145,19 @@ public abstract class AbstractType
             List<IMethod> list = entry.getValue();
             IMethod method0 = list.get(0);
             switch (list.size()) {
-            case 0:
-                throw new UnexpectedException("empty list");
-            case 1:
-                map.put(name, method0);
-            default:
-                IElementDoc doc0 = method0.getXjdoc();
+                case 0:
+                    throw new UnexpectedException("empty list");
+                case 1:
+                    map.put(name, method0);
+                default:
+                    IElementDoc doc0 = method0.getXjdoc();
 
-                Class<?> declaringClass = method0.getDeclaringClass();
-                IType declaringType = null;
-                if (declaringClass != null)
-                    declaringType = getProvider().loadType(declaringClass);
+                    Class<?> declaringClass = method0.getDeclaringClass();
+                    IType declaringType = null;
+                    if (declaringClass != null)
+                        declaringType = getProvider().loadType(declaringClass);
 
-                map.put(name, new OverloadedMethod(declaringType, list, doc0));
+                    map.put(name, new OverloadedMethod(declaringType, list, doc0));
             }
         }
         return map;
@@ -184,24 +180,24 @@ public abstract class AbstractType
 
     @Override
     public <T> T get(Object instance, String propertyName)
-            throws ReflectiveOperationException {
+            throws PropertyReadException {
         IProperty property = getProperty(propertyName);
         if (property == null) {
             throw new NoSuchPropertyException(propertyName);
         }
         @SuppressWarnings("unchecked")
-        T value = (T) property.getValue(instance);
+        T value = (T) property.read(instance);
         return value;
     }
 
     @Override
     public void set(Object instance, String propertyName, Object value)
-            throws ReflectiveOperationException {
+            throws PropertyWriteException {
         IProperty property = getProperty(propertyName);
         if (property == null) {
             throw new NoSuchPropertyException(propertyName);
         }
-        property.setValue(instance, value);
+        property.write(instance, value);
     }
 
     @Override

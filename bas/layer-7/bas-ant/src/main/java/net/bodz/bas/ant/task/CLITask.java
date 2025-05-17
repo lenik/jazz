@@ -1,6 +1,7 @@
 package net.bodz.bas.ant.task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
@@ -13,10 +14,10 @@ import org.apache.tools.ant.Task;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.meta.source.UnderDevelopment;
 import net.bodz.bas.potato.element.IType;
-import net.bodz.bas.program.model.ApplyOptionException;
+import net.bodz.bas.potato.element.PropertyReadException;
+import net.bodz.bas.potato.element.PropertyWriteException;
 import net.bodz.bas.program.model.IOptionGroup;
 import net.bodz.bas.program.skel.BasicCLI;
-import net.bodz.bas.program.skel.CLISyntaxException;
 
 public class CLITask
         extends Task {
@@ -36,8 +37,7 @@ public class CLITask
     protected void addArguments(String... args) {
         if (remainingArguments == null)
             remainingArguments = new ArrayList<String>();
-        for (String arg : args)
-            remainingArguments.add(arg);
+        remainingArguments.addAll(Arrays.asList(args));
     }
 
     public String getCLITail() {
@@ -58,16 +58,16 @@ public class CLITask
 
     protected Object get(String cliFieldName) {
         try {
-            return appType.getProperty(cliFieldName).getValue(program);
-        } catch (ReflectiveOperationException e) {
+            return appType.getProperty(cliFieldName).read(program);
+        } catch (PropertyReadException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
     protected void set(String cliFieldName, Object newValue) {
         try {
-            appType.getProperty(cliFieldName).setValue(program, newValue);
-        } catch (ReflectiveOperationException e) {
+            appType.getProperty(cliFieldName).write(program, newValue);
+        } catch (PropertyWriteException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
@@ -86,14 +86,14 @@ public class CLITask
             if (optnam.startsWith("arg-")) {
                 int argIndex = Integer.parseInt(optnam.substring(4));
                 if (rawArgs == null)
-                    rawArgs = new ArrayList<String>(argIndex + 1);
+                    rawArgs = new ArrayList<>(argIndex + 1);
                 while (rawArgs.size() <= argIndex)
                     rawArgs.add(null);
                 rawArgs.set(argIndex, optarg);
                 continue;
             }
 
-            List<String> suggestions = new ArrayList<String>();
+            List<String> suggestions = new ArrayList<>();
             opts.fillSuggestKeys(optnam, suggestions);
             if (suggestions.size() != 1) {
                 // TODO
@@ -139,14 +139,10 @@ public class CLITask
             }
             // adapting attributes
             if (logLevel != 0) {
-                Logger logger = (Logger) appType.getProperty("logger").getValue(program);
+                Logger logger = (Logger) appType.getProperty("logger").read(program);
                 logger.setDelta(logLevel);
             }
-        } catch (CLISyntaxException e) {
-            throw new BuildException(e.getMessage(), e);
-        } catch (ApplyOptionException e) {
-            throw new BuildException(e.getMessage(), e);
-        } catch (ReflectiveOperationException e) {
+        } catch (Exception e) {
             throw new BuildException(e.getMessage(), e);
         }
         try {
@@ -156,7 +152,7 @@ public class CLITask
         }
     }
 
-    private StringBuilder errbuf = new StringBuilder();
+    private final StringBuilder errbuf = new StringBuilder();
 
     @Override
     protected void handleErrorOutput(String output) {

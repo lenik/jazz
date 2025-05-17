@@ -711,7 +711,7 @@ public class DefaultColumnMetadata
     /* _____________________________ */static section.iface __JSON__;
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
 //        index = o.getInt("index", -1);
         name = o.getString(K_NAME);

@@ -2,11 +2,14 @@ package net.bodz.bas.db.ctx;
 
 import org.apache.ibatis.session.SqlSession;
 
+import net.bodz.bas.meta.decl.NotNull;
+
 public interface IDataContextAware {
 
+    @NotNull
     DataContext getDataContext();
 
-    void setDataContext(DataContext dataContext);
+    void setDataContext(@NotNull DataContext dataContext);
 
     default <mapper_t> mapper_t getMapper(Class<mapper_t> mapperClass) {
         return getDataContext().getMapper(mapperClass);

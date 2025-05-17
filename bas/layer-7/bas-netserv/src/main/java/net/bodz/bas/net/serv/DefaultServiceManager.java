@@ -104,7 +104,7 @@ public class DefaultServiceManager
     //
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         for (String id : o.keySet()) {
             JsonObject joDescriptor = o.getJsonObject(id);

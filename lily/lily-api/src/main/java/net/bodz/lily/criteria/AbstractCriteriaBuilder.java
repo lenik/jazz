@@ -13,6 +13,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.element.PropertyReadException;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.criterion.Composite;
@@ -151,9 +152,9 @@ public abstract class AbstractCriteriaBuilder<This>
 
         try {
             @SuppressWarnings("unchecked")
-            FieldCriterionBuilder<?, ?, Object> value = (FieldCriterionBuilder<?, ?, Object>) property.getValue(this);
+            FieldCriterionBuilder<?, ?, Object> value = (FieldCriterionBuilder<?, ?, Object>) property.read(this);
             return value;
-        } catch (ReflectiveOperationException e) {
+        } catch (PropertyReadException e) {
             throw new IllegalUsageException("can't get value for property " + name, e);
         }
     }
@@ -180,7 +181,7 @@ public abstract class AbstractCriteriaBuilder<This>
 
     public void readObject(IVariantMap<String> map, ITypeInferrer typeInferrer)
             throws ParseException {
-        Function<String, String> qualifier = (String name) -> qualify(name);
+        Function<String, String> qualifier = this::qualify;
 
         clear();
         addDefaults();

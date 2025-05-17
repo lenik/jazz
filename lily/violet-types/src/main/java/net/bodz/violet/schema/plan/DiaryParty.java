@@ -10,6 +10,7 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.lily.entity.IdFn;
 
 @Table(schema = DiaryParty.SCHEMA_NAME, name = DiaryParty.TABLE_NAME)
@@ -44,7 +45,7 @@ public class DiaryParty
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         throw new NotImplementedException();
     }

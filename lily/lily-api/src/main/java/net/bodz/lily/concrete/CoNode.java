@@ -18,6 +18,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.bas.meta.decl.TypeParamType;
 import net.bodz.bas.meta.decl.TypeParameters;
@@ -546,7 +547,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
     @SuppressWarnings("unchecked")
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         super.jsonIn(o, opts);
 

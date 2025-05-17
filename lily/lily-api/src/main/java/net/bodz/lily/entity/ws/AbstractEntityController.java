@@ -38,6 +38,7 @@ import net.bodz.bas.html.viz.PathArrivalFrame;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.ObjectType;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
@@ -254,13 +255,14 @@ public abstract class AbstractEntityController<T>
     @Override
     public abstract IDataApplication getDataApp();
 
+    @NotNull
     @Override
     public DataContext getDataContext() {
         return getDataApp().getDataContext();
     }
 
     @Override
-    public void setDataContext(DataContext dataContext) {
+    public void setDataContext(@NotNull DataContext dataContext) {
         throw new ReadOnlyException();
     }
 

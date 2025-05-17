@@ -114,7 +114,7 @@ public class ServiceDescriptor
     private static final String K_LAST_UPDATED = "lastUpdated";
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
 //        channel = o.getSocketChannel(K_CHANNEL);
         String address = o.getString(K_ADDRESS);

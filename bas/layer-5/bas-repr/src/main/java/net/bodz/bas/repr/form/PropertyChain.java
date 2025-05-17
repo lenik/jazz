@@ -5,10 +5,11 @@ import java.util.List;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IPropertyAccessor;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.element.PropertyReadException;
+import net.bodz.bas.potato.element.PropertyWriteException;
 
 public class PropertyChain
-        implements
-            IPropertyAccessor {
+        implements IPropertyAccessor {
 
     private final String path;
     private final List<IFormProperty> propertyVector;
@@ -49,13 +50,13 @@ public class PropertyChain
     }
 
     @Override
-    public Object getValue(Object instance)
-            throws ReflectiveOperationException {
+    public Object read(Object instance)
+            throws PropertyReadException {
         if (instance == null)
             throw new NullPointerException("null instance for path: " + path);
         Object obj = instance;
         for (IFormProperty fieldDecl : propertyVector) {
-            obj = fieldDecl.getAccessor().getValue(obj);
+            obj = fieldDecl.getAccessor().read(obj);
             if (obj == null)
                 return null;
         }
@@ -63,19 +64,24 @@ public class PropertyChain
     }
 
     @Override
-    public void setValue(Object instance, Object value)
-            throws ReflectiveOperationException {
+    public void write(Object instance, Object value)
+            throws PropertyWriteException {
         if (instance == null)
             throw new NullPointerException("null instance for path: " + path);
         int max = propertyVector.size() - 1;
         Object obj = instance;
         for (int i = 0; i < max; i++) {
-            obj = propertyVector.get(i).getAccessor().getValue(obj);
+            IFormProperty property = propertyVector.get(i);
+            try {
+                obj = property.getAccessor().read(obj);
+            } catch (PropertyReadException e) {
+                throw new PropertyWriteException("Error get context from " + property.getProperty() + ": " + e.getMessage(), e);
+            }
             if (obj == null)
                 return;
         }
         IFormProperty lastField = propertyVector.get(max);
-        lastField.getAccessor().setValue(obj, value);
+        lastField.getAccessor().write(obj, value);
     }
 
 }

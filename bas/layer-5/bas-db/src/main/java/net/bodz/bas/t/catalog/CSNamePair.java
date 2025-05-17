@@ -17,6 +17,7 @@ import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 abstract class CSNamePair
         implements
@@ -148,7 +149,7 @@ abstract class CSNamePair
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         catalogName = o.getString(K_CATALOG_NAME);
         schemaName = o.getString(K_SCHEMA_NAME);

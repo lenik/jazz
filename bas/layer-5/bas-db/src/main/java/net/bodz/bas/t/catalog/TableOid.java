@@ -184,7 +184,7 @@ public class TableOid
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         super.jsonIn(o, opts);
         tableName = o.getString(K_TABLE_NAME);

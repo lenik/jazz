@@ -19,6 +19,7 @@ import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.ProgramName;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.program.skel.BasicCLI;
 
 /**
@@ -41,13 +42,14 @@ public class DumpTable
         dataContext = dataContexts.getMain();
     }
 
+    @NotNull
     @Override
     public DataContext getDataContext() {
         return dataContext;
     }
 
     @Override
-    public void setDataContext(DataContext dataContext) {
+    public void setDataContext(@NotNull DataContext dataContext) {
         this.dataContext = dataContext;
     }
 

@@ -1,15 +1,19 @@
 package net.bodz.bas.program.model;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.control.Control;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.element.IMethod;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.element.PropertyReadException;
+import net.bodz.bas.potato.element.PropertyWriteException;
 import net.bodz.bas.typer.std.ParserUtil;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
@@ -20,10 +24,10 @@ public class MethodOption
 
     private final IType type;
     private final Method method;
-    private Class<?>[] parameterTypes;
+    private final Class<?>[] parameterTypes;
 
     public MethodOption(IType type, Method method, MethodDoc doc) {
-        super("method:" + new MethodId(method).toString(), //
+        super("method:" + new MethodId(method), //
                 method.getName(), method.getGenericReturnType(), doc);
         this.type = type;
         this.method = method;
@@ -72,10 +76,11 @@ class InvocationAsProperty
     protected IProperty loadSuperProperty() {
         String name = method.getName();
         Class<?>[] signature = method.getParameterTypes();
-        IType decl = getDeclaringType();
-        while ((decl = decl.getSuperType()) != null) {
-            IMethod m = decl.getMethod(name, signature);
-            return new InvocationAsProperty(decl, m.getMethod(), m.getXjdoc());
+        IType type = getDeclaringType();
+        IType superType = type.getSuperType();
+        if ((superType) != null) {
+            IMethod m = superType.getMethod(name, signature);
+            return new InvocationAsProperty(superType, m.getMethod(), m.getXjdoc());
         }
         return null;
     }
@@ -91,37 +96,41 @@ class InvocationAsProperty
     }
 
     @Override
-    public Object getValue(Object instance)
-            throws ReflectiveOperationException {
+    public Object read(Object instance)
+            throws PropertyReadException {
         return args;
     }
 
     @Override
-    public void setValue(Object instance, Object value)
-            throws ReflectiveOperationException {
+    public void write(Object instance, Object value)
+            throws PropertyWriteException {
         this.args = (Object[]) value;
 
         int nparam = method.getParameterCount();
         Object[] params = new Object[nparam];
         if (args != null) {
-            int com = Math.min(args.length, nparam);
-            for (int i = 0; i < com; i++) {
-                params[i] = args[i];
-            }
+            int min = Math.min(args.length, nparam);
+            System.arraycopy(args, 0, params, 0, min);
         }
 
-        this.returnValue = Control.invoke(method, instance, params);
+        try {
+            this.returnValue = Control.invoke(method, instance, params);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new PropertyWriteException("Error invoke " + method + ": " + e.getMessage(), e);
+        }
     }
 
     public Object getReturnValue() {
         return returnValue;
     }
 
+    @NotNull
     @Override
     public Annotation[] getAnnotations() {
         return method.getAnnotations();
     }
 
+    @NotNull
     @Override
     public Annotation[] getDeclaredAnnotations() {
         return method.getDeclaredAnnotations();

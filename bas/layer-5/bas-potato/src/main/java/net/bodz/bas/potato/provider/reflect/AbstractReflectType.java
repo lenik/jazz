@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.AbstractType;
@@ -117,11 +118,13 @@ public abstract class AbstractReflectType
         return clazz.getAnnotation(annotationClass);
     }
 
+    @NotNull
     @Override
     public Annotation[] getAnnotations() {
         return clazz.getAnnotations();
     }
 
+    @NotNull
     @Override
     public Annotation[] getDeclaredAnnotations() {
         return clazz.getDeclaredAnnotations();

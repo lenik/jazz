@@ -139,7 +139,7 @@ public class Command
     private static final String K_ARGS = "args";
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         name = o.getString(K_NAME);
         List<String> list = o.getArrayList(K_ARGS, JsonVariant::castToString);

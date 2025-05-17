@@ -257,7 +257,7 @@ public class ImportProcess
                             cellVal.getClass(), propType));
 
                 try {
-                    fieldProp.setValue(obj, cellVal);
+                    fieldProp.write(obj, cellVal);
                 } catch (Exception e) {
                     throw new ParseException(String.format(//
                             "Error load csv cell at row %d, column %s[%d]: %s", //

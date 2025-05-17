@@ -31,7 +31,7 @@ public class MutablePropertyMapTest
         assertEquals("city", cityProp.getName());
         assertSame(AddressBean.class, cityProp.getDeclaringClass());
 
-        cityProp.setValue(addr, "New York");
+        cityProp.write(addr, "New York");
         assertEquals("New York", addr.getCity());
     }
 

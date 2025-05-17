@@ -19,6 +19,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.meta.source.OverrideOption;
+import net.bodz.bas.potato.element.PropertyReadException;
 import net.bodz.bas.potato.invoke.Invocation;
 import net.bodz.bas.program.IProgram;
 import net.bodz.bas.program.skel.CLISyntaxException;
@@ -31,9 +32,8 @@ import net.bodz.mda.xjdoc.model.artifact.ArtifactObject;
  */
 public abstract class AbstractProgram
         extends ArtifactObject
-        implements
-            IProgram,
-            II18nCapable {
+        implements IProgram,
+                   II18nCapable {
 
     static final Logger logger;
 
@@ -197,26 +197,26 @@ public abstract class AbstractProgram
     }
 
     void dumpOptions()
-            throws ReflectiveOperationException {
+            throws PropertyReadException {
         IOptionGroup options = getOptionModel();
         logger.debug("Dump of options:");
 
         Map<String, IOption> localMap = options.getLocalOptionMap();
-        if (! localMap.isEmpty()) {
+        if (!localMap.isEmpty()) {
             logger.debug("    Local options: ");
             for (Entry<String, IOption> entry : localMap.entrySet()) {
                 IOption option = entry.getValue();
                 String optionName = option.getName();
-                if (! optionName.equals(entry.getKey()))
+                if (!optionName.equals(entry.getKey()))
                     continue;
-                Object optionValue = option.property().getValue(this);
+                Object optionValue = option.property().read(this);
                 if (optionValue instanceof Invocation)
                     continue;
                 logger.debug("        ", optionName, " = ", SimpleObjectFormatter.dispval(optionValue));
             }
         }
 
-        if (! variableMap.isEmpty()) {
+        if (!variableMap.isEmpty()) {
             logger.debug("    Variables: ");
             for (Entry<String, Object> entry : variableMap.entrySet()) {
                 String name = entry.getKey();

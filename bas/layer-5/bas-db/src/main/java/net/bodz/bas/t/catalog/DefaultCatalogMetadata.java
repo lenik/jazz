@@ -360,7 +360,7 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         name = o.getString(K_NAME);
 

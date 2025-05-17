@@ -3,6 +3,7 @@ package net.bodz.bas.t.catalog.poi;
 import java.util.List;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.catalog.DefaultTableMetadata;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 
@@ -17,6 +18,7 @@ public class SheetTableMetadata
         return true;
     }
 
+    @NotNull
     @SuppressWarnings("unchecked")
     @Override
     public List<? extends SheetColumn> getColumns() {

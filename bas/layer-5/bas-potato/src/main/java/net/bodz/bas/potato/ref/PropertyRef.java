@@ -3,6 +3,8 @@ package net.bodz.bas.potato.ref;
 import java.util.Map.Entry;
 
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.PropertyReadException;
+import net.bodz.bas.potato.element.PropertyWriteException;
 import net.bodz.bas.t.ref.AbstractRef;
 
 public class PropertyRef<T>
@@ -40,23 +42,25 @@ public class PropertyRef<T>
     @Override
     public T get() {
         try {
-            Object value = property.getValue(obj);
+            Object value = property.read(obj);
             return getValueType().cast(value);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
+        } catch (PropertyReadException e) {
+            throw new RuntimeException("error reading property " + property + ": " + e.getMessage(), e);
         }
     }
 
     @Override
     public void set(Object value) {
         try {
-            property.setValue(obj, value);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            property.write(obj, value);
+        } catch (PropertyWriteException e) {
+            throw new RuntimeException("error writing property " + property + ": " + e.getMessage(), e);
         }
     }
 
-    /** ⇱ Implementation Of {@link Entry}. */
+    /**
+     * ⇱ Implementation Of {@link Entry}.
+     */
     /* _____________________________ */static section.iface __ENTRY__;
 
     @Override

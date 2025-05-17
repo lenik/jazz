@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class JsonVerbatimBuf_Entry
         implements
@@ -20,7 +21,7 @@ public class JsonVerbatimBuf_Entry
     static final char CHAR_QQ = '"';
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         Object val = o.get(key);
         String json = JsonObject.valueToString(val);

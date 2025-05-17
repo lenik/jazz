@@ -7,8 +7,7 @@ import net.bodz.bas.t.event.IPropertyChangeListener;
 
 public class DecoratedProperty
         extends DecoratedPotatoElement
-        implements
-            IProperty {
+        implements IProperty {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,15 +52,15 @@ public class DecoratedProperty
     }
 
     @Override
-    public Object getValue(Object instance)
-            throws ReflectiveOperationException {
-        return getWrapped().getValue(instance);
+    public Object read(Object instance)
+            throws PropertyReadException {
+        return getWrapped().read(instance);
     }
 
     @Override
-    public void setValue(Object instance, Object value)
-            throws ReflectiveOperationException {
-        getWrapped().setValue(instance, value);
+    public void write(Object instance, Object value)
+            throws PropertyWriteException {
+        getWrapped().write(instance, value);
     }
 
     @Override

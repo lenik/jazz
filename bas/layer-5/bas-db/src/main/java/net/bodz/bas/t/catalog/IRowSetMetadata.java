@@ -12,11 +12,11 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.meta.decl.NotNull;
 
 public interface IRowSetMetadata
-        extends
-            IJsonForm,
-            IXmlForm {
+        extends IJsonForm,
+                IXmlForm {
 
     String K_COLUMNS = "columns";
     String K_COLUMN = "column";
@@ -33,6 +33,7 @@ public interface IRowSetMetadata
 
     boolean isSparse();
 
+    @NotNull
     List<? extends IColumnMetadata> getColumns();
 
     int getColumnCount();
@@ -69,8 +70,7 @@ public interface IRowSetMetadata
     }
 
     /**
-     * @param index
-     *            0-based.
+     * @param index 0-based.
      */
     IColumnMetadata getColumn(int index);
 

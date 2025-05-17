@@ -11,6 +11,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.map.ListMap;
 import net.bodz.bas.typer.Typers;
@@ -45,7 +46,7 @@ public class ListMap_JX<K, V extends IJsonForm>
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         for (String key : o.keySet()) {
             K k1 = parseKey(key);

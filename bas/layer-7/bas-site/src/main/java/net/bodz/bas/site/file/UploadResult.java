@@ -9,6 +9,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class UploadResult
         extends ArrayList<UploadedFileInfo>
@@ -18,7 +19,7 @@ public class UploadResult
     private static final long serialVersionUID = 1L;
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         JsonArray files = o.getJsonArray("files");
         int nfile = files.length();

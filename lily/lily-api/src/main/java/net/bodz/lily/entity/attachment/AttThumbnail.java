@@ -6,6 +6,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class AttThumbnail
         extends DefaultBackedFile
@@ -60,7 +61,7 @@ public class AttThumbnail
     private static final String K_QUALITY = "quality";
 
     @Override
-    public void jsonIn(JsonObject o)
+    public void jsonIn(@NotNull JsonObject o)
             throws ParseException {
         super.jsonIn(o);
         width = o.getInt(K_WIDTH, 0);

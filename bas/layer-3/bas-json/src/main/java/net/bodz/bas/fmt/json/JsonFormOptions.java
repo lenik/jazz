@@ -6,6 +6,7 @@ import java.util.Map;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 
@@ -76,7 +77,7 @@ public class JsonFormOptions
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         typeInfo = o.getBoolean(K_TYPE_INFO, typeInfo);
         compact = o.getBoolean(K_COMPACT, compact);

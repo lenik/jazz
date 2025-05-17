@@ -33,7 +33,7 @@ public class JsonUnion
     }
 
     @Override
-    public final void jsonIn(JsonObject o, JsonFormOptions opts)
+    public final void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         jsonIn(JsonVariant.of(o), opts);
     }

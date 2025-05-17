@@ -268,7 +268,7 @@ public class DefaultAttachmentManifest
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         JsonArray ja = o.getJsonArray(K_DATA);
         reloadData(ja, opts);

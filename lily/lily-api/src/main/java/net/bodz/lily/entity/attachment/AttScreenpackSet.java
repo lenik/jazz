@@ -44,7 +44,7 @@ public class AttScreenpackSet
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         clear();
         for (String key : o.keySet()) {

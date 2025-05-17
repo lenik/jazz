@@ -10,6 +10,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class AttScreenpack
         extends ArrayList<AttScreenshot>
@@ -71,7 +72,7 @@ public class AttScreenpack
     private static final String K_LIST = "list";
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts) {
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts) {
         width = o.getInt(K_WIDTH, 0);
         height = o.getInt(K_HEIGHT, 0);
         format = o.getString(K_FORMAT);

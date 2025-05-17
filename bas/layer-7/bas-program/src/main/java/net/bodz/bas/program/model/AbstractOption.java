@@ -282,7 +282,7 @@ public abstract class AbstractOption
     public String[] formatValue(Object context, Object value)
             throws FormatException {
         Class<?> valueType = getValueType();
-        IFormatter<Object> formatter = Typers.getTyper(valueType, IFormatter.class);
+        IFormatter<Object> formatter = Typers.getGenericTyper(valueType, IFormatter.class);
         String param1 = formatter.format(value);
         return new String[] { param1 };
     }

@@ -161,7 +161,7 @@ public class SaveProcess
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         if (resolvedEntity != null) {
             // createNew = undefined;

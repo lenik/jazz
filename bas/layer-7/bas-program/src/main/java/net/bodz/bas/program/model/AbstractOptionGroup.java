@@ -12,6 +12,8 @@ import net.bodz.bas.c.type.addor.IAddor;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.PropertyReadException;
+import net.bodz.bas.potato.element.PropertyWriteException;
 import net.bodz.bas.program.skel.CLISyntaxException;
 import net.bodz.mda.xjdoc.model.javadoc.SemiMutableXjdocElement;
 
@@ -21,16 +23,14 @@ import net.bodz.mda.xjdoc.model.javadoc.SemiMutableXjdocElement;
  */
 public abstract class AbstractOptionGroup
         extends SemiMutableXjdocElement
-        implements
-            IOptionGroup {
+        implements IOptionGroup {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * Get the explicitly declared local option.
      *
-     * @param optionKey
-     *            Explicitly declared local option key.
+     * @param optionKey Explicitly declared local option key.
      * @return <code>null</code> if the local option isn't existed.
      */
     protected abstract IOption getLocalOption(String optionKey);
@@ -133,16 +133,16 @@ public abstract class AbstractOptionGroup
         Object prev;
         if (property.isReadable()) {
             try {
-                prev = property.getValue(obj);
-            } catch (ReflectiveOperationException e1) {
-                throw new RuntimeException(e1.getMessage(), e1);
+                prev = property.read(obj);
+            } catch (PropertyReadException e) {
+                throw new RuntimeException("error read " + property + ": " + e.getMessage(), e);
             }
             result = addor.add(prev, value);
         }
 
         try {
-            property.setValue(obj, result);
-        } catch (ReflectiveOperationException e) {
+            property.write(obj, result);
+        } catch (PropertyWriteException e) {
             throw new IllegalUsageException(String.format(//
                     "error setting property value of %s.%s to %s: %s", //
                     property.getDeclaringClass().getSimpleName(), //
@@ -152,26 +152,26 @@ public abstract class AbstractOptionGroup
         }
     }
 
-    class _Parser {
+    private class _Parser {
 
         static final int START = 0;
         static final int UNPACKING = 1;
         static final int SHIFT_ARGS = 2;
         static final int STOPPED = 3;
 
-        private int state = START;
+        int state = START;
 
-        private OptionGroupParseFlags flags;
+        OptionGroupParseFlags flags;
 
-        private String[] args;
-        private int argIndex;
-        private String packed;
+        String[] args;
+        int argIndex;
+        String packed;
 
-        private IOption option = null;
-        private List<String> optArgs = new ArrayList<String>();
-        private Object optValue = null;
+        IOption option = null;
+        List<String> optArgs = new ArrayList<>();
+        Object optValue = null;
 
-        private List<String> rejected = new ArrayList<String>();
+        List<String> rejected = new ArrayList<>();
 
         public _Parser(OptionGroupParseFlags flags, String[] args) {
             this.flags = flags;
@@ -186,104 +186,103 @@ public abstract class AbstractOptionGroup
 
             while (true)
                 switch (state) {
-                case START:
-                    if (argIndex == args.length)
-                        return false;
+                    case START:
+                        if (argIndex == args.length)
+                            return false;
 
-                    String arg = args[argIndex++];
+                        String arg = args[argIndex++];
 
-                    // long-option
-                    if (arg.startsWith("--")) {
-                        arg = arg.substring(2);
+                        // long-option
+                        if (arg.startsWith("--")) {
+                            arg = arg.substring(2);
 
-                        int eq = arg.indexOf('=');
-                        if (eq != -1) {
-                            optArgs.add(arg.substring(eq + 1));
-                            arg = arg.substring(0, eq);
-                        }
-
-                        option = getUniqueOption(arg);
-
-                        if (option == null) {
-                            if (arg.startsWith("no-")) {
-                                option = getUniqueOption(arg.substring(3));
-                                if (option != null)
-                                    optValue = false;
+                            int eq = arg.indexOf('=');
+                            if (eq != -1) {
+                                optArgs.add(arg.substring(eq + 1));
+                                arg = arg.substring(0, eq);
                             }
-                            if (option == null)
-                                throw new NoSuchOptionException(arg);
+
+                            option = getUniqueOption(arg);
+
+                            if (option == null) {
+                                if (arg.startsWith("no-")) {
+                                    option = getUniqueOption(arg.substring(3));
+                                    if (option != null)
+                                        optValue = false;
+                                }
+                                if (option == null)
+                                    throw new NoSuchOptionException(arg);
+                            }
+
+                            state = SHIFT_ARGS;
+                            continue;
                         }
 
+                        // short-option[s]
+                        if (arg.startsWith("-") && arg.length() > 1) {
+                            packed = arg.substring(1);
+                            state = UNPACKING;
+                            continue;
+                        }
+
+                        // non-option
+                        if (flags.isStopAtFirstNonOption())
+                            rejected.add(arg);
+                        else
+                            state = STOPPED;
+                        continue;
+
+                    case UNPACKING:
+                        if (packed.isEmpty()) {
+                            state = START;
+                            continue;
+                        }
+
+                        String shortKey = packed.substring(0, 1);
+                        packed = packed.substring(1);
+
+                        option = getOption(shortKey);
+                        if (option == null)
+                            throw new NoSuchOptionException(shortKey);
+
+                        if (option.getParameterCount() == 0) {
+                            Object trueValue = option.getDefaultValue();
+                            optValue = trueValue;
+                            return true;
+                        }
+
+                        if (!packed.isEmpty()) {
+                            // The remaining chars are used as opt arg..
+                            optArgs.add(packed);
+                        }
+
+                        // The next args (if exist) are used as opt arg.
                         state = SHIFT_ARGS;
                         continue;
-                    }
 
-                    // short-option[s]
-                    if (arg.startsWith("-") && arg.length() > 1) {
-                        packed = arg.substring(1);
-                        state = UNPACKING;
-                        continue;
-                    }
+                    case SHIFT_ARGS:
+                        if (optValue == null)
+                            optValue = option.getDefaultValue();
 
-                    // non-option
-                    if (flags.isStopAtFirstNonOption())
-                        rejected.add(arg);
-                    else
-                        state = STOPPED;
-                    continue;
+                        int parameterCount = option.getParameterCount();
+                        int shiftCount = parameterCount - optArgs.size();
+                        int available = args.length - argIndex;
 
-                case UNPACKING:
-                    if (packed.isEmpty()) {
+                        if (available < shiftCount) {
+                            throw new CLISyntaxException(String.format("Option %s expects %d parameters, but only %d given.", //
+                                    option.getName(), parameterCount, optArgs.size() + available));
+                        }
+
+                        for (int i = 0; i < shiftCount; i++)
+                            optArgs.add(args[argIndex++]);
+
                         state = START;
-                        continue;
-                    }
-
-                    String shortKey = packed.substring(0, 1);
-                    packed = packed.substring(1);
-
-                    option = getOption(shortKey);
-                    if (option == null)
-                        throw new NoSuchOptionException(shortKey);
-
-                    if (option.getParameterCount() == 0) {
-                        Object trueValue = option.getDefaultValue();
-                        optValue = trueValue;
                         return true;
-                    }
 
-                    if (!packed.isEmpty()) {
-                        // The remaining chars are used as opt arg..
-                        optArgs.add(packed);
-                    }
-
-                    // The next args (if exist) are used as opt arg.
-                    state = SHIFT_ARGS;
-                    continue;
-
-                case SHIFT_ARGS:
-                    if (optValue == null)
-                        optValue = option.getDefaultValue();
-
-                    int parameterCount = option.getParameterCount();
-                    int shiftCount = parameterCount - optArgs.size();
-                    int available = args.length - argIndex;
-
-                    if (available < shiftCount) {
-                        throw new CLISyntaxException(
-                                String.format("Option %s expects %d parameters, but only %d given.", //
-                                        option.getName(), parameterCount, optArgs.size() + available));
-                    }
-
-                    for (int i = 0; i < shiftCount; i++)
-                        optArgs.add(args[argIndex++]);
-
-                    state = START;
-                    return true;
-
-                case STOPPED:
-                    while (argIndex < args.length)
-                        rejected.add(args[argIndex++]);
-                    return false;
+                    case STOPPED:
+                        while (argIndex < args.length)
+                            rejected.add(args[argIndex++]);
+                        return false;
                 }
         }
 

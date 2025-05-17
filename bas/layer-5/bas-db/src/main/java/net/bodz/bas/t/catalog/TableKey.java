@@ -26,6 +26,7 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.map.ListMap;
 import net.bodz.bas.t.order.OrdinalComparator;
 
@@ -198,7 +199,7 @@ public final class TableKey
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         oid.jsonIn(o, opts);
         columnNames = o.getStringArray(K_COLUMNS);

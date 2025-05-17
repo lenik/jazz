@@ -20,6 +20,8 @@ import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.element.PropertyReadException;
+import net.bodz.bas.potato.element.PropertyWriteException;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 
@@ -75,7 +77,7 @@ public class VarMapLoader {
         }
 
         if (remain == null) {
-            if (! property.isWritable()) {
+            if (!property.isWritable()) {
                 // can be transient or derived, and all
                 // logger.warn("Ignored readonly property: " + path);
                 return;
@@ -86,8 +88,8 @@ public class VarMapLoader {
         if ("null".equals(remain)) {
             // if (anyVal)
             try {
-                property.setValue(obj, null);
-            } catch (ReflectiveOperationException e) {
+                property.write(obj, null);
+            } catch (PropertyWriteException e) {
                 throw new LoaderException("Failed to set to null: " + e.getMessage(), e);
             }
             return;
@@ -95,8 +97,8 @@ public class VarMapLoader {
 
         Object pVal;
         try {
-            pVal = property.getValue(obj);
-        } catch (ReflectiveOperationException e) {
+            pVal = property.read(obj);
+        } catch (PropertyReadException e) {
             throw new LoaderException("Failed to access object property: " + e.getMessage(), e);
         }
         Class<?> pClass = property.getPropertyClass();
@@ -104,7 +106,7 @@ public class VarMapLoader {
 
         boolean dirty = false;
         if (pVal == null) {
-            if (! autoCreate)
+            if (!autoCreate)
                 return;
             try {
                 pVal = pClass.getConstructor().newInstance();
@@ -116,8 +118,8 @@ public class VarMapLoader {
         load(pType, pVal, remain, anyVal);
         if (dirty)
             try {
-                property.setValue(obj, pVal);
-            } catch (ReflectiveOperationException e) {
+                property.write(obj, pVal);
+            } catch (PropertyWriteException e) {
                 throw new LoaderException("Failed to save auto created instance: " + e.getMessage(), e);
             }
     }
@@ -156,15 +158,16 @@ public class VarMapLoader {
 
             // Load collections.
             try {
-                lval = property.getValue(obj);
-            } catch (ReflectiveOperationException e) {
+                lval = property.read(obj);
+            } catch (PropertyReadException e) {
                 throw new LoaderException("Failed to access object property: " + e.getMessage(), e);
             }
 
             if (rval instanceof ILookupMap) {
-                ILookupMap<String, ?> rmap = ILookupMap.class.cast(rval);
+                @SuppressWarnings("unchecked")
+                ILookupMap<String, ?> rmap = (ILookupMap<String, ?>) rval;
                 if (lval == null) {
-                    if (! autoCreate) {
+                    if (!autoCreate) {
                         logger.warn("Skipped to load nested map on null property.");
                         return;
                     }
@@ -199,8 +202,8 @@ public class VarMapLoader {
         } while (false);
 
         try {
-            property.setValue(obj, lval);
-        } catch (ReflectiveOperationException e) {
+            property.write(obj, lval);
+        } catch (PropertyWriteException e) {
             throw new LoaderException("Failed to set property value: " + e.getMessage(), e);
         }
     }
@@ -224,7 +227,8 @@ public class VarMapLoader {
             return o.toString();
     }
 
-    static Map<Class<?>, Class<?>> concreteTypes = new HashMap<Class<?>, Class<?>>();
+    static Map<Class<?>, Class<?>> concreteTypes = new HashMap<>();
+
     static {
         concreteTypes.put(List.class, ArrayList.class);
         concreteTypes.put(Set.class, HashSet.class);

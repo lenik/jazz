@@ -18,6 +18,7 @@ import net.bodz.bas.log.BufferedLogger;
 import net.bodz.bas.log.ILogger;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.repr.form.SortOrder;
 
 @SuppressWarnings("unchecked")
@@ -256,7 +257,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         for (String key : o.keySet()) {
             boolean handled = readRootEntry(o, key, opts);

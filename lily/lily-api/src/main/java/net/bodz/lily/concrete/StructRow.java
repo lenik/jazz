@@ -21,6 +21,7 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.bean.IgnoreChild;
 import net.bodz.bas.meta.bean.Internal;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.meta.decl.TsTyped;
 import net.bodz.bas.repr.content.IContent;
@@ -245,7 +246,7 @@ public abstract class StructRow
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         if (o == null)
             throw new NullPointerException("o");
