@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
@@ -29,8 +30,7 @@ import net.bodz.bas.t.map.ListMap;
 import net.bodz.bas.t.tuple.QualifiedName;
 
 public class DefaultSchemaMetadata
-        implements
-            IMutableSchemaMetadata {
+        implements IMutableSchemaMetadata {
 
     static final Logger logger = LoggerFactory.getLogger(DefaultSchemaMetadata.class);
 
@@ -45,6 +45,9 @@ public class DefaultSchemaMetadata
 
     Map<String, ITableMetadata> tableMap = new LinkedHashMap<>();
     Map<String, IViewMetadata> viewMap = new LinkedHashMap<>();
+
+    TypePoMap<ITableMetadata> tableClasses = new TypePoMap<>();
+    TypePoMap<IViewMetadata> viewClasses = new TypePoMap<>();
 
     Boolean convertToUpperCase;
     Map<String, String> canonicalNames = new HashMap<>();
@@ -168,8 +171,7 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public DefaultTableMetadata autoLoadTableFromJDBC(TableOid oid, Connection autoLoadConnection,
-            LoadFromJDBCOptions options) {
+    public DefaultTableMetadata autoLoadTableFromJDBC(TableOid oid, Connection autoLoadConnection, LoadFromJDBCOptions options) {
         return autoLoadTableFromJDBC(oid.getTableName(), autoLoadConnection, options);
     }
 
@@ -181,8 +183,7 @@ public class DefaultSchemaMetadata
         }
     }
 
-    public synchronized DefaultTableMetadata loadTableFromJDBC(String tableName, Connection cn,
-            LoadFromJDBCOptions options)
+    public synchronized DefaultTableMetadata loadTableFromJDBC(String tableName, Connection cn, LoadFromJDBCOptions options)
             throws SQLException {
         if (tableName == null)
             throw new NullPointerException("tableName");
@@ -229,41 +230,62 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public void addTable(ITableMetadata table) {
-        if (table == null)
-            throw new NullPointerException("table");
+    public void addTable(@NotNull ITableMetadata table) {
         String name = table.getName();
+        if (name == null)
+            throw new NullPointerException("table name");
+
         ITableMetadata existing = tableMap.get(name);
         if (existing != null)
-            throw new DuplicatedKeyException("Table is already existed: " + name);
+            throw new DuplicatedKeyException("table name duplicated: " + name);
+
+        Class<?> tableClass = table.getJavaClass();
+        if (tableClass == null)
+            throw new NullPointerException("table class");
+
+        existing = tableClasses.get(tableClass);
+        if (existing != null)
+            throw new DuplicatedKeyException("Table class duplicated: " + tableClass);
+
         tableMap.put(name, table);
+        tableClasses.put(tableClass, table);
     }
 
     @Override
-    public boolean removeTable(ITableMetadata table) {
+    public boolean removeTable(@NotNull ITableMetadata table) {
         return removeTable(table.getName());
     }
 
     @Override
-    public boolean removeTable(String tableName) {
+    public boolean removeTable(@NotNull String tableName) {
         ITableMetadata table = tableMap.remove(tableName);
+        if (table != null) {
+            Class<?> tableClass = table.getJavaClass();
+            if (tableClass != null)
+                tableClasses.remove(tableClass);
+        }
         return table != null;
     }
 
     @Override
     public List<ITableMetadata> findTables(TableOid pattern, boolean ignoreCase) {
         if (pattern != null) {
-            if (! pattern.toSchemaId().contains(this.getId(), ignoreCase))
+            if (!pattern.toSchemaId().contains(this.getId(), ignoreCase))
                 return Collections.emptyList();
         }
         List<ITableMetadata> list = new ArrayList<>();
         for (ITableMetadata table : getTables()) {
             if (pattern != null)
-                if (! pattern.contains(table.getId(), ignoreCase))
+                if (!pattern.contains(table.getId(), ignoreCase))
                     continue;
             list.add(table);
         }
         return list;
+    }
+
+    @Override
+    public ITableMetadata findTable(Class<?> tableClass) {
+        return tableClasses.get(tableClass);
     }
 
     public String getTableNames() {
@@ -342,14 +364,25 @@ public class DefaultSchemaMetadata
         return view;
     }
 
-    public void addView(IViewMetadata view) {
-        if (view == null)
-            throw new NullPointerException("view");
+    public void addView(@NotNull IViewMetadata view) {
         String name = view.getName();
+        if (name == null)
+            throw new NullPointerException("view name");
+
         IViewMetadata existing = viewMap.get(name);
         if (existing != null)
             throw new DuplicatedKeyException("View is already existed: " + name);
+
+        Class<?> viewClass = view.getJavaClass();
+        if (viewClass == null)
+            throw new NullPointerException("view class");
+
+        existing = viewClasses.get(viewClass);
+        if (existing != null)
+            throw new DuplicatedKeyException("View class duplicated: " + viewClass);
+
         viewMap.put(name, view);
+        viewClasses.put(viewClass, view);
     }
 
     public boolean removeView(IViewMetadata view) {
@@ -364,13 +397,13 @@ public class DefaultSchemaMetadata
     @Override
     public List<IViewMetadata> findViews(TableOid pattern, boolean ignoreCase) {
         if (pattern != null) {
-            if (! pattern.toSchemaId().contains(this.getId(), ignoreCase))
+            if (!pattern.toSchemaId().contains(this.getId(), ignoreCase))
                 return Collections.emptyList();
         }
         List<IViewMetadata> list = new ArrayList<>();
         for (IViewMetadata view : viewMap.values()) {
             if (pattern != null)
-                if (! pattern.contains(view.getId(), ignoreCase))
+                if (!pattern.contains(view.getId(), ignoreCase))
                     continue;
             list.add(view);
         }
@@ -461,8 +494,7 @@ public class DefaultSchemaMetadata
     }
 
     class SchemaHandler
-            implements
-                IJDBCMetaDataHandler {
+            implements IJDBCMetaDataHandler {
 
         @Override
         public ISchemaMetadata schema(ResultSet rs)
@@ -485,25 +517,25 @@ public class DefaultSchemaMetadata
                 return null;
 
             switch (type) {
-            case TABLE:
-                DefaultTableMetadata table = new DefaultTableMetadata(DefaultSchemaMetadata.this);
-                table.getJDBCMetaDataHandler().table(rs);
-                if (mode == SelectMode.EXCLUDE)
-                    table.setExcluded(true);
-                addTable(table);
-                return table;
+                case TABLE:
+                    DefaultTableMetadata table = new DefaultTableMetadata(DefaultSchemaMetadata.this);
+                    table.getJDBCMetaDataHandler().table(rs);
+                    if (mode == SelectMode.EXCLUDE)
+                        table.setExcluded(true);
+                    addTable(table);
+                    return table;
 
-            case VIEW:
-            case MATERIALIZED_VIEW:
-                DefaultViewMetadata view = new DefaultViewMetadata(DefaultSchemaMetadata.this);
-                view.getJDBCMetaDataHandler().table(rs);
-                if (mode == SelectMode.EXCLUDE)
-                    view.setExcluded(true);
-                addView(view);
-                return view;
+                case VIEW:
+                case MATERIALIZED_VIEW:
+                    DefaultViewMetadata view = new DefaultViewMetadata(DefaultSchemaMetadata.this);
+                    view.getJDBCMetaDataHandler().table(rs);
+                    if (mode == SelectMode.EXCLUDE)
+                        view.setExcluded(true);
+                    addView(view);
+                    return view;
 
-            default:
-                return null;
+                default:
+                    return null;
             }
         }
 

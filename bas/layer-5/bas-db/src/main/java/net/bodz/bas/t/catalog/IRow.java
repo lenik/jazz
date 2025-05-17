@@ -17,13 +17,15 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.PropertyWriteException;
 import net.bodz.bas.t.variant.IVariant;
 import net.bodz.bas.t.variant.MutableVariant;
 
 public interface IRow
-        extends
-            IJsonForm,
-            IXmlForm {
+        extends IJsonForm,
+                IXmlForm {
 
     IRowSet getRowSet();
 
@@ -52,8 +54,7 @@ public interface IRow
      * Get column metadata by name.
      *
      * @return non-<code>null</code>.
-     * @throws NoSuchKeyException
-     *             if column with <code>name</code> isn't existed.
+     * @throws NoSuchKeyException if column with <code>name</code> isn't existed.
      */
     IColumnMetadata getColumn(String name);
 
@@ -111,7 +112,7 @@ public interface IRow
             throw new IllegalUsageException("No table metadata.");
         int index = parent.indexOfColumn(name);
         if (index == -1)
-            if (! optional)
+            if (!optional)
                 throw new NoSuchKeyException(name);
         return index;
     }
@@ -136,45 +137,7 @@ public interface IRow
         return values;
     }
 
-    @Override
-    default void jsonOut(IJsonOut out, JsonFormOptions opts)
-            throws IOException, FormatException {
-        out.array();
-        IRowSetMetadata metadata = getRowSet().getMetadata();
-        int cc = metadata.getColumnCount();
-        for (int i = 0; i < cc; i++) {
-            IColumnMetadata column = getColumn(i);
-            Object cell = i < cc ? getCellData(i) : null;
-            column.writeColumnInJson(out, cell);
-        }
-        out.endArray();
-    }
-
-    @Override
-    default boolean wantObjectContext() {
-        return false;
-    }
-
-    @Override
-    default void writeObject(IXmlOutput out)
-            throws XMLStreamException, FormatException {
-        IRowSetMetadata metadata = getRowSet().getMetadata();
-        int cc = metadata.getColumnCount();
-        for (int i = 0; i < cc; i++) {
-            IColumnMetadata column = getColumn(i);
-            Object cell = getCellData(i);
-            column.writeColumnInXml(out, cell);
-        }
-    }
-
-    @Override
-    default void writeObjectBoxed(IXmlOutput out)
-            throws XMLStreamException, FormatException {
-        out.beginElement("row");
-        // out.attribute("index", getRowIndex());
-        writeObject(out);
-        out.endElement();
-    }
+    // MAP FORM
 
     default Map<String, Object> toMap() {
         return toMap(null, null);
@@ -209,6 +172,118 @@ public interface IRow
                 String posName = positionName.apply(pos);
                 if (posName != null)
                     map.put(posName, val);
+            }
+        }
+    }
+
+    // JSON FORM
+    @Override
+    default boolean wantObjectContext() {
+        return false;
+    }
+
+    @Override
+    default void jsonOut(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        jsonOutArray(out, opts);
+    }
+
+    default void jsonOutArray(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        int cellCount = getCellCount();
+        int columnCount = cellCount;
+
+        IRowSetMetadata metadata = null;
+        IRowSet rowSet = getRowSet();
+        if (rowSet != null)
+            metadata = rowSet.getMetadata();
+
+        if (metadata != null)
+            columnCount = metadata.getColumnCount();
+
+        int maxCount = Math.max(columnCount, cellCount);
+
+        out.array();
+        for (int i = 0; i < maxCount; i++) {
+            IColumnMetadata column = getColumn(i);
+            Object cell = i < cellCount ? getCellData(i) : null;
+            column.writeColumnInJson(out, cell);
+        }
+        out.endArray();
+    }
+
+    default void jsonOutObject(IJsonOut out, JsonFormOptions opts, @NotNull IRowSetMetadata metadata)
+            throws IOException, FormatException {
+        int columnCount = metadata.getColumnCount();
+        int cellCount = getCellCount();
+        int minCount = Math.min(columnCount, cellCount);
+
+
+        out.object();
+        for (int i = 0; i < minCount; i++) {
+            String name = metadata.getColumn(i).getName();
+            out.key(name);
+
+            IColumnMetadata column = getColumn(i);
+            Object cell = getCellData(i);
+            column.writeColumnInJson(out, cell);
+        }
+        out.endObject();
+    }
+
+    // XML FORM
+
+    @Override
+    default void writeObject(IXmlOutput out)
+            throws XMLStreamException, FormatException {
+        IRowSetMetadata metadata = getRowSet().getMetadata();
+        int cc = metadata.getColumnCount();
+        for (int i = 0; i < cc; i++) {
+            IColumnMetadata column = getColumn(i);
+            Object cell = getCellData(i);
+            column.writeColumnInXml(out, cell);
+        }
+    }
+
+    @Override
+    default void writeObjectBoxed(IXmlOutput out)
+            throws XMLStreamException, FormatException {
+        out.beginElement("row");
+        // out.attribute("index", getRowIndex());
+        writeObject(out);
+        out.endElement();
+    }
+
+    // BEAN FORM
+
+    default void writeToBean(Object bean)
+            throws PropertyWriteException {
+        IRowSet rowSet = getRowSet();
+        if (rowSet == null)
+            throw new IllegalUsageException("w/o rowSet");
+
+        IRowSetMetadata metadata = rowSet.getMetadata();
+        if (metadata == null)
+            throw new IllegalUsageException("w/o metadata");
+
+        IProperty[] propertyArray = metadata.toPropertyArray();
+
+        writeToBean(bean, propertyArray);
+    }
+
+    default void writeToBean(Object bean, @NotNull IProperty[] propertyArray)
+            throws PropertyWriteException {
+        int n = propertyArray.length;
+        for (int i = 0; i < n; i++) {
+            IProperty property = propertyArray[i];
+            if (!property.isWritable())
+                continue;
+
+            Object cellData = getCellData(i);
+            try {
+                property.write(bean, cellData);
+            } catch (PropertyWriteException e) {
+                throw new PropertyWriteException("error write to property " + property + ": " + e.getMessage(), e);
             }
         }
     }

@@ -13,7 +13,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -22,10 +27,14 @@ import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.potato.PotatoTypes;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.t.map.ListMap;
 import net.bodz.bas.t.tuple.QualifiedName;
+import net.bodz.mda.xjdoc.Xjdocs;
+import net.bodz.mda.xjdoc.model.ClassDoc;
 
 public class DefaultTableMetadata
         extends DefaultRowSetMetadata
@@ -47,7 +56,6 @@ public class DefaultTableMetadata
 
     TableType tableType = getDefaultTableType();
 
-    String label;
     String description;
     protected TableKey primaryKey;
     final Map<String, CrossReference> foreignKeys = new LinkedHashMap<>();
@@ -102,6 +110,18 @@ public class DefaultTableMetadata
 
     public void setBaseTypeName(String baseTypeName) {
         this.baseTypeName = baseTypeName;
+    }
+
+    public void setBaseClass(Class<?> baseClass) {
+        this.baseTypeName = baseClass.getName(); //QualifiedName.of(baseClass);
+        this.baseClass = baseClass;
+        try {
+            baseType = PotatoTypes.getInstance().loadType(baseClass);
+        } catch (NoClassDefFoundError e) {
+            assert false;
+        } catch (com.thoughtworks.qdox.parser.ParseException e) {
+            // ignore
+        }
     }
 
     @Override
@@ -202,7 +222,7 @@ public class DefaultTableMetadata
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         super.jsonIn(o, opts);
 
@@ -416,6 +436,48 @@ public class DefaultTableMetadata
     protected void _acceptMore(ICatalogVisitor visitor) {
     }
 
+    public void parseClass(@NotNull Class<?> entityClass) {
+        Table aTable = entityClass.getAnnotation(Table.class);
+
+        TableOid oid;
+        if (aTable != null)
+            oid = TableOid.parse(aTable);
+        else {
+            String simpleName = entityClass.getSimpleName();
+            String table_name = StringId.UL.breakCamel(simpleName);
+            oid = TableOid.of(table_name);
+        }
+        this.setId(oid);
+        this.setJavaClass(entityClass);
+
+        this.setBaseClass(entityClass.getSuperclass());
+
+        // this.tableType = TableType.TABLE;
+
+        ClassDoc classDoc = Xjdocs.getDefaultProvider().loadClassDoc(entityClass);
+        if (classDoc != null) {
+            this.setDescription(classDoc.getText().toString());
+        }
+
+        IType potatoType = this.getPotatoType();
+        List<String> primaryKeyColumnNames = new ArrayList<>();
+        for (IProperty property : potatoType.getProperties()) {
+            Column aColumn = property.getAnnotation(Column.class);
+            if (aColumn == null)
+                continue;
+
+            boolean isPrimaryKey = property.isAnnotationPresent(Id.class);
+            if (isPrimaryKey)
+                primaryKeyColumnNames.add(aColumn.name());
+
+            DefaultColumnMetadata column = this.addNewColumn(aColumn.name());
+            column.parseProperty(property);
+        }
+
+        if (!primaryKeyColumnNames.isEmpty())
+            this.setPrimaryKey(new TableKey(oid, primaryKeyColumnNames.toArray(new String[0])));
+    }
+
     @Override
     public String toString() {
         SchemaOid ns = getParent().getId();
@@ -460,6 +522,19 @@ public class DefaultTableMetadata
     public Class<?> getJavaClass() {
         resolveType();
         return javaClass;
+    }
+
+    public void setJavaClass(@NotNull Class<?> javaClass) {
+        this.javaType = QualifiedName.of(javaClass);
+        this.javaClass = javaClass;
+        try {
+            potatoType = PotatoTypes.getInstance().loadType(javaClass);
+        } catch (NoClassDefFoundError e) {
+            assert false;
+        } catch (com.thoughtworks.qdox.parser.ParseException e) {
+            // ignore
+        }
+        this.resolved = true;
     }
 
     @Override

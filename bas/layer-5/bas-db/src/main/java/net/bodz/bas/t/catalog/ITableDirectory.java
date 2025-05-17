@@ -20,7 +20,7 @@ public interface ITableDirectory {
     boolean isValidIdOf(String catalogName);
 
     default void checkTableId(TableOid oid) {
-        if (! isValidTableId(oid))
+        if (!isValidTableId(oid))
             throw new IllegalArgumentException("Invalid table id: " + oid);
     }
 
@@ -43,6 +43,8 @@ public interface ITableDirectory {
         else
             return tableList.get(0);
     }
+
+    ITableMetadata findTable(Class<?> tableClass);
 
     default ITableMetadata autoLoadTableFromJDBC(TableOid oid, Connection autoLoadConnection) {
         LoadFromJDBCOptions options = new LoadFromJDBCOptions();

@@ -6,9 +6,14 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.db.sql.DataType;
 import net.bodz.bas.db.sql.dialect.ISqlDialect;
 import net.bodz.bas.err.FormatException;
@@ -23,11 +28,14 @@ import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.tuple.QualifiedName;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
+import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class DefaultColumnMetadata
         implements IColumnMetadata,
@@ -80,8 +88,8 @@ public class DefaultColumnMetadata
 
     String defaultValue;
 
-    int verboseLevel;
-    int joinLevel;
+    int verboseLevel; // not used
+    int joinLevel; // not used
 
     IColumnMetadata parentColumn;
 
@@ -146,11 +154,10 @@ public class DefaultColumnMetadata
 
     @Override
     public ColumnOid getId() {
-        if (oid == null)
-            if (tableOid == null)
-                return null;
-            else
-                return new ColumnOid(tableOid, name);
+        if (oid == null) {
+            if (tableOid != null)
+                oid = new ColumnOid(tableOid, name);
+        }
         return oid;
     }
 
@@ -522,8 +529,11 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public Object readColumnJsonValue(Object jsonBox)
+    public Object readColumnJsonValue(Object jsonValue)
             throws ParseException {
+        if (jsonValue == null)
+            return null;
+
         if (jsonType) {
             IJsonForm obj;
             try {
@@ -531,19 +541,19 @@ public class DefaultColumnMetadata
             } catch (Exception e) {
                 throw new ParseException("Failed to instantiate " + javaClass, e);
             }
-            obj.jsonIn(JsonVariant.of(jsonBox), Convention.JSON_STYLE);
+            obj.jsonIn(JsonVariant.of(jsonValue), Convention.JSON_STYLE);
             return obj;
         }
 
         IParser<?> parser = Typers.getTyper(javaClass, IParser.class);
         if (parser != null) {
-            String text = jsonBox.toString();
+            String text = jsonValue.toString();
             Object value = parser.parse(text);
             return value;
         }
 
         throw new UnsupportedOperationException(//
-                "Don't know how to convert json " + jsonBox + " to " + javaClass);
+                "Don't know how to convert json " + jsonValue + " to " + javaClass);
     }
 
     @Override
@@ -554,8 +564,10 @@ public class DefaultColumnMetadata
             return;
         }
 
-        if (!javaClass.isInstance(value))
-            throw new IllegalArgumentException("Not an instance of " + javaClass);
+        Class<?> boxed = Primitives.box(javaClass);
+        if (!boxed.isInstance(value))
+            throw new IllegalArgumentException(String.format(//
+                    "Not an instance of %s: \"%s\" (%s)", javaClass, value, value.getClass()));
 
         if (jsonType) {
             IJsonForm obj = (IJsonForm) value;
@@ -819,6 +831,78 @@ public class DefaultColumnMetadata
             return null;
         else
             return property.getAnnotation(annotationType);
+    }
+
+    public void parseProperty(IProperty property) {
+//        int columnIndex;
+        Ordinal aOrdinal = property.getAnnotation(Ordinal.class);
+        if (aOrdinal != null)
+            ordinalPosition = aOrdinal.value();
+
+        javaQName = QualifiedName.parse(property.getName());
+        javaNameComplete = true;
+
+        IElementDoc xjdoc = property.getXjdoc();
+        if (xjdoc != null) {
+            label = xjdoc.getString("label");
+            description = xjdoc.getText().toString();
+        }
+
+        Class<?> javaClass = property.getPropertyClass();
+        setJavaClass(javaClass);
+
+        ISqlDialect dialect = getDialect();
+        if (dialect != null) {
+            DataType dataType = dialect.getDefaultType(javaClass);
+            setDataType(dataType);
+        }
+
+        Column aColumn = property.getAnnotation(Column.class);
+        primaryKey = property.isAnnotationPresent(Id.class);
+        unique = aColumn.unique();
+
+//        boolean autoIncrement
+//        boolean caseSensitive;
+//        boolean searchable;
+//        boolean currency;
+        nullableType = aColumn.nullable() ? NullableType.NULLABLE : NullableType.NO_NULLS;
+        signed = true;
+        readOnly = property.isReadable() && !property.isWritable();
+        writable = property.isWritable();
+        definitelyWritable = writable;
+
+        if (javaClass == String.class)
+            precision = aColumn.length();
+        else {
+            precision = aColumn.precision();
+            scale = aColumn.scale();
+        }
+        columnDisplaySize = precision;
+
+//        ManyToOne aManyToOne = property.getAnnotation(ManyToOne.class);
+//        OneToOne aOneToOne = property.getAnnotation(OneToOne.class);
+        JoinColumn aJoinColumn = property.getAnnotation(JoinColumn.class);
+        JoinColumns aJoinColumns = property.getAnnotation(JoinColumns.class);
+        if (aJoinColumn != null || aJoinColumns != null) {
+            ICatalogMetadata catalog = getCatalog();
+            if (catalog != null) {
+                ITableMetadata parentTable = getCatalog().findTable(javaClass);
+                if (parentTable != null) {
+                    if (aJoinColumn == null)
+                        aJoinColumn = aJoinColumns.value()[0];
+                    parentColumn = parentTable.getColumn(aJoinColumn.name());
+                }
+            }
+        }
+
+        DetailLevel aDetailLevel = property.getAnnotation(DetailLevel.class);
+        if (aDetailLevel != null) {
+            int detailLevel = aDetailLevel.value();
+            excluded = detailLevel >= DetailLevel.HIDDEN;
+        } else {
+            excluded = false;
+        }
+        this.property = property;
     }
 
 }

@@ -13,6 +13,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.potato.element.IProperty;
 
 public interface IRowSetMetadata
         extends IJsonForm,
@@ -81,6 +82,18 @@ public interface IRowSetMetadata
             if (Nullables.equals(column.getJavaName(), javaName))
                 return column;
         return null;
+    }
+
+    default IProperty[] toPropertyArray() {
+        List<? extends IColumnMetadata> columns = getColumns();
+        int n = columns.size();
+        IProperty[] properties = new IProperty[n];
+        for (int i = 0; i < n; i++) {
+            IColumnMetadata column = columns.get(i);
+            IProperty property = column.getProperty();
+            properties[i] = property;
+        }
+        return properties;
     }
 
     @Override

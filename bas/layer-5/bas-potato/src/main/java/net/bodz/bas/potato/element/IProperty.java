@@ -3,16 +3,14 @@ package net.bodz.bas.potato.element;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 
 public interface IProperty
-        extends
-            IPotatoElement,
-            IPropertyAccessor {
+        extends IPotatoElement,
+                IPropertyAccessor {
 
     default String getQName() {
         return getDeclaringType().getName() + "::" + getName();
@@ -21,12 +19,7 @@ public interface IProperty
     IProperty getSuperProperty();
 
     default Iterable<IProperty> ancestorsToRoot(boolean includeThis) {
-        return new Iterable<IProperty>() {
-            @Override
-            public Iterator<IProperty> iterator() {
-                return new AncestorsToRootIterator(IProperty.this, includeThis);
-            }
-        };
+        return () -> new AncestorsToRootIterator(IProperty.this, includeThis);
     }
 
     default Iterable<IProperty> ancestorsFromRoot(boolean includeThis) {

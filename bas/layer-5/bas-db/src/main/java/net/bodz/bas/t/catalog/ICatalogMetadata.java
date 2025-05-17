@@ -44,6 +44,10 @@ public interface ICatalogMetadata
 
     ISchemaMetadata getSchema(String name);
 
+    default ISchemaMetadata getDefaultSchema() {
+        return getSchema((String) null);
+    }
+
     default ISchemaMetadata findSchema(String name, boolean ignoreCase) {
         if (ignoreCase)
             name = getCanonicalName(name);

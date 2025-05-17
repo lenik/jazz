@@ -332,6 +332,21 @@ public class DefaultCatalogMetadata
     }
 
     @Override
+    public ITableMetadata findTable(Class<?> tableClass) {
+        for (ISchemaMetadata schema : schemas.values()) {
+            ITableMetadata table = schema.findTable(tableClass);
+            if (table != null)
+                return table;
+        }
+        if (anySchema != null) {
+            ITableMetadata table = anySchema.findTable(tableClass);
+            if (table != null)
+                return table;
+        }
+        return null;
+    }
+
+    @Override
     public void findCrossReferences(Collection<CrossReference> list, TableOid parent) {
         for (ISchemaMetadata schema : getSchemas().values())
             schema.findCrossReferences(list, parent);

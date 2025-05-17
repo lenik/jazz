@@ -17,6 +17,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
+import net.bodz.bas.meta.source.NotUsed;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.order.IOrdinal;
 import net.bodz.bas.t.tuple.QualifiedName;
@@ -239,8 +240,10 @@ public interface IColumnMetadata
 
     String getDefaultValue();
 
+    @NotUsed
     int getVerboseLevel();
 
+    @NotUsed
     int getJoinLevel();
 
     Object parseColumnValue(String s)

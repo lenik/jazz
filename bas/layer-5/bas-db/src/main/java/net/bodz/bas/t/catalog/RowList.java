@@ -129,14 +129,14 @@ public class RowList
     @Override
     public synchronized long consume(ResultSet resultSet, Long limit)
             throws SQLException {
-        boolean limited = limit != null;
-        long nLimit = limited ? limit.longValue() : -1L;
+        boolean limitSpecified = limit != null;
+        long nLimit = limitSpecified ? limit : -1L;
         long n = 0;
         while (resultSet.next()) {
             IMutableRow row = addNewRow();
             row.readObject(resultSet);
             n++;
-            if (limited && n >= nLimit)
+            if (limitSpecified && n >= nLimit)
                 break;
         }
         return n;

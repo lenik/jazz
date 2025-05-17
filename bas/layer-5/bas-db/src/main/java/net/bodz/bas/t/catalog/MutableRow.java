@@ -20,8 +20,7 @@ import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class MutableRow
-        implements
-            IAppendableRow {
+        implements IAppendableRow {
 
     static final Logger logger = LoggerFactory.getLogger(MutableRow.class);
 
@@ -206,6 +205,7 @@ public class MutableRow
     @Override
     public Iterable<? extends ICell> flatten() {
         return new Iterable<ICell>() {
+            @NotNull
             @Override
             public Iterator<ICell> iterator() {
                 return _iterator();
@@ -237,17 +237,21 @@ public class MutableRow
     @Override
     public void jsonIn(@NotNull JsonVariant in, JsonFormOptions opts)
             throws ParseException {
+        if (!in.isArray())
+            throw new ParseException("expect array: " + in);
+
         JsonArray jarray = in.getArray();
+        assert jarray != null;
         int jn = jarray.length();
 
         int cc = getRowSetMetadata().getColumnCount();
         List<IMutableCell> list = new ArrayList<>(cc);
 
         for (int i = 0; i < cc && i < jn; i++) {
-            Object j_cell_box = jarray.get(i);
+            Object jsonValue = jarray.get(i);
 
             IColumnMetadata column = getRowSetMetadata().getColumn(i);
-            Object cellData = column.readColumnJsonValue(j_cell_box);
+            Object cellData = column.readColumnJsonValue(jsonValue);
 
             IMutableCell cell = addNewCell();
             cell.setData(cellData);
@@ -256,7 +260,7 @@ public class MutableRow
     }
 
     @Override
-    public final void jsonIn(JsonObject o, JsonFormOptions opts)
+    public final void jsonIn(@NotNull JsonObject o, JsonFormOptions opts)
             throws ParseException {
         jsonIn(JsonVariant.of(o), opts);
     }
