@@ -30,8 +30,7 @@ public class ExceptionSuppliers {
 }
 
 class ReflectExceptionSupplier<E extends Throwable>
-        implements
-            ExceptionSupplier<E> {
+        implements ExceptionSupplier<E> {
 
     Class<E> exceptionType;
 
