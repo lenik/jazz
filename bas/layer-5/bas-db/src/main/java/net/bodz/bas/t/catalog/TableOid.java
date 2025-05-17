@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Table;
 import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.err.FormatException;
@@ -17,6 +18,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.decl.NotNull;
 
 public class TableOid
         extends CSNamePair {
@@ -45,6 +47,21 @@ public class TableOid
 
     public static TableOid of(String tableName) {
         return of(tableName, null, null);
+    }
+
+    public static TableOid parse(@NotNull Table aTable) {
+        String catalog = aTable.catalog();
+        if (catalog.isEmpty())
+            catalog = null;
+
+        String schema = aTable.schema();
+        if (schema.isEmpty())
+            schema = null;
+
+        String table = aTable.name();
+        if (table.isEmpty())
+            throw new IllegalArgumentException("table name is empty");
+        return TableOid.of(table, schema, catalog);
     }
 
     public static TableOid parse(String fullName) {
@@ -145,21 +162,21 @@ public class TableOid
     }
 
     public boolean contains(TableOid o) {
-        if (! NamePattern.matches(catalogName, o.catalogName))
+        if (!NamePattern.matches(catalogName, o.catalogName))
             return false;
-        if (! NamePattern.matches(schemaName, o.schemaName))
+        if (!NamePattern.matches(schemaName, o.schemaName))
             return false;
-        if (! NamePattern.matches(tableName, o.tableName))
+        if (!NamePattern.matches(tableName, o.tableName))
             return false;
         return true;
     }
 
     public boolean containsIgnoreCase(TableOid o) {
-        if (! NamePattern.matchesIgnoreCase(catalogName, o.catalogName))
+        if (!NamePattern.matchesIgnoreCase(catalogName, o.catalogName))
             return false;
-        if (! NamePattern.matchesIgnoreCase(schemaName, o.schemaName))
+        if (!NamePattern.matchesIgnoreCase(schemaName, o.schemaName))
             return false;
-        if (! NamePattern.matchesIgnoreCase(tableName, o.tableName))
+        if (!NamePattern.matchesIgnoreCase(tableName, o.tableName))
             return false;
         return true;
     }
