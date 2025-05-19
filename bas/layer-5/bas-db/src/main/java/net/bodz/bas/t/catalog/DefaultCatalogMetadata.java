@@ -52,10 +52,9 @@ public class DefaultCatalogMetadata
         this.dialect = dialect;
     }
 
-    public static DefaultCatalogMetadata fromContext(DataContext dataContext) {
-        String name = dataContext.getOptions().getDatabase();
-        ISqlDialect dialect = dataContext.getOptions().getType().getDialect();
-        return new DefaultCatalogMetadata(name, dialect);
+    public DefaultCatalogMetadata(DataContext dataContext) {
+        this.name = dataContext.getOptions().getDatabase();
+        this.dialect = dataContext.getOptions().getType().getDialect();
     }
 
     @Override

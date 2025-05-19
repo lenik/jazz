@@ -73,7 +73,7 @@ public class Item2Attachment
 
     public Item2Attachment(DataContext dataContext) {
         this.dataContext = dataContext;
-        this.catalog = DefaultCatalogMetadata.fromContext(dataContext);
+        this.catalog = new DefaultCatalogMetadata(dataContext);
     }
 
     boolean processTableOrView(ITableMetadata tableView) {

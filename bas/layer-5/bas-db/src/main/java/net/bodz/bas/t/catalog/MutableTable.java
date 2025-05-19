@@ -3,8 +3,10 @@ package net.bodz.bas.t.catalog;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -14,11 +16,11 @@ import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.potato.element.PropertyReadException;
 
 public class MutableTable
         extends RowList
-        implements
-            ITable {
+        implements ITable {
 
     ISchema parent;
     TableOid oid;
@@ -149,6 +151,27 @@ public class MutableTable
     public String toString() {
         return String.format("[%d] %s", //
                 getRowCount(), getMetadata().toString());
+    }
+
+    public static MutableTable fromObjects(Class<?> type, Object... objects) {
+        return fromObjects(type, Arrays.asList(objects));
+    }
+
+    public static MutableTable fromObjects(Class<?> type, Collection<?> objects) {
+        DefaultTableMetadata metadata = new DefaultTableMetadata();
+        metadata.parseClass(type);
+
+        MutableTable table = new MutableTable(metadata);
+
+        for (Object obj : objects) {
+            IMutableRow row = table.addNewRow();
+            try {
+                row.readFromBean(obj);
+            } catch (PropertyReadException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return table;
     }
 
 }
