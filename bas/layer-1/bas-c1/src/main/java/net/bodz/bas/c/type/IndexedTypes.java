@@ -10,9 +10,7 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
@@ -43,8 +41,7 @@ public class IndexedTypes {
         return list(serviceBaseType, includeAbstract, classLoader);
     }
 
-    public static <T> Iterable<Class<? extends T>> list(Class<T> serviceBaseType, boolean includeAbstract,
-            ClassLoader classLoader) {
+    public static <T> Iterable<Class<? extends T>> list(Class<T> serviceBaseType, boolean includeAbstract, ClassLoader classLoader) {
         try {
             return _list(null, serviceBaseType, includeAbstract, classLoader);
         } catch (Exception e) {
@@ -52,8 +49,7 @@ public class IndexedTypes {
         }
     }
 
-    static <T> Iterable<Class<? extends T>> _list(String dirName, Class<T> serviceBaseType, boolean includeAbstract,
-            ClassLoader classLoader)
+    static <T> Iterable<Class<? extends T>> _list(String dirName, Class<T> serviceBaseType, boolean includeAbstract, ClassLoader classLoader)
             throws IOException, ClassNotFoundException {
 
         if (dirName == null) {
@@ -68,15 +64,12 @@ public class IndexedTypes {
 
         String resourceName = dirName + "/" + serviceBaseType.getName();
 
-        return new Iterable<Class<? extends T>>() {
-            @Override
-            public Iterator<Class<? extends T>> iterator() {
-                try {
-                    Enumeration<URL> resources = classLoader.getResources(resourceName);
-                    return new ResolveIterator<T>(serviceBaseType, includeAbstract, classLoader, resources);
-                } catch (IOException e) {
-                    throw new RuntimeException(e.getMessage(), e);
-                }
+        return () -> {
+            try {
+                Enumeration<URL> resources = classLoader.getResources(resourceName);
+                return new ResolveIterator<T>(serviceBaseType, includeAbstract, classLoader, resources);
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage(), e);
             }
         };
 
@@ -95,8 +88,7 @@ public class IndexedTypes {
         boolean ignoreIOError = false;
         boolean ignoreROE = true;
 
-        public ResolveIterator(Class<T> serviceBaseType, boolean includeAbstract, ClassLoader classLoader,
-                Enumeration<URL> resources) {
+        public ResolveIterator(Class<T> serviceBaseType, boolean includeAbstract, ClassLoader classLoader, Enumeration<URL> resources) {
             this.serviceBaseType = serviceBaseType;
             this.includeAbstract = includeAbstract;
             this.classLoader = classLoader;
@@ -154,15 +146,14 @@ public class IndexedTypes {
                     line = currentReader.readLine();
 //                    System.err.println("ReadLine ----- " + line);
                 } catch (IOException e) { // SecurityException: digest error
-                    logger.log(Level.SEVERE,
-                            "Error but ignored: Can't read from " + currentResource + ": " + e.getMessage(), e);
+                    logger.log(Level.SEVERE, "Error but ignored: Can't read from " + currentResource + ": " + e.getMessage(), e);
 
                     File file = FileURL.toNearestFile(currentResource);
                     if (file != null) {
                         Instant fileTime = Instant.ofEpochMilli(file.lastModified());
                         String fileTimeStr = DateTimes.ISO_LOCAL_DATE_TIME.format(LocalDateTime.from(fileTime));
-                        String mesg = String.format("    Zip file: %s, length %d, ", file.getPath(), file.length(),
-                                fileTimeStr);
+                        String mesg = String.format("    Zip file: %s, length %d, time %s", //
+                                file.getPath(), file.length(), fileTimeStr);
                         logger.log(Level.INFO, mesg);
                     }
 
@@ -203,8 +194,8 @@ public class IndexedTypes {
                         throw new IllegalUsageException(e);
                 }
 
-                if (! serviceBaseType.isAnnotation())
-                    if (! serviceBaseType.isAssignableFrom(serviceClass)) {
+                if (!serviceBaseType.isAnnotation())
+                    if (!serviceBaseType.isAssignableFrom(serviceClass)) {
                         String message = String.format(//
                                 "Invalid service class %s for %s.", className, serviceBaseType.getName());
                         logger.severe(message);
@@ -215,7 +206,7 @@ public class IndexedTypes {
                     }
 
                 if (Modifier.isAbstract(serviceClass.getModifiers()))
-                    if (! includeAbstract)
+                    if (!includeAbstract)
                         continue;
 
                 @SuppressWarnings("unchecked")
@@ -227,18 +218,18 @@ public class IndexedTypes {
     }
 
     public static <S extends IPriority> List<S> loadInOrder(Class<S> service) {
-        List<S> list = new ArrayList<S>();
+        List<S> list = new ArrayList<>();
         for (S instance : ServiceLoader.load(service))
             list.add(instance);
-        Collections.sort(list, PriorityComparator.INSTANCE);
+        list.sort(PriorityComparator.INSTANCE);
         return list;
     }
 
     public static <S extends IPriority> List<S> loadInOrder(Class<S> service, ClassLoader classLoader) {
-        List<S> list = new ArrayList<S>();
+        List<S> list = new ArrayList<>();
         for (S instance : ServiceLoader.load(service, classLoader))
             list.add(instance);
-        Collections.sort(list, PriorityComparator.INSTANCE);
+        list.sort(PriorityComparator.INSTANCE);
         return list;
     }
 
