@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface IListMap<K, E>
@@ -13,6 +14,15 @@ public interface IListMap<K, E>
 
     @NotNull
     List<E> makeList(K keyToList);
+
+    @NotNull
+    default List<E> getOrEmpty(K keyToList) {
+        List<E> list = get(keyToList);
+        if (list != null)
+            return list;
+        else
+            return Collections.emptyList();
+    }
 
     default boolean isEmptyPurged() {
         return true;
