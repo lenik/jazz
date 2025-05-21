@@ -1,21 +1,19 @@
-package net.bodz.bas.make;
+package net.bodz.bas.make.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.c.java.io.capture.Processes;
+import net.bodz.bas.make.MakeException;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class ExecRule<T extends FileTarget>
-        extends BasicMakeRule<T> {
+public class ExecRule<T extends FileEntry> {
 
     String executable;
     List<Object> args = new ArrayList<>();
 
-    public ExecRule(@NotNull IMakefile makefile, @NotNull T target) {
-        super(makefile, target);
-    }
 
     public String getExecutable() {
         return executable;
@@ -33,8 +31,7 @@ public class ExecRule<T extends FileTarget>
         this.args = args;
     }
 
-    @Override
-    public void doMake()
+    public File doMake()
             throws MakeException {
         List<String> argv = new ArrayList<>();
         for (Object arg : args) {
@@ -54,6 +51,7 @@ public class ExecRule<T extends FileTarget>
         } catch (InterruptedException e) {
             throw new MakeException(e);
         }
+        return null;
     }
 
 }
