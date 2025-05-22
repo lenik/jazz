@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedMap<K, V>
@@ -31,6 +32,7 @@ public abstract class DecoratedMap<K, V>
         return _orig.containsValue(value);
     }
 
+    @NotNull
     @Override
     public Set<Entry<K, V>> entrySet() {
         return _orig.entrySet();
@@ -46,6 +48,7 @@ public abstract class DecoratedMap<K, V>
         return _orig.isEmpty();
     }
 
+    @NotNull
     @Override
     public Set<K> keySet() {
         return _orig.keySet();
@@ -57,7 +60,7 @@ public abstract class DecoratedMap<K, V>
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends V> m) {
+    public void putAll(@NotNull Map<? extends K, ? extends V> m) {
         _orig.putAll(m);
     }
 
@@ -71,6 +74,7 @@ public abstract class DecoratedMap<K, V>
         return _orig.size();
     }
 
+    @NotNull
     @Override
     public Collection<V> values() {
         return _orig.values();
