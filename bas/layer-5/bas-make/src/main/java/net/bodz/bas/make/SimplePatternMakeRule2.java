@@ -4,7 +4,7 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public class SimplePatternMakeRule2<Tp extends IKeyPattern<Param, K>, Param, K, //
         Us extends IParameterizedKeys<Param, UK>, UK, Vs extends IParameterizedKeys<Param, VK>, VK, //
-        T extends IDataEntry<K, TT>, TT, U extends IDataEntry<UK, UT>, UT, V extends IDataEntry<VK, VT>, VT>
+        T extends IKeyData<K, TT>, TT, U extends IKeyData<UK, UT>, UT, V extends IKeyData<VK, VT>, VT>
         implements IPatternMakeRule2<Tp, Param, K, Us, UK, Vs, VK, T, TT, U, UT, V, VT> {
 
     int priority;
@@ -49,14 +49,14 @@ public class SimplePatternMakeRule2<Tp extends IKeyPattern<Param, K>, Param, K, 
 
     public static <Tp extends IKeyPattern<Param, K>, Param, K, //
             Us extends IParameterizedKeys<Param, UK>, UK, Vs extends IParameterizedKeys<Param, VK>, VK, //
-            T extends IDataEntry<K, TT>, TT, U extends IDataEntry<UK, UT>, UT, V extends IDataEntry<VK, VT>, VT> //
+            T extends IKeyData<K, TT>, TT, U extends IKeyData<UK, UT>, UT, V extends IKeyData<VK, VT>, VT> //
     Builder<Tp, Param, K, Us, UK, Vs, VK, T, TT, U, UT, V, VT> builder() {
         return new Builder<>();
     }
 
     public static class Builder<Tp extends IKeyPattern<Param, K>, Param, K, //
             Us extends IParameterizedKeys<Param, UK>, UK, Vs extends IParameterizedKeys<Param, VK>, VK, //
-            T extends IDataEntry<K, TT>, TT, U extends IDataEntry<UK, UT>, UT, V extends IDataEntry<VK, VT>, VT> {
+            T extends IKeyData<K, TT>, TT, U extends IKeyData<UK, UT>, UT, V extends IKeyData<VK, VT>, VT> {
 
         int priority;
         Tp pattern;

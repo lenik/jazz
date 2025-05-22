@@ -1,53 +1,48 @@
 package net.bodz.bas.make.util;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SetKey<E>
-        implements Comparator<SetKey<E>> {
+public class SetKey<K, E>
+        implements ICollectionKey<K, E> {
 
     final Class<E> elementType;
+    final K key;
 
-    public SetKey(@NotNull Class<E> elementType) {
+    public SetKey(@NotNull Class<E> elementType, @NotNull K key) {
         this.elementType = elementType;
+        this.key = key;
     }
 
     @NotNull
+    @Override
     public Class<E> getElementType() {
         return elementType;
+    }
+
+    @NotNull
+    @Override
+    public K getWrappedKey() {
+        return key;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass())
             return false;
-        SetKey<?> listKey = (SetKey<?>) o;
-        return Objects.equals(elementType, listKey.elementType);
+        SetKey<?, ?> setKey = (SetKey<?, ?>) o;
+        return Objects.equals(elementType, setKey.elementType) && Objects.equals(key, setKey.key);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(elementType);
+        return Objects.hash(0xe86e9f3b, elementType, key);
     }
 
     @Override
     public String toString() {
-        return elementType.toString() + " Set";
-    }
-
-    @Override
-    public int compare(SetKey<E> o1, SetKey<E> o2) {
-        if (o1 == o2)
-            return 0;
-        if (o1 == null)
-            return -1;
-        if (o2 == null)
-            return 1;
-        String type1 = o1.elementType.toString();
-        String type2 = o2.elementType.toString();
-        return type1.compareTo(type2);
+        return "Set<" + elementType.getName() + ", " + key + '>';
     }
 
 }

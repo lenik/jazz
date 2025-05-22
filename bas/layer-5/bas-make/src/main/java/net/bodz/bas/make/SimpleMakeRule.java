@@ -2,14 +2,14 @@ package net.bodz.bas.make;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimpleMakeRule<T extends IDataEntry<?, ?>>
+public class SimpleMakeRule<T extends IKeyData<?, ?>>
         implements IMakeRule<T> {
 
     int priority;
-    IDataEntry<?, ?>[] inputs;
+    IKeyData<?, ?>[] inputs;
     MakeFunction<T> fn;
 
-    public SimpleMakeRule(int priority, @NotNull IDataEntry<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
+    public SimpleMakeRule(int priority, @NotNull IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         this.priority = priority;
         this.inputs = inputs;
         this.fn = fn;
@@ -23,24 +23,24 @@ public class SimpleMakeRule<T extends IDataEntry<?, ?>>
 
     @NotNull
     @Override
-    public IDataEntry<?, ?>[] getInputs() {
+    public IKeyData<?, ?>[] getInputs() {
         return inputs;
     }
 
     @Override
-    public void make(@NotNull T target, @NotNull IDataEntry<?, ?>... inputs)
+    public void make(@NotNull T target, @NotNull IKeyData<?, ?>... inputs)
             throws MakeException {
         fn.make(target, inputs);
     }
 
-    public static <T extends IDataEntry<?, ?>> Builder<T> builder() {
+    public static <T extends IKeyData<?, ?>> Builder<T> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<T extends IDataEntry<?, ?>> {
+    public static class Builder<T extends IKeyData<?, ?>> {
 
         int priority;
-        IDataEntry<?, ?>[] inputs = {};
+        IKeyData<?, ?>[] inputs = {};
         MakeFunction<T> fn;
 
 
@@ -50,7 +50,7 @@ public class SimpleMakeRule<T extends IDataEntry<?, ?>>
         }
 
 
-        public Builder<T> input(@NotNull IDataEntry<?, ?>... inputs) {
+        public Builder<T> input(@NotNull IKeyData<?, ?>... inputs) {
             this.inputs = inputs;
             return this;
         }

@@ -3,23 +3,27 @@ package net.bodz.bas.make;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.order.IPriority;
 
-public interface IMakeRule<T extends IDataEntry<?, ?>>
+public interface IMakeRule<T extends IKeyData<?, ?>>
         extends IPriority {
 
-//    @NotNull
-//    Class<T> getType();
-
     @NotNull
-    IDataEntry<?, ?>[] getInputs();
+    IKeyData<?, ?>[] getInputs();
 
-    default boolean canMake() {
+    default boolean canMake(@NotNull T target, IMakeSession session) {
+        if (!session.canMake(target))
+            return false;
+        for (IKeyData<?, ?> input : getInputs()) {
+            assert input != null;
+            if (!session.canMake(input))
+                return false;
+        }
         return true;
     }
 
-    void make(@NotNull T target, @NotNull IDataEntry<?, ?>... inputs)
+    void make(@NotNull T target, @NotNull IKeyData<?, ?>... inputs)
             throws MakeException;
 
-    default int getEstimatedCost(@NotNull T target, @NotNull IDataEntry<?, ?>... inputs) {
+    default int getEstimatedCost(@NotNull T target, @NotNull IKeyData<?, ?>... inputs) {
         return 1;
     }
 

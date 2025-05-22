@@ -2,7 +2,7 @@ package net.bodz.bas.make;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimpleMakeRule2<T extends IDataEntry<TK, TT>, TK, TT, U extends IDataEntry<UK, UT>, UK, UT, V extends IDataEntry<VK, VT>, VK, VT>
+public class SimpleMakeRule2<T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT, V extends IKeyData<VK, VT>, VK, VT>
         implements IMakeRule2<T, TK, TT, U, UK, UT, V, VK, VT> {
 
     int priority;
@@ -38,12 +38,12 @@ public class SimpleMakeRule2<T extends IDataEntry<TK, TT>, TK, TT, U extends IDa
         return fn.make(in1, in2);
     }
 
-    public static <T extends IDataEntry<TK, TT>, TK, TT, U extends IDataEntry<UK, UT>, UK, UT, V extends IDataEntry<VK, VT>, VK, VT> //
+    public static <T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT, V extends IKeyData<VK, VT>, VK, VT> //
     Builder<T, TK, TT, U, UK, UT, V, VK, VT> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<T extends IDataEntry<TK, TT>, TK, TT, U extends IDataEntry<UK, UT>, UK, UT, V extends IDataEntry<VK, VT>, VK, VT> {
+    public static class Builder<T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT, V extends IKeyData<VK, VT>, VK, VT> {
 
         int priority;
         U input1;
@@ -56,7 +56,7 @@ public class SimpleMakeRule2<T extends IDataEntry<TK, TT>, TK, TT, U extends IDa
         }
 
         @SuppressWarnings("unchecked")
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT> input(@NotNull IDataEntry<?, ?>... inputs) {
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT> input(@NotNull IKeyData<?, ?>... inputs) {
             input1 = (U) inputs[0];
             input2 = (V) inputs[1];
             return this;

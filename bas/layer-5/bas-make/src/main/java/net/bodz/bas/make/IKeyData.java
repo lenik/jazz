@@ -1,6 +1,6 @@
 package net.bodz.bas.make;
 
-public interface IDataEntry<K, T>
+public interface IKeyData<K, T>
         extends IKey<K>,
                 IDataRef<T> {
 

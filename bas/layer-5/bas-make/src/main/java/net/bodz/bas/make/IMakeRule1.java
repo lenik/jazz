@@ -2,19 +2,19 @@ package net.bodz.bas.make;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public interface IMakeRule1<T extends IDataEntry<TK, TT>, TK, TT, U extends IDataEntry<UK, UT>, UK, UT>
+public interface IMakeRule1<T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT>
         extends IMakeRule<T> {
 
     @NotNull
     @Override
-    default IDataEntry<?, ?>[] getInputs() {
-        return new IDataEntry[] { getInput1() };
+    default IKeyData<?, ?>[] getInputs() {
+        return new IKeyData[] { getInput1() };
     }
 
     U getInput1();
 
     @Override
-    default void make(@NotNull T target, @NotNull IDataEntry<?, ?>... inputs)
+    default void make(@NotNull T target, @NotNull IKeyData<?, ?>... inputs)
             throws MakeException {
         @SuppressWarnings("unchecked")
         U input1 = (U) inputs[0];

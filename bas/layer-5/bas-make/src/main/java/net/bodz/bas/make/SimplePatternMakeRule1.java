@@ -3,7 +3,7 @@ package net.bodz.bas.make;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class SimplePatternMakeRule1<Tp extends IKeyPattern<Param, K>, Param, K, Us extends IParameterizedKeys<Param, UK>, UK, //
-        T extends IDataEntry<K, TT>, TT, U extends IDataEntry<UK, UT>, UT>
+        T extends IKeyData<K, TT>, TT, U extends IKeyData<UK, UT>, UT>
         implements IPatternMakeRule1<Tp, Param, K, Us, UK, T, TT, U, UT> {
 
     int priority;
@@ -40,13 +40,13 @@ public class SimplePatternMakeRule1<Tp extends IKeyPattern<Param, K>, Param, K, 
     }
 
     public static <Tp extends IKeyPattern<Param, K>, Param, K, Us extends IParameterizedKeys<Param, UK>, UK, //
-            T extends IDataEntry<K, TT>, TT, U extends IDataEntry<UK, UT>, UT> //
+            T extends IKeyData<K, TT>, TT, U extends IKeyData<UK, UT>, UT> //
     Builder<Tp, Param, K, Us, UK, T, TT, U, UT> builder() {
         return new Builder<>();
     }
 
     public static class Builder<Tp extends IKeyPattern<Param, K>, Param, K, Us extends IParameterizedKeys<Param, UK>, UK, //
-            T extends IDataEntry<K, TT>, TT, U extends IDataEntry<UK, UT>, UT> {
+            T extends IKeyData<K, TT>, TT, U extends IKeyData<UK, UT>, UT> {
 
         int priority;
         Tp pattern;

@@ -2,7 +2,7 @@ package net.bodz.bas.make;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimplePatternMakeRule<T extends IKeyPattern<?, K>, K, D extends IDataEntry<K, ?>>
+public class SimplePatternMakeRule<T extends IKeyPattern<?, K>, K, D extends IKeyData<K, ?>>
         implements IPatternMakeRule<T, K, D> {
 
     int priority;
@@ -38,11 +38,11 @@ public class SimplePatternMakeRule<T extends IKeyPattern<?, K>, K, D extends IDa
         return fn.compile(target, pattern, inputss);
     }
 
-    public static <T extends IKeyPattern<?, K>, K, D extends IDataEntry<K, ?>> Builder<T, K, D> builder() {
+    public static <T extends IKeyPattern<?, K>, K, D extends IKeyData<K, ?>> Builder<T, K, D> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<T extends IKeyPattern<?, K>, K, D extends IDataEntry<K, ?>> {
+    public static class Builder<T extends IKeyPattern<?, K>, K, D extends IKeyData<K, ?>> {
 
         int priority;
         T pattern;

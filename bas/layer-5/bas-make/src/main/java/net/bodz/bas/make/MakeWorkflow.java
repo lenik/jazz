@@ -2,23 +2,21 @@ package net.bodz.bas.make;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.make.sample.GlobNamePattern;
-import net.bodz.bas.make.sample.GlobNames;
-import net.bodz.bas.make.sample.NamedDouble;
-import net.bodz.bas.make.sample.NamedFloat;
-import net.bodz.bas.make.sample.NamedInteger;
-import net.bodz.bas.make.sample.NamedList;
-import net.bodz.bas.make.sample.NamedString;
-import net.bodz.bas.make.util.FileEntry;
+import net.bodz.bas.make.util.FileBin;
+import net.bodz.bas.make.util.GlobNamePattern;
+import net.bodz.bas.make.util.GlobNames;
 import net.bodz.bas.make.util.GlobPathPattern;
 import net.bodz.bas.make.util.GlobPaths;
-import net.bodz.bas.meta.decl.NotNull;
+import net.bodz.bas.make.util.NamedDouble;
+import net.bodz.bas.make.util.NamedFloat;
+import net.bodz.bas.make.util.NamedInteger;
+import net.bodz.bas.make.util.NamedList;
+import net.bodz.bas.make.util.NamedString;
 
 //interface ParameterMap<P,K> extends  Map
 
@@ -30,13 +28,13 @@ public class MakeWorkflow {
             throws MakeException {
         GlobPathPattern param = new GlobPathPattern("foo%.o");
 
-        FileEntry target = new FileEntry(Paths.get("foo-bar.o"));
+        FileBin target = FileBin.builder().path(Paths.get("foo-bar.o")).build();
         String wantStem = param.match(target.getKey());
 
         GlobPaths sourcePath = new GlobPaths("foo%.c");
         Path sourceKey = sourcePath.getKey(wantStem);
 
-        FileEntry source = new FileEntry(sourceKey);
+        FileBin source = FileBin.builder().path(sourceKey).build();
         System.out.println(source);
 
         MakeSession session = new MakeSession();

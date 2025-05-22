@@ -2,12 +2,12 @@ package net.bodz.bas.make;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public class MakeRuleInstance<T extends IDataEntry<?, ?>> {
+public class MakeRuleInstance<T extends IKeyData<?, ?>> {
 
     final IMakeRule<T> rule;
-    final IDataEntry<?, ?>[] inputs;
+    final IKeyData<?, ?>[] inputs;
 
-    public MakeRuleInstance(IMakeRule<T> rule, @NotNull IDataEntry<?, ?>... inputs) {
+    public MakeRuleInstance(IMakeRule<T> rule, @NotNull IKeyData<?, ?>... inputs) {
         this.rule = rule;
         this.inputs = inputs;
     }
@@ -16,7 +16,7 @@ public class MakeRuleInstance<T extends IDataEntry<?, ?>> {
         return rule;
     }
 
-    public IDataEntry<?, ?>[] getInputs() {
+    public IKeyData<?, ?>[] getInputs() {
         return inputs;
     }
 

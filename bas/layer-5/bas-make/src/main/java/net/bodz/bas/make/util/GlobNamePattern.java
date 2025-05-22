@@ -1,4 +1,4 @@
-package net.bodz.bas.make.sample;
+package net.bodz.bas.make.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

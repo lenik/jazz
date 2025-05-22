@@ -1,4 +1,4 @@
-package net.bodz.bas.make;
+package net.bodz.bas.make.util;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,14 +9,15 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import net.bodz.bas.io.res.ResFn;
+import net.bodz.bas.make.IDataRef;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class FileRef
+public class FileCache
         implements IDataRef<byte[]> {
 
     protected final Path file;
 
-    public FileRef(@NotNull Path file) {
+    public FileCache(@NotNull Path file) {
         this.file = file;
     }
 

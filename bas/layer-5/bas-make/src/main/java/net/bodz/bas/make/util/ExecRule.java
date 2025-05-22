@@ -9,11 +9,10 @@ import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.make.MakeException;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class ExecRule<T extends FileEntry> {
+public class ExecRule<T extends AbstractFileEntry> {
 
     String executable;
     List<Object> args = new ArrayList<>();
-
 
     public String getExecutable() {
         return executable;

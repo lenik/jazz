@@ -1,4 +1,4 @@
-package net.bodz.bas.make.sample;
+package net.bodz.bas.make.util;
 
 import net.bodz.bas.make.IParameterizedKeys;
 
