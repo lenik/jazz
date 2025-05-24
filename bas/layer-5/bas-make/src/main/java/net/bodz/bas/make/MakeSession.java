@@ -4,20 +4,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;
+import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPatternMakeRule;
+import net.bodz.bas.make.pattern.key.IKeyPattern;
+import net.bodz.bas.make.pattern.key.IKeyPatternMakeRule;
+import net.bodz.bas.make.plan.IMakeNode;
+import net.bodz.bas.make.strategy.DataTypeMatch;
+import net.bodz.bas.make.strategy.DataTypedKeyPatternMatch;
+import net.bodz.bas.make.strategy.ExactMatch;
+import net.bodz.bas.make.strategy.KeyMatch;
+import net.bodz.bas.make.strategy.KeyPatternMatch;
+import net.bodz.bas.make.strategy.KeyTypeMatch;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.map.ListMap;
 
 public class MakeSession
         implements IMakeSession {
 
+    // data sources
     Map<Object, IKeyData<?, ?>> keyMap = new HashMap<>();
     ListMap<Class<?>, IKeyData<?, ?>> typeListMap = new ListMap<>();
 
-    ListMap<IKeyData<?, ?>, IMakeRule<?>> rulesMap = new ListMap<>();
-    ListMap<IKeyPattern<?, ?>, IPatternMakeRule<?, ?, ?>> patternRulesMap = new ListMap<>();
-
-    // Class<K> => IKeyParameter<?, K>
-    ListMap<Class<?>, IKeyPattern<?, ?>> patternsMap = new ListMap<>();
+    public final ExactMatch exactMatch = new ExactMatch();
+    public final KeyMatch keyMatch = new KeyMatch();
+    public final KeyTypeMatch keyTypeMatch = new KeyTypeMatch();
+    public final DataTypeMatch dataTypeMatch = new DataTypeMatch();
+    public final KeyPatternMatch keyPatternMatch = new KeyPatternMatch();
+    public final DataTypedKeyPatternMatch dataTypedKeyPatternMatch = new DataTypedKeyPatternMatch();
 
     @Override
     public void addData(@NotNull IKeyData<?, ?> entry) {
@@ -38,73 +51,99 @@ public class MakeSession
         return list;
     }
 
-// rules
+    // rules: exact match
 
-    @SuppressWarnings("unchecked")
     @NotNull
     @Override
     public <T extends IKeyData<?, ?>> List<IMakeRule<T>> getRules(T target) {
-        return (List<IMakeRule<T>>) (Object) rulesMap.getOrEmpty(target);
+        return exactMatch.getRules(target);
     }
 
     @Override
     public <T extends IKeyData<?, ?>> void addRule(@NotNull T target, @NotNull IMakeRule<T> rule) {
-        rulesMap.addToList(target, rule);
+        exactMatch.addRule(target, rule);
+    }
+
+    // rules: key match
+
+    @Override
+    @NotNull
+    public <T extends IKeyData<TK, ?>, TK> List<IMakeRule<T>> getKeyRules(@NotNull TK key) {
+        return keyMatch.getRules(key);
     }
 
     @Override
-    public <T extends IKeyData<?, ?>> void addRule(@NotNull T target, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
-        rulesMap.addToList(target, //
-                SimpleMakeRule.<T>builder()//
-                        .input(inputs)//
-                        .make(fn).build());
+    public <T extends IKeyData<TK, ?>, TK> void addKeyRule(@NotNull TK key, @NotNull IMakeRule<T> rule) {
+        keyMatch.addRule(key, rule);
+    }
+
+    // rules: key type
+
+    @Override
+    @NotNull
+    public <T extends IKeyData<TK, ?>, TK> List<IMakeRule<T>> getKeyTypeRules(@NotNull Class<TK> keyType) {
+        return keyTypeMatch.getRules(keyType);
     }
 
     @Override
-    public <T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT> //
-    void addRule(@NotNull T target, U input1, @NotNull MakeFunction1<TT, UT> fn) {
-        rulesMap.addToList(target, //
-                SimpleMakeRule1.<T, TK, TT, U, UK, UT>builder() //
-                        .input(input1) //
-                        .fn(fn).build());
+    public <T extends IKeyData<TK, ?>, TK> void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull IMakeRule<T> rule) {
+        keyTypeMatch.addRule(keyType, rule);
+    }
+
+    // rules: data type
+
+    @Override
+    @NotNull
+    public <T extends IKeyData<?, TT>, TT> List<IMakeRule<T>> getRules(@NotNull Class<TT> dataType) {
+        return dataTypeMatch.getRules(dataType);
     }
 
     @Override
-    public <T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT, V extends IKeyData<VK, VT>, VK, VT> //
-    void addRule(@NotNull T target, U input1, V input2, @NotNull MakeFunction2<TT, UT, VT> fn) {
-        rulesMap.addToList(target, //
-                SimpleMakeRule2.<T, TK, TT, U, UK, UT, V, VK, VT>builder() //
-                        .input(input1, input2) //
-                        .fn(fn).build());
+    public <T extends IKeyData<?, TT>, TT> void addRule(@NotNull Class<TT> dataType, @NotNull IMakeRule<T> rule) {
+        dataTypeMatch.addRule(dataType, rule);
     }
 
-    // parameterized rules
+    // rules: key pattern
 
-    @SuppressWarnings("unchecked")
     @NotNull
     @Override
-    public <T extends IKeyPattern<?, K>, K, D extends IKeyData<K, ?>> //
-    List<IPatternMakeRule<T, K, D>> getPatternRules(IKeyPattern<?, ?> pattern) {
-        return (List<IPatternMakeRule<T, K, D>>) (Object) patternRulesMap.get(pattern);
+    public <Tp extends IKeyPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT> //
+    List<IKeyPatternMakeRule<Tp, Param, K, T, TT>> getPatternRules(IKeyPattern<?, ?> pattern) {
+        return keyPatternMatch.getRules(pattern);
     }
 
     @Override
-    public <T extends IKeyPattern<?, K>, K, D extends IKeyData<K, ?>> //
-    void addPatternRule(@NotNull T pattern, @NotNull IPatternMakeRule<T, K, D> rule) {
-        patternRulesMap.addToList(pattern, rule);
+    public <Tp extends IKeyPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull IKeyPatternMakeRule<Tp, Param, K, T, TT> rule) {
+        keyPatternMatch.addRule(pattern, rule);
     }
 
-    public <Tp extends IKeyPattern<Param, K>, Param, K, Us extends IParameterizedKeys<Param, UK>, UK, //
-            T extends IKeyData<K, TT>, TT, U extends IKeyData<UK, UT>, UT> //
-    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull CompileFunction1<T, K, TT, U, UK, UT> fn) {
-        patternRulesMap.addToList(pattern, SimplePatternMakeRule1.<Tp, Param, K, Us, UK, T, TT, U, UT>builder()//
-                .pattern(pattern) //
-                .input(input1s)//
-                .fn(fn).build());
+    // rules: data typed key pattern
+
+    @NotNull
+    @Override
+    public <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, T extends IKeyData<K, TT>, TT> //
+    List<IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> getPatternRules(IDataTypedKeyPattern<?, ?, ?> pattern) {
+        return dataTypedKeyPatternMatch.getRules(pattern);
+    }
+
+    @Override
+    public <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, T extends IKeyData<K, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT> rule) {
+        dataTypedKeyPatternMatch.addRule(pattern, rule);
     }
 
     // make
 
+    public <T extends IKeyData<TK, TT>, TK, TT> void makePlan(T target) {
+
+    }
+
+    public IMakeNode makeGraph(@NotNull IKeyData<?, ?> target) {
+        return null;
+    }
+
+    @Override
     public <T extends IKeyData<TK, TT>, TK, TT> void make(T target)
             throws MakeException {
 
@@ -112,15 +151,15 @@ public class MakeSession
             return;
 
 //        TK targetKey = target.getKey();
-        Class<TK> targetKeyType = target.getKeyType();
+        Class<? extends TK> targetKeyType = target.getKeyType();
 
-        for (IKeyPattern<?, ?> pattern : patternRulesMap.keySet()) {
+        for (IKeyPattern<?, ?> pattern : keyPatternRules.keySet()) {
             Class<?> patternKeyType = pattern.getKeyType();
             if (patternKeyType.isAssignableFrom(targetKeyType)) {
 //                Object param = parameter.resolve(targetKey);
-                for (IPatternMakeRule<IKeyPattern<?, Object>, Object, IKeyData<Object, ?>> patternRule : getPatternRules(pattern)) {
+                for (IKeyPatternMakeRule<IKeyPattern<Object, Object>, Object, Object, IKeyData<Object, Object>, Object> patternRule : getPatternRules(pattern)) {
                     @SuppressWarnings("unchecked")
-                    MakeRuleInstance<T> instance = (MakeRuleInstance<T>) patternRule.compile((IKeyData<Object, ?>) target, this);
+                    MakeAction<T> instance = (MakeAction<T>) patternRule.compile((IKeyData<Object, Object>) target, this);
                     if (instance == null)
                         continue;
                     IMakeRule<T> rule = instance.getRule();

@@ -9,7 +9,6 @@ import java.time.ZonedDateTime;
 
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.IKeyDataBuilder;
-import net.bodz.bas.make.INamed;
 import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class AbstractFileEntry<T>
@@ -109,6 +108,7 @@ public abstract class AbstractFileEntry<T>
             return (self_t) this;
         }
 
+        @Override
         public self_t data(T value) {
             this.data = value;
             return (self_t) this;

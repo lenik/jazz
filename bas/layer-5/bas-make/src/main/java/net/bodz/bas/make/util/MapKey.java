@@ -4,14 +4,14 @@ import java.util.Objects;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public class MapKey<K, EK, EV>
-        implements IMapKey<K, EK, EV> {
+public class MapKey<EK, EV, K>
+        implements IMapKey<EK, EV, K> {
 
-    final Class<EK> elementKeyType;
-    final Class<EV> elementValueType;
+    final Class<? extends EK> elementKeyType;
+    final Class<? extends EV> elementValueType;
     final K key;
 
-    public MapKey(@NotNull Class<EK> elementKeyType, @NotNull Class<EV> elementValueType, @NotNull K key) {
+    public MapKey(@NotNull Class<? extends EK> elementKeyType, @NotNull Class<? extends EV> elementValueType, @NotNull K key) {
         this.elementKeyType = elementKeyType;
         this.elementValueType = elementValueType;
         this.key = key;
@@ -19,13 +19,13 @@ public class MapKey<K, EK, EV>
 
     @NotNull
     @Override
-    public Class<EK> getElementKeyType() {
+    public Class<? extends EK> getElementKeyType() {
         return elementKeyType;
     }
 
     @NotNull
     @Override
-    public Class<EV> getElementValueType() {
+    public Class<? extends EV> getElementValueType() {
         return elementValueType;
     }
 

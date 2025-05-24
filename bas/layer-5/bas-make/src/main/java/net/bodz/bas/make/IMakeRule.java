@@ -9,7 +9,7 @@ public interface IMakeRule<T extends IKeyData<?, ?>>
     @NotNull
     IKeyData<?, ?>[] getInputs();
 
-    default boolean canMake(@NotNull T target, IMakeSession session) {
+    default boolean canMake(IMakeSession session, @NotNull T target) {
         if (!session.canMake(target))
             return false;
         for (IKeyData<?, ?> input : getInputs()) {
@@ -20,10 +20,13 @@ public interface IMakeRule<T extends IKeyData<?, ?>>
         return true;
     }
 
+    /**
+     * @param inputs Exactly getInputs().
+     */
     void make(@NotNull T target, @NotNull IKeyData<?, ?>... inputs)
             throws MakeException;
 
-    default int getEstimatedCost(@NotNull T target, @NotNull IKeyData<?, ?>... inputs) {
+    default double getEstimatedCost(@NotNull T target, @NotNull IKeyData<?, ?>... inputs) {
         return 1;
     }
 

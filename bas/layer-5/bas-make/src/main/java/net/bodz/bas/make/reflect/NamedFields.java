@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.make.INamed;
+import net.bodz.bas.make.util.INamed;
 
 public class NamedFields {
 

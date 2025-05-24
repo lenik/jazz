@@ -4,11 +4,11 @@ import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.make.IKeyPattern;
+import net.bodz.bas.make.pattern.template.IKeyPatternLike;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class GlobPathPattern
-        implements IKeyPattern<String, Path> {
+        implements IKeyPatternLike<String, Path> {
 
     static final char STAR = '%';
     static final String STAR_ESC = "%";
@@ -37,11 +37,13 @@ public class GlobPathPattern
         this.globPattern = Pattern.compile("^" + regex + "$");
     }
 
+    @NotNull
     @Override
     public Class<String> getParameterType() {
         return String.class;
     }
 
+    @NotNull
     @Override
     public Class<Path> getKeyType() {
         return Path.class;

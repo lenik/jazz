@@ -4,20 +4,20 @@ import java.util.Objects;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SetKey<K, E>
-        implements ICollectionKey<K, E> {
+public class SetKey<E, K>
+        implements ICollectionKey<E, K> {
 
-    final Class<E> elementType;
+    final Class<? extends E> elementType;
     final K key;
 
-    public SetKey(@NotNull Class<E> elementType, @NotNull K key) {
+    public SetKey(@NotNull Class<? extends E> elementType, @NotNull K key) {
         this.elementType = elementType;
         this.key = key;
     }
 
     @NotNull
     @Override
-    public Class<E> getElementType() {
+    public Class<? extends E> getElementType() {
         return elementType;
     }
 

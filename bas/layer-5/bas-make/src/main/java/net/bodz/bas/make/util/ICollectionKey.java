@@ -2,10 +2,10 @@ package net.bodz.bas.make.util;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public interface ICollectionKey<K, E>
+public interface ICollectionKey<E, K>
         extends IWrappedKey<K> {
 
     @NotNull
-    Class<E> getElementType();
+    Class<? extends E> getElementType();
 
 }

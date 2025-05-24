@@ -3,10 +3,8 @@ package net.bodz.bas.make;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface IKey<K>
-        extends IParameterizedKeys<Object, K> {
-
-    @NotNull
-    Class<K> getKeyType();
+        extends IKeyType<K>,
+                IParameterizedKeys<Object, K> {
 
     @NotNull
     K getKey();

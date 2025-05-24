@@ -4,7 +4,6 @@ import java.time.ZonedDateTime;
 
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.IKeyDataBuilder;
-import net.bodz.bas.make.INamed;
 import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class NamedData<T>
@@ -81,11 +80,13 @@ public abstract class NamedData<T>
         protected String key;
         protected T data;
 
+        @Override
         public self_t key(@NotNull String value) {
             this.key = value;
             return (self_t) this;
         }
 
+        @Override
         public self_t data(T value) {
             this.data = value;
             return (self_t) this;

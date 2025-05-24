@@ -5,13 +5,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import net.bodz.bas.make.util.FileBin;
-import net.bodz.bas.make.util.GlobNamePattern;
-import net.bodz.bas.make.util.GlobNames;
 import net.bodz.bas.make.util.GlobPathPattern;
 import net.bodz.bas.make.util.GlobPaths;
+import net.bodz.bas.make.util.GlobStringNames;
+import net.bodz.bas.make.util.GlobStringPatternForInt;
 import net.bodz.bas.make.util.NamedDouble;
 import net.bodz.bas.make.util.NamedFloat;
 import net.bodz.bas.make.util.NamedInteger;
@@ -21,8 +20,6 @@ import net.bodz.bas.make.util.NamedString;
 //interface ParameterMap<P,K> extends  Map
 
 public class MakeWorkflow {
-
-    Map<IKeyPattern<?, ?>, IParameterizedKeys<?, ?>> parameterMap;
 
     public static void main(String[] args)
             throws MakeException {
@@ -57,12 +54,12 @@ public class MakeWorkflow {
         session.addData(brand);
         NamedInteger brandCount = new NamedInteger("brand_count");
 
-        GlobNamePattern countPattern = new GlobNamePattern("%_count");
-        GlobNames srcNames = new GlobNames("%");
+        GlobStringPatternForInt countPattern = new GlobStringPatternForInt("%_count");
+//        GlobNames srcNames = new GlobNames("%");
+        GlobStringNames srcNames = new GlobStringNames("%");
 
         session.addPatternRule(countPattern, srcNames, //
-                (CompileFunction1<NamedInteger, String, Integer, NamedString, String, String>) //
-                        (count, input1) -> String::length);
+                (count, input1) -> String::length);
 
         System.out.println("greet: " + greet);
         System.out.println("count: " + greetCount.getData());

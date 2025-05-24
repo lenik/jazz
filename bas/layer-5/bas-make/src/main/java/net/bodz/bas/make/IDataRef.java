@@ -2,12 +2,8 @@ package net.bodz.bas.make;
 
 import java.time.ZonedDateTime;
 
-import net.bodz.bas.meta.decl.NotNull;
-
-public interface IDataRef<T> {
-
-    @NotNull
-    Class<T> getDataType();
+public interface IDataRef<T>
+        extends IDataType<T> {
 
     T getData();
 
