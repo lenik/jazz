@@ -7,12 +7,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.iterator.PrefetchSeed;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class PreorderTreeMap<K, V>
         extends TreeMap<K, V>
-        implements IPreorderMap<K, V>, Map<K, V> {
+        implements IPreorderMap<K, V>,
+                   Map<K, V> {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,6 +27,7 @@ public class PreorderTreeMap<K, V>
         this.preorder = preorder;
     }
 
+    @NotNull
     @Override
     public IPreorder<K> getPreorder() {
         return preorder;
@@ -32,11 +35,11 @@ public class PreorderTreeMap<K, V>
 
     /**
      * Get the exact key.
-     * 
+     * <p>
      * Use {@link #meet(Object)} instead to get a nearest node in the preorder map.
      * <p>
      * {@inheritDoc}
-     * 
+     *
      * @see #meet(Object)
      * @see #meetKey(Object)
      * @see #meetEntry(Object)
@@ -142,9 +145,10 @@ public class PreorderTreeMap<K, V>
             return entry.getValue();
     }
 
+    @NotNull
     @Override
     public Map<K, V> joinMap(K key) {
-        Map<K, V> map = new LinkedHashMap<K, V>();
+        Map<K, V> map = new LinkedHashMap<>();
 
         Map.Entry<K, V> entry = joinEntry_fast(key);
 
@@ -163,6 +167,7 @@ public class PreorderTreeMap<K, V>
         return map;
     }
 
+    @NotNull
     @Override
     public Iterable<Map.Entry<K, V>> joinEntries(final K key) {
         final Map.Entry<K, V> start = joinEntry_fast(key);
@@ -197,9 +202,10 @@ public class PreorderTreeMap<K, V>
         return new Seed(start);
     }
 
+    @NotNull
     @Override
     public Set<K> joinKeySet(K key) {
-        Set<K> set = new HashSet<K>();
+        Set<K> set = new HashSet<>();
         for (K k : joinKeys(key))
             set.add(k);
         return set;
@@ -208,6 +214,7 @@ public class PreorderTreeMap<K, V>
     /**
      * Using Preorder-Preceding to get the greator key (only if available).
      */
+    @NotNull
     @Override
     public Iterable<K> joinKeys(final K key) {
         final K start = joinKey_fast(key);
@@ -233,6 +240,7 @@ public class PreorderTreeMap<K, V>
         }
 
         return new Iterable<K>() {
+            @NotNull
             @Override
             public Iterator<K> iterator() {
                 return new Iter(start);
@@ -240,9 +248,10 @@ public class PreorderTreeMap<K, V>
         };
     }
 
+    @NotNull
     @Override
     public Set<V> joinValueSet(K key) {
-        Set<V> list = new HashSet<V>();
+        Set<V> list = new HashSet<>();
         for (V val : join(key))
             list.add(val);
         return list;
@@ -251,6 +260,7 @@ public class PreorderTreeMap<K, V>
     /**
      * Using Preorder-Preceding to get the greator key (only if available).
      */
+    @NotNull
     @Override
     public Iterable<V> join(final K key) {
         final Map.Entry<K, V> start = joinEntry_fast(key);
@@ -278,6 +288,7 @@ public class PreorderTreeMap<K, V>
         }
 
         return new Iterable<V>() {
+            @NotNull
             @Override
             public Iterator<V> iterator() {
                 return new HigherIter(start);

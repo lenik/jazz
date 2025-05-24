@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.bodz.bas.fn.IFilter;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.t.pojo.Pair;
 
@@ -27,6 +28,7 @@ public class PreorderHashMap<K, V>
         this.preorder = preorder;
     }
 
+    @NotNull
     @Override
     public IPreorder<K> getPreorder() {
         return preorder;
@@ -75,23 +77,27 @@ public class PreorderHashMap<K, V>
 
     }
 
+    @NotNull
     @Override
     public Iterable<Map.Entry<K, V>> joinEntries(K key) {
         return Iterables.filter(entrySet(), new JoinEntryFilter(key));
     }
 
+    @NotNull
     @Override
     public Iterable<K> joinKeys(K key) {
         joinEntries(key);
         return null;
     }
 
+    @NotNull
     @Override
     public Iterable<V> join(K key) {
         joinEntries(key);
         return null;
     }
 
+    @NotNull
     @Override
     public Map<K, V> joinMap(K key) {
         Map<K, V> map = new LinkedHashMap<K, V>();
@@ -101,6 +107,7 @@ public class PreorderHashMap<K, V>
         return map;
     }
 
+    @NotNull
     @Override
     public Set<K> joinKeySet(K key) {
         Set<K> set = new HashSet<K>();
@@ -109,6 +116,7 @@ public class PreorderHashMap<K, V>
         return set;
     }
 
+    @NotNull
     @Override
     public Set<V> joinValueSet(K key) {
         Set<V> list = new HashSet<V>();

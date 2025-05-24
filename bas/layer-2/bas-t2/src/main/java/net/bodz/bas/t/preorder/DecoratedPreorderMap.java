@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public class DecoratedPreorderMap<K, V>
@@ -16,6 +17,7 @@ public class DecoratedPreorderMap<K, V>
         super(_orig);
     }
 
+    @NotNull
     @Override
     public IPreorder<K> getPreorder() {
         return getWrapped().getPreorder();
@@ -36,31 +38,37 @@ public class DecoratedPreorderMap<K, V>
         return getWrapped().meet(key);
     }
 
+    @NotNull
     @Override
     public Iterable<java.util.Map.Entry<K, V>> joinEntries(K key) {
         return getWrapped().joinEntries(key);
     }
 
+    @NotNull
     @Override
     public Iterable<K> joinKeys(K key) {
         return getWrapped().joinKeys(key);
     }
 
+    @NotNull
     @Override
     public Iterable<V> join(K key) {
         return getWrapped().join(key);
     }
 
+    @NotNull
     @Override
     public Map<K, V> joinMap(K key) {
         return getWrapped().joinMap(key);
     }
 
+    @NotNull
     @Override
     public Set<K> joinKeySet(K key) {
         return getWrapped().joinKeySet(key);
     }
 
+    @NotNull
     @Override
     public Set<V> joinValueSet(K key) {
         return getWrapped().joinValueSet(key);
