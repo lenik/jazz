@@ -15,23 +15,23 @@ public abstract class SimpleKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<P
         T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT, //
         V extends IKeyData<VK, VT>, VT, //
-        W extends IKeyData<WK, WT>, WT>
+        W extends IKeyData<WK, WT>, WT> //
         implements IKeyPatternLikeMakeRule3<Tp, Param, K, Keys, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT> {
 
     int priority;
     Tp pattern;
+    CompileFunction3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn;
     Us input1s;
     Vs input2s;
     Ws input3s;
-    CompileFunction3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn;
 
-    public SimpleKeyPatternLikeMakeRule3(int priority, @NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull CompileFunction3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn) {
+    public SimpleKeyPatternLikeMakeRule3(int priority, @NotNull Tp pattern, @NotNull CompileFunction3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s) {
         this.priority = priority;
         this.pattern = pattern;
+        this.fn = fn;
         this.input1s = input1s;
         this.input2s = input2s;
         this.input3s = input3s;
-        this.fn = fn;
     }
 
     @Override
@@ -71,16 +71,19 @@ public abstract class SimpleKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<P
             Vs extends IParameterizedKeys<Param, VK>, VK, //
             Ws extends IParameterizedKeys<Param, WK>, WK, //
             T extends IKeyData<K, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT, //
-            V extends IKeyData<VK, VT>, VT, //
-            W extends IKeyData<WK, WT>, WT> {
+            U extends IKeyData<UK, UT>, UT
+            , //
+            V extends IKeyData<VK, VT>, VT
+            , //
+            W extends IKeyData<WK, WT>, WT
+            > {
 
         protected int priority;
         protected Tp pattern;
+        protected CompileFunction3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn;
         protected Us input1s;
         protected Vs input2s;
         protected Ws input3s;
-        protected CompileFunction3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn;
 
         public self_t priority(int priority) {
             this.priority = priority;
@@ -92,9 +95,16 @@ public abstract class SimpleKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<P
             return (self_t) this;
         }
 
+        public self_t fn(@NotNull CompileFunction3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn) {
+            this.fn = fn;
+            return (self_t) this;
+        }
+
         @SuppressWarnings("unchecked")
         public self_t input(@NotNull IParameterizedKeys<?, ?>... inputss) {
             this.input1s = (Us) inputss[0];
+            this.input2s = (Vs) inputss[1];
+            this.input3s = (Ws) inputss[2];
             return (self_t) this;
         }
 
@@ -110,11 +120,6 @@ public abstract class SimpleKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<P
 
         public self_t input3(@NotNull Ws input3s) {
             this.input3s = input3s;
-            return (self_t) this;
-        }
-
-        public self_t fn(@NotNull CompileFunction3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn) {
-            this.fn = fn;
             return (self_t) this;
         }
 

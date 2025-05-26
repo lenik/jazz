@@ -1,10 +1,11 @@
 package net.bodz.bas.make.fn;
 
+import net.bodz.bas.make.IDataTypedKey;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.MakeException;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimpleMakeRule0<T extends IKeyData<TK, TT>, TK, TT>
+public class SimpleMakeRule0<T extends IKeyData<TK, TT>, TK, TT> //
         implements IMakeRule0<T, TK, TT> {
 
     int priority;
@@ -20,7 +21,6 @@ public class SimpleMakeRule0<T extends IKeyData<TK, TT>, TK, TT>
         return priority;
     }
 
-
     @Override
     public TT make()
             throws MakeException {
@@ -32,7 +32,7 @@ public class SimpleMakeRule0<T extends IKeyData<TK, TT>, TK, TT>
         return new Builder<>();
     }
 
-    public static class Builder<T extends IKeyData<TK, TT>, TK, TT> {
+    public static class Builder<T extends IKeyData<TK, TT>, TK, TT> { //
 
         int priority;
         IMakeable0<TT> fn;
@@ -44,6 +44,10 @@ public class SimpleMakeRule0<T extends IKeyData<TK, TT>, TK, TT>
 
         public Builder<T, TK, TT> fn(@NotNull IMakeable0<TT> fn) {
             this.fn = fn;
+            return this;
+        }
+
+        public Builder<T, TK, TT> input() {
             return this;
         }
 

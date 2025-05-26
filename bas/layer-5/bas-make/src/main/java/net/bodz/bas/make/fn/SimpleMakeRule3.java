@@ -1,5 +1,6 @@
 package net.bodz.bas.make.fn;
 
+import net.bodz.bas.make.IDataTypedKey;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.MakeException;
 import net.bodz.bas.meta.decl.NotNull;
@@ -7,16 +8,16 @@ import net.bodz.bas.meta.decl.NotNull;
 public class SimpleMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
         U extends IKeyData<UK, UT>, UK, UT, //
         V extends IKeyData<VK, VT>, VK, VT, //
-        W extends IKeyData<WK, WT>, WK, WT>
+        W extends IKeyData<WK, WT>, WK, WT> //
         implements IMakeRule3<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> {
 
     int priority;
     IMakeable3<TT, UT, VT, WT> fn;
-    U input1;
-    V input2;
-    W input3;
+    IDataTypedKey<UK, UT> input1;
+    IDataTypedKey<VK, VT> input2;
+    IDataTypedKey<WK, WT> input3;
 
-    public SimpleMakeRule3(int priority, @NotNull IMakeable3<TT, UT, VT, WT> fn, @NotNull U input1, @NotNull V input2, @NotNull W input3) {
+    public SimpleMakeRule3(int priority, @NotNull IMakeable3<TT, UT, VT, WT> fn, @NotNull IDataTypedKey<UK, UT> input1, @NotNull IDataTypedKey<VK, VT> input2, @NotNull IDataTypedKey<WK, WT> input3) {
         this.priority = priority;
         this.fn = fn;
         this.input1 = input1;
@@ -30,24 +31,24 @@ public class SimpleMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
     }
 
     @Override
-    public U getInput1() {
+    public IDataTypedKey<UK, UT> getInput1() {
         return input1;
     }
 
     @Override
-    public V getInput2() {
+    public IDataTypedKey<VK, VT> getInput2() {
         return input2;
     }
 
     @Override
-    public W getInput3() {
+    public IDataTypedKey<WK, WT> getInput3() {
         return input3;
     }
 
     @Override
-    public TT make(UT in1, VT in2, WT in3)
+    public TT make(UT input1, VT input2, WT input3)
             throws MakeException {
-        return fn.make(in1, in2, in3);
+        return fn.make(input1, input2, input3);
     }
 
     public static <T extends IKeyData<TK, TT>, TK, TT, //
@@ -64,41 +65,40 @@ public class SimpleMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
             W extends IKeyData<WK, WT>, WK, WT> {
 
         int priority;
-        U input1;
-        V input2;
-        W input3;
         IMakeable3<TT, UT, VT, WT> fn;
+        IDataTypedKey<UK, UT> input1;
+        IDataTypedKey<VK, VT> input2;
+        IDataTypedKey<WK, WT> input3;
 
         public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> priority(int priority) {
             this.priority = priority;
             return this;
         }
 
-        @SuppressWarnings("unchecked")
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> input(@NotNull IKeyData<?, ?>... inputs) {
-            input1 = (U) inputs[0];
-            input2 = (V) inputs[1];
-            input3 = (W) inputs[2];
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn(@NotNull IMakeable3<TT, UT, VT, WT> fn) {
+            this.fn = fn;
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> input1(@NotNull U input1) {
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> input(@NotNull IDataTypedKey<UK, UT> input1, @NotNull IDataTypedKey<VK, VT> input2, @NotNull IDataTypedKey<WK, WT> input3) {
             this.input1 = input1;
-            return this;
-        }
-
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> input2(@NotNull V input2) {
             this.input2 = input2;
-            return this;
-        }
-
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> input3(@NotNull W input3) {
             this.input3 = input3;
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn(@NotNull IMakeable3<TT, UT, VT, WT> fn) {
-            this.fn = fn;
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> input1(@NotNull IDataTypedKey<UK, UT> input1) {
+            this.input1 = input1;
+            return this;
+        }
+
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> input2(@NotNull IDataTypedKey<VK, VT> input2) {
+            this.input2 = input2;
+            return this;
+        }
+
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> input3(@NotNull IDataTypedKey<WK, WT> input3) {
+            this.input3 = input3;
             return this;
         }
 

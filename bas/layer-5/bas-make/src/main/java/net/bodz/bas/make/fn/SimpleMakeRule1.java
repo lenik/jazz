@@ -1,5 +1,6 @@
 package net.bodz.bas.make.fn;
 
+import net.bodz.bas.make.IDataTypedKey;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.MakeException;
 import net.bodz.bas.meta.decl.NotNull;
@@ -10,9 +11,9 @@ public class SimpleMakeRule1<T extends IKeyData<TK, TT>, TK, TT, //
 
     int priority;
     IMakeable1<TT, UT> fn;
-    U input1;
+    IDataTypedKey<UK, UT> input1;
 
-    public SimpleMakeRule1(int priority, @NotNull IMakeable1<TT, UT> fn, @NotNull U input1) {
+    public SimpleMakeRule1(int priority, @NotNull IMakeable1<TT, UT> fn, @NotNull IDataTypedKey<UK, UT> input1) {
         this.priority = priority;
         this.fn = fn;
         this.input1 = input1;
@@ -24,14 +25,14 @@ public class SimpleMakeRule1<T extends IKeyData<TK, TT>, TK, TT, //
     }
 
     @Override
-    public U getInput1() {
+    public IDataTypedKey<UK, UT> getInput1() {
         return input1;
     }
 
     @Override
-    public TT make(UT input)
+    public TT make(UT input1)
             throws MakeException {
-        return fn.make(input);
+        return fn.make(input1);
     }
 
     public static <T extends IKeyData<TK, TT>, TK, TT, //
@@ -44,27 +45,26 @@ public class SimpleMakeRule1<T extends IKeyData<TK, TT>, TK, TT, //
             U extends IKeyData<UK, UT>, UK, UT> {
 
         int priority;
-        U input1;
         IMakeable1<TT, UT> fn;
+        IDataTypedKey<UK, UT> input1;
 
         public Builder<T, TK, TT, U, UK, UT> priority(int priority) {
             this.priority = priority;
             return this;
         }
 
-        @SuppressWarnings("unchecked")
-        public Builder<T, TK, TT, U, UK, UT> input(@NotNull IKeyData<?, ?>... inputs) {
-            input1 = (U) inputs[0];
+        public Builder<T, TK, TT, U, UK, UT> fn(@NotNull IMakeable1<TT, UT> fn) {
+            this.fn = fn;
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT> input1(@NotNull U input1) {
+        public Builder<T, TK, TT, U, UK, UT> input(@NotNull IDataTypedKey<UK, UT> input1) {
             this.input1 = input1;
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT> fn(@NotNull IMakeable1<TT, UT> fn) {
-            this.fn = fn;
+        public Builder<T, TK, TT, U, UK, UT> input1(@NotNull IDataTypedKey<UK, UT> input1) {
+            this.input1 = input1;
             return this;
         }
 

@@ -18,7 +18,7 @@ public interface IKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, 
         T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT, //
         V extends IKeyData<VK, VT>, VT, //
-        W extends IKeyData<WK, WT>, WT>
+        W extends IKeyData<WK, WT>, WT> //
         extends IKeyPatternLikeMakeRule<Tp, Param, K, Keys, T, TT> {
 
     @Override
@@ -51,22 +51,22 @@ public interface IKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, 
         if (input1Key == null)
             return null;
 
-        VK input2Key = input2s.getKey(param);
-        if (input2Key == null)
-            return null;
-
-        WK input3Key = input3s.getKey(param);
-        if (input3Key == null)
-            return null;
-
         @SuppressWarnings("unchecked")
         U input1 = (U) session.getData(input1Key);
         if (input1 == null)
             return null;
 
+        VK input2Key = input2s.getKey(param);
+        if (input2Key == null)
+            return null;
+
         @SuppressWarnings("unchecked")
         V input2 = (V) session.getData(input2Key);
         if (input2 == null)
+            return null;
+
+        WK input3Key = input3s.getKey(param);
+        if (input3Key == null)
             return null;
 
         @SuppressWarnings("unchecked")
@@ -80,9 +80,6 @@ public interface IKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, 
 
         SimpleMakeRule3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> rule = SimpleMakeRule3.<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT>builder()//
                 .priority(this.getPriority())//
-                .input1(input1)//
-                .input2(input2)//
-                .input3(input3)//
                 .fn(fn).build();
 
         MakeAction<T> instance = new MakeAction<>(rule, target, input1, input2, input3);

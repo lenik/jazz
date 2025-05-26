@@ -1,5 +1,6 @@
 package net.bodz.bas.make.fn;
 
+import net.bodz.bas.make.IDataTypedKey;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.IMakeRule;
 import net.bodz.bas.make.MakeException;
@@ -10,23 +11,21 @@ public interface IMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
         V extends IKeyData<VK, VT>, VK, VT, //
         W extends IKeyData<WK, WT>, WK, WT>
         extends IMakeRule<T>
-        // , IMakeable3<TT, UT, VT, WT>
 {
 
-    @NotNull
     @Override
-    default IKeyData<?, ?>[] getInputs() {
-        return new IKeyData[] { getInput1(), getInput2(), getInput3() };
+    default IDataTypedKey<?, ?>[] getInputs() {
+        return new IDataTypedKey<?, ?>[] { getInput1(), getInput2(), getInput3() };
     }
 
-    U getInput1();
+    IDataTypedKey<UK, UT> getInput1();
 
-    V getInput2();
+    IDataTypedKey<VK, VT> getInput2();
 
-    W getInput3();
+    IDataTypedKey<WK, WT> getInput3();
 
     @Override
-    default void make(@NotNull T target, @NotNull IKeyData<?, ?>[] inputs)
+    default void make(@NotNull T target, @NotNull IKeyData<?, ?>... inputs)
             throws MakeException {
         @SuppressWarnings("unchecked")
         U input1 = (U) inputs[0];
@@ -34,6 +33,7 @@ public interface IMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
         V input2 = (V) inputs[1];
         @SuppressWarnings("unchecked")
         W input3 = (W) inputs[2];
+
         make(target, input1, input2, input3);
     }
 

@@ -5,7 +5,7 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public interface CompileFunction2<T extends IKeyData<TK, TT>, TK, TT, //
         U extends IKeyData<UK, UT>, UK, UT, //
-        V extends IKeyData<VK, VT>, VK, VT>
+        V extends IKeyData<VK, VT>, VK, VT> //
         extends CompileFunction<T> {
 
     @Override
@@ -13,6 +13,7 @@ public interface CompileFunction2<T extends IKeyData<TK, TT>, TK, TT, //
         return (t, iv) -> {
             @SuppressWarnings("unchecked")
             U input1 = (U) iv[0];
+
             @SuppressWarnings("unchecked")
             V input2 = (V) iv[1];
 

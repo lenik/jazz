@@ -150,34 +150,6 @@ public class MakeSession
         if (target.exists())
             return;
 
-//        TK targetKey = target.getKey();
-        Class<? extends TK> targetKeyType = target.getKeyType();
-
-        for (IKeyPattern<?, ?> pattern : keyPatternRules.keySet()) {
-            Class<?> patternKeyType = pattern.getKeyType();
-            if (patternKeyType.isAssignableFrom(targetKeyType)) {
-//                Object param = parameter.resolve(targetKey);
-                for (IKeyPatternMakeRule<IKeyPattern<Object, Object>, Object, Object, IKeyData<Object, Object>, Object> patternRule : getPatternRules(pattern)) {
-                    @SuppressWarnings("unchecked")
-                    MakeAction<T> instance = (MakeAction<T>) patternRule.compile((IKeyData<Object, Object>) target, this);
-                    if (instance == null)
-                        continue;
-                    IMakeRule<T> rule = instance.getRule();
-                    rule.make(target, rule.getInputs());
-                    return;
-                }
-            }
-        }
-
-        for (IMakeRule<T> rule : getRules(target)) {
-            if (canMake(target)) {
-                for (IKeyData<?, ?> input : rule.getInputs()) {
-                    make(input);
-                }
-                rule.make(target, rule.getInputs());
-                return;
-            }
-        }
         throw new MakeException("can't find a make rule for " + target);
     }
 

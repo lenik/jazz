@@ -43,7 +43,7 @@ public class MakeWorkflow {
 
         NamedString greet = new NamedString("greet");
 
-        session.addRule(greet, name, age, (n, a) -> "hello " + n + ", you are " + a + " years now.");
+//        session.addRule(greet, name, age, (n, a) -> "hello " + n + ", you are " + a + " years now.");
 
         NamedInteger greetCount = new NamedInteger("greet_count");
         session.addRule(greetCount, greet, String::length);

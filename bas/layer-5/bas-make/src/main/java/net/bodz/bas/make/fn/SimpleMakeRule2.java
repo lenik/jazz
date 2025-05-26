@@ -1,24 +1,25 @@
 package net.bodz.bas.make.fn;
 
+import net.bodz.bas.make.IDataTypedKey;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.MakeException;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class SimpleMakeRule2<T extends IKeyData<TK, TT>, TK, TT, //
         U extends IKeyData<UK, UT>, UK, UT, //
-        V extends IKeyData<VK, VT>, VK, VT>
+        V extends IKeyData<VK, VT>, VK, VT> //
         implements IMakeRule2<T, TK, TT, U, UK, UT, V, VK, VT> {
 
     int priority;
     IMakeable2<TT, UT, VT> fn;
-    U input1;
-    V input2;
+    IDataTypedKey<UK, UT> input1;
+    IDataTypedKey<VK, VT> input2;
 
-    public SimpleMakeRule2(int priority, @NotNull IMakeable2<TT, UT, VT> fn, @NotNull U input1, @NotNull V input2) {
+    public SimpleMakeRule2(int priority, @NotNull IMakeable2<TT, UT, VT> fn, @NotNull IDataTypedKey<UK, UT> input1, @NotNull IDataTypedKey<VK, VT> input2) {
         this.priority = priority;
+        this.fn = fn;
         this.input1 = input1;
         this.input2 = input2;
-        this.fn = fn;
     }
 
     @Override
@@ -27,19 +28,19 @@ public class SimpleMakeRule2<T extends IKeyData<TK, TT>, TK, TT, //
     }
 
     @Override
-    public U getInput1() {
+    public IDataTypedKey<UK, UT> getInput1() {
         return input1;
     }
 
     @Override
-    public V getInput2() {
+    public IDataTypedKey<VK, VT> getInput2() {
         return input2;
     }
 
     @Override
-    public TT make(UT in1, VT in2)
+    public TT make(UT input1, VT input2)
             throws MakeException {
-        return fn.make(in1, in2);
+        return fn.make(input1, input2);
     }
 
     public static <T extends IKeyData<TK, TT>, TK, TT, //
@@ -54,34 +55,33 @@ public class SimpleMakeRule2<T extends IKeyData<TK, TT>, TK, TT, //
             V extends IKeyData<VK, VT>, VK, VT> {
 
         int priority;
-        U input1;
-        V input2;
         IMakeable2<TT, UT, VT> fn;
+        IDataTypedKey<UK, UT> input1;
+        IDataTypedKey<VK, VT> input2;
 
         public Builder<T, TK, TT, U, UK, UT, V, VK, VT> priority(int priority) {
             this.priority = priority;
             return this;
         }
 
-        @SuppressWarnings("unchecked")
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT> input(@NotNull IKeyData<?, ?>... inputs) {
-            input1 = (U) inputs[0];
-            input2 = (V) inputs[1];
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT> fn(@NotNull IMakeable2<TT, UT, VT> fn) {
+            this.fn = fn;
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT> input1(@NotNull U input1) {
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT> input(@NotNull IDataTypedKey<UK, UT> input1, @NotNull IDataTypedKey<VK, VT> input2) {
             this.input1 = input1;
-            return this;
-        }
-
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT> input2(@NotNull V input2) {
             this.input2 = input2;
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT> fn(@NotNull IMakeable2<TT, UT, VT> fn) {
-            this.fn = fn;
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT> input1(@NotNull IDataTypedKey<UK, UT> input1) {
+            this.input1 = input1;
+            return this;
+        }
+
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT> input2(@NotNull IDataTypedKey<VK, VT> input2) {
+            this.input2 = input2;
             return this;
         }
 

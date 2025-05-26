@@ -11,7 +11,7 @@ public interface IKeyPatternMakeRule3<Tp extends IKeyPattern<Param, K>, Param, K
         T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT, //
         V extends IKeyData<VK, VT>, VT, //
-        W extends IKeyData<WK, WT>, WT>
+        W extends IKeyData<WK, WT>, WT> //
         extends IKeyPatternLikeMakeRule3<Tp, Param, K, IParameterizedKeys<?, ?>, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT>,
                 IKeyPatternMakeRule<Tp, Param, K, T, TT> {
 

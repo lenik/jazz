@@ -10,9 +10,9 @@ import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.make.fn.SimpleMakeRule0;
 import net.bodz.bas.meta.decl.NotNull;
 
-public interface IKeyPatternLikeMakeRule0<Tp extends IKeyPatternLike<Param, K>, Param, K,  //
+public interface IKeyPatternLikeMakeRule0<Tp extends IKeyPatternLike<Param, K>, Param, K, //
         Keys extends IParameterizedKeys<?, ?>, //
-        T extends IKeyData<K, TT>, TT>
+        T extends IKeyData<K, TT>, TT> //
         extends IKeyPatternLikeMakeRule<Tp, Param, K, Keys, T, TT> {
 
     @Override
@@ -44,9 +44,9 @@ public interface IKeyPatternLikeMakeRule0<Tp extends IKeyPatternLike<Param, K>, 
     @Override
     default MakeFunction<T> compile(@NotNull T target, IKeyData<?, ?>... inputs)
             throws CompileException {
-        IMakeable0<TT> fn0 = compile(target);
+        IMakeable0<TT> fn = compile(target);
         return (t, iv) -> {
-            TT tData = fn0.make();
+            TT tData = fn.make();
             t.setData(tData);
         };
     }

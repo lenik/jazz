@@ -9,7 +9,7 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class SimpleKeyPatternLikeMakeRule0<Tp extends IKeyPatternLike<Param, K>, Param, K, //
         Keys extends IParameterizedKeys<?, ?>, //
-        T extends IKeyData<K, TT>, TT>
+        T extends IKeyData<K, TT>, TT> //
         implements IKeyPatternLikeMakeRule0<Tp, Param, K, Keys, T, TT> {
 
     int priority;
@@ -39,7 +39,7 @@ public abstract class SimpleKeyPatternLikeMakeRule0<Tp extends IKeyPatternLike<P
     }
 
     @SuppressWarnings("unchecked")
-    public abstract static class Builder<self_t, Tp extends IKeyPatternLike<Param, K>, Param, K, //
+    public static abstract class Builder<self_t, Tp extends IKeyPatternLike<Param, K>, Param, K, //
             T extends IKeyData<K, TT>, TT> {
 
         protected int priority;
@@ -58,6 +58,11 @@ public abstract class SimpleKeyPatternLikeMakeRule0<Tp extends IKeyPatternLike<P
 
         public self_t fn(@NotNull CompileFunction0<T, K, TT> fn) {
             this.fn = fn;
+            return (self_t) this;
+        }
+
+        @SuppressWarnings("unchecked")
+        public self_t input(@NotNull IParameterizedKeys<?, ?>... inputss) {
             return (self_t) this;
         }
 

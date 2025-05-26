@@ -13,7 +13,8 @@ import net.bodz.bas.meta.decl.NotNull;
 public interface IKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<Param, K>, Param, K, //
         Keys extends IParameterizedKeys<?, ?>, //
         Us extends IParameterizedKeys<Param, UK>, UK, //
-        T extends IKeyData<K, TT>, TT, U extends IKeyData<UK, UT>, UT>
+        T extends IKeyData<K, TT>, TT, //
+        U extends IKeyData<UK, UT>, UT> //
         extends IKeyPatternLikeMakeRule<Tp, Param, K, Keys, T, TT> {
 
     @Override
@@ -49,7 +50,6 @@ public interface IKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<Param, K>, 
 
         SimpleMakeRule1<T, K, TT, U, UK, UT> rule = SimpleMakeRule1.<T, K, TT, U, UK, UT>builder()//
                 .priority(this.getPriority())//
-                .input1(input1)//
                 .fn(fn).build();
 
         MakeAction<T> instance = new MakeAction<>(rule, target, input1);
@@ -61,9 +61,9 @@ public interface IKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<Param, K>, 
             throws CompileException {
         @SuppressWarnings("unchecked")
         U input1 = (U) inputs[0];
-        IMakeable1<TT, UT> fn1 = compile(target, input1);
+        IMakeable1<TT, UT> fn = compile(target, input1);
         return (t, iv) -> {
-            TT tData = fn1.make(input1.getData());
+            TT tData = fn.make(input1.getData());
             t.setData(tData);
         };
     }

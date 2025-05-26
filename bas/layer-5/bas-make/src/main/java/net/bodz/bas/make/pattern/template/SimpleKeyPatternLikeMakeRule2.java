@@ -13,21 +13,21 @@ public abstract class SimpleKeyPatternLikeMakeRule2<Tp extends IKeyPatternLike<P
         Vs extends IParameterizedKeys<Param, VK>, VK, //
         T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT, //
-        V extends IKeyData<VK, VT>, VT>
+        V extends IKeyData<VK, VT>, VT> //
         implements IKeyPatternLikeMakeRule2<Tp, Param, K, Keys, Us, UK, Vs, VK, T, TT, U, UT, V, VT> {
 
     int priority;
     Tp pattern;
+    CompileFunction2<T, K, TT, U, UK, UT, V, VK, VT> fn;
     Us input1s;
     Vs input2s;
-    CompileFunction2<T, K, TT, U, UK, UT, V, VK, VT> fn;
 
-    public SimpleKeyPatternLikeMakeRule2(int priority, @NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull CompileFunction2<T, K, TT, U, UK, UT, V, VK, VT> fn) {
+    public SimpleKeyPatternLikeMakeRule2(int priority, @NotNull Tp pattern, @NotNull CompileFunction2<T, K, TT, U, UK, UT, V, VK, VT> fn, @NotNull Us input1s, @NotNull Vs input2s) {
         this.priority = priority;
         this.pattern = pattern;
+        this.fn = fn;
         this.input1s = input1s;
         this.input2s = input2s;
-        this.fn = fn;
     }
 
     @Override
@@ -61,14 +61,16 @@ public abstract class SimpleKeyPatternLikeMakeRule2<Tp extends IKeyPatternLike<P
             Us extends IParameterizedKeys<Param, UK>, UK, //
             Vs extends IParameterizedKeys<Param, VK>, VK, //
             T extends IKeyData<K, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT, //
-            V extends IKeyData<VK, VT>, VT> {
+            U extends IKeyData<UK, UT>, UT
+            , //
+            V extends IKeyData<VK, VT>, VT
+            > {
 
         protected int priority;
         protected Tp pattern;
+        protected CompileFunction2<T, K, TT, U, UK, UT, V, VK, VT> fn;
         protected Us input1s;
         protected Vs input2s;
-        protected CompileFunction2<T, K, TT, U, UK, UT, V, VK, VT> fn;
 
         public self_t priority(int priority) {
             this.priority = priority;
@@ -80,9 +82,15 @@ public abstract class SimpleKeyPatternLikeMakeRule2<Tp extends IKeyPatternLike<P
             return (self_t) this;
         }
 
+        public self_t fn(@NotNull CompileFunction2<T, K, TT, U, UK, UT, V, VK, VT> fn) {
+            this.fn = fn;
+            return (self_t) this;
+        }
+
         @SuppressWarnings("unchecked")
         public self_t input(@NotNull IParameterizedKeys<?, ?>... inputss) {
             this.input1s = (Us) inputss[0];
+            this.input2s = (Vs) inputss[1];
             return (self_t) this;
         }
 
@@ -93,11 +101,6 @@ public abstract class SimpleKeyPatternLikeMakeRule2<Tp extends IKeyPatternLike<P
 
         public self_t input2(@NotNull Vs input2s) {
             this.input2s = input2s;
-            return (self_t) this;
-        }
-
-        public self_t fn(@NotNull CompileFunction2<T, K, TT, U, UK, UT, V, VK, VT> fn) {
-            this.fn = fn;
             return (self_t) this;
         }
 

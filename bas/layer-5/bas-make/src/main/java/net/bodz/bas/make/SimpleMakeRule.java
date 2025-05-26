@@ -8,9 +8,9 @@ public class SimpleMakeRule<T extends IKeyData<?, ?>>
 
     int priority;
     MakeFunction<T> fn;
-    IKeyData<?, ?>[] inputs;
+    IDataTypedKey<?, ?>[] inputs;
 
-    public SimpleMakeRule(int priority, @NotNull MakeFunction<T> fn, @NotNull IKeyData<?, ?>[] inputs) {
+    public SimpleMakeRule(int priority, @NotNull MakeFunction<T> fn, @NotNull IDataTypedKey<?, ?>... inputs) {
         this.priority = priority;
         this.fn = fn;
         this.inputs = inputs;
@@ -21,10 +21,8 @@ public class SimpleMakeRule<T extends IKeyData<?, ?>>
         return priority;
     }
 
-
-    @NotNull
     @Override
-    public IKeyData<?, ?>[] getInputs() {
+    public IDataTypedKey<?, ?>[] getInputs() {
         return inputs;
     }
 
@@ -41,17 +39,11 @@ public class SimpleMakeRule<T extends IKeyData<?, ?>>
     public static class Builder<T extends IKeyData<?, ?>> {
 
         int priority;
-        IKeyData<?, ?>[] inputs = {};
         MakeFunction<T> fn;
+        IKeyData<?, ?>[] inputs = {};
 
         public Builder<T> priority(int priority) {
             this.priority = priority;
-            return this;
-        }
-
-
-        public Builder<T> input(@NotNull IKeyData<?, ?>... inputs) {
-            this.inputs = inputs;
             return this;
         }
 
@@ -60,11 +52,16 @@ public class SimpleMakeRule<T extends IKeyData<?, ?>>
             return this;
         }
 
+        public Builder<T> input(@NotNull IKeyData<?, ?>... inputs) {
+            this.inputs = inputs;
+            return this;
+        }
+
         public SimpleMakeRule<T> build() {
-            if (inputs == null)
-                throw new NullPointerException("inputs");
             if (fn == null)
                 throw new NullPointerException("fn");
+            if (inputs == null)
+                throw new NullPointerException("inputs");
             return new SimpleMakeRule<>(priority, fn, inputs);
         }
 

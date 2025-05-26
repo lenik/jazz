@@ -13,7 +13,7 @@ import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.map.ListMap;
 
 public class KeyPatternMatch
-        extends IMakeStrategy {
+        implements IMakeStrategy {
 
     ListMap<IKeyPattern<?, ?>, IKeyPatternMakeRule<?, ?, ?, ?, ?>> rulesMap = new ListMap<>();
 
@@ -36,6 +36,7 @@ public class KeyPatternMatch
                 IMakeRule<T> rule = action.getRule();
             }
         }
+        return null;
     }
 
     @SuppressWarnings("unchecked")

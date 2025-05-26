@@ -4,7 +4,7 @@ import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface CompileFunction1<T extends IKeyData<TK, TT>, TK, TT, //
-        U extends IKeyData<UK, UT>, UK, UT>
+        U extends IKeyData<UK, UT>, UK, UT> //
         extends CompileFunction<T> {
 
     @Override

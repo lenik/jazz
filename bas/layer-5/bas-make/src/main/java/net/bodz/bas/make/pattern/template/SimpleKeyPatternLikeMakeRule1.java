@@ -11,19 +11,19 @@ public abstract class SimpleKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<P
         Keys extends IParameterizedKeys<?, ?>, //
         Us extends IParameterizedKeys<Param, UK>, UK, //
         T extends IKeyData<K, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT>
+        U extends IKeyData<UK, UT>, UT> //
         implements IKeyPatternLikeMakeRule1<Tp, Param, K, Keys, Us, UK, T, TT, U, UT> {
 
     int priority;
     Tp pattern;
-    Us input1s;
     CompileFunction1<T, K, TT, U, UK, UT> fn;
+    Us input1s;
 
-    public SimpleKeyPatternLikeMakeRule1(int priority, @NotNull Tp pattern, @NotNull Us input1s, @NotNull CompileFunction1<T, K, TT, U, UK, UT> fn) {
+    public SimpleKeyPatternLikeMakeRule1(int priority, @NotNull Tp pattern, @NotNull CompileFunction1<T, K, TT, U, UK, UT> fn, @NotNull Us input1s) {
         this.priority = priority;
         this.pattern = pattern;
-        this.input1s = input1s;
         this.fn = fn;
+        this.input1s = input1s;
     }
 
     @Override
@@ -51,12 +51,13 @@ public abstract class SimpleKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<P
     public static abstract class Builder<self_t, Tp extends IKeyPatternLike<Param, K>, Param, K, //
             Us extends IParameterizedKeys<Param, UK>, UK, //
             T extends IKeyData<K, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT> {
+            U extends IKeyData<UK, UT>, UT
+            > {
 
         protected int priority;
         protected Tp pattern;
-        protected Us input1s;
         protected CompileFunction1<T, K, TT, U, UK, UT> fn;
+        protected Us input1s;
 
         public self_t priority(int priority) {
             this.priority = priority;
@@ -68,6 +69,11 @@ public abstract class SimpleKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<P
             return (self_t) this;
         }
 
+        public self_t fn(@NotNull CompileFunction1<T, K, TT, U, UK, UT> fn) {
+            this.fn = fn;
+            return (self_t) this;
+        }
+
         @SuppressWarnings("unchecked")
         public self_t input(@NotNull IParameterizedKeys<?, ?>... inputss) {
             this.input1s = (Us) inputss[0];
@@ -76,11 +82,6 @@ public abstract class SimpleKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<P
 
         public self_t input1(@NotNull Us input1s) {
             this.input1s = input1s;
-            return (self_t) this;
-        }
-
-        public self_t fn(@NotNull CompileFunction1<T, K, TT, U, UK, UT> fn) {
-            this.fn = fn;
             return (self_t) this;
         }
 

@@ -6,8 +6,7 @@ import net.bodz.bas.make.IParameterizedKeys;
 import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule0;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimpleKeyPatternMakeRule0<Tp extends IKeyPattern<Param, K>, Param, K, //
-        T extends IKeyData<K, TT>, TT>
+public class SimpleKeyPatternMakeRule0<Tp extends IKeyPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT> //
         extends SimpleKeyPatternLikeMakeRule0<Tp, Param, K, IParameterizedKeys<?, ?>, T, TT>
         implements IKeyPatternMakeRule0<Tp, Param, K, T, TT> {
 
@@ -15,14 +14,14 @@ public class SimpleKeyPatternMakeRule0<Tp extends IKeyPattern<Param, K>, Param, 
         super(priority, pattern, fn);
     }
 
-    public static <Tp extends IKeyPattern<Param, K>, Param, K,   //
+    public static <Tp extends IKeyPattern<Param, K>, Param, K, //
             T extends IKeyData<K, TT>, TT> //
     Builder<Tp, Param, K, T, TT> builder() {
         return new Builder<>();
     }
 
     public static class Builder<Tp extends IKeyPattern<Param, K>, Param, K, //
-            T extends IKeyData<K, TT>, TT>
+            T extends IKeyData<K, TT>, TT> //
             extends SimpleKeyPatternLikeMakeRule0.Builder<Builder<Tp, Param, K, T, TT>, //
             Tp, Param, K, T, TT> {
 

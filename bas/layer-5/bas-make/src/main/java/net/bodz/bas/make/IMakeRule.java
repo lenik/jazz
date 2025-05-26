@@ -6,13 +6,12 @@ import net.bodz.bas.t.order.IPriority;
 public interface IMakeRule<T extends IKeyData<?, ?>>
         extends IPriority {
 
-    @NotNull
-    IKeyData<?, ?>[] getInputs();
+    IDataTypedKey<?, ?>[] getInputs();
 
-    default boolean canMake(IMakeSession session, @NotNull T target) {
+    default boolean canMake(IMakeSession session, @NotNull T target, @NotNull IKeyData<?, ?>... inputs) {
         if (!session.canMake(target))
             return false;
-        for (IKeyData<?, ?> input : getInputs()) {
+        for (IKeyData<?, ?> input : inputs) {
             assert input != null;
             if (!session.canMake(input))
                 return false;
@@ -20,9 +19,6 @@ public interface IMakeRule<T extends IKeyData<?, ?>>
         return true;
     }
 
-    /**
-     * @param inputs Exactly getInputs().
-     */
     void make(@NotNull T target, @NotNull IKeyData<?, ?>... inputs)
             throws MakeException;
 
