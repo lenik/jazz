@@ -16,7 +16,7 @@ public class CodeGen
 
     static final Logger logger = LoggerFactory.getLogger(CodeGen.class);
 
-    int maxCount = 3;
+    int maxCount = 6;
 
     @Override
     public void execute(String... args)
