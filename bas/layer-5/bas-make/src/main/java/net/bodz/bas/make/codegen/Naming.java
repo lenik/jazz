@@ -9,7 +9,10 @@ public class Naming {
             .collect(Collectors.toList()).toArray(new String[0]);
 
     public static String typeVar(int count, int index) {
-        return tvInputs[index];
+        if (count <= tvInputs.length)
+            return tvInputs[index];
+        else
+            return "U" + (index + 1);
     }
 
     public static String inputParam(int count, int index) {

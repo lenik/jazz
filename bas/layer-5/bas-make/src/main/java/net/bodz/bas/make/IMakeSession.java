@@ -7,6 +7,7 @@ import net.bodz.bas.make.fn.CompileFunction3;
 import net.bodz.bas.make.fn.CompileFunction4;
 import net.bodz.bas.make.fn.CompileFunction5;
 import net.bodz.bas.make.fn.CompileFunction6;
+import net.bodz.bas.make.fn.CompileFunction7;
 import net.bodz.bas.make.fn.IMakeable0;
 import net.bodz.bas.make.fn.IMakeable1;
 import net.bodz.bas.make.fn.IMakeable2;
@@ -14,6 +15,7 @@ import net.bodz.bas.make.fn.IMakeable3;
 import net.bodz.bas.make.fn.IMakeable4;
 import net.bodz.bas.make.fn.IMakeable5;
 import net.bodz.bas.make.fn.IMakeable6;
+import net.bodz.bas.make.fn.IMakeable7;
 import net.bodz.bas.make.fn.SimpleMakeRule0;
 import net.bodz.bas.make.fn.SimpleMakeRule1;
 import net.bodz.bas.make.fn.SimpleMakeRule2;
@@ -21,6 +23,7 @@ import net.bodz.bas.make.fn.SimpleMakeRule3;
 import net.bodz.bas.make.fn.SimpleMakeRule4;
 import net.bodz.bas.make.fn.SimpleMakeRule5;
 import net.bodz.bas.make.fn.SimpleMakeRule6;
+import net.bodz.bas.make.fn.SimpleMakeRule7;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKeys;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule0;
@@ -30,6 +33,7 @@ import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule3;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule4;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule5;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule6;
+import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule7;
 import net.bodz.bas.make.pattern.key.IKeyPattern;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule0;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule1;
@@ -38,6 +42,7 @@ import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule3;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule4;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule5;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule6;
+import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule7;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface IMakeSession
@@ -97,6 +102,14 @@ public interface IMakeSession
         addRule(target, //
                 SimpleMakeRule6.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder() //
                         .input(input1, input2, input3, input4, input5, input6) //
+                        .fn(fn).build());
+    }
+
+    default <T extends IKeyData<TK, TT>, TK, TT, U1 extends IKeyData<U1K, U1T>, U1K, U1T, U2 extends IKeyData<U2K, U2T>, U2K, U2T, U3 extends IKeyData<U3K, U3T>, U3K, U3T, U4 extends IKeyData<U4K, U4T>, U4K, U4T, U5 extends IKeyData<U5K, U5T>, U5K, U5T, U6 extends IKeyData<U6K, U6T>, U6K, U6T, U7 extends IKeyData<U7K, U7T>, U7K, U7T> //
+    void addRule(@NotNull T target, U1 input1, U2 input2, U3 input3, U4 input4, U5 input5, U6 input6, U7 input7, @NotNull IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn) {
+        addRule(target, //
+                SimpleMakeRule7.<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
+                        .input(input1, input2, input3, input4, input5, input6, input7) //
                         .fn(fn).build());
     }
 
@@ -178,6 +191,21 @@ public interface IMakeSession
                         .fn(fn).build());
     }
 
+    default <T extends IKeyData<TK, TT>, TK, TT, //
+            U1 extends IKeyData<U1K, U1T>, U1K, U1T, //
+            U2 extends IKeyData<U2K, U2T>, U2K, U2T, //
+            U3 extends IKeyData<U3K, U3T>, U3K, U3T, //
+            U4 extends IKeyData<U4K, U4T>, U4K, U4T, //
+            U5 extends IKeyData<U5K, U5T>, U5K, U5T, //
+            U6 extends IKeyData<U6K, U6T>, U6K, U6T, //
+            U7 extends IKeyData<U7K, U7T>, U7K, U7T> //
+    void addKeyRule(@NotNull TK key, @NotNull U1 input1, @NotNull U2 input2, @NotNull U3 input3, @NotNull U4 input4, @NotNull U5 input5, @NotNull U6 input6, @NotNull U7 input7, @NotNull IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn) {
+        addKeyRule(key, //
+                SimpleMakeRule7.<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
+                        .input(input1, input2, input3, input4, input5, input6, input7) //
+                        .fn(fn).build());
+    }
+
     // rules: key type match
 
     default <T extends IKeyData<TK, TT>, TK, TT> //
@@ -256,6 +284,21 @@ public interface IMakeSession
                         .fn(fn).build());
     }
 
+    default <T extends IKeyData<TK, TT>, TK, TT, //
+            U1 extends IKeyData<U1K, U1T>, U1K, U1T, //
+            U2 extends IKeyData<U2K, U2T>, U2K, U2T, //
+            U3 extends IKeyData<U3K, U3T>, U3K, U3T, //
+            U4 extends IKeyData<U4K, U4T>, U4K, U4T, //
+            U5 extends IKeyData<U5K, U5T>, U5K, U5T, //
+            U6 extends IKeyData<U6K, U6T>, U6K, U6T, //
+            U7 extends IKeyData<U7K, U7T>, U7K, U7T> //
+    void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull U1 input1, @NotNull U2 input2, @NotNull U3 input3, @NotNull U4 input4, @NotNull U5 input5, @NotNull U6 input6, @NotNull U7 input7, @NotNull IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn) {
+        addKeyTypeRule(keyType, //
+                SimpleMakeRule7.<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
+                        .input(input1, input2, input3, input4, input5, input6, input7) //
+                        .fn(fn).build());
+    }
+
     // rules: data type match
 
     default <T extends IKeyData<TK, TT>, TK, TT> //
@@ -331,6 +374,21 @@ public interface IMakeSession
         addRule(dataType, //
                 SimpleMakeRule6.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder() //
                         .input(input1, input2, input3, input4, input5, input6) //
+                        .fn(fn).build());
+    }
+
+    default <T extends IKeyData<TK, TT>, TK, TT, //
+            U1 extends IKeyData<U1K, U1T>, U1K, U1T, //
+            U2 extends IKeyData<U2K, U2T>, U2K, U2T, //
+            U3 extends IKeyData<U3K, U3T>, U3K, U3T, //
+            U4 extends IKeyData<U4K, U4T>, U4K, U4T, //
+            U5 extends IKeyData<U5K, U5T>, U5K, U5T, //
+            U6 extends IKeyData<U6K, U6T>, U6K, U6T, //
+            U7 extends IKeyData<U7K, U7T>, U7K, U7T> //
+    void addRule(@NotNull Class<TT> dataType, @NotNull U1 input1, @NotNull U2 input2, @NotNull U3 input3, @NotNull U4 input4, @NotNull U5 input5, @NotNull U6 input6, @NotNull U7 input7, @NotNull IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn) {
+        addRule(dataType, //
+                SimpleMakeRule7.<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
+                        .input(input1, input2, input3, input4, input5, input6, input7) //
                         .fn(fn).build());
     }
 
@@ -447,6 +505,30 @@ public interface IMakeSession
                         .fn(fn).build());
     }
 
+    default <Tp extends IKeyPattern<Param, K>, Param, K, //
+            U1s extends IParameterizedKeys<Param, U1K>, U1K, //
+            U2s extends IParameterizedKeys<Param, U2K>, U2K, //
+            U3s extends IParameterizedKeys<Param, U3K>, U3K, //
+            U4s extends IParameterizedKeys<Param, U4K>, U4K, //
+            U5s extends IParameterizedKeys<Param, U5K>, U5K, //
+            U6s extends IParameterizedKeys<Param, U6K>, U6K, //
+            U7s extends IParameterizedKeys<Param, U7K>, U7K, //
+            T extends IKeyData<K, TT>, TT, //
+            U1 extends IKeyData<U1K, U1T>, U1T, //
+            U2 extends IKeyData<U2K, U2T>, U2T, //
+            U3 extends IKeyData<U3K, U3T>, U3T, //
+            U4 extends IKeyData<U4K, U4T>, U4T, //
+            U5 extends IKeyData<U5K, U5T>, U5T, //
+            U6 extends IKeyData<U6K, U6T>, U6T, //
+            U7 extends IKeyData<U7K, U7T>, U7T> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull U1s input1s, @NotNull U2s input2s, @NotNull U3s input3s, @NotNull U4s input4s, @NotNull U5s input5s, @NotNull U6s input6s, @NotNull U7s input7s, @NotNull CompileFunction7<T, K, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> fn) {
+        addPatternRule(pattern, //
+                SimpleKeyPatternMakeRule7.<Tp, Param, K, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s, input4s, input5s, input6s, input7s)//
+                        .fn(fn).build());
+    }
+
     // rules: data-typed key pattern
 
     default <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
@@ -557,6 +639,30 @@ public interface IMakeSession
                 SimpleDataTypedKeyPatternMakeRule6.<Tp, Param, K, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT>builder()//
                         .pattern(pattern) //
                         .input(input1s, input2s, input3s, input4s, input5s, input6s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
+            U1s extends IDataTypedParameterizedKeys<Param, U1K, U1T>, U1K, //
+            U2s extends IDataTypedParameterizedKeys<Param, U2K, U2T>, U2K, //
+            U3s extends IDataTypedParameterizedKeys<Param, U3K, U3T>, U3K, //
+            U4s extends IDataTypedParameterizedKeys<Param, U4K, U4T>, U4K, //
+            U5s extends IDataTypedParameterizedKeys<Param, U5K, U5T>, U5K, //
+            U6s extends IDataTypedParameterizedKeys<Param, U6K, U6T>, U6K, //
+            U7s extends IDataTypedParameterizedKeys<Param, U7K, U7T>, U7K, //
+            T extends IKeyData<K, TT>, TT, //
+            U1 extends IKeyData<U1K, U1T>, U1T, //
+            U2 extends IKeyData<U2K, U2T>, U2T, //
+            U3 extends IKeyData<U3K, U3T>, U3T, //
+            U4 extends IKeyData<U4K, U4T>, U4T, //
+            U5 extends IKeyData<U5K, U5T>, U5T, //
+            U6 extends IKeyData<U6K, U6T>, U6T, //
+            U7 extends IKeyData<U7K, U7T>, U7T> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull U1s input1s, @NotNull U2s input2s, @NotNull U3s input3s, @NotNull U4s input4s, @NotNull U5s input5s, @NotNull U6s input6s, @NotNull U7s input7s, @NotNull CompileFunction7<T, K, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> fn) {
+        addPatternRule(pattern, //
+                SimpleDataTypedKeyPatternMakeRule7.<Tp, Param, K, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s, input4s, input5s, input6s, input7s)//
                         .fn(fn).build());
     }
 
