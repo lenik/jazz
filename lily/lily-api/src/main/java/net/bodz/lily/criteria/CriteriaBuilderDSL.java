@@ -12,8 +12,7 @@ import java.time.ZonedDateTime;
 import net.bodz.lily.criterion.ICriterion;
 
 public abstract class CriteriaBuilderDSL<This>
-        implements
-            IReceiver<ICriterion> {
+        implements IReceiver<ICriterion> {
 
     protected String qualify(String fieldName) {
 //        ISqlDialect dialect = DataApps.getPreferred().getDataContext().getOptions().getType().getSqlFormat();
@@ -256,6 +255,20 @@ public abstract class CriteriaBuilderDSL<This>
             super(fieldName, LocalDateTime.class);
         }
 
+        public void matchYear(int year, int month) {
+            LocalDateTime yrStart = LocalDate.of(year, 1, 1).atStartOfDay();
+            LocalDateTime yrEnd1 = yrStart.plusYears(1);
+            LocalDateTime yrEnd = yrEnd1.minusNanos(1);
+            between(yrStart, yrEnd);
+        }
+
+        public void matchYearMonth(int year, int month) {
+            LocalDateTime moStart = LocalDate.of(year, month, 1).atStartOfDay();
+            LocalDateTime moEnd1 = moStart.plusMonths(1);
+            LocalDateTime moEnd = moEnd1.minusNanos(1);
+            between(moStart, moEnd);
+        }
+
     }
 
     public class LocalDateField
@@ -263,6 +276,32 @@ public abstract class CriteriaBuilderDSL<This>
 
         public LocalDateField(String fieldName) {
             super(fieldName, LocalDate.class);
+        }
+
+        public void matchYear(int year) {
+            LocalDate yrStart = LocalDate.of(year, 1, 1);
+            LocalDate yrEnd1 = yrStart.plusYears(1);
+            LocalDate yrEnd = yrEnd1.minusDays(1);
+            between(yrStart, yrEnd);
+        }
+
+        public void matchYearMonth(int year, int month) {
+            LocalDate moStart = LocalDate.of(year, month, 1);
+            LocalDate moEnd1 = moStart.plusMonths(1);
+            LocalDate moEnd = moEnd1.minusDays(1);
+            between(moStart, moEnd);
+        }
+
+        public void matchYearMonths(int year, int monthStart, int monthEnd) {
+            LocalDate moStart = LocalDate.of(year, monthStart, 1);
+            LocalDate moEnd1 = LocalDate.of(year, monthEnd, 1).plusMonths(1);
+            LocalDate moEnd = moEnd1.minusDays(1);
+            between(moStart, moEnd);
+        }
+
+        public void match(int year, int month, int day) {
+            LocalDate date = LocalDate.of(year, month, day);
+            eq(date);
         }
 
     }

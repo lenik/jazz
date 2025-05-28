@@ -21,6 +21,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.meta.source.NotUsed;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
@@ -149,6 +150,7 @@ public class DefaultEntityTypeInfo
         return instance;
     }
 
+    @NotNull
     @Override
     public Class<?> getEntityClass() {
         return entityClass;

@@ -1,6 +1,7 @@
 package net.bodz.lily.entity.type;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.form.IFormDecl;
@@ -11,6 +12,7 @@ public interface IEntityTypeInfo {
 
     Object newInstance();
 
+    @NotNull
     Class<?> getEntityClass();
 
     IType getPotatoType();
