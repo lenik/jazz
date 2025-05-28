@@ -158,10 +158,18 @@ public class MutableTable
     }
 
     public static MutableTable fromObjects(Class<?> type, Collection<?> objects) {
-        DefaultTableMetadata metadata = new DefaultTableMetadata();
+        return fromObjects(type, objects, null);
+    }
+
+    public static MutableTable fromObjects(Class<?> type, Collection<?> objects, ISchema parent) {
+        DefaultTableMetadata metadata = parent == null //
+                ? new DefaultTableMetadata() //
+                : new DefaultTableMetadata(parent.getMetadata());
         metadata.parseClass(type);
 
         MutableTable table = new MutableTable(metadata);
+        if (parent != null)
+            table.setParent(parent);
 
         for (Object obj : objects) {
             IMutableRow row = table.addNewRow();

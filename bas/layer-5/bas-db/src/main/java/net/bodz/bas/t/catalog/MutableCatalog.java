@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.sql.dialect.ISqlDialect;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -31,6 +32,10 @@ public class MutableCatalog
         this.metadata = metadata;
         this.name = metadata.getName();
         this.dialect = metadata.getDialect();
+    }
+
+    public MutableCatalog(@NotNull DataContext dataContext) {
+        this(new DefaultCatalogMetadata(dataContext));
     }
 
     public static MutableCatalog fromSchemaElement(IElement x_schema, String catalogName, ISqlDialect dialect)
@@ -142,7 +147,7 @@ public class MutableCatalog
                 throw new ParseException("No metadata for schema " + key);
 
             JsonObject j_schema = j_schemas.getJsonObject(key);
-            MutableSchema schema = new MutableSchema(schemaMetadata);
+            MutableSchema schema = new MutableSchema(this, schemaMetadata);
             schema.jsonIn(j_schema, opts);
             map.put(key, schema);
         }

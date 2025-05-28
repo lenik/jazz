@@ -13,8 +13,7 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class MutableSchema
-        implements
-            ISchema {
+        implements ISchema {
 
     ICatalog parent;
     SchemaOid id;
@@ -23,12 +22,14 @@ public class MutableSchema
     Map<String, ITable> tables = createMap();
 
     public MutableSchema() {
-        this(null);
+        this(null, null);
     }
 
-    public MutableSchema(ISchemaMetadata metadata) {
-        if (metadata == null)
-            metadata = createMetadata();
+    public MutableSchema(ICatalog catalog, ISchemaMetadata metadata) {
+        this.parent = catalog;
+        if (metadata == null) {
+            metadata = createMetadata(catalog.getMetadata());
+        }
         this.metadata = metadata;
     }
 
@@ -48,8 +49,8 @@ public class MutableSchema
         return metadata;
     }
 
-    protected DefaultSchemaMetadata createMetadata() {
-        DefaultSchemaMetadata dsm = new DefaultSchemaMetadata();
+    protected DefaultSchemaMetadata createMetadata(ICatalogMetadata parent) {
+        DefaultSchemaMetadata dsm = new DefaultSchemaMetadata(parent);
         if (id != null)
             dsm.getId().assign(id.catalogName, id.schemaName);
         return dsm;
@@ -138,6 +139,7 @@ public class MutableSchema
         return removeTable(name);
     }
 
+    @NotNull
     @Override
     public Iterator<ITable> iterator() {
         return tables.values().iterator();
@@ -154,7 +156,7 @@ public class MutableSchema
             throws ParseException {
         JsonObject j_md = o.getJsonObject(K_METADATA);
         if (j_md != null) {
-            DefaultSchemaMetadata metadata = createMetadata();
+            DefaultSchemaMetadata metadata = createMetadata(null);
             metadata.jsonIn(j_md, opts);
             this.metadata = metadata;
         }
@@ -180,7 +182,7 @@ public class MutableSchema
             throws ParseException, LoaderException {
         IElement x_md = x_schema.selectByTag(K_METADATA).getFirst();
         if (x_md != null && x_md.getParentNode() == x_schema) {
-            DefaultSchemaMetadata metadata = createMetadata();
+            DefaultSchemaMetadata metadata = createMetadata(null);
             metadata.readObject(x_md);
             this.metadata = metadata;
         }

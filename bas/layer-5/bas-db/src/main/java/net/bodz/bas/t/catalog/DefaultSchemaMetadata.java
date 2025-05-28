@@ -41,7 +41,7 @@ public class DefaultSchemaMetadata
     String label;
     String description;
 
-    IMutableCatalogMetadata parent;
+    ICatalogMetadata parent;
 
     Map<String, ITableMetadata> tableMap = new LinkedHashMap<>();
     Map<String, IViewMetadata> viewMap = new LinkedHashMap<>();
@@ -55,7 +55,7 @@ public class DefaultSchemaMetadata
     public DefaultSchemaMetadata() {
     }
 
-    public DefaultSchemaMetadata(IMutableCatalogMetadata parent) {
+    public DefaultSchemaMetadata(ICatalogMetadata parent) {
         this.parent = parent;
     }
 
@@ -197,8 +197,8 @@ public class DefaultSchemaMetadata
             } finally {
                 options.leave();
             }
-            if (parent != null)
-                parent.addTable(table);
+            if (parent != null && parent instanceof IMutableCatalogMetadata)
+                ((IMutableCatalogMetadata) parent).addTable(table);
             else
                 addTable(table);
         }

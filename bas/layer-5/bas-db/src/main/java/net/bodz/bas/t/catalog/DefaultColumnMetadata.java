@@ -15,6 +15,7 @@ import javax.xml.stream.XMLStreamException;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.db.sql.DataType;
+import net.bodz.bas.db.sql.IStdDataTypes;
 import net.bodz.bas.db.sql.dialect.ISqlDialect;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
@@ -244,10 +245,11 @@ public class DefaultColumnMetadata
         return dataType;
     }
 
-    public void setDataType(DataType dataType) {
+    public void setDataType(@NotNull DataType dataType) {
         this.dataType = dataType;
         this.sqlType = dataType.getSqlType();
         this.sqlTypeName = dataType.getSqlTypeName();
+        this.sqlClassName = dataType.getSqlClassName();
     }
 
     public void updateDataType() {
@@ -854,6 +856,8 @@ public class DefaultColumnMetadata
         ISqlDialect dialect = getDialect();
         if (dialect != null) {
             DataType dataType = dialect.getDefaultType(javaClass);
+            if (dataType == null)
+                dataType = IStdDataTypes.OTHER;
             setDataType(dataType);
         }
 
