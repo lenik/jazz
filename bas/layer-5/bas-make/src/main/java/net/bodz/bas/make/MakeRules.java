@@ -1,108 +1,156 @@
 package net.bodz.bas.make;
 
-import net.bodz.bas.make.fn.CompileFunction;
-import net.bodz.bas.make.fn.CompileFunction0;
-import net.bodz.bas.make.fn.CompileFunction1;
-import net.bodz.bas.make.fn.MakeFunction;
-import net.bodz.bas.make.fn.IMakeable0;
-import net.bodz.bas.make.fn.IMakeable1;
-import net.bodz.bas.make.fn.SimpleMakeRule0;
-import net.bodz.bas.make.fn.SimpleMakeRule1;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;
-import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKeys;
-import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule;
-import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule0;
-import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule1;
+import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.key.IKeyPattern;
-import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule;
-import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule0;
-import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule1;
+import net.bodz.bas.make.pattern.key.IKeyPatternMakeRule;
+import net.bodz.bas.make.strategy.DataTypeMatch;
+import net.bodz.bas.make.strategy.DataTypedKeyPatternMatch;
+import net.bodz.bas.make.strategy.ExactMatch;
+import net.bodz.bas.make.strategy.IMakeStrategy;
+import net.bodz.bas.make.strategy.KeyMatch;
+import net.bodz.bas.make.strategy.KeyPatternMatch;
+import net.bodz.bas.make.strategy.KeyTypeMatch;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class MakeRules {
+public class MakeRules
+        implements IMakeRules {
 
-    public static <T extends IKeyData<?, ?>> //
-    SimpleMakeRule<T>//
-    toRule(IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
-        return SimpleMakeRule.<T>builder()//
-                .input(inputs)//
-                .fn(fn).build();
+    public final ExactMatch exactMatch = new ExactMatch();
+    public final KeyMatch keyMatch = new KeyMatch();
+    public final KeyTypeMatch keyTypeMatch = new KeyTypeMatch();
+    public final DataTypeMatch dataTypeMatch = new DataTypeMatch();
+    public final KeyPatternMatch keyPatternMatch = new KeyPatternMatch();
+    public final DataTypedKeyPatternMatch dataTypedKeyPatternMatch = new DataTypedKeyPatternMatch();
+
+    IMakeStrategy[] strategies = { //
+            exactMatch, //
+            keyMatch, //
+            keyTypeMatch, //
+            dataTypeMatch, //
+            keyPatternMatch, //
+            dataTypedKeyPatternMatch, //
+    };
+
+    // rules: exact match
+
+    @NotNull
+    @Override
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> getRules(T target) {
+        return exactMatch.getRules(target);
     }
 
-    public static <T extends IKeyData<TK, TT>, TK, TT>//
-    SimpleMakeRule0<T, TK, TT> //
-    toRule(@NotNull IMakeable0<TT> fn) {
-        return SimpleMakeRule0.<T, TK, TT>builder() //
-                .fn(fn).build();
+    @Override
+    public <T extends IKeyData<TK, TT>, TK, TT> void addRule(@NotNull T target, @NotNull IMakeRule<T> rule) {
+        exactMatch.addRule(target, rule);
     }
 
-    public static <T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT> //
-    SimpleMakeRule1<T, TK, TT, U, UK, UT>//
-    toRule(@NotNull T target, U input1, @NotNull IMakeable1<TT, UT> fn) {
-        return SimpleMakeRule1.<T, TK, TT, U, UK, UT>builder() //
-                .input(input1) //
-                .fn(fn).build();
+    // rules: key match
+
+    @Override
+    @NotNull
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> getKeyRules(@NotNull TK key) {
+        return keyMatch.getRules(key);
+    }
+
+    @Override
+    public <T extends IKeyData<TK, TT>, TK, TT> void addKeyRule(@NotNull TK key, @NotNull IMakeRule<T> rule) {
+        keyMatch.addRule(key, rule);
+    }
+
+    // rules: key type
+
+    @Override
+    @NotNull
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> getKeyTypeRules(@NotNull Class<TK> keyType) {
+        return keyTypeMatch.getRules(keyType);
+    }
+
+    @Override
+    public <T extends IKeyData<TK, TT>, TK, TT> void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull IMakeRule<T> rule) {
+        keyTypeMatch.addRule(keyType, rule);
+    }
+
+    // rules: data type
+
+    @Override
+    @NotNull
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> getRules(@NotNull Class<TT> dataType) {
+        return dataTypeMatch.getRules(dataType);
+    }
+
+    @Override
+    public <T extends IKeyData<TK, TT>, TK, TT> void addRule(@NotNull Class<TT> dataType, @NotNull IMakeRule<T> rule) {
+        dataTypeMatch.addRule(dataType, rule);
     }
 
     // rules: key pattern
 
-    public static <Tp extends IKeyPattern<Param, K>, Param, K, //
-            T extends IKeyData<K, TT>, TT> //
-    SimpleKeyPatternMakeRule<Tp, Param, K, T, TT> //
-    toPatternRule(@NotNull Tp pattern, @NotNull IParameterizedKeys<Param, ?>[] inputss, @NotNull CompileFunction<T> fn) {
-        return SimpleKeyPatternMakeRule.<Tp, Param, K, T, TT>builder()//
-                .pattern(pattern) //
-                .input(inputss)//
-                .fn(fn).build();
+    @NotNull
+    @Override
+    public <Tp extends IKeyPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT> //
+    List<IKeyPatternMakeRule<Tp, Param, K, T, TT>> getPatternRules(IKeyPattern<?, ?> pattern) {
+        return keyPatternMatch.getRules(pattern);
     }
 
-    public static <Tp extends IKeyPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT> //
-    SimpleKeyPatternMakeRule0<Tp, Param, K, T, TT> //
-    toPatternRule(@NotNull Tp pattern, @NotNull CompileFunction0<T, K, TT> fn) {
-        return SimpleKeyPatternMakeRule0.<Tp, Param, K, T, TT>builder()//
-                .pattern(pattern) //
-                .fn(fn).build();
-    }
-
-    public static <Tp extends IKeyPattern<Param, K>, Param, K, Us extends IParameterizedKeys<Param, UK>, UK, //
-            T extends IKeyData<K, TT>, TT, U extends IKeyData<UK, UT>, UT> //
-    SimpleKeyPatternMakeRule1<Tp, Param, K, Us, UK, T, TT, U, UT>//
-    toPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull CompileFunction1<T, K, TT, U, UK, UT> fn) {
-        return SimpleKeyPatternMakeRule1.<Tp, Param, K, Us, UK, T, TT, U, UT>builder()//
-                .pattern(pattern) //
-                .input(input1s)//
-                .fn(fn).build();
+    @Override
+    public <Tp extends IKeyPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull IKeyPatternMakeRule<Tp, Param, K, T, TT> rule) {
+        keyPatternMatch.addRule(pattern, rule);
     }
 
     // rules: data typed key pattern
 
-    public static <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
-            T extends IKeyData<K, TT>, TT> //
-    SimpleDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT> //
-    toPatternRule(@NotNull Tp pattern, @NotNull IDataTypedParameterizedKeys<?, ?, ?>[] inputss, @NotNull CompileFunction<T> fn) {
-        return SimpleDataTypedKeyPatternMakeRule.<Tp, Param, K, T, TT>builder()//
-                .pattern(pattern) //
-                .input(inputss)//
-                .fn(fn).build();
+    @NotNull
+    @Override
+    public <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, T extends IKeyData<K, TT>, TT> //
+    List<IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> getPatternRules(IDataTypedKeyPattern<?, ?, ?> pattern) {
+        return dataTypedKeyPatternMatch.getRules(pattern);
     }
 
-    public static <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, T extends IKeyData<K, TT>, TT> //
-    SimpleDataTypedKeyPatternMakeRule0<Tp, Param, K, T, TT> //
-    toPatternRule(@NotNull Tp pattern, @NotNull CompileFunction0<T, K, TT> fn) {
-        return SimpleDataTypedKeyPatternMakeRule0.<Tp, Param, K, T, TT>builder()//
-                .pattern(pattern) //
-                .fn(fn).build();
+    @Override
+    public <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, T extends IKeyData<K, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT> rule) {
+        dataTypedKeyPatternMatch.addRule(pattern, rule);
     }
 
-    public static <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
-            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
-            T extends IKeyData<K, TT>, TT, U extends IKeyData<UK, UT>, UT> //
-    SimpleDataTypedKeyPatternMakeRule1<Tp, Param, K, Us, UK, T, TT, U, UT>//
-    toPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull CompileFunction1<T, K, TT, U, UK, UT> fn) {
-        return SimpleDataTypedKeyPatternMakeRule1.<Tp, Param, K, Us, UK, T, TT, U, UT>builder()//
-                .pattern(pattern) //
-                .input(input1s)//
-                .fn(fn).build();
+    // make
+
+    @Override
+    public boolean canMake(@NotNull IKeyData<?, ?> target, @NotNull IDataBinding binding)
+            throws CompileException {
+        for (IMakeStrategy strategy : strategies)
+            if (strategy.canMake(target, binding))
+                return true;
+        return false;
+    }
+
+    @Override
+    public <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
+            throws CompileException {
+        for (IMakeStrategy strategy : strategies) {
+            IMakeRule<T> rule = strategy.makeDefaultRule(target, binding);
+            if (rule != null)
+                return rule;
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    @NotNull
+    @Override
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> makeRules(@NotNull T target, @NotNull IDataBinding binding)
+            throws CompileException {
+        List<IMakeRule<T>> list = new ArrayList<>();
+        for (IMakeStrategy strategy : strategies) {
+            for (IMakeRule<? extends IKeyData<?, ?>> rule : strategy.makeRules(target, binding)) {
+                list.add((IMakeRule<T>) (IMakeRule<?>) rule);
+            }
+        }
+        return list;
     }
 
 }

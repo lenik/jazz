@@ -11,64 +11,31 @@ import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.key.IKeyPattern;
 import net.bodz.bas.make.pattern.key.IKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule;
-import net.bodz.bas.make.tdk.ITypeDerivedKeyList;
-import net.bodz.bas.make.tdk.ITypeDerivedKeyMap;
-import net.bodz.bas.make.tdk.ITypeDerivedKeySet;
-import net.bodz.bas.make.util.ListKey;
-import net.bodz.bas.make.util.MapKey;
-import net.bodz.bas.make.util.SetKey;
 import net.bodz.bas.meta.decl.NotNull;
 
-public interface IMakeSessionBase {
+public interface IMakeRulesBase {
 
-    <T extends IKeyData<?, ?>> boolean canMake(@NotNull T target);
+    boolean canMake(@NotNull IKeyData<?, ?> target, @NotNull IDataBinding binding)
+            throws CompileException;
 
-    <T extends IKeyData<TK, TT>, TK, TT> void make(T target)
-            throws MakeException;
+    @NotNull
+    <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> makeRules(@NotNull T target, @NotNull IDataBinding binding)
+            throws CompileException;
 
-    // data
-
-    void addData(@NotNull IKeyData<?, ?> entry);
-
-    <K> IKeyData<K, ?> getData(@NotNull K key);
-
-    <T> List<IKeyData<?, T>> findData(@NotNull Class<T> dataClass);
-
-    default <K, E> ITypeDerivedKeyList<K, E> getListData(@NotNull Class<E> elementType, K key) {
-        ListKey<E, K> listKey = new ListKey<>(elementType, key);
-        IKeyData<ListKey<E, K>, ?> _data = getData(listKey);
-        @SuppressWarnings("unchecked")
-        ITypeDerivedKeyList<K, E> data = (ITypeDerivedKeyList<K, E>) _data;
-        return data;
-    }
-
-    default <K, E> ITypeDerivedKeySet<K, E> getSetData(@NotNull Class<E> elementType, K key) {
-        SetKey<E, K> setKey = new SetKey<>(elementType, key);
-        IKeyData<SetKey<E, K>, ?> _data = getData(setKey);
-        @SuppressWarnings("unchecked")
-        ITypeDerivedKeySet<K, E> data = (ITypeDerivedKeySet<K, E>) _data;
-        return data;
-    }
-
-    default <K, EK, EV> ITypeDerivedKeyMap<K, EK, EV> getSetData(@NotNull Class<EK> elementKeyType, Class<EV> elementValueType, K key) {
-        MapKey<EK, EV, K> mapKey = new MapKey<>(elementKeyType, elementValueType, key);
-        IKeyData<MapKey<EK, EV, K>, ?> _data = getData(mapKey);
-        @SuppressWarnings("unchecked")
-        ITypeDerivedKeyMap<K, EK, EV> data = (ITypeDerivedKeyMap<K, EK, EV>) _data;
-        return data;
-    }
+    <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
+            throws CompileException;
 
     // rules: exact match
 
     @NotNull
-    <T extends IKeyData<?, ?>> List<IMakeRule<T>> getRules(T target);
+    <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> getRules(T target);
 
-    <T extends IKeyData<?, ?>> void addRule(@NotNull T target, @NotNull IMakeRule<T> rule);
+    <T extends IKeyData<TK, TT>, TK, TT> void addRule(@NotNull T target, @NotNull IMakeRule<T> rule);
 
-    default <T extends IKeyData<?, ?>> //
+    default <T extends IKeyData<TK, TT>, TK, TT> //
     void addRule(@NotNull T target, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addRule(target, //
-                SimpleMakeRule.<T>builder()//
+                SimpleMakeRule.<T, TK, TT>builder()//
                         .input(inputs)//
                         .fn(fn).build());
     }
@@ -76,14 +43,14 @@ public interface IMakeSessionBase {
     // rules: key match
 
     @NotNull
-    <T extends IKeyData<TK, ?>, TK> List<IMakeRule<T>> getKeyRules(@NotNull TK key);
+    <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> getKeyRules(@NotNull TK key);
 
-    <T extends IKeyData<TK, ?>, TK> void addKeyRule(@NotNull TK key, @NotNull IMakeRule<T> rule);
+    <T extends IKeyData<TK, TT>, TK, TT> void addKeyRule(@NotNull TK key, @NotNull IMakeRule<T> rule);
 
-    default <T extends IKeyData<TK, ?>, TK> //
+    default <T extends IKeyData<TK, TT>, TK, TT> //
     void addKeyRule(@NotNull TK key, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addKeyRule(key, //
-                SimpleMakeRule.<T>builder()//
+                SimpleMakeRule.<T, TK, TT>builder()//
                         .input(inputs)//
                         .fn(fn).build());
     }
@@ -91,14 +58,14 @@ public interface IMakeSessionBase {
     // rules: key type match
 
     @NotNull
-    <T extends IKeyData<TK, ?>, TK> List<IMakeRule<T>> getKeyTypeRules(@NotNull Class<TK> keyType);
+    <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> getKeyTypeRules(@NotNull Class<TK> keyType);
 
-    <T extends IKeyData<TK, ?>, TK> void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull IMakeRule<T> rule);
+    <T extends IKeyData<TK, TT>, TK, TT> void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull IMakeRule<T> rule);
 
-    default <T extends IKeyData<TK, ?>, TK> //
+    default <T extends IKeyData<TK, TT>, TK, TT> //
     void addKeyTypeRule(@NotNull Class<TK> keyType, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addKeyTypeRule(keyType, //
-                SimpleMakeRule.<T>builder()//
+                SimpleMakeRule.<T, TK, TT>builder()//
                         .input(inputs)//
                         .fn(fn).build());
     }
@@ -106,14 +73,14 @@ public interface IMakeSessionBase {
     // rules: data type match
 
     @NotNull
-    <T extends IKeyData<?, TT>, TT> List<IMakeRule<T>> getRules(@NotNull Class<TT> dataType);
+    <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> getRules(@NotNull Class<TT> dataType);
 
-    <T extends IKeyData<?, TT>, TT> void addRule(@NotNull Class<TT> dataType, @NotNull IMakeRule<T> rule);
+    <T extends IKeyData<TK, TT>, TK, TT> void addRule(@NotNull Class<TT> dataType, @NotNull IMakeRule<T> rule);
 
-    default <T extends IKeyData<?, TT>, TT> //
+    default <T extends IKeyData<TK, TT>, TK, TT>//
     void addRule(@NotNull Class<TT> dataType, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addRule(dataType, //
-                SimpleMakeRule.<T>builder()//
+                SimpleMakeRule.<T, TK, TT>builder()//
                         .input(inputs)//
                         .fn(fn).build());
     }

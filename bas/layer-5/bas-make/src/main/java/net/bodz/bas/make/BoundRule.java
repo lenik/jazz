@@ -2,16 +2,20 @@ package net.bodz.bas.make;
 
 import net.bodz.bas.meta.decl.NotNull;
 
-public class MakeAction<T extends IKeyData<?, ?>> {
+public class BoundRule<T extends IKeyData<?, ?>> {
 
     final IMakeRule<T> rule;
     final T target;
     final IKeyData<?, ?>[] inputs;
 
-    public MakeAction(IMakeRule<T> rule, T target, @NotNull IKeyData<?, ?>... inputs) {
+    public BoundRule(IMakeRule<T> rule, T target, @NotNull IKeyData<?, ?>... inputs) {
         this.rule = rule;
         this.target = target;
         this.inputs = inputs;
+    }
+
+    public static <T extends IKeyData<?, ?>> BoundRule<T> of(@NotNull IMakeRule<T> rule, @NotNull T target, @NotNull IKeyData<?, ?>... inputs) {
+        return new BoundRule<T>(rule, target, inputs);
     }
 
     public T getTarget() {

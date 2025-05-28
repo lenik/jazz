@@ -1,10 +1,10 @@
 package net.bodz.bas.make.pattern.template;
 
+import net.bodz.bas.make.BoundRule;
 import net.bodz.bas.make.CompileException;
 import net.bodz.bas.make.IKeyData;
-import net.bodz.bas.make.IMakeSession;
+import net.bodz.bas.make.IDataBinding;
 import net.bodz.bas.make.IParameterizedKeys;
-import net.bodz.bas.make.MakeAction;
 import net.bodz.bas.make.SimpleMakeRule;
 import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.meta.decl.NotNull;
@@ -19,7 +19,7 @@ public interface IKeyPatternLikeMakeRule<Tp extends IKeyPatternLike<Param, K>, P
 
     Keys[] getInputs();
 
-    default MakeAction<T> compile(@NotNull T target, @NotNull IMakeSession session)
+    default BoundRule<T> compile(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         Tp pattern = getPattern();
         Class<? extends Param> paramType = pattern.getParameterType();
@@ -44,7 +44,7 @@ public interface IKeyPatternLikeMakeRule<Tp extends IKeyPatternLike<Param, K>, P
             if (key == null)
                 return null;
 
-            IKeyData<Object, ?> input = session.getData(key);
+            IKeyData<Object, ?> input = binding.getData(key);
             if (input == null)
                 return null;
 
@@ -55,11 +55,11 @@ public interface IKeyPatternLikeMakeRule<Tp extends IKeyPatternLike<Param, K>, P
         if (fn == null)
             return null;
 
-        SimpleMakeRule<T> rule = SimpleMakeRule.<T>builder()//
+        SimpleMakeRule<T, K, TT> rule = SimpleMakeRule.<T, K, TT>builder()//
                 .priority(this.getPriority())//
                 .fn(fn).build();
 
-        MakeAction<T> instance = new MakeAction<>(rule, target);
+        BoundRule<T> instance = new BoundRule<>(rule, target);
         return instance;
     }
 

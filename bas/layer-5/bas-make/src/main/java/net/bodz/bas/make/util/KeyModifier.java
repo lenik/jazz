@@ -2,13 +2,13 @@ package net.bodz.bas.make.util;
 
 import net.bodz.bas.make.IParameterizedKeys;
 
-public class GlobNames
+public class KeyModifier
         implements IParameterizedKeys<String, String> {
 
     String prefix;
     String suffix;
 
-    public GlobNames(String replacement) {
+    public KeyModifier(String replacement) {
         int hash = replacement.indexOf('%');
         if (hash == -1) {
             prefix = replacement;

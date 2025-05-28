@@ -6,6 +6,6 @@ public enum MakeNodeType {
 
     SEQUENCE,
 
-    ACTION,
+    RUN,
 
 }

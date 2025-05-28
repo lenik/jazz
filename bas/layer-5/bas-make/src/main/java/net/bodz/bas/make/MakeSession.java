@@ -1,40 +1,41 @@
 package net.bodz.bas.make;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;
-import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPatternMakeRule;
-import net.bodz.bas.make.pattern.key.IKeyPattern;
-import net.bodz.bas.make.pattern.key.IKeyPatternMakeRule;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.make.plan.IMakeNode;
-import net.bodz.bas.make.strategy.DataTypeMatch;
-import net.bodz.bas.make.strategy.DataTypedKeyPatternMatch;
-import net.bodz.bas.make.strategy.ExactMatch;
-import net.bodz.bas.make.strategy.KeyMatch;
-import net.bodz.bas.make.strategy.KeyPatternMatch;
-import net.bodz.bas.make.strategy.KeyTypeMatch;
+import net.bodz.bas.make.plan.MutableMakeNode;
 import net.bodz.bas.meta.decl.NotNull;
-import net.bodz.bas.t.map.ListMap;
+import net.bodz.bas.t.map.TypeListPmap;
 
 public class MakeSession
         implements IMakeSession {
 
-    // data sources
-    Map<Object, IKeyData<?, ?>> keyMap = new HashMap<>();
-    ListMap<Class<?>, IKeyData<?, ?>> typeListMap = new ListMap<>();
+    MakeRules rules;
 
-    public final ExactMatch exactMatch = new ExactMatch();
-    public final KeyMatch keyMatch = new KeyMatch();
-    public final KeyTypeMatch keyTypeMatch = new KeyTypeMatch();
-    public final DataTypeMatch dataTypeMatch = new DataTypeMatch();
-    public final KeyPatternMatch keyPatternMatch = new KeyPatternMatch();
-    public final DataTypedKeyPatternMatch dataTypedKeyPatternMatch = new DataTypedKeyPatternMatch();
+    Map<Object, IKeyData<?, ?>> keyMap = new HashMap<>();
+    TypeListPmap<IKeyData<?, ?>> keyTypeListMap = new TypeListPmap<>();
+    TypeListPmap<IKeyData<?, ?>> dataTypeListMap = new TypeListPmap<>();
+
+    public MakeSession(@NotNull MakeRules rules) {
+        this.rules = rules;
+    }
+
+    @NotNull
+    @Override
+    public MakeRules getRules() {
+        return rules;
+    }
 
     @Override
-    public void addData(@NotNull IKeyData<?, ?> entry) {
-        keyMap.put(entry.getKey(), entry);
+    public void addData(@NotNull IKeyData<?, ?> keyData) {
+        keyMap.put(keyData.getKey(), keyData);
     }
 
     @Override
@@ -44,113 +45,116 @@ public class MakeSession
         return data;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public <T> List<IKeyData<?, T>> findData(@NotNull Class<T> dataClass) {
-        @SuppressWarnings("unchecked")
-        List<IKeyData<?, T>> list = (List<IKeyData<?, T>>) (List<?>) typeListMap.getOrEmpty(dataClass);
+    public <T> List<IKeyData<?, T>> findData(@NotNull Class<T> dataType, boolean join) {
+        if (join) {
+            return (List<IKeyData<?, T>>) (List<?>) dataTypeListMap.getOrEmpty(dataType);
+        } else {
+            return (List<IKeyData<?, T>>) (List<?>) dataTypeListMap.joinConcatenated(dataType);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <K> List<IKeyData<K, ?>> findDataByKeyType(@NotNull Class<K> keyType, boolean join) {
+        if (join) {
+            return (List<IKeyData<K, ?>>) (List<?>) keyTypeListMap.getOrEmpty(keyType);
+        } else {
+            return (List<IKeyData<K, ?>>) (List<?>) keyTypeListMap.joinConcatenated(keyType);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <K, T> List<IKeyData<K, T>> resolve(@NotNull IDataTypedKey<K, T> dataTypedKey) {
+        if (dataTypedKey instanceof IKeyData<?, ?>)
+            return Collections.singletonList((IKeyData<K, T>) dataTypedKey);
+
+        K key = dataTypedKey.getKey();
+        IKeyData<K, T> data = (IKeyData<K, T>) getData(key);
+        if (data != null)
+            return Collections.singletonList(data);
+
+        List<IKeyData<K, T>> list = new ArrayList<>();
+        for (IKeyData<?, ? extends T> _data : findData(dataTypedKey.getDataType(), true)) {
+            list.add((IKeyData<K, T>) _data);
+        }
+        for (IKeyData<? extends K, ?> _data : findDataByKeyType(dataTypedKey.getKeyType(), true)) {
+            list.add((IKeyData<K, T>) _data);
+        }
         return list;
     }
 
-    // rules: exact match
-
-    @NotNull
-    @Override
-    public <T extends IKeyData<?, ?>> List<IMakeRule<T>> getRules(T target) {
-        return exactMatch.getRules(target);
-    }
-
-    @Override
-    public <T extends IKeyData<?, ?>> void addRule(@NotNull T target, @NotNull IMakeRule<T> rule) {
-        exactMatch.addRule(target, rule);
-    }
-
-    // rules: key match
-
     @Override
     @NotNull
-    public <T extends IKeyData<TK, ?>, TK> List<IMakeRule<T>> getKeyRules(@NotNull TK key) {
-        return keyMatch.getRules(key);
+    public IKeyData<?, ?>[] resolve(@NotNull IDataTypedKey<?, ?>... inputKeys) {
+        IKeyData<?, ?>[] inputs = new IKeyData<?, ?>[inputKeys.length];
+        for (int i = 0; i < inputKeys.length; i++) {
+            IDataTypedKey<?, ?> inputKey = inputKeys[i];
+            List<? extends IKeyData<?, ?>> inputList = resolve(inputKey);
+            if (inputList.isEmpty())
+                throw new IllegalUsageException("can't resolve " + inputKey);
+            if (inputList.size() > 1)
+                throw new IllegalUsageException("ambiguous input key " + inputKey + " => " + inputList);
+            IKeyData<?, ?> input = inputList.get(0);
+            inputs[i] = input;
+        }
+        return inputs;
     }
 
     @Override
-    public <T extends IKeyData<TK, ?>, TK> void addKeyRule(@NotNull TK key, @NotNull IMakeRule<T> rule) {
-        keyMatch.addRule(key, rule);
-    }
+    public IMakeNode makeGraph(@NotNull IKeyData<?, ?> target, boolean reduce)
+            throws CompileException {
+        MutableMakeNode selection = MutableMakeNode.select();
+        for (IMakeRule<? extends IKeyData<?, ?>> rule : getRules().makeRules(target, this)) {
+            IDataTypedKey<?, ?>[] inputKeys = rule.getInputs();
+            IKeyData<?, ?>[] inputs = resolve(inputKeys);
 
-    // rules: key type
+            @SuppressWarnings({ "rawtypes", "unchecked" })
+            BoundRule bound = ((IMakeRule) rule).bind(target, inputs);
+            MutableMakeNode runNode = MutableMakeNode.run(bound);
 
-    @Override
-    @NotNull
-    public <T extends IKeyData<TK, ?>, TK> List<IMakeRule<T>> getKeyTypeRules(@NotNull Class<TK> keyType) {
-        return keyTypeMatch.getRules(keyType);
-    }
+            for (IKeyData<?, ?> input : inputs) {
+                if (input.exists())
+                    continue;
+                IMakeNode inputNode = makeGraph(input, true);
+                if (inputNode == null)
+                    throw new IllegalUsageException("dont know how to make input " + input);
+                runNode.addChild(inputNode);
+            }
 
-    @Override
-    public <T extends IKeyData<TK, ?>, TK> void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull IMakeRule<T> rule) {
-        keyTypeMatch.addRule(keyType, rule);
-    }
-
-    // rules: data type
-
-    @Override
-    @NotNull
-    public <T extends IKeyData<?, TT>, TT> List<IMakeRule<T>> getRules(@NotNull Class<TT> dataType) {
-        return dataTypeMatch.getRules(dataType);
-    }
-
-    @Override
-    public <T extends IKeyData<?, TT>, TT> void addRule(@NotNull Class<TT> dataType, @NotNull IMakeRule<T> rule) {
-        dataTypeMatch.addRule(dataType, rule);
-    }
-
-    // rules: key pattern
-
-    @NotNull
-    @Override
-    public <Tp extends IKeyPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT> //
-    List<IKeyPatternMakeRule<Tp, Param, K, T, TT>> getPatternRules(IKeyPattern<?, ?> pattern) {
-        return keyPatternMatch.getRules(pattern);
-    }
-
-    @Override
-    public <Tp extends IKeyPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT> //
-    void addPatternRule(@NotNull Tp pattern, @NotNull IKeyPatternMakeRule<Tp, Param, K, T, TT> rule) {
-        keyPatternMatch.addRule(pattern, rule);
-    }
-
-    // rules: data typed key pattern
-
-    @NotNull
-    @Override
-    public <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, T extends IKeyData<K, TT>, TT> //
-    List<IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> getPatternRules(IDataTypedKeyPattern<?, ?, ?> pattern) {
-        return dataTypedKeyPatternMatch.getRules(pattern);
-    }
-
-    @Override
-    public <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, T extends IKeyData<K, TT>, TT> //
-    void addPatternRule(@NotNull Tp pattern, @NotNull IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT> rule) {
-        dataTypedKeyPatternMatch.addRule(pattern, rule);
-    }
-
-    // make
-
-    public <T extends IKeyData<TK, TT>, TK, TT> void makePlan(T target) {
-
-    }
-
-    public IMakeNode makeGraph(@NotNull IKeyData<?, ?> target) {
-        return null;
+            selection.addChild(runNode);
+        }
+        if (!reduce)
+            return selection;
+        switch (selection.getChildCount()) {
+            case 0:
+                return null;
+            case 1:
+                return selection.getChildren().get(0);
+            default:
+                return selection;
+        }
     }
 
     @Override
     public <T extends IKeyData<TK, TT>, TK, TT> void make(T target)
             throws MakeException {
-
         if (target.exists())
             return;
 
-        throw new MakeException("can't find a make rule for " + target);
+        IMakeNode plan = makePlan(target);
+        if (plan == null)
+            throw new MakeException("can't find a make rule for " + target);
+
+        ITreeOut out = Stdio.cout.indented();
+        out.println("Make graph for " + target);
+        out.enter();
+        plan.dump(out);
+        out.leave();
+
+        plan.run(a -> true);
     }
 
     //

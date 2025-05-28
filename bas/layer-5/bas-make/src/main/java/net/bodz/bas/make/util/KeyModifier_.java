@@ -3,13 +3,14 @@ package net.bodz.bas.make.util;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKeys;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class GlobStringNames
-        implements IDataTypedParameterizedKeys<String, String, String> {
+public class KeyModifier_<T>
+        implements IDataTypedParameterizedKeys<String, String, T> {
 
     String prefix;
     String suffix;
+    Class<T> dataType;
 
-    public GlobStringNames(String replacement) {
+    public KeyModifier_(String replacement, Class<T> dataType) {
         int hash = replacement.indexOf('%');
         if (hash == -1) {
             prefix = replacement;
@@ -18,6 +19,7 @@ public class GlobStringNames
             prefix = replacement.substring(0, hash);
             suffix = replacement.substring(hash + 1);
         }
+        this.dataType = dataType;
     }
 
     @NotNull
@@ -34,8 +36,8 @@ public class GlobStringNames
 
     @NotNull
     @Override
-    public Class<String> getDataType() {
-        return String.class;
+    public Class<T> getDataType() {
+        return dataType;
     }
 
     @Override

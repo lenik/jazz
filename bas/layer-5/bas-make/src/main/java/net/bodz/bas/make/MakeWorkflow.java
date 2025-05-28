@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.c.object.ClassLiterals;
 import net.bodz.bas.make.util.FileBin;
 import net.bodz.bas.make.util.GlobPathPattern;
 import net.bodz.bas.make.util.GlobPaths;
-import net.bodz.bas.make.util.GlobStringNames;
+import net.bodz.bas.make.util.KeyModifier_;
 import net.bodz.bas.make.util.GlobStringPatternForInt;
 import net.bodz.bas.make.util.NamedDouble;
 import net.bodz.bas.make.util.NamedFloat;
@@ -34,7 +35,8 @@ public class MakeWorkflow {
         FileBin source = FileBin.builder().path(sourceKey).build();
         System.out.println(source);
 
-        MakeSession session = new MakeSession();
+        MakeRules rules = new MakeRules();
+        MakeSession session = new MakeSession(rules);
 
         NamedString name = new NamedString("name", "Lenik");
         NamedFloat age = new NamedFloat("age", 13.f);
@@ -42,36 +44,38 @@ public class MakeWorkflow {
         session.addData(age);
 
         NamedString greet = new NamedString("greet");
-        session.addRule(greet, name, age, (n, a) -> "hello " + n + ", you are " + a + " years now.");
+        rules.addRule(greet, name, age, (n, a) -> "hello " + n + ", you are " + a + " years now.");
 
         NamedInteger greetCount = new NamedInteger("greet_count");
-        session.addRule(greetCount, greet, String::length);
+        rules.addRule(greetCount, greet, String::length);
 
         session.make(greetCount);
-
-        NamedString brand = new NamedString("brand", "IBM");
-        session.addData(brand);
-        NamedInteger brandCount = new NamedInteger("brand_count");
+        System.out.println("greetCount: " + greetCount);
 
         GlobStringPatternForInt countPattern = new GlobStringPatternForInt("%_count");
-//        GlobNames srcNames = new GlobNames("%");
-        GlobStringNames srcNames = new GlobStringNames("%");
+        KeyModifier_<String> justStem_Str = new KeyModifier_<>("%", String.class);
 
-        session.addPatternRule(countPattern, srcNames, //
+        rules.addPatternRule(countPattern, justStem_Str, //
                 (count, input1) -> String::length);
 
-        System.out.println("greet: " + greet);
-        System.out.println("count: " + greetCount.getData());
+        NamedString brand = new NamedString("brand", "IBM And Microsoft");
+        session.addData(brand);
 
-        System.out.println("brand: " + brand);
+        NamedInteger brandCount = new NamedInteger("brand_count");
         session.make(brandCount);
-        System.out.println("count: " + brandCount);
+        System.out.println("brandCount: " + brandCount);
 
         List<String> colorList = new ArrayList<>(Arrays.asList("red", "black", "blue"));
         NamedList<String> colors = (NamedList<String>) new NamedList<>("color", colorList);
+        session.addData(colors);
 
-        NamedInteger colorCount = new NamedInteger("colorCount");
-        session.addRule(colorCount, colors, List::size);
+        //rules.addRule(colorCount, colors, List::size);
+//        GlobNames srcNames = new GlobNames("%");
+        KeyModifier_<List<?>> justStem_List = new KeyModifier_<>("%", ClassLiterals.List_class);
+        rules.addPatternRule(countPattern, justStem_List, //
+                (count, input1) -> List::size);
+
+        NamedInteger colorCount = new NamedInteger("color_count");
         session.make(colorCount);
         System.out.println("List count: " + colorCount);
 
@@ -79,7 +83,7 @@ public class MakeWorkflow {
         NamedList<Double> nums = new NamedList<>("nums", numList);
         NamedDouble sum = new NamedDouble("sum");
 
-        session.addRule(sum, nums, list -> list.stream().mapToDouble(a -> a).sum());
+        rules.addRule(sum, nums, list -> list.stream().mapToDouble(a -> a).sum());
         session.make(sum);
         System.out.println("Sum: " + sum);
     }

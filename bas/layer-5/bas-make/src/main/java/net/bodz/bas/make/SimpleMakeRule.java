@@ -3,7 +3,7 @@ package net.bodz.bas.make;
 import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimpleMakeRule<T extends IKeyData<?, ?>>
+public class SimpleMakeRule<T extends IKeyData<TK, TT>, TK, TT>
         implements IMakeRule<T> {
 
     int priority;
@@ -32,32 +32,32 @@ public class SimpleMakeRule<T extends IKeyData<?, ?>>
         fn.make(target, inputs);
     }
 
-    public static <T extends IKeyData<?, ?>> Builder<T> builder() {
+    public static <T extends IKeyData<TK, TT>, TK, TT> Builder<T, TK, TT> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<T extends IKeyData<?, ?>> {
+    public static class Builder<T extends IKeyData<TK, TT>, TK, TT> {
 
         int priority;
         MakeFunction<T> fn;
         IKeyData<?, ?>[] inputs = {};
 
-        public Builder<T> priority(int priority) {
+        public Builder<T, TK, TT> priority(int priority) {
             this.priority = priority;
             return this;
         }
 
-        public Builder<T> fn(@NotNull MakeFunction<T> fn) {
+        public Builder<T, TK, TT> fn(@NotNull MakeFunction<T> fn) {
             this.fn = fn;
             return this;
         }
 
-        public Builder<T> input(@NotNull IKeyData<?, ?>... inputs) {
+        public Builder<T, TK, TT> input(@NotNull IKeyData<?, ?>... inputs) {
             this.inputs = inputs;
             return this;
         }
 
-        public SimpleMakeRule<T> build() {
+        public SimpleMakeRule<T, TK, TT> build() {
             if (fn == null)
                 throw new NullPointerException("fn");
             if (inputs == null)
