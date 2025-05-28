@@ -1,10 +1,10 @@
 package net.bodz.bas.make.pattern.template;
 
+import net.bodz.bas.make.BoundRule;
 import net.bodz.bas.make.CompileException;
+import net.bodz.bas.make.IDataBinding;
 import net.bodz.bas.make.IKeyData;
-import net.bodz.bas.make.IMakeSession;
 import net.bodz.bas.make.IParameterizedKeys;
-import net.bodz.bas.make.MakeAction;
 import net.bodz.bas.make.fn.IMakeable3;
 import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.make.fn.SimpleMakeRule3;
@@ -33,7 +33,7 @@ public interface IKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, 
     Ws getInput3();
 
     @Override
-    default MakeAction<T> compile(@NotNull T target, @NotNull IMakeSession session)
+    default BoundRule<T> compile(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         Tp pattern = getPattern();
         @SuppressWarnings("unchecked")
@@ -52,7 +52,7 @@ public interface IKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, 
             return null;
 
         @SuppressWarnings("unchecked")
-        U input1 = (U) session.getData(input1Key);
+        U input1 = (U) binding.getData(input1Key);
         if (input1 == null)
             return null;
 
@@ -61,7 +61,7 @@ public interface IKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, 
             return null;
 
         @SuppressWarnings("unchecked")
-        V input2 = (V) session.getData(input2Key);
+        V input2 = (V) binding.getData(input2Key);
         if (input2 == null)
             return null;
 
@@ -70,7 +70,7 @@ public interface IKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, 
             return null;
 
         @SuppressWarnings("unchecked")
-        W input3 = (W) session.getData(input3Key);
+        W input3 = (W) binding.getData(input3Key);
         if (input3 == null)
             return null;
 
@@ -80,9 +80,10 @@ public interface IKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, 
 
         SimpleMakeRule3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> rule = SimpleMakeRule3.<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT>builder()//
                 .priority(this.getPriority())//
+                .input(input1, input2, input3)
                 .fn(fn).build();
 
-        MakeAction<T> instance = new MakeAction<>(rule, target, input1, input2, input3);
+        BoundRule<T> instance = new BoundRule<>(rule, target, input1, input2, input3);
         return instance;
     }
 

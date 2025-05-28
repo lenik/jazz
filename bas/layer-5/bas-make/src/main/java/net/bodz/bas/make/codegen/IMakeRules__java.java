@@ -7,12 +7,12 @@ import net.bodz.bas.t.tuple.QualifiedName;
 
 import static net.bodz.bas.make.codegen.Names.comma;
 
-public class IMakeSession__java
+public class IMakeRules__java
         extends Class__java {
 
     @Override
     public QualifiedName getQName() {
-        return QualifiedName.parse("net.bodz.bas.make.IMakeSession");
+        return QualifiedName.parse("net.bodz.bas.make.IMakeRules");
     }
 
     @Override
@@ -42,12 +42,12 @@ public class IMakeSession__java
             out.printf("import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule%d;\n", inputCount);
         out.printf("import net.bodz.bas.meta.decl.NotNull;\n");
         out.println();
-        out.printf("public interface IMakeSession\n");
+        out.printf("public interface IMakeRules\n");
         out.enter();
         {
             out.enter();
             {
-                out.printf("extends IMakeSessionBase {\n");
+                out.printf("extends IMakeRulesBase {\n");
                 out.leave();
             }
 

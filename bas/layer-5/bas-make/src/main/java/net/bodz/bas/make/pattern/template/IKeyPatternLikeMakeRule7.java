@@ -1,10 +1,10 @@
 package net.bodz.bas.make.pattern.template;
 
+import net.bodz.bas.make.BoundRule;
 import net.bodz.bas.make.CompileException;
+import net.bodz.bas.make.IDataBinding;
 import net.bodz.bas.make.IKeyData;
-import net.bodz.bas.make.IMakeSession;
 import net.bodz.bas.make.IParameterizedKeys;
-import net.bodz.bas.make.MakeAction;
 import net.bodz.bas.make.fn.IMakeable7;
 import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.make.fn.SimpleMakeRule7;
@@ -49,7 +49,7 @@ public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, 
     U7s getInput7();
 
     @Override
-    default MakeAction<T> compile(@NotNull T target, @NotNull IMakeSession session)
+    default BoundRule<T> compile(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         Tp pattern = getPattern();
         @SuppressWarnings("unchecked")
@@ -76,7 +76,7 @@ public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, 
             return null;
 
         @SuppressWarnings("unchecked")
-        U1 input1 = (U1) session.getData(input1Key);
+        U1 input1 = (U1) binding.getData(input1Key);
         if (input1 == null)
             return null;
 
@@ -85,7 +85,7 @@ public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, 
             return null;
 
         @SuppressWarnings("unchecked")
-        U2 input2 = (U2) session.getData(input2Key);
+        U2 input2 = (U2) binding.getData(input2Key);
         if (input2 == null)
             return null;
 
@@ -94,7 +94,7 @@ public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, 
             return null;
 
         @SuppressWarnings("unchecked")
-        U3 input3 = (U3) session.getData(input3Key);
+        U3 input3 = (U3) binding.getData(input3Key);
         if (input3 == null)
             return null;
 
@@ -103,7 +103,7 @@ public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, 
             return null;
 
         @SuppressWarnings("unchecked")
-        U4 input4 = (U4) session.getData(input4Key);
+        U4 input4 = (U4) binding.getData(input4Key);
         if (input4 == null)
             return null;
 
@@ -112,7 +112,7 @@ public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, 
             return null;
 
         @SuppressWarnings("unchecked")
-        U5 input5 = (U5) session.getData(input5Key);
+        U5 input5 = (U5) binding.getData(input5Key);
         if (input5 == null)
             return null;
 
@@ -121,7 +121,7 @@ public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, 
             return null;
 
         @SuppressWarnings("unchecked")
-        U6 input6 = (U6) session.getData(input6Key);
+        U6 input6 = (U6) binding.getData(input6Key);
         if (input6 == null)
             return null;
 
@@ -130,7 +130,7 @@ public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, 
             return null;
 
         @SuppressWarnings("unchecked")
-        U7 input7 = (U7) session.getData(input7Key);
+        U7 input7 = (U7) binding.getData(input7Key);
         if (input7 == null)
             return null;
 
@@ -140,9 +140,10 @@ public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, 
 
         SimpleMakeRule7<T, K, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> rule = SimpleMakeRule7.<T, K, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder()//
                 .priority(this.getPriority())//
+                .input(input1, input2, input3, input4, input5, input6, input7)
                 .fn(fn).build();
 
-        MakeAction<T> instance = new MakeAction<>(rule, target, input1, input2, input3, input4, input5, input6, input7);
+        BoundRule<T> instance = new BoundRule<>(rule, target, input1, input2, input3, input4, input5, input6, input7);
         return instance;
     }
 

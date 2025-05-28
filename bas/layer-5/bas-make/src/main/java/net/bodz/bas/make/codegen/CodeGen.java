@@ -39,7 +39,7 @@ public class CodeGen
                 new SimpleKeyPatternMakeRule__java(), //
                 new IDataTypedKeyPatternMakeRule__java(), //
                 new SimpleDataTypedKeyPatternMakeRule__java(), //
-                new IMakeSession__java(), //
+                new IMakeRules__java(), //
         };
 
         for (int inputCount = 0; inputCount <= maxCount; inputCount++) {
