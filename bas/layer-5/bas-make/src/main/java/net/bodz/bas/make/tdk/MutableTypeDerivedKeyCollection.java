@@ -83,6 +83,7 @@ public abstract class MutableTypeDerivedKeyCollection<CK extends ICollectionKey<
         return elementType;
     }
 
+    @NotNull
     @Override
     public Class<? extends K> getDerivedKeyType() {
         return derivedKeyType;
@@ -107,17 +108,17 @@ public abstract class MutableTypeDerivedKeyCollection<CK extends ICollectionKey<
     public static abstract class Builder<self_t, CK extends ICollectionKey<E, K>, K, C extends Collection<E>, E>
             implements IKeyDataBuilder<self_t, CK, C> {
 
-        protected Class<? extends E> elementType;
-        protected Class<? extends K> derivedKeyType;
+        protected Class<E> elementType;
+        protected Class<K> derivedKeyType;
         protected K derivedKey;
         protected C data;
 
-        public self_t elementType(Class<? extends E> value) {
+        public self_t elementType(Class<E> value) {
             this.elementType = value;
             return (self_t) this;
         }
 
-        public self_t derivedKeyType(Class<? extends K> value) {
+        public self_t derivedKeyType(Class<K> value) {
             this.derivedKeyType = value;
             return (self_t) this;
         }

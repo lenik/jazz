@@ -16,11 +16,13 @@ public interface ITypeDerivedKeyCollection<CK extends ICollectionKey<E, K>, K, C
         return getKey().getElementType();
     }
 
+    @NotNull
     @Override
     default Class<? extends E> getDerivedFromType() {
         return getElementType();
     }
 
+    @NotNull
     @Override
     Class<? extends K> getDerivedKeyType();
 

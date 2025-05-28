@@ -30,7 +30,7 @@ public class MutableTypeDerivedKeySet<K, E>
 
     @Override
     protected SetKey<E, K> createKey(K derivedKey) {
-        return new SetKey<>(elementType, derivedKey);
+        return new SetKey<>(elementType, derivedKeyType, derivedKey);
     }
 
     @SuppressWarnings("unchecked")

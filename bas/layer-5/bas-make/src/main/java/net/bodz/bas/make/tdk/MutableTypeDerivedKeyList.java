@@ -30,7 +30,7 @@ public class MutableTypeDerivedKeyList<K, E>
 
     @Override
     protected ListKey<E, K> createKey(K derivedKey) {
-        return new ListKey<>(elementType, derivedKey);
+        return new ListKey<>(elementType, derivedKeyType, derivedKey);
     }
 
     @SuppressWarnings("unchecked")

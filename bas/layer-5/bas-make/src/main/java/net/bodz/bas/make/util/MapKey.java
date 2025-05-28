@@ -2,18 +2,32 @@ package net.bodz.bas.make.util;
 
 import java.util.Objects;
 
+import net.bodz.bas.make.tdk.ITypeDerivedKey;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class MapKey<EK, EV, K>
-        implements IMapKey<EK, EV, K> {
+        implements IMapKey<EK, EV, K>,
+                   ITypeDerivedKey<EV, K> {
 
     final Class<? extends EK> elementKeyType;
     final Class<? extends EV> elementValueType;
+    final Class<? extends K> keyType;
     final K key;
 
-    public MapKey(@NotNull Class<? extends EK> elementKeyType, @NotNull Class<? extends EV> elementValueType, @NotNull K key) {
+    @SuppressWarnings("unchecked")
+    public MapKey(@NotNull Class<? extends EK> elementKeyType, //
+            @NotNull Class<? extends EV> elementValueType, //
+            @NotNull K key) {
+        this(elementKeyType, elementValueType, (Class<? extends K>) key.getClass(), key);
+    }
+
+    public MapKey(@NotNull Class<? extends EK> elementKeyType, //
+            @NotNull Class<? extends EV> elementValueType, //
+            @NotNull Class<? extends K> keyType, //
+            @NotNull K key) {
         this.elementKeyType = elementKeyType;
         this.elementValueType = elementValueType;
+        this.keyType = keyType;
         this.key = key;
     }
 
@@ -31,7 +45,31 @@ public class MapKey<EK, EV, K>
 
     @NotNull
     @Override
+    public Class<? extends K> getWrappedKeyType() {
+        return keyType;
+    }
+
+    @NotNull
+    @Override
     public K getWrappedKey() {
+        return key;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends EV> getDerivedFromType() {
+        return elementValueType;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends K> getDerivedKeyType() {
+        return keyType;
+    }
+
+    @NotNull
+    @Override
+    public K getDerivedKey() {
         return key;
     }
 
