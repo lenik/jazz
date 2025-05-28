@@ -6,8 +6,7 @@ import net.bodz.bas.t.variant.IVariantMap;
 
 public class SelectOptions
         extends AbstractSelectionRange<SelectOptions>
-        implements
-            IVarMapForm {
+        implements IVarMapForm {
 
     public static final String K_ORDER = "order";
 
@@ -37,6 +36,10 @@ public class SelectOptions
 
     public void setOrders(String orders) {
         this.orders = Orders.parse(orders);
+    }
+
+    public SelectOptions order(String column) {
+        return order(column, true);
     }
 
     public SelectOptions order(String column, boolean ascending) {
