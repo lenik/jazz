@@ -11,6 +11,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.db.sql.DataType;
 import net.bodz.bas.db.sql.DataTypes;
@@ -213,7 +214,8 @@ public abstract class AbstractSqlDialect
 
     @Override
     public DataType getDefaultType(Class<?> javaClass) {
-        return dataTypes.getDefault(javaClass);
+        Class<?> boxed = Primitives.box(javaClass);
+        return dataTypes.getDefault(boxed);
     }
 
 }

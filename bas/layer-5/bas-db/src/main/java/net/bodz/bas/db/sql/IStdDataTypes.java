@@ -16,6 +16,7 @@ public interface IStdDataTypes {
     DataType ARRAY = newType(java.sql.Array.class, Types.ARRAY, "array")//
             .refiner(Refiners.R_ARRAY).build();
     DataType BIGINT = newType(Long.class, Types.BIGINT, "bigint")//
+            .alt(BigInteger.class) //
             .refiner(column -> {
                 if (column.isSigned())
                     return column.isNullable() ? Long.class : long.class;
@@ -24,6 +25,7 @@ public interface IStdDataTypes {
             }).build();
     DataType BINARY = newType(byte[].class, Types.BINARY, "binary").build();
     DataType BIT = newType(Boolean.class, Types.BIT, "bit")//
+            .alt(byte[].class) //
             .refiner(column -> {
                 if (column.getPrecision() > 1)
                     return byte[].class;
@@ -36,11 +38,13 @@ public interface IStdDataTypes {
     DataType BLOB = newType(byte[].class, Types.BLOB, "blob").build();
     DataType BOOLEAN = newType(Boolean.class, Types.BOOLEAN, "boolean").build();
     DataType CHAR = newType(String.class, Types.CHAR, "char")//
+            .alt(Character.class) //
             .refiner(Refiners.R_CHAR).build();
     DataType CLOB = newType(String.class, Types.CLOB, "clob").build(); // java.sql.Clob
     DataType DATALINK = newType(Object.class, Types.DATALINK, "datalink").build();
     DataType DATE = newType(LocalDate.class, Types.DATE, "date").build();
     DataType DECIMAL = newType(BigDecimal.class, Types.DECIMAL, "decimal")//
+            .alt(Short.class, Integer.class, Long.class, BigInteger.class) //
             .refiner(Refiners.R_NUMERIC).build();
     DataType DISTINCT = newType(Object.class, Types.DISTINCT, "distinct").build();
     DataType DOUBLE = newType(Double.class, Types.DOUBLE, "double")//
@@ -48,6 +52,7 @@ public interface IStdDataTypes {
     DataType FLOAT = newType(Double.class, Types.FLOAT, "float")//
             .refiner(Refiners.R_DOUBLE).build();
     DataType INTEGER = newType(Integer.class, Types.INTEGER, "integer")//
+            .alt(Long.class) //
             .refiner(column -> {
                 if (column.isSigned())
                     return column.isNullable() ? Integer.class : int.class;
@@ -72,6 +77,7 @@ public interface IStdDataTypes {
     DataType REF = newType(java.sql.Ref.class, Types.REF, "ref").build();
     DataType ROWID = newType(java.sql.RowId.class, Types.ROWID, "rowid").build();
     DataType SMALLINT = newType(Short.class, Types.SMALLINT, "smallint")//
+            .alt(Integer.class) //
             .refiner(column -> {
                 if (column.isSigned())
                     return column.isNullable() ? Short.class : short.class;
@@ -85,6 +91,7 @@ public interface IStdDataTypes {
     DataType TIMESTAMP_WITH_TIMEZONE = newType(OffsetDateTime.class, Types.TIMESTAMP_WITH_TIMEZONE, "timestamp with timezone").build();
     DataType TIME_WITH_TIMEZONE = newType(OffsetTime.class, Types.TIME_WITH_TIMEZONE, "time with timezone").build();
     DataType TINYINT = newType(Short.class, Types.TINYINT, "tinyint")//
+            .alt(Short.class) //
             .refiner(column -> {
                 if (column.isSigned())
                     return column.isNullable() ? Byte.class : byte.class;
@@ -93,7 +100,6 @@ public interface IStdDataTypes {
             }).build();
     DataType VARBINARY = newType(byte[].class, Types.VARBINARY, "varbinary").build();
     DataType VARCHAR = newType(String.class, Types.VARCHAR, "varchar").build();
-
 }
 
 class Refiners {

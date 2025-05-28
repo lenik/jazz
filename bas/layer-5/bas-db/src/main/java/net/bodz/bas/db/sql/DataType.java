@@ -9,6 +9,7 @@ public class DataType
                    Comparable<DataType> {
 
     final Class<?> javaClass;
+    final Class<?>[] altJavaClasses;
     final int sqlType;
     final String sqlTypeName;
     final boolean sqlTypeDefault;
@@ -17,11 +18,12 @@ public class DataType
     final IRefiner refiner;
     final ISampleGenerator<?> generator;
 
-    DataType(@NotNull Class<?> javaClass, //
+    DataType(@NotNull Class<?> javaClass, @NotNull Class<?>[] altJavaClasses, //
             int sqlType, @NotNull String sqlTypeName, boolean sqlTypeDefault,//
             @NotNull String sqlClassName, Class<?> sqlClass,//
             IRefiner refiner, ISampleGenerator<?> generator) {
         this.javaClass = javaClass;
+        this.altJavaClasses = altJavaClasses;
         this.sqlType = sqlType;
         this.sqlTypeName = sqlTypeName;
         this.sqlTypeDefault = sqlTypeDefault;
@@ -38,6 +40,12 @@ public class DataType
     @Override
     public Class<?> getJavaClass() {
         return javaClass;
+    }
+
+    @NotNull
+    @Override
+    public Class<?>[] getAltJavaClasses() {
+        return altJavaClasses;
     }
 
     @Override
@@ -114,6 +122,7 @@ public class DataType
     public static class Builder {
 
         private Class<?> javaClass;
+        private Class<?>[] altJavaClasses = {};
         private int sqlType;
         private String sqlTypeName;
         private boolean sqlTypeDefault;
@@ -128,6 +137,11 @@ public class DataType
                 sqlClass = javaClass;
             if (sqlClassName == null)
                 sqlClassName = javaClass.getName();
+            return this;
+        }
+
+        public Builder alt(@NotNull Class<?>... altJavaClasses) {
+            this.altJavaClasses = altJavaClasses;
             return this;
         }
 
@@ -170,7 +184,7 @@ public class DataType
         }
 
         public DataType build() {
-            return new DataType(javaClass, sqlType, sqlTypeName, sqlTypeDefault, //
+            return new DataType(javaClass, altJavaClasses, sqlType, sqlTypeName, sqlTypeDefault, //
                     sqlClassName, sqlClass, refiner, generator);
         }
 

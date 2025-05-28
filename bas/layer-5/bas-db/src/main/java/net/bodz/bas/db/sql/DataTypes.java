@@ -5,11 +5,16 @@ import net.bodz.bas.t.map.SetMap;
 public class DataTypes {
 
     final SetMap<Class<?>, DataType> classMap = new SetMap<>();
+    final SetMap<Class<?>, DataType> altClassMap = new SetMap<>();
     final SetMap<Integer, DataType> sqlTypeMap = new SetMap<>();
     final SetMap<String, DataType> sqlTypeNameMap = new SetMap<>();
 
     public DataType getDefault(Class<?> javaClass) {
-        return classMap.getFirstOfSet(javaClass);
+        DataType type = classMap.getFirstOfSet(javaClass);
+        if (type != null)
+            return type;
+        type = altClassMap.getFirstOfSet(javaClass);
+        return type;
     }
 
     public DataType getDefault(int sqlType) {
@@ -27,12 +32,18 @@ public class DataTypes {
 
     public void add(DataType type) {
         classMap.addToSet(type.getJavaClass(), type);
+        for (Class<?> altClass : type.altJavaClasses)
+            altClassMap.addToSet(altClass, type);
+
         sqlTypeMap.addToSet(type.getSqlType(), type);
         sqlTypeNameMap.addToSet(type.getSqlTypeName(), type);
     }
 
     public void remove(DataType type) {
         classMap.removeFromSet(type.getJavaClass(), type);
+        for (Class<?> altClass : type.altJavaClasses)
+            altClassMap.removeFromSet(altClass, type);
+
         sqlTypeMap.removeFromSet(type.getSqlType(), type);
         sqlTypeNameMap.removeFromSet(type.getSqlTypeName(), type);
     }

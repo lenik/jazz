@@ -10,6 +10,9 @@ public interface IDataType {
     @NotNull
     Class<?> getJavaClass();
 
+    @NotNull
+    Class<?>[] getAltJavaClasses();
+
     int getSqlType();
 
     default SqlTypeEnum getSqlTypeEnum() {
