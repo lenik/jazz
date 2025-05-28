@@ -34,9 +34,10 @@ public class ErrorRecoverer
         }
     }
 
+    @Override
     public <T, X extends Throwable> IRunner1<T> run(SupplierThrows<T, X> supplier, String message) {
         try {
-            T context = supplier.supply();
+            T context = supplier.get();
             return new Runner1<>(context);
         } catch (Throwable e) {
             logger.error(e, message);
