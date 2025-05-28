@@ -13,9 +13,8 @@ public class GenericAnnotationFn {
     Set<Class<? extends Annotation>> concreteAnnotationClasses = new HashSet<Class<? extends Annotation>>();
 
     public GenericAnnotationFn(Class<? extends Annotation> genericAnnotationType) {
-        for (Class<?> c : IndexedTypes.list(genericAnnotationType, true)) {
-            @SuppressWarnings("unchecked")
-            Class<? extends Annotation> aClass = (Class<? extends Annotation>) c;
+        for (Class<? extends Annotation> c : IndexedTypes.list(genericAnnotationType, true)) {
+            Class<? extends Annotation> aClass = c;
             concreteAnnotationClasses.add(aClass);
         }
     }
