@@ -1,3 +1,4 @@
+net.bodz.bas.codegen.java.IndentedOutPrintsCompiler
 net.bodz.bas.codegen.java.ToCodegen
 net.bodz.bas.codegen.java.TypeCollectorApp
 net.bodz.bas.codegen.java.ioforms.IOFormsGenerator

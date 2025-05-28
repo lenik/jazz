@@ -1,3 +1,4 @@
+main 2print = net.bodz.bas.codegen.java.IndentedOutPrintsCompiler
 main codegen = net.bodz.bas.codegen.java.ToCodegen
 main fixbatbb = net.bodz.bas.codegen.win32.Fix_BatBB
 main ioforms = net.bodz.bas.codegen.java.ioforms.IOFormsGenerator
