@@ -6,31 +6,31 @@ import net.bodz.bas.make.fn.CompileFunction5;
 import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule5;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimpleKeyPatternMakeRule5<Tp extends IKeyPattern<Param, K>, Param, K, Us extends IParameterizedKeys<Param, UK>, UK, //
+public class SimpleTargetPatternMakeRule5<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, Us extends IParameterizedKeys<Param, UK>, UK, //
         Vs extends IParameterizedKeys<Param, VK>, VK, //
         Ws extends IParameterizedKeys<Param, WK>, WK, //
         Xs extends IParameterizedKeys<Param, XK>, XK, //
         Ys extends IParameterizedKeys<Param, YK>, YK, //
-        T extends IKeyData<K, TT>, TT, //
+        T extends IKeyData<TK, TT>, TT, //
         U extends IKeyData<UK, UT>, UT, //
         V extends IKeyData<VK, VT>, VT, //
         W extends IKeyData<WK, WT>, WT, //
         X extends IKeyData<XK, XT>, XT, //
         Y extends IKeyData<YK, YT>, YT> //
-        extends SimpleKeyPatternLikeMakeRule5<Tp, Param, K, IParameterizedKeys<?, ?>, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT>
-        implements IKeyPatternMakeRule5<Tp, Param, K, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT> {
+        extends SimpleKeyPatternLikeMakeRule5<Tp, Param, TK, IParameterizedKeys<?, ?>, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT>
+        implements ITargetPatternMakeRule5<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT> {
 
-    public SimpleKeyPatternMakeRule5(int priority, @NotNull Tp pattern, @NotNull CompileFunction5<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> fn, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull Xs input4s, @NotNull Ys input5s) {
+    public SimpleTargetPatternMakeRule5(int priority, @NotNull Tp pattern, @NotNull CompileFunction5<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> fn, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull Xs input4s, @NotNull Ys input5s) {
         super(priority, pattern, fn, input1s, input2s, input3s, input4s, input5s);
     }
 
-    public static <Tp extends IKeyPattern<Param, K>, Param, K, //
+    public static <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
             Us extends IParameterizedKeys<Param, UK>, UK, //
             Vs extends IParameterizedKeys<Param, VK>, VK, //
             Ws extends IParameterizedKeys<Param, WK>, WK, //
             Xs extends IParameterizedKeys<Param, XK>, XK, //
             Ys extends IParameterizedKeys<Param, YK>, YK, //
-            T extends IKeyData<K, TT>, TT, //
+            T extends IKeyData<TK, TT>, TT, //
             U extends IKeyData<UK, UT>, UT
             , //
             V extends IKeyData<VK, VT>, VT
@@ -41,17 +41,17 @@ public class SimpleKeyPatternMakeRule5<Tp extends IKeyPattern<Param, K>, Param, 
             , //
             Y extends IKeyData<YK, YT>, YT
             > //
-    Builder<Tp, Param, K, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT> builder() {
+    Builder<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<Tp extends IKeyPattern<Param, K>, Param, K, //
+    public static class Builder<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
             Us extends IParameterizedKeys<Param, UK>, UK, //
             Vs extends IParameterizedKeys<Param, VK>, VK, //
             Ws extends IParameterizedKeys<Param, WK>, WK, //
             Xs extends IParameterizedKeys<Param, XK>, XK, //
             Ys extends IParameterizedKeys<Param, YK>, YK, //
-            T extends IKeyData<K, TT>, TT, //
+            T extends IKeyData<TK, TT>, TT, //
             U extends IKeyData<UK, UT>, UT
             , //
             V extends IKeyData<VK, VT>, VT
@@ -62,10 +62,10 @@ public class SimpleKeyPatternMakeRule5<Tp extends IKeyPattern<Param, K>, Param, 
             , //
             Y extends IKeyData<YK, YT>, YT
             > //
-            extends SimpleKeyPatternLikeMakeRule5.Builder<Builder<Tp, Param, K, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT>, //
-            Tp, Param, K, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT> {
+            extends SimpleKeyPatternLikeMakeRule5.Builder<Builder<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT>, //
+            Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT> {
 
-        public SimpleKeyPatternMakeRule5<Tp, Param, K, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT> build() {
+        public SimpleTargetPatternMakeRule5<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT> build() {
             if (pattern == null)
                 throw new NullPointerException("pattern");
             if (fn == null)
@@ -80,7 +80,7 @@ public class SimpleKeyPatternMakeRule5<Tp extends IKeyPattern<Param, K>, Param, 
                 throw new NullPointerException("input4s");
             if (input5s == null)
                 throw new NullPointerException("input5s");
-            return new SimpleKeyPatternMakeRule5<>(priority, pattern, fn, input1s, input2s, input3s, input4s, input5s);
+            return new SimpleTargetPatternMakeRule5<>(priority, pattern, fn, input1s, input2s, input3s, input4s, input5s);
         }
 
     }

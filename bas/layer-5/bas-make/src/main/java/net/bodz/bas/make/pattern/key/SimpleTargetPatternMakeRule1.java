@@ -6,8 +6,7 @@ import net.bodz.bas.make.fn.CompileFunction1;
 import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule1;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimpleTargetPatternMakeRule1<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
-        Us extends IParameterizedKeys<Param, UK>, UK, //
+public class SimpleTargetPatternMakeRule1<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, Us extends IParameterizedKeys<Param, UK>, UK, //
         T extends IKeyData<TK, TT>, TT, //
         U extends IKeyData<UK, UT>, UT> //
         extends SimpleKeyPatternLikeMakeRule1<Tp, Param, TK, IParameterizedKeys<?, ?>, Us, UK, T, TT, U, UT>
@@ -20,7 +19,8 @@ public class SimpleTargetPatternMakeRule1<Tp extends ITargetPattern<Param, T, TK
     public static <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
             Us extends IParameterizedKeys<Param, UK>, UK, //
             T extends IKeyData<TK, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT> //
+            U extends IKeyData<UK, UT>, UT
+            > //
     Builder<Tp, Param, TK, Us, UK, T, TT, U, UT> builder() {
         return new Builder<>();
     }
@@ -28,7 +28,8 @@ public class SimpleTargetPatternMakeRule1<Tp extends ITargetPattern<Param, T, TK
     public static class Builder<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
             Us extends IParameterizedKeys<Param, UK>, UK, //
             T extends IKeyData<TK, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT> //
+            U extends IKeyData<UK, UT>, UT
+            > //
             extends SimpleKeyPatternLikeMakeRule1.Builder<Builder<Tp, Param, TK, Us, UK, T, TT, U, UT>, //
             Tp, Param, TK, Us, UK, T, TT, U, UT> {
 

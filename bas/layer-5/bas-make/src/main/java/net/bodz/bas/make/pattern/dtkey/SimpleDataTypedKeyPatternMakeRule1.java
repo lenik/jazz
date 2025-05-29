@@ -7,8 +7,7 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public class SimpleDataTypedKeyPatternMakeRule1<Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
         Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
-        T extends IKeyData<K, TT>, TT
-        , //
+        T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT> //
         extends SimpleKeyPatternLikeMakeRule1<Tp, Param, K, IDataTypedParameterizedKeys<?, ?, ?>, Us, UK, T, TT, U, UT>
         implements IDataTypedKeyPatternMakeRule1<Tp, Param, K, Us, UK, T, TT, U, UT> {

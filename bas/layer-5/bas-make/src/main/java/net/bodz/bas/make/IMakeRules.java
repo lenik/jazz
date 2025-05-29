@@ -1,31 +1,9 @@
 package net.bodz.bas.make;
 
-import net.bodz.bas.make.fn.CompileFunction0;
-import net.bodz.bas.make.fn.CompileFunction1;
-import net.bodz.bas.make.fn.CompileFunction2;
-import net.bodz.bas.make.fn.CompileFunction3;
-import net.bodz.bas.make.fn.CompileFunction4;
-import net.bodz.bas.make.fn.CompileFunction5;
-import net.bodz.bas.make.fn.CompileFunction6;
-import net.bodz.bas.make.fn.CompileFunction7;
-import net.bodz.bas.make.fn.IMakeable0;
-import net.bodz.bas.make.fn.IMakeable1;
-import net.bodz.bas.make.fn.IMakeable2;
-import net.bodz.bas.make.fn.IMakeable3;
-import net.bodz.bas.make.fn.IMakeable4;
-import net.bodz.bas.make.fn.IMakeable5;
-import net.bodz.bas.make.fn.IMakeable6;
-import net.bodz.bas.make.fn.IMakeable7;
-import net.bodz.bas.make.fn.SimpleMakeRule0;
-import net.bodz.bas.make.fn.SimpleMakeRule1;
-import net.bodz.bas.make.fn.SimpleMakeRule2;
-import net.bodz.bas.make.fn.SimpleMakeRule3;
-import net.bodz.bas.make.fn.SimpleMakeRule4;
-import net.bodz.bas.make.fn.SimpleMakeRule5;
-import net.bodz.bas.make.fn.SimpleMakeRule6;
-import net.bodz.bas.make.fn.SimpleMakeRule7;
+import net.bodz.bas.make.fn.*;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKeys;
+import net.bodz.bas.make.pattern.dtkey.IDataTypedTargetPattern;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule0;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule1;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule2;
@@ -34,7 +12,16 @@ import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule4;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule5;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule6;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule7;
+import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTargetPatternMakeRule0;
+import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTargetPatternMakeRule1;
+import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTargetPatternMakeRule2;
+import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTargetPatternMakeRule3;
+import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTargetPatternMakeRule4;
+import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTargetPatternMakeRule5;
+import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTargetPatternMakeRule6;
+import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTargetPatternMakeRule7;
 import net.bodz.bas.make.pattern.key.IKeyPattern;
+import net.bodz.bas.make.pattern.key.ITargetPattern;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule0;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule1;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule2;
@@ -43,6 +30,14 @@ import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule4;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule5;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule6;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule7;
+import net.bodz.bas.make.pattern.key.SimpleTargetPatternMakeRule0;
+import net.bodz.bas.make.pattern.key.SimpleTargetPatternMakeRule1;
+import net.bodz.bas.make.pattern.key.SimpleTargetPatternMakeRule2;
+import net.bodz.bas.make.pattern.key.SimpleTargetPatternMakeRule3;
+import net.bodz.bas.make.pattern.key.SimpleTargetPatternMakeRule4;
+import net.bodz.bas.make.pattern.key.SimpleTargetPatternMakeRule5;
+import net.bodz.bas.make.pattern.key.SimpleTargetPatternMakeRule6;
+import net.bodz.bas.make.pattern.key.SimpleTargetPatternMakeRule7;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface IMakeRules
@@ -661,6 +656,280 @@ public interface IMakeRules
     void addPatternRule(@NotNull Tp pattern, @NotNull U1s input1s, @NotNull U2s input2s, @NotNull U3s input3s, @NotNull U4s input4s, @NotNull U5s input5s, @NotNull U6s input6s, @NotNull U7s input7s, @NotNull CompileFunction7<T, K, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> fn) {
         addPatternRule(pattern, //
                 SimpleDataTypedKeyPatternMakeRule7.<Tp, Param, K, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s, input4s, input5s, input6s, input7s)//
+                        .fn(fn).build());
+    }
+
+    // rules: target pattern
+
+    default <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+            T extends IKeyData<TK, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull CompileFunction0<T, TK, TT> fn) {
+        addPatternRule(pattern, //
+                SimpleTargetPatternMakeRule0.<Tp, Param, TK, T, TT>builder()//
+                        .pattern(pattern) //
+                        .fn(fn).build());
+    }
+
+    default <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IParameterizedKeys<Param, UK>, UK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull CompileFunction1<T, TK, TT, U, UK, UT> fn) {
+        addPatternRule(pattern, //
+                SimpleTargetPatternMakeRule1.<Tp, Param, TK, Us, UK, T, TT, U, UT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IParameterizedKeys<Param, UK>, UK, //
+            Vs extends IParameterizedKeys<Param, VK>, VK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT, //
+            V extends IKeyData<VK, VT>, VT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull CompileFunction2<T, TK, TT, U, UK, UT, V, VK, VT> fn) {
+        addPatternRule(pattern, //
+                SimpleTargetPatternMakeRule2.<Tp, Param, TK, Us, UK, Vs, VK, T, TT, U, UT, V, VT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IParameterizedKeys<Param, UK>, UK, //
+            Vs extends IParameterizedKeys<Param, VK>, VK, //
+            Ws extends IParameterizedKeys<Param, WK>, WK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT, //
+            V extends IKeyData<VK, VT>, VT, //
+            W extends IKeyData<WK, WT>, WT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull CompileFunction3<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn) {
+        addPatternRule(pattern, //
+                SimpleTargetPatternMakeRule3.<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IParameterizedKeys<Param, UK>, UK, //
+            Vs extends IParameterizedKeys<Param, VK>, VK, //
+            Ws extends IParameterizedKeys<Param, WK>, WK, //
+            Xs extends IParameterizedKeys<Param, XK>, XK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT, //
+            V extends IKeyData<VK, VT>, VT, //
+            W extends IKeyData<WK, WT>, WT, //
+            X extends IKeyData<XK, XT>, XT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull Xs input4s, @NotNull CompileFunction4<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT> fn) {
+        addPatternRule(pattern, //
+                SimpleTargetPatternMakeRule4.<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, T, TT, U, UT, V, VT, W, WT, X, XT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s, input4s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IParameterizedKeys<Param, UK>, UK, //
+            Vs extends IParameterizedKeys<Param, VK>, VK, //
+            Ws extends IParameterizedKeys<Param, WK>, WK, //
+            Xs extends IParameterizedKeys<Param, XK>, XK, //
+            Ys extends IParameterizedKeys<Param, YK>, YK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT, //
+            V extends IKeyData<VK, VT>, VT, //
+            W extends IKeyData<WK, WT>, WT, //
+            X extends IKeyData<XK, XT>, XT, //
+            Y extends IKeyData<YK, YT>, YT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull Xs input4s, @NotNull Ys input5s, @NotNull CompileFunction5<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> fn) {
+        addPatternRule(pattern, //
+                SimpleTargetPatternMakeRule5.<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s, input4s, input5s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IParameterizedKeys<Param, UK>, UK, //
+            Vs extends IParameterizedKeys<Param, VK>, VK, //
+            Ws extends IParameterizedKeys<Param, WK>, WK, //
+            Xs extends IParameterizedKeys<Param, XK>, XK, //
+            Ys extends IParameterizedKeys<Param, YK>, YK, //
+            Zs extends IParameterizedKeys<Param, ZK>, ZK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT, //
+            V extends IKeyData<VK, VT>, VT, //
+            W extends IKeyData<WK, WT>, WT, //
+            X extends IKeyData<XK, XT>, XT, //
+            Y extends IKeyData<YK, YT>, YT, //
+            Z extends IKeyData<ZK, ZT>, ZT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull Xs input4s, @NotNull Ys input5s, @NotNull Zs input6s, @NotNull CompileFunction6<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> fn) {
+        addPatternRule(pattern, //
+                SimpleTargetPatternMakeRule6.<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s, input4s, input5s, input6s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+            U1s extends IParameterizedKeys<Param, U1K>, U1K, //
+            U2s extends IParameterizedKeys<Param, U2K>, U2K, //
+            U3s extends IParameterizedKeys<Param, U3K>, U3K, //
+            U4s extends IParameterizedKeys<Param, U4K>, U4K, //
+            U5s extends IParameterizedKeys<Param, U5K>, U5K, //
+            U6s extends IParameterizedKeys<Param, U6K>, U6K, //
+            U7s extends IParameterizedKeys<Param, U7K>, U7K, //
+            T extends IKeyData<TK, TT>, TT, //
+            U1 extends IKeyData<U1K, U1T>, U1T, //
+            U2 extends IKeyData<U2K, U2T>, U2T, //
+            U3 extends IKeyData<U3K, U3T>, U3T, //
+            U4 extends IKeyData<U4K, U4T>, U4T, //
+            U5 extends IKeyData<U5K, U5T>, U5T, //
+            U6 extends IKeyData<U6K, U6T>, U6T, //
+            U7 extends IKeyData<U7K, U7T>, U7T> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull U1s input1s, @NotNull U2s input2s, @NotNull U3s input3s, @NotNull U4s input4s, @NotNull U5s input5s, @NotNull U6s input6s, @NotNull U7s input7s, @NotNull CompileFunction7<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> fn) {
+        addPatternRule(pattern, //
+                SimpleTargetPatternMakeRule7.<Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s, input4s, input5s, input6s, input7s)//
+                        .fn(fn).build());
+    }
+
+    // rules: data-typed target pattern
+
+    default <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
+            T extends IKeyData<TK, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull CompileFunction0<T, TK, TT> fn) {
+        addPatternRule(pattern, //
+                SimpleDataTypedTargetPatternMakeRule0.<Tp, Param, TK, T, TT>builder()//
+                        .pattern(pattern) //
+                        .fn(fn).build());
+    }
+
+    default <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull CompileFunction1<T, TK, TT, U, UK, UT> fn) {
+        addPatternRule(pattern, //
+                SimpleDataTypedTargetPatternMakeRule1.<Tp, Param, TK, Us, UK, T, TT, U, UT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
+            Vs extends IDataTypedParameterizedKeys<Param, VK, VT>, VK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT, //
+            V extends IKeyData<VK, VT>, VT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull CompileFunction2<T, TK, TT, U, UK, UT, V, VK, VT> fn) {
+        addPatternRule(pattern, //
+                SimpleDataTypedTargetPatternMakeRule2.<Tp, Param, TK, Us, UK, Vs, VK, T, TT, U, UT, V, VT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
+            Vs extends IDataTypedParameterizedKeys<Param, VK, VT>, VK, //
+            Ws extends IDataTypedParameterizedKeys<Param, WK, WT>, WK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT, //
+            V extends IKeyData<VK, VT>, VT, //
+            W extends IKeyData<WK, WT>, WT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull CompileFunction3<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn) {
+        addPatternRule(pattern, //
+                SimpleDataTypedTargetPatternMakeRule3.<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
+            Vs extends IDataTypedParameterizedKeys<Param, VK, VT>, VK, //
+            Ws extends IDataTypedParameterizedKeys<Param, WK, WT>, WK, //
+            Xs extends IDataTypedParameterizedKeys<Param, XK, XT>, XK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT, //
+            V extends IKeyData<VK, VT>, VT, //
+            W extends IKeyData<WK, WT>, WT, //
+            X extends IKeyData<XK, XT>, XT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull Xs input4s, @NotNull CompileFunction4<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT> fn) {
+        addPatternRule(pattern, //
+                SimpleDataTypedTargetPatternMakeRule4.<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, T, TT, U, UT, V, VT, W, WT, X, XT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s, input4s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
+            Vs extends IDataTypedParameterizedKeys<Param, VK, VT>, VK, //
+            Ws extends IDataTypedParameterizedKeys<Param, WK, WT>, WK, //
+            Xs extends IDataTypedParameterizedKeys<Param, XK, XT>, XK, //
+            Ys extends IDataTypedParameterizedKeys<Param, YK, YT>, YK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT, //
+            V extends IKeyData<VK, VT>, VT, //
+            W extends IKeyData<WK, WT>, WT, //
+            X extends IKeyData<XK, XT>, XT, //
+            Y extends IKeyData<YK, YT>, YT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull Xs input4s, @NotNull Ys input5s, @NotNull CompileFunction5<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> fn) {
+        addPatternRule(pattern, //
+                SimpleDataTypedTargetPatternMakeRule5.<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s, input4s, input5s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
+            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
+            Vs extends IDataTypedParameterizedKeys<Param, VK, VT>, VK, //
+            Ws extends IDataTypedParameterizedKeys<Param, WK, WT>, WK, //
+            Xs extends IDataTypedParameterizedKeys<Param, XK, XT>, XK, //
+            Ys extends IDataTypedParameterizedKeys<Param, YK, YT>, YK, //
+            Zs extends IDataTypedParameterizedKeys<Param, ZK, ZT>, ZK, //
+            T extends IKeyData<TK, TT>, TT, //
+            U extends IKeyData<UK, UT>, UT, //
+            V extends IKeyData<VK, VT>, VT, //
+            W extends IKeyData<WK, WT>, WT, //
+            X extends IKeyData<XK, XT>, XT, //
+            Y extends IKeyData<YK, YT>, YT, //
+            Z extends IKeyData<ZK, ZT>, ZT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull Xs input4s, @NotNull Ys input5s, @NotNull Zs input6s, @NotNull CompileFunction6<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> fn) {
+        addPatternRule(pattern, //
+                SimpleDataTypedTargetPatternMakeRule6.<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT>builder()//
+                        .pattern(pattern) //
+                        .input(input1s, input2s, input3s, input4s, input5s, input6s)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
+            U1s extends IDataTypedParameterizedKeys<Param, U1K, U1T>, U1K, //
+            U2s extends IDataTypedParameterizedKeys<Param, U2K, U2T>, U2K, //
+            U3s extends IDataTypedParameterizedKeys<Param, U3K, U3T>, U3K, //
+            U4s extends IDataTypedParameterizedKeys<Param, U4K, U4T>, U4K, //
+            U5s extends IDataTypedParameterizedKeys<Param, U5K, U5T>, U5K, //
+            U6s extends IDataTypedParameterizedKeys<Param, U6K, U6T>, U6K, //
+            U7s extends IDataTypedParameterizedKeys<Param, U7K, U7T>, U7K, //
+            T extends IKeyData<TK, TT>, TT, //
+            U1 extends IKeyData<U1K, U1T>, U1T, //
+            U2 extends IKeyData<U2K, U2T>, U2T, //
+            U3 extends IKeyData<U3K, U3T>, U3T, //
+            U4 extends IKeyData<U4K, U4T>, U4T, //
+            U5 extends IKeyData<U5K, U5T>, U5T, //
+            U6 extends IKeyData<U6K, U6T>, U6T, //
+            U7 extends IKeyData<U7K, U7T>, U7T> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull U1s input1s, @NotNull U2s input2s, @NotNull U3s input3s, @NotNull U4s input4s, @NotNull U5s input5s, @NotNull U6s input6s, @NotNull U7s input7s, @NotNull CompileFunction7<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> fn) {
+        addPatternRule(pattern, //
+                SimpleDataTypedTargetPatternMakeRule7.<Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T>builder()//
                         .pattern(pattern) //
                         .input(input1s, input2s, input3s, input4s, input5s, input6s, input7s)//
                         .fn(fn).build());

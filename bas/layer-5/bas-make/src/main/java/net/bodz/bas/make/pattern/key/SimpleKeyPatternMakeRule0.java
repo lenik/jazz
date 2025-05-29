@@ -1,8 +1,8 @@
 package net.bodz.bas.make.pattern.key;
 
-import net.bodz.bas.make.fn.CompileFunction0;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.fn.CompileFunction0;
 import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule0;
 import net.bodz.bas.meta.decl.NotNull;
 
