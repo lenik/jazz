@@ -22,9 +22,9 @@ public class SimpleKeyPatternMakeRule__java
 
         out.printf("package net.bodz.bas.make.pattern.key;\n");
         out.println();
-        out.printf("import net.bodz.bas.make.fn.CompileFunction%d;\n", inputCount);
         out.printf("import net.bodz.bas.make.IKeyData;\n");
         out.printf("import net.bodz.bas.make.IParameterizedKeys;\n");
+        out.printf("import net.bodz.bas.make.fn.CompileFunction%d;\n", inputCount);
         out.printf("import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule%d;\n", inputCount);
         out.printf("import net.bodz.bas.meta.decl.NotNull;\n");
         out.println();

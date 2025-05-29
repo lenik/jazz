@@ -7,10 +7,16 @@ import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKeys;
+import net.bodz.bas.make.pattern.dtkey.IDataTypedTargetPattern;
+import net.bodz.bas.make.pattern.dtkey.IDataTypedTargetPatternMakeRule;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule;
+import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTargetPatternMakeRule;
 import net.bodz.bas.make.pattern.key.IKeyPattern;
 import net.bodz.bas.make.pattern.key.IKeyPatternMakeRule;
+import net.bodz.bas.make.pattern.key.ITargetPattern;
+import net.bodz.bas.make.pattern.key.ITargetPatternMakeRule;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule;
+import net.bodz.bas.make.pattern.key.SimpleTargetPatternMakeRule;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface IMakeRulesBase {
@@ -120,6 +126,46 @@ public interface IMakeRulesBase {
     void addPatternRule(@NotNull Tp pattern, @NotNull IDataTypedParameterizedKeys<?, ?, ?>[] inputss, @NotNull CompileFunction<T> fn) {
         addPatternRule(pattern, //
                 SimpleDataTypedKeyPatternMakeRule.<Tp, Param, K, T, TT>builder()//
+                        .pattern(pattern) //
+                        .input(inputss)//
+                        .fn(fn).build());
+    }
+
+    // rules: target pattern
+
+    @NotNull
+    <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
+    List<ITargetPatternMakeRule<Tp, Param, TK, T, TT>> //
+    getPatternRules(ITargetPattern<?, ?, ?, ?> pattern);
+
+    <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull ITargetPatternMakeRule<Tp, Param, TK, T, TT> rule);
+
+    default <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+            T extends IKeyData<TK, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull IParameterizedKeys<?, ?>[] inputss, @NotNull CompileFunction<T> fn) {
+        addPatternRule(pattern, //
+                SimpleTargetPatternMakeRule.<Tp, Param, TK, T, TT>builder()//
+                        .pattern(pattern) //
+                        .input(inputss)//
+                        .fn(fn).build());
+    }
+
+    // rules: data typed target pattern
+
+    @NotNull
+    <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
+    List<IDataTypedTargetPatternMakeRule<Tp, Param, TK, T, TT>> //
+    getPatternRules(IDataTypedTargetPattern<?, ?, ?, ?> pattern);
+
+    <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull IDataTypedTargetPatternMakeRule<Tp, Param, TK, T, TT> rule);
+
+    default <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
+            T extends IKeyData<TK, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull IDataTypedParameterizedKeys<?, ?, ?>[] inputss, @NotNull CompileFunction<T> fn) {
+        addPatternRule(pattern, //
+                SimpleDataTypedTargetPatternMakeRule.<Tp, Param, TK, T, TT>builder()//
                         .pattern(pattern) //
                         .input(inputss)//
                         .fn(fn).build());

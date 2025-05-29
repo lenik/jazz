@@ -39,6 +39,10 @@ public class CodeGen
                 new SimpleKeyPatternMakeRule__java(), //
                 new IDataTypedKeyPatternMakeRule__java(), //
                 new SimpleDataTypedKeyPatternMakeRule__java(), //
+                new ITargetPatternMakeRule__java(), //
+                new SimpleTargetPatternMakeRule__java(), //
+                new IDataTypedTargetPatternMakeRule__java(), //
+                new SimpleDataTypedTargetPatternMakeRule__java(), //
                 new IMakeRules__java(), //
         };
 
