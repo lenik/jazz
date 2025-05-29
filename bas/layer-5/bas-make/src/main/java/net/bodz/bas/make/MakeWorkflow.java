@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.c.object.ClassLiterals;
+import net.bodz.bas.type.ClassLiterals;
 import net.bodz.bas.make.util.FileBin;
 import net.bodz.bas.make.util.GlobPathPattern;
 import net.bodz.bas.make.util.GlobPaths;

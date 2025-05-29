@@ -1,4 +1,4 @@
-package net.bodz.bas.c.object;
+package net.bodz.bas.type;
 
 import java.util.Collection;
 import java.util.List;
