@@ -18,7 +18,7 @@ import net.bodz.bas.t.map.ListMap;
 import net.bodz.lily.entity.type.EntityTypes;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 
-public class DefaultDataSet
+public class MutableDataSet
         implements IMutableDataSet,
                    IJsonForm {
 
@@ -26,7 +26,7 @@ public class DefaultDataSet
     Function<String, IEntityTypeInfo> typeMap;
     Function<ITable, String> defaultNaming;
 
-    public DefaultDataSet(@NotNull Map<String, MutableTable> map, @NotNull Function<String, IEntityTypeInfo> typeMap) {
+    public MutableDataSet(@NotNull Map<String, MutableTable> map, @NotNull Function<String, IEntityTypeInfo> typeMap) {
         this.map = map;
         this.typeMap = typeMap;
     }
@@ -69,14 +69,14 @@ public class DefaultDataSet
             return this;
         }
 
-        public DefaultDataSet build() {
+        public MutableDataSet build() {
             if (map == null)
                 map = new HashMap<>();
             if (typeMap == null)
                 typeMap = EntityTypes.qTypeMap;
             if (defaultNaming == null)
                 defaultNaming = EntityTypes.qTypeNaming;
-            return new DefaultDataSet(map, typeMap);
+            return new MutableDataSet(map, typeMap);
         }
 
     }

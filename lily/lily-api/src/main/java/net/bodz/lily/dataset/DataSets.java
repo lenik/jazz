@@ -107,8 +107,8 @@ public class DataSets
         this.dataContext = dataContext;
     }
 
-    public DefaultDataSet newDataSet() {
-        return DefaultDataSet.builder() //
+    public MutableDataSet newDataSet() {
+        return MutableDataSet.builder() //
                 .typeMap(typeMap, defaultNaming) //
                 .build();
     }
@@ -160,7 +160,7 @@ public class DataSets
     }
 
     public IMutableDataSet loadTables(Function<IEntityMapper<?>, List<?>> loader, Class<?>... types) {
-        DefaultDataSet dataSet = DefaultDataSet.builder()//
+        MutableDataSet dataSet = MutableDataSet.builder()//
                 .typeMap(typeMap, defaultNaming)//
                 .build();
         for (Class<?> type : types) {
