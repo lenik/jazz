@@ -4,20 +4,20 @@ import net.bodz.bas.make.BoundRule;
 import net.bodz.bas.make.CompileException;
 import net.bodz.bas.make.IDataBinding;
 import net.bodz.bas.make.IKeyData;
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.fn.IMakeable6;
 import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.make.fn.SimpleMakeRule6;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface IKeyPatternLikeMakeRule6<Tp extends IKeyPatternLike<Param, K>, Param, K, //
-        Keys extends IParameterizedKeys<?, ?>, //
-        Us extends IParameterizedKeys<Param, UK>, UK, //
-        Vs extends IParameterizedKeys<Param, VK>, VK, //
-        Ws extends IParameterizedKeys<Param, WK>, WK, //
-        Xs extends IParameterizedKeys<Param, XK>, XK, //
-        Ys extends IParameterizedKeys<Param, YK>, YK, //
-        Zs extends IParameterizedKeys<Param, ZK>, ZK, //
+        Keys extends IParameterizedKey<?, ?>, //
+        Us extends IParameterizedKey<Param, UK>, UK, //
+        Vs extends IParameterizedKey<Param, VK>, VK, //
+        Ws extends IParameterizedKey<Param, WK>, WK, //
+        Xs extends IParameterizedKey<Param, XK>, XK, //
+        Ys extends IParameterizedKey<Param, YK>, YK, //
+        Zs extends IParameterizedKey<Param, ZK>, ZK, //
         T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT, //
         V extends IKeyData<VK, VT>, VT, //
@@ -45,7 +45,7 @@ public interface IKeyPatternLikeMakeRule6<Tp extends IKeyPatternLike<Param, K>, 
     Zs getInput6();
 
     @Override
-    default BoundRule<T> compile(@NotNull T target, @NotNull IDataBinding binding)
+    default BoundRule<T, K, TT> compile(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         Tp pattern = getPattern();
         @SuppressWarnings("unchecked")
@@ -125,10 +125,10 @@ public interface IKeyPatternLikeMakeRule6<Tp extends IKeyPatternLike<Param, K>, 
 
         SimpleMakeRule6<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> rule = SimpleMakeRule6.<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder()//
                 .priority(this.getPriority())//
-                .input(input1, input2, input3, input4, input5, input6)
+                .input(input1, input2, input3, input4, input5, input6)//
                 .fn(fn).build();
 
-        BoundRule<T> instance = new BoundRule<>(rule, target, input1, input2, input3, input4, input5, input6);
+        BoundRule<T, K, TT> instance = new BoundRule<>(rule, target, input1, input2, input3, input4, input5, input6);
         return instance;
     }
 

@@ -4,21 +4,21 @@ import net.bodz.bas.make.BoundRule;
 import net.bodz.bas.make.CompileException;
 import net.bodz.bas.make.IDataBinding;
 import net.bodz.bas.make.IKeyData;
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.fn.IMakeable7;
 import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.make.fn.SimpleMakeRule7;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, Param, K, //
-        Keys extends IParameterizedKeys<?, ?>, //
-        U1s extends IParameterizedKeys<Param, U1K>, U1K, //
-        U2s extends IParameterizedKeys<Param, U2K>, U2K, //
-        U3s extends IParameterizedKeys<Param, U3K>, U3K, //
-        U4s extends IParameterizedKeys<Param, U4K>, U4K, //
-        U5s extends IParameterizedKeys<Param, U5K>, U5K, //
-        U6s extends IParameterizedKeys<Param, U6K>, U6K, //
-        U7s extends IParameterizedKeys<Param, U7K>, U7K, //
+        Keys extends IParameterizedKey<?, ?>, //
+        U1s extends IParameterizedKey<Param, U1K>, U1K, //
+        U2s extends IParameterizedKey<Param, U2K>, U2K, //
+        U3s extends IParameterizedKey<Param, U3K>, U3K, //
+        U4s extends IParameterizedKey<Param, U4K>, U4K, //
+        U5s extends IParameterizedKey<Param, U5K>, U5K, //
+        U6s extends IParameterizedKey<Param, U6K>, U6K, //
+        U7s extends IParameterizedKey<Param, U7K>, U7K, //
         T extends IKeyData<K, TT>, TT, //
         U1 extends IKeyData<U1K, U1T>, U1T, //
         U2 extends IKeyData<U2K, U2T>, U2T, //
@@ -49,7 +49,7 @@ public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, 
     U7s getInput7();
 
     @Override
-    default BoundRule<T> compile(@NotNull T target, @NotNull IDataBinding binding)
+    default BoundRule<T, K, TT> compile(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         Tp pattern = getPattern();
         @SuppressWarnings("unchecked")
@@ -140,10 +140,10 @@ public interface IKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, 
 
         SimpleMakeRule7<T, K, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> rule = SimpleMakeRule7.<T, K, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder()//
                 .priority(this.getPriority())//
-                .input(input1, input2, input3, input4, input5, input6, input7)
+                .input(input1, input2, input3, input4, input5, input6, input7)//
                 .fn(fn).build();
 
-        BoundRule<T> instance = new BoundRule<>(rule, target, input1, input2, input3, input4, input5, input6, input7);
+        BoundRule<T, K, TT> instance = new BoundRule<>(rule, target, input1, input2, input3, input4, input5, input6, input7);
         return instance;
     }
 

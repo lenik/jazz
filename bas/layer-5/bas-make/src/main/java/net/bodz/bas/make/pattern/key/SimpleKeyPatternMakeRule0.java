@@ -1,13 +1,13 @@
 package net.bodz.bas.make.pattern.key;
 
 import net.bodz.bas.make.IKeyData;
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.fn.CompileFunction0;
 import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule0;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class SimpleKeyPatternMakeRule0<Tp extends IKeyPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT> //
-        extends SimpleKeyPatternLikeMakeRule0<Tp, Param, K, IParameterizedKeys<?, ?>, T, TT>
+        extends SimpleKeyPatternLikeMakeRule0<Tp, Param, K, IParameterizedKey<?, ?>, T, TT>
         implements IKeyPatternMakeRule0<Tp, Param, K, T, TT> {
 
     public SimpleKeyPatternMakeRule0(int priority, @NotNull Tp pattern, @NotNull CompileFunction0<T, K, TT> fn) {

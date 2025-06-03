@@ -11,7 +11,7 @@ public interface IMakeRule4<T extends IKeyData<TK, TT>, TK, TT, //
         V extends IKeyData<VK, VT>, VK, VT, //
         W extends IKeyData<WK, WT>, WK, WT, //
         X extends IKeyData<XK, XT>, XK, XT>
-        extends IMakeRule<T>
+        extends IMakeRule<T, TK, TT>
 {
 
     @Override

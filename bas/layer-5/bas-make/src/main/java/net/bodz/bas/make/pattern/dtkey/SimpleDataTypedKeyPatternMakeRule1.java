@@ -6,10 +6,10 @@ import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule1;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class SimpleDataTypedKeyPatternMakeRule1<Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
-        Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
+        Us extends IDataTypedParameterizedKey<Param, UK, UT>, UK, //
         T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT> //
-        extends SimpleKeyPatternLikeMakeRule1<Tp, Param, K, IDataTypedParameterizedKeys<?, ?, ?>, Us, UK, T, TT, U, UT>
+        extends SimpleKeyPatternLikeMakeRule1<Tp, Param, K, IDataTypedParameterizedKey<?, ?, ?>, Us, UK, T, TT, U, UT>
         implements IDataTypedKeyPatternMakeRule1<Tp, Param, K, Us, UK, T, TT, U, UT> {
 
     public SimpleDataTypedKeyPatternMakeRule1(int priority, @NotNull Tp pattern, @NotNull CompileFunction1<T, K, TT, U, UK, UT> fn, @NotNull Us input1s) {
@@ -17,7 +17,7 @@ public class SimpleDataTypedKeyPatternMakeRule1<Tp extends IDataTypedKeyPattern<
     }
 
     public static <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
-            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
+            Us extends IDataTypedParameterizedKey<Param, UK, UT>, UK, //
             T extends IKeyData<K, TT>, TT, //
             U extends IKeyData<UK, UT>, UT> //
     Builder<Tp, Param, K, Us, UK, T, TT, U, UT> builder() {
@@ -25,7 +25,7 @@ public class SimpleDataTypedKeyPatternMakeRule1<Tp extends IDataTypedKeyPattern<
     }
 
     public static class Builder<Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
-            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
+            Us extends IDataTypedParameterizedKey<Param, UK, UT>, UK, //
             T extends IKeyData<K, TT>, TT, //
             U extends IKeyData<UK, UT>, UT> //
             extends SimpleKeyPatternLikeMakeRule1.Builder<Builder<Tp, Param, K, Us, UK, T, TT, U, UT>, //

@@ -1,21 +1,21 @@
 package net.bodz.bas.make.pattern.key;
 
 import net.bodz.bas.make.IKeyData;
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.fn.CompileFunction4;
 import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule4;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimpleKeyPatternMakeRule4<Tp extends IKeyPattern<Param, K>, Param, K, Us extends IParameterizedKeys<Param, UK>, UK, //
-        Vs extends IParameterizedKeys<Param, VK>, VK, //
-        Ws extends IParameterizedKeys<Param, WK>, WK, //
-        Xs extends IParameterizedKeys<Param, XK>, XK, //
+public class SimpleKeyPatternMakeRule4<Tp extends IKeyPattern<Param, K>, Param, K, Us extends IParameterizedKey<Param, UK>, UK, //
+        Vs extends IParameterizedKey<Param, VK>, VK, //
+        Ws extends IParameterizedKey<Param, WK>, WK, //
+        Xs extends IParameterizedKey<Param, XK>, XK, //
         T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT, //
         V extends IKeyData<VK, VT>, VT, //
         W extends IKeyData<WK, WT>, WT, //
         X extends IKeyData<XK, XT>, XT> //
-        extends SimpleKeyPatternLikeMakeRule4<Tp, Param, K, IParameterizedKeys<?, ?>, Us, UK, Vs, VK, Ws, WK, Xs, XK, T, TT, U, UT, V, VT, W, WT, X, XT>
+        extends SimpleKeyPatternLikeMakeRule4<Tp, Param, K, IParameterizedKey<?, ?>, Us, UK, Vs, VK, Ws, WK, Xs, XK, T, TT, U, UT, V, VT, W, WT, X, XT>
         implements IKeyPatternMakeRule4<Tp, Param, K, Us, UK, Vs, VK, Ws, WK, Xs, XK, T, TT, U, UT, V, VT, W, WT, X, XT> {
 
     public SimpleKeyPatternMakeRule4(int priority, @NotNull Tp pattern, @NotNull CompileFunction4<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT> fn, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull Xs input4s) {
@@ -23,10 +23,10 @@ public class SimpleKeyPatternMakeRule4<Tp extends IKeyPattern<Param, K>, Param, 
     }
 
     public static <Tp extends IKeyPattern<Param, K>, Param, K, //
-            Us extends IParameterizedKeys<Param, UK>, UK, //
-            Vs extends IParameterizedKeys<Param, VK>, VK, //
-            Ws extends IParameterizedKeys<Param, WK>, WK, //
-            Xs extends IParameterizedKeys<Param, XK>, XK, //
+            Us extends IParameterizedKey<Param, UK>, UK, //
+            Vs extends IParameterizedKey<Param, VK>, VK, //
+            Ws extends IParameterizedKey<Param, WK>, WK, //
+            Xs extends IParameterizedKey<Param, XK>, XK, //
             T extends IKeyData<K, TT>, TT, //
             U extends IKeyData<UK, UT>, UT
             , //
@@ -41,10 +41,10 @@ public class SimpleKeyPatternMakeRule4<Tp extends IKeyPattern<Param, K>, Param, 
     }
 
     public static class Builder<Tp extends IKeyPattern<Param, K>, Param, K, //
-            Us extends IParameterizedKeys<Param, UK>, UK, //
-            Vs extends IParameterizedKeys<Param, VK>, VK, //
-            Ws extends IParameterizedKeys<Param, WK>, WK, //
-            Xs extends IParameterizedKeys<Param, XK>, XK, //
+            Us extends IParameterizedKey<Param, UK>, UK, //
+            Vs extends IParameterizedKey<Param, VK>, VK, //
+            Ws extends IParameterizedKey<Param, WK>, WK, //
+            Xs extends IParameterizedKey<Param, XK>, XK, //
             T extends IKeyData<K, TT>, TT, //
             U extends IKeyData<UK, UT>, UT
             , //

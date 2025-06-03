@@ -9,7 +9,7 @@ import net.bodz.bas.meta.decl.NotNull;
 public interface IMakeRule2<T extends IKeyData<TK, TT>, TK, TT, //
         U extends IKeyData<UK, UT>, UK, UT, //
         V extends IKeyData<VK, VT>, VK, VT>
-        extends IMakeRule<T>
+        extends IMakeRule<T, TK, TT>
 {
 
     @Override

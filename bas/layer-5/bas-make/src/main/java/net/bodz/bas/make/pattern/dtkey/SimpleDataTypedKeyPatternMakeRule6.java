@@ -6,12 +6,12 @@ import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule6;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class SimpleDataTypedKeyPatternMakeRule6<Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
-        Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
-        Vs extends IDataTypedParameterizedKeys<Param, VK, VT>, VK, //
-        Ws extends IDataTypedParameterizedKeys<Param, WK, WT>, WK, //
-        Xs extends IDataTypedParameterizedKeys<Param, XK, XT>, XK, //
-        Ys extends IDataTypedParameterizedKeys<Param, YK, YT>, YK, //
-        Zs extends IDataTypedParameterizedKeys<Param, ZK, ZT>, ZK, //
+        Us extends IDataTypedParameterizedKey<Param, UK, UT>, UK, //
+        Vs extends IDataTypedParameterizedKey<Param, VK, VT>, VK, //
+        Ws extends IDataTypedParameterizedKey<Param, WK, WT>, WK, //
+        Xs extends IDataTypedParameterizedKey<Param, XK, XT>, XK, //
+        Ys extends IDataTypedParameterizedKey<Param, YK, YT>, YK, //
+        Zs extends IDataTypedParameterizedKey<Param, ZK, ZT>, ZK, //
         T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT, //
         V extends IKeyData<VK, VT>, VT, //
@@ -19,7 +19,7 @@ public class SimpleDataTypedKeyPatternMakeRule6<Tp extends IDataTypedKeyPattern<
         X extends IKeyData<XK, XT>, XT, //
         Y extends IKeyData<YK, YT>, YT, //
         Z extends IKeyData<ZK, ZT>, ZT> //
-        extends SimpleKeyPatternLikeMakeRule6<Tp, Param, K, IDataTypedParameterizedKeys<?, ?, ?>, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT>
+        extends SimpleKeyPatternLikeMakeRule6<Tp, Param, K, IDataTypedParameterizedKey<?, ?, ?>, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT>
         implements IDataTypedKeyPatternMakeRule6<Tp, Param, K, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> {
 
     public SimpleDataTypedKeyPatternMakeRule6(int priority, @NotNull Tp pattern, @NotNull CompileFunction6<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> fn, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull Xs input4s, @NotNull Ys input5s, @NotNull Zs input6s) {
@@ -27,12 +27,12 @@ public class SimpleDataTypedKeyPatternMakeRule6<Tp extends IDataTypedKeyPattern<
     }
 
     public static <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
-            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
-            Vs extends IDataTypedParameterizedKeys<Param, VK, VT>, VK, //
-            Ws extends IDataTypedParameterizedKeys<Param, WK, WT>, WK, //
-            Xs extends IDataTypedParameterizedKeys<Param, XK, XT>, XK, //
-            Ys extends IDataTypedParameterizedKeys<Param, YK, YT>, YK, //
-            Zs extends IDataTypedParameterizedKeys<Param, ZK, ZT>, ZK, //
+            Us extends IDataTypedParameterizedKey<Param, UK, UT>, UK, //
+            Vs extends IDataTypedParameterizedKey<Param, VK, VT>, VK, //
+            Ws extends IDataTypedParameterizedKey<Param, WK, WT>, WK, //
+            Xs extends IDataTypedParameterizedKey<Param, XK, XT>, XK, //
+            Ys extends IDataTypedParameterizedKey<Param, YK, YT>, YK, //
+            Zs extends IDataTypedParameterizedKey<Param, ZK, ZT>, ZK, //
             T extends IKeyData<K, TT>, TT, //
             U extends IKeyData<UK, UT>, UT, //
             V extends IKeyData<VK, VT>, VT, //
@@ -45,12 +45,12 @@ public class SimpleDataTypedKeyPatternMakeRule6<Tp extends IDataTypedKeyPattern<
     }
 
     public static class Builder<Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
-            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
-            Vs extends IDataTypedParameterizedKeys<Param, VK, VT>, VK, //
-            Ws extends IDataTypedParameterizedKeys<Param, WK, WT>, WK, //
-            Xs extends IDataTypedParameterizedKeys<Param, XK, XT>, XK, //
-            Ys extends IDataTypedParameterizedKeys<Param, YK, YT>, YK, //
-            Zs extends IDataTypedParameterizedKeys<Param, ZK, ZT>, ZK, //
+            Us extends IDataTypedParameterizedKey<Param, UK, UT>, UK, //
+            Vs extends IDataTypedParameterizedKey<Param, VK, VT>, VK, //
+            Ws extends IDataTypedParameterizedKey<Param, WK, WT>, WK, //
+            Xs extends IDataTypedParameterizedKey<Param, XK, XT>, XK, //
+            Ys extends IDataTypedParameterizedKey<Param, YK, YT>, YK, //
+            Zs extends IDataTypedParameterizedKey<Param, ZK, ZT>, ZK, //
             T extends IKeyData<K, TT>, TT, //
             U extends IKeyData<UK, UT>, UT, //
             V extends IKeyData<VK, VT>, VT, //

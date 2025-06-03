@@ -1,5 +1,6 @@
 package net.bodz.bas.make.fn;
 
+import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.make.IDataTypedKey;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.MakeException;
@@ -12,13 +13,19 @@ public class SimpleMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
         implements IMakeRule3<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> {
 
     int priority;
+    final Class<? extends T> targetType;
+    final Class<? extends TK> keyType;
+    final Class<? extends TT> dataType;
     IMakeable3<TT, UT, VT, WT> fn;
     IDataTypedKey<UK, UT> input1;
     IDataTypedKey<VK, VT> input2;
     IDataTypedKey<WK, WT> input3;
 
-    public SimpleMakeRule3(int priority, @NotNull IMakeable3<TT, UT, VT, WT> fn, @NotNull IDataTypedKey<UK, UT> input1, @NotNull IDataTypedKey<VK, VT> input2, @NotNull IDataTypedKey<WK, WT> input3) {
+    public SimpleMakeRule3(int priority, @NotNull Class<? extends T> targetType, @NotNull Class<? extends TK> keyType, @NotNull Class<? extends TT> dataType, @NotNull IMakeable3<TT, UT, VT, WT> fn, @NotNull IDataTypedKey<UK, UT> input1, @NotNull IDataTypedKey<VK, VT> input2, @NotNull IDataTypedKey<WK, WT> input3) {
         this.priority = priority;
+        this.targetType = targetType;
+        this.keyType = keyType;
+        this.dataType = dataType;
         this.fn = fn;
         this.input1 = input1;
         this.input2 = input2;
@@ -28,6 +35,24 @@ public class SimpleMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
     @Override
     public int getPriority() {
         return priority;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends T> getTargetType() {
+        return targetType;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends TK> getKeyType() {
+        return keyType;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends TT> getDataType() {
+        return dataType;
     }
 
     @Override
@@ -65,6 +90,9 @@ public class SimpleMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
             W extends IKeyData<WK, WT>, WK, WT> {
 
         int priority;
+        Class<? extends T> targetType;
+        Class<? extends TK> keyType;
+        Class<? extends TT> dataType;
         IMakeable3<TT, UT, VT, WT> fn;
         IDataTypedKey<UK, UT> input1;
         IDataTypedKey<VK, VT> input2;
@@ -72,6 +100,11 @@ public class SimpleMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
 
         public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> priority(int priority) {
             this.priority = priority;
+            return this;
+        }
+
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> targetType(Class<? extends T> targetType) {
+            this.targetType = targetType;
             return this;
         }
 
@@ -103,6 +136,12 @@ public class SimpleMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
         }
 
         public SimpleMakeRule3<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT> build() {
+            if (targetType == null)
+                throw new NullPointerException("targetType");
+            if (keyType == null)
+                keyType = TypeParam.infer1(targetType, IKeyData.class, 0);
+            if (dataType == null)
+                dataType = TypeParam.infer1(targetType, IKeyData.class, 1);
             if (fn == null)
                 throw new NullPointerException("fn");
             if (input1 == null)
@@ -111,7 +150,7 @@ public class SimpleMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
                 throw new NullPointerException("input2");
             if (input3 == null)
                 throw new NullPointerException("input3");
-            return new SimpleMakeRule3<>(priority, fn, input1, input2, input3);
+            return new SimpleMakeRule3<>(priority, targetType, keyType, dataType, fn, input1, input2, input3);
         }
 
     }

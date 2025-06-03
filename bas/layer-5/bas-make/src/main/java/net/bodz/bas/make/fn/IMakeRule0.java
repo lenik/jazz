@@ -7,7 +7,7 @@ import net.bodz.bas.make.MakeException;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface IMakeRule0<T extends IKeyData<TK, TT>, TK, TT> //
-        extends IMakeRule<T>
+        extends IMakeRule<T, TK, TT>
 {
 
     @Override

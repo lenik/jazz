@@ -4,17 +4,17 @@ import net.bodz.bas.make.BoundRule;
 import net.bodz.bas.make.CompileException;
 import net.bodz.bas.make.IDataBinding;
 import net.bodz.bas.make.IKeyData;
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.fn.IMakeable3;
 import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.make.fn.SimpleMakeRule3;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface IKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, Param, K, //
-        Keys extends IParameterizedKeys<?, ?>, //
-        Us extends IParameterizedKeys<Param, UK>, UK, //
-        Vs extends IParameterizedKeys<Param, VK>, VK, //
-        Ws extends IParameterizedKeys<Param, WK>, WK, //
+        Keys extends IParameterizedKey<?, ?>, //
+        Us extends IParameterizedKey<Param, UK>, UK, //
+        Vs extends IParameterizedKey<Param, VK>, VK, //
+        Ws extends IParameterizedKey<Param, WK>, WK, //
         T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT, //
         V extends IKeyData<VK, VT>, VT, //
@@ -33,7 +33,7 @@ public interface IKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, 
     Ws getInput3();
 
     @Override
-    default BoundRule<T> compile(@NotNull T target, @NotNull IDataBinding binding)
+    default BoundRule<T, K, TT> compile(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         Tp pattern = getPattern();
         @SuppressWarnings("unchecked")
@@ -80,10 +80,10 @@ public interface IKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, 
 
         SimpleMakeRule3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> rule = SimpleMakeRule3.<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT>builder()//
                 .priority(this.getPriority())//
-                .input(input1, input2, input3)
+                .input(input1, input2, input3)//
                 .fn(fn).build();
 
-        BoundRule<T> instance = new BoundRule<>(rule, target, input1, input2, input3);
+        BoundRule<T, K, TT> instance = new BoundRule<>(rule, target, input1, input2, input3);
         return instance;
     }
 

@@ -6,14 +6,14 @@ import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule3;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class SimpleDataTypedKeyPatternMakeRule3<Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
-        Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
-        Vs extends IDataTypedParameterizedKeys<Param, VK, VT>, VK, //
-        Ws extends IDataTypedParameterizedKeys<Param, WK, WT>, WK, //
+        Us extends IDataTypedParameterizedKey<Param, UK, UT>, UK, //
+        Vs extends IDataTypedParameterizedKey<Param, VK, VT>, VK, //
+        Ws extends IDataTypedParameterizedKey<Param, WK, WT>, WK, //
         T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT, //
         V extends IKeyData<VK, VT>, VT, //
         W extends IKeyData<WK, WT>, WT> //
-        extends SimpleKeyPatternLikeMakeRule3<Tp, Param, K, IDataTypedParameterizedKeys<?, ?, ?>, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT>
+        extends SimpleKeyPatternLikeMakeRule3<Tp, Param, K, IDataTypedParameterizedKey<?, ?, ?>, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT>
         implements IDataTypedKeyPatternMakeRule3<Tp, Param, K, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT> {
 
     public SimpleDataTypedKeyPatternMakeRule3(int priority, @NotNull Tp pattern, @NotNull CompileFunction3<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT> fn, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s) {
@@ -21,9 +21,9 @@ public class SimpleDataTypedKeyPatternMakeRule3<Tp extends IDataTypedKeyPattern<
     }
 
     public static <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
-            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
-            Vs extends IDataTypedParameterizedKeys<Param, VK, VT>, VK, //
-            Ws extends IDataTypedParameterizedKeys<Param, WK, WT>, WK, //
+            Us extends IDataTypedParameterizedKey<Param, UK, UT>, UK, //
+            Vs extends IDataTypedParameterizedKey<Param, VK, VT>, VK, //
+            Ws extends IDataTypedParameterizedKey<Param, WK, WT>, WK, //
             T extends IKeyData<K, TT>, TT, //
             U extends IKeyData<UK, UT>, UT, //
             V extends IKeyData<VK, VT>, VT, //
@@ -33,9 +33,9 @@ public class SimpleDataTypedKeyPatternMakeRule3<Tp extends IDataTypedKeyPattern<
     }
 
     public static class Builder<Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
-            Us extends IDataTypedParameterizedKeys<Param, UK, UT>, UK, //
-            Vs extends IDataTypedParameterizedKeys<Param, VK, VT>, VK, //
-            Ws extends IDataTypedParameterizedKeys<Param, WK, WT>, WK, //
+            Us extends IDataTypedParameterizedKey<Param, UK, UT>, UK, //
+            Vs extends IDataTypedParameterizedKey<Param, VK, VT>, VK, //
+            Ws extends IDataTypedParameterizedKey<Param, WK, WT>, WK, //
             T extends IKeyData<K, TT>, TT, //
             U extends IKeyData<UK, UT>, UT, //
             V extends IKeyData<VK, VT>, VT, //

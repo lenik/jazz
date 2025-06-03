@@ -4,14 +4,14 @@ import net.bodz.bas.make.BoundRule;
 import net.bodz.bas.make.CompileException;
 import net.bodz.bas.make.IDataBinding;
 import net.bodz.bas.make.IKeyData;
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.fn.IMakeable0;
 import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.make.fn.SimpleMakeRule0;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface IKeyPatternLikeMakeRule0<Tp extends IKeyPatternLike<Param, K>, Param, K, //
-        Keys extends IParameterizedKeys<?, ?>, //
+        Keys extends IParameterizedKey<?, ?>, //
         T extends IKeyData<K, TT>, TT> //
         extends IKeyPatternLikeMakeRule<Tp, Param, K, Keys, T, TT> {
 
@@ -21,7 +21,7 @@ public interface IKeyPatternLikeMakeRule0<Tp extends IKeyPatternLike<Param, K>, 
     }
 
     @Override
-    default BoundRule<T> compile(@NotNull T target, @NotNull IDataBinding binding)
+    default BoundRule<T, K, TT> compile(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         Tp pattern = getPattern();
 
@@ -35,10 +35,10 @@ public interface IKeyPatternLikeMakeRule0<Tp extends IKeyPatternLike<Param, K>, 
 
         SimpleMakeRule0<T, K, TT> rule = SimpleMakeRule0.<T, K, TT>builder()//
                 .priority(this.getPriority())//
-                .input()
+                .input()//
                 .fn(fn).build();
 
-        BoundRule<T> instance = new BoundRule<>(rule, target);
+        BoundRule<T, K, TT> instance = new BoundRule<>(rule, target);
         return instance;
     }
 

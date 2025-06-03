@@ -4,15 +4,15 @@ import net.bodz.bas.make.BoundRule;
 import net.bodz.bas.make.CompileException;
 import net.bodz.bas.make.IDataBinding;
 import net.bodz.bas.make.IKeyData;
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.fn.IMakeable1;
 import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.make.fn.SimpleMakeRule1;
 import net.bodz.bas.meta.decl.NotNull;
 
 public interface IKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<Param, K>, Param, K, //
-        Keys extends IParameterizedKeys<?, ?>, //
-        Us extends IParameterizedKeys<Param, UK>, UK, //
+        Keys extends IParameterizedKey<?, ?>, //
+        Us extends IParameterizedKey<Param, UK>, UK, //
         T extends IKeyData<K, TT>, TT, //
         U extends IKeyData<UK, UT>, UT> //
         extends IKeyPatternLikeMakeRule<Tp, Param, K, Keys, T, TT> {
@@ -25,7 +25,7 @@ public interface IKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<Param, K>, 
     Us getInput1();
 
     @Override
-    default BoundRule<T> compile(@NotNull T target, @NotNull IDataBinding binding)
+    default BoundRule<T, K, TT> compile(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         Tp pattern = getPattern();
         @SuppressWarnings("unchecked")
@@ -50,10 +50,10 @@ public interface IKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<Param, K>, 
 
         SimpleMakeRule1<T, K, TT, U, UK, UT> rule = SimpleMakeRule1.<T, K, TT, U, UK, UT>builder()//
                 .priority(this.getPriority())//
-                .input(input1)
+                .input(input1)//
                 .fn(fn).build();
 
-        BoundRule<T> instance = new BoundRule<>(rule, target, input1);
+        BoundRule<T, K, TT> instance = new BoundRule<>(rule, target, input1);
         return instance;
     }
 

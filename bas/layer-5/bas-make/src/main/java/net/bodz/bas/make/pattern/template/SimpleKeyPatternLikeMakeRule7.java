@@ -2,20 +2,20 @@ package net.bodz.bas.make.pattern.template;
 
 import net.bodz.bas.make.CompileException;
 import net.bodz.bas.make.IKeyData;
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.fn.CompileFunction7;
 import net.bodz.bas.make.fn.IMakeable7;
 import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class SimpleKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<Param, K>, Param, K, //
-        Keys extends IParameterizedKeys<?, ?>, //
-        U1s extends IParameterizedKeys<Param, U1K>, U1K, //
-        U2s extends IParameterizedKeys<Param, U2K>, U2K, //
-        U3s extends IParameterizedKeys<Param, U3K>, U3K, //
-        U4s extends IParameterizedKeys<Param, U4K>, U4K, //
-        U5s extends IParameterizedKeys<Param, U5K>, U5K, //
-        U6s extends IParameterizedKeys<Param, U6K>, U6K, //
-        U7s extends IParameterizedKeys<Param, U7K>, U7K, //
+        Keys extends IParameterizedKey<?, ?>, //
+        U1s extends IParameterizedKey<Param, U1K>, U1K, //
+        U2s extends IParameterizedKey<Param, U2K>, U2K, //
+        U3s extends IParameterizedKey<Param, U3K>, U3K, //
+        U4s extends IParameterizedKey<Param, U4K>, U4K, //
+        U5s extends IParameterizedKey<Param, U5K>, U5K, //
+        U6s extends IParameterizedKey<Param, U6K>, U6K, //
+        U7s extends IParameterizedKey<Param, U7K>, U7K, //
         T extends IKeyData<K, TT>, TT, //
         U1 extends IKeyData<U1K, U1T>, U1T, //
         U2 extends IKeyData<U2K, U2T>, U2T, //
@@ -101,30 +101,22 @@ public abstract class SimpleKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<P
         return fn.compile(target, input1, input2, input3, input4, input5, input6, input7);
     }
 
-    @SuppressWarnings("unchecked")
     public static abstract class Builder<self_t, Tp extends IKeyPatternLike<Param, K>, Param, K, //
-            U1s extends IParameterizedKeys<Param, U1K>, U1K, //
-            U2s extends IParameterizedKeys<Param, U2K>, U2K, //
-            U3s extends IParameterizedKeys<Param, U3K>, U3K, //
-            U4s extends IParameterizedKeys<Param, U4K>, U4K, //
-            U5s extends IParameterizedKeys<Param, U5K>, U5K, //
-            U6s extends IParameterizedKeys<Param, U6K>, U6K, //
-            U7s extends IParameterizedKeys<Param, U7K>, U7K, //
+            U1s extends IParameterizedKey<Param, U1K>, U1K, //
+            U2s extends IParameterizedKey<Param, U2K>, U2K, //
+            U3s extends IParameterizedKey<Param, U3K>, U3K, //
+            U4s extends IParameterizedKey<Param, U4K>, U4K, //
+            U5s extends IParameterizedKey<Param, U5K>, U5K, //
+            U6s extends IParameterizedKey<Param, U6K>, U6K, //
+            U7s extends IParameterizedKey<Param, U7K>, U7K, //
             T extends IKeyData<K, TT>, TT, //
-            U1 extends IKeyData<U1K, U1T>, U1T
-            , //
-            U2 extends IKeyData<U2K, U2T>, U2T
-            , //
-            U3 extends IKeyData<U3K, U3T>, U3T
-            , //
-            U4 extends IKeyData<U4K, U4T>, U4T
-            , //
-            U5 extends IKeyData<U5K, U5T>, U5T
-            , //
-            U6 extends IKeyData<U6K, U6T>, U6T
-            , //
-            U7 extends IKeyData<U7K, U7T>, U7T
-            > {
+            U1 extends IKeyData<U1K, U1T>, U1T, //
+            U2 extends IKeyData<U2K, U2T>, U2T, //
+            U3 extends IKeyData<U3K, U3T>, U3T, //
+            U4 extends IKeyData<U4K, U4T>, U4T, //
+            U5 extends IKeyData<U5K, U5T>, U5T, //
+            U6 extends IKeyData<U6K, U6T>, U6T, //
+            U7 extends IKeyData<U7K, U7T>, U7T> {
 
         protected int priority;
         protected Tp pattern;
@@ -137,23 +129,26 @@ public abstract class SimpleKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<P
         protected U6s input6s;
         protected U7s input7s;
 
+        @SuppressWarnings("unchecked")
+        protected final self_t _this = (self_t) this;
+
         public self_t priority(int priority) {
             this.priority = priority;
-            return (self_t) this;
+            return _this;
         }
 
         public self_t pattern(@NotNull Tp pattern) {
             this.pattern = pattern;
-            return (self_t) this;
+            return _this;
         }
 
         public self_t fn(@NotNull CompileFunction7<T, K, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> fn) {
             this.fn = fn;
-            return (self_t) this;
+            return _this;
         }
 
         @SuppressWarnings("unchecked")
-        public self_t input(@NotNull IParameterizedKeys<?, ?>... inputss) {
+        public self_t input(@NotNull IParameterizedKey<?, ?>... inputss) {
             this.input1s = (U1s) inputss[0];
             this.input2s = (U2s) inputss[1];
             this.input3s = (U3s) inputss[2];
@@ -161,42 +156,42 @@ public abstract class SimpleKeyPatternLikeMakeRule7<Tp extends IKeyPatternLike<P
             this.input5s = (U5s) inputss[4];
             this.input6s = (U6s) inputss[5];
             this.input7s = (U7s) inputss[6];
-            return (self_t) this;
+            return _this;
         }
 
         public self_t input1(@NotNull U1s input1s) {
             this.input1s = input1s;
-            return (self_t) this;
+            return _this;
         }
 
         public self_t input2(@NotNull U2s input2s) {
             this.input2s = input2s;
-            return (self_t) this;
+            return _this;
         }
 
         public self_t input3(@NotNull U3s input3s) {
             this.input3s = input3s;
-            return (self_t) this;
+            return _this;
         }
 
         public self_t input4(@NotNull U4s input4s) {
             this.input4s = input4s;
-            return (self_t) this;
+            return _this;
         }
 
         public self_t input5(@NotNull U5s input5s) {
             this.input5s = input5s;
-            return (self_t) this;
+            return _this;
         }
 
         public self_t input6(@NotNull U6s input6s) {
             this.input6s = input6s;
-            return (self_t) this;
+            return _this;
         }
 
         public self_t input7(@NotNull U7s input7s) {
             this.input7s = input7s;
-            return (self_t) this;
+            return _this;
         }
 
     }

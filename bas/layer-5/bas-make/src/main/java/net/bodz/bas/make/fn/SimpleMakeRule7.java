@@ -1,5 +1,6 @@
 package net.bodz.bas.make.fn;
 
+import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.make.IDataTypedKey;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.MakeException;
@@ -16,6 +17,9 @@ public class SimpleMakeRule7<T extends IKeyData<TK, TT>, TK, TT, //
         implements IMakeRule7<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> {
 
     int priority;
+    final Class<? extends T> targetType;
+    final Class<? extends TK> keyType;
+    final Class<? extends TT> dataType;
     IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn;
     IDataTypedKey<U1K, U1T> input1;
     IDataTypedKey<U2K, U2T> input2;
@@ -25,8 +29,11 @@ public class SimpleMakeRule7<T extends IKeyData<TK, TT>, TK, TT, //
     IDataTypedKey<U6K, U6T> input6;
     IDataTypedKey<U7K, U7T> input7;
 
-    public SimpleMakeRule7(int priority, @NotNull IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn, @NotNull IDataTypedKey<U1K, U1T> input1, @NotNull IDataTypedKey<U2K, U2T> input2, @NotNull IDataTypedKey<U3K, U3T> input3, @NotNull IDataTypedKey<U4K, U4T> input4, @NotNull IDataTypedKey<U5K, U5T> input5, @NotNull IDataTypedKey<U6K, U6T> input6, @NotNull IDataTypedKey<U7K, U7T> input7) {
+    public SimpleMakeRule7(int priority, @NotNull Class<? extends T> targetType, @NotNull Class<? extends TK> keyType, @NotNull Class<? extends TT> dataType, @NotNull IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn, @NotNull IDataTypedKey<U1K, U1T> input1, @NotNull IDataTypedKey<U2K, U2T> input2, @NotNull IDataTypedKey<U3K, U3T> input3, @NotNull IDataTypedKey<U4K, U4T> input4, @NotNull IDataTypedKey<U5K, U5T> input5, @NotNull IDataTypedKey<U6K, U6T> input6, @NotNull IDataTypedKey<U7K, U7T> input7) {
         this.priority = priority;
+        this.targetType = targetType;
+        this.keyType = keyType;
+        this.dataType = dataType;
         this.fn = fn;
         this.input1 = input1;
         this.input2 = input2;
@@ -40,6 +47,24 @@ public class SimpleMakeRule7<T extends IKeyData<TK, TT>, TK, TT, //
     @Override
     public int getPriority() {
         return priority;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends T> getTargetType() {
+        return targetType;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends TK> getKeyType() {
+        return keyType;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends TT> getDataType() {
+        return dataType;
     }
 
     @Override
@@ -105,6 +130,9 @@ public class SimpleMakeRule7<T extends IKeyData<TK, TT>, TK, TT, //
             U7 extends IKeyData<U7K, U7T>, U7K, U7T> {
 
         int priority;
+        Class<? extends T> targetType;
+        Class<? extends TK> keyType;
+        Class<? extends TT> dataType;
         IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn;
         IDataTypedKey<U1K, U1T> input1;
         IDataTypedKey<U2K, U2T> input2;
@@ -116,6 +144,11 @@ public class SimpleMakeRule7<T extends IKeyData<TK, TT>, TK, TT, //
 
         public Builder<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> priority(int priority) {
             this.priority = priority;
+            return this;
+        }
+
+        public Builder<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> targetType(Class<? extends T> targetType) {
+            this.targetType = targetType;
             return this;
         }
 
@@ -171,6 +204,12 @@ public class SimpleMakeRule7<T extends IKeyData<TK, TT>, TK, TT, //
         }
 
         public SimpleMakeRule7<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> build() {
+            if (targetType == null)
+                throw new NullPointerException("targetType");
+            if (keyType == null)
+                keyType = TypeParam.infer1(targetType, IKeyData.class, 0);
+            if (dataType == null)
+                dataType = TypeParam.infer1(targetType, IKeyData.class, 1);
             if (fn == null)
                 throw new NullPointerException("fn");
             if (input1 == null)
@@ -187,7 +226,7 @@ public class SimpleMakeRule7<T extends IKeyData<TK, TT>, TK, TT, //
                 throw new NullPointerException("input6");
             if (input7 == null)
                 throw new NullPointerException("input7");
-            return new SimpleMakeRule7<>(priority, fn, input1, input2, input3, input4, input5, input6, input7);
+            return new SimpleMakeRule7<>(priority, targetType, keyType, dataType, fn, input1, input2, input3, input4, input5, input6, input7);
         }
 
     }

@@ -10,7 +10,7 @@ public interface IMakeRule3<T extends IKeyData<TK, TT>, TK, TT, //
         U extends IKeyData<UK, UT>, UK, UT, //
         V extends IKeyData<VK, VT>, VK, VT, //
         W extends IKeyData<WK, WT>, WK, WT>
-        extends IMakeRule<T>
+        extends IMakeRule<T, TK, TT>
 {
 
     @Override

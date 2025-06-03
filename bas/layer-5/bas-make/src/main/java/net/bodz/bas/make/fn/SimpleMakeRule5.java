@@ -1,5 +1,6 @@
 package net.bodz.bas.make.fn;
 
+import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.make.IDataTypedKey;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.MakeException;
@@ -14,6 +15,9 @@ public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
         implements IMakeRule5<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> {
 
     int priority;
+    final Class<? extends T> targetType;
+    final Class<? extends TK> keyType;
+    final Class<? extends TT> dataType;
     IMakeable5<TT, UT, VT, WT, XT, YT> fn;
     IDataTypedKey<UK, UT> input1;
     IDataTypedKey<VK, VT> input2;
@@ -21,8 +25,11 @@ public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
     IDataTypedKey<XK, XT> input4;
     IDataTypedKey<YK, YT> input5;
 
-    public SimpleMakeRule5(int priority, @NotNull IMakeable5<TT, UT, VT, WT, XT, YT> fn, @NotNull IDataTypedKey<UK, UT> input1, @NotNull IDataTypedKey<VK, VT> input2, @NotNull IDataTypedKey<WK, WT> input3, @NotNull IDataTypedKey<XK, XT> input4, @NotNull IDataTypedKey<YK, YT> input5) {
+    public SimpleMakeRule5(int priority, @NotNull Class<? extends T> targetType, @NotNull Class<? extends TK> keyType, @NotNull Class<? extends TT> dataType, @NotNull IMakeable5<TT, UT, VT, WT, XT, YT> fn, @NotNull IDataTypedKey<UK, UT> input1, @NotNull IDataTypedKey<VK, VT> input2, @NotNull IDataTypedKey<WK, WT> input3, @NotNull IDataTypedKey<XK, XT> input4, @NotNull IDataTypedKey<YK, YT> input5) {
         this.priority = priority;
+        this.targetType = targetType;
+        this.keyType = keyType;
+        this.dataType = dataType;
         this.fn = fn;
         this.input1 = input1;
         this.input2 = input2;
@@ -34,6 +41,24 @@ public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
     @Override
     public int getPriority() {
         return priority;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends T> getTargetType() {
+        return targetType;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends TK> getKeyType() {
+        return keyType;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends TT> getDataType() {
+        return dataType;
     }
 
     @Override
@@ -85,6 +110,9 @@ public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
             Y extends IKeyData<YK, YT>, YK, YT> {
 
         int priority;
+        Class<? extends T> targetType;
+        Class<? extends TK> keyType;
+        Class<? extends TT> dataType;
         IMakeable5<TT, UT, VT, WT, XT, YT> fn;
         IDataTypedKey<UK, UT> input1;
         IDataTypedKey<VK, VT> input2;
@@ -94,6 +122,11 @@ public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
 
         public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> priority(int priority) {
             this.priority = priority;
+            return this;
+        }
+
+        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> targetType(Class<? extends T> targetType) {
+            this.targetType = targetType;
             return this;
         }
 
@@ -137,6 +170,12 @@ public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
         }
 
         public SimpleMakeRule5<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> build() {
+            if (targetType == null)
+                throw new NullPointerException("targetType");
+            if (keyType == null)
+                keyType = TypeParam.infer1(targetType, IKeyData.class, 0);
+            if (dataType == null)
+                dataType = TypeParam.infer1(targetType, IKeyData.class, 1);
             if (fn == null)
                 throw new NullPointerException("fn");
             if (input1 == null)
@@ -149,7 +188,7 @@ public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
                 throw new NullPointerException("input4");
             if (input5 == null)
                 throw new NullPointerException("input5");
-            return new SimpleMakeRule5<>(priority, fn, input1, input2, input3, input4, input5);
+            return new SimpleMakeRule5<>(priority, targetType, keyType, dataType, fn, input1, input2, input3, input4, input5);
         }
 
     }

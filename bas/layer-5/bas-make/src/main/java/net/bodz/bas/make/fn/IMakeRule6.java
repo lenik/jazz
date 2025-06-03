@@ -13,7 +13,7 @@ public interface IMakeRule6<T extends IKeyData<TK, TT>, TK, TT, //
         X extends IKeyData<XK, XT>, XK, XT, //
         Y extends IKeyData<YK, YT>, YK, YT, //
         Z extends IKeyData<ZK, ZT>, ZK, ZT>
-        extends IMakeRule<T>
+        extends IMakeRule<T, TK, TT>
 {
 
     @Override
