@@ -40,7 +40,7 @@ public class IMakeRule__java
                     else
                         out.println(">");
                 }
-                out.println("extends IMakeRule<T>");
+                out.println("extends IMakeRule<T, TK, TT>");
                 out.leave();
             }
             out.leave();

@@ -13,21 +13,21 @@ import net.bodz.bas.t.map.TypeListPmap;
 public class KeyTypeMatch
         implements IMakeStrategy {
 
-    TypeListPmap<IMakeRule<?>> rulesMap = new TypeListPmap<>();
-    ListMap<Class<?>, IMakeRule<?>> ifaceRulesMap = new ListMap<>();
+    TypeListPmap<IMakeRule<?, ?, ?>> rulesMap = new TypeListPmap<>();
+    ListMap<Class<?>, IMakeRule<?, ?, ?>> ifaceRulesMap = new ListMap<>();
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
+    public <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T, TK, TT> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         Class<?> keyType = target.getKeyType();
-        for (List<IMakeRule<?>> rules : rulesMap.join(keyType)) {
+        for (List<IMakeRule<?, ?, ?>> rules : rulesMap.join(keyType)) {
             if (!rules.isEmpty())
-                return (IMakeRule<T>) rules.get(0);
+                return (IMakeRule<T, TK, TT>) rules.get(0);
         }
         for (Class<?> iface : ifaceRulesMap.keySet()) {
             if (keyType.isAssignableFrom(iface)) {
-                return (IMakeRule<T>) ifaceRulesMap.getFirstOfList(iface);
+                return (IMakeRule<T, TK, TT>) ifaceRulesMap.getFirstOfList(iface);
             }
         }
         return null;
@@ -36,25 +36,25 @@ public class KeyTypeMatch
     @SuppressWarnings("unchecked")
     @NotNull
     @Override
-    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> makeRules(@NotNull T target, @NotNull IDataBinding binding) {
-        return (List<IMakeRule<T>>) (List<?>) getRules(target.getKeyType());
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> makeRules(@NotNull T target, @NotNull IDataBinding binding) {
+        return (List<IMakeRule<T, TK, TT>>) (List<?>) getRules(target.getKeyType());
     }
 
     @SuppressWarnings("unchecked")
     @NotNull
-    public <T extends IKeyData<? extends TK, TT>, TK, TT> List<IMakeRule<T>> getRules(@NotNull Class<TK> keyType) {
-        List<IMakeRule<T>> rules = (List<IMakeRule<T>>) (List<?>) rulesMap.joinConcatenated(keyType);
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> getRules(@NotNull Class<TK> keyType) {
+        List<IMakeRule<T, TK, TT>> rules = (List<IMakeRule<T, TK, TT>>) (List<?>) rulesMap.joinConcatenated(keyType);
 
         for (Class<?> iface : ifaceRulesMap.keySet()) {
             if (keyType.isAssignableFrom(iface)) {
-                List<IMakeRule<T>> sub = (List<IMakeRule<T>>) (List<?>) ifaceRulesMap.get(iface);
+                List<IMakeRule<T, TK, TT>> sub = (List<IMakeRule<T, TK, TT>>) (List<?>) ifaceRulesMap.get(iface);
                 rules.addAll(sub);
             }
         }
         return rules;
     }
 
-    public <T extends IKeyData<TK, TT>, TK, TT> void addRule(@NotNull Class<TK> keyType, @NotNull IMakeRule<T> rule) {
+    public <T extends IKeyData<TK, TT>, TK, TT> void addRule(@NotNull Class<TK> keyType, @NotNull IMakeRule<T, TK, TT> rule) {
         rulesMap.addToList(keyType, rule);
     }
 

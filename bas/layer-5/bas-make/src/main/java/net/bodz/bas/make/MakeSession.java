@@ -107,7 +107,7 @@ public class MakeSession
     public IMakeNode makeGraph(@NotNull IKeyData<?, ?> target, boolean reduce)
             throws CompileException {
         MutableMakeNode selection = MutableMakeNode.select();
-        for (IMakeRule<? extends IKeyData<?, ?>> rule : getRules().makeRules(target, this)) {
+        for (IMakeRule<? extends IKeyData<?, ?>, ?, ?> rule : getRules().makeRules(target, this)) {
             IDataTypedKey<?, ?>[] inputKeys = rule.getInputs();
             IKeyData<?, ?>[] inputs = resolve(inputKeys);
 

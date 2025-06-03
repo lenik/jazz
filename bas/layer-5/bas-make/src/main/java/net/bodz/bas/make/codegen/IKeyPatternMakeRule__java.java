@@ -21,7 +21,7 @@ public class IKeyPatternMakeRule__java
         out.printf("package net.bodz.bas.make.pattern.key;\n");
         out.println();
         out.printf("import net.bodz.bas.make.IKeyData;\n");
-        out.printf("import net.bodz.bas.make.IParameterizedKeys;\n");
+        out.printf("import net.bodz.bas.make.IParameterizedKey;\n");
         out.printf("import net.bodz.bas.make.pattern.template.IKeyPatternLikeMakeRule%d;\n", inputCount);
         out.println();
         out.printf("public interface IKeyPatternMakeRule%d<Tp extends IKeyPattern<Param, K>, Param, K, //\n", inputCount);
@@ -31,7 +31,7 @@ public class IKeyPatternMakeRule__java
             {
                 for (int i = 0; i < inputCount; i++) {
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                    out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                 }
                 out.printf("T extends IKeyData<K, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
@@ -41,7 +41,7 @@ public class IKeyPatternMakeRule__java
                 }
                 out.print("> //\n");
 
-                out.printf("extends IKeyPatternLikeMakeRule%d<Tp, Param, K, IParameterizedKeys<?, ?>%s, T, TT%s>,\n", //
+                out.printf("extends IKeyPatternLikeMakeRule%d<Tp, Param, K, IParameterizedKey<?, ?>%s, T, TT%s>,\n", //
                         inputCount, //
                         comma(Naming.typeVars(inputCount, "s", "K")), //
                         comma(Naming.typeVars(inputCount, "", "T")));
@@ -58,10 +58,10 @@ public class IKeyPatternMakeRule__java
                 out.leave();
             }
             out.printf("@Override\n");
-            out.printf("default IParameterizedKeys<?, ?>[] getInputs() {\n");
+            out.printf("default IParameterizedKey<?, ?>[] getInputs() {\n");
             out.enter();
             {
-                out.printf("return new IParameterizedKeys[] { ");
+                out.printf("return new IParameterizedKey[] { ");
                 for (int i = 0; i < inputCount; i++) {
                     if (i != 0)
                         out.print(", ");

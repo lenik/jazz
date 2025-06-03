@@ -17,12 +17,12 @@ public interface IMakeSession
     }
 
     @NotNull
-    default <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> makeRules(@NotNull T target)
+    default <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> makeRules(@NotNull T target)
             throws CompileException {
         return getRules().makeRules(target, this);
     }
 
-    default <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T> makeDefaultRule(@NotNull T target)
+    default <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T, TK, TT> makeDefaultRule(@NotNull T target)
             throws CompileException {
         return getRules().makeDefaultRule(target, this);
     }

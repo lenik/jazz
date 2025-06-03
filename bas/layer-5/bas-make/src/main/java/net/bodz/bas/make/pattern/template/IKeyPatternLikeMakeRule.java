@@ -4,14 +4,14 @@ import net.bodz.bas.make.BoundRule;
 import net.bodz.bas.make.CompileException;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.IDataBinding;
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.SimpleMakeRule;
 import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.order.IPriority;
 
 public interface IKeyPatternLikeMakeRule<Tp extends IKeyPatternLike<Param, K>, Param, K, //
-        Keys extends IParameterizedKeys<?, ?>, //
+        Keys extends IParameterizedKey<?, ?>, //
         T extends IKeyData<K, TT>, TT>
         extends IPriority {
 
@@ -19,12 +19,12 @@ public interface IKeyPatternLikeMakeRule<Tp extends IKeyPatternLike<Param, K>, P
 
     Keys[] getInputs();
 
-    default BoundRule<T> compile(@NotNull T target, @NotNull IDataBinding binding)
+    default BoundRule<T, K, TT> compile(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         Tp pattern = getPattern();
         Class<? extends Param> paramType = pattern.getParameterType();
 
-        IParameterizedKeys<?, ?>[] inputss = getInputs();
+        IParameterizedKey<?, ?>[] inputss = getInputs();
 
         Param param = pattern.match(target.getKey());
         if (param == null)
@@ -32,11 +32,11 @@ public interface IKeyPatternLikeMakeRule<Tp extends IKeyPatternLike<Param, K>, P
 
         IKeyData<?, ?>[] inputs = new IKeyData[inputss.length];
         for (int i = 0; i < inputs.length; i++) {
-            IParameterizedKeys<?, ?> _keys = inputss[i];
+            IParameterizedKey<?, ?> _keys = inputss[i];
             Object key;
             if (_keys.getParameterType().isAssignableFrom(paramType)) {
                 @SuppressWarnings("unchecked")
-                IParameterizedKeys<Param, ?> keys = (IParameterizedKeys<Param, ?>) _keys;
+                IParameterizedKey<Param, ?> keys = (IParameterizedKey<Param, ?>) _keys;
                 key = keys.getKey(param);
             } else {
                 key = _keys.getKey(null);
@@ -59,7 +59,7 @@ public interface IKeyPatternLikeMakeRule<Tp extends IKeyPatternLike<Param, K>, P
                 .priority(this.getPriority())//
                 .fn(fn).build();
 
-        BoundRule<T> instance = new BoundRule<>(rule, target);
+        BoundRule<T, K, TT> instance = new BoundRule<>(rule, target);
         return instance;
     }
 

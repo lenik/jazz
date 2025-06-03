@@ -16,6 +16,33 @@ public interface IDataBinding {
 
     <K> IKeyData<K, ?> getData(@NotNull K key);
 
+    default <E, K> ITypeDerivedKeyList<E, K> getListData(@NotNull Class<E> elementType, K key) {
+        ListKey<E, K> listKey = new ListKey<>(elementType, key);
+        IKeyData<ListKey<E, K>, ?> _data = getData(listKey);
+        @SuppressWarnings("unchecked")
+        ITypeDerivedKeyList<E, K> data = (ITypeDerivedKeyList<E, K>) _data;
+        return data;
+    }
+
+    default <E, K> ITypeDerivedKeySet<E, K> getSetData(@NotNull Class<E> elementType, K key) {
+        SetKey<E, K> setKey = new SetKey<>(elementType, key);
+        IKeyData<SetKey<E, K>, ?> _data = getData(setKey);
+        @SuppressWarnings("unchecked")
+        ITypeDerivedKeySet<E, K> data = (ITypeDerivedKeySet<E, K>) _data;
+        return data;
+    }
+
+    default <E, EK, K> ITypeDerivedKeyMap<E, EK, K> getMapData(//
+            Class<E> elementValueType, //
+            @NotNull Class<EK> elementKeyType, //
+            K key) {
+        MapKey<E, EK, K> mapKey = new MapKey<>(elementValueType, elementKeyType, key);
+        IKeyData<MapKey<E, EK, K>, ?> _data = getData(mapKey);
+        @SuppressWarnings("unchecked")
+        ITypeDerivedKeyMap<E, EK, K> data = (ITypeDerivedKeyMap<E, EK, K>) _data;
+        return data;
+    }
+
     default <T> List<IKeyData<?, T>> findData(@NotNull Class<T> dataType) {
         return findData(dataType, false);
     }
@@ -28,33 +55,11 @@ public interface IDataBinding {
 
     <K> List<IKeyData<K, ?>> findDataByKeyType(@NotNull Class<K> keyType, boolean join);
 
+    //
+
     <K, T> List<IKeyData<K, T>> resolve(@NotNull IDataTypedKey<K, T> dataTypedKey);
 
     @NotNull
     IKeyData<?, ?>[] resolve(@NotNull IDataTypedKey<?, ?>... inputKeys);
-
-    default <K, E> ITypeDerivedKeyList<K, E> getListData(@NotNull Class<E> elementType, K key) {
-        ListKey<E, K> listKey = new ListKey<>(elementType, key);
-        IKeyData<ListKey<E, K>, ?> _data = getData(listKey);
-        @SuppressWarnings("unchecked")
-        ITypeDerivedKeyList<K, E> data = (ITypeDerivedKeyList<K, E>) _data;
-        return data;
-    }
-
-    default <K, E> ITypeDerivedKeySet<K, E> getSetData(@NotNull Class<E> elementType, K key) {
-        SetKey<E, K> setKey = new SetKey<>(elementType, key);
-        IKeyData<SetKey<E, K>, ?> _data = getData(setKey);
-        @SuppressWarnings("unchecked")
-        ITypeDerivedKeySet<K, E> data = (ITypeDerivedKeySet<K, E>) _data;
-        return data;
-    }
-
-    default <K, EK, EV> ITypeDerivedKeyMap<K, EK, EV> getSetData(@NotNull Class<EK> elementKeyType, Class<EV> elementValueType, K key) {
-        MapKey<EK, EV, K> mapKey = new MapKey<>(elementKeyType, elementValueType, key);
-        IKeyData<MapKey<EK, EV, K>, ?> _data = getData(mapKey);
-        @SuppressWarnings("unchecked")
-        ITypeDerivedKeyMap<K, EK, EV> data = (ITypeDerivedKeyMap<K, EK, EV>) _data;
-        return data;
-    }
 
 }

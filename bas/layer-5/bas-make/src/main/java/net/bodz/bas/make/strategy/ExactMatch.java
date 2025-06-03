@@ -12,28 +12,28 @@ import net.bodz.bas.t.map.ListMap;
 public class ExactMatch
         implements IMakeStrategy {
 
-    ListMap<IKeyData<?, ?>, IMakeRule<?>> rulesMap = new ListMap<>();
+    ListMap<IKeyData<?, ?>, IMakeRule<?, ?, ?>> rulesMap = new ListMap<>();
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
+    public <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T, TK, TT> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
-        return (IMakeRule<T>) rulesMap.getFirstOfList(target);
+        return (IMakeRule<T, TK, TT>) rulesMap.getFirstOfList(target);
     }
 
     @NotNull
     @Override
-    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> makeRules(@NotNull T target, @NotNull IDataBinding binding) {
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> makeRules(@NotNull T target, @NotNull IDataBinding binding) {
         return getRules(target);
     }
 
     @SuppressWarnings("unchecked")
     @NotNull
-    public <T extends IKeyData<?, ?>> List<IMakeRule<T>> getRules(@NotNull T target) {
-        return (List<IMakeRule<T>>) (List<?>) rulesMap.getOrEmpty(target);
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> getRules(@NotNull T target) {
+        return (List<IMakeRule<T, TK, TT>>) (List<?>) rulesMap.getOrEmpty(target);
     }
 
-    public <T extends IKeyData<?, ?>> void addRule(@NotNull T target, @NotNull IMakeRule<T> rule) {
+    public <T extends IKeyData<TK, TT>, TK, TT> void addRule(@NotNull T target, @NotNull IMakeRule<T, TK, TT> rule) {
         rulesMap.addToList(target, rule);
     }
 

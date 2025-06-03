@@ -75,7 +75,7 @@ public class ListKey<E, K>
 
     @Override
     public String toString() {
-        return "List<" + elementType.getName() + ", " + key + '>';
+        return "List<" + elementType.getName() + ">[" + key + "]";
     }
 
 }

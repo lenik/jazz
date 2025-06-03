@@ -1,9 +1,9 @@
 package net.bodz.bas.make.util;
 
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 
 public class KeyModifier
-        implements IParameterizedKeys<String, String> {
+        implements IParameterizedKey<String, String> {
 
     String prefix;
     String suffix;

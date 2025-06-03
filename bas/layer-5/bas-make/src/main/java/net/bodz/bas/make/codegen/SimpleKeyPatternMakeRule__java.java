@@ -23,7 +23,7 @@ public class SimpleKeyPatternMakeRule__java
         out.printf("package net.bodz.bas.make.pattern.key;\n");
         out.println();
         out.printf("import net.bodz.bas.make.IKeyData;\n");
-        out.printf("import net.bodz.bas.make.IParameterizedKeys;\n");
+        out.printf("import net.bodz.bas.make.IParameterizedKey;\n");
         out.printf("import net.bodz.bas.make.fn.CompileFunction%d;\n", inputCount);
         out.printf("import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule%d;\n", inputCount);
         out.printf("import net.bodz.bas.meta.decl.NotNull;\n");
@@ -35,7 +35,7 @@ public class SimpleKeyPatternMakeRule__java
             {
                 for (int i = 0; i < inputCount; i++) {
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                    out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                 }
                 out.printf("T extends IKeyData<K, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
@@ -45,7 +45,7 @@ public class SimpleKeyPatternMakeRule__java
                 }
                 out.print("> //\n");
 
-                out.printf("extends SimpleKeyPatternLikeMakeRule%d<Tp, Param, K, IParameterizedKeys<?, ?>%s, T, TT%s>\n", //
+                out.printf("extends SimpleKeyPatternLikeMakeRule%d<Tp, Param, K, IParameterizedKey<?, ?>%s, T, TT%s>\n", //
                         inputCount, //
                         comma(Naming.typeVars(inputCount, "s", "K")), //
                         comma(Naming.typeVars(inputCount, "", "T")));
@@ -78,7 +78,7 @@ public class SimpleKeyPatternMakeRule__java
                 {
                     for (int i = 0; i < inputCount; i++) {
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                        out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                     }
                     out.printf("T extends IKeyData<K, TT>, TT");
                     for (int i = 0; i < inputCount; i++) {
@@ -110,7 +110,7 @@ public class SimpleKeyPatternMakeRule__java
                 {
                     for (int i = 0; i < inputCount; i++) {
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                        out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                     }
                     out.printf("T extends IKeyData<K, TT>, TT");
                     for (int i = 0; i < inputCount; i++) {

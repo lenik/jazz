@@ -3,8 +3,8 @@ package net.bodz.bas.make;
 import net.bodz.bas.make.strategy.IMakeStrategy;
 import net.bodz.bas.meta.decl.NotNull;
 
-public abstract class AbstractMakeRule<T extends IKeyData<?, ?>>
-        implements IMakeRule<T> {
+public abstract class AbstractMakeRule<T extends IKeyData<TK, TT>, TK, TT>
+        implements IMakeRule<T, TK, TT> {
 
     IMakeStrategy source;
 

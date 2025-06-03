@@ -4,8 +4,9 @@ import net.bodz.bas.make.strategy.IMakeStrategy;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.order.IPriority;
 
-public interface IMakeRule<T extends IKeyData<?, ?>>
-        extends IPriority {
+public interface IMakeRule<T extends IKeyData<TK, TT>, TK, TT>
+        extends IPriority,
+                ITargetType<T, TK, TT> {
 
     default IMakeStrategy getSource() {
         return null;
@@ -32,8 +33,8 @@ public interface IMakeRule<T extends IKeyData<?, ?>>
         return 1;
     }
 
-    default BoundRule<T> bind(T target, @NotNull IKeyData<?, ?>... inputs) {
-        return new BoundRule<T>(this, target, inputs);
+    default BoundRule<T, TK, TT> bind(T target, @NotNull IKeyData<?, ?>... inputs) {
+        return new BoundRule<>(this, target, inputs);
     }
 
 }

@@ -5,28 +5,30 @@ import java.util.Objects;
 import net.bodz.bas.make.tdk.ITypeDerivedKey;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class MapKey<EK, EV, K>
-        implements IMapKey<EK, EV, K>,
-                   ITypeDerivedKey<EV, K> {
+public class MapKey<E, EK, K>
+        implements IMapKey<E, EK, K>,
+                   ITypeDerivedKey<E, K> {
 
     final Class<? extends EK> elementKeyType;
-    final Class<? extends EV> elementValueType;
+    final Class<? extends E> elementValueType;
     final Class<? extends K> keyType;
     final K key;
 
     @SuppressWarnings("unchecked")
-    public MapKey(@NotNull Class<? extends EK> elementKeyType, //
-            @NotNull Class<? extends EV> elementValueType, //
+    public MapKey(//
+            @NotNull Class<? extends E> elementValueType, //
+            @NotNull Class<? extends EK> elementKeyType, //
             @NotNull K key) {
-        this(elementKeyType, elementValueType, (Class<? extends K>) key.getClass(), key);
+        this(elementValueType, elementKeyType, (Class<? extends K>) key.getClass(), key);
     }
 
-    public MapKey(@NotNull Class<? extends EK> elementKeyType, //
-            @NotNull Class<? extends EV> elementValueType, //
+    public MapKey(//
+            @NotNull Class<? extends E> elementValueType, //
+            @NotNull Class<? extends EK> elementKeyType, //
             @NotNull Class<? extends K> keyType, //
             @NotNull K key) {
-        this.elementKeyType = elementKeyType;
         this.elementValueType = elementValueType;
+        this.elementKeyType = elementKeyType;
         this.keyType = keyType;
         this.key = key;
     }
@@ -39,7 +41,7 @@ public class MapKey<EK, EV, K>
 
     @NotNull
     @Override
-    public Class<? extends EV> getElementValueType() {
+    public Class<? extends E> getElementValueType() {
         return elementValueType;
     }
 
@@ -57,7 +59,7 @@ public class MapKey<EK, EV, K>
 
     @NotNull
     @Override
-    public Class<? extends EV> getDerivedFromType() {
+    public Class<? extends E> getDerivedFromType() {
         return elementValueType;
     }
 
@@ -90,7 +92,7 @@ public class MapKey<EK, EV, K>
 
     @Override
     public String toString() {
-        return "Map<" + elementKeyType.getName() + ", " + elementValueType.getName() + ", " + key + '>';
+        return "Map<" + elementKeyType.getName() + ", " + elementValueType.getName() + ">[" + key + ']';
     }
 
 }

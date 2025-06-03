@@ -14,9 +14,11 @@ public class MutableMakeNode
         extends MutableElement
         implements IMakeNode {
 
+    private static final long serialVersionUID = -4072712716902647412L;
+
     MakeNodeType type;
     List<IMakeNode> children = new ArrayList<>();
-    BoundRule<?> boundRule;
+    BoundRule<?, ?, ?> boundRule;
 
     public MutableMakeNode(@NotNull MakeNodeType type) {
         this.type = type;
@@ -34,7 +36,7 @@ public class MutableMakeNode
         return node;
     }
 
-    public static MutableMakeNode run(BoundRule<?> boundRule) {
+    public static MutableMakeNode run(BoundRule<?, ?, ?> boundRule) {
         MutableMakeNode node = new MutableMakeNode(MakeNodeType.RUN);
         node.boundRule = boundRule;
         return node;
@@ -67,11 +69,11 @@ public class MutableMakeNode
     }
 
     @Override
-    public BoundRule<?> getBoundRule() {
+    public BoundRule<?, ?, ?> getBoundRule() {
         return boundRule;
     }
 
-    public void setBoundRule(BoundRule<?> boundRule) {
+    public void setBoundRule(BoundRule<?, ?, ?> boundRule) {
         this.boundRule = boundRule;
     }
 
@@ -93,7 +95,7 @@ public class MutableMakeNode
                 break;
 
             case RUN:
-                IMakeRule<?> rule = boundRule.getRule();
+                IMakeRule<?, ?, ?> rule = boundRule.getRule();
                 //                IKeyData<?, ?> target = boundRule.getTarget();
                 //                IKeyData<?, ?>[] inputs = boundRule.getInputs();
 

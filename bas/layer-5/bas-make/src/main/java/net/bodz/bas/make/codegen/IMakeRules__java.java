@@ -23,16 +23,18 @@ public class IMakeRules__java
         out.println();
         out.printf("import net.bodz.bas.make.fn.*;\n");
         out.printf("import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;\n");
-        out.printf("import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKeys;\n");
+        out.printf("import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKey;\n");
+        out.printf("import net.bodz.bas.make.pattern.dtkey.IDataTypedTarget2KeyPattern;\n");
         for (int inputCount = 0; inputCount <= maxCount; inputCount++)
             out.printf("import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule%d;\n", inputCount);
         for (int inputCount = 0; inputCount <= maxCount; inputCount++)
-            out.printf("import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTargetPatternMakeRule%d;\n", inputCount);
+            out.printf("import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTarget2KeyPatternMakeRule%d;\n", inputCount);
         out.printf("import net.bodz.bas.make.pattern.key.IKeyPattern;\n");
+        out.printf("import net.bodz.bas.make.pattern.key.ITarget2KeyPattern;\n");
         for (int inputCount = 0; inputCount <= maxCount; inputCount++)
             out.printf("import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule%d;\n", inputCount);
         for (int inputCount = 0; inputCount <= maxCount; inputCount++)
-            out.printf("import net.bodz.bas.make.pattern.key.SimpleTargetPatternMakeRule%d;\n", inputCount);
+            out.printf("import net.bodz.bas.make.pattern.key.SimpleTarget2KeyPatternMakeRule%d;\n", inputCount);
         out.printf("import net.bodz.bas.meta.decl.NotNull;\n");
         out.println();
         out.printf("public interface IMakeRules\n");
@@ -68,13 +70,21 @@ public class IMakeRules__java
             out.printf("// rules: data-typed key pattern\n");
             dataTypedKeyPatternMatch(out);
 
-            out.println();
-            out.printf("// rules: target pattern\n");
-            targetPatternMatch(out);
+//            out.println();
+//            out.printf("// rules: target pattern\n");
+//            targetPatternMatch(out);
+//
+//            out.println();
+//            out.printf("// rules: data-typed target pattern\n");
+//            dataTypedTargetPatternMatch(out);
 
             out.println();
-            out.printf("// rules: data-typed target pattern\n");
-            dataTypedTargetPatternMatch(out);
+            out.printf("// rules: target to key pattern\n");
+            target2KeyPatternMatch(out);
+
+            out.println();
+            out.printf("// rules: data-typed target to key pattern\n");
+            dataTypedTarget2KeyPatternMatch(out);
 
             out.println();
             out.leave();
@@ -304,7 +314,7 @@ public class IMakeRules__java
                 {
                     for (int i = 0; i < inputCount; i++) {
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                        out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                     }
                     out.printf("T extends IKeyData<K, TT>, TT");
 
@@ -365,7 +375,7 @@ public class IMakeRules__java
                 {
                     for (int i = 0; i < inputCount; i++) {
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IDataTypedParameterizedKeys<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
+                        out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
                     }
                     out.printf("T extends IKeyData<K, TT>, TT");
 
@@ -417,17 +427,17 @@ public class IMakeRules__java
     }
 
 
-    void targetPatternMatch(JavaSourceWriter out) {
+    void target2KeyPatternMatch(JavaSourceWriter out) {
         for (int inputCount = 0; inputCount <= maxCount; inputCount++) {
             out.println();
-            out.printf("default <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //\n");
+            out.printf("default <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //\n");
             out.enter();
             {
                 out.enter();
                 {
                     for (int i = 0; i < inputCount; i++) {
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                        out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                     }
                     out.printf("T extends IKeyData<TK, TT>, TT");
 
@@ -452,7 +462,7 @@ public class IMakeRules__java
                 {
                     out.enter();
                     {
-                        out.printf("SimpleTargetPatternMakeRule%d.<Tp, Param, TK%s, T, TT%s>builder()//\n", //
+                        out.printf("SimpleTarget2KeyPatternMakeRule%d.<Tp, Param, TK%s, T, TT%s>builder()//\n", //
                                 inputCount, //
                                 comma(Naming.typeVars(inputCount, "s", "K")), //
                                 comma(Naming.typeVars(inputCount, "", "T")));
@@ -478,17 +488,17 @@ public class IMakeRules__java
         }
     }
 
-    void dataTypedTargetPatternMatch(JavaSourceWriter out) {
+    void dataTypedTarget2KeyPatternMatch(JavaSourceWriter out) {
         for (int inputCount = 0; inputCount <= maxCount; inputCount++) {
             out.println();
-            out.printf("default <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //\n");
+            out.printf("default <Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, //\n");
             out.enter();
             {
                 out.enter();
                 {
                     for (int i = 0; i < inputCount; i++) {
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IDataTypedParameterizedKeys<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
+                        out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
                     }
                     out.printf("T extends IKeyData<TK, TT>, TT");
 
@@ -513,7 +523,7 @@ public class IMakeRules__java
                 {
                     out.enter();
                     {
-                        out.printf("SimpleDataTypedTargetPatternMakeRule%d.<Tp, Param, TK%s, T, TT%s>builder()//\n",//
+                        out.printf("SimpleDataTypedTarget2KeyPatternMakeRule%d.<Tp, Param, TK%s, T, TT%s>builder()//\n",//
                                 inputCount, //
                                 comma(Naming.typeVars(inputCount, "s", "K")), //
                                 comma(Naming.typeVars(inputCount, "", "T")));

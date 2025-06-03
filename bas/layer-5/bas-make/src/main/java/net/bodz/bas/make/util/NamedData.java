@@ -42,7 +42,6 @@ public abstract class NamedData<T>
         return String.class;
     }
 
-    @NotNull
     @Override
     public String getKey() {
         return key;
@@ -73,23 +72,25 @@ public abstract class NamedData<T>
         return buf.toString();
     }
 
-    @SuppressWarnings("unchecked")
     public static abstract class Builder<self_t, T>
             implements IKeyDataBuilder<self_t, String, T> {
 
         protected String key;
         protected T data;
 
+        @SuppressWarnings("unchecked")
+        protected final self_t _this = (self_t) this;
+
         @Override
         public self_t key(@NotNull String value) {
             this.key = value;
-            return (self_t) this;
+            return _this;
         }
 
         @Override
         public self_t data(T value) {
             this.data = value;
-            return (self_t) this;
+            return _this;
         }
 
     }

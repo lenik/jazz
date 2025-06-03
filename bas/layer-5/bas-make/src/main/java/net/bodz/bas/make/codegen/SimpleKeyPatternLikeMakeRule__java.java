@@ -25,7 +25,7 @@ public class SimpleKeyPatternLikeMakeRule__java
         out.println();
         out.printf("import net.bodz.bas.make.CompileException;\n");
         out.printf("import net.bodz.bas.make.IKeyData;\n");
-        out.printf("import net.bodz.bas.make.IParameterizedKeys;\n");
+        out.printf("import net.bodz.bas.make.IParameterizedKey;\n");
         out.printf("import net.bodz.bas.make.fn.CompileFunction%d;\n", inputCount);
         out.printf("import net.bodz.bas.make.fn.IMakeable%d;\n", inputCount);
         out.printf("import net.bodz.bas.meta.decl.NotNull;\n");
@@ -35,10 +35,10 @@ public class SimpleKeyPatternLikeMakeRule__java
         {
             out.enter();
             {
-                out.printf("Keys extends IParameterizedKeys<?, ?>, //\n");
+                out.printf("Keys extends IParameterizedKey<?, ?>, //\n");
                 for (int i = 0; i < inputCount; i++) {
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                    out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                 }
                 out.printf("T extends IKeyData<K, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
@@ -130,7 +130,6 @@ public class SimpleKeyPatternLikeMakeRule__java
             }
             out.printf("}\n");
             out.println();
-            out.printf("@SuppressWarnings(\"unchecked\")\n");
             out.printf("public static abstract class Builder<self_t, Tp extends IKeyPatternLike<Param, K>, Param, K, //\n");
             out.enter();
             {
@@ -139,14 +138,14 @@ public class SimpleKeyPatternLikeMakeRule__java
 
                     for (int i = 0; i < inputCount; i++) {
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                        out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                     }
                     out.printf("T extends IKeyData<K, TT>, TT");
 
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT\n", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
                     }
                     out.print("> {\n");
                     out.println();
@@ -160,11 +159,14 @@ public class SimpleKeyPatternLikeMakeRule__java
                     out.printf("protected %ss input%ds;\n", U, i + 1);
                 }
                 out.println();
+                out.printf("@SuppressWarnings(\"unchecked\")\n");
+                out.println("protected final self_t _this = (self_t) this;");
+                out.println();
                 out.printf("public self_t priority(int priority) {\n");
                 out.enter();
                 {
                     out.printf("this.priority = priority;\n");
-                    out.printf("return (self_t) this;\n");
+                    out.printf("return _this;\n");
                     out.leave();
                 }
                 out.printf("}\n");
@@ -173,7 +175,7 @@ public class SimpleKeyPatternLikeMakeRule__java
                 out.enter();
                 {
                     out.printf("this.pattern = pattern;\n");
-                    out.printf("return (self_t) this;\n");
+                    out.printf("return _this;\n");
                     out.leave();
                 }
                 out.printf("}\n");
@@ -183,21 +185,21 @@ public class SimpleKeyPatternLikeMakeRule__java
                 out.enter();
                 {
                     out.printf("this.fn = fn;\n");
-                    out.printf("return (self_t) this;\n");
+                    out.printf("return _this;\n");
                     out.leave();
                 }
                 out.printf("}\n");
 
                 out.println();
                 out.printf("@SuppressWarnings(\"unchecked\")\n");
-                out.printf("public self_t input(@NotNull IParameterizedKeys<?, ?>... inputss) {\n");
+                out.printf("public self_t input(@NotNull IParameterizedKey<?, ?>... inputss) {\n");
                 out.enter();
                 {
                     for (int i = 0; i < inputCount; i++) {
                         String U = Naming.typeVar(inputCount, i);
                         out.printf("this.input%ds = (%ss) inputss[%d];\n", i + 1, U, i);
                     }
-                    out.printf("return (self_t) this;\n");
+                    out.printf("return _this;\n");
                     out.leave();
                 }
                 out.printf("}\n");
@@ -209,7 +211,7 @@ public class SimpleKeyPatternLikeMakeRule__java
                     out.enter();
                     {
                         out.printf("this.input%ds = input%ds;\n", i + 1, i + 1);
-                        out.printf("return (self_t) this;\n");
+                        out.printf("return _this;\n");
                         out.leave();
                     }
                     out.printf("}\n");

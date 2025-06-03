@@ -1,12 +1,9 @@
 package net.bodz.bas.make;
 
-import net.bodz.bas.meta.decl.NotNull;
-
 public interface IKey<K>
         extends IKeyType<K>,
-                IParameterizedKeys<Object, K> {
+                IParameterizedKey<Object, K> {
 
-    @NotNull
     K getKey();
 
     @Override

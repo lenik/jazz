@@ -3,7 +3,7 @@ package net.bodz.bas.make.pattern.dtkey;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class DataTypedCapture<Param, T>
-        implements IDataTypedParameterizedKeys<Param, Param, T> {
+        implements IDataTypedParameterizedKey<Param, Param, T> {
 
     final Class<Param> parameterType;
     final Class<? extends T> dataType;

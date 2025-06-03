@@ -1,6 +1,6 @@
 package net.bodz.bas.make;
 
-public interface IParameterizedKeys<P, K> {
+public interface IParameterizedKey<P, K> {
 
     Class<? extends P> getParameterType();
 

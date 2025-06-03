@@ -5,9 +5,9 @@ import java.util.List;
 import net.bodz.bas.make.util.ListKey;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class MutableTypeDerivedKeyList<K, E>
-        extends MutableTypeDerivedKeyCollection<ListKey<E, K>, K, List<E>, E>
-        implements ITypeDerivedKeyList<K, E> {
+public class MutableTypeDerivedKeyList<E, K>
+        extends MutableTypeDerivedKeyCollection<E, ListKey<E, K>, K, List<E>>
+        implements ITypeDerivedKeyList<E, K> {
 
     public MutableTypeDerivedKeyList(@NotNull Class<? extends E> elementType, @NotNull K derivedKey) {
         super(elementType, derivedKey, null);
@@ -28,6 +28,7 @@ public class MutableTypeDerivedKeyList<K, E>
         return (Class<ListKey<E, K>>) (Class<?>) ListKey.class;
     }
 
+    @NotNull
     @Override
     protected ListKey<E, K> createKey(K derivedKey) {
         return new ListKey<>(elementType, derivedKeyType, derivedKey);
@@ -40,15 +41,15 @@ public class MutableTypeDerivedKeyList<K, E>
         return (Class<List<E>>) (Class<?>) List.class;
     }
 
-    public static <K, E> Builder<K, E> builder() {
+    public static <E, K> Builder<E, K> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<K, E>
-            extends MutableTypeDerivedKeyCollection.Builder<Builder<K, E>, ListKey<E, K>, K, List<E>, E> {
+    public static class Builder<E, K>
+            extends MutableTypeDerivedKeyCollection.Builder<Builder<E, K>, E, ListKey<E, K>, K, List<E>> {
 
         @Override
-        public MutableTypeDerivedKeyList<K, E> build() {
+        public MutableTypeDerivedKeyList<E, K> build() {
             return new MutableTypeDerivedKeyList<>(elementType, derivedKeyType, derivedKey, data);
         }
 

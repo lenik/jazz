@@ -8,13 +8,9 @@ import net.bodz.bas.codegen.java.JavaCodeWriter;
 import net.bodz.bas.fn.IExecutableVarArgsX;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.ITreeOut;
-import net.bodz.bas.log.Logger;
-import net.bodz.bas.log.LoggerFactory;
 
 public class CodeGen
         implements IExecutableVarArgsX<String, Exception> {
-
-    static final Logger logger = LoggerFactory.getLogger(CodeGen.class);
 
     int maxCount = 7;
 
@@ -31,18 +27,29 @@ public class CodeGen
         Class__java[] modules = { //
                 new CompileFunction__java(), //
                 new IMakeable__java(), //
+
                 new IMakeRule__java(), //
                 new SimpleMakeRule__java(), //
+
                 new IKeyPatternLikeMakeRule__java(), //
                 new SimpleKeyPatternLikeMakeRule__java(), //
+
                 new IKeyPatternMakeRule__java(), //
                 new SimpleKeyPatternMakeRule__java(), //
                 new IDataTypedKeyPatternMakeRule__java(), //
                 new SimpleDataTypedKeyPatternMakeRule__java(), //
+
+                new ITarget2KeyPatternMakeRule__java(), //
+                new SimpleTarget2KeyPatternMakeRule__java(), //
+                new IDataTypedTarget2KeyPatternMakeRule__java(), //
+                new SimpleDataTypedTarget2KeyPatternMakeRule__java(), //
+
+                new ITargetPatternLikeMakeRule__java(), //
+                new SimpleTargetPatternLikeMakeRule__java(), //
+
                 new ITargetPatternMakeRule__java(), //
                 new SimpleTargetPatternMakeRule__java(), //
-                new IDataTypedTargetPatternMakeRule__java(), //
-                new SimpleDataTypedTargetPatternMakeRule__java(), //
+
                 new IMakeRules__java(), //
         };
 
@@ -69,7 +76,11 @@ public class CodeGen
 
     public static void main(String[] args)
             throws Exception {
-        new CodeGen().execute(args);
+        try {
+            new CodeGen().execute(args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

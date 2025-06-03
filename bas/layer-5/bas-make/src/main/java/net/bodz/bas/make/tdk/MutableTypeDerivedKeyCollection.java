@@ -10,8 +10,8 @@ import net.bodz.bas.make.util.INamed;
 import net.bodz.bas.make.util.ICollectionKey;
 import net.bodz.bas.meta.decl.NotNull;
 
-public abstract class MutableTypeDerivedKeyCollection<CK extends ICollectionKey<E, K>, K, C extends Collection<E>, E>
-        implements ITypeDerivedKeyCollection<CK, K, C, E>,
+public abstract class MutableTypeDerivedKeyCollection<E, CK extends ICollectionKey<E, K>, K, C extends Collection<E>>
+        implements ITypeDerivedKeyCollection<E, CK, K, C>,
                    INamed {
 
     final Class<? extends E> elementType;
@@ -54,6 +54,7 @@ public abstract class MutableTypeDerivedKeyCollection<CK extends ICollectionKey<
         this.name = name;
     }
 
+    @NotNull
     protected abstract CK createKey(K derivedKey);
 
     @NotNull
@@ -105,7 +106,7 @@ public abstract class MutableTypeDerivedKeyCollection<CK extends ICollectionKey<
     }
 
     @SuppressWarnings("unchecked")
-    public static abstract class Builder<self_t, CK extends ICollectionKey<E, K>, K, C extends Collection<E>, E>
+    public static abstract class Builder<self_t, E, CK extends ICollectionKey<E, K>, K, C extends Collection<E>>
             implements IKeyDataBuilder<self_t, CK, C> {
 
         protected Class<E> elementType;
@@ -113,31 +114,33 @@ public abstract class MutableTypeDerivedKeyCollection<CK extends ICollectionKey<
         protected K derivedKey;
         protected C data;
 
+        protected final self_t _this = (self_t) this;
+
         public self_t elementType(Class<E> value) {
             this.elementType = value;
-            return (self_t) this;
+            return _this;
         }
 
         public self_t derivedKeyType(Class<K> value) {
             this.derivedKeyType = value;
-            return (self_t) this;
+            return _this;
         }
 
         public self_t derivedKey(K value) {
             this.derivedKey = value;
-            return (self_t) this;
+            return _this;
         }
 
         @Override
         public self_t key(@NotNull CK key) {
             // nop
-            return (self_t) this;
+            return _this;
         }
 
         @Override
         public self_t data(C data) {
             this.data = data;
-            return (self_t) this;
+            return _this;
         }
 
     }

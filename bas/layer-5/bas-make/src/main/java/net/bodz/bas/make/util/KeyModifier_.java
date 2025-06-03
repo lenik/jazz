@@ -1,10 +1,10 @@
 package net.bodz.bas.make.util;
 
-import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKeys;
+import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKey;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class KeyModifier_<T>
-        implements IDataTypedParameterizedKeys<String, String, T> {
+        implements IDataTypedParameterizedKey<String, String, T> {
 
     String prefix;
     String suffix;

@@ -11,10 +11,10 @@ import net.bodz.bas.meta.decl.NotNull;
 public interface IMakeStrategy {
 
     @NotNull
-    <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> makeRules(@NotNull T target, @NotNull IDataBinding binding)
+    <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> makeRules(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException;
 
-    <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
+    <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T, TK, TT> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException;
 
     default boolean canMake(@NotNull IKeyData<?, ?> target, @NotNull IDataBinding binding)

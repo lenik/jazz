@@ -12,7 +12,7 @@ public class SimpleTargetPatternMakeRule__java
 
     @Override
     public QualifiedName getQName() {
-        return QualifiedName.parse("net.bodz.bas.make.pattern.key.SimpleTargetPatternMakeRule" + inputCount);
+        return QualifiedName.parse("net.bodz.bas.make.pattern.target.SimpleTargetPatternMakeRule" + inputCount);
     }
 
     @Override
@@ -20,12 +20,12 @@ public class SimpleTargetPatternMakeRule__java
             throws IOException {
         String ruleTypeVars = "<T, TK, TT" + comma(Naming.typeVars(inputCount, "", "K", "T")) + ">";
 
-        out.printf("package net.bodz.bas.make.pattern.key;\n");
+        out.printf("package net.bodz.bas.make.pattern.target;\n");
         out.println();
         out.printf("import net.bodz.bas.make.IKeyData;\n");
-        out.printf("import net.bodz.bas.make.IParameterizedKeys;\n");
+        out.printf("import net.bodz.bas.make.IParameterizedTarget;\n");
         out.printf("import net.bodz.bas.make.fn.CompileFunction%d;\n", inputCount);
-        out.printf("import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule%d;\n", inputCount);
+        out.printf("import net.bodz.bas.make.pattern.template.SimpleTargetPatternLikeMakeRule%d;\n", inputCount);
         out.printf("import net.bodz.bas.meta.decl.NotNull;\n");
         out.println();
         out.printf("public class SimpleTargetPatternMakeRule%d<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, ", inputCount);
@@ -35,7 +35,7 @@ public class SimpleTargetPatternMakeRule__java
             {
                 for (int i = 0; i < inputCount; i++) {
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                    out.printf("%ss extends IParameterizedTarget<Param, %s, %sK, %sT>, %sK, //\n", U, U, U, U, U);
                 }
                 out.printf("T extends IKeyData<TK, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
@@ -45,7 +45,7 @@ public class SimpleTargetPatternMakeRule__java
                 }
                 out.print("> //\n");
 
-                out.printf("extends SimpleKeyPatternLikeMakeRule%d<Tp, Param, TK, IParameterizedKeys<?, ?>%s, T, TT%s>\n", //
+                out.printf("extends SimpleTargetPatternLikeMakeRule%d<Tp, Param, TK, IParameterizedTarget<?, ?, ?, ?>%s, T, TT%s>\n", //
                         inputCount, //
                         comma(Naming.typeVars(inputCount, "s", "K")), //
                         comma(Naming.typeVars(inputCount, "", "T")));
@@ -78,13 +78,13 @@ public class SimpleTargetPatternMakeRule__java
                 {
                     for (int i = 0; i < inputCount; i++) {
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                        out.printf("%ss extends IParameterizedTarget<Param, %s, %sK, %sT>, %sK, //\n", U, U, U, U, U);
                     }
                     out.printf("T extends IKeyData<TK, TT>, TT");
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT\n", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
                     }
                     out.print("> //\n");
                     out.leave();
@@ -110,17 +110,17 @@ public class SimpleTargetPatternMakeRule__java
                 {
                     for (int i = 0; i < inputCount; i++) {
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                        out.printf("%ss extends IParameterizedTarget<Param, %s, %sK, %sT>, %sK, //\n", U, U, U, U, U);
                     }
                     out.printf("T extends IKeyData<TK, TT>, TT");
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT\n", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
                     }
                     out.print("> //\n");
 
-                    out.printf("extends SimpleKeyPatternLikeMakeRule%d.Builder<Builder<%s>, //\n", inputCount, builderTypeVars);
+                    out.printf("extends SimpleTargetPatternLikeMakeRule%d.Builder<Builder<%s>, //\n", inputCount, builderTypeVars);
                     out.printf("%s> {\n", builderTypeVars);
                     out.println();
                     out.leave();

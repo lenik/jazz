@@ -10,7 +10,7 @@ import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.IMakeRule;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPatternMakeRule;
-import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKeys;
+import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKey;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.map.ListMap;
 
@@ -21,7 +21,7 @@ public class DataTypedKeyPatternMatch
 
     @SuppressWarnings("rawtypes")
     @Override
-    public <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
+    public <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T, TK, TT> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         for (IDataTypedKeyPattern<?, ?, ?> pattern : rulesMap.keySet()) {
             Class<?> patternKeyType = pattern.getKeyType();
@@ -34,11 +34,11 @@ public class DataTypedKeyPatternMatch
 
             for (IDataTypedKeyPatternMakeRule patternRule : getRules(pattern)) {
                 @SuppressWarnings("unchecked")
-                BoundRule<T> action = (BoundRule<T>) patternRule.compile(target, binding);
+                BoundRule<T, TK, TT> action = (BoundRule<T, TK, TT>) patternRule.compile(target, binding);
                 if (action == null)
                     continue;
 
-                IMakeRule<T> rule = action.getRule();
+                IMakeRule<T, TK, TT> rule = action.getRule();
                 return rule;
             }
         }
@@ -47,9 +47,9 @@ public class DataTypedKeyPatternMatch
 
     @NotNull
     @Override
-    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> makeRules(@NotNull T target, @NotNull IDataBinding binding)
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> makeRules(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
-        List<IMakeRule<T>> rules = new ArrayList<>();
+        List<IMakeRule<T, TK, TT>> rules = new ArrayList<>();
 
         for (IDataTypedKeyPattern<?, ?, ?> _pattern : rulesMap.keySet()) {
             Class<?> patternKeyType = _pattern.getKeyType();
@@ -70,12 +70,12 @@ L:
                 IDataTypedKeyPatternMakeRule<?, ?, TK, T, TT> patternRule =//
                         (IDataTypedKeyPatternMakeRule<?, ?, TK, T, TT>) _patternRule;
 
-                BoundRule<T> action = patternRule.compile(target, binding);
+                BoundRule<T, TK, TT> action = patternRule.compile(target, binding);
                 if (action == null)
                     continue;
                 IKeyData<?, ?>[] inputs = action.getInputs();
 
-                IDataTypedParameterizedKeys<?, ?, ?>[] patternInputs = patternRule.getInputs();
+                IDataTypedParameterizedKey<?, ?, ?>[] patternInputs = patternRule.getInputs();
                 for (int i = 0; i < patternInputs.length; i++) {
                     Class<?> patternType = patternInputs[i].getDataType();
                     Class<?> inputType = inputs[i].getDataType();
@@ -83,7 +83,7 @@ L:
                         continue L;
                 }
 
-                IMakeRule<T> rule = action.getRule();
+                IMakeRule<T, TK, TT> rule = action.getRule();
                 rules.add(rule);
             }
         }

@@ -43,7 +43,7 @@ public interface IMakeNode
 
     void removeChild(@NotNull IMakeNode child);
 
-    BoundRule<?> getBoundRule();
+    BoundRule<?, ?, ?> getBoundRule();
 
     default double getMinEstimatedCost() {
         switch (getType()) {
@@ -65,7 +65,7 @@ public interface IMakeNode
                 return sum;
 
             case RUN:
-                BoundRule<?> boundRule = getBoundRule();
+                BoundRule<?, ?, ?> boundRule = getBoundRule();
                 double cost = boundRule.getCost();
                 for (IMakeNode child : getChildren())
                     cost += child.getMinEstimatedCost();
@@ -147,7 +147,7 @@ public interface IMakeNode
             case RUN:
                 for (IMakeNode child : getChildren()) // inputs
                     child.run(selector);
-                BoundRule<?> boundRule = getBoundRule();
+                BoundRule<?, ?, ?> boundRule = getBoundRule();
                 boundRule.run();
                 break;
 
@@ -168,8 +168,8 @@ public interface IMakeNode
                 break;
 
             case RUN:
-                BoundRule<?> boundRule = getBoundRule();
-                IMakeRule<?> rule = boundRule.getRule();
+                BoundRule<?, ?, ?> boundRule = getBoundRule();
+                IMakeRule<?, ?, ?> rule = boundRule.getRule();
                 IKeyData<?, ?> target = boundRule.getTarget();
                 String targetSpec = DataTypedKeys.format(target);
 

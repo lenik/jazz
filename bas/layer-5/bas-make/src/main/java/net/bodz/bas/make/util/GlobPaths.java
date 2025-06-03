@@ -3,10 +3,10 @@ package net.bodz.bas.make.util;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 
 public class GlobPaths
-        implements IParameterizedKeys<String, Path> {
+        implements IParameterizedKey<String, Path> {
 
     String prefix;
     String suffix;

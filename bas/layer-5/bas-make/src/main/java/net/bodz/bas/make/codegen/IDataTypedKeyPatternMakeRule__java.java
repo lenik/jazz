@@ -30,7 +30,7 @@ public class IDataTypedKeyPatternMakeRule__java
             {
                 for (int i = 0; i < inputCount; i++) {
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%ss extends IDataTypedParameterizedKeys<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
+                    out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
                 }
                 out.printf("T extends IKeyData<K, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
@@ -40,7 +40,7 @@ public class IDataTypedKeyPatternMakeRule__java
                 }
                 out.print("> //\n");
 
-                out.printf("extends IKeyPatternLikeMakeRule%d<Tp, Param, K, IDataTypedParameterizedKeys<?, ?, ?>%s, T, TT%s>,\n", //
+                out.printf("extends IKeyPatternLikeMakeRule%d<Tp, Param, K, IDataTypedParameterizedKey<?, ?, ?>%s, T, TT%s>,\n", //
                         inputCount, //
                         comma(Naming.typeVars(inputCount, "s", "K")), //
                         comma(Naming.typeVars(inputCount, "", "T")) //
@@ -58,10 +58,10 @@ public class IDataTypedKeyPatternMakeRule__java
                 out.leave();
             }
             out.printf("@Override\n");
-            out.printf("default IDataTypedParameterizedKeys<?, ?, ?>[] getInputs() {\n");
+            out.printf("default IDataTypedParameterizedKey<?, ?, ?>[] getInputs() {\n");
             out.enter();
             {
-                out.printf("return new IDataTypedParameterizedKeys[] { ");
+                out.printf("return new IDataTypedParameterizedKey[] { ");
                 for (int i = 0; i < inputCount; i++) {
                     if (i != 0)
                         out.print(", ");

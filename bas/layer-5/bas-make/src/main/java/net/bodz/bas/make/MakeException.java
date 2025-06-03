@@ -3,6 +3,8 @@ package net.bodz.bas.make;
 public class MakeException
         extends Exception {
 
+    private static final long serialVersionUID = 2738275444663327244L;
+
     public MakeException() {
     }
 

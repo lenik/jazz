@@ -13,4 +13,8 @@ public interface ITypeDerivedKey<T, K> {
     @NotNull
     K getDerivedKey();
 
+    default String getKeyString() {
+        return getDerivedFromType() + " :: " + getDerivedKey();
+    }
+
 }

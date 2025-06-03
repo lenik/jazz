@@ -23,6 +23,7 @@ public class SimpleMakeRule__java
 
         out.printf("package net.bodz.bas.make.fn;\n");
         out.println();
+        out.printf("import net.bodz.bas.c.type.TypeParam;\n");
         out.printf("import net.bodz.bas.make.IDataTypedKey;\n");
         out.printf("import net.bodz.bas.make.IKeyData;\n");
         out.printf("import net.bodz.bas.make.MakeException;\n");
@@ -43,15 +44,22 @@ public class SimpleMakeRule__java
                 out.println();
                 out.leave();
             }
+
             out.printf("int priority;\n");
+            out.printf("final Class<? extends T> targetType;\n");
+            out.printf("final Class<? extends TK> keyType;\n");
+            out.printf("final Class<? extends TT> dataType;\n");
             out.printf("IMakeable%d<TT%s> fn;\n", inputCount, _TVars);
             for (int i = 0; i < inputCount; i++) {
                 String U = Naming.typeVar(inputCount, i);
                 out.printf("IDataTypedKey<%sK, %sT> input%d;\n", U, U, i + 1);
             }
             out.println();
-            out.printf("public SimpleMakeRule%d(int priority, ", inputCount);
-            out.printf("@NotNull IMakeable%d<TT%s> fn", inputCount, _TVars);
+            out.printf("public SimpleMakeRule%d(int priority", inputCount);
+            out.printf(", @NotNull Class<? extends T> targetType");
+            out.printf(", @NotNull Class<? extends TK> keyType");
+            out.printf(", @NotNull Class<? extends TT> dataType");
+            out.printf(", @NotNull IMakeable%d<TT%s> fn", inputCount, _TVars);
             for (int i = 0; i < inputCount; i++) {
                 String U = Naming.typeVar(inputCount, i);
                 out.printf(", @NotNull IDataTypedKey<%sK, %sT> input%d", U, U, i + 1);
@@ -60,6 +68,9 @@ public class SimpleMakeRule__java
             out.enter();
             {
                 out.printf("this.priority = priority;\n");
+                out.printf("this.targetType = targetType;\n");
+                out.printf("this.keyType = keyType;\n");
+                out.printf("this.dataType = dataType;\n");
                 out.printf("this.fn = fn;\n");
                 for (int i = 0; i < inputCount; i++) {
                     out.printf("this.input%d = input%d;\n", i + 1, i + 1);
@@ -67,12 +78,46 @@ public class SimpleMakeRule__java
                 out.leave();
             }
             out.printf("}\n");
+
             out.println();
             out.printf("@Override\n");
             out.printf("public int getPriority() {\n");
             out.enter();
             {
                 out.printf("return priority;\n");
+                out.leave();
+            }
+            out.printf("}\n");
+
+            out.println();
+            out.printf("@NotNull\n");
+            out.printf("@Override\n");
+            out.printf("public Class<? extends T> getTargetType() {\n");
+            out.enter();
+            {
+                out.printf("return targetType;\n");
+                out.leave();
+            }
+            out.printf("}\n");
+
+            out.println();
+            out.printf("@NotNull\n");
+            out.printf("@Override\n");
+            out.printf("public Class<? extends TK> getKeyType() {\n");
+            out.enter();
+            {
+                out.printf("return keyType;\n");
+                out.leave();
+            }
+            out.printf("}\n");
+
+            out.println();
+            out.printf("@NotNull\n");
+            out.printf("@Override\n");
+            out.printf("public Class<? extends TT> getDataType() {\n");
+            out.enter();
+            {
+                out.printf("return dataType;\n");
                 out.leave();
             }
             out.printf("}\n");
@@ -144,11 +189,15 @@ public class SimpleMakeRule__java
                     out.leave();
                 }
                 out.printf("int priority;\n");
+                out.printf("Class<? extends T> targetType;\n");
+                out.printf("Class<? extends TK> keyType;\n");
+                out.printf("Class<? extends TT> dataType;\n");
                 out.printf("IMakeable%d<TT%s> fn;\n", inputCount, _TVars);
                 for (int i = 0; i < inputCount; i++) {
                     String U = Naming.typeVar(inputCount, i);
                     out.printf("IDataTypedKey<%sK, %sT> input%d;\n", U, U, i + 1);
                 }
+
                 out.println();
                 out.printf("public %s priority(int priority) {\n", builderType);
                 out.enter();
@@ -158,6 +207,17 @@ public class SimpleMakeRule__java
                     out.leave();
                 }
                 out.printf("}\n");
+
+                out.println();
+                out.printf("public %s targetType(Class<? extends T> targetType) {\n", builderType);
+                out.enter();
+                {
+                    out.printf("this.targetType = targetType;\n");
+                    out.printf("return this;\n");
+                    out.leave();
+                }
+                out.printf("}\n");
+
                 out.println();
                 out.printf("public %s fn(@NotNull IMakeable%d<TT%s> fn) {\n", builderType, inputCount, _TVars);
                 out.enter();
@@ -167,6 +227,7 @@ public class SimpleMakeRule__java
                     out.leave();
                 }
                 out.printf("}\n");
+
                 out.println();
                 out.printf("public %s input(", builderType);
                 for (int i = 0; i < inputCount; i++) {
@@ -204,6 +265,27 @@ public class SimpleMakeRule__java
                 out.printf("public SimpleMakeRule%d%s build() {\n", inputCount, typeVars);
                 out.enter();
                 {
+                    out.printf("if (targetType == null)\n");
+                    out.enter();
+                    {
+                        out.printf("throw new NullPointerException(\"targetType\");\n");
+                        out.leave();
+                    }
+
+                    out.printf("if (keyType == null)\n");
+                    out.enter();
+                    {
+                        out.printf("keyType = TypeParam.infer1(targetType, IKeyData.class, 0);\n");
+                        out.leave();
+                    }
+
+                    out.printf("if (dataType == null)\n");
+                    out.enter();
+                    {
+                        out.printf("dataType = TypeParam.infer1(targetType, IKeyData.class, 1);\n");
+                        out.leave();
+                    }
+
                     out.printf("if (fn == null)\n");
                     out.enter();
                     {
@@ -219,7 +301,7 @@ public class SimpleMakeRule__java
                             out.leave();
                         }
                     }
-                    out.printf("return new SimpleMakeRule%d<>(priority, fn%s);\n", inputCount, //
+                    out.printf("return new SimpleMakeRule%d<>(priority, targetType, keyType, dataType, fn%s);\n", inputCount, //
                             comma(Naming.inputVars(inputCount)));
                     out.leave();
                 }

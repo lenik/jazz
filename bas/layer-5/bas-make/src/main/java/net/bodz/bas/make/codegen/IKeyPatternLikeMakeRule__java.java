@@ -27,7 +27,7 @@ public class IKeyPatternLikeMakeRule__java
         out.printf("import net.bodz.bas.make.CompileException;\n");
         out.printf("import net.bodz.bas.make.IDataBinding;\n");
         out.printf("import net.bodz.bas.make.IKeyData;\n");
-        out.printf("import net.bodz.bas.make.IParameterizedKeys;\n");
+        out.printf("import net.bodz.bas.make.IParameterizedKey;\n");
         out.printf("import net.bodz.bas.make.fn.IMakeable%d;\n", inputCount);
         out.printf("import net.bodz.bas.make.fn.MakeFunction;\n");
         out.printf("import net.bodz.bas.make.fn.SimpleMakeRule%d;\n", inputCount);
@@ -38,10 +38,10 @@ public class IKeyPatternLikeMakeRule__java
         {
             out.enter();
             {
-                out.printf("Keys extends IParameterizedKeys<?, ?>, //\n");
+                out.printf("Keys extends IParameterizedKey<?, ?>, //\n");
                 for (int i = 0; i < inputCount; i++) {
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%ss extends IParameterizedKeys<Param, %sK>, %sK, //\n", U, U, U);
+                    out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                 }
                 out.printf("T extends IKeyData<K, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
@@ -71,7 +71,7 @@ public class IKeyPatternLikeMakeRule__java
             }
             out.println();
             out.printf("@Override\n");
-            out.printf("default BoundRule<T> compile(@NotNull T target, @NotNull IDataBinding binding)\n");
+            out.printf("default BoundRule<T, K, TT> compile(@NotNull T target, @NotNull IDataBinding binding)\n");
             out.enter();
             {
                 out.enter();
@@ -134,14 +134,14 @@ public class IKeyPatternLikeMakeRule__java
                     out.enter();
                     {
                         out.printf(".priority(this.getPriority())//\n");
-                        out.printf(".input(%s)\n", Naming.inputVars(inputCount));
+                        out.printf(".input(%s)//\n", Naming.inputVars(inputCount));
                         out.printf(".fn(fn).build();\n");
                         out.println();
                         out.leave();
                     }
                     out.leave();
                 }
-                out.printf("BoundRule<T> instance = new BoundRule<>(rule, target%s);\n", //
+                out.printf("BoundRule<T, K, TT> instance = new BoundRule<>(rule, target%s);\n", //
                         comma(Naming.inputVars(inputCount)));
                 out.printf("return instance;\n");
                 out.leave();

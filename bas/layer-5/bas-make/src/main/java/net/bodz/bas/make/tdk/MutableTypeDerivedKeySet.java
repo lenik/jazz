@@ -5,9 +5,9 @@ import java.util.Set;
 import net.bodz.bas.make.util.SetKey;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class MutableTypeDerivedKeySet<K, E>
-        extends MutableTypeDerivedKeyCollection<SetKey<E, K>, K, Set<E>, E>
-        implements ITypeDerivedKeySet<K, E> {
+public class MutableTypeDerivedKeySet<E, K>
+        extends MutableTypeDerivedKeyCollection<E, SetKey<E, K>, K, Set<E>>
+        implements ITypeDerivedKeySet<E, K> {
 
     public MutableTypeDerivedKeySet(@NotNull Class<? extends E> elementType, @NotNull K derivedKey) {
         super(elementType, derivedKey, null);
@@ -28,6 +28,7 @@ public class MutableTypeDerivedKeySet<K, E>
         return (Class<? extends SetKey<E, K>>) (Class<?>) SetKey.class;
     }
 
+    @NotNull
     @Override
     protected SetKey<E, K> createKey(K derivedKey) {
         return new SetKey<>(elementType, derivedKeyType, derivedKey);
@@ -40,15 +41,15 @@ public class MutableTypeDerivedKeySet<K, E>
         return (Class<? extends Set<E>>) (Class<?>) Set.class;
     }
 
-    public static <K, E> MutableTypeDerivedKeySet.Builder<K, E> builder() {
+    public static <E, K> MutableTypeDerivedKeySet.Builder<E, K> builder() {
         return new MutableTypeDerivedKeySet.Builder<>();
     }
 
-    public static class Builder<K, E>
-            extends MutableTypeDerivedKeyCollection.Builder<MutableTypeDerivedKeySet.Builder<K, E>, SetKey<E, K>, K, Set<E>, E> {
+    public static class Builder<E, K>
+            extends MutableTypeDerivedKeyCollection.Builder<MutableTypeDerivedKeySet.Builder<E, K>, E, SetKey<E, K>, K, Set<E>> {
 
         @Override
-        public MutableTypeDerivedKeySet<K, E> build() {
+        public MutableTypeDerivedKeySet<E, K> build() {
             return new MutableTypeDerivedKeySet<>(elementType, derivedKeyType, derivedKey, data);
         }
 

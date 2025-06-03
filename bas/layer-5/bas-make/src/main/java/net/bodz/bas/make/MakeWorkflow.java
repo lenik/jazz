@@ -44,10 +44,10 @@ public class MakeWorkflow {
         session.addData(age);
 
         NamedString greet = new NamedString("greet");
-        rules.addRule(greet, name, age, (n, a) -> "hello " + n + ", you are " + a + " years now.");
+//        rules.addRule(greet, name, age, (n, a) -> "hello " + n + ", you are " + a + " years now.");
 
         NamedInteger greetCount = new NamedInteger("greet_count");
-        rules.addRule(greetCount, greet, String::length);
+//        rules.addRule(greetCount, greet, String::length);
 
         session.make(greetCount);
         System.out.println("greetCount: " + greetCount);
@@ -55,8 +55,8 @@ public class MakeWorkflow {
         GlobStringPatternForInt countPattern = new GlobStringPatternForInt("%_count");
         KeyModifier_<String> justStem_Str = new KeyModifier_<>("%", String.class);
 
-        rules.addPatternRule(countPattern, justStem_Str, //
-                (count, input1) -> String::length);
+//        rules.addPatternRule(countPattern, justStem_Str, //
+//                (count, input1) -> String::length);
 
         NamedString brand = new NamedString("brand", "IBM And Microsoft");
         session.addData(brand);
@@ -72,8 +72,8 @@ public class MakeWorkflow {
         //rules.addRule(colorCount, colors, List::size);
 //        GlobNames srcNames = new GlobNames("%");
         KeyModifier_<List<?>> justStem_List = new KeyModifier_<>("%", ClassLiterals.List_class);
-        rules.addPatternRule(countPattern, justStem_List, //
-                (count, input1) -> List::size);
+//        rules.addPatternRule(countPattern, justStem_List, //
+//                (count, input1) -> List::size);
 
         NamedInteger colorCount = new NamedInteger("color_count");
         session.make(colorCount);
@@ -83,7 +83,7 @@ public class MakeWorkflow {
         NamedList<Double> nums = new NamedList<>("nums", numList);
         NamedDouble sum = new NamedDouble("sum");
 
-        rules.addRule(sum, nums, list -> list.stream().mapToDouble(a -> a).sum());
+//        rules.addRule(sum, nums, list -> list.stream().mapToDouble(a -> a).sum());
         session.make(sum);
         System.out.println("Sum: " + sum);
     }

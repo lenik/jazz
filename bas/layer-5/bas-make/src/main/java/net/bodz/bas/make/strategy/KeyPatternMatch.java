@@ -20,7 +20,7 @@ public class KeyPatternMatch
 
     @SuppressWarnings("rawtypes")
     @Override
-    public <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
+    public <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T, TK, TT> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
         for (IKeyPattern<?, ?> pattern : rulesMap.keySet()) {
             Class<?> patternKeyType = pattern.getKeyType();
@@ -30,7 +30,7 @@ public class KeyPatternMatch
             for (IKeyPatternMakeRule patternRule : getRules(pattern)) {
                 try {
                     @SuppressWarnings("unchecked")
-                    BoundRule<T> action = patternRule.compile(target, binding);
+                    BoundRule<T, TK, TT> action = patternRule.compile(target, binding);
                     if (action != null)
                         return action.getRule();
                 } catch (CompileException e) {
@@ -44,9 +44,9 @@ public class KeyPatternMatch
     @SuppressWarnings("rawtypes")
     @NotNull
     @Override
-    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T>> makeRules(@NotNull T target, @NotNull IDataBinding binding)
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> makeRules(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
-        List<IMakeRule<T>> rules = new ArrayList<>();
+        List<IMakeRule<T, TK, TT>> rules = new ArrayList<>();
 
         for (IKeyPattern<?, ?> pattern : rulesMap.keySet()) {
             Class<?> patternKeyType = pattern.getKeyType();
@@ -55,11 +55,11 @@ public class KeyPatternMatch
 
             for (IKeyPatternMakeRule patternRule : getRules(pattern)) {
                 @SuppressWarnings("unchecked")
-                BoundRule<T> action = (BoundRule<T>) patternRule.compile(target, binding);
+                BoundRule<T, TK, TT> action = (BoundRule<T, TK, TT>) patternRule.compile(target, binding);
                 if (action == null)
                     continue;
 
-                IMakeRule<T> rule = action.getRule();
+                IMakeRule<T, TK, TT> rule = action.getRule();
                 rules.add(rule);
             }
         }

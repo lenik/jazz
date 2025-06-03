@@ -1,10 +1,10 @@
 package net.bodz.bas.make.pattern.key;
 
-import net.bodz.bas.make.IParameterizedKeys;
+import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class Capture<Param>
-        implements IParameterizedKeys<Param, Param> {
+        implements IParameterizedKey<Param, Param> {
 
     final Class<? extends Param> parameterType;
 

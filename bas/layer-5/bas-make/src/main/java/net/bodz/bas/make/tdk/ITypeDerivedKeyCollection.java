@@ -6,7 +6,7 @@ import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.util.ICollectionKey;
 import net.bodz.bas.meta.decl.NotNull;
 
-public interface ITypeDerivedKeyCollection<CK extends ICollectionKey<E, K>, K, C extends Collection<E>, E>
+public interface ITypeDerivedKeyCollection<E, CK extends ICollectionKey<E, K>, K, C extends Collection<E>>
         extends IKeyData<CK, C>,
                 ITypeDerivedKey<E, K>,
                 Iterable<E> {

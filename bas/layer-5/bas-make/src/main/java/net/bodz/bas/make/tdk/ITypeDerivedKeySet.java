@@ -4,7 +4,7 @@ import java.util.Set;
 
 import net.bodz.bas.make.util.SetKey;
 
-public interface ITypeDerivedKeySet<K, E>
-        extends ITypeDerivedKeyCollection<SetKey<E, K>, K, Set<E>, E> {
+public interface ITypeDerivedKeySet<E, K>
+        extends ITypeDerivedKeyCollection<E, SetKey<E, K>, K, Set<E>> {
 
 }

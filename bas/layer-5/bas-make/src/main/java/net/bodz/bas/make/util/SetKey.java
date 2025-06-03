@@ -75,7 +75,7 @@ public class SetKey<E, K>
 
     @Override
     public String toString() {
-        return "Set<" + elementType.getName() + ", " + key + '>';
+        return "Set<" + elementType.getName() + ">[" + key + ']';
     }
 
 }
