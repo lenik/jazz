@@ -73,7 +73,7 @@ public interface ITargetPatternLikeMakeRule4<Tp extends ITargetPatternLike<Param
         if (fn == null)
             return null;
 
-        SimpleMakeRule4<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT> rule = SimpleMakeRule4.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT>builder()//
+        SimpleMakeRule4<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT> rule = SimpleMakeRule4.<T, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT>builder()//
                 .priority(this.getPriority())//
                 .input(input1, input2, input3, input4)//
                 .fn(fn).build();

@@ -1,9 +1,9 @@
 package net.bodz.bas.make.fn;
 
-import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.make.IDataTypedKey;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.MakeException;
+import net.bodz.bas.make.SimpleMakeRule;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class SimpleMakeRule0<T extends IKeyData<TK, TT>, TK, TT> //
@@ -52,48 +52,39 @@ public class SimpleMakeRule0<T extends IKeyData<TK, TT>, TK, TT> //
         return fn.make();
     }
 
-    public static <T extends IKeyData<TK, TT>, TK, TT> //
-    Builder<T, TK, TT> builder() {
+    public static <S, T extends IKeyData<TK, TT>, TK, TT> //
+    Builder<S, T, TK, TT> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<T extends IKeyData<TK, TT>, TK, TT> { //
+    public static class Builder<S, T extends IKeyData<TK, TT>, TK, TT> //
+            extends SimpleMakeRule.AbstractBuilder<Builder<S, T, TK, TT>, S, T, TK, TT> { 
 
-        int priority;
-        Class<? extends T> targetType;
-        Class<? extends TK> keyType;
-        Class<? extends TT> dataType;
         IMakeable0<TT> fn;
 
-        public Builder<T, TK, TT> priority(int priority) {
-            this.priority = priority;
-            return this;
-        }
-
-        public Builder<T, TK, TT> targetType(Class<? extends T> targetType) {
-            this.targetType = targetType;
-            return this;
-        }
-
-        public Builder<T, TK, TT> fn(@NotNull IMakeable0<TT> fn) {
+        public Builder<S, T, TK, TT> fn(@NotNull IMakeable0<TT> fn) {
             this.fn = fn;
             return this;
         }
 
-        public Builder<T, TK, TT> input() {
+        public Builder<S, T, TK, TT> input() {
             return this;
         }
 
         public SimpleMakeRule0<T, TK, TT> build() {
-            if (targetType == null)
-                throw new NullPointerException("targetType");
-            if (keyType == null)
-                keyType = TypeParam.infer1(targetType, IKeyData.class, 0);
-            if (dataType == null)
-                dataType = TypeParam.infer1(targetType, IKeyData.class, 1);
+            wireUp();
             if (fn == null)
                 throw new NullPointerException("fn");
             return new SimpleMakeRule0<>(priority, targetType, keyType, dataType, fn);
+        }
+
+        public void make(@NotNull IMakeable0<TT> fn) {
+            make(subject, fn);
+        }
+
+        public void make(@NotNull S subject, @NotNull IMakeable0<TT> fn) {
+            this.fn = fn;
+            apply.accept(subject, build());
         }
 
     }

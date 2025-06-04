@@ -1,5 +1,7 @@
 package net.bodz.bas.make.pattern.key;
 
+import java.util.function.BiConsumer;
+
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.fn.CompileFunction7;
@@ -28,7 +30,7 @@ public class SimpleTarget2KeyPatternMakeRule7<Tp extends ITarget2KeyPattern<Para
         super(priority, pattern, fn, input1s, input2s, input3s, input4s, input5s, input6s, input7s);
     }
 
-    public static <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
+    public static <S, Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
             U1s extends IParameterizedKey<Param, U1K>, U1K, //
             U2s extends IParameterizedKey<Param, U2K>, U2K, //
             U3s extends IParameterizedKey<Param, U3K>, U3K, //
@@ -44,11 +46,11 @@ public class SimpleTarget2KeyPatternMakeRule7<Tp extends ITarget2KeyPattern<Para
             U5 extends IKeyData<U5K, U5T>, U5T, //
             U6 extends IKeyData<U6K, U6T>, U6T, //
             U7 extends IKeyData<U7K, U7T>, U7T> //
-    Builder<Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T> builder() {
+    Builder<S, Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
+    public static class Builder<S, Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
             U1s extends IParameterizedKey<Param, U1K>, U1K, //
             U2s extends IParameterizedKey<Param, U2K>, U2K, //
             U3s extends IParameterizedKey<Param, U3K>, U3K, //
@@ -64,8 +66,21 @@ public class SimpleTarget2KeyPatternMakeRule7<Tp extends ITarget2KeyPattern<Para
             U5 extends IKeyData<U5K, U5T>, U5T, //
             U6 extends IKeyData<U6K, U6T>, U6T, //
             U7 extends IKeyData<U7K, U7T>, U7T> //
-            extends SimpleKeyPatternLikeMakeRule7.Builder<Builder<Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T>, //
+            extends SimpleKeyPatternLikeMakeRule7.Builder<Builder<S, Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T>, //
             Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T> {
+
+        BiConsumer<S, ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> apply;
+        S subject;
+
+        public Builder<S, Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T> apply(BiConsumer<S, ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
+            this.apply = apply;
+            return this;
+        }
+
+        public Builder<S, Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T> subject(S subject) {
+            this.subject = subject;
+            return this;
+        }
 
         public SimpleTarget2KeyPatternMakeRule7<Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T> build() {
             if (pattern == null)
@@ -87,6 +102,17 @@ public class SimpleTarget2KeyPatternMakeRule7<Tp extends ITarget2KeyPattern<Para
             if (input7s == null)
                 throw new NullPointerException("input7s");
             return new SimpleTarget2KeyPatternMakeRule7<>(priority, pattern, fn, input1s, input2s, input3s, input4s, input5s, input6s, input7s);
+        }
+
+        public void make(CompileFunction7<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> fn) {
+            make(subject, fn);
+        }
+
+        public void make(S subject, CompileFunction7<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T> fn) {
+            if (subject == null)
+                throw new NullPointerException("subject");
+            this.fn = fn;
+            apply.accept(subject, build());
         }
 
     }

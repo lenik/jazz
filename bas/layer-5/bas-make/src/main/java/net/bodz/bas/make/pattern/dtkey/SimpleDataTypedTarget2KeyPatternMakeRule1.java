@@ -1,5 +1,7 @@
 package net.bodz.bas.make.pattern.dtkey;
 
+import java.util.function.BiConsumer;
+
 import net.bodz.bas.make.fn.CompileFunction1;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule1;
@@ -16,20 +18,33 @@ public class SimpleDataTypedTarget2KeyPatternMakeRule1<Tp extends IDataTypedTarg
         super(priority, pattern, fn, input1s);
     }
 
-    public static <Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
+    public static <S, Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
             Us extends IDataTypedParameterizedKey<Param, UK, UT>, UK, //
             T extends IKeyData<TK, TT>, TT, //
             U extends IKeyData<UK, UT>, UT> //
-    Builder<Tp, Param, TK, Us, UK, T, TT, U, UT> builder() {
+    Builder<S, Tp, Param, TK, Us, UK, T, TT, U, UT> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
+    public static class Builder<S, Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
             Us extends IDataTypedParameterizedKey<Param, UK, UT>, UK, //
             T extends IKeyData<TK, TT>, TT, //
             U extends IKeyData<UK, UT>, UT> //
-            extends SimpleKeyPatternLikeMakeRule1.Builder<Builder<Tp, Param, TK, Us, UK, T, TT, U, UT>, //
+            extends SimpleKeyPatternLikeMakeRule1.Builder<Builder<S, Tp, Param, TK, Us, UK, T, TT, U, UT>, //
             Tp, Param, TK, Us, UK, T, TT, U, UT> {
+
+        BiConsumer<S, IDataTypedTarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> apply;
+        S subject;
+
+        public Builder<S, Tp, Param, TK, Us, UK, T, TT, U, UT> apply(BiConsumer<S, IDataTypedTarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
+            this.apply = apply;
+            return this;
+        }
+
+        public Builder<S, Tp, Param, TK, Us, UK, T, TT, U, UT> subject(S subject) {
+            this.subject = subject;
+            return this;
+        }
 
         public SimpleDataTypedTarget2KeyPatternMakeRule1<Tp, Param, TK, Us, UK, T, TT, U, UT> build() {
             if (pattern == null)
@@ -39,6 +54,17 @@ public class SimpleDataTypedTarget2KeyPatternMakeRule1<Tp extends IDataTypedTarg
             if (input1s == null)
                 throw new NullPointerException("input1s");
             return new SimpleDataTypedTarget2KeyPatternMakeRule1<>(priority, pattern, fn, input1s);
+        }
+
+        public void make(CompileFunction1<T, TK, TT, U, UK, UT> fn) {
+            make(subject, fn);
+        }
+
+        public void make(S subject, CompileFunction1<T, TK, TT, U, UK, UT> fn) {
+            if (subject == null)
+                throw new NullPointerException("subject");
+            this.fn = fn;
+            apply.accept(subject, build());
         }
 
     }

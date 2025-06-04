@@ -33,7 +33,7 @@ public interface IKeyPatternLikeMakeRule0<Tp extends IKeyPatternLike<Param, K>, 
         if (fn == null)
             return null;
 
-        SimpleMakeRule0<T, K, TT> rule = SimpleMakeRule0.<T, K, TT>builder()//
+        SimpleMakeRule0<T, K, TT> rule = SimpleMakeRule0.<T, T, K, TT>builder()//
                 .priority(this.getPriority())//
                 .input()//
                 .fn(fn).build();

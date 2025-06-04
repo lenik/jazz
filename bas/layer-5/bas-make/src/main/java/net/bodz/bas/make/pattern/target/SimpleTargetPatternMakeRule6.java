@@ -1,5 +1,7 @@
 package net.bodz.bas.make.pattern.target;
 
+import java.util.function.BiConsumer;
+
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.IParameterizedTarget;
 import net.bodz.bas.make.fn.CompileFunction6;
@@ -26,7 +28,7 @@ public class SimpleTargetPatternMakeRule6<Tp extends ITargetPattern<Param, T, TK
         super(priority, pattern, fn, input1s, input2s, input3s, input4s, input5s, input6s);
     }
 
-    public static <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+    public static <S, Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
             Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
             Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
             Ws extends IParameterizedTarget<Param, W, WK, WT>, WK, //
@@ -40,11 +42,11 @@ public class SimpleTargetPatternMakeRule6<Tp extends ITargetPattern<Param, T, TK
             X extends IKeyData<XK, XT>, XT, //
             Y extends IKeyData<YK, YT>, YT, //
             Z extends IKeyData<ZK, ZT>, ZT> //
-    Builder<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> builder() {
+    Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+    public static class Builder<S, Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
             Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
             Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
             Ws extends IParameterizedTarget<Param, W, WK, WT>, WK, //
@@ -58,8 +60,21 @@ public class SimpleTargetPatternMakeRule6<Tp extends ITargetPattern<Param, T, TK
             X extends IKeyData<XK, XT>, XT, //
             Y extends IKeyData<YK, YT>, YT, //
             Z extends IKeyData<ZK, ZT>, ZT> //
-            extends SimpleTargetPatternLikeMakeRule6.Builder<Builder<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT>, //
+            extends SimpleTargetPatternLikeMakeRule6.Builder<Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT>, //
             Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> {
+
+        BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply;
+        S subject;
+
+        public Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> apply(BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
+            this.apply = apply;
+            return this;
+        }
+
+        public Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> subject(S subject) {
+            this.subject = subject;
+            return this;
+        }
 
         public SimpleTargetPatternMakeRule6<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> build() {
             if (pattern == null)
@@ -79,6 +94,17 @@ public class SimpleTargetPatternMakeRule6<Tp extends ITargetPattern<Param, T, TK
             if (input6s == null)
                 throw new NullPointerException("input6s");
             return new SimpleTargetPatternMakeRule6<>(priority, pattern, fn, input1s, input2s, input3s, input4s, input5s, input6s);
+        }
+
+        public void make(CompileFunction6<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> fn) {
+            make(subject, fn);
+        }
+
+        public void make(S subject, CompileFunction6<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> fn) {
+            if (subject == null)
+                throw new NullPointerException("subject");
+            this.fn = fn;
+            apply.accept(subject, build());
         }
 
     }

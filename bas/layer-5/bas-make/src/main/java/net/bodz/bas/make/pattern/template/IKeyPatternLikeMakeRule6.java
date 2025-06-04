@@ -123,7 +123,7 @@ public interface IKeyPatternLikeMakeRule6<Tp extends IKeyPatternLike<Param, K>, 
         if (fn == null)
             return null;
 
-        SimpleMakeRule6<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> rule = SimpleMakeRule6.<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder()//
+        SimpleMakeRule6<T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> rule = SimpleMakeRule6.<T, T, K, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder()//
                 .priority(this.getPriority())//
                 .input(input1, input2, input3, input4, input5, input6)//
                 .fn(fn).build();

@@ -1,9 +1,9 @@
 package net.bodz.bas.make.fn;
 
-import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.make.IDataTypedKey;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.MakeException;
+import net.bodz.bas.make.SimpleMakeRule;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
@@ -92,27 +92,24 @@ public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
         return fn.make(input1, input2, input3, input4, input5);
     }
 
-    public static <T extends IKeyData<TK, TT>, TK, TT, //
+    public static <S, T extends IKeyData<TK, TT>, TK, TT, //
             U extends IKeyData<UK, UT>, UK, UT, //
             V extends IKeyData<VK, VT>, VK, VT, //
             W extends IKeyData<WK, WT>, WK, WT, //
             X extends IKeyData<XK, XT>, XK, XT, //
             Y extends IKeyData<YK, YT>, YK, YT> //
-    Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> builder() {
+    Builder<S, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<T extends IKeyData<TK, TT>, TK, TT, //
+    public static class Builder<S, T extends IKeyData<TK, TT>, TK, TT, //
             U extends IKeyData<UK, UT>, UK, UT, //
             V extends IKeyData<VK, VT>, VK, VT, //
             W extends IKeyData<WK, WT>, WK, WT, //
             X extends IKeyData<XK, XT>, XK, XT, //
-            Y extends IKeyData<YK, YT>, YK, YT> {
+            Y extends IKeyData<YK, YT>, YK, YT> //
+            extends SimpleMakeRule.AbstractBuilder<Builder<S, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT>, S, T, TK, TT> { 
 
-        int priority;
-        Class<? extends T> targetType;
-        Class<? extends TK> keyType;
-        Class<? extends TT> dataType;
         IMakeable5<TT, UT, VT, WT, XT, YT> fn;
         IDataTypedKey<UK, UT> input1;
         IDataTypedKey<VK, VT> input2;
@@ -120,22 +117,12 @@ public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
         IDataTypedKey<XK, XT> input4;
         IDataTypedKey<YK, YT> input5;
 
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> priority(int priority) {
-            this.priority = priority;
-            return this;
-        }
-
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> targetType(Class<? extends T> targetType) {
-            this.targetType = targetType;
-            return this;
-        }
-
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> fn(@NotNull IMakeable5<TT, UT, VT, WT, XT, YT> fn) {
+        public Builder<S, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> fn(@NotNull IMakeable5<TT, UT, VT, WT, XT, YT> fn) {
             this.fn = fn;
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input(@NotNull IDataTypedKey<UK, UT> input1, @NotNull IDataTypedKey<VK, VT> input2, @NotNull IDataTypedKey<WK, WT> input3, @NotNull IDataTypedKey<XK, XT> input4, @NotNull IDataTypedKey<YK, YT> input5) {
+        public Builder<S, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input(@NotNull IDataTypedKey<UK, UT> input1, @NotNull IDataTypedKey<VK, VT> input2, @NotNull IDataTypedKey<WK, WT> input3, @NotNull IDataTypedKey<XK, XT> input4, @NotNull IDataTypedKey<YK, YT> input5) {
             this.input1 = input1;
             this.input2 = input2;
             this.input3 = input3;
@@ -144,38 +131,33 @@ public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input1(@NotNull IDataTypedKey<UK, UT> input1) {
+        public Builder<S, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input1(@NotNull IDataTypedKey<UK, UT> input1) {
             this.input1 = input1;
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input2(@NotNull IDataTypedKey<VK, VT> input2) {
+        public Builder<S, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input2(@NotNull IDataTypedKey<VK, VT> input2) {
             this.input2 = input2;
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input3(@NotNull IDataTypedKey<WK, WT> input3) {
+        public Builder<S, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input3(@NotNull IDataTypedKey<WK, WT> input3) {
             this.input3 = input3;
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input4(@NotNull IDataTypedKey<XK, XT> input4) {
+        public Builder<S, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input4(@NotNull IDataTypedKey<XK, XT> input4) {
             this.input4 = input4;
             return this;
         }
 
-        public Builder<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input5(@NotNull IDataTypedKey<YK, YT> input5) {
+        public Builder<S, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> input5(@NotNull IDataTypedKey<YK, YT> input5) {
             this.input5 = input5;
             return this;
         }
 
         public SimpleMakeRule5<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT> build() {
-            if (targetType == null)
-                throw new NullPointerException("targetType");
-            if (keyType == null)
-                keyType = TypeParam.infer1(targetType, IKeyData.class, 0);
-            if (dataType == null)
-                dataType = TypeParam.infer1(targetType, IKeyData.class, 1);
+            wireUp();
             if (fn == null)
                 throw new NullPointerException("fn");
             if (input1 == null)
@@ -189,6 +171,15 @@ public class SimpleMakeRule5<T extends IKeyData<TK, TT>, TK, TT, //
             if (input5 == null)
                 throw new NullPointerException("input5");
             return new SimpleMakeRule5<>(priority, targetType, keyType, dataType, fn, input1, input2, input3, input4, input5);
+        }
+
+        public void make(@NotNull IMakeable5<TT, UT, VT, WT, XT, YT> fn) {
+            make(subject, fn);
+        }
+
+        public void make(@NotNull S subject, @NotNull IMakeable5<TT, UT, VT, WT, XT, YT> fn) {
+            this.fn = fn;
+            apply.accept(subject, build());
         }
 
     }
