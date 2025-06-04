@@ -18,7 +18,7 @@ public class IKeyPatternLikeMakeRule__java
     @Override
     public void build(JavaCodeWriter out)
             throws IOException {
-        String ruleTypeVars = "<T, K, TT" + comma(Naming.typeVars(inputCount, "", "K", "T")) + ">";
+        String ruleTypeVars = "T, K, TT" + comma(Naming.typeVars(inputCount, "", "K", "T"));
         String _TVars = comma(Naming.typeVars(inputCount, "T"));
 
         out.printf("package net.bodz.bas.make.pattern.template;\n");
@@ -127,7 +127,7 @@ public class IKeyPatternLikeMakeRule__java
                     out.println();
                     out.leave();
                 }
-                out.printf("SimpleMakeRule%d%s rule = SimpleMakeRule%d.%sbuilder()//\n", //
+                out.printf("SimpleMakeRule%d<%s> rule = SimpleMakeRule%d.<T, %s>builder()//\n", //
                         inputCount, ruleTypeVars, inputCount, ruleTypeVars);
                 out.enter();
                 {

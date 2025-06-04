@@ -8,9 +8,11 @@ import net.bodz.bas.meta.decl.NotNull;
 public abstract class MakeDef {
 
     protected final IMakeSession session;
+    protected final IMakeRules rules;
 
     public MakeDef(@NotNull IMakeSession session) {
         this.session = session;
+        this.rules = session.getRules();
 
         defineTypeDerivedList(BigDecimal.class).build();
     }

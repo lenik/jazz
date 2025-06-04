@@ -112,7 +112,7 @@ public class IMakeRules__java
                 {
                     out.enter();
                     {
-                        out.printf("SimpleMakeRule%d.<T, TK, TT%s>builder() //\n", inputCount, //
+                        out.printf("SimpleMakeRule%d.<T, T, TK, TT%s>builder() //\n", inputCount, //
                                 comma(Naming.typeVars(inputCount, "", "K", "T")));
                         out.enter();
                         {
@@ -169,7 +169,7 @@ public class IMakeRules__java
                 {
                     out.enter();
                     {
-                        out.printf("SimpleMakeRule%d.<T, TK, TT%s>builder() //\n", inputCount, //
+                        out.printf("SimpleMakeRule%d.<TK, T, TK, TT%s>builder() //\n", inputCount, //
                                 comma(Naming.typeVars(inputCount, "", "K", "T")));
                         out.enter();
                         {
@@ -225,7 +225,7 @@ public class IMakeRules__java
                 {
                     out.enter();
                     {
-                        out.printf("SimpleMakeRule%d.<T, TK, TT%s>builder() //\n", inputCount, //
+                        out.printf("SimpleMakeRule%d.<Class<TK>, T, TK, TT%s>builder() //\n", inputCount, //
                                 comma(Naming.typeVars(inputCount, "", "K", "T")));
                         out.enter();
                         {
@@ -281,7 +281,7 @@ public class IMakeRules__java
                 {
                     out.enter();
                     {
-                        out.printf("SimpleMakeRule%d.<T, TK, TT%s>builder() //\n", inputCount, //
+                        out.printf("SimpleMakeRule%d.<Class<TT>, T, TK, TT%s>builder() //\n", inputCount, //
                                 comma(Naming.typeVars(inputCount, "", "K", "T")));
                         out.enter();
                         {

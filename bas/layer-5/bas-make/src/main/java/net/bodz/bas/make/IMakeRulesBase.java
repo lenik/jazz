@@ -41,9 +41,14 @@ public interface IMakeRulesBase {
     default <T extends IKeyData<TK, TT>, TK, TT> //
     void addRule(@NotNull T target, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addRule(target, //
-                SimpleMakeRule.<T, TK, TT>builder()//
-                        .input(inputs)//
+                SimpleMakeRule.<T, TK, TT, T>builder() //
+                        .input(inputs) //
                         .fn(fn).build());
+    }
+
+    @NotNull
+    default <T extends IKeyData<TK, TT>, TK, TT> MakeRuleBuilder<T, T, TK, TT> matchExact(T target) {
+        return new MakeRuleBuilder<>(target, this::addRule);
     }
 
     // rules: key match
@@ -56,9 +61,14 @@ public interface IMakeRulesBase {
     default <T extends IKeyData<TK, TT>, TK, TT> //
     void addKeyRule(@NotNull TK key, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addKeyRule(key, //
-                SimpleMakeRule.<T, TK, TT>builder()//
-                        .input(inputs)//
+                SimpleMakeRule.<T, TK, TT, TK>builder() //
+                        .input(inputs) //
                         .fn(fn).build());
+    }
+
+    @NotNull
+    default <T extends IKeyData<TK, TT>, TK, TT> MakeRuleBuilder<TK, T, TK, TT> matchKey(@NotNull TK key) {
+        return new MakeRuleBuilder<>(key, this::addKeyRule);
     }
 
     // rules: key type match
@@ -71,9 +81,14 @@ public interface IMakeRulesBase {
     default <T extends IKeyData<TK, TT>, TK, TT> //
     void addKeyTypeRule(@NotNull Class<TK> keyType, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addKeyTypeRule(keyType, //
-                SimpleMakeRule.<T, TK, TT>builder()//
+                SimpleMakeRule.<T, TK, TT, TK>builder()//
                         .input(inputs)//
                         .fn(fn).build());
+    }
+
+    @NotNull
+    default <T extends IKeyData<TK, TT>, TK, TT> MakeRuleBuilder<Class<TK>, T, TK, TT> matchKeyType(@NotNull Class<TK> keyType) {
+        return new MakeRuleBuilder<>(keyType, this::addKeyTypeRule);
     }
 
     // rules: data type match
@@ -86,9 +101,14 @@ public interface IMakeRulesBase {
     default <T extends IKeyData<TK, TT>, TK, TT>//
     void addRule(@NotNull Class<TT> dataType, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addRule(dataType, //
-                SimpleMakeRule.<T, TK, TT>builder()//
+                SimpleMakeRule.<T, TK, TT, Class<TT>>builder()//
                         .input(inputs)//
                         .fn(fn).build());
+    }
+
+    @NotNull
+    default <T extends IKeyData<TK, TT>, TK, TT> MakeRuleBuilder<Class<TT>, T, TK, TT> matchDataType(@NotNull Class<TT> dataType) {
+        return new MakeRuleBuilder<>(dataType, this::addRule);
     }
 
     // rules: key pattern

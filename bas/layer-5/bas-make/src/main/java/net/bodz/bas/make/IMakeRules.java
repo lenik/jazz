@@ -48,14 +48,14 @@ public interface IMakeRules
     default <T extends IKeyData<TK, TT>, TK, TT> //
     void addRule(@NotNull T target, @NotNull IMakeable0<TT> fn) {
         addRule(target, //
-                SimpleMakeRule0.<T, TK, TT>builder() //
+                SimpleMakeRule0.<T, T, TK, TT>builder() //
                         .fn(fn).build());
     }
 
     default <T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT> //
     void addRule(@NotNull T target, U input1, @NotNull IMakeable1<TT, UT> fn) {
         addRule(target, //
-                SimpleMakeRule1.<T, TK, TT, U, UK, UT>builder() //
+                SimpleMakeRule1.<T, T, TK, TT, U, UK, UT>builder() //
                         .input(input1) //
                         .fn(fn).build());
     }
@@ -63,7 +63,7 @@ public interface IMakeRules
     default <T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT, V extends IKeyData<VK, VT>, VK, VT> //
     void addRule(@NotNull T target, U input1, V input2, @NotNull IMakeable2<TT, UT, VT> fn) {
         addRule(target, //
-                SimpleMakeRule2.<T, TK, TT, U, UK, UT, V, VK, VT>builder() //
+                SimpleMakeRule2.<T, T, TK, TT, U, UK, UT, V, VK, VT>builder() //
                         .input(input1, input2) //
                         .fn(fn).build());
     }
@@ -71,7 +71,7 @@ public interface IMakeRules
     default <T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT, V extends IKeyData<VK, VT>, VK, VT, W extends IKeyData<WK, WT>, WK, WT> //
     void addRule(@NotNull T target, U input1, V input2, W input3, @NotNull IMakeable3<TT, UT, VT, WT> fn) {
         addRule(target, //
-                SimpleMakeRule3.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT>builder() //
+                SimpleMakeRule3.<T, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT>builder() //
                         .input(input1, input2, input3) //
                         .fn(fn).build());
     }
@@ -79,7 +79,7 @@ public interface IMakeRules
     default <T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT, V extends IKeyData<VK, VT>, VK, VT, W extends IKeyData<WK, WT>, WK, WT, X extends IKeyData<XK, XT>, XK, XT> //
     void addRule(@NotNull T target, U input1, V input2, W input3, X input4, @NotNull IMakeable4<TT, UT, VT, WT, XT> fn) {
         addRule(target, //
-                SimpleMakeRule4.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT>builder() //
+                SimpleMakeRule4.<T, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT>builder() //
                         .input(input1, input2, input3, input4) //
                         .fn(fn).build());
     }
@@ -87,7 +87,7 @@ public interface IMakeRules
     default <T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT, V extends IKeyData<VK, VT>, VK, VT, W extends IKeyData<WK, WT>, WK, WT, X extends IKeyData<XK, XT>, XK, XT, Y extends IKeyData<YK, YT>, YK, YT> //
     void addRule(@NotNull T target, U input1, V input2, W input3, X input4, Y input5, @NotNull IMakeable5<TT, UT, VT, WT, XT, YT> fn) {
         addRule(target, //
-                SimpleMakeRule5.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT>builder() //
+                SimpleMakeRule5.<T, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT>builder() //
                         .input(input1, input2, input3, input4, input5) //
                         .fn(fn).build());
     }
@@ -95,7 +95,7 @@ public interface IMakeRules
     default <T extends IKeyData<TK, TT>, TK, TT, U extends IKeyData<UK, UT>, UK, UT, V extends IKeyData<VK, VT>, VK, VT, W extends IKeyData<WK, WT>, WK, WT, X extends IKeyData<XK, XT>, XK, XT, Y extends IKeyData<YK, YT>, YK, YT, Z extends IKeyData<ZK, ZT>, ZK, ZT> //
     void addRule(@NotNull T target, U input1, V input2, W input3, X input4, Y input5, Z input6, @NotNull IMakeable6<TT, UT, VT, WT, XT, YT, ZT> fn) {
         addRule(target, //
-                SimpleMakeRule6.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder() //
+                SimpleMakeRule6.<T, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder() //
                         .input(input1, input2, input3, input4, input5, input6) //
                         .fn(fn).build());
     }
@@ -103,7 +103,7 @@ public interface IMakeRules
     default <T extends IKeyData<TK, TT>, TK, TT, U1 extends IKeyData<U1K, U1T>, U1K, U1T, U2 extends IKeyData<U2K, U2T>, U2K, U2T, U3 extends IKeyData<U3K, U3T>, U3K, U3T, U4 extends IKeyData<U4K, U4T>, U4K, U4T, U5 extends IKeyData<U5K, U5T>, U5K, U5T, U6 extends IKeyData<U6K, U6T>, U6K, U6T, U7 extends IKeyData<U7K, U7T>, U7K, U7T> //
     void addRule(@NotNull T target, U1 input1, U2 input2, U3 input3, U4 input4, U5 input5, U6 input6, U7 input7, @NotNull IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn) {
         addRule(target, //
-                SimpleMakeRule7.<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
+                SimpleMakeRule7.<T, T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
                         .input(input1, input2, input3, input4, input5, input6, input7) //
                         .fn(fn).build());
     }
@@ -113,7 +113,7 @@ public interface IMakeRules
     default <T extends IKeyData<TK, TT>, TK, TT> //
     void addKeyRule(@NotNull TK key, @NotNull IMakeable0<TT> fn) {
         addKeyRule(key, //
-                SimpleMakeRule0.<T, TK, TT>builder() //
+                SimpleMakeRule0.<TK, T, TK, TT>builder() //
                         .fn(fn).build());
     }
 
@@ -121,7 +121,7 @@ public interface IMakeRules
             U extends IKeyData<UK, UT>, UK, UT> //
     void addKeyRule(@NotNull TK key, @NotNull U input1, @NotNull IMakeable1<TT, UT> fn) {
         addKeyRule(key, //
-                SimpleMakeRule1.<T, TK, TT, U, UK, UT>builder() //
+                SimpleMakeRule1.<TK, T, TK, TT, U, UK, UT>builder() //
                         .input(input1) //
                         .fn(fn).build());
     }
@@ -131,7 +131,7 @@ public interface IMakeRules
             V extends IKeyData<VK, VT>, VK, VT> //
     void addKeyRule(@NotNull TK key, @NotNull U input1, @NotNull V input2, @NotNull IMakeable2<TT, UT, VT> fn) {
         addKeyRule(key, //
-                SimpleMakeRule2.<T, TK, TT, U, UK, UT, V, VK, VT>builder() //
+                SimpleMakeRule2.<TK, T, TK, TT, U, UK, UT, V, VK, VT>builder() //
                         .input(input1, input2) //
                         .fn(fn).build());
     }
@@ -142,7 +142,7 @@ public interface IMakeRules
             W extends IKeyData<WK, WT>, WK, WT> //
     void addKeyRule(@NotNull TK key, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull IMakeable3<TT, UT, VT, WT> fn) {
         addKeyRule(key, //
-                SimpleMakeRule3.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT>builder() //
+                SimpleMakeRule3.<TK, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT>builder() //
                         .input(input1, input2, input3) //
                         .fn(fn).build());
     }
@@ -154,7 +154,7 @@ public interface IMakeRules
             X extends IKeyData<XK, XT>, XK, XT> //
     void addKeyRule(@NotNull TK key, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull X input4, @NotNull IMakeable4<TT, UT, VT, WT, XT> fn) {
         addKeyRule(key, //
-                SimpleMakeRule4.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT>builder() //
+                SimpleMakeRule4.<TK, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT>builder() //
                         .input(input1, input2, input3, input4) //
                         .fn(fn).build());
     }
@@ -167,7 +167,7 @@ public interface IMakeRules
             Y extends IKeyData<YK, YT>, YK, YT> //
     void addKeyRule(@NotNull TK key, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull X input4, @NotNull Y input5, @NotNull IMakeable5<TT, UT, VT, WT, XT, YT> fn) {
         addKeyRule(key, //
-                SimpleMakeRule5.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT>builder() //
+                SimpleMakeRule5.<TK, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT>builder() //
                         .input(input1, input2, input3, input4, input5) //
                         .fn(fn).build());
     }
@@ -181,7 +181,7 @@ public interface IMakeRules
             Z extends IKeyData<ZK, ZT>, ZK, ZT> //
     void addKeyRule(@NotNull TK key, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull X input4, @NotNull Y input5, @NotNull Z input6, @NotNull IMakeable6<TT, UT, VT, WT, XT, YT, ZT> fn) {
         addKeyRule(key, //
-                SimpleMakeRule6.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder() //
+                SimpleMakeRule6.<TK, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder() //
                         .input(input1, input2, input3, input4, input5, input6) //
                         .fn(fn).build());
     }
@@ -196,7 +196,7 @@ public interface IMakeRules
             U7 extends IKeyData<U7K, U7T>, U7K, U7T> //
     void addKeyRule(@NotNull TK key, @NotNull U1 input1, @NotNull U2 input2, @NotNull U3 input3, @NotNull U4 input4, @NotNull U5 input5, @NotNull U6 input6, @NotNull U7 input7, @NotNull IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn) {
         addKeyRule(key, //
-                SimpleMakeRule7.<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
+                SimpleMakeRule7.<TK, T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
                         .input(input1, input2, input3, input4, input5, input6, input7) //
                         .fn(fn).build());
     }
@@ -206,7 +206,7 @@ public interface IMakeRules
     default <T extends IKeyData<TK, TT>, TK, TT> //
     void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull IMakeable0<TT> fn) {
         addKeyTypeRule(keyType, //
-                SimpleMakeRule0.<T, TK, TT>builder() //
+                SimpleMakeRule0.<Class<TK>, T, TK, TT>builder() //
                         .fn(fn).build());
     }
 
@@ -214,7 +214,7 @@ public interface IMakeRules
             U extends IKeyData<UK, UT>, UK, UT> //
     void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull U input1, @NotNull IMakeable1<TT, UT> fn) {
         addKeyTypeRule(keyType, //
-                SimpleMakeRule1.<T, TK, TT, U, UK, UT>builder() //
+                SimpleMakeRule1.<Class<TK>, T, TK, TT, U, UK, UT>builder() //
                         .input(input1) //
                         .fn(fn).build());
     }
@@ -224,7 +224,7 @@ public interface IMakeRules
             V extends IKeyData<VK, VT>, VK, VT> //
     void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull U input1, @NotNull V input2, @NotNull IMakeable2<TT, UT, VT> fn) {
         addKeyTypeRule(keyType, //
-                SimpleMakeRule2.<T, TK, TT, U, UK, UT, V, VK, VT>builder() //
+                SimpleMakeRule2.<Class<TK>, T, TK, TT, U, UK, UT, V, VK, VT>builder() //
                         .input(input1, input2) //
                         .fn(fn).build());
     }
@@ -235,7 +235,7 @@ public interface IMakeRules
             W extends IKeyData<WK, WT>, WK, WT> //
     void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull IMakeable3<TT, UT, VT, WT> fn) {
         addKeyTypeRule(keyType, //
-                SimpleMakeRule3.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT>builder() //
+                SimpleMakeRule3.<Class<TK>, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT>builder() //
                         .input(input1, input2, input3) //
                         .fn(fn).build());
     }
@@ -247,7 +247,7 @@ public interface IMakeRules
             X extends IKeyData<XK, XT>, XK, XT> //
     void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull X input4, @NotNull IMakeable4<TT, UT, VT, WT, XT> fn) {
         addKeyTypeRule(keyType, //
-                SimpleMakeRule4.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT>builder() //
+                SimpleMakeRule4.<Class<TK>, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT>builder() //
                         .input(input1, input2, input3, input4) //
                         .fn(fn).build());
     }
@@ -260,7 +260,7 @@ public interface IMakeRules
             Y extends IKeyData<YK, YT>, YK, YT> //
     void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull X input4, @NotNull Y input5, @NotNull IMakeable5<TT, UT, VT, WT, XT, YT> fn) {
         addKeyTypeRule(keyType, //
-                SimpleMakeRule5.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT>builder() //
+                SimpleMakeRule5.<Class<TK>, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT>builder() //
                         .input(input1, input2, input3, input4, input5) //
                         .fn(fn).build());
     }
@@ -274,7 +274,7 @@ public interface IMakeRules
             Z extends IKeyData<ZK, ZT>, ZK, ZT> //
     void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull X input4, @NotNull Y input5, @NotNull Z input6, @NotNull IMakeable6<TT, UT, VT, WT, XT, YT, ZT> fn) {
         addKeyTypeRule(keyType, //
-                SimpleMakeRule6.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder() //
+                SimpleMakeRule6.<Class<TK>, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder() //
                         .input(input1, input2, input3, input4, input5, input6) //
                         .fn(fn).build());
     }
@@ -289,7 +289,7 @@ public interface IMakeRules
             U7 extends IKeyData<U7K, U7T>, U7K, U7T> //
     void addKeyTypeRule(@NotNull Class<TK> keyType, @NotNull U1 input1, @NotNull U2 input2, @NotNull U3 input3, @NotNull U4 input4, @NotNull U5 input5, @NotNull U6 input6, @NotNull U7 input7, @NotNull IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn) {
         addKeyTypeRule(keyType, //
-                SimpleMakeRule7.<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
+                SimpleMakeRule7.<Class<TK>, T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
                         .input(input1, input2, input3, input4, input5, input6, input7) //
                         .fn(fn).build());
     }
@@ -299,7 +299,7 @@ public interface IMakeRules
     default <T extends IKeyData<TK, TT>, TK, TT> //
     void addRule(@NotNull Class<TT> dataType, @NotNull IMakeable0<TT> fn) {
         addRule(dataType, //
-                SimpleMakeRule0.<T, TK, TT>builder() //
+                SimpleMakeRule0.<Class<TT>, T, TK, TT>builder() //
                         .fn(fn).build());
     }
 
@@ -307,7 +307,7 @@ public interface IMakeRules
             U extends IKeyData<UK, UT>, UK, UT> //
     void addRule(@NotNull Class<TT> dataType, @NotNull U input1, @NotNull IMakeable1<TT, UT> fn) {
         addRule(dataType, //
-                SimpleMakeRule1.<T, TK, TT, U, UK, UT>builder() //
+                SimpleMakeRule1.<Class<TT>, T, TK, TT, U, UK, UT>builder() //
                         .input(input1) //
                         .fn(fn).build());
     }
@@ -317,7 +317,7 @@ public interface IMakeRules
             V extends IKeyData<VK, VT>, VK, VT> //
     void addRule(@NotNull Class<TT> dataType, @NotNull U input1, @NotNull V input2, @NotNull IMakeable2<TT, UT, VT> fn) {
         addRule(dataType, //
-                SimpleMakeRule2.<T, TK, TT, U, UK, UT, V, VK, VT>builder() //
+                SimpleMakeRule2.<Class<TT>, T, TK, TT, U, UK, UT, V, VK, VT>builder() //
                         .input(input1, input2) //
                         .fn(fn).build());
     }
@@ -328,7 +328,7 @@ public interface IMakeRules
             W extends IKeyData<WK, WT>, WK, WT> //
     void addRule(@NotNull Class<TT> dataType, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull IMakeable3<TT, UT, VT, WT> fn) {
         addRule(dataType, //
-                SimpleMakeRule3.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT>builder() //
+                SimpleMakeRule3.<Class<TT>, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT>builder() //
                         .input(input1, input2, input3) //
                         .fn(fn).build());
     }
@@ -340,7 +340,7 @@ public interface IMakeRules
             X extends IKeyData<XK, XT>, XK, XT> //
     void addRule(@NotNull Class<TT> dataType, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull X input4, @NotNull IMakeable4<TT, UT, VT, WT, XT> fn) {
         addRule(dataType, //
-                SimpleMakeRule4.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT>builder() //
+                SimpleMakeRule4.<Class<TT>, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT>builder() //
                         .input(input1, input2, input3, input4) //
                         .fn(fn).build());
     }
@@ -353,7 +353,7 @@ public interface IMakeRules
             Y extends IKeyData<YK, YT>, YK, YT> //
     void addRule(@NotNull Class<TT> dataType, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull X input4, @NotNull Y input5, @NotNull IMakeable5<TT, UT, VT, WT, XT, YT> fn) {
         addRule(dataType, //
-                SimpleMakeRule5.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT>builder() //
+                SimpleMakeRule5.<Class<TT>, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT>builder() //
                         .input(input1, input2, input3, input4, input5) //
                         .fn(fn).build());
     }
@@ -367,7 +367,7 @@ public interface IMakeRules
             Z extends IKeyData<ZK, ZT>, ZK, ZT> //
     void addRule(@NotNull Class<TT> dataType, @NotNull U input1, @NotNull V input2, @NotNull W input3, @NotNull X input4, @NotNull Y input5, @NotNull Z input6, @NotNull IMakeable6<TT, UT, VT, WT, XT, YT, ZT> fn) {
         addRule(dataType, //
-                SimpleMakeRule6.<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder() //
+                SimpleMakeRule6.<Class<TT>, T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>builder() //
                         .input(input1, input2, input3, input4, input5, input6) //
                         .fn(fn).build());
     }
@@ -382,7 +382,7 @@ public interface IMakeRules
             U7 extends IKeyData<U7K, U7T>, U7K, U7T> //
     void addRule(@NotNull Class<TT> dataType, @NotNull U1 input1, @NotNull U2 input2, @NotNull U3 input3, @NotNull U4 input4, @NotNull U5 input5, @NotNull U6 input6, @NotNull U7 input7, @NotNull IMakeable7<TT, U1T, U2T, U3T, U4T, U5T, U6T, U7T> fn) {
         addRule(dataType, //
-                SimpleMakeRule7.<T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
+                SimpleMakeRule7.<Class<TT>, T, TK, TT, U1, U1K, U1T, U2, U2K, U2T, U3, U3K, U3T, U4, U4K, U4T, U5, U5K, U5T, U6, U6K, U6T, U7, U7K, U7T>builder() //
                         .input(input1, input2, input3, input4, input5, input6, input7) //
                         .fn(fn).build());
     }
