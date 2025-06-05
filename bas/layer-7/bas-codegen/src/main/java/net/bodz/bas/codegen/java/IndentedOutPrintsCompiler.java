@@ -39,6 +39,7 @@ public class IndentedOutPrintsCompiler
      * @option -f
      */
     boolean format = false;
+    boolean addLineBreakToPrintln = true;
 
     /**
      * Convert decimals to %d or %f parameters.
@@ -68,6 +69,8 @@ public class IndentedOutPrintsCompiler
 
             line = line.substring(leadingSpace.length()).trim();
             if (line.isEmpty()) {
+                if (addLineBreakToPrintln)
+                    out.println();
                 out.println("out.println();");
                 continue;
             }
