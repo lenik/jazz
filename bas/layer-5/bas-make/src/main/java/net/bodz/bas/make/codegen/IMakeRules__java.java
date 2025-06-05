@@ -17,6 +17,11 @@ public class IMakeRules__java
     }
 
     @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
     public void build(JavaCodeWriter out)
             throws IOException {
         out.printf("package net.bodz.bas.make;\n");
@@ -29,12 +34,18 @@ public class IMakeRules__java
             out.printf("import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule%d;\n", inputCount);
         for (int inputCount = 0; inputCount <= maxCount; inputCount++)
             out.printf("import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTarget2KeyPatternMakeRule%d;\n", inputCount);
+
         out.printf("import net.bodz.bas.make.pattern.key.IKeyPattern;\n");
         out.printf("import net.bodz.bas.make.pattern.key.ITarget2KeyPattern;\n");
         for (int inputCount = 0; inputCount <= maxCount; inputCount++)
             out.printf("import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule%d;\n", inputCount);
         for (int inputCount = 0; inputCount <= maxCount; inputCount++)
             out.printf("import net.bodz.bas.make.pattern.key.SimpleTarget2KeyPatternMakeRule%d;\n", inputCount);
+
+        out.printf("net.bodz.bas.make.pattern.target.ITargetPattern;\n");
+        for (int inputCount = 0; inputCount <= maxCount; inputCount++)
+            out.printf("import net.bodz.bas.make.pattern.target.SimpleTargetPatternMakeRule%d;\n", inputCount);
+
         out.printf("import net.bodz.bas.meta.decl.NotNull;\n");
         out.println();
         out.printf("public interface IMakeRules\n");
@@ -85,6 +96,10 @@ public class IMakeRules__java
             out.println();
             out.printf("// rules: data-typed target to key pattern\n");
             dataTypedTarget2KeyPatternMatch(out);
+
+            out.println();
+            out.printf("// rules: target pattern\n");
+            targetPatternMatch(out);
 
             out.println();
             out.leave();
@@ -339,7 +354,7 @@ public class IMakeRules__java
                 {
                     out.enter();
                     {
-                        out.printf("SimpleKeyPatternMakeRule%d.<Tp, Param, K%s, T, TT%s>builder()//\n", //
+                        out.printf("SimpleKeyPatternMakeRule%d.<Tp, Tp, Param, K%s, T, TT%s>builder()//\n", //
                                 inputCount, //
                                 comma(Naming.typeVars(inputCount, "s", "K")), //
                                 comma(Naming.typeVars(inputCount, "", "T")));
@@ -400,7 +415,7 @@ public class IMakeRules__java
                 {
                     out.enter();
                     {
-                        out.printf("SimpleDataTypedKeyPatternMakeRule%d.<Tp, Param, K%s, T, TT%s>builder()//\n",//
+                        out.printf("SimpleDataTypedKeyPatternMakeRule%d.<Tp, Tp, Param, K%s, T, TT%s>builder()//\n",//
                                 inputCount, //
                                 comma(Naming.typeVars(inputCount, "s", "K")), //
                                 comma(Naming.typeVars(inputCount, "", "T")));
@@ -462,7 +477,7 @@ public class IMakeRules__java
                 {
                     out.enter();
                     {
-                        out.printf("SimpleTarget2KeyPatternMakeRule%d.<Tp, Param, TK%s, T, TT%s>builder()//\n", //
+                        out.printf("SimpleTarget2KeyPatternMakeRule%d.<Tp, Tp, Param, TK%s, T, TT%s>builder()//\n", //
                                 inputCount, //
                                 comma(Naming.typeVars(inputCount, "s", "K")), //
                                 comma(Naming.typeVars(inputCount, "", "T")));
@@ -523,7 +538,7 @@ public class IMakeRules__java
                 {
                     out.enter();
                     {
-                        out.printf("SimpleDataTypedTarget2KeyPatternMakeRule%d.<Tp, Param, TK%s, T, TT%s>builder()//\n",//
+                        out.printf("SimpleDataTypedTarget2KeyPatternMakeRule%d.<Tp, Tp, Param, TK%s, T, TT%s>builder()//\n",//
                                 inputCount, //
                                 comma(Naming.typeVars(inputCount, "s", "K")), //
                                 comma(Naming.typeVars(inputCount, "", "T")));

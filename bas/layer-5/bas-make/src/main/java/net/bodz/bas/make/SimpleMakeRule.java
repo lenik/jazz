@@ -63,7 +63,7 @@ public class SimpleMakeRule<T extends IKeyData<TK, TT>, TK, TT>
         fn.make(target, inputs);
     }
 
-    public static <T extends IKeyData<TK, TT>, TK, TT, S> Builder<S, T, TK, TT> builder() {
+    public static <S, T extends IKeyData<TK, TT>, TK, TT> Builder<S, T, TK, TT> builder() {
         return new Builder<>();
     }
 
@@ -167,6 +167,28 @@ public class SimpleMakeRule<T extends IKeyData<TK, TT>, TK, TT>
             this.fn = fn;
             apply.accept(subject, build());
         }
+
+    }
+
+    public static class Dispatcher<S, T extends IKeyData<TK, TT>, TK, TT> {
+
+        BiConsumer<S, IMakeRule<T, TK, TT>> apply;
+        S subject;
+
+        public Dispatcher(BiConsumer<S, IMakeRule<T, TK, TT>> apply, S subject) {
+            this.apply = apply;
+            this.subject = subject;
+        }
+
+        public SimpleMakeRule.Builder<S, T, TK, TT> input(@NotNull IKeyData<?, ?>... inputs) {
+            return SimpleMakeRule.<S, T, TK, TT>builder().apply(apply).subject(subject).input(inputs);
+        }
+
+//        public <U extends IKeyData<UK, UT>, UK, UT> //
+//        SimpleMakeRule1.Builder<S, T, TK, TT, U, UK, UT> input(U input1) {
+//            return SimpleMakeRule1.<S, T, TK, TT, U, UK, UT>builder().apply(apply).subject(subject)//
+//                    .input(input1);
+//        }
 
     }
 

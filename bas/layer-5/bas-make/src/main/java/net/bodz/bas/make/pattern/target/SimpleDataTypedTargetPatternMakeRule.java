@@ -1,5 +1,7 @@
 package net.bodz.bas.make.pattern.target;
 
+import java.util.function.BiConsumer;
+
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.fn.CompileFunction;
 import net.bodz.bas.make.pattern.template.SimpleTargetPatternLikeMakeRule;
@@ -14,15 +16,28 @@ public class SimpleDataTypedTargetPatternMakeRule<Tp extends IDataTypedTargetPat
         super(priority, pattern, inputss, fn);
     }
 
-    public static <Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
+    public static <S, Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
             T extends IKeyData<TK, TT>, TT> //
-    Builder<Tp, Param, TK, T, TT> builder() {
-        return new Builder<Tp, Param, TK, T, TT>();
+    Builder<S, Tp, Param, TK, T, TT> builder() {
+        return new Builder<>();
     }
 
-    public static class Builder<Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
+    public static class Builder<S, Tp extends IDataTypedTargetPattern<Param, T, TK, TT>, Param, TK, //
             T extends IKeyData<TK, TT>, TT>
-            extends SimpleTargetPatternLikeMakeRule.Builder<Builder<Tp, Param, TK, T, TT>, Tp, Param, TK, IDataTypedParameterizedTarget<?, ?, ?, ?>, T, TT> {
+            extends SimpleTargetPatternLikeMakeRule.Builder<Builder<S, Tp, Param, TK, T, TT>, Tp, Param, TK, IDataTypedParameterizedTarget<?, ?, ?, ?>, T, TT> {
+
+        BiConsumer<S, IDataTypedTargetPatternMakeRule<Tp, Param, TK, T, TT>> apply;
+        S subject;
+
+        public Builder<S, Tp, Param, TK, T, TT> apply(BiConsumer<S, IDataTypedTargetPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
+            this.apply = apply;
+            return this;
+        }
+
+        public Builder<S, Tp, Param, TK, T, TT> subject(S subject) {
+            this.subject = subject;
+            return this;
+        }
 
         public SimpleDataTypedTargetPatternMakeRule<Tp, Param, TK, T, TT> build() {
             if (pattern == null)
@@ -32,6 +47,17 @@ public class SimpleDataTypedTargetPatternMakeRule<Tp extends IDataTypedTargetPat
             if (fn == null)
                 throw new NullPointerException("fn");
             return new SimpleDataTypedTargetPatternMakeRule<>(priority, pattern, inputs, fn);
+        }
+
+        public void make(CompileFunction<T> fn) {
+            make(subject, fn);
+        }
+
+        public void make(S subject, CompileFunction<T> fn) {
+            if (subject == null)
+                throw new NullPointerException("subject");
+            this.fn = fn;
+            apply.accept(subject, build());
         }
 
     }

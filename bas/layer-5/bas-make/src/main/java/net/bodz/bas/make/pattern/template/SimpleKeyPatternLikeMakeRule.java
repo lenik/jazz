@@ -46,7 +46,7 @@ public abstract class SimpleKeyPatternLikeMakeRule<Tp extends IKeyPatternLike<Pa
     }
 
     @SuppressWarnings("unchecked")
-    public static abstract class Builder<self_t, Tp extends IKeyPatternLike<Param, K>, Param, K, //
+    public static abstract class AbstractBuilder<self_t, Tp extends IKeyPatternLike<Param, K>, Param, K, //
             Keys extends IParameterizedKey<?, ?>, //
             T extends IKeyData<K, TT>, TT> {
 

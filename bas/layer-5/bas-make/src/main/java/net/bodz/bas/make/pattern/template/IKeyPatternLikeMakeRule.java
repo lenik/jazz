@@ -55,7 +55,7 @@ public interface IKeyPatternLikeMakeRule<Tp extends IKeyPatternLike<Param, K>, P
         if (fn == null)
             return null;
 
-        SimpleMakeRule<T, K, TT> rule = SimpleMakeRule.<T, K, TT, T>builder()//
+        SimpleMakeRule<T, K, TT> rule = SimpleMakeRule.<T, T, K, TT>builder()//
                 .priority(this.getPriority())//
                 .fn(fn).build();
 

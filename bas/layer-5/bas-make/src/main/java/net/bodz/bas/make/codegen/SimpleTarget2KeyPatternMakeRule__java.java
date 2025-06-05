@@ -19,8 +19,14 @@ public class SimpleTarget2KeyPatternMakeRule__java
     public void build(JavaCodeWriter out)
             throws IOException {
         String ruleTypeVars = "<T, TK, TT" + comma(Naming.typeVars(inputCount, "", "K", "T")) + ">";
+        String typeVars = String.format("Tp, Param, TK%s, T, TT%s", //
+                comma(Naming.typeVars(inputCount, "s", "K")), //
+                comma(Naming.typeVars(inputCount, "", "T")));
+        String builderTypeVars = "S, " + typeVars;
 
         out.printf("package net.bodz.bas.make.pattern.key;\n");
+        out.println();
+        out.printf("import java.util.function.BiConsumer;\n");
         out.println();
         out.printf("import net.bodz.bas.make.IKeyData;\n");
         out.printf("import net.bodz.bas.make.IParameterizedKey;\n");
@@ -49,10 +55,7 @@ public class SimpleTarget2KeyPatternMakeRule__java
                         inputCount, //
                         comma(Naming.typeVars(inputCount, "s", "K")), //
                         comma(Naming.typeVars(inputCount, "", "T")));
-                out.printf("implements ITarget2KeyPatternMakeRule%d<Tp, Param, TK%s, T, TT%s> {\n", //
-                        inputCount, //
-                        comma(Naming.typeVars(inputCount, "s", "K")), //
-                        comma(Naming.typeVars(inputCount, "", "T")));
+                out.printf("implements ITarget2KeyPatternMakeRule%d<%s> {\n", inputCount, typeVars);
                 out.println();
                 out.leave();
             }
@@ -70,8 +73,9 @@ public class SimpleTarget2KeyPatternMakeRule__java
                 out.leave();
             }
             out.printf("}\n");
+
             out.println();
-            out.printf("public static <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //\n");
+            out.printf("public static <S, Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //\n");
             out.enter();
             {
                 out.enter();
@@ -91,10 +95,6 @@ public class SimpleTarget2KeyPatternMakeRule__java
                 }
                 out.leave();
             }
-            String builderTypeVars = String.format("Tp, Param, TK%s, T, TT%s", //
-                    comma(Naming.typeVars(inputCount, "s", "K")), //
-                    comma(Naming.typeVars(inputCount, "", "T")));
-
             out.printf("Builder<%s> builder() {\n", builderTypeVars);
             out.enter();
             {
@@ -102,8 +102,9 @@ public class SimpleTarget2KeyPatternMakeRule__java
                 out.leave();
             }
             out.printf("}\n");
+
             out.println();
-            out.printf("public static class Builder<Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //\n");
+            out.printf("public static class Builder<S, Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //\n");
             out.enter();
             {
                 out.enter();
@@ -121,11 +122,15 @@ public class SimpleTarget2KeyPatternMakeRule__java
                     out.print("> //\n");
 
                     out.printf("extends SimpleKeyPatternLikeMakeRule%d.Builder<Builder<%s>, //\n", inputCount, builderTypeVars);
-                    out.printf("%s> {\n", builderTypeVars);
-                    out.println();
+                    out.printf("%s> {\n", typeVars);
                     out.leave();
                 }
-                out.printf("public SimpleTarget2KeyPatternMakeRule%d<%s> build() {\n", inputCount, builderTypeVars);
+
+                String ruleType =  "ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>";
+                applySubject(out, ruleType, builderTypeVars);
+
+                out.println();
+                out.printf("public SimpleTarget2KeyPatternMakeRule%d<%s> build() {\n", inputCount, typeVars);
                 out.enter();
                 {
                     out.printf("if (pattern == null)\n");
@@ -155,6 +160,9 @@ public class SimpleTarget2KeyPatternMakeRule__java
                     out.leave();
                 }
                 out.printf("}\n");
+
+                makeCompileFn(out);
+
                 out.println();
                 out.leave();
             }

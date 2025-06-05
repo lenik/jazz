@@ -1,7 +1,9 @@
 package net.bodz.bas.make.pattern.dtkey;
 
-import net.bodz.bas.make.fn.CompileFunction;
+import java.util.function.BiConsumer;
+
 import net.bodz.bas.make.IKeyData;
+import net.bodz.bas.make.fn.CompileFunction;
 import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule;
 import net.bodz.bas.meta.decl.NotNull;
 
@@ -14,15 +16,28 @@ public class SimpleDataTypedKeyPatternMakeRule<Tp extends IDataTypedKeyPattern<P
         super(priority, pattern, inputss, fn);
     }
 
-    public static <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
+    public static <S, Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
             T extends IKeyData<K, TT>, TT> //
-    Builder<Tp, Param, K, T, TT> builder() {
-        return new Builder<Tp, Param, K, T, TT>();
+    Builder<S, Tp, Param, K, T, TT> builder() {
+        return new Builder<>();
     }
 
-    public static class Builder<Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
+    public static class Builder<S, Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
             T extends IKeyData<K, TT>, TT>
-            extends SimpleKeyPatternLikeMakeRule.Builder<Builder<Tp, Param, K, T, TT>, Tp, Param, K, IDataTypedParameterizedKey<?, ?, ?>, T, TT> {
+            extends AbstractBuilder<Builder<S, Tp, Param, K, T, TT>, Tp, Param, K, IDataTypedParameterizedKey<?, ?, ?>, T, TT> {
+
+        BiConsumer<S, IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> apply;
+        S subject;
+
+        public Builder<S, Tp, Param, K, T, TT> apply(BiConsumer<S, IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> apply) {
+            this.apply = apply;
+            return this;
+        }
+
+        public Builder<S, Tp, Param, K, T, TT> subject(S subject) {
+            this.subject = subject;
+            return this;
+        }
 
         public SimpleDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT> build() {
             if (pattern == null)
@@ -32,6 +47,56 @@ public class SimpleDataTypedKeyPatternMakeRule<Tp extends IDataTypedKeyPattern<P
             if (fn == null)
                 throw new NullPointerException("fn");
             return new SimpleDataTypedKeyPatternMakeRule<>(priority, pattern, inputs, fn);
+        }
+
+        public void make(CompileFunction<T> fn) {
+            make(subject, fn);
+        }
+
+        public void make(S subject, CompileFunction<T> fn) {
+            if (subject == null)
+                throw new NullPointerException("subject");
+            this.fn = fn;
+            apply.accept(subject, build());
+        }
+
+    }
+
+    public static class Dispatcher<S, Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, T extends IKeyData<K, TT>, TT>
+            extends SimpleDataTypedKeyPatternMakeRuleBuilders<S, Tp, Param, K, T, TT> {
+
+        BiConsumer<S, IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> apply;
+        S subject;
+
+        public Dispatcher(BiConsumer<S, IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> apply, S subject) {
+            this.apply = apply;
+            this.subject = subject;
+        }
+
+        @Override
+        public BiConsumer<S, IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> getApply() {
+            return apply;
+        }
+
+        @Override
+        public S getSubject() {
+            return subject;
+        }
+
+        public Dispatcher<S, Tp, Param, K, T, TT> apply(BiConsumer<S, IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> apply) {
+            this.apply = apply;
+            return this;
+        }
+
+        public Dispatcher<S, Tp, Param, K, T, TT> subject(S subject) {
+            this.subject = subject;
+            return this;
+        }
+
+        public Builder<S, Tp, Param, K, T, TT> input(@NotNull IDataTypedParameterizedKey<?, ?, ?>... inputss) {
+            return SimpleDataTypedKeyPatternMakeRule.<S, Tp, Param, K, T, TT>builder()//
+                    .input(inputss) //
+                    .apply(apply).subject(subject);
         }
 
     }

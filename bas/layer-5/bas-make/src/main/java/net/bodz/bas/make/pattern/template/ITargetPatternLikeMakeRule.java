@@ -51,7 +51,7 @@ public interface ITargetPatternLikeMakeRule<Tp extends ITargetPatternLike<Param,
         if (fn == null)
             return null;
 
-        SimpleMakeRule<T, TK, TT> rule = SimpleMakeRule.<T, TK, TT, T>builder()//
+        SimpleMakeRule<T, TK, TT> rule = SimpleMakeRule.<T, T, TK, TT>builder()//
                 .priority(this.getPriority())//
                 .fn(fn).build();
 

@@ -1,5 +1,7 @@
 package net.bodz.bas.make.pattern.target;
 
+import java.util.function.BiConsumer;
+
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.IParameterizedTarget;
 import net.bodz.bas.make.fn.CompileFunction;
@@ -15,14 +17,27 @@ public class SimpleTargetPatternMakeRule<Tp extends ITargetPattern<Param, T, TK,
         super(priority, pattern, inputss, fn);
     }
 
-    public static <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
-    Builder<Tp, Param, TK, T, TT> builder() {
+    public static <S, Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
+    Builder<S, Tp, Param, TK, T, TT> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT>
-            extends SimpleTargetPatternLikeMakeRule.Builder<Builder<Tp, Param, TK, T, TT>, //
+    public static class Builder<S, Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT>
+            extends SimpleTargetPatternLikeMakeRule.Builder<Builder<S, Tp, Param, TK, T, TT>, //
             Tp, Param, TK, IParameterizedTarget<?, ?, ?, ?>, T, TT> {
+
+        BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply;
+        S subject;
+
+        public Builder<S, Tp, Param, TK, T, TT> apply(BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
+            this.apply = apply;
+            return this;
+        }
+
+        public Builder<S, Tp, Param, TK, T, TT> subject(S subject) {
+            this.subject = subject;
+            return this;
+        }
 
         public SimpleTargetPatternMakeRule<Tp, Param, TK, T, TT> build() {
             if (pattern == null)
@@ -32,6 +47,17 @@ public class SimpleTargetPatternMakeRule<Tp extends ITargetPattern<Param, T, TK,
             if (fn == null)
                 throw new NullPointerException("fn");
             return new SimpleTargetPatternMakeRule<>(priority, pattern, inputs, fn);
+        }
+
+        public void make(CompileFunction<T> fn) {
+            make(subject, fn);
+        }
+
+        public void make(S subject, CompileFunction<T> fn) {
+            if (subject == null)
+                throw new NullPointerException("subject");
+            this.fn = fn;
+            apply.accept(subject, build());
         }
 
     }

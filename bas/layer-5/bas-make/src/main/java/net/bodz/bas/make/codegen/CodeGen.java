@@ -50,11 +50,22 @@ public class CodeGen
                 new ITargetPatternMakeRule__java(), //
                 new SimpleTargetPatternMakeRule__java(), //
 
+                new SimpleDataTypedKeyPatternMakeRuleBuilders__java(), //
+                new SimpleDataTypedTarget2KeyPatternMakeRuleBuilders__java(), //
+//                new SimpleDataTypedTargetPatternMakeRuleBuilders__java(), //
+                new SimpleKeyPatternMakeRuleBuilders__java(), //
+                new SimpleMakeRuleBuilders__java(), //
+                new SimpleTarget2KeyPatternMakeRuleBuilders__java(), //
+                new SimpleTargetPatternMakeRuleBuilders__java(), //
+
                 new IMakeRules__java(), //
         };
 
         for (int inputCount = 0; inputCount <= maxCount; inputCount++) {
             for (Class__java module : modules) {
+                if (module.isSingle() && inputCount != maxCount)
+                    continue;
+
                 module.setInputCount(inputCount);
                 module.setMaxCount(maxCount);
 

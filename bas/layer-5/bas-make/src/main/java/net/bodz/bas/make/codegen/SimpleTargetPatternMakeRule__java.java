@@ -18,9 +18,15 @@ public class SimpleTargetPatternMakeRule__java
     @Override
     public void build(JavaCodeWriter out)
             throws IOException {
-        String ruleTypeVars = "<T, TK, TT" + comma(Naming.typeVars(inputCount, "", "K", "T")) + ">";
+        String compileFnTypeVars = "T, TK, TT" + comma(Naming.typeVars(inputCount, "", "K", "T"));
+        String typeVars = String.format("Tp, Param, TK%s, T, TT%s", //
+                comma(Naming.typeVars(inputCount, "s", "K")), //
+                comma(Naming.typeVars(inputCount, "", "T")));
+        String builderTypeVars = "S, " + typeVars;
 
         out.printf("package net.bodz.bas.make.pattern.target;\n");
+        out.println();
+        out.printf("import java.util.function.BiConsumer;\n");
         out.println();
         out.printf("import net.bodz.bas.make.IKeyData;\n");
         out.printf("import net.bodz.bas.make.IParameterizedTarget;\n");
@@ -49,15 +55,13 @@ public class SimpleTargetPatternMakeRule__java
                         inputCount, //
                         comma(Naming.typeVars(inputCount, "s", "K")), //
                         comma(Naming.typeVars(inputCount, "", "T")));
-                out.printf("implements ITargetPatternMakeRule%d<Tp, Param, TK%s, T, TT%s> {\n", //
-                        inputCount, //
-                        comma(Naming.typeVars(inputCount, "s", "K")), //
-                        comma(Naming.typeVars(inputCount, "", "T")));
-                out.println();
+                out.printf("implements ITargetPatternMakeRule%d<%s> {\n", inputCount, typeVars);
                 out.leave();
             }
+
+            out.println();
             out.printf("public SimpleTargetPatternMakeRule%d(int priority, @NotNull Tp pattern", inputCount);
-            out.printf(", @NotNull CompileFunction%d%s fn", inputCount, ruleTypeVars);
+            out.printf(", @NotNull CompileFunction%d<%s> fn", inputCount, compileFnTypeVars);
             for (int i = 0; i < inputCount; i++) {
                 String U = Naming.typeVar(inputCount, i);
                 out.printf(", @NotNull %ss input%ds", U, i + 1);
@@ -71,7 +75,7 @@ public class SimpleTargetPatternMakeRule__java
             }
             out.printf("}\n");
             out.println();
-            out.printf("public static <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //\n");
+            out.printf("public static <S, Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //\n");
             out.enter();
             {
                 out.enter();
@@ -91,10 +95,6 @@ public class SimpleTargetPatternMakeRule__java
                 }
                 out.leave();
             }
-            String builderTypeVars = String.format("Tp, Param, TK%s, T, TT%s", //
-                    comma(Naming.typeVars(inputCount, "s", "K")), //
-                    comma(Naming.typeVars(inputCount, "", "T")));
-
             out.printf("Builder<%s> builder() {\n", builderTypeVars);
             out.enter();
             {
@@ -102,8 +102,9 @@ public class SimpleTargetPatternMakeRule__java
                 out.leave();
             }
             out.printf("}\n");
+
             out.println();
-            out.printf("public static class Builder<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //\n");
+            out.printf("public static class Builder<S, Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //\n");
             out.enter();
             {
                 out.enter();
@@ -121,11 +122,15 @@ public class SimpleTargetPatternMakeRule__java
                     out.print("> //\n");
 
                     out.printf("extends SimpleTargetPatternLikeMakeRule%d.Builder<Builder<%s>, //\n", inputCount, builderTypeVars);
-                    out.printf("%s> {\n", builderTypeVars);
-                    out.println();
+                    out.printf("%s> {\n", typeVars);
                     out.leave();
                 }
-                out.printf("public SimpleTargetPatternMakeRule%d<%s> build() {\n", inputCount, builderTypeVars);
+
+                String ruleType = "ITargetPatternMakeRule<Tp, Param, TK, T, TT>";
+                applySubject(out, ruleType, builderTypeVars);
+
+                out.println();
+                out.printf("public SimpleTargetPatternMakeRule%d<%s> build() {\n", inputCount, typeVars);
                 out.enter();
                 {
                     out.printf("if (pattern == null)\n");
@@ -140,7 +145,6 @@ public class SimpleTargetPatternMakeRule__java
                         out.printf("throw new NullPointerException(\"fn\");\n");
                         out.leave();
                     }
-
                     for (int i = 0; i < inputCount; i++) {
                         out.printf("if (input%ds == null)\n", i + 1);
                         out.enter();
@@ -155,6 +159,9 @@ public class SimpleTargetPatternMakeRule__java
                     out.leave();
                 }
                 out.printf("}\n");
+
+                makeCompileFn(out);
+
                 out.println();
                 out.leave();
             }

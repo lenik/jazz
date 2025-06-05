@@ -1,5 +1,7 @@
 package net.bodz.bas.make.pattern.key;
 
+import java.util.function.BiConsumer;
+
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.fn.CompileFunction;
@@ -14,14 +16,27 @@ public class SimpleTarget2KeyPatternMakeRule<Tp extends ITarget2KeyPattern<Param
         super(priority, pattern, inputss, fn);
     }
 
-    public static <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
-    Builder<Tp, Param, TK, T, TT> builder() {
+    public static <S, Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
+    Builder<S, Tp, Param, TK, T, TT> builder() {
         return new Builder<>();
     }
 
-    public static class Builder<Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT>
-            extends SimpleKeyPatternLikeMakeRule.Builder<Builder<Tp, Param, TK, T, TT>, //
+    public static class Builder<S, Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT>
+            extends AbstractBuilder<Builder<S, Tp, Param, TK, T, TT>, //
             Tp, Param, TK, IParameterizedKey<?, ?>, T, TT> {
+
+        BiConsumer<S, ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> apply;
+        S subject;
+
+        public Builder<S, Tp, Param, TK, T, TT> apply(BiConsumer<S, ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
+            this.apply = apply;
+            return this;
+        }
+
+        public Builder<S, Tp, Param, TK, T, TT> subject(S subject) {
+            this.subject = subject;
+            return this;
+        }
 
         public SimpleTarget2KeyPatternMakeRule<Tp, Param, TK, T, TT> build() {
             if (pattern == null)
@@ -31,6 +46,56 @@ public class SimpleTarget2KeyPatternMakeRule<Tp extends ITarget2KeyPattern<Param
             if (fn == null)
                 throw new NullPointerException("fn");
             return new SimpleTarget2KeyPatternMakeRule<>(priority, pattern, inputs, fn);
+        }
+
+        public void make(CompileFunction<T> fn) {
+            make(subject, fn);
+        }
+
+        public void make(S subject, CompileFunction<T> fn) {
+            if (subject == null)
+                throw new NullPointerException("subject");
+            this.fn = fn;
+            apply.accept(subject, build());
+        }
+
+    }
+
+    public static class Dispatcher<S, Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT>
+            extends SimpleTarget2KeyPatternMakeRuleBuilders<S, Tp, Param, TK, T, TT> {
+
+        BiConsumer<S, ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> apply;
+        S subject;
+
+        public Dispatcher(BiConsumer<S, ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> apply, S subject) {
+            this.apply = apply;
+            this.subject = subject;
+        }
+
+        @Override
+        public BiConsumer<S, ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> getApply() {
+            return apply;
+        }
+
+        @Override
+        public S getSubject() {
+            return subject;
+        }
+
+        public Dispatcher<S, Tp, Param, TK, T, TT> apply(BiConsumer<S, ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
+            this.apply = apply;
+            return this;
+        }
+
+        public Dispatcher<S, Tp, Param, TK, T, TT> subject(S subject) {
+            this.subject = subject;
+            return this;
+        }
+
+        public Builder<S, Tp, Param, TK, T, TT> input(@NotNull IParameterizedKey<?, ?>... inputss) {
+            return SimpleTarget2KeyPatternMakeRule.<S, Tp, Param, TK, T, TT>builder()//
+                    .input(inputss) //
+                    .apply(apply).subject(subject);
         }
 
     }

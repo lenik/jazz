@@ -148,16 +148,19 @@ public class SimpleKeyPatternLikeMakeRule__java
                         out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
                     }
                     out.print("> {\n");
-                    out.println();
                     out.leave();
                 }
+
+                out.println();
                 out.printf("protected int priority;\n");
                 out.printf("protected Tp pattern;\n");
                 out.printf("protected CompileFunction%d%s fn;\n", inputCount, ruleTypeVars);
+
                 for (int i = 0; i < inputCount; i++) {
                     String U = Naming.typeVar(inputCount, i);
                     out.printf("protected %ss input%ds;\n", U, i + 1);
                 }
+
                 out.println();
                 out.printf("@SuppressWarnings(\"unchecked\")\n");
                 out.println("protected final self_t _this = (self_t) this;");
@@ -170,6 +173,7 @@ public class SimpleKeyPatternLikeMakeRule__java
                     out.leave();
                 }
                 out.printf("}\n");
+
                 out.println();
                 out.printf("public self_t pattern(@NotNull Tp pattern) {\n");
                 out.enter();

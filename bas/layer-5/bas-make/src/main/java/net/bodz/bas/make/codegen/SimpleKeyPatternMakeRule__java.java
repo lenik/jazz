@@ -18,9 +18,15 @@ public class SimpleKeyPatternMakeRule__java
     @Override
     public void build(JavaCodeWriter out)
             throws IOException {
-        String ruleTypeVars = "<T, K, TT" + comma(Naming.typeVars(inputCount, "", "K", "T")) + ">";
+        String compileFnTypeVars = "T, TK, TT" + comma(Naming.typeVars(inputCount, "", "K", "T"));
+        String typeVars = String.format("Tp, Param, TK%s, T, TT%s", //
+                comma(Naming.typeVars(inputCount, "s", "K")), //
+                comma(Naming.typeVars(inputCount, "", "T")));
+        String builderTypeVars = "S, " + typeVars;
 
         out.printf("package net.bodz.bas.make.pattern.key;\n");
+        out.println();
+        out.printf("import java.util.function.BiConsumer;\n");
         out.println();
         out.printf("import net.bodz.bas.make.IKeyData;\n");
         out.printf("import net.bodz.bas.make.IParameterizedKey;\n");
@@ -28,7 +34,7 @@ public class SimpleKeyPatternMakeRule__java
         out.printf("import net.bodz.bas.make.pattern.template.SimpleKeyPatternLikeMakeRule%d;\n", inputCount);
         out.printf("import net.bodz.bas.meta.decl.NotNull;\n");
         out.println();
-        out.printf("public class SimpleKeyPatternMakeRule%d<Tp extends IKeyPattern<Param, K>, Param, K, ", inputCount);
+        out.printf("public class SimpleKeyPatternMakeRule%d<Tp extends IKeyPattern<Param, TK>, Param, TK, ", inputCount);
         out.enter();
         {
             out.enter();
@@ -37,7 +43,7 @@ public class SimpleKeyPatternMakeRule__java
                     String U = Naming.typeVar(inputCount, i);
                     out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                 }
-                out.printf("T extends IKeyData<K, TT>, TT");
+                out.printf("T extends IKeyData<TK, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
                     out.print(", //\n");
                     String U = Naming.typeVar(inputCount, i);
@@ -45,19 +51,17 @@ public class SimpleKeyPatternMakeRule__java
                 }
                 out.print("> //\n");
 
-                out.printf("extends SimpleKeyPatternLikeMakeRule%d<Tp, Param, K, IParameterizedKey<?, ?>%s, T, TT%s>\n", //
+                out.printf("extends SimpleKeyPatternLikeMakeRule%d<Tp, Param, TK, IParameterizedKey<?, ?>%s, T, TT%s>\n", //
                         inputCount, //
                         comma(Naming.typeVars(inputCount, "s", "K")), //
                         comma(Naming.typeVars(inputCount, "", "T")));
-                out.printf("implements IKeyPatternMakeRule%d<Tp, Param, K%s, T, TT%s> {\n", //
-                        inputCount, //
-                        comma(Naming.typeVars(inputCount, "s", "K")), //
-                        comma(Naming.typeVars(inputCount, "", "T")));
-                out.println();
+                out.printf("implements IKeyPatternMakeRule%d<%s> {\n", inputCount, typeVars);
                 out.leave();
             }
+
+            out.println();
             out.printf("public SimpleKeyPatternMakeRule%d(int priority, @NotNull Tp pattern", inputCount);
-            out.printf(", @NotNull CompileFunction%d%s fn", inputCount, ruleTypeVars);
+            out.printf(", @NotNull CompileFunction%d<%s> fn", inputCount, compileFnTypeVars);
             for (int i = 0; i < inputCount; i++) {
                 String U = Naming.typeVar(inputCount, i);
                 out.printf(", @NotNull %ss input%ds", U, i + 1);
@@ -70,8 +74,9 @@ public class SimpleKeyPatternMakeRule__java
                 out.leave();
             }
             out.printf("}\n");
+
             out.println();
-            out.printf("public static <Tp extends IKeyPattern<Param, K>, Param, K, //\n");
+            out.printf("public static <S, Tp extends IKeyPattern<Param, TK>, Param, TK, //\n");
             out.enter();
             {
                 out.enter();
@@ -80,21 +85,17 @@ public class SimpleKeyPatternMakeRule__java
                         String U = Naming.typeVar(inputCount, i);
                         out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                     }
-                    out.printf("T extends IKeyData<K, TT>, TT");
+                    out.printf("T extends IKeyData<TK, TT>, TT");
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT\n", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
                     }
                     out.print("> //\n");
                     out.leave();
                 }
                 out.leave();
             }
-            String builderTypeVars = String.format("Tp, Param, K%s, T, TT%s", //
-                    comma(Naming.typeVars(inputCount, "s", "K")), //
-                    comma(Naming.typeVars(inputCount, "", "T")));
-
             out.printf("Builder<%s> builder() {\n", builderTypeVars);
             out.enter();
             {
@@ -102,8 +103,9 @@ public class SimpleKeyPatternMakeRule__java
                 out.leave();
             }
             out.printf("}\n");
+
             out.println();
-            out.printf("public static class Builder<Tp extends IKeyPattern<Param, K>, Param, K, //\n");
+            out.printf("public static class Builder<S, Tp extends IKeyPattern<Param, TK>, Param, TK, //\n");
             out.enter();
             {
                 out.enter();
@@ -112,20 +114,24 @@ public class SimpleKeyPatternMakeRule__java
                         String U = Naming.typeVar(inputCount, i);
                         out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
                     }
-                    out.printf("T extends IKeyData<K, TT>, TT");
+                    out.printf("T extends IKeyData<TK, TT>, TT");
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT\n", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
                     }
                     out.print("> //\n");
 
                     out.printf("extends SimpleKeyPatternLikeMakeRule%d.Builder<Builder<%s>, //\n", inputCount, builderTypeVars);
-                    out.printf("%s> {\n", builderTypeVars);
-                    out.println();
+                    out.printf("%s> {\n", typeVars);
                     out.leave();
                 }
-                out.printf("public SimpleKeyPatternMakeRule%d<%s> build() {\n", inputCount, builderTypeVars);
+
+                String ruleType = "IKeyPatternMakeRule<Tp, Param, TK, T, TT>";
+                applySubject(out, ruleType, builderTypeVars);
+
+                out.println();
+                out.printf("public SimpleKeyPatternMakeRule%d<%s> build() {\n", inputCount, typeVars);
                 out.enter();
                 {
                     out.printf("if (pattern == null)\n");
@@ -140,7 +146,6 @@ public class SimpleKeyPatternMakeRule__java
                         out.printf("throw new NullPointerException(\"fn\");\n");
                         out.leave();
                     }
-
                     for (int i = 0; i < inputCount; i++) {
                         out.printf("if (input%ds == null)\n", i + 1);
                         out.enter();
@@ -155,9 +160,12 @@ public class SimpleKeyPatternMakeRule__java
                     out.leave();
                 }
                 out.printf("}\n");
-                out.println();
                 out.leave();
             }
+
+            makeCompileFn(out);
+
+            out.println();
             out.printf("}\n");
             out.println();
             out.leave();

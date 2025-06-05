@@ -41,14 +41,14 @@ public interface IMakeRulesBase {
     default <T extends IKeyData<TK, TT>, TK, TT> //
     void addRule(@NotNull T target, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addRule(target, //
-                SimpleMakeRule.<T, TK, TT, T>builder() //
+                SimpleMakeRule.<T, T, TK, TT>builder() //
                         .input(inputs) //
                         .fn(fn).build());
     }
 
     @NotNull
-    default <T extends IKeyData<TK, TT>, TK, TT> MakeRuleBuilder<T, T, TK, TT> matchExact(T target) {
-        return new MakeRuleBuilder<>(target, this::addRule);
+    default <T extends IKeyData<TK, TT>, TK, TT> SimpleMakeRule.Dispatcher<T, T, TK, TT> matchExact(T target) {
+        return new SimpleMakeRule.Dispatcher<>(this::addRule, target);
     }
 
     // rules: key match
@@ -61,14 +61,14 @@ public interface IMakeRulesBase {
     default <T extends IKeyData<TK, TT>, TK, TT> //
     void addKeyRule(@NotNull TK key, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addKeyRule(key, //
-                SimpleMakeRule.<T, TK, TT, TK>builder() //
+                SimpleMakeRule.<TK, T, TK, TT>builder() //
                         .input(inputs) //
                         .fn(fn).build());
     }
 
     @NotNull
-    default <T extends IKeyData<TK, TT>, TK, TT> MakeRuleBuilder<TK, T, TK, TT> matchKey(@NotNull TK key) {
-        return new MakeRuleBuilder<>(key, this::addKeyRule);
+    default <T extends IKeyData<TK, TT>, TK, TT> SimpleMakeRule.Dispatcher<TK, T, TK, TT> matchKey(@NotNull TK key) {
+        return new SimpleMakeRule.Dispatcher<>(this::addKeyRule, key);
     }
 
     // rules: key type match
@@ -81,14 +81,14 @@ public interface IMakeRulesBase {
     default <T extends IKeyData<TK, TT>, TK, TT> //
     void addKeyTypeRule(@NotNull Class<TK> keyType, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addKeyTypeRule(keyType, //
-                SimpleMakeRule.<T, TK, TT, TK>builder()//
+                SimpleMakeRule.<TK, T, TK, TT>builder()//
                         .input(inputs)//
                         .fn(fn).build());
     }
 
     @NotNull
-    default <T extends IKeyData<TK, TT>, TK, TT> MakeRuleBuilder<Class<TK>, T, TK, TT> matchKeyType(@NotNull Class<TK> keyType) {
-        return new MakeRuleBuilder<>(keyType, this::addKeyTypeRule);
+    default <T extends IKeyData<TK, TT>, TK, TT> SimpleMakeRule.Dispatcher<Class<TK>, T, TK, TT> matchKeyType(@NotNull Class<TK> keyType) {
+        return new SimpleMakeRule.Dispatcher<>(this::addKeyTypeRule, keyType);
     }
 
     // rules: data type match
@@ -101,14 +101,14 @@ public interface IMakeRulesBase {
     default <T extends IKeyData<TK, TT>, TK, TT>//
     void addRule(@NotNull Class<TT> dataType, IKeyData<?, ?>[] inputs, @NotNull MakeFunction<T> fn) {
         addRule(dataType, //
-                SimpleMakeRule.<T, TK, TT, Class<TT>>builder()//
+                SimpleMakeRule.<Class<TT>, T, TK, TT>builder()//
                         .input(inputs)//
                         .fn(fn).build());
     }
 
     @NotNull
-    default <T extends IKeyData<TK, TT>, TK, TT> MakeRuleBuilder<Class<TT>, T, TK, TT> matchDataType(@NotNull Class<TT> dataType) {
-        return new MakeRuleBuilder<>(dataType, this::addRule);
+    default <T extends IKeyData<TK, TT>, TK, TT> SimpleMakeRule.Dispatcher<Class<TT>, T, TK, TT> matchType(@NotNull Class<TT> dataType) {
+        return new SimpleMakeRule.Dispatcher<>(this::addRule, dataType);
     }
 
     // rules: key pattern
@@ -125,10 +125,16 @@ public interface IMakeRulesBase {
             T extends IKeyData<K, TT>, TT> //
     void addPatternRule(@NotNull Tp pattern, @NotNull IParameterizedKey<?, ?>[] inputss, @NotNull CompileFunction<T> fn) {
         addPatternRule(pattern, //
-                SimpleKeyPatternMakeRule.<Tp, Param, K, T, TT>builder()//
+                SimpleKeyPatternMakeRule.<Tp, Tp, Param, K, T, TT>builder()//
                         .pattern(pattern) //
                         .input(inputss)//
                         .fn(fn).build());
+    }
+
+    default <Tp extends IKeyPattern<Param, K>, Param, K, //
+            T extends IKeyData<K, TT>, TT> //
+    SimpleKeyPatternMakeRule.Dispatcher<Tp, Tp, Param, K, T, TT> matchKey(@NotNull Tp pattern) {
+        return new SimpleKeyPatternMakeRule.Dispatcher<>(this::addPatternRule, pattern);
     }
 
     // rules: data-typed key pattern
@@ -145,10 +151,16 @@ public interface IMakeRulesBase {
             T extends IKeyData<K, TT>, TT> //
     void addPatternRule(@NotNull Tp pattern, @NotNull IDataTypedParameterizedKey<?, ?, ?>[] inputss, @NotNull CompileFunction<T> fn) {
         addPatternRule(pattern, //
-                SimpleDataTypedKeyPatternMakeRule.<Tp, Param, K, T, TT>builder()//
+                SimpleDataTypedKeyPatternMakeRule.<Tp, Tp, Param, K, T, TT>builder()//
                         .pattern(pattern) //
                         .input(inputss)//
                         .fn(fn).build());
+    }
+
+    default <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
+            T extends IKeyData<K, TT>, TT> //
+    SimpleDataTypedKeyPatternMakeRule.Dispatcher<Tp, Tp, Param, K, T, TT> matchKey(@NotNull Tp pattern) {
+        return new SimpleDataTypedKeyPatternMakeRule.Dispatcher<>(this::addPatternRule, pattern);
     }
 
     // rules: target-to-key pattern
@@ -165,10 +177,16 @@ public interface IMakeRulesBase {
             T extends IKeyData<TK, TT>, TT> //
     void addPatternRule(@NotNull Tp pattern, @NotNull IParameterizedKey<?, ?>[] inputss, @NotNull CompileFunction<T> fn) {
         addPatternRule(pattern, //
-                SimpleTarget2KeyPatternMakeRule.<Tp, Param, TK, T, TT>builder()//
+                SimpleTarget2KeyPatternMakeRule.<Tp, Tp, Param, TK, T, TT>builder()//
                         .pattern(pattern) //
                         .input(inputss)//
                         .fn(fn).build());
+    }
+
+    default <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
+            T extends IKeyData<TK, TT>, TT> //
+    SimpleTarget2KeyPatternMakeRule.Dispatcher<Tp, Tp, Param, TK, T, TT> matchKey(@NotNull Tp pattern) {
+        return new SimpleTarget2KeyPatternMakeRule.Dispatcher<>(this::addPatternRule, pattern);
     }
 
     // rules: data typed target-to-key pattern
@@ -185,10 +203,16 @@ public interface IMakeRulesBase {
             T extends IKeyData<TK, TT>, TT> //
     void addPatternRule(@NotNull Tp pattern, @NotNull IDataTypedParameterizedKey<?, ?, ?>[] inputss, @NotNull CompileFunction<T> fn) {
         addPatternRule(pattern, //
-                SimpleDataTypedTarget2KeyPatternMakeRule.<Tp, Param, TK, T, TT>builder()//
+                SimpleDataTypedTarget2KeyPatternMakeRule.<Tp, Tp, Param, TK, T, TT>builder()//
                         .pattern(pattern) //
                         .input(inputss)//
                         .fn(fn).build());
+    }
+
+    default <Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
+            T extends IKeyData<TK, TT>, TT> //
+    SimpleDataTypedTarget2KeyPatternMakeRule.Dispatcher<Tp, Tp, Param, TK, T, TT> matchKey(@NotNull Tp pattern) {
+        return new SimpleDataTypedTarget2KeyPatternMakeRule.Dispatcher<>(this::addPatternRule, pattern);
     }
 
 }
