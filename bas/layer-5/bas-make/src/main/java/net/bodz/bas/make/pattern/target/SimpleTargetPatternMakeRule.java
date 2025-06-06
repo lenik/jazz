@@ -67,10 +67,12 @@ public class SimpleTargetPatternMakeRule<Tp extends ITargetPattern<Param, T, TK,
 
         BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply;
         S subject;
+        Tp pattern;
 
-        public Dispatcher(BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply, S subject) {
+        public Dispatcher(BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply, S subject, Tp pattern) {
             this.apply = apply;
             this.subject = subject;
+            this.pattern = pattern;
         }
 
         @Override
@@ -83,6 +85,11 @@ public class SimpleTargetPatternMakeRule<Tp extends ITargetPattern<Param, T, TK,
             return subject;
         }
 
+        @Override
+        public Tp getPattern() {
+            return pattern;
+        }
+
         public Dispatcher<S, Tp, Param, TK, T, TT> apply(BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
             this.apply = apply;
             return this;
@@ -93,8 +100,14 @@ public class SimpleTargetPatternMakeRule<Tp extends ITargetPattern<Param, T, TK,
             return this;
         }
 
+        public Dispatcher<S, Tp, Param, TK, T, TT> pattern(Tp pattern) {
+            this.pattern = pattern;
+            return this;
+        }
+
         public SimpleTargetPatternMakeRule.Builder<S, Tp, Param, TK, T, TT> input(@NotNull IParameterizedTarget<?, ?, ?, ?>... inputss) {
             return SimpleTargetPatternMakeRule.<S, Tp, Param, TK, T, TT>builder()//
+                    .pattern(pattern) //
                     .input(inputss) //
                     .apply(apply).subject(subject);
         }

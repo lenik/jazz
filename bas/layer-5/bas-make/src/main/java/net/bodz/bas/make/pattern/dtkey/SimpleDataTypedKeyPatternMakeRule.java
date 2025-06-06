@@ -67,10 +67,12 @@ public class SimpleDataTypedKeyPatternMakeRule<Tp extends IDataTypedKeyPattern<P
 
         BiConsumer<S, IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> apply;
         S subject;
+        Tp pattern;
 
-        public Dispatcher(BiConsumer<S, IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> apply, S subject) {
+        public Dispatcher(BiConsumer<S, IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> apply, S subject, Tp pattern) {
             this.apply = apply;
             this.subject = subject;
+            this.pattern = pattern;
         }
 
         @Override
@@ -83,6 +85,11 @@ public class SimpleDataTypedKeyPatternMakeRule<Tp extends IDataTypedKeyPattern<P
             return subject;
         }
 
+        @Override
+        public Tp getPattern() {
+            return pattern;
+        }
+
         public Dispatcher<S, Tp, Param, K, T, TT> apply(BiConsumer<S, IDataTypedKeyPatternMakeRule<Tp, Param, K, T, TT>> apply) {
             this.apply = apply;
             return this;
@@ -93,8 +100,14 @@ public class SimpleDataTypedKeyPatternMakeRule<Tp extends IDataTypedKeyPattern<P
             return this;
         }
 
+        public Dispatcher<S, Tp, Param, K, T, TT> pattern(Tp pattern) {
+            this.pattern = pattern;
+            return this;
+        }
+
         public Builder<S, Tp, Param, K, T, TT> input(@NotNull IDataTypedParameterizedKey<?, ?, ?>... inputss) {
             return SimpleDataTypedKeyPatternMakeRule.<S, Tp, Param, K, T, TT>builder()//
+                    .pattern(pattern) //
                     .input(inputss) //
                     .apply(apply).subject(subject);
         }

@@ -44,10 +44,12 @@ public class MakeWorkflow {
         session.addData(age);
 
         NamedString greet = new NamedString("greet");
-//        rules.addRule(greet, name, age, (n, a) -> "hello " + n + ", you are " + a + " years now.");
+        // rules.addRule(greet, name, age, (n, a) -> "hello " + n + ", you are " + a + " years now.");
+        rules.forExact(greet).input(name, age).make((n, a) -> "hello " + n + ", you are " + a + " years now.");
 
         NamedInteger greetCount = new NamedInteger("greet_count");
 //        rules.addRule(greetCount, greet, String::length);
+        rules.forExact(greetCount).input(greet).make(String::length);
 
         session.make(greetCount);
         System.out.println("greetCount: " + greetCount);
@@ -57,6 +59,8 @@ public class MakeWorkflow {
 
 //        rules.addPatternRule(countPattern, justStem_Str, //
 //                (count, input1) -> String::length);
+        rules.forKeysDataTyped(countPattern).input(justStem_Str)//
+                .make((count, input1) -> String::length);
 
         NamedString brand = new NamedString("brand", "IBM And Microsoft");
         session.addData(brand);
@@ -74,6 +78,8 @@ public class MakeWorkflow {
         KeyModifier_<List<?>> justStem_List = new KeyModifier_<>("%", ClassLiterals.List_class);
 //        rules.addPatternRule(countPattern, justStem_List, //
 //                (count, input1) -> List::size);
+        rules.forKeysDataTyped(countPattern).input(justStem_List)//
+                .make((count, input1) -> List::size);
 
         NamedInteger colorCount = new NamedInteger("color_count");
         session.make(colorCount);
@@ -83,9 +89,48 @@ public class MakeWorkflow {
         NamedList<Double> nums = new NamedList<>("nums", numList);
         NamedDouble sum = new NamedDouble("sum");
 
-//        rules.addRule(sum, nums, list -> list.stream().mapToDouble(a -> a).sum());
+        // rules.addRule(sum, nums, list -> list.stream().mapToDouble(a -> a).sum());
+        rules.forExact(sum).input(nums)//
+                .make(list -> list.stream().mapToDouble(a -> a).sum());
+
         session.make(sum);
         System.out.println("Sum: " + sum);
+
+        rules.forKeyType(IFoo.class, IBar.class);
+    }
+
+}
+
+interface IFoo {
+    int getFoo();
+}
+
+interface IBar {
+    int getBar();
+}
+
+class FooBar
+        implements IFoo,
+                   IBar {
+    int foo;
+    int bar;
+
+    @Override
+    public int getFoo() {
+        return foo;
+    }
+
+    public void setFoo(int foo) {
+        this.foo = foo;
+    }
+
+    @Override
+    public int getBar() {
+        return bar;
+    }
+
+    public void setBar(int bar) {
+        this.bar = bar;
     }
 
 }

@@ -46,6 +46,9 @@ public class SimpleDataTypedKeyPatternMakeRuleBuilders__java
             out.println();
             out.printf("public abstract S getSubject();\n");
 
+            out.println();
+            out.printf("public abstract Tp getPattern();\n");
+
             for (int inputCount = 0; inputCount <= maxCount; inputCount++) {
                 String typeVars = String.format("Tp, Param, TK%s, T, TT%s", //
                         comma(Naming.typeVars(inputCount, "s", "K")), //
@@ -87,8 +90,9 @@ public class SimpleDataTypedKeyPatternMakeRuleBuilders__java
                     {
                         out.enter();
                         {
-                            out.printf(".apply(getApply()).subject(getSubject()).input(%s);\n", //
-                                    Naming.inputVars(inputCount, "s"));
+                            out.printf(".apply(getApply()).subject(getSubject()) //\n");
+                            out.printf(".pattern(getPattern()) //\n");
+                            out.printf(".input(%s);\n", Naming.inputVars(inputCount, "s"));
                             out.leave();
                         }
                         out.leave();

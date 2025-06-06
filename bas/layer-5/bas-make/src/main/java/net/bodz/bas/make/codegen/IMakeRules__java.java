@@ -75,16 +75,8 @@ public class IMakeRules__java
             keyPatternMatch(out);
 
             out.println();
-            out.printf("// rules: data-typed key pattern\n");
+            out.printf("// rules: data typed key pattern\n");
             dataTypedKeyPatternMatch(out);
-
-//            out.println();
-//            out.printf("// rules: target pattern\n");
-//            targetPatternMatch(out);
-//
-//            out.println();
-//            out.printf("// rules: data-typed target pattern\n");
-//            dataTypedTargetPatternMatch(out);
 
             out.println();
             out.printf("// rules: target typed key pattern\n");

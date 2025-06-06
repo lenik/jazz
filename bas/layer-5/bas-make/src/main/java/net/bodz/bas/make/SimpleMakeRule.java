@@ -4,6 +4,7 @@ import java.util.function.BiConsumer;
 
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.make.fn.MakeFunction;
+import net.bodz.bas.make.fn.SimpleMakeRuleBuilders;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class SimpleMakeRule<T extends IKeyData<TK, TT>, TK, TT>
@@ -100,12 +101,12 @@ public class SimpleMakeRule<T extends IKeyData<TK, TT>, TK, TT>
         }
 
         protected void wireUp() {
-            if (targetType == null)
-                throw new NullPointerException("targetType");
-            if (keyType == null)
-                keyType = TypeParam.infer1(targetType, IKeyData.class, 0);
-            if (dataType == null)
-                dataType = TypeParam.infer1(targetType, IKeyData.class, 1);
+            if (targetType != null) {
+                if (keyType == null)
+                    keyType = TypeParam.infer1(targetType, IKeyData.class, 0);
+                if (dataType == null)
+                    dataType = TypeParam.infer1(targetType, IKeyData.class, 1);
+            }
         }
 
         public This apply(BiConsumer<S, IMakeRule<T, TK, TT>> apply) {
@@ -170,7 +171,8 @@ public class SimpleMakeRule<T extends IKeyData<TK, TT>, TK, TT>
 
     }
 
-    public static class Dispatcher<S, T extends IKeyData<TK, TT>, TK, TT> {
+    public static class Dispatcher<S, T extends IKeyData<TK, TT>, TK, TT>
+            extends SimpleMakeRuleBuilders<S, T, TK, TT> {
 
         BiConsumer<S, IMakeRule<T, TK, TT>> apply;
         S subject;
@@ -180,15 +182,29 @@ public class SimpleMakeRule<T extends IKeyData<TK, TT>, TK, TT>
             this.subject = subject;
         }
 
+        @Override
+        public BiConsumer<S, IMakeRule<T, TK, TT>> getApply() {
+            return apply;
+        }
+
+        @Override
+        public S getSubject() {
+            return subject;
+        }
+
+        public Dispatcher<S, T, TK, TT> apply(BiConsumer<S, IMakeRule<T, TK, TT>> apply) {
+            this.apply = apply;
+            return this;
+        }
+
+        public Dispatcher<S, T, TK, TT> subject(S subject) {
+            this.subject = subject;
+            return this;
+        }
+
         public SimpleMakeRule.Builder<S, T, TK, TT> input(@NotNull IKeyData<?, ?>... inputs) {
             return SimpleMakeRule.<S, T, TK, TT>builder().apply(apply).subject(subject).input(inputs);
         }
-
-//        public <U extends IKeyData<UK, UT>, UK, UT> //
-//        SimpleMakeRule1.Builder<S, T, TK, TT, U, UK, UT> input(U input1) {
-//            return SimpleMakeRule1.<S, T, TK, TT, U, UK, UT>builder().apply(apply).subject(subject)//
-//                    .input(input1);
-//        }
 
     }
 

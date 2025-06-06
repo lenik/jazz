@@ -524,7 +524,7 @@ public interface IMakeRules
                         .fn(fn).build());
     }
 
-    // rules: data-typed key pattern
+    // rules: data typed key pattern
 
     default <Tp extends IDataTypedKeyPattern<Param, K, TT>, Param, K, //
             T extends IKeyData<K, TT>, TT> //

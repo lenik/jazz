@@ -11,15 +11,18 @@ import net.bodz.bas.make.pattern.key.ITargetTypedKeyPattern;
 import net.bodz.bas.make.pattern.key.ITargetTypedKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.target.ITargetPattern;
 import net.bodz.bas.make.pattern.target.ITargetPatternMakeRule;
+import net.bodz.bas.make.strategy.DataExtendsMatch;
 import net.bodz.bas.make.strategy.DataTypeMatch;
 import net.bodz.bas.make.strategy.DataTypedKeyPatternMatch;
 import net.bodz.bas.make.strategy.ExactMatch;
 import net.bodz.bas.make.strategy.IMakeStrategy;
+import net.bodz.bas.make.strategy.KeyExtendsMatch;
 import net.bodz.bas.make.strategy.KeyMatch;
 import net.bodz.bas.make.strategy.KeyPatternMatch;
 import net.bodz.bas.make.strategy.KeyTypeMatch;
 import net.bodz.bas.make.strategy.TargetPatternMatch;
 import net.bodz.bas.make.strategy.TargetTypedKeyPatternMatch;
+import net.bodz.bas.make.type.Extends;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class MakeRules
@@ -30,6 +33,9 @@ public class MakeRules
 
     public final KeyTypeMatch keyTypeMatch = new KeyTypeMatch();
     public final DataTypeMatch dataTypeMatch = new DataTypeMatch();
+
+    public final KeyExtendsMatch keyExtendsMatch = new KeyExtendsMatch();
+    public final DataExtendsMatch dataExtendsMatch = new DataExtendsMatch();
 
     public final KeyPatternMatch keyPatternMatch = new KeyPatternMatch();
     public final DataTypedKeyPatternMatch dataTypedKeyPatternMatch = new DataTypedKeyPatternMatch();
@@ -43,6 +49,7 @@ public class MakeRules
             keyMatch, //
             keyTypeMatch, //
             dataTypeMatch, //
+            dataExtendsMatch, //
             keyPatternMatch, //
             dataTypedKeyPatternMatch, //
             targetTypedKeyPatternMatch, //
@@ -88,6 +95,16 @@ public class MakeRules
         keyTypeMatch.addRule(keyType, rule);
     }
 
+    @Override
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> getKeyTypeRules(@NotNull Extends dataInterfaces) {
+        return keyExtendsMatch.getRules(dataInterfaces);
+    }
+
+    @Override
+    public <T extends IKeyData<TK, TT>, TK, TT> void addKeyTypeRule(@NotNull Extends keyInterfaces, @NotNull IMakeRule<T, TK, TT> rule) {
+        keyExtendsMatch.addRule(keyInterfaces, rule);
+    }
+
     // rules: data type
 
     @Override
@@ -99,6 +116,16 @@ public class MakeRules
     @Override
     public <T extends IKeyData<TK, TT>, TK, TT> void addRule(@NotNull Class<TT> dataType, @NotNull IMakeRule<T, TK, TT> rule) {
         dataTypeMatch.addRule(dataType, rule);
+    }
+
+    @Override
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> getRules(@NotNull Extends dataInterfaces) {
+        return dataExtendsMatch.getRules(dataInterfaces);
+    }
+
+    @Override
+    public <T extends IKeyData<TK, TT>, TK, TT> void addRule(@NotNull Extends dataInterfaces, @NotNull IMakeRule<T, TK, TT> rule) {
+        dataExtendsMatch.addRule(dataInterfaces, rule);
     }
 
     // rules: key pattern
