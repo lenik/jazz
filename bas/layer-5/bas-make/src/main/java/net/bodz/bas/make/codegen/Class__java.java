@@ -28,6 +28,12 @@ public abstract class Class__java
         this.maxCount = maxCount;
     }
 
+    public boolean isValid(int inputCount) {
+        if (isSingle())
+            return inputCount == maxCount;
+        return true;
+    }
+
     public boolean isSingle() {
         return false;
     }

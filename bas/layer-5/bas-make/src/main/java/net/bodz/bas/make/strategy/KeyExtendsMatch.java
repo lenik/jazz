@@ -11,7 +11,7 @@ import net.bodz.bas.make.type.Extends;
 import net.bodz.bas.meta.decl.NotNull;
 import net.bodz.bas.t.map.ListMap;
 
-public class DataExtendsMatch
+public class KeyExtendsMatch
         implements IMakeStrategy {
 
     ListMap<Extends, IMakeRule<?, ?, ?>> rulesMap = new ListMap<>();
@@ -19,10 +19,13 @@ public class DataExtendsMatch
     @Override
     public <T extends IKeyData<TK, TT>, TK, TT> IMakeRule<T, TK, TT> makeDefaultRule(@NotNull T target, @NotNull IDataBinding binding)
             throws CompileException {
+        Class<? extends TK> keyType = target.getKeyType();
         Class<? extends TT> dataType = target.getDataType();
         for (Extends interfaces : rulesMap.keySet()) {
-            if (interfaces.isAssignableFrom(dataType)) {
+            if (interfaces.isAssignableFrom(keyType)) {
                 for (IMakeRule<?, ?, ?> _rule : rulesMap.get(interfaces)) {
+                    if (!keyType.isAssignableFrom(_rule.getKeyType()))
+                        continue;
                     if (!dataType.isAssignableFrom(_rule.getDataType()))
                         continue;
                     @SuppressWarnings("unchecked")
@@ -38,16 +41,16 @@ public class DataExtendsMatch
     @NotNull
     @Override
     public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> makeRules(@NotNull T target, @NotNull IDataBinding binding) {
-        return (List<IMakeRule<T, TK, TT>>) (List<?>) getRules(target.getDataType());
+        return (List<IMakeRule<T, TK, TT>>) (List<?>) getRules(target.getKeyType());
     }
 
     @NotNull
-    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> getRules(@NotNull Class<TT> dataType) {
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> getRules(@NotNull Class<TT> keyType) {
         List<IMakeRule<T, TK, TT>> rules = new ArrayList<>();
         for (Extends interfaces : rulesMap.keySet()) {
-            if (interfaces.isAssignableFrom(dataType)) {
+            if (interfaces.isAssignableFrom(keyType)) {
                 for (IMakeRule<?, ?, ?> _rule : rulesMap.get(interfaces)) {
-                    if (!dataType.isAssignableFrom(_rule.getDataType()))
+                    if (!keyType.isAssignableFrom(_rule.getKeyType()))
                         continue;
                     @SuppressWarnings("unchecked")
                     IMakeRule<T, TK, TT> rule = (IMakeRule<T, TK, TT>) _rule;
@@ -60,17 +63,17 @@ public class DataExtendsMatch
 
     @SafeVarargs
     @NotNull
-    public final <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> getRules(Class<? super TT>... dataInterfaces) {
-        return getRules(Extends.of(dataInterfaces));
+    public final <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> getRules(Class<? super TK>... keyInterfaces) {
+        return getRules(Extends.of(keyInterfaces));
     }
 
     @NotNull
-    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> getRules(Extends dataInterfaces) {
+    public <T extends IKeyData<TK, TT>, TK, TT> List<IMakeRule<T, TK, TT>> getRules(Extends keyInterfaces) {
         List<IMakeRule<T, TK, TT>> rules = new ArrayList<>();
         for (Extends interfaces : rulesMap.keySet()) {
-            if (interfaces.isAssignableFrom(dataInterfaces)) {
+            if (interfaces.isAssignableFrom(keyInterfaces)) {
                 for (IMakeRule<?, ?, ?> _rule : rulesMap.get(interfaces)) {
-                    if (!dataInterfaces.isAssignableFrom(_rule.getDataType()))
+                    if (!keyInterfaces.isAssignableFrom(_rule.getKeyType()))
                         continue;
                     @SuppressWarnings("unchecked")
                     IMakeRule<T, TK, TT> rule = (IMakeRule<T, TK, TT>) _rule;

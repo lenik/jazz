@@ -1,5 +1,6 @@
 package net.bodz.bas.make.codegen;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Naming {
@@ -79,21 +80,45 @@ public class Naming {
         return buf.toString();
     }
 
-    public static String inputVars(int count) {
+    static int count(String s, String pattern) {
+        int pos = 0;
+        int count = 0;
+        while ((pos = s.indexOf(pattern, pos)) != -1) {
+            count++;
+            pos += pattern.length();
+        }
+        return count;
+    }
+
+    public static String formatVars(String format, int count) {
+        int placeholders = count(format, "%d");
+        Object[] args = new Object[placeholders];
         StringBuilder buf = new StringBuilder();
-        for (int i = 0; i < count; i++) {
-            if (i != 0)
+        for (int index = 0; index < count; index++) {
+            if (index != 0)
                 buf.append(", ");
-            String var = "input" + (i + 1);
+            Arrays.fill(args, index + 1);
+            String var = String.format(format, args);
             buf.append(var);
         }
         return buf.toString();
     }
 
-    public static String inputVars(int count, String... suffices) {
+    public static String vars(String prefix, int count) {
         StringBuilder buf = new StringBuilder();
         for (int i = 0; i < count; i++) {
-            String var = "input" + (i + 1);
+            if (i != 0)
+                buf.append(", ");
+            String var = prefix + (i + 1);
+            buf.append(var);
+        }
+        return buf.toString();
+    }
+
+    public static String vars(String prefix, int count, String... suffices) {
+        StringBuilder buf = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            String var = prefix + (i + 1);
             for (String suffix : suffices) {
                 String varStuff = var + suffix;
                 if (buf.length() != 0)
@@ -102,6 +127,14 @@ public class Naming {
             }
         }
         return buf.toString();
+    }
+
+    public static String inputVars(int count) {
+        return vars("input", count, "");
+    }
+
+    public static String inputVars(int count, String... suffices) {
+        return vars("input", count, suffices);
     }
 
 }

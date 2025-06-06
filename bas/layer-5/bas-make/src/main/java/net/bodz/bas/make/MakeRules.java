@@ -5,6 +5,8 @@ import java.util.List;
 
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPatternMakeRule;
+import net.bodz.bas.make.pattern.key.IKeyExtendsPattern;
+import net.bodz.bas.make.pattern.key.IKeyExtendsPatternMakeRule;
 import net.bodz.bas.make.pattern.key.IKeyPattern;
 import net.bodz.bas.make.pattern.key.IKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.key.ITargetTypedKeyPattern;
@@ -17,6 +19,7 @@ import net.bodz.bas.make.strategy.DataTypedKeyPatternMatch;
 import net.bodz.bas.make.strategy.ExactMatch;
 import net.bodz.bas.make.strategy.IMakeStrategy;
 import net.bodz.bas.make.strategy.KeyExtendsMatch;
+import net.bodz.bas.make.strategy.KeyExtendsPatternMatch;
 import net.bodz.bas.make.strategy.KeyMatch;
 import net.bodz.bas.make.strategy.KeyPatternMatch;
 import net.bodz.bas.make.strategy.KeyTypeMatch;
@@ -35,6 +38,8 @@ public class MakeRules
     public final DataTypeMatch dataTypeMatch = new DataTypeMatch();
 
     public final KeyExtendsMatch keyExtendsMatch = new KeyExtendsMatch();
+    public final KeyExtendsPatternMatch keyExtendsPatternMatch = new KeyExtendsPatternMatch();
+
     public final DataExtendsMatch dataExtendsMatch = new DataExtendsMatch();
 
     public final KeyPatternMatch keyPatternMatch = new KeyPatternMatch();
@@ -103,6 +108,22 @@ public class MakeRules
     @Override
     public <T extends IKeyData<TK, TT>, TK, TT> void addKeyTypeRule(@NotNull Extends keyInterfaces, @NotNull IMakeRule<T, TK, TT> rule) {
         keyExtendsMatch.addRule(keyInterfaces, rule);
+    }
+
+    @NotNull
+    @Override
+    public <Tp extends IKeyExtendsPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT>//
+    List<IKeyExtendsPatternMakeRule<Tp, Param, K, T, TT>> getPatternRules(@NotNull IKeyExtendsPattern<?, K> pattern) {
+        Class<?>[] interfaces = pattern.getInterfaces();
+        return keyExtendsPatternMatch.getRules(Extends.of(interfaces));
+    }
+
+    @Override
+    public <Tp extends IKeyExtendsPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT> //
+    void addPatternRule(@NotNull IKeyExtendsPattern<Param, K> pattern, @NotNull IKeyExtendsPatternMakeRule<Tp, Param, K, T, TT> rule) {
+        @SuppressWarnings("unchecked")
+        Class<? super K>[] interfaces = (Class<? super K>[]) pattern.getInterfaces();
+        keyExtendsPatternMatch.addRule(interfaces, rule);
     }
 
     // rules: data type

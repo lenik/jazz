@@ -55,12 +55,15 @@ public class CodeGen
 
                 new SimpleTargetPatternMakeRuleBuilders__java(), //
 
+                new IKeyExtendsPattern__java(), //
+                new IDataExtendsPattern__java(), //
+
                 new IMakeRules__java(), //
         };
 
         for (int inputCount = 0; inputCount <= maxCount; inputCount++) {
             for (Class__java module : modules) {
-                if (module.isSingle() && inputCount != maxCount)
+                if (!module.isValid(inputCount))
                     continue;
 
                 module.setInputCount(inputCount);

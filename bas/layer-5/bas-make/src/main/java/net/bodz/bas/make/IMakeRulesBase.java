@@ -8,10 +8,13 @@ import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKey;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule;
+import net.bodz.bas.make.pattern.key.IKeyExtendsPattern;
+import net.bodz.bas.make.pattern.key.IKeyExtendsPatternMakeRule;
 import net.bodz.bas.make.pattern.key.IKeyPattern;
 import net.bodz.bas.make.pattern.key.IKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.key.ITargetTypedKeyPattern;
 import net.bodz.bas.make.pattern.key.ITargetTypedKeyPatternMakeRule;
+import net.bodz.bas.make.pattern.key.SimpleKeyExtendsPatternMakeRule;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.key.SimpleTargetTypedKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.target.ITargetPattern;
@@ -122,6 +125,41 @@ public interface IMakeRulesBase {
     default <T extends IKeyData<TK, TT>, TK, TT> SimpleMakeRule.Dispatcher<Class<? super TK>[], T, TK, TT> //
     forKeyType(@NotNull Class<? super TK>... keyInterfaces) {
         return new SimpleMakeRule.Dispatcher<>(this::addKeyTypeRule, keyInterfaces);
+    }
+
+    // rules: key extends pattern match
+
+    @NotNull
+    <Tp extends IKeyExtendsPattern<Param, K>, Param, K, T extends IKeyData<K, TT>, TT> List<IKeyExtendsPatternMakeRule<Tp, Param, K, T, TT>> //
+    getPatternRules(@NotNull IKeyExtendsPattern<?, K> pattern);
+
+    <Tp extends IKeyExtendsPattern<Param, K>, Param, K, //
+            T extends IKeyData<K, TT>, TT> //
+    void addPatternRule(@NotNull IKeyExtendsPattern<Param, K> pattern, @NotNull IKeyExtendsPatternMakeRule<Tp, Param, K, T, TT> rule);
+
+    default <Tp extends IKeyExtendsPattern<Param, K>, Param, K, //
+            T extends IKeyData<K, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull IParameterizedKey<?, ?>[] inputss, @NotNull CompileFunction<T> fn) {
+        addPatternRule(pattern, //
+                SimpleKeyExtendsPatternMakeRule.<Tp, Tp, Param, K, T, TT>builder()//
+                        .pattern(pattern) //
+                        .input(inputss)//
+                        .fn(fn).build());
+    }
+
+    default <Tp extends IKeyExtendsPattern<Param, K>, Param, K, //
+            T extends IKeyData<K, TT>, TT> //
+    SimpleKeyExtendsPatternMakeRule.Dispatcher<Tp, Tp, Param, K, T, TT> forKeys(@NotNull Tp pattern) {
+        return new SimpleKeyExtendsPatternMakeRule.Dispatcher<>(this::addPatternRule, pattern, pattern);
+    }
+
+    @SuppressWarnings("unchecked")
+    default <Tp extends IKeyExtendsPattern<Param, K>, Param, K, //
+            T extends IKeyData<K, TT>, TT, //
+            T1> //
+    SimpleKeyExtendsPatternMakeRule.Dispatcher<Tp, Tp, Param, K, T, TT> forKeys(@NotNull Class<T1> type1) {
+//        return new SimpleKeyExtendsPatternMakeRule.Dispatcher1<>(this::addPatternRule, type1);
+        return null;
     }
 
     // rules: data type match
