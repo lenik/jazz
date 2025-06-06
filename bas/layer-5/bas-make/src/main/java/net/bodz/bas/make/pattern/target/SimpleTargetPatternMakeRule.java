@@ -62,4 +62,43 @@ public class SimpleTargetPatternMakeRule<Tp extends ITargetPattern<Param, T, TK,
 
     }
 
+    public static class Dispatcher<S, Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT>
+            extends SimpleTargetPatternMakeRuleBuilders<S, Tp, Param, TK, T, TT> {
+
+        BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply;
+        S subject;
+
+        public Dispatcher(BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply, S subject) {
+            this.apply = apply;
+            this.subject = subject;
+        }
+
+        @Override
+        public BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> getApply() {
+            return apply;
+        }
+
+        @Override
+        public S getSubject() {
+            return subject;
+        }
+
+        public Dispatcher<S, Tp, Param, TK, T, TT> apply(BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
+            this.apply = apply;
+            return this;
+        }
+
+        public Dispatcher<S, Tp, Param, TK, T, TT> subject(S subject) {
+            this.subject = subject;
+            return this;
+        }
+
+        public SimpleTargetPatternMakeRule.Builder<S, Tp, Param, TK, T, TT> input(@NotNull IParameterizedTarget<?, ?, ?, ?>... inputss) {
+            return SimpleTargetPatternMakeRule.<S, Tp, Param, TK, T, TT>builder()//
+                    .input(inputss) //
+                    .apply(apply).subject(subject);
+        }
+
+    }
+
 }

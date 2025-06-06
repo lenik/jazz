@@ -11,6 +11,8 @@ import net.bodz.bas.make.pattern.key.IKeyPattern;
 import net.bodz.bas.make.pattern.key.IKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.key.ITarget2KeyPattern;
 import net.bodz.bas.make.pattern.key.ITarget2KeyPatternMakeRule;
+import net.bodz.bas.make.pattern.target.ITargetPattern;
+import net.bodz.bas.make.pattern.target.ITargetPatternMakeRule;
 import net.bodz.bas.make.strategy.DataTypeMatch;
 import net.bodz.bas.make.strategy.DataTypedKeyPatternMatch;
 import net.bodz.bas.make.strategy.DataTypedTarget2KeyPatternMatch;
@@ -20,6 +22,7 @@ import net.bodz.bas.make.strategy.KeyMatch;
 import net.bodz.bas.make.strategy.KeyPatternMatch;
 import net.bodz.bas.make.strategy.KeyTypeMatch;
 import net.bodz.bas.make.strategy.Target2KeyPatternMatch;
+import net.bodz.bas.make.strategy.TargetPatternMatch;
 import net.bodz.bas.meta.decl.NotNull;
 
 public class MakeRules
@@ -34,8 +37,10 @@ public class MakeRules
     public final KeyPatternMatch keyPatternMatch = new KeyPatternMatch();
     public final DataTypedKeyPatternMatch dataTypedKeyPatternMatch = new DataTypedKeyPatternMatch();
 
-    public final Target2KeyPatternMatch targetPatternMatch = new Target2KeyPatternMatch();
+    public final Target2KeyPatternMatch target2KeyPatternMatch = new Target2KeyPatternMatch();
     public final DataTypedTarget2KeyPatternMatch dataTypedTarget2KeyPatternMatch = new DataTypedTarget2KeyPatternMatch();
+
+    public final TargetPatternMatch targetPatternMatch = new TargetPatternMatch();
 
     IMakeStrategy[] strategies = { //
             exactMatch, //
@@ -44,8 +49,9 @@ public class MakeRules
             dataTypeMatch, //
             keyPatternMatch, //
             dataTypedKeyPatternMatch, //
-            targetPatternMatch, //
+            target2KeyPatternMatch, //
             dataTypedTarget2KeyPatternMatch, //
+            targetPatternMatch, //
     };
 
     // rules: exact match
@@ -130,22 +136,22 @@ public class MakeRules
         dataTypedKeyPatternMatch.addRule(pattern, rule);
     }
 
-    // rules: target pattern
+    // rules: target to key pattern
 
     @Override
     @NotNull
     public <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
     List<ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> getPatternRules(ITarget2KeyPattern<?, ?, ?, ?> pattern) {
-        return targetPatternMatch.getRules(pattern);
+        return target2KeyPatternMatch.getRules(pattern);
     }
 
     @Override
     public <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
     void addPatternRule(@NotNull Tp pattern, @NotNull ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT> rule) {
-        targetPatternMatch.addRule(pattern, rule);
+        target2KeyPatternMatch.addRule(pattern, rule);
     }
 
-    // rules: data typed target pattern
+    // rules: data typed target to key pattern
 
     @Override
     @NotNull
@@ -158,6 +164,21 @@ public class MakeRules
     public <Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
     void addPatternRule(@NotNull Tp pattern, @NotNull IDataTypedTarget2KeyPatternMakeRule<Tp, Param, TK, T, TT> rule) {
         dataTypedTarget2KeyPatternMatch.addRule(pattern, rule);
+    }
+
+    // rule: target pattern
+
+    @NotNull
+    @Override
+    public <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
+    List<ITargetPatternMakeRule<Tp, Param, TK, T, TT>> getPatternRules(ITargetPattern<?, ?, ?, ?> pattern) {
+        return targetPatternMatch.getRules(pattern);
+    }
+
+    @Override
+    public <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull ITargetPatternMakeRule<Tp, Param, TK, T, TT> rule) {
+        targetPatternMatch.addRule(pattern, rule);
     }
 
     // make

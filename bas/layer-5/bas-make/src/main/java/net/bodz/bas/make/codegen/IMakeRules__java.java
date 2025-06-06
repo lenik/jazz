@@ -564,4 +564,65 @@ public class IMakeRules__java
         }
     }
 
+    void targetPatternMatch(JavaSourceWriter out) {
+        for (int inputCount = 0; inputCount <= maxCount; inputCount++) {
+            out.println();
+            out.printf("default <Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //\n");
+            out.enter();
+            {
+                out.enter();
+                {
+                    for (int i = 0; i < inputCount; i++) {
+                        String U = Naming.typeVar(inputCount, i);
+                        out.printf("%ss extends IParameterizedTarget<Param, %s, %sK, %sT>, %sK, //\n", U, U, U, U, U);
+                    }
+                    out.printf("T extends IKeyData<TK, TT>, TT");
+
+                    for (int i = 0; i < inputCount; i++) {
+                        out.print(", //\n");
+                        String U = Naming.typeVar(inputCount, i);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                    }
+                    out.leave();
+                }
+                out.leave();
+            }
+            out.print("> //\n");
+            out.printf("void addPatternRule(@NotNull Tp pattern%s, @NotNull CompileFunction%d<T, TK, TT%s> fn) {\n", //
+                    comma(Naming.inputParams(inputCount, "s", "@NotNull ", "s")), //
+                    inputCount, //
+                    comma(Naming.typeVars(inputCount, "", "K", "T")));
+            out.enter();
+            {
+                out.printf("addPatternRule(pattern, //\n");
+                out.enter();
+                {
+                    out.enter();
+                    {
+                        out.printf("SimpleTargetPatternMakeRule%d.<Tp, Tp, Param, TK%s, T, TT%s>builder()//\n",//
+                                inputCount, //
+                                comma(Naming.typeVars(inputCount, "s", "K")), //
+                                comma(Naming.typeVars(inputCount, "", "T")));
+                        out.enter();
+                        {
+                            out.enter();
+                            {
+                                out.printf(".pattern(pattern) //\n");
+                                if (inputCount != 0)
+                                    out.printf(".input(%s)//\n", Naming.inputVars(inputCount, "s"));
+                                out.printf(".fn(fn).build());\n");
+                                out.leave();
+                            }
+                            out.leave();
+                        }
+                        out.leave();
+                    }
+                    out.leave();
+                }
+                out.leave();
+            }
+            out.printf("}\n");
+        }
+    }
+
 }

@@ -50,13 +50,13 @@ public class CodeGen
                 new ITargetPatternMakeRule__java(), //
                 new SimpleTargetPatternMakeRule__java(), //
 
-                new SimpleDataTypedKeyPatternMakeRuleBuilders__java(), //
-                new SimpleDataTypedTarget2KeyPatternMakeRuleBuilders__java(), //
-//                new SimpleDataTypedTargetPatternMakeRuleBuilders__java(), //
-                new SimpleKeyPatternMakeRuleBuilders__java(), //
                 new SimpleMakeRuleBuilders__java(), //
+                new SimpleKeyPatternMakeRuleBuilders__java(), //
+                new SimpleDataTypedKeyPatternMakeRuleBuilders__java(), //
                 new SimpleTarget2KeyPatternMakeRuleBuilders__java(), //
+                new SimpleDataTypedTarget2KeyPatternMakeRuleBuilders__java(), //
                 new SimpleTargetPatternMakeRuleBuilders__java(), //
+//                new SimpleDataTypedTargetPatternMakeRuleBuilders__java(), //
 
                 new IMakeRules__java(), //
         };
