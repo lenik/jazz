@@ -29,20 +29,17 @@ public class IMakeRules__java
         out.printf("import net.bodz.bas.make.fn.*;\n");
         out.printf("import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;\n");
         out.printf("import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKey;\n");
-        out.printf("import net.bodz.bas.make.pattern.dtkey.IDataTypedTarget2KeyPattern;\n");
         for (int inputCount = 0; inputCount <= maxCount; inputCount++)
             out.printf("import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule%d;\n", inputCount);
-        for (int inputCount = 0; inputCount <= maxCount; inputCount++)
-            out.printf("import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTarget2KeyPatternMakeRule%d;\n", inputCount);
 
         out.printf("import net.bodz.bas.make.pattern.key.IKeyPattern;\n");
-        out.printf("import net.bodz.bas.make.pattern.key.ITarget2KeyPattern;\n");
+        out.printf("import net.bodz.bas.make.pattern.key.ITargetTypedKeyPattern;\n");
         for (int inputCount = 0; inputCount <= maxCount; inputCount++)
             out.printf("import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule%d;\n", inputCount);
         for (int inputCount = 0; inputCount <= maxCount; inputCount++)
-            out.printf("import net.bodz.bas.make.pattern.key.SimpleTarget2KeyPatternMakeRule%d;\n", inputCount);
+            out.printf("import net.bodz.bas.make.pattern.key.SimpleTargetTypedKeyPatternMakeRule%d;\n", inputCount);
 
-        out.printf("net.bodz.bas.make.pattern.target.ITargetPattern;\n");
+        out.printf("import net.bodz.bas.make.pattern.target.ITargetPattern;\n");
         for (int inputCount = 0; inputCount <= maxCount; inputCount++)
             out.printf("import net.bodz.bas.make.pattern.target.SimpleTargetPatternMakeRule%d;\n", inputCount);
 
@@ -90,12 +87,8 @@ public class IMakeRules__java
 //            dataTypedTargetPatternMatch(out);
 
             out.println();
-            out.printf("// rules: target to key pattern\n");
-            target2KeyPatternMatch(out);
-
-            out.println();
-            out.printf("// rules: data-typed target to key pattern\n");
-            dataTypedTarget2KeyPatternMatch(out);
+            out.printf("// rules: target typed key pattern\n");
+            targetTypedKeyPatternMatch(out);
 
             out.println();
             out.printf("// rules: target pattern\n");
@@ -442,10 +435,10 @@ public class IMakeRules__java
     }
 
 
-    void target2KeyPatternMatch(JavaSourceWriter out) {
+    void targetTypedKeyPatternMatch(JavaSourceWriter out) {
         for (int inputCount = 0; inputCount <= maxCount; inputCount++) {
             out.println();
-            out.printf("default <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //\n");
+            out.printf("default <Tp extends ITargetTypedKeyPattern<Param, T, TK, TT>, Param, TK, //\n");
             out.enter();
             {
                 out.enter();
@@ -477,68 +470,7 @@ public class IMakeRules__java
                 {
                     out.enter();
                     {
-                        out.printf("SimpleTarget2KeyPatternMakeRule%d.<Tp, Tp, Param, TK%s, T, TT%s>builder()//\n", //
-                                inputCount, //
-                                comma(Naming.typeVars(inputCount, "s", "K")), //
-                                comma(Naming.typeVars(inputCount, "", "T")));
-                        out.enter();
-                        {
-                            out.enter();
-                            {
-                                out.printf(".pattern(pattern) //\n");
-                                if (inputCount != 0)
-                                    out.printf(".input(%s)//\n", Naming.inputVars(inputCount, "s"));
-                                out.printf(".fn(fn).build());\n");
-                                out.leave();
-                            }
-                            out.leave();
-                        }
-                        out.leave();
-                    }
-                    out.leave();
-                }
-                out.leave();
-            }
-            out.printf("}\n");
-        }
-    }
-
-    void dataTypedTarget2KeyPatternMatch(JavaSourceWriter out) {
-        for (int inputCount = 0; inputCount <= maxCount; inputCount++) {
-            out.println();
-            out.printf("default <Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, //\n");
-            out.enter();
-            {
-                out.enter();
-                {
-                    for (int i = 0; i < inputCount; i++) {
-                        String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
-                    }
-                    out.printf("T extends IKeyData<TK, TT>, TT");
-
-                    for (int i = 0; i < inputCount; i++) {
-                        out.print(", //\n");
-                        String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
-                    }
-                    out.leave();
-                }
-                out.leave();
-            }
-            out.print("> //\n");
-            out.printf("void addPatternRule(@NotNull Tp pattern%s, @NotNull CompileFunction%d<T, TK, TT%s> fn) {\n", //
-                    comma(Naming.inputParams(inputCount, "s", "@NotNull ", "s")), //
-                    inputCount, //
-                    comma(Naming.typeVars(inputCount, "", "K", "T")));
-            out.enter();
-            {
-                out.printf("addPatternRule(pattern, //\n");
-                out.enter();
-                {
-                    out.enter();
-                    {
-                        out.printf("SimpleDataTypedTarget2KeyPatternMakeRule%d.<Tp, Tp, Param, TK%s, T, TT%s>builder()//\n",//
+                        out.printf("SimpleTargetTypedKeyPatternMakeRule%d.<Tp, Tp, Param, TK%s, T, TT%s>builder()//\n", //
                                 inputCount, //
                                 comma(Naming.typeVars(inputCount, "s", "K")), //
                                 comma(Naming.typeVars(inputCount, "", "T")));

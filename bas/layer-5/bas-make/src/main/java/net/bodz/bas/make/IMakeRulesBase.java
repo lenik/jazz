@@ -7,16 +7,13 @@ import net.bodz.bas.make.fn.MakeFunction;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPattern;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.dtkey.IDataTypedParameterizedKey;
-import net.bodz.bas.make.pattern.dtkey.IDataTypedTarget2KeyPattern;
-import net.bodz.bas.make.pattern.dtkey.IDataTypedTarget2KeyPatternMakeRule;
 import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedKeyPatternMakeRule;
-import net.bodz.bas.make.pattern.dtkey.SimpleDataTypedTarget2KeyPatternMakeRule;
 import net.bodz.bas.make.pattern.key.IKeyPattern;
 import net.bodz.bas.make.pattern.key.IKeyPatternMakeRule;
-import net.bodz.bas.make.pattern.key.ITarget2KeyPattern;
-import net.bodz.bas.make.pattern.key.ITarget2KeyPatternMakeRule;
+import net.bodz.bas.make.pattern.key.ITargetTypedKeyPattern;
+import net.bodz.bas.make.pattern.key.ITargetTypedKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.key.SimpleKeyPatternMakeRule;
-import net.bodz.bas.make.pattern.key.SimpleTarget2KeyPatternMakeRule;
+import net.bodz.bas.make.pattern.key.SimpleTargetTypedKeyPatternMakeRule;
 import net.bodz.bas.make.pattern.target.ITargetPattern;
 import net.bodz.bas.make.pattern.target.ITargetPatternMakeRule;
 import net.bodz.bas.make.pattern.target.SimpleTargetPatternMakeRule;
@@ -169,53 +166,27 @@ public interface IMakeRulesBase {
     // rules: target-to-key pattern
 
     @NotNull
-    <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
-    List<ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> //
-    getPatternRules(ITarget2KeyPattern<?, ?, ?, ?> pattern);
+    <Tp extends ITargetTypedKeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
+    List<ITargetTypedKeyPatternMakeRule<Tp, Param, TK, T, TT>> //
+    getPatternRules(ITargetTypedKeyPattern<?, ?, ?, ?> pattern);
 
-    <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
-    void addPatternRule(@NotNull Tp pattern, @NotNull ITarget2KeyPatternMakeRule<Tp, Param, TK, T, TT> rule);
+    <Tp extends ITargetTypedKeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
+    void addPatternRule(@NotNull Tp pattern, @NotNull ITargetTypedKeyPatternMakeRule<Tp, Param, TK, T, TT> rule);
 
-    default <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
+    default <Tp extends ITargetTypedKeyPattern<Param, T, TK, TT>, Param, TK, //
             T extends IKeyData<TK, TT>, TT> //
     void addPatternRule(@NotNull Tp pattern, @NotNull IParameterizedKey<?, ?>[] inputss, @NotNull CompileFunction<T> fn) {
         addPatternRule(pattern, //
-                SimpleTarget2KeyPatternMakeRule.<Tp, Tp, Param, TK, T, TT>builder()//
+                SimpleTargetTypedKeyPatternMakeRule.<Tp, Tp, Param, TK, T, TT>builder()//
                         .pattern(pattern) //
                         .input(inputss)//
                         .fn(fn).build());
     }
 
-    default <Tp extends ITarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
+    default <Tp extends ITargetTypedKeyPattern<Param, T, TK, TT>, Param, TK, //
             T extends IKeyData<TK, TT>, TT> //
-    SimpleTarget2KeyPatternMakeRule.Dispatcher<Tp, Tp, Param, TK, T, TT> forKeysQualified(@NotNull Tp pattern) {
-        return new SimpleTarget2KeyPatternMakeRule.Dispatcher<>(this::addPatternRule, pattern);
-    }
-
-    // rules: data typed target-to-key pattern
-
-    @NotNull
-    <Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
-    List<IDataTypedTarget2KeyPatternMakeRule<Tp, Param, TK, T, TT>> //
-    getPatternRules(IDataTypedTarget2KeyPattern<?, ?, ?, ?> pattern);
-
-    <Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
-    void addPatternRule(@NotNull Tp pattern, @NotNull IDataTypedTarget2KeyPatternMakeRule<Tp, Param, TK, T, TT> rule);
-
-    default <Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
-            T extends IKeyData<TK, TT>, TT> //
-    void addPatternRule(@NotNull Tp pattern, @NotNull IDataTypedParameterizedKey<?, ?, ?>[] inputss, @NotNull CompileFunction<T> fn) {
-        addPatternRule(pattern, //
-                SimpleDataTypedTarget2KeyPatternMakeRule.<Tp, Tp, Param, TK, T, TT>builder()//
-                        .pattern(pattern) //
-                        .input(inputss)//
-                        .fn(fn).build());
-    }
-
-    default <Tp extends IDataTypedTarget2KeyPattern<Param, T, TK, TT>, Param, TK, //
-            T extends IKeyData<TK, TT>, TT> //
-    SimpleDataTypedTarget2KeyPatternMakeRule.Dispatcher<Tp, Tp, Param, TK, T, TT> forKeysQualified(@NotNull Tp pattern) {
-        return new SimpleDataTypedTarget2KeyPatternMakeRule.Dispatcher<>(this::addPatternRule, pattern);
+    SimpleTargetTypedKeyPatternMakeRule.Dispatcher<Tp, Tp, Param, TK, T, TT> forKeysQualified(@NotNull Tp pattern) {
+        return new SimpleTargetTypedKeyPatternMakeRule.Dispatcher<>(this::addPatternRule, pattern);
     }
 
     // rules: target pattern

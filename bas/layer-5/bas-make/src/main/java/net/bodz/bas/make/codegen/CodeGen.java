@@ -39,10 +39,8 @@ public class CodeGen
                 new IDataTypedKeyPatternMakeRule__java(), //
                 new SimpleDataTypedKeyPatternMakeRule__java(), //
 
-                new ITarget2KeyPatternMakeRule__java(), //
-                new SimpleTarget2KeyPatternMakeRule__java(), //
-                new IDataTypedTarget2KeyPatternMakeRule__java(), //
-                new SimpleDataTypedTarget2KeyPatternMakeRule__java(), //
+                new ITargetTypedKeyPatternMakeRule__java(), //
+                new SimpleTargetTypedKeyPatternMakeRule__java(), //
 
                 new ITargetPatternLikeMakeRule__java(), //
                 new SimpleTargetPatternLikeMakeRule__java(), //
@@ -53,10 +51,9 @@ public class CodeGen
                 new SimpleMakeRuleBuilders__java(), //
                 new SimpleKeyPatternMakeRuleBuilders__java(), //
                 new SimpleDataTypedKeyPatternMakeRuleBuilders__java(), //
-                new SimpleTarget2KeyPatternMakeRuleBuilders__java(), //
-                new SimpleDataTypedTarget2KeyPatternMakeRuleBuilders__java(), //
+                new SimpleTargetTypedKeyPatternMakeRuleBuilders__java(), //
+
                 new SimpleTargetPatternMakeRuleBuilders__java(), //
-//                new SimpleDataTypedTargetPatternMakeRuleBuilders__java(), //
 
                 new IMakeRules__java(), //
         };
