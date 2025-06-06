@@ -12,9 +12,12 @@ public abstract class SimpleTargetPatternMakeRuleBuilders<S, Tp extends ITargetP
 
     public abstract S getSubject();
 
+    public abstract Tp getPattern();
+
     public SimpleTargetPatternMakeRule0.Builder<S, Tp, Param, TK, T, TT> input() {
         return SimpleTargetPatternMakeRule0.<S, Tp, Param, TK, T, TT>builder()//
-                .apply(getApply()).subject(getSubject())//
+                .apply(getApply()).subject(getSubject()) //
+                .pattern(getPattern()) 
                 .input();
     }
 
@@ -22,7 +25,8 @@ public abstract class SimpleTargetPatternMakeRuleBuilders<S, Tp extends ITargetP
             U extends IKeyData<UK, UT>, UT> //
     SimpleTargetPatternMakeRule1.Builder<S, Tp, Param, TK, Us, UK, T, TT, U, UT> input(Us input1s) {
         return SimpleTargetPatternMakeRule1.<S, Tp, Param, TK, Us, UK, T, TT, U, UT>builder()//
-                .apply(getApply()).subject(getSubject())//
+                .apply(getApply()).subject(getSubject()) //
+                .pattern(getPattern()) 
                 .input(input1s);
     }
 
@@ -32,7 +36,8 @@ public abstract class SimpleTargetPatternMakeRuleBuilders<S, Tp extends ITargetP
             V extends IKeyData<VK, VT>, VT> //
     SimpleTargetPatternMakeRule2.Builder<S, Tp, Param, TK, Us, UK, Vs, VK, T, TT, U, UT, V, VT> input(Us input1s, Vs input2s) {
         return SimpleTargetPatternMakeRule2.<S, Tp, Param, TK, Us, UK, Vs, VK, T, TT, U, UT, V, VT>builder()//
-                .apply(getApply()).subject(getSubject())//
+                .apply(getApply()).subject(getSubject()) //
+                .pattern(getPattern()) 
                 .input(input1s, input2s);
     }
 
@@ -44,7 +49,8 @@ public abstract class SimpleTargetPatternMakeRuleBuilders<S, Tp extends ITargetP
             W extends IKeyData<WK, WT>, WT> //
     SimpleTargetPatternMakeRule3.Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT> input(Us input1s, Vs input2s, Ws input3s) {
         return SimpleTargetPatternMakeRule3.<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT>builder()//
-                .apply(getApply()).subject(getSubject())//
+                .apply(getApply()).subject(getSubject()) //
+                .pattern(getPattern()) 
                 .input(input1s, input2s, input3s);
     }
 
@@ -58,7 +64,8 @@ public abstract class SimpleTargetPatternMakeRuleBuilders<S, Tp extends ITargetP
             X extends IKeyData<XK, XT>, XT> //
     SimpleTargetPatternMakeRule4.Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, T, TT, U, UT, V, VT, W, WT, X, XT> input(Us input1s, Vs input2s, Ws input3s, Xs input4s) {
         return SimpleTargetPatternMakeRule4.<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, T, TT, U, UT, V, VT, W, WT, X, XT>builder()//
-                .apply(getApply()).subject(getSubject())//
+                .apply(getApply()).subject(getSubject()) //
+                .pattern(getPattern()) 
                 .input(input1s, input2s, input3s, input4s);
     }
 
@@ -74,7 +81,8 @@ public abstract class SimpleTargetPatternMakeRuleBuilders<S, Tp extends ITargetP
             Y extends IKeyData<YK, YT>, YT> //
     SimpleTargetPatternMakeRule5.Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT> input(Us input1s, Vs input2s, Ws input3s, Xs input4s, Ys input5s) {
         return SimpleTargetPatternMakeRule5.<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT>builder()//
-                .apply(getApply()).subject(getSubject())//
+                .apply(getApply()).subject(getSubject()) //
+                .pattern(getPattern()) 
                 .input(input1s, input2s, input3s, input4s, input5s);
     }
 
@@ -92,7 +100,8 @@ public abstract class SimpleTargetPatternMakeRuleBuilders<S, Tp extends ITargetP
             Z extends IKeyData<ZK, ZT>, ZT> //
     SimpleTargetPatternMakeRule6.Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> input(Us input1s, Vs input2s, Ws input3s, Xs input4s, Ys input5s, Zs input6s) {
         return SimpleTargetPatternMakeRule6.<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT>builder()//
-                .apply(getApply()).subject(getSubject())//
+                .apply(getApply()).subject(getSubject()) //
+                .pattern(getPattern()) 
                 .input(input1s, input2s, input3s, input4s, input5s, input6s);
     }
 
@@ -112,7 +121,8 @@ public abstract class SimpleTargetPatternMakeRuleBuilders<S, Tp extends ITargetP
             U7 extends IKeyData<U7K, U7T>, U7T> //
     SimpleTargetPatternMakeRule7.Builder<S, Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T> input(U1s input1s, U2s input2s, U3s input3s, U4s input4s, U5s input5s, U6s input6s, U7s input7s) {
         return SimpleTargetPatternMakeRule7.<S, Tp, Param, TK, U1s, U1K, U2s, U2K, U3s, U3K, U4s, U4K, U5s, U5K, U6s, U6K, U7s, U7K, T, TT, U1, U1T, U2, U2T, U3, U3T, U4, U4T, U5, U5T, U6, U6T, U7, U7T>builder()//
-                .apply(getApply()).subject(getSubject())//
+                .apply(getApply()).subject(getSubject()) //
+                .pattern(getPattern()) 
                 .input(input1s, input2s, input3s, input4s, input5s, input6s, input7s);
     }
 
