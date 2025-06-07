@@ -25,6 +25,7 @@ public class CodeGen
         Path javaDir = baseDir.resolve("src/main/java");
 
         Class__java[] modules = { //
+                new Function__java(), //
                 new CompileFunction__java(), //
                 new IMakeable__java(), //
 
