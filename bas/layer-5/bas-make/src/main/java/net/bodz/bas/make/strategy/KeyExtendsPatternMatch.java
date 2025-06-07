@@ -9,7 +9,7 @@ import net.bodz.bas.make.CompileException;
 import net.bodz.bas.make.IDataBinding;
 import net.bodz.bas.make.IKeyData;
 import net.bodz.bas.make.IMakeRule;
-import net.bodz.bas.make.type.IKeyExtendsPattern;
+import net.bodz.bas.make.pattern.key.IKeyExtendsPattern;
 import net.bodz.bas.make.pattern.key.IKeyExtendsPatternMakeRule;
 import net.bodz.bas.make.type.Extends;
 import net.bodz.bas.meta.decl.NotNull;

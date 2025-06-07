@@ -12,7 +12,7 @@ public class IDataExtendsPattern__java
 
     @Override
     public QualifiedName getQName() {
-        return QualifiedName.parse("net.bodz.bas.make.type.IDataExtendsPattern" + inputCount);
+        return QualifiedName.parse("net.bodz.bas.make.pattern.data.IDataExtendsPattern" + inputCount);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class IDataExtendsPattern__java
     @Override
     public void build(JavaCodeWriter out)
             throws IOException {
-        out.printf("package net.bodz.bas.make.type;\n");
+        out.printf("package net.bodz.bas.make.pattern.data;\n");
 
         out.println();
         out.printf("import net.bodz.bas.make.IParameterType;\n");

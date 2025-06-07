@@ -1,4 +1,4 @@
-package net.bodz.bas.make.type;
+package net.bodz.bas.make.pattern.data;
 
 import net.bodz.bas.make.IParameterType;
 

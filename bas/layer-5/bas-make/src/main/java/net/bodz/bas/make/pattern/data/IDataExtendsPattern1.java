@@ -1,9 +1,9 @@
-package net.bodz.bas.make.type;
+package net.bodz.bas.make.pattern.data;
 
 import net.bodz.bas.make.IParameterType;
 
-public interface IKeyExtendsPattern1<Param, K, T1>
-        extends IKeyExtendsPattern<Param, K>,
+public interface IDataExtendsPattern1<Param, T, T1>
+        extends IDataExtendsPattern<Param, T>,
                 IParameterType<Param> {
 
     @Override

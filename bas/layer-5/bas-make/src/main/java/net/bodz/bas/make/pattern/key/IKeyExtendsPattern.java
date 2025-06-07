@@ -1,9 +1,12 @@
-package net.bodz.bas.make.type;
+package net.bodz.bas.make.pattern.key;
 
+import net.bodz.bas.make.IParameterType;
 import net.bodz.bas.make.pattern.template.IKeyPatternLike;
 
 public interface IKeyExtendsPattern<Param, K>
-        extends IKeyPatternLike<Param, K> {
+        extends IParameterType<Param>, //
+                IKeyPatternLike<Param, K> //
+{
 
     Class<?>[] getInterfaces();
 
