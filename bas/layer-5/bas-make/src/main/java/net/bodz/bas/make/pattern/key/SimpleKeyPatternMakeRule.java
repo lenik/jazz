@@ -28,6 +28,11 @@ public class SimpleKeyPatternMakeRule<Tp extends IKeyPattern<Param, K>, Param, K
         BiConsumer<S, IKeyPatternMakeRule<Tp, Param, K, T, TT>> apply;
         S subject;
 
+        @Override
+        protected IParameterizedKey<?, ?>[] defaultInputs() {
+            return new IParameterizedKey<?, ?>[inputCount()];
+        }
+
         public Builder<S, Tp, Param, K, T, TT> apply(BiConsumer<S, IKeyPatternMakeRule<Tp, Param, K, T, TT>> apply) {
             this.apply = apply;
             return this;
@@ -41,8 +46,6 @@ public class SimpleKeyPatternMakeRule<Tp extends IKeyPattern<Param, K>, Param, K
         public SimpleKeyPatternMakeRule<Tp, Param, K, T, TT> build() {
             if (pattern == null)
                 throw new NullPointerException("pattern");
-            if (inputs == null)
-                inputs = new IParameterizedKey<?, ?>[0];
             if (fn == null)
                 throw new NullPointerException("fn");
             return new SimpleKeyPatternMakeRule<>(priority, pattern, inputs, fn);

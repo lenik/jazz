@@ -52,10 +52,18 @@ public abstract class SimpleKeyPatternLikeMakeRule<Tp extends IKeyPatternLike<Pa
 
         protected int priority;
         protected Tp pattern;
-        protected Keys[] inputs;
+        protected Keys[] inputs = defaultInputs();
         protected CompileFunction<T> fn;
 
         protected final self_t _this = (self_t) this;
+
+        protected int inputCount() {
+            return 0;
+        }
+
+        protected Keys[] defaultInputs() {
+            return null;
+        }
 
         public self_t priority(int priority) {
             this.priority = priority;

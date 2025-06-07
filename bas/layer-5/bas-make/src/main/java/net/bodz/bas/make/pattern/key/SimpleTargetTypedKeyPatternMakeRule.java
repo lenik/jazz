@@ -28,6 +28,11 @@ public class SimpleTargetTypedKeyPatternMakeRule<Tp extends ITargetTypedKeyPatte
         BiConsumer<S, ITargetTypedKeyPatternMakeRule<Tp, Param, TK, T, TT>> apply;
         S subject;
 
+        @Override
+        protected IParameterizedKey<?, ?>[] defaultInputs() {
+            return new IParameterizedKey<?, ?>[inputCount()];
+        }
+
         public Builder<S, Tp, Param, TK, T, TT> apply(BiConsumer<S, ITargetTypedKeyPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
             this.apply = apply;
             return this;
@@ -41,8 +46,6 @@ public class SimpleTargetTypedKeyPatternMakeRule<Tp extends ITargetTypedKeyPatte
         public SimpleTargetTypedKeyPatternMakeRule<Tp, Param, TK, T, TT> build() {
             if (pattern == null)
                 throw new NullPointerException("pattern");
-            if (inputs == null)
-                inputs = new IParameterizedKey<?, ?>[0];
             if (fn == null)
                 throw new NullPointerException("fn");
             return new SimpleTargetTypedKeyPatternMakeRule<>(priority, pattern, inputs, fn);
