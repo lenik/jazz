@@ -8,51 +8,52 @@ import net.bodz.bas.make.fn.CompileFunction2;
 import net.bodz.bas.make.pattern.template.SimpleTargetPatternLikeMakeRule2;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimpleTargetPatternMakeRule2<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-        Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
+public class SimpleTargetPatternMakeRule2<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+        Us extends IParameterizedTarget<Param, U, UK, UT>, //
+        Vs extends IParameterizedTarget<Param, V, VK, VT>, //
         T extends IKeyData<TK, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT, //
-        V extends IKeyData<VK, VT>, VT> //
-        extends SimpleTargetPatternLikeMakeRule2<Tp, Param, TK, IParameterizedTarget<?, ?, ?, ?>, Us, UK, Vs, VK, T, TT, U, UT, V, VT>
-        implements ITargetPatternMakeRule2<Tp, Param, TK, Us, UK, Vs, VK, T, TT, U, UT, V, VT> {
+        U extends IKeyData<UK, UT>, UK, UT, //
+        V extends IKeyData<VK, VT>, VK, VT> //
+        extends SimpleTargetPatternLikeMakeRule2<Tp, Param, TK, IParameterizedTarget<?, ?, ?, ?>, Us, Vs, T, TT, U, UK, UT, V, VK, VT>
+        implements ITargetPatternMakeRule2<Tp, Param, TK, Us, Vs, T, TT, U, UK, UT, V, VK, VT> {
 
     public SimpleTargetPatternMakeRule2(int priority, @NotNull Tp pattern, @NotNull CompileFunction2<T, TK, TT, U, UK, UT, V, VK, VT> fn, @NotNull Us input1s, @NotNull Vs input2s) {
         super(priority, pattern, fn, input1s, input2s);
     }
 
     public static <S, Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
-            Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-            Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
+            Us extends IParameterizedTarget<Param, U, UK, UT>, //
+            Vs extends IParameterizedTarget<Param, V, VK, VT>, //
             T extends IKeyData<TK, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT, //
-            V extends IKeyData<VK, VT>, VT> //
-    Builder<S, Tp, Param, TK, Us, UK, Vs, VK, T, TT, U, UT, V, VT> builder() {
+            U extends IKeyData<UK, UT>, UK, UT, //
+            V extends IKeyData<VK, VT>, VK, VT> //
+    Builder<S, Tp, Param, TK, Us, Vs, T, TT, U, UK, UT, V, VK, VT> builder() {
         return new Builder<>();
     }
 
     public static class Builder<S, Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
-            Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-            Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
+            Us extends IParameterizedTarget<Param, U, UK, UT>, //
+            Vs extends IParameterizedTarget<Param, V, VK, VT>, //
             T extends IKeyData<TK, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT, //
-            V extends IKeyData<VK, VT>, VT> //
-            extends SimpleTargetPatternLikeMakeRule2.Builder<Builder<S, Tp, Param, TK, Us, UK, Vs, VK, T, TT, U, UT, V, VT>, //
-            Tp, Param, TK, Us, UK, Vs, VK, T, TT, U, UT, V, VT> {
+            U extends IKeyData<UK, UT>, UK, UT, //
+            V extends IKeyData<VK, VT>, VK, VT> //
+            extends SimpleTargetPatternLikeMakeRule2.Builder<Builder<S, Tp, Param, TK, Us, Vs, T, TT, U, UK, UT, V, VK, VT>, //
+            Tp, Param, TK, Us, Vs, T, TT, U, UK, UT, V, VK, VT> {
 
         BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply;
         S subject;
 
-        public Builder<S, Tp, Param, TK, Us, UK, Vs, VK, T, TT, U, UT, V, VT> apply(BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
+        public Builder<S, Tp, Param, TK, Us, Vs, T, TT, U, UK, UT, V, VK, VT> apply(BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
             this.apply = apply;
             return this;
         }
 
-        public Builder<S, Tp, Param, TK, Us, UK, Vs, VK, T, TT, U, UT, V, VT> subject(S subject) {
+        public Builder<S, Tp, Param, TK, Us, Vs, T, TT, U, UK, UT, V, VK, VT> subject(S subject) {
             this.subject = subject;
             return this;
         }
 
-        public SimpleTargetPatternMakeRule2<Tp, Param, TK, Us, UK, Vs, VK, T, TT, U, UT, V, VT> build() {
+        public SimpleTargetPatternMakeRule2<Tp, Param, TK, Us, Vs, T, TT, U, UK, UT, V, VK, VT> build() {
             if (pattern == null)
                 throw new NullPointerException("pattern");
             if (fn == null)

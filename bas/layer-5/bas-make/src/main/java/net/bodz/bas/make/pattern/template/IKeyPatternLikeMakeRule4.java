@@ -12,15 +12,15 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public interface IKeyPatternLikeMakeRule4<Tp extends IKeyPatternLike<Param, K>, Param, K, //
         Keys extends IParameterizedKey<?, ?>, //
-        Us extends IParameterizedKey<Param, UK>, UK, //
-        Vs extends IParameterizedKey<Param, VK>, VK, //
-        Ws extends IParameterizedKey<Param, WK>, WK, //
-        Xs extends IParameterizedKey<Param, XK>, XK, //
+        Us extends IParameterizedKey<Param, UK>, //
+        Vs extends IParameterizedKey<Param, VK>, //
+        Ws extends IParameterizedKey<Param, WK>, //
+        Xs extends IParameterizedKey<Param, XK>, //
         T extends IKeyData<K, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT, //
-        V extends IKeyData<VK, VT>, VT, //
-        W extends IKeyData<WK, WT>, WT, //
-        X extends IKeyData<XK, XT>, XT> //
+        U extends IKeyData<UK, UT>, UK, UT, //
+        V extends IKeyData<VK, VT>, VK, VT, //
+        W extends IKeyData<WK, WT>, WK, WT, //
+        X extends IKeyData<XK, XT>, XK, XT> //
         extends IKeyPatternLikeMakeRule<Tp, Param, K, Keys, T, TT> {
 
     @Override

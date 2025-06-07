@@ -9,10 +9,10 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class SimpleTargetPatternLikeMakeRule1<Tp extends ITargetPatternLike<Param, T, TK, TT>, Param, TK, //
         Keys extends IParameterizedTarget<?, ?, ?, ?>, //
-        Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
+        Us extends IParameterizedTarget<Param, U, UK, UT>, //
         T extends IKeyData<TK, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT> //
-        implements ITargetPatternLikeMakeRule1<Tp, Param, TK, Keys, Us, UK, T, TT, U, UT> {
+        U extends IKeyData<UK, UT>, UK, UT> //
+        implements ITargetPatternLikeMakeRule1<Tp, Param, TK, Keys, Us, T, TT, U, UK, UT> {
 
     int priority;
     Tp pattern;
@@ -48,9 +48,9 @@ public abstract class SimpleTargetPatternLikeMakeRule1<Tp extends ITargetPattern
     }
 
     public static abstract class Builder<self_t, Tp extends ITargetPatternLike<Param, T, TK, TT>, Param, TK, //
-            Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
+            Us extends IParameterizedTarget<Param, U, UK, UT>, //
             T extends IKeyData<TK, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT> {
+            U extends IKeyData<UK, UT>, UK,UT> {
 
         protected int priority;
         protected Tp pattern;

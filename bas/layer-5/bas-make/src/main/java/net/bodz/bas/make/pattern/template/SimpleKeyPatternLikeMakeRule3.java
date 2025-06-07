@@ -9,14 +9,14 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class SimpleKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<Param, K>, Param, K, //
         Keys extends IParameterizedKey<?, ?>, //
-        Us extends IParameterizedKey<Param, UK>, UK, //
-        Vs extends IParameterizedKey<Param, VK>, VK, //
-        Ws extends IParameterizedKey<Param, WK>, WK, //
+        Us extends IParameterizedKey<Param, UK>, //
+        Vs extends IParameterizedKey<Param, VK>, //
+        Ws extends IParameterizedKey<Param, WK>, //
         T extends IKeyData<K, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT, //
-        V extends IKeyData<VK, VT>, VT, //
-        W extends IKeyData<WK, WT>, WT> //
-        implements IKeyPatternLikeMakeRule3<Tp, Param, K, Keys, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT> {
+        U extends IKeyData<UK, UT>, UK, UT, //
+        V extends IKeyData<VK, VT>, VK, VT, //
+        W extends IKeyData<WK, WT>, WK, WT> //
+        implements IKeyPatternLikeMakeRule3<Tp, Param, K, Keys, Us, Vs, Ws, T, TT, U, UK, UT, V, VK, VT, W, WK, WT> {
 
     int priority;
     Tp pattern;
@@ -66,13 +66,13 @@ public abstract class SimpleKeyPatternLikeMakeRule3<Tp extends IKeyPatternLike<P
     }
 
     public static abstract class Builder<self_t, Tp extends IKeyPatternLike<Param, K>, Param, K, //
-            Us extends IParameterizedKey<Param, UK>, UK, //
-            Vs extends IParameterizedKey<Param, VK>, VK, //
-            Ws extends IParameterizedKey<Param, WK>, WK, //
+            Us extends IParameterizedKey<Param, UK>, //
+            Vs extends IParameterizedKey<Param, VK>, //
+            Ws extends IParameterizedKey<Param, WK>, //
             T extends IKeyData<K, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT, //
-            V extends IKeyData<VK, VT>, VT, //
-            W extends IKeyData<WK, WT>, WT> {
+            U extends IKeyData<UK, UT>, UK, UT, //
+            V extends IKeyData<VK, VT>, VK, VT, //
+            W extends IKeyData<WK, WT>, WK, WT> {
 
         protected int priority;
         protected Tp pattern;

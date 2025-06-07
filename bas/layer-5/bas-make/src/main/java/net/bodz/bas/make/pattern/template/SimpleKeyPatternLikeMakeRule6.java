@@ -9,20 +9,20 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class SimpleKeyPatternLikeMakeRule6<Tp extends IKeyPatternLike<Param, K>, Param, K, //
         Keys extends IParameterizedKey<?, ?>, //
-        Us extends IParameterizedKey<Param, UK>, UK, //
-        Vs extends IParameterizedKey<Param, VK>, VK, //
-        Ws extends IParameterizedKey<Param, WK>, WK, //
-        Xs extends IParameterizedKey<Param, XK>, XK, //
-        Ys extends IParameterizedKey<Param, YK>, YK, //
-        Zs extends IParameterizedKey<Param, ZK>, ZK, //
+        Us extends IParameterizedKey<Param, UK>, //
+        Vs extends IParameterizedKey<Param, VK>, //
+        Ws extends IParameterizedKey<Param, WK>, //
+        Xs extends IParameterizedKey<Param, XK>, //
+        Ys extends IParameterizedKey<Param, YK>, //
+        Zs extends IParameterizedKey<Param, ZK>, //
         T extends IKeyData<K, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT, //
-        V extends IKeyData<VK, VT>, VT, //
-        W extends IKeyData<WK, WT>, WT, //
-        X extends IKeyData<XK, XT>, XT, //
-        Y extends IKeyData<YK, YT>, YT, //
-        Z extends IKeyData<ZK, ZT>, ZT> //
-        implements IKeyPatternLikeMakeRule6<Tp, Param, K, Keys, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> {
+        U extends IKeyData<UK, UT>, UK, UT, //
+        V extends IKeyData<VK, VT>, VK, VT, //
+        W extends IKeyData<WK, WT>, WK, WT, //
+        X extends IKeyData<XK, XT>, XK, XT, //
+        Y extends IKeyData<YK, YT>, YK, YT, //
+        Z extends IKeyData<ZK, ZT>, ZK, ZT> //
+        implements IKeyPatternLikeMakeRule6<Tp, Param, K, Keys, Us, Vs, Ws, Xs, Ys, Zs, T, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> {
 
     int priority;
     Tp pattern;
@@ -93,19 +93,19 @@ public abstract class SimpleKeyPatternLikeMakeRule6<Tp extends IKeyPatternLike<P
     }
 
     public static abstract class Builder<self_t, Tp extends IKeyPatternLike<Param, K>, Param, K, //
-            Us extends IParameterizedKey<Param, UK>, UK, //
-            Vs extends IParameterizedKey<Param, VK>, VK, //
-            Ws extends IParameterizedKey<Param, WK>, WK, //
-            Xs extends IParameterizedKey<Param, XK>, XK, //
-            Ys extends IParameterizedKey<Param, YK>, YK, //
-            Zs extends IParameterizedKey<Param, ZK>, ZK, //
+            Us extends IParameterizedKey<Param, UK>, //
+            Vs extends IParameterizedKey<Param, VK>, //
+            Ws extends IParameterizedKey<Param, WK>, //
+            Xs extends IParameterizedKey<Param, XK>, //
+            Ys extends IParameterizedKey<Param, YK>, //
+            Zs extends IParameterizedKey<Param, ZK>, //
             T extends IKeyData<K, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT, //
-            V extends IKeyData<VK, VT>, VT, //
-            W extends IKeyData<WK, WT>, WT, //
-            X extends IKeyData<XK, XT>, XT, //
-            Y extends IKeyData<YK, YT>, YT, //
-            Z extends IKeyData<ZK, ZT>, ZT> {
+            U extends IKeyData<UK, UT>, UK, UT, //
+            V extends IKeyData<VK, VT>, VK, VT, //
+            W extends IKeyData<WK, WT>, WK, WT, //
+            X extends IKeyData<XK, XT>, XK, XT, //
+            Y extends IKeyData<YK, YT>, YK, YT, //
+            Z extends IKeyData<ZK, ZT>, ZK, ZT> {
 
         protected int priority;
         protected Tp pattern;

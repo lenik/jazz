@@ -5,14 +5,14 @@ import net.bodz.bas.make.IParameterizedKey;
 import net.bodz.bas.make.pattern.template.IKeyPatternLikeMakeRule3;
 
 public interface IKeyPatternMakeRule3<Tp extends IKeyPattern<Param, K>, Param, K, //
-        Us extends IParameterizedKey<Param, UK>, UK, //
-        Vs extends IParameterizedKey<Param, VK>, VK, //
-        Ws extends IParameterizedKey<Param, WK>, WK, //
+        Us extends IParameterizedKey<Param, UK>, //
+        Vs extends IParameterizedKey<Param, VK>, //
+        Ws extends IParameterizedKey<Param, WK>, //
         T extends IKeyData<K, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT, //
-        V extends IKeyData<VK, VT>, VT, //
-        W extends IKeyData<WK, WT>, WT> //
-        extends IKeyPatternLikeMakeRule3<Tp, Param, K, IParameterizedKey<?, ?>, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT>,
+        U extends IKeyData<UK, UT>, UK, UT, //
+        V extends IKeyData<VK, VT>, VK, VT, //
+        W extends IKeyData<WK, WT>, WK, WT> //
+        extends IKeyPatternLikeMakeRule3<Tp, Param, K, IParameterizedKey<?, ?>, Us, Vs, Ws, T, TT, U, UK, UT, V, VK, VT, W, WK, WT>,
                 IKeyPatternMakeRule<Tp, Param, K, T, TT> {
 
     @Override

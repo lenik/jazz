@@ -12,13 +12,13 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public interface ITargetPatternLikeMakeRule3<Tp extends ITargetPatternLike<Param, T, TK, TT>, Param, TK, //
         Keys extends IParameterizedTarget<?, ?, ?, ?>, //
-        Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-        Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
-        Ws extends IParameterizedTarget<Param, W, WK, WT>, WK, //
+        Us extends IParameterizedTarget<Param, U, UK, UT>, //
+        Vs extends IParameterizedTarget<Param, V, VK, VT>, //
+        Ws extends IParameterizedTarget<Param, W, WK, WT>, //
         T extends IKeyData<TK, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT, //
-        V extends IKeyData<VK, VT>, VT, //
-        W extends IKeyData<WK, WT>, WT> //
+        U extends IKeyData<UK, UT>, UK, UT, //
+        V extends IKeyData<VK, VT>, VK, VT, //
+        W extends IKeyData<WK, WT>, WK, WT> //
         extends ITargetPatternLikeMakeRule<Tp, Param, TK, Keys, T, TT> {
 
     @Override

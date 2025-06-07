@@ -9,12 +9,12 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class SimpleTargetPatternLikeMakeRule2<Tp extends ITargetPatternLike<Param, T, TK, TT>, Param, TK, //
         Keys extends IParameterizedTarget<?, ?, ?, ?>, //
-        Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-        Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
+        Us extends IParameterizedTarget<Param, U, UK, UT>, //
+        Vs extends IParameterizedTarget<Param, V, VK, VT>, //
         T extends IKeyData<TK, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT, //
-        V extends IKeyData<VK, VT>, VT> //
-        implements ITargetPatternLikeMakeRule2<Tp, Param, TK, Keys, Us, UK, Vs, VK, T, TT, U, UT, V, VT> {
+        U extends IKeyData<UK, UT>, UK, UT, //
+        V extends IKeyData<VK, VT>, VK, VT> //
+        implements ITargetPatternLikeMakeRule2<Tp, Param, TK, Keys, Us, Vs, T, TT, U, UK, UT, V, VK, VT> {
 
     int priority;
     Tp pattern;
@@ -57,11 +57,11 @@ public abstract class SimpleTargetPatternLikeMakeRule2<Tp extends ITargetPattern
     }
 
     public static abstract class Builder<self_t, Tp extends ITargetPatternLike<Param, T, TK, TT>, Param, TK, //
-            Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-            Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
+            Us extends IParameterizedTarget<Param, U, UK, UT>, //
+            Vs extends IParameterizedTarget<Param, V, VK, VT>, //
             T extends IKeyData<TK, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT, //
-            V extends IKeyData<VK, VT>, VT> {
+            U extends IKeyData<UK, UT>, UK,UT, //
+            V extends IKeyData<VK, VT>, VK,VT> {
 
         protected int priority;
         protected Tp pattern;

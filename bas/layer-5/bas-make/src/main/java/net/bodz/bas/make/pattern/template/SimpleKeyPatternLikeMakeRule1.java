@@ -9,10 +9,10 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class SimpleKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<Param, K>, Param, K, //
         Keys extends IParameterizedKey<?, ?>, //
-        Us extends IParameterizedKey<Param, UK>, UK, //
+        Us extends IParameterizedKey<Param, UK>, //
         T extends IKeyData<K, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT> //
-        implements IKeyPatternLikeMakeRule1<Tp, Param, K, Keys, Us, UK, T, TT, U, UT> {
+        U extends IKeyData<UK, UT>, UK, UT> //
+        implements IKeyPatternLikeMakeRule1<Tp, Param, K, Keys, Us, T, TT, U, UK, UT> {
 
     int priority;
     Tp pattern;
@@ -48,9 +48,9 @@ public abstract class SimpleKeyPatternLikeMakeRule1<Tp extends IKeyPatternLike<P
     }
 
     public static abstract class Builder<self_t, Tp extends IKeyPatternLike<Param, K>, Param, K, //
-            Us extends IParameterizedKey<Param, UK>, UK, //
+            Us extends IParameterizedKey<Param, UK>, //
             T extends IKeyData<K, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT> {
+            U extends IKeyData<UK, UT>, UK, UT> {
 
         protected int priority;
         protected Tp pattern;

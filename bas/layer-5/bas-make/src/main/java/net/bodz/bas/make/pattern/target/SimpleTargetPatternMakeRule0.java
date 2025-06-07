@@ -8,7 +8,8 @@ import net.bodz.bas.make.fn.CompileFunction0;
 import net.bodz.bas.make.pattern.template.SimpleTargetPatternLikeMakeRule0;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimpleTargetPatternMakeRule0<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, T extends IKeyData<TK, TT>, TT> //
+public class SimpleTargetPatternMakeRule0<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+        T extends IKeyData<TK, TT>, TT> //
         extends SimpleTargetPatternLikeMakeRule0<Tp, Param, TK, IParameterizedTarget<?, ?, ?, ?>, T, TT>
         implements ITargetPatternMakeRule0<Tp, Param, TK, T, TT> {
 

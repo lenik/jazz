@@ -9,14 +9,14 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class SimpleTargetPatternLikeMakeRule3<Tp extends ITargetPatternLike<Param, T, TK, TT>, Param, TK, //
         Keys extends IParameterizedTarget<?, ?, ?, ?>, //
-        Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-        Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
-        Ws extends IParameterizedTarget<Param, W, WK, WT>, WK, //
+        Us extends IParameterizedTarget<Param, U, UK, UT>, //
+        Vs extends IParameterizedTarget<Param, V, VK, VT>, //
+        Ws extends IParameterizedTarget<Param, W, WK, WT>, //
         T extends IKeyData<TK, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT, //
-        V extends IKeyData<VK, VT>, VT, //
-        W extends IKeyData<WK, WT>, WT> //
-        implements ITargetPatternLikeMakeRule3<Tp, Param, TK, Keys, Us, UK, Vs, VK, Ws, WK, T, TT, U, UT, V, VT, W, WT> {
+        U extends IKeyData<UK, UT>, UK, UT, //
+        V extends IKeyData<VK, VT>, VK, VT, //
+        W extends IKeyData<WK, WT>, WK, WT> //
+        implements ITargetPatternLikeMakeRule3<Tp, Param, TK, Keys, Us, Vs, Ws, T, TT, U, UK, UT, V, VK, VT, W, WK, WT> {
 
     int priority;
     Tp pattern;
@@ -66,13 +66,13 @@ public abstract class SimpleTargetPatternLikeMakeRule3<Tp extends ITargetPattern
     }
 
     public static abstract class Builder<self_t, Tp extends ITargetPatternLike<Param, T, TK, TT>, Param, TK, //
-            Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-            Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
-            Ws extends IParameterizedTarget<Param, W, WK, WT>, WK, //
+            Us extends IParameterizedTarget<Param, U, UK, UT>, //
+            Vs extends IParameterizedTarget<Param, V, VK, VT>, //
+            Ws extends IParameterizedTarget<Param, W, WK, WT>, //
             T extends IKeyData<TK, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT, //
-            V extends IKeyData<VK, VT>, VT, //
-            W extends IKeyData<WK, WT>, WT> {
+            U extends IKeyData<UK, UT>, UK,UT, //
+            V extends IKeyData<VK, VT>, VK,VT, //
+            W extends IKeyData<WK, WT>, WK,WT> {
 
         protected int priority;
         protected Tp pattern;

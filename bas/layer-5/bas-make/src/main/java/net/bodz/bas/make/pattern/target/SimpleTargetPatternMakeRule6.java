@@ -8,75 +8,76 @@ import net.bodz.bas.make.fn.CompileFunction6;
 import net.bodz.bas.make.pattern.template.SimpleTargetPatternLikeMakeRule6;
 import net.bodz.bas.meta.decl.NotNull;
 
-public class SimpleTargetPatternMakeRule6<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-        Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
-        Ws extends IParameterizedTarget<Param, W, WK, WT>, WK, //
-        Xs extends IParameterizedTarget<Param, X, XK, XT>, XK, //
-        Ys extends IParameterizedTarget<Param, Y, YK, YT>, YK, //
-        Zs extends IParameterizedTarget<Param, Z, ZK, ZT>, ZK, //
+public class SimpleTargetPatternMakeRule6<Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
+        Us extends IParameterizedTarget<Param, U, UK, UT>, //
+        Vs extends IParameterizedTarget<Param, V, VK, VT>, //
+        Ws extends IParameterizedTarget<Param, W, WK, WT>, //
+        Xs extends IParameterizedTarget<Param, X, XK, XT>, //
+        Ys extends IParameterizedTarget<Param, Y, YK, YT>, //
+        Zs extends IParameterizedTarget<Param, Z, ZK, ZT>, //
         T extends IKeyData<TK, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT, //
-        V extends IKeyData<VK, VT>, VT, //
-        W extends IKeyData<WK, WT>, WT, //
-        X extends IKeyData<XK, XT>, XT, //
-        Y extends IKeyData<YK, YT>, YT, //
-        Z extends IKeyData<ZK, ZT>, ZT> //
-        extends SimpleTargetPatternLikeMakeRule6<Tp, Param, TK, IParameterizedTarget<?, ?, ?, ?>, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT>
-        implements ITargetPatternMakeRule6<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> {
+        U extends IKeyData<UK, UT>, UK, UT, //
+        V extends IKeyData<VK, VT>, VK, VT, //
+        W extends IKeyData<WK, WT>, WK, WT, //
+        X extends IKeyData<XK, XT>, XK, XT, //
+        Y extends IKeyData<YK, YT>, YK, YT, //
+        Z extends IKeyData<ZK, ZT>, ZK, ZT> //
+        extends SimpleTargetPatternLikeMakeRule6<Tp, Param, TK, IParameterizedTarget<?, ?, ?, ?>, Us, Vs, Ws, Xs, Ys, Zs, T, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>
+        implements ITargetPatternMakeRule6<Tp, Param, TK, Us, Vs, Ws, Xs, Ys, Zs, T, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> {
 
     public SimpleTargetPatternMakeRule6(int priority, @NotNull Tp pattern, @NotNull CompileFunction6<T, TK, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> fn, @NotNull Us input1s, @NotNull Vs input2s, @NotNull Ws input3s, @NotNull Xs input4s, @NotNull Ys input5s, @NotNull Zs input6s) {
         super(priority, pattern, fn, input1s, input2s, input3s, input4s, input5s, input6s);
     }
 
     public static <S, Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
-            Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-            Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
-            Ws extends IParameterizedTarget<Param, W, WK, WT>, WK, //
-            Xs extends IParameterizedTarget<Param, X, XK, XT>, XK, //
-            Ys extends IParameterizedTarget<Param, Y, YK, YT>, YK, //
-            Zs extends IParameterizedTarget<Param, Z, ZK, ZT>, ZK, //
+            Us extends IParameterizedTarget<Param, U, UK, UT>, //
+            Vs extends IParameterizedTarget<Param, V, VK, VT>, //
+            Ws extends IParameterizedTarget<Param, W, WK, WT>, //
+            Xs extends IParameterizedTarget<Param, X, XK, XT>, //
+            Ys extends IParameterizedTarget<Param, Y, YK, YT>, //
+            Zs extends IParameterizedTarget<Param, Z, ZK, ZT>, //
             T extends IKeyData<TK, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT, //
-            V extends IKeyData<VK, VT>, VT, //
-            W extends IKeyData<WK, WT>, WT, //
-            X extends IKeyData<XK, XT>, XT, //
-            Y extends IKeyData<YK, YT>, YT, //
-            Z extends IKeyData<ZK, ZT>, ZT> //
-    Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> builder() {
+            U extends IKeyData<UK, UT>, UK, UT, //
+            V extends IKeyData<VK, VT>, VK, VT, //
+            W extends IKeyData<WK, WT>, WK, WT, //
+            X extends IKeyData<XK, XT>, XK, XT, //
+            Y extends IKeyData<YK, YT>, YK, YT, //
+            Z extends IKeyData<ZK, ZT>, ZK, ZT> //
+    Builder<S, Tp, Param, TK, Us, Vs, Ws, Xs, Ys, Zs, T, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> builder() {
         return new Builder<>();
     }
 
     public static class Builder<S, Tp extends ITargetPattern<Param, T, TK, TT>, Param, TK, //
-            Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-            Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
-            Ws extends IParameterizedTarget<Param, W, WK, WT>, WK, //
-            Xs extends IParameterizedTarget<Param, X, XK, XT>, XK, //
-            Ys extends IParameterizedTarget<Param, Y, YK, YT>, YK, //
-            Zs extends IParameterizedTarget<Param, Z, ZK, ZT>, ZK, //
+            Us extends IParameterizedTarget<Param, U, UK, UT>, //
+            Vs extends IParameterizedTarget<Param, V, VK, VT>, //
+            Ws extends IParameterizedTarget<Param, W, WK, WT>, //
+            Xs extends IParameterizedTarget<Param, X, XK, XT>, //
+            Ys extends IParameterizedTarget<Param, Y, YK, YT>, //
+            Zs extends IParameterizedTarget<Param, Z, ZK, ZT>, //
             T extends IKeyData<TK, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT, //
-            V extends IKeyData<VK, VT>, VT, //
-            W extends IKeyData<WK, WT>, WT, //
-            X extends IKeyData<XK, XT>, XT, //
-            Y extends IKeyData<YK, YT>, YT, //
-            Z extends IKeyData<ZK, ZT>, ZT> //
-            extends SimpleTargetPatternLikeMakeRule6.Builder<Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT>, //
-            Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> {
+            U extends IKeyData<UK, UT>, UK, UT, //
+            V extends IKeyData<VK, VT>, VK, VT, //
+            W extends IKeyData<WK, WT>, WK, WT, //
+            X extends IKeyData<XK, XT>, XK, XT, //
+            Y extends IKeyData<YK, YT>, YK, YT, //
+            Z extends IKeyData<ZK, ZT>, ZK, ZT> //
+            extends SimpleTargetPatternLikeMakeRule6.Builder<Builder<S, Tp, Param, TK, Us, Vs, Ws, Xs, Ys, Zs, T, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT>, //
+            Tp, Param, TK, Us, Vs, Ws, Xs, Ys, Zs, T, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> {
 
         BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply;
         S subject;
 
-        public Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> apply(BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
+        public Builder<S, Tp, Param, TK, Us, Vs, Ws, Xs, Ys, Zs, T, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> apply(BiConsumer<S, ITargetPatternMakeRule<Tp, Param, TK, T, TT>> apply) {
             this.apply = apply;
             return this;
         }
 
-        public Builder<S, Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> subject(S subject) {
+        public Builder<S, Tp, Param, TK, Us, Vs, Ws, Xs, Ys, Zs, T, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> subject(S subject) {
             this.subject = subject;
             return this;
         }
 
-        public SimpleTargetPatternMakeRule6<Tp, Param, TK, Us, UK, Vs, VK, Ws, WK, Xs, XK, Ys, YK, Zs, ZK, T, TT, U, UT, V, VT, W, WT, X, XT, Y, YT, Z, ZT> build() {
+        public SimpleTargetPatternMakeRule6<Tp, Param, TK, Us, Vs, Ws, Xs, Ys, Zs, T, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT, Y, YK, YT, Z, ZK, ZT> build() {
             if (pattern == null)
                 throw new NullPointerException("pattern");
             if (fn == null)

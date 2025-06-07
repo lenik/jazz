@@ -12,9 +12,9 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public interface ITargetPatternLikeMakeRule1<Tp extends ITargetPatternLike<Param, T, TK, TT>, Param, TK, //
         Keys extends IParameterizedTarget<?, ?, ?, ?>, //
-        Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
+        Us extends IParameterizedTarget<Param, U, UK, UT>, //
         T extends IKeyData<TK, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT> //
+        U extends IKeyData<UK, UT>, UK, UT> //
         extends ITargetPatternLikeMakeRule<Tp, Param, TK, Keys, T, TT> {
 
     @Override

@@ -9,16 +9,16 @@ import net.bodz.bas.meta.decl.NotNull;
 
 public abstract class SimpleTargetPatternLikeMakeRule4<Tp extends ITargetPatternLike<Param, T, TK, TT>, Param, TK, //
         Keys extends IParameterizedTarget<?, ?, ?, ?>, //
-        Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-        Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
-        Ws extends IParameterizedTarget<Param, W, WK, WT>, WK, //
-        Xs extends IParameterizedTarget<Param, X, XK, XT>, XK, //
+        Us extends IParameterizedTarget<Param, U, UK, UT>, //
+        Vs extends IParameterizedTarget<Param, V, VK, VT>, //
+        Ws extends IParameterizedTarget<Param, W, WK, WT>, //
+        Xs extends IParameterizedTarget<Param, X, XK, XT>, //
         T extends IKeyData<TK, TT>, TT, //
-        U extends IKeyData<UK, UT>, UT, //
-        V extends IKeyData<VK, VT>, VT, //
-        W extends IKeyData<WK, WT>, WT, //
-        X extends IKeyData<XK, XT>, XT> //
-        implements ITargetPatternLikeMakeRule4<Tp, Param, TK, Keys, Us, UK, Vs, VK, Ws, WK, Xs, XK, T, TT, U, UT, V, VT, W, WT, X, XT> {
+        U extends IKeyData<UK, UT>, UK, UT, //
+        V extends IKeyData<VK, VT>, VK, VT, //
+        W extends IKeyData<WK, WT>, WK, WT, //
+        X extends IKeyData<XK, XT>, XK, XT> //
+        implements ITargetPatternLikeMakeRule4<Tp, Param, TK, Keys, Us, Vs, Ws, Xs, T, TT, U, UK, UT, V, VK, VT, W, WK, WT, X, XK, XT> {
 
     int priority;
     Tp pattern;
@@ -75,15 +75,15 @@ public abstract class SimpleTargetPatternLikeMakeRule4<Tp extends ITargetPattern
     }
 
     public static abstract class Builder<self_t, Tp extends ITargetPatternLike<Param, T, TK, TT>, Param, TK, //
-            Us extends IParameterizedTarget<Param, U, UK, UT>, UK, //
-            Vs extends IParameterizedTarget<Param, V, VK, VT>, VK, //
-            Ws extends IParameterizedTarget<Param, W, WK, WT>, WK, //
-            Xs extends IParameterizedTarget<Param, X, XK, XT>, XK, //
+            Us extends IParameterizedTarget<Param, U, UK, UT>, //
+            Vs extends IParameterizedTarget<Param, V, VK, VT>, //
+            Ws extends IParameterizedTarget<Param, W, WK, WT>, //
+            Xs extends IParameterizedTarget<Param, X, XK, XT>, //
             T extends IKeyData<TK, TT>, TT, //
-            U extends IKeyData<UK, UT>, UT, //
-            V extends IKeyData<VK, VT>, VT, //
-            W extends IKeyData<WK, WT>, WT, //
-            X extends IKeyData<XK, XT>, XT> {
+            U extends IKeyData<UK, UT>, UK,UT, //
+            V extends IKeyData<VK, VT>, VK,VT, //
+            W extends IKeyData<WK, WT>, WK,WT, //
+            X extends IKeyData<XK, XT>, XK,XT> {
 
         protected int priority;
         protected Tp pattern;
