@@ -312,16 +312,17 @@ public class IMakeRules__java
             {
                 out.enter();
                 {
-                    for (int i = 0; i < inputCount; i++) {
-                        String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
-                    }
+                    if (modeUs)
+                        for (int i = 0; i < inputCount; i++) {
+                            String U = Naming.typeVar(inputCount, i);
+                            out.printf("%ss extends IParameterizedKey<Param, %sK>, //\n", U, U);
+                        }
                     out.printf("T extends IKeyData<K, TT>, TT");
 
                     for (int i = 0; i < inputCount; i++) {
                         out.printf(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                     }
                     out.leave();
                 }
@@ -329,7 +330,9 @@ public class IMakeRules__java
             }
             out.print("> //\n");
             out.printf("void addPatternRule(@NotNull Tp pattern%s, @NotNull CompileFunction%d<T, K, TT%s> fn) {\n", //
-                    comma(Naming.inputParams(inputCount, "s", "@NotNull ", "s")), //
+                    modeUs ? comma(Naming.inputParams(inputCount, "s", "@NotNull ", "s")) //
+                            : comma(Naming.inputParams(inputCount, //
+                            U -> String.format("@NotNull IParameterizedKey<Param, %sK>", U), "s")), //
                     inputCount, //
                     comma(Naming.typeVars(inputCount, "", "K", "T")));
             out.enter();
@@ -341,8 +344,8 @@ public class IMakeRules__java
                     {
                         out.printf("SimpleKeyPatternMakeRule%d.<Tp, Tp, Param, K%s, T, TT%s>builder()//\n", //
                                 inputCount, //
-                                comma(Naming.typeVars(inputCount, "s", "K")), //
-                                comma(Naming.typeVars(inputCount, "", "T")));
+                                modeUs ? comma(Naming.typeVars(inputCount, "s")) : "", //
+                                comma(Naming.typeVars(inputCount, "", "K", "T")));
                         out.enter();
                         {
                             out.enter();
@@ -373,16 +376,16 @@ public class IMakeRules__java
             {
                 out.enter();
                 {
-                    for (int i = 0; i < inputCount; i++) {
-                        String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
-                    }
+                    if (modeUs)
+                        for (int i = 0; i < inputCount; i++) {
+                            String U = Naming.typeVar(inputCount, i);
+                            out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, //\n", U, U, U);
+                        }
                     out.printf("T extends IKeyData<K, TT>, TT");
-
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                     }
                     out.leave();
                 }
@@ -390,7 +393,9 @@ public class IMakeRules__java
             }
             out.print("> //\n");
             out.printf("void addPatternRule(@NotNull Tp pattern%s, @NotNull CompileFunction%d<T, K, TT%s> fn) {\n", //
-                    comma(Naming.inputParams(inputCount, "s", "@NotNull ", "s")), //
+                    modeUs ? comma(Naming.inputParams(inputCount, "s", "@NotNull ", "s")) //
+                            : comma(Naming.inputParams(inputCount, //
+                            U -> String.format("@NotNull IDataTypedParameterizedKey<Param, %sK, %sT>", U, U), "s")), //
                     inputCount, //
                     comma(Naming.typeVars(inputCount, "", "K", "T")));
             out.enter();
@@ -402,8 +407,8 @@ public class IMakeRules__java
                     {
                         out.printf("SimpleDataTypedKeyPatternMakeRule%d.<Tp, Tp, Param, K%s, T, TT%s>builder()//\n",//
                                 inputCount, //
-                                comma(Naming.typeVars(inputCount, "s", "K")), //
-                                comma(Naming.typeVars(inputCount, "", "T")));
+                                modeUs ? comma(Naming.typeVars(inputCount, "s")) : "", //
+                                comma(Naming.typeVars(inputCount, "", "K", "T")));
                         out.enter();
                         {
                             out.enter();
@@ -435,16 +440,16 @@ public class IMakeRules__java
             {
                 out.enter();
                 {
-                    for (int i = 0; i < inputCount; i++) {
-                        String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
-                    }
+                    if (modeUs)
+                        for (int i = 0; i < inputCount; i++) {
+                            String U = Naming.typeVar(inputCount, i);
+                            out.printf("%ss extends IParameterizedKey<Param, %sK>, //\n", U, U);
+                        }
                     out.printf("T extends IKeyData<TK, TT>, TT");
-
                     for (int i = 0; i < inputCount; i++) {
                         out.printf(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                     }
                     out.leave();
                 }
@@ -452,7 +457,9 @@ public class IMakeRules__java
             }
             out.print("> //\n");
             out.printf("void addPatternRule(@NotNull Tp pattern%s, @NotNull CompileFunction%d<T, TK, TT%s> fn) {\n", //
-                    comma(Naming.inputParams(inputCount, "s", "@NotNull ", "s")), //
+                    modeUs ? comma(Naming.inputParams(inputCount, "s", "@NotNull ", "s")) //
+                            : comma(Naming.inputParams(inputCount, //
+                            U -> String.format("@NotNull IParameterizedKey<Param, %sK>", U), "s")), //
                     inputCount, //
                     comma(Naming.typeVars(inputCount, "", "K", "T")));
             out.enter();
@@ -464,8 +471,8 @@ public class IMakeRules__java
                     {
                         out.printf("SimpleTargetTypedKeyPatternMakeRule%d.<Tp, Tp, Param, TK%s, T, TT%s>builder()//\n", //
                                 inputCount, //
-                                comma(Naming.typeVars(inputCount, "s", "K")), //
-                                comma(Naming.typeVars(inputCount, "", "T")));
+                                modeUs ? comma(Naming.typeVars(inputCount, "s")) : "", //
+                                comma(Naming.typeVars(inputCount, "", "K", "T")));
                         out.enter();
                         {
                             out.enter();
@@ -496,16 +503,16 @@ public class IMakeRules__java
             {
                 out.enter();
                 {
-                    for (int i = 0; i < inputCount; i++) {
-                        String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IParameterizedTarget<Param, %s, %sK, %sT>, %sK, //\n", U, U, U, U, U);
-                    }
+                    if (modeUs)
+                        for (int i = 0; i < inputCount; i++) {
+                            String U = Naming.typeVar(inputCount, i);
+                            out.printf("%ss extends IParameterizedTarget<Param, %s, %sK, %sT>, //\n", U, U, U, U);
+                        }
                     out.printf("T extends IKeyData<TK, TT>, TT");
-
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                     }
                     out.leave();
                 }
@@ -513,7 +520,9 @@ public class IMakeRules__java
             }
             out.print("> //\n");
             out.printf("void addPatternRule(@NotNull Tp pattern%s, @NotNull CompileFunction%d<T, TK, TT%s> fn) {\n", //
-                    comma(Naming.inputParams(inputCount, "s", "@NotNull ", "s")), //
+                    modeUs ? comma(Naming.inputParams(inputCount, "s", "@NotNull ", "s")) //
+                            : comma(Naming.inputParams(inputCount, //
+                            U -> String.format("IParameterizedTarget<Param, %s, %sK, %sT>", U, U, U), "s")), //
                     inputCount, //
                     comma(Naming.typeVars(inputCount, "", "K", "T")));
             out.enter();
@@ -525,8 +534,8 @@ public class IMakeRules__java
                     {
                         out.printf("SimpleTargetPatternMakeRule%d.<Tp, Tp, Param, TK%s, T, TT%s>builder()//\n",//
                                 inputCount, //
-                                comma(Naming.typeVars(inputCount, "s", "K")), //
-                                comma(Naming.typeVars(inputCount, "", "T")));
+                                modeUs ? comma(Naming.typeVars(inputCount, "s")) : "", //
+                                comma(Naming.typeVars(inputCount, "", "K", "T")));
                         out.enter();
                         {
                             out.enter();

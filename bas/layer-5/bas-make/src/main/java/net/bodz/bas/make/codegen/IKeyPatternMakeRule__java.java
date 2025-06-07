@@ -29,22 +29,24 @@ public class IKeyPatternMakeRule__java
         {
             out.enter();
             {
-                for (int i = 0; i < inputCount; i++) {
-                    String U = Naming.typeVar(inputCount, i);
-                    out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
-                }
+                if (modeUs)
+                    for (int i = 0; i < inputCount; i++) {
+                        String U = Naming.typeVar(inputCount, i);
+                        out.printf("%ss extends IParameterizedKey<Param, %sK>, //\n", U, U);
+                    }
                 out.printf("T extends IKeyData<K, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
                     out.print(", //\n");
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                    out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                 }
                 out.print("> //\n");
 
                 out.printf("extends IKeyPatternLikeMakeRule%d<Tp, Param, K, IParameterizedKey<?, ?>%s, T, TT%s>,\n", //
                         inputCount, //
-                        comma(Naming.typeVars(inputCount, "s", "K")), //
-                        comma(Naming.typeVars(inputCount, "", "T")));
+                        modeUs ? comma(Naming.typeVars(inputCount, "s")) //
+                                : comma(Naming.typeVars(inputCount, U -> String.format("IParameterizedKey<Param, %sK>", U))), //
+                        comma(Naming.typeVars(inputCount, "", "K", "T")));
                 out.enter();
                 {
                     out.enter();

@@ -20,8 +20,8 @@ public class SimpleDataTypedKeyPatternMakeRule__java
             throws IOException {
         String compileFnTypeVars = "T, TK, TT" + comma(Naming.typeVars(inputCount, "", "K", "T"));
         String typeVars = String.format("Tp, Param, TK%s, T, TT%s", //
-                comma(Naming.typeVars(inputCount, "s", "K")), //
-                comma(Naming.typeVars(inputCount, "", "T")) //
+                modeUs ? comma(Naming.typeVars(inputCount, "s")) : "", //
+                comma(Naming.typeVars(inputCount, "", "K", "T")) //
         );
         String builderTypeVars = "S, " + typeVars;
 
@@ -39,22 +39,24 @@ public class SimpleDataTypedKeyPatternMakeRule__java
         {
             out.enter();
             {
-                for (int i = 0; i < inputCount; i++) {
-                    String U = Naming.typeVar(inputCount, i);
-                    out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
-                }
+                if (modeUs)
+                    for (int i = 0; i < inputCount; i++) {
+                        String U = Naming.typeVar(inputCount, i);
+                        out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, //\n", U, U, U);
+                    }
                 out.printf("T extends IKeyData<TK, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
                     out.print(", //\n");
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                    out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                 }
                 out.print("> //\n");
 
                 out.printf("extends SimpleKeyPatternLikeMakeRule%d<Tp, Param, TK, IDataTypedParameterizedKey<?, ?, ?>%s, T, TT%s>\n", //
                         inputCount, //
-                        comma(Naming.typeVars(inputCount, "s", "K")), //
-                        comma(Naming.typeVars(inputCount, "", "T")) //
+                        modeUs ? comma(Naming.typeVars(inputCount, "s")) //
+                                : comma(Naming.typeVars(inputCount, U -> String.format("IDataTypedParameterizedKey<Param, %sK, %sT>", U, U))), //
+                        comma(Naming.typeVars(inputCount, "", "K", "T")) //
                 );
                 out.printf("implements IDataTypedKeyPatternMakeRule%d<%s> {\n", inputCount, typeVars);
                 out.println();
@@ -62,9 +64,21 @@ public class SimpleDataTypedKeyPatternMakeRule__java
             }
             out.printf("public SimpleDataTypedKeyPatternMakeRule%d(int priority, @NotNull Tp pattern", inputCount);
             out.printf(", @NotNull CompileFunction%d<%s> fn", inputCount, compileFnTypeVars);
-            for (int i = 0; i < inputCount; i++) {
-                String U = Naming.typeVar(inputCount, i);
-                out.printf(", @NotNull %ss input%ds", U, i + 1);
+            out.enter();
+            {
+                out.enter();
+                {
+                    for (int i = 0; i < inputCount; i++) {
+                        String U = Naming.typeVar(inputCount, i);
+                        out.printf(", \n");
+                        if (modeUs)
+                            out.printf("@NotNull %ss input%ds", U, i + 1);
+                        else
+                            out.printf("@NotNull IDataTypedParameterizedKey<Param, %sK, %sT> input%ds", U, U, i + 1);
+                    }
+                    out.leave();
+                }
+                out.leave();
             }
             out.print(") {\n");
             out.enter();
@@ -80,15 +94,16 @@ public class SimpleDataTypedKeyPatternMakeRule__java
             {
                 out.enter();
                 {
-                    for (int i = 0; i < inputCount; i++) {
-                        String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
-                    }
+                    if (modeUs)
+                        for (int i = 0; i < inputCount; i++) {
+                            String U = Naming.typeVar(inputCount, i);
+                            out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, //\n", U, U, U);
+                        }
                     out.printf("T extends IKeyData<TK, TT>, TT");
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                     }
                     out.print("> //\n");
                     out.leave();
@@ -109,21 +124,25 @@ public class SimpleDataTypedKeyPatternMakeRule__java
             {
                 out.enter();
                 {
-                    for (int i = 0; i < inputCount; i++) {
-                        String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
-                    }
+                    if (modeUs)
+                        for (int i = 0; i < inputCount; i++) {
+                            String U = Naming.typeVar(inputCount, i);
+                            out.printf("%ss extends IDataTypedParameterizedKey<Param, %sK, %sT>, //\n", U, U, U);
+                        }
                     out.printf("T extends IKeyData<TK, TT>, TT");
 
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                     }
                     out.print("> //\n");
 
                     out.printf("extends SimpleKeyPatternLikeMakeRule%d.Builder<Builder<%s>, //\n", inputCount, builderTypeVars);
-                    out.printf("%s> {\n", typeVars);
+                    out.printf("Tp, Param, TK%s, T, TT%s> {\n", //
+                            modeUs ? comma(Naming.typeVars(inputCount, "s"))//
+                                    : comma(Naming.typeVars(inputCount, U -> String.format("IDataTypedParameterizedKey<Param, %sK, %sT>", U, U))), //
+                            comma(Naming.typeVars(inputCount, "", "K", "T")));
                     out.leave();
                 }
 

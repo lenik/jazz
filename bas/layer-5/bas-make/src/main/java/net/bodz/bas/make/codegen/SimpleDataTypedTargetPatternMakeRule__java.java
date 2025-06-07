@@ -40,22 +40,24 @@ public class SimpleDataTypedTargetPatternMakeRule__java
         {
             out.enter();
             {
-                for (int i = 0; i < inputCount; i++) {
-                    String U = Naming.typeVar(inputCount, i);
-                    out.printf("%ss extends IDataTypedParameterizedTarget<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
-                }
+                if (modeUs)
+                    for (int i = 0; i < inputCount; i++) {
+                        String U = Naming.typeVar(inputCount, i);
+                        out.printf("%ss extends IDataTypedParameterizedTarget<Param, %sK, %sT>,  //\n", U, U, U);
+                    }
                 out.printf("T extends IKeyData<TK, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
                     out.print(", //\n");
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                    out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                 }
                 out.print("> //\n");
 
                 out.printf("extends SimpleTargetPatternLikeMakeRule%d<Tp, Param, TK, IDataTypedParameterizedTarget<?, ?, ?>%s, T, TT%s>\n", //
                         inputCount, //
-                        comma(Naming.typeVars(inputCount, "s", "K")), //
-                        comma(Naming.typeVars(inputCount, "", "T")) //
+                        modeUs ? comma(Naming.typeVars(inputCount, "s")) //
+                                : comma(Naming.typeVars(inputCount, U -> String.format("IDataTypedParameterizedTarget<Param, %s, %sK, %sT>", U, U, U))), //
+                        comma(Naming.typeVars(inputCount, "", "K", "T")) //
                 );
                 out.printf("implements IDataTypedTargetPatternMakeRule%d<%s> {\n", inputCount, typeVars);
                 out.leave();
@@ -83,15 +85,16 @@ public class SimpleDataTypedTargetPatternMakeRule__java
             {
                 out.enter();
                 {
-                    for (int i = 0; i < inputCount; i++) {
-                        String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IDataTypedParameterizedTarget<Param, %sK, %sT>, %sK, //\n", U, U, U, U);
-                    }
+                    if (modeUs)
+                        for (int i = 0; i < inputCount; i++) {
+                            String U = Naming.typeVar(inputCount, i);
+                            out.printf("%ss extends IDataTypedParameterizedTarget<Param, %sK, %sT>, //\n", U, U, U);
+                        }
                     out.printf("T extends IKeyData<TK, TT>, TT");
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                     }
                     out.print("> //\n");
                     out.leave();
@@ -121,12 +124,15 @@ public class SimpleDataTypedTargetPatternMakeRule__java
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                     }
                     out.print("> //\n");
 
                     out.printf("extends SimpleTargetPatternLikeMakeRule%d.Builder<Builder<%s>, //\n", inputCount, builderTypeVars);
-                    out.printf("%s> {\n", typeVars);
+                    out.printf("Tp, Param, TK%s, T, TT%s> {\n", //
+                            modeUs ? comma(Naming.typeVars(inputCount, "s")) //
+                                    : comma(Naming.typeVars(inputCount, U -> String.format("IDataTypedParameterizedTarget<Param, %s, %sK, %sT>", U, U, U))), //
+                            comma(Naming.typeVars(inputCount, "", "K", "T")));
                     out.leave();
                 }
 

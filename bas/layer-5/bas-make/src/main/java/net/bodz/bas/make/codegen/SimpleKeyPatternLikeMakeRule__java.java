@@ -38,19 +38,19 @@ public class SimpleKeyPatternLikeMakeRule__java
                 out.printf("Keys extends IParameterizedKey<?, ?>, //\n");
                 for (int i = 0; i < inputCount; i++) {
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
+                    out.printf("%ss extends IParameterizedKey<Param, %sK>, //\n", U, U);
                 }
                 out.printf("T extends IKeyData<K, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
                     out.print(", //\n");
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                    out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                 }
                 out.print("> //\n");
 
                 out.printf("implements IKeyPatternLikeMakeRule%d<Tp, Param, K, Keys%s, T, TT%s> {\n", inputCount, //
-                        comma(Naming.typeVars(inputCount, "s", "K")), //
-                        comma(Naming.typeVars(inputCount, "", "T")) //
+                        comma(Naming.typeVars(inputCount, "s")), //
+                        comma(Naming.typeVars(inputCount, "", "K", "T")) //
                 );
                 out.println();
                 out.leave();
@@ -138,14 +138,14 @@ public class SimpleKeyPatternLikeMakeRule__java
 
                     for (int i = 0; i < inputCount; i++) {
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%ss extends IParameterizedKey<Param, %sK>, %sK, //\n", U, U, U);
+                        out.printf("%ss extends IParameterizedKey<Param, %sK>, //\n", U, U);
                     }
                     out.printf("T extends IKeyData<K, TT>, TT");
 
                     for (int i = 0; i < inputCount; i++) {
                         out.print(", //\n");
                         String U = Naming.typeVar(inputCount, i);
-                        out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                        out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                     }
                     out.print("> {\n");
                     out.leave();

@@ -5,6 +5,8 @@ import java.io.IOException;
 import net.bodz.bas.codegen.java.JavaCodeWriter;
 import net.bodz.bas.t.tuple.QualifiedName;
 
+import static net.bodz.bas.make.codegen.Names.comma;
+
 public class ITargetPatternMakeRule__java
         extends Class__java {
 
@@ -18,7 +20,7 @@ public class ITargetPatternMakeRule__java
             throws IOException {
         out.printf("package net.bodz.bas.make.pattern.target;\n");
         out.println();
-;
+
         out.printf("import net.bodz.bas.make.IKeyData;\n");
         out.printf("import net.bodz.bas.make.IParameterizedTarget;\n");
         out.printf("import net.bodz.bas.make.pattern.template.ITargetPatternLikeMakeRule%d;\n", inputCount);
@@ -28,22 +30,24 @@ public class ITargetPatternMakeRule__java
         {
             out.enter();
             {
-                for (int i = 0; i < inputCount; i++) {
-                    String U = Naming.typeVar(inputCount, i);
-                    out.printf("%ss extends IParameterizedTarget<Param, %s, %sK, %sT>, %sK, //\n", U, U, U, U, U);
-                }
+                if (modeUs)
+                    for (int i = 0; i < inputCount; i++) {
+                        String U = Naming.typeVar(inputCount, i);
+                        out.printf("%ss extends IParameterizedTarget<Param, %s, %sK, %sT>, //\n", U, U, U, U);
+                    }
                 out.printf("T extends IKeyData<TK, TT>, TT");
                 for (int i = 0; i < inputCount; i++) {
                     out.print(", //\n");
                     String U = Naming.typeVar(inputCount, i);
-                    out.printf("%s extends IKeyData<%sK, %sT>, %sT", U, U, U, U);
+                    out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT", U, U, U, U, U);
                 }
                 out.print("> //\n");
 
                 out.printf("extends ITargetPatternLikeMakeRule%d<Tp, Param, TK, IParameterizedTarget<?, ?, ?, ?>%s, T, TT%s>,\n", //
                         inputCount, //
-                        Naming._typeVars(inputCount, "s", "K"), //
-                        Naming._typeVars(inputCount, "", "T"));
+                        modeUs ? Naming._typeVars(inputCount, "s") //
+                                : comma(Naming.typeVars(inputCount, U -> String.format("IParameterizedTarget<Param, %s, %sK, %sT>", U, U, U))), //
+                        Naming._typeVars(inputCount, "", "K", "T"));
                 out.enter();
                 {
                     out.enter();

@@ -51,27 +51,7 @@ public class SimpleMakeRuleBuilders__java
 
                 out.println();
                 out.printf("public ");
-                if (inputCount != 0) {
-                    String U = Naming.typeVar(inputCount, 0);
-                    out.printf("<%s extends IKeyData<%sK, %sT>, %sK, %sT%s //\n", U, U, U, U, U, //
-                            inputCount == 1 ? ">" : ",");
-                    if (inputCount > 1) {
-                        out.enter();
-                        {
-                            out.enter();
-                            {
-                                for (int index = 1; index < inputCount; index++) {
-                                    U = Naming.typeVar(inputCount, index);
-                                    out.printf("%s extends IKeyData<%sK, %sT>, %sK, %sT%s //\n", U, U, U, U, U, //
-                                            index == inputCount - 1 ? ">" : ",");
-                                }
-                                out.leave();
-                            }
-                            out.leave();
-                        }
-                    }
-                }
-
+                inputTypeParams(out, true, inputCount);
                 out.printf("SimpleMakeRule%d.Builder<%s> input(", inputCount, builderTypeVars);
                 for (int index = 0; index < inputCount; index++) {
                     String U = Naming.typeVar(inputCount, index);

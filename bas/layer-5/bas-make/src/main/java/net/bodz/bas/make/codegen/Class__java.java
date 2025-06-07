@@ -13,6 +13,7 @@ public abstract class Class__java
 
     int inputCount = 0;
     int maxCount = 0;
+    boolean modeUs = true;
 
     public int getInputCount() {
         return inputCount;

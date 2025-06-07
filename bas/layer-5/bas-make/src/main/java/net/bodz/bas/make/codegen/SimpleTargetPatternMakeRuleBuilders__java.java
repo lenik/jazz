@@ -53,39 +53,20 @@ public class SimpleTargetPatternMakeRuleBuilders__java
 
             for (int inputCount = 0; inputCount <= maxCount; inputCount++) {
                 String typeVars = String.format("Tp, Param, TK%s, T, TT%s", //
-                        comma(Naming.typeVars(inputCount, "s", "K")), //
-                        comma(Naming.typeVars(inputCount, "", "T")) //
+                        modeUs ? comma(Naming.typeVars(inputCount, "s")) : "", //
+                        comma(Naming.typeVars(inputCount, "", "K", "T")) //
                 );
                 String builderTypeVars = "S, " + typeVars;
 
                 out.println();
                 out.printf("public ");
-                if (inputCount != 0) {
-                    String U = Naming.typeVar(inputCount, 0);
-                    out.printf("<%ss extends IParameterizedTarget<Param, %s, %sK, %sT>, %sK, //\n", U, U, U, U, U);
-                    out.enter();
-                    {
-                        out.enter();
-                        {
-                            for (int index = 1; index < inputCount; index++) {
-                                U = Naming.typeVar(inputCount, index);
-                                out.printf("%ss extends IParameterizedTarget<Param, %s, %sK, %sT>, %sK, //\n", U, U, U, U, U);
-                            }
-                            for (int index = 0; index < inputCount; index++) {
-                                U = Naming.typeVar(inputCount, index);
-                                out.printf("%s extends IKeyData<%sK, %sT>, %sT%s //\n", U, U, U, U, //
-                                        index == inputCount - 1 ? ">" : ",");
-                            }
-                            out.leave();
-                        }
-                        out.leave();
-                    }
-                }
-
+                inputTypeParams(out, true, inputCount, //
+                        modeUs ? U -> String.format("%ss extends IParameterizedTarget<Param, %s, %sK, %sT>", U, U, U, U) : null);
                 out.printf("SimpleTargetPatternMakeRule%d.Builder<%s> input(%s) {\n", //
                         inputCount, //
                         builderTypeVars, //
-                        Naming.inputParams(inputCount, "s", "", "s"));
+                        modeUs ? Naming.inputParams(inputCount, "s", "", "s") //
+                                : Naming.inputParams(inputCount, U -> String.format("IParameterizedTarget<Param, %s, %sK, %sT>", U, U, U), "s"));
                 out.enter();
                 {
                     out.printf("return SimpleTargetPatternMakeRule%d.<%s>builder()//\n", inputCount, builderTypeVars);
