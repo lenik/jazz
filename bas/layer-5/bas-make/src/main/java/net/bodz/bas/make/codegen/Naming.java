@@ -1,6 +1,7 @@
 package net.bodz.bas.make.codegen;
 
 import java.util.Arrays;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Naming {
@@ -24,6 +25,10 @@ public class Naming {
 
     public static String _typeVars(int count) {
         return count == 0 ? "" : ", " + typeVars(count);
+    }
+
+    public static String typeVars_(int count) {
+        return typeVars(count) + (count == 0 ? "" : ", ");
     }
 
     public static String typeVars(int count) {
@@ -55,6 +60,21 @@ public class Naming {
         return buf.toString();
     }
 
+    @SafeVarargs
+    public static String typeVars(int count, Function<String, String>... typeFns) {
+        StringBuilder buf = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            String U = typeVar(count, i);
+            for (Function<String, String> typeFn : typeFns) {
+                String type = typeFn.apply(U);
+                if (buf.length() != 0)
+                    buf.append(", ");
+                buf.append(type);
+            }
+        }
+        return buf.toString();
+    }
+
     public static String inputParams(int count) {
         return inputParams(count, "", "");
     }
@@ -72,10 +92,23 @@ public class Naming {
         for (int i = 0; i < count; i++) {
             if (i != 0)
                 buf.append(", ");
-            String Us = typeVar(count, i) + typeSuffix;
+            String type = typeVar(count, i) + typeSuffix;
             String var = "input" + (i + 1) + varSuffix;
             buf.append(paramPrefix);
-            buf.append(Us).append(" ").append(var);
+            buf.append(type).append(" ").append(var);
+        }
+        return buf.toString();
+    }
+
+    public static String inputParams(int count, Function<String, String> typeFn, String varSuffix) {
+        StringBuilder buf = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            if (i != 0)
+                buf.append(", ");
+            String U = typeVar(count, i);
+            String type = typeFn.apply(U);
+            String var = "input" + (i + 1) + varSuffix;
+            buf.append(type).append(" ").append(var);
         }
         return buf.toString();
     }
