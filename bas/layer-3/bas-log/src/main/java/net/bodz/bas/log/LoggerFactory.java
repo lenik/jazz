@@ -8,13 +8,18 @@ import org.apache.logging.log4j.spi.LoggerContext;
 import org.apache.logging.log4j.spi.LoggerRegistry;
 import org.slf4j.spi.LocationAwareLogger;
 
+import net.bodz.bas.log.diag.ILoggingSystemDebug;
 import net.bodz.bas.log.impl.Log4jLogger;
 import net.bodz.bas.log.impl.Slf4jLogger;
 import net.bodz.bas.log.impl.Slf4jSimpleLogger;
 
-public class LoggerFactory {
+public class LoggerFactory
+        implements ILoggingSystemDebug {
+
+    static final java.util.logging.Logger juLogger = java.util.logging.Logger.getLogger(LoggerFactory.class.getName());
 
     static boolean inited;
+
     static {
         init();
     }
@@ -22,9 +27,9 @@ public class LoggerFactory {
     public static void init() {
         if (inited)
             return;
-        for (ILoggingSystemConfigurer listener : ServiceLoader.load(ILoggingSystemConfigurer.class)) {
-            // System.out.println("Init: " + listener);
-            listener.initLoggingSystem();
+        for (ILoggingSystemConfigurer configurer : ServiceLoader.load(ILoggingSystemConfigurer.class)) {
+            juLogger.log(LEVEL, "Apply logging configurer: " + configurer);
+            configurer.initLoggingSystem();
         }
         inited = true;
     }
@@ -60,23 +65,23 @@ public class LoggerFactory {
         }
 
         org.apache.logging.log4j.Logger log4j = null;
-        while (name != null) {
-            log4j = registry.getLogger(name);
-            if (log4j == null) {
-                System.err.println("not registered logger: " + name);
-                return null;
-            }
-            if (log4j.getLevel() != null)
+        String prefix = name;
+        while (prefix != null) {
+            log4j = registry.getLogger(prefix);
+            if (log4j != null)
                 break;
-            int lastDot = name.lastIndexOf('.');
+            int lastDot = prefix.lastIndexOf('.');
             if (lastDot != -1)
-                name = name.substring(0, lastDot);
+                prefix = prefix.substring(0, lastDot);
             else
-                name = null;
+                prefix = null;
         }
 
-        if (log4j == null)
-            log4j = null; // TODO registry.getRootLogger();
+        if (log4j == null) {
+            juLogger.warning("LoggerFactory warning: can't find logger in the registry for name: " + name);
+            //log4j = null; // TODO registry.getRootLogger();
+            return null;
+        }
         return new Log4jLogger(log4j);
     }
 

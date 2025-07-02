@@ -8,14 +8,14 @@ import java.util.logging.Logger;
 import org.apache.logging.log4j.core.config.ConfigurationFactory;
 
 import net.bodz.bas.log.ILoggingSystemConfigurer;
+import net.bodz.bas.log.diag.ILoggingSystemDebug;
 import net.bodz.bas.t.order.PriorityComparator;
 
 public class PragmaticLog4jLoader
-        implements ILoggingSystemConfigurer {
+        implements ILoggingSystemConfigurer,
+                   ILoggingSystemDebug {
 
     static final Logger logger = Logger.getLogger(PragmaticLog4jLoader.class.getName());
-
-    final boolean enabled;
 
     static List<ILog4jConfigurer> configurers = new ArrayList<>();
 
@@ -26,24 +26,25 @@ public class PragmaticLog4jLoader
         configurers.sort(PriorityComparator.INSTANCE);
     }
 
-    public PragmaticLog4jLoader() {
+    final boolean hasLog4j = hasLog4j();
+
+    static boolean hasLog4j() {
         try {
             Class.forName("org.apache.logging.log4j.Logger");
+            return true;
         } catch (ClassNotFoundException e) {
             logger.warning("Log4j is not available.");
-            enabled = false;
-            return;
+            return false;
         }
-        enabled = true;
     }
 
     @Override
     public void initLoggingSystem() {
-        if (!enabled)
-            return;
-        logger.fine("Init logging system.");
-        ConfigurationFactory factory = new PragmaticLog4jConfigurationFactory();
-        ConfigurationFactory.setConfigurationFactory(factory);
+        if (hasLog4j) {
+            logger.log(LEVEL, "Log4j is available, install pragmatic config factory to log4j system .");
+            ConfigurationFactory factory = new PragmaticLog4jConfigurationFactory();
+            ConfigurationFactory.setConfigurationFactory(factory);
+        }
     }
 
 }
