@@ -8,6 +8,7 @@ import net.bodz.bas.io.adapter.PrintOutPrintWriter;
 import net.bodz.bas.io.impl.NullPrintOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.meta.decl.Final;
+import net.bodz.bas.meta.decl.NotNull;
 
 public interface IPrintOut
         extends ICharOut {
@@ -196,11 +197,11 @@ public interface IPrintOut
         }
     }
 
-    default ITreeOut indented() {
+    default @NotNull ITreeOut indented() {
         return TreeOutImpl.from(this);
     }
 
-    default PrintWriter toPrintWriter() {
+    default @NotNull  PrintWriter toPrintWriter() {
         return new PrintOutPrintWriter(this);
     }
 
